@@ -6,16 +6,26 @@
 # Appearance
 appearance:
   mode: system
-  color: custom
+  color: custom  # Ceci est correct, il dit à Hugo de chercher notre custom.css
 
-# Définition de la palette 'Pataphysique
-color_options:
-  custom:
-    # Palette du Cabinet de Curiosités
-    primary: '#b08f56'     # Laiton vieilli
-    secondary: '#7a2a2a'    # Rouge sang séché
-    background: '#fbf5e9'    # Parchemin
-    dark_background: '#3a3a3a' # Bois de noyer / Encre
+# ---------------------------------------------------------------------------
+# Typographie ('Pataphysique)
+# ---------------------------------------------------------------------------
+fonts:
+  # Source: https://docs.hugoblox.com/getting-started/customization/#fonts
+  # Importer les polices Google
+  google:
+    families:
+      - name: 'Playfair Display:400,700' # Titres savants
+      - name: 'EB Garamond:400,400i,700' # Corps de texte (régulier, italique, gras)
+      - name: 'Special Elite'             # Machine à écrire
+    subsets:
+      - latin
+  # Définir les familles de polices
+  font_family:
+    heading: 'Playfair Display'
+    body: 'EB Garamond'
+    code: 'Special Elite'
 
 # SEO
 marketing:
