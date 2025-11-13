@@ -1,9 +1,13 @@
-languages:
-  fr: # <- C'est cette "map" (ce niveau d'imbrication) que l'erreur réclame
-    languageCode: fr
-    # Le 'contentDir' est crucial si vous segmentez les langues.
-    # Si le français est la SEULE langue, vous n'avez peut-être pas besoin de 'contentDir' ici,
-    # ou il devrait pointer vers 'content/fr' si vous avez créé ce dossier.
-    # contentDir: content/fr 
-    title: "Le titre de votre site en français" # (Exemple de paramètre)
-    weight: 1 # Indique que c'est la langue principale
+fr:
+  languageCode: fr
+  title: "presque-quelque-chose" # Titre pour la version FR
+  weight: 1
+  # Indique à Hugo de chercher le contenu FR dans ce dossier :
+  contentDir: content/fr
+
+en:
+  languageCode: en
+  title: "almost-something" # Titre pour la version EN
+  weight: 2
+  # Indique à Hugo de chercher le contenu EN dans ce dossier :
+  contentDir: content/en

@@ -2,12 +2,12 @@
 #   The weight parameter defines the order that the links will appear in.
 
 main:
-  - name: Home
+  - name: Globiboulga
     url: /
     weight: 10
-  - name: Topics
+  - name: a?
     url: tags/
     weight: 20
-  - name: Uses
+  - name: a?
     url: uses/
     weight: 30
