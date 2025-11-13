@@ -1,20 +1,9 @@
-# Languages
-#   Create a section for each of your site's languages.
-#   Documentation: https://docs.hugoblox.com/reference/language/
-
-  languageCode: fr
-  # Uncomment for multi-lingual sites, and move English content into `en` sub-folder.
-  #contentDir: content/en
-
-# Uncomment the lines below to configure your website in a second language.
-#zh:
-#  languageCode: zh-Hans
-#  contentDir: content/zh
-#  title: Chinese website title...
-#  params:
-#    description: Site description in Chinese...
-#  menu:
-#    main:
-#      - name: 传
-#        url: '#about'
-#        weight: 1
+languages:
+  fr: # <- C'est cette "map" (ce niveau d'imbrication) que l'erreur réclame
+    languageCode: fr
+    # Le 'contentDir' est crucial si vous segmentez les langues.
+    # Si le français est la SEULE langue, vous n'avez peut-être pas besoin de 'contentDir' ici,
+    # ou il devrait pointer vers 'content/fr' si vous avez créé ce dossier.
+    # contentDir: content/fr 
+    title: "Le titre de votre site en français" # (Exemple de paramètre)
+    weight: 1 # Indique que c'est la langue principale
