@@ -6,7 +6,16 @@
 # Appearance
 appearance:
   mode: system
-  color: blue
+  color: custom
+
+# Définition de la palette 'Pataphysique
+color_options:
+  custom:
+    # Palette du Cabinet de Curiosités
+    primary: '#b08f56'     # Laiton vieilli
+    secondary: '#7a2a2a'    # Rouge sang séché
+    background: '#fbf5e9'    # Parchemin
+    dark_background: '#3a3a3a' # Bois de noyer / Encre
 
 # SEO
 marketing:
