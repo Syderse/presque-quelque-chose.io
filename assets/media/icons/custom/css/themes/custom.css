@@ -1,0 +1,20 @@
+/* Thème 'Pataphysique - Cabinet de Curiosités */
+
+:root {
+  --hb-color-primary: #b08f56;     /* Laiton vieilli */
+  --hb-color-secondary: #7a2a2a;    /* Rouge sang séché */
+  --hb-color-background: #fbf5e9;    /* Parchemin */
+  --hb-color-dark-background: #3a3a3a; /* Bois de noyer */
+
+  /* On peut aussi en profiter pour "salir" un peu les bordures */
+  --hb-color-border: #d3c8b4; /* Une couleur de bordure parchemin sale */
+}
+
+/* Pour le mode sombre, si activé */
+[data-theme='dark'] {
+  --hb-color-primary: #b08f56;     /* Le laiton ressort bien sur le sombre */
+  --hb-color-secondary: #e08f8f;    /* Un rouge plus clair pour la lisibilité */
+  --hb-color-background: #3a3a3a;    /* Fond Noyer */
+  --hb-color-dark-background: #2a2a2a; /* Un fond encore plus sombre (optionnel) */
+  --hb-color-border: #5a5a5a;
+}
