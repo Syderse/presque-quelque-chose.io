@@ -1,13 +1,19 @@
-# Navigation Links
-#   The weight parameter defines the order that the links will appear in.
-
 main:
-  - name: Globiboulga
+  - name: home
     url: /
     weight: 10
-  - name: a?
-    url: tags/
+  - name: inutilités appliquées
+    url: /non-fiction/
     weight: 20
-  - name: a?
-    url: uses/
+  - name: solutions imaginaires
+    url: /fiction/
     weight: 30
+  - name: parcours académique
+    url: /parcours/
+    weight: 40
+  - name: ondes & pixels
+    url: /media/
+    weight: 50
+  - name: l'agenda
+    url: /agenda/  # pointe vers votre dossier content/agenda
+    weight: 60
