@@ -69,7 +69,7 @@ sections:
   - block: collection
     id: agenda-inoccupations
     content:
-      title: "Inoccupations impersonnelles"
+      title: "inoccupations impersonnelles"
       subtitle: "Recensement des flâneries et non-rendez-vous à venir"
       filters:
         folders:
