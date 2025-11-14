@@ -71,13 +71,13 @@ sections:
 
   # --- feed 5: agenda ---
   - block: collection
-    id: agenda-inoccupations
+    id: almanach-inoccupations
     content:
       title: "l'agenda des inoccupations"
       subtitle: "recensement des flâneries et non-rendez-vous à venir"
       filters:
         folders:
-          - agenda
+          - almanach
     design:
       view: date-title-summary # <-- corrigé (compact n'existe pas)
       spacing:

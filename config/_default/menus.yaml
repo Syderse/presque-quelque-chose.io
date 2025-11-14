@@ -14,6 +14,6 @@ main:
   - name: ondes & pixels
     url: /media/
     weight: 50
-  - name: l'agenda
-    url: /agenda/  # pointe vers votre dossier content/agenda
+  - name: almanach
+    url: /almanach/  # pointe vers votre dossier content/agenda
     weight: 60
