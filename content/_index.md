@@ -18,16 +18,64 @@ sections:
         shape: circle # Options: circle (default), square, rounded
   
   - block: collection
-    id: cabinet-des-merveilles  # Un ID si vous voulez un lien de menu /#cabinet-des-merveilles
+    id: inutilités-appliquées  # Un ID si vous voulez un lien de menu /#cabinet-des-merveilles
     content:
-      title: "Atelier des inutilités appliquées"
+      title: "inutilités appliquées"
       filters:
         folders:
-          - post  
+          - non-fiction  
     design:
       # Amusez-vous à changer 'card' !
       # Essayez 'showcase', 'compact', 'list', ou même 'citation'
       view: card
+      spacing:
+        padding: ['3rem', 0, '6rem', 0]
+  - block: collection
+    id: solutions-imaginaires
+    content:
+      title: "solutions imaginaires"
+      subtitle: "Scènes, poèmes, chansons et autres clinamens"
+      filters:
+        folders:
+          - fiction  # <-- Le dossier à créer
+    design:
+      view: card # 'card' est bien, 'list' serait plus sobre.
+      spacing:
+        padding: ['3rem', 0, '6rem', 0]
+  - block: collection
+    id: parcours
+    content:
+      title: "phynance intellectuelle"
+      subtitle: "Recherches en histoire de l'art, cinéma et radio"
+      filters:
+        folders:
+          - parcours # <-- Le dossier à créer
+    design:
+      view: citation # <-- Une vue parfaite pour l'académique
+      spacing:
+        padding: ['3rem', 0, '6rem', 0]
+  - block: collection
+    id: ondes-et-pixels
+    content:
+      title: "ondes & pixels"
+      subtitle: "Podcasts, vidéos et expérimentations audiovisuelles"
+      filters:
+        folders:
+          - media # <-- Le dossier à créer
+    design:
+      view: showcase # <-- Très visuel, parfait pour des vignettes
+      spacing:
+        padding: ['3rem', 0, '6rem', 0]
+  - block: collection
+    id: agenda-inoccupations
+    content:
+      title: "Inoccupations impersonnelles"
+      subtitle: "Recensement des flâneries et non-rendez-vous à venir"
+      filters:
+        folders:
+          - agenda # <-- Le dossier à créer
+    design:
+      view: compact # <-- Style compact, comme un vrai agenda
       spacing:
         padding: ['3rem', 0, '6rem', 0]
 ---
