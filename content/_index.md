@@ -20,8 +20,7 @@ sections:
   - block: collection
     id: cabinet-des-merveilles  # Un ID si vous voulez un lien de menu /#cabinet-des-merveilles
     content:
-      title: "Le Cabinet des Merveilles"
-      subtitle: "Explorations 'pataphysiques et autres singularités"
+      title: "Atelier des inutilités appliquées"
       filters:
         folders:
           - post  
