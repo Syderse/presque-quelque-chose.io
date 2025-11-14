@@ -14,45 +14,6 @@ sections:
       avatar:
         size: medium
         shape: circle
-  # --- INDEX EN GRILLE ---
-  - block: markdown
-    id: index
-    content:
-      title: "" # Pas de titre pour ce bloc
-      subtitle: ""
-      text: |
-        <style>
-          .section-index-grid {
-            display: grid;
-            /* Crée des colonnes automatiques (min 150px, max 1fr) */
-            grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
-            gap: 1.5rem;
-            text-align: center;
-          }
-          .section-index-grid a {
-            display: block;
-            padding: 1.5rem 1rem;
-            border: 1px solid var(--tw-prose-borders);
-            border-radius: 0.5rem;
-            transition: all 0.2s ease-in-out;
-            text-decoration: none;
-            font-weight: 500;
-          }
-          .section-index-grid a:hover {
-            background-color: var(--tw-prose-invert-bg);
-            color: var(--tw-prose-invert-body);
-            border-color: var(--tw-prose-invert-borders);
-            transform: translateY(-2px);
-          }
-        </style>
-        
-        <div class="section-index-grid">
-          <a href="/#inutilites-appliquees">inutilités appliquées</a>
-          <a href="/#solutions-imaginaires">solutions imaginaires</a>
-          <a href="/#parcours">parcours académique</a>
-          <a href="/#ondes-et-pixels">ondes & pixels</a>
-          <a href="/#agenda-inoccupations">l'agenda</a>
-        </div>
   # --- feed 1: inutilités ---
   - block: collection
     id: inutilites-appliquees
