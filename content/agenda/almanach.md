@@ -5,7 +5,7 @@ sections:
   - block: markdown
     id: almanac-viewer
     content:
-      title: "almanach des inoccupations"
+      title: "almanach des inoccupations impersonnelles"
       subtitle: "l'éphéméride 'pataphysique du jour."
       text: |
         <style>
