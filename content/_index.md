@@ -1,81 +1,86 @@
 ---
-title: 'Home'
+title: 'home'
 date: 2023-10-24
 type: landing
 sections:
   - block: resume-biography
     content:
-      # The user's folder name in content/authors/
       username: admin
     design:
       spacing:
         padding: [0, 0, 0, 0]
       biography:
         style: 'text-align: justify; font-size: 0.8em;'
-      # Avatar customization
       avatar:
-        size: medium  # Options: small (150px), medium (200px, default), large (320px), xl (400px), xxl (500px)
-        shape: circle # Options: circle (default), square, rounded
+        size: medium
+        shape: circle
   
+  # --- feed 1: inutilités ---
   - block: collection
-    id: inutilités-appliquées  # Un ID si vous voulez un lien de menu /#cabinet-des-merveilles
+    id: inutilites-appliquees
     content:
       title: "inutilités appliquées"
       filters:
         folders:
-          - non-fiction  
+          - non-fiction  # corrigé
     design:
-      # Amusez-vous à changer 'card' !
-      # Essayez 'showcase', 'compact', 'list', ou même 'citation'
       view: card
       spacing:
         padding: ['3rem', 0, '6rem', 0]
+
+  # --- feed 2: fiction ---
   - block: collection
     id: solutions-imaginaires
     content:
       title: "solutions imaginaires"
-      subtitle: "Scènes, poèmes, chansons et autres clinamens"
+      subtitle: "scènes, poèmes, chansons et autres clinamens"
       filters:
         folders:
-          - fiction  # <-- Le dossier à créer
+          - fiction
     design:
-      view: card # 'card' est bien, 'list' serait plus sobre.
+      view: card 
       spacing:
         padding: ['3rem', 0, '6rem', 0]
+
+  # --- feed 3: académique ---
   - block: collection
     id: parcours
     content:
-      title: "phynance intellectuelle"
-      subtitle: "Recherches en histoire de l'art, cinéma et radio"
+      title: "parcours académique"
+      subtitle: "recherches en histoire de l'art, cinéma et radio"
       filters:
         folders:
-          - parcours # <-- Le dossier à créer
+          - parcours
     design:
-      view: citation # <-- Une vue parfaite pour l'académique
+      view: citation 
       spacing:
         padding: ['3rem', 0, '6rem', 0]
+
+  # --- feed 4: media ---
   - block: collection
     id: ondes-et-pixels
     content:
       title: "ondes & pixels"
-      subtitle: "Podcasts, vidéos et expérimentations audiovisuelles"
+      subtitle: "podcasts, vidéos et expérimentations audiovisuelles"
       filters:
         folders:
-          - media # <-- Le dossier à créer
+          - media
     design:
-      view: showcase # <-- Très visuel, parfait pour des vignettes
+      view: card  # <-- corrigé (showcase n'existe pas)
       spacing:
         padding: ['3rem', 0, '6rem', 0]
+
+  # --- feed 5: agenda ---
   - block: collection
     id: agenda-inoccupations
     content:
-      title: "inoccupations impersonnelles"
-      subtitle: "Recensement des flâneries et non-rendez-vous à venir"
+      title: "l'agenda des inoccupations"
+      subtitle: "recensement des flâneries et non-rendez-vous à venir"
       filters:
         folders:
-          - agenda # <-- Le dossier à créer
+          - agenda
     design:
-      view: compact # <-- Style compact, comme un vrai agenda
+      view: date-title-summary # <-- corrigé (compact n'existe pas)
       spacing:
         padding: ['3rem', 0, '6rem', 0]
 ---
