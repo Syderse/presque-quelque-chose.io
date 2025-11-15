@@ -47,26 +47,12 @@ sections:
           .almanac-content strong {
             color: var(--hb-color-primary-600);
           }
-          .almanac-nav {
-            display: flex;
-            justify-content: space-between;
-            margin-top: 1.5rem;
-            font-family: sans-serif;
-          }
-          .almanac-nav-btn {
-            padding: 0.5rem 1rem;
-            border: 1px solid var(--tw-prose-borders);
-            text-decoration: none;
-            cursor: pointer;
-            user-select: none;
-          }
-          .almanac-nav-btn:hover {
-            background-color: var(--tw-prose-invert-bg);
-            color: var(--tw-prose-invert-body);
-          }
+          
+          /* les boutons de navigation ont disparu du css, car ils ont disparu du html */
+
         </style>
 
-        <div id="almanac-wrapper">
+        <div id="almanac-wrapper" style="display: none;">
           <div class="almanac-container">
             <div class="almanac-header">
               <div id="almanac-date" class="almanac-date">chargement...</div>
@@ -76,27 +62,24 @@ sections:
               <p>recherche de l'inoccupation correspondante...</p>
             </div>
           </div>
-          <div class="almanac-nav">
-            <div id="almanac-prev" class="almanac-nav-btn">← occupation précédente</div>
-            <div id="almanac-next" class="almanac-nav-btn">occupation suivante →</div>
           </div>
-        </div>
         
         <script>
           document.addEventListener('DOMContentLoaded', () => {
             let allEvents = [];
-            let currentEventIndex = -1;
+            // currentEventIndex n'est plus nécessaire
 
             // formats de date
             const userLocale = 'fr-fr';
             const dateOptions = { day: 'numeric', month: 'long', year: 'numeric' };
 
             // éléments de l'interface
+            const wrapperEl = document.getElementById('almanac-wrapper'); // <- nouvel élément
             const dateEl = document.getElementById('almanac-date');
             const categoryEl = document.getElementById('almanac-category');
             const contentEl = document.getElementById('almanac-content');
-            const prevBtn = document.getElementById('almanac-prev');
-            const nextBtn = document.getElementById('almanac-next');
+            
+            // modification clé 3 : les variables prevBtn et nextBtn sont supprimées.
 
             // fonction pour normaliser la date (enlève l'heure)
             const normalizeDate = (date) => {
@@ -105,12 +88,10 @@ sections:
               return d;
             };
 
-            // fonction pour afficher un événement par son index
-            const displayEvent = (index) => {
-              if (index < 0 || index >= allEvents.length) return;
+            // fonction pour afficher l'événement trouvé
+            const displayEvent = (event) => {
+              if (!event) return;
               
-              currentEventIndex = index;
-              const event = allEvents[index];
               const eventDate = new Date(event.pubDate);
               
               dateEl.textContent = eventDate.toLocaleDateString(userLocale, dateOptions);
@@ -125,19 +106,16 @@ sections:
               // on trie les événements par date au cas où
               allEvents.sort((a, b) => new Date(a.pubDate) - new Date(b.pubDate));
 
-              const eventIndex = allEvents.findIndex(event => {
+              // on utilise .find() au lieu de .findIndex() pour avoir l'événement directement
+              const eventToday = allEvents.find(event => {
                 return normalizeDate(event.pubDate).getTime() === normalizedToday.getTime();
               });
 
-              return eventIndex;
+              return eventToday; // retourne l'événement ou 'undefined'
             };
 
             // --- exécution ---
-            // 1. fetcher le flux rss (xml) généré par hugo
-            // !! important : le script cherche les données dans /almanach/index.xml
-            //
-            // la correction est ici ! (le chemin et le type de commentaire)
-            //
+            // 1. fetcher le flux rss
             fetch('/almanach/index.xml')
               .then(response => response.text())
               .then(str => new window.DOMParser().parseFromString(str, 'text/xml'))
@@ -155,38 +133,32 @@ sections:
 
                 // 2. trouver l'événement d'aujourd'hui
                 const today = new Date();
-                let eventIndex = findEventForDate(today);
+                let eventFound = findEventForDate(today); // c'est l'objet événement, ou 'undefined'
 
-                if (eventIndex !== -1) {
-                  displayEvent(eventIndex);
+                // 
+                // modification clé 4 : la logique d'affichage
+                //
+                if (eventFound) {
+                  // un événement est trouvé !
+                  displayEvent(eventFound);
+                  // on affiche le conteneur
+                  wrapperEl.style.display = 'block';
                 } else {
-                  // si pas d'événement, afficher un message
-                  dateEl.textContent = today.toLocaleDateString(userLocale, dateOptions);
-                  categoryEl.textContent = "(repos)";
-                  contentEl.textContent = "aucune inoccupation n'est prévue pour aujourd'hui. profitez du vide.";
+                  // pas d'événement pour aujourd'hui.
+                  // on ne fait rien. la page reste blanche.
+                  // la 'div' almanac-wrapper reste en 'display: none'.
+                  console.log("aucune inoccupation n'est prévue pour aujourd'hui. profitez du vide.");
                 }
 
-                // 3. lier les boutons de navigation
-                prevBtn.addEventListener('click', () => {
-                  if (currentEventIndex > 0) {
-                    displayEvent(currentEventIndex - 1);
-                  } else if (allEvents.length > 0) {
-                    displayEvent(allEvents.length - 1); // boucle vers la fin
-                  }
-                });
-
-                nextBtn.addEventListener('click', () => {
-                  if (currentEventIndex < allEvents.length - 1) {
-                    displayEvent(currentEventIndex + 1);
-                  } else if (allEvents.length > 0) {
-                    displayEvent(0); // boucle vers le début
-                  }
-                });
+                //
+                // modification clé 5 : 
+                // les 'event listeners' pour prevBtn et nextBtn ont été supprimés.
+                //
+                
               })
               .catch(err => {
                 console.error("erreur pataphysique:", err);
-                dateEl.textContent = "erreur";
-                contentEl.textContent = "l'almanach n'a pas pu être chargé. les ondes sont brouillées.";
+                // on n'affiche rien à l'utilisateur, on log juste en console.
               });
           });
         </script>
