@@ -17,8 +17,7 @@ sections:
   - block: collection
     id: almanach
     content:
-      title: "l'agenda des inoccupations"
-      subtitle: "recensement des flâneries et non-rendez-vous à venir"
+      title: "almanach des inoccupations personnelles"
       filters:
         folders:
           - almanach
