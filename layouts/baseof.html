@@ -12,18 +12,16 @@
   <style>
     /*
      * ✅ NOUVEAU : Variables de couleur 'Pataphysiques
-     * Uniquement pour nos nouveaux styles de menu.
      */
     :root {
-      --pataphysique-primary: #FF00FF; /* Magenta */
-      --pataphysique-theme: #00FFFF; /* Cyan */
-      --pataphysique-primary-text: #FFFFFF; /* Blanc pour le bouton */
-      --pataphysique-theme-light: #CCFFFF; /* Pour le halo du bouton */
+      --pataphysique-primary: #CC00CC; /* MODIFIÉ : Magenta (moins vif) */
+      --pataphysique-theme: #00CCCC; /* MODIFIÉ : Cyan (plus sombre/teal) */
+      --pataphysique-primary-text: #FFFFFF; /* Blanc pour le bouton (inchangé) */
+      --pataphysique-theme-light: #AEEEEE; /* MODIFIÉ : Halo (turquoise doux) */
     }
 
     /*
      * ✅ NOUVEAU : L'animation du dégradé
-     * On définit une animation qui fait bouger le fond
      */
     @keyframes pataphysique-flow {
       0% {
@@ -39,8 +37,6 @@
 
     /*
      * ✅ NOUVEAU : Les liens du menu (home, blog, etc.)
-     * On cible `.navbar-nav .nav-link` qui est plus spécifique
-     * que ton `.nav-link` pour appliquer le dégradé.
      */
     .navbar-nav .nav-link {
       /* On utilise 3 couleurs (Magenta -> Cyan -> Magenta) pour une boucle parfaite */
@@ -98,7 +94,6 @@
 
     /*
      * ✅ MODIFIÉ : Curseur 'Pataphysique (Fourmi)
-     * Cible: <html> (tout le site)
      */
     html {
       /* Nous remplaçons la spirale par la fourmi */
@@ -196,7 +191,6 @@
 
     /*
      * ✅ NOUVEAU : Esthétique "tout en minuscules" (Inchangé)
-     * Cible: Navigation et Titres de contenu
      */
     .navbar-brand, /* Logo/Titre du site dans la nav */
     .nav-link,     /* Liens de navigation */
