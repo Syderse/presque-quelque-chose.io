@@ -1,8 +1,9 @@
 build:
-  hugo_version: '0.152.2'
+  hugo_version: '0.152.2'
 template:
-  id: "blog"
-  name: "Blog"
+  id: "blog"
+  name: "Blog"
 # --- NOTRE SOLUTION 'PATAPHYSIQUE ---
 appearance:
-  mode: system
+  mode: system
+  color: custom

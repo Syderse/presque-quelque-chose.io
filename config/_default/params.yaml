@@ -5,74 +5,75 @@
 
 # Appearance
 appearance:
-  mode: system
+  mode: system
+  color: custom  # Ceci est correct, il dit à Hugo de chercher notre custom.css
 
 # ---------------------------------------------------------------------------
 # Typographie ('Pataphysique)
 # ---------------------------------------------------------------------------
 fonts:
-  # Source: https://docs.hugoblox.com/getting-started/customization/#fonts
-  # Importer les polices Google
-  google:
-    families:
-      - name: 'Playfair Display:400,700' # Titres savants
-      - name: 'EB Garamond:400,400i,700' # Corps de texte (régulier, italique, gras)
-      - name: 'Special Elite'             # Machine à écrire
-    subsets:
-      - latin
-  # Définir les familles de polices
-  font_family:
-    heading: 'Playfair Display'
-    body: 'EB Garamond'
-    code: 'Special Elite'
+  # Source: https://docs.hugoblox.com/getting-started/customization/#fonts
+  # Importer les polices Google
+  google:
+    families:
+      - name: 'Playfair Display:400,700' # Titres savants
+      - name: 'EB Garamond:400,400i,700' # Corps de texte (régulier, italique, gras)
+      - name: 'Special Elite'             # Machine à écrire
+    subsets:
+      - latin
+  # Définir les familles de polices
+  font_family:
+    heading: 'Playfair Display'
+    body: 'EB Garamond'
+    code: 'Special Elite'
 
 # SEO
 marketing:
-  seo:
-    site_type: Person
-    local_business_type: ''
-    org_name: ''
-    description: 'A highly-customizable Hugo blog theme powered by Hugo Blox Builder.'
-    twitter: 'GetResearchDev'
-  analytics:
-    google_analytics: ''
-    baidu_tongji: ''
-    plausible: ''
-    fathom: ''
-    pirsch: ''
-  verification:
-    google: ''
-    baidu: ''
+  seo:
+    site_type: Person
+    local_business_type: ''
+    org_name: ''
+    description: 'A highly-customizable Hugo blog theme powered by Hugo Blox Builder.'
+    twitter: 'GetResearchDev'
+  analytics:
+    google_analytics: ''
+    baidu_tongji: ''
+    plausible: ''
+    fathom: ''
+    pirsch: ''
+  verification:
+    google: ''
+    baidu: ''
 
 # Site header
 header:
-  navbar:
-    enable: true
-    show_search: true
-    show_theme_chooser: true
+  navbar:
+    enable: true
+    show_search: true
+    show_theme_chooser: true
 
 # Site footer
 footer:
-  copyright:
-    notice: '© {year} Me. This work is licensed under {license}'
-    license:
-      enable: true
-      allow_derivatives: false
-      share_alike: true
-      allow_commercial: false
+  copyright:
+    notice: '© {year} Me. This work is licensed under {license}'
+    license:
+      enable: true
+      allow_derivatives: false
+      share_alike: true
+      allow_commercial: false
 
 # Localization
 locale:
-  date_format: 'Jan 2, 2006'
-  time_format: '3:04 PM'
+  date_format: 'Jan 2, 2006'
+  time_format: '3:04 PM'
 
 # Site features
 features:
-  math:
-    enable: false
-  privacy_pack:
-    enable: false
-  repository:
-    url: 'https://github.com/HugoBlox/hugo-blox-builder/'
-    content_dir: templates/blog/content
-    branch: main
+  math:
+    enable: false
+  privacy_pack:
+    enable: false
+  repository:
+    url: 'https://github.com/HugoBlox/hugo-blox-builder/'
+    content_dir: templates/blog/content
+    branch: main
