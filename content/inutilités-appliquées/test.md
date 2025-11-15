@@ -4,9 +4,9 @@ date: 2025-11-15
 summary: "Ceci est le test v2 pour vérifier la solution radicale. il teste à la fois les variables css (pour les composants) et les classes tailwind (pour le contenu)."
 ---
 
-## test
-# test
-### test
+## **test**
+# *test*
+### ***test***
 
 Avant d'explorer cette valeur expressive, Arnheim opère un détour nécessaire par la psychophysiologie de l'audition. Il établit une distinction fondamentale : notre oreille, par sa stéréophonie naturelle, distingue « *assez précisément entre "gauche et droite"* » (p. 53) grâce à une infime « *différence de temps* » (p. 53) dans la perception. Cette capacité ne s'étend cependant pas aux autres axes.
 
