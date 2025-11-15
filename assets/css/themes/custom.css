@@ -1,8 +1,8 @@
 /*
-  SOLUTION RADICALE v4.0 - LE NETTOYAGE
-  1. Import Polices (inchangé)
-  2. Patch 'Obsidian' (SUPPRIMÉ - Déménagé dans tailwind.config.js)
-  3. Patch 'Pataphysique' (Titres + Minuscules)
+  SOLUTION RADICALE v13.0 - L'ESCALADE FINALE
+  1. Import Polices
+  2. Patch 'Obsidian' (Spécificité [0,2,X] avec <html>)
+  3. Patch 'Pataphysique' (Minuscules + Titres)
 */
 
 /* 1. Importer manuellement les polices (stable) */
@@ -10,17 +10,45 @@
 
 /*
 =================================================================
---- 2. patch 'obsidian' : (SUPPRIMÉ) ---
-=================================================================
-
-  Les règles pour .prose em, .prose strong, .prose a, 
-  et .prose code ont été retirées d'ici.
-  Elles sont maintenant gérées par le plugin 
-  @tailwindcss/typography dans tailwind.config.js
-
+--- 2. patch 'obsidian' : couleurs du contenu (markdown) ---
 =================================================================
 */
 
+/* Nous ciblons depuis la racine <html> pour obtenir la 
+  spécificité la plus haute possible (0,2,2) et 
+  gagner la guerre contre le !important du thème.
+*/
+
+/* --- ITALIQUE (Vert) --- */
+html[data-theme] .prose em {
+  color: #a6e22e !important; /* Vert 'Obsidian' (Spécificité 0,2,2) */
+  font-style: italic;
+}
+
+/* --- GRAS (Orange) --- */
+html[data-theme] .prose strong {
+  color: #fd971f !important; /* Orange 'Obsidian' (Spécificité 0,2,2) */
+  font-weight: 700;
+}
+
+/* --- GRAS ET ITALIQUE (Violet) --- */
+html[data-theme] .prose strong em,
+html[data-theme] .prose em strong {
+  color: #e879f9 !important; /* (Spécificité 0,2,3) */
+  font-style: italic;
+  font-weight: 700;
+}
+
+/* --- BONUS : Liens de contenu (Bleu 'Obsidian') --- */
+html[data-theme] .prose a {
+  color: #80bfff !important; /* Bleu (Spécificité 0,2,2) */
+}
+
+/* --- BONUS : Code (Rose 'Obsidian') --- */
+/* (On restaure notre règle qui fonctionnait, mais avec la nouvelle spécificité) */
+html[data-theme] .prose code:not(pre > code) {
+  color: #f92672 !important; /* Rose (Spécificité 0,3,2) */
+}
 
 /*
 =================================================================
@@ -29,7 +57,7 @@
 */
 
 /* --- Règle 3a : Titres (Minuscules + Dégradé Bleu) --- */
-/* (Ceci fonctionne et reste ici) */
+/* (Ceci fonctionnait déjà) */
 h1.article-title,
 .prose h1, .prose h2, .prose h3, .prose h4, .prose h5, .prose h6,
 h1.section-title, h2.section-title, h3.section-title,
@@ -39,11 +67,10 @@ h1.section-title, h2.section-title, h3.section-title,
   background-clip: text;
   -webkit-background-clip: text;
   color: transparent !important;
-  text-transform: lowercase !important; 
+  text-transform: lowercase !important;  
 }
 
 /* --- Règle 3b : Autres Minuscules (non-titres) --- */
-/* (Ceci fonctionne et reste ici) */
 .navbar-nav .nav-link,
 .section-heading p {
   text-transform: lowercase !important;
