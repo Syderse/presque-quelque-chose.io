@@ -1,0 +1,6 @@
+---
+title: "inoccupation du 2026-02-02"
+date: 2026-02-02
+---
+
+(à compléter...)
