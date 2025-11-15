@@ -11,21 +11,12 @@ appearance:
 # ---------------------------------------------------------------------------
 # Typographie ('Pataphysique)
 # ---------------------------------------------------------------------------
-fonts:
-  # Source: https://docs.hugoblox.com/getting-started/customization/#fonts
-  # Importer les polices Google
-  google:
-    families:
-      - name: 'Playfair Display:400,700' # Titres savants
-      - name: 'EB Garamond:400,400i,700' # Corps de texte (régulier, italique, gras)
-      - name: 'Special Elite'            # Machine à écrire
-    subsets:
-      - latin
-  # Définir les familles de polices
-  font_family:
-    heading: 'Playfair Display'
-    body: 'EB Garamond'
-    code: 'Special Elite'
+#
+# La section 'fonts:' a été supprimée.
+# 1. Les polices Google sont importées dans assets/css/themes/custom.css
+# 2. Les familles de polices sont définies dans tailwind.config.js
+#
+# ---------------------------------------------------------------------------
 
 # SEO
 marketing:
