@@ -11,16 +11,98 @@
 
   <style>
     /*
-     * ✅ NOUVEAU : Curseur 'Pataphysique
+     * ✅ NOUVEAU : Variables de couleur 'Pataphysiques
+     * Uniquement pour nos nouveaux styles de menu.
+     */
+    :root {
+      --pataphysique-primary: #FF00FF; /* Magenta */
+      --pataphysique-theme: #00FFFF; /* Cyan */
+      --pataphysique-primary-text: #FFFFFF; /* Blanc pour le bouton */
+      --pataphysique-theme-light: #CCFFFF; /* Pour le halo du bouton */
+    }
+
+    /*
+     * ✅ NOUVEAU : L'animation du dégradé
+     * On définit une animation qui fait bouger le fond
+     */
+    @keyframes pataphysique-flow {
+      0% {
+        background-position: 0% 50%;
+      }
+      50% {
+        background-position: 100% 50%;
+      }
+      100% {
+        background-position: 0% 50%;
+      }
+    }
+
+    /*
+     * ✅ NOUVEAU : Les liens du menu (home, blog, etc.)
+     * On cible `.navbar-nav .nav-link` qui est plus spécifique
+     * que ton `.nav-link` pour appliquer le dégradé.
+     */
+    .navbar-nav .nav-link {
+      /* On utilise 3 couleurs (Magenta -> Cyan -> Magenta) pour une boucle parfaite */
+      background: linear-gradient(
+        to right,
+        var(--pataphysique-primary),
+        var(--pataphysique-theme),
+        var(--pataphysique-primary)
+      );
+
+      /* On dit au fond d'être 2x plus grand pour qu'il ait de la place pour bouger */
+      background-size: 200% 200%;
+
+      /* La magie CSS pour que le dégradé s'applique AU TEXTE */
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+      text-fill-color: transparent;
+
+      /* On applique notre animation ! */
+      animation: pataphysique-flow 4s ease infinite;
+
+      /* On les met en un peu plus gras pour que le dégradé soit bien visible */
+      font-weight: 600;
+    }
+
+    /*
+     * ✅ NOUVEAU : Le bouton "Get Started"
+     */
+    .btn-primary {
+      /* Un fond en dégradé solide */
+      background-image: linear-gradient(to right, var(--pataphysique-primary), var(--pataphysique-theme));
+      /* On enlève la couleur de fond par défaut */
+      background-color: transparent;
+      /* Pas de bordure */
+      border: none;
+      /* On s'assure que le texte est lisible (il utilise --pataphysique-primary-text) */
+      color: var(--pataphysique-primary-text);
+      font-weight: 600;
+      text-transform: lowercase; /* On le met en minuscule aussi */
+    }
+
+    /* Effet au survol pour le bouton */
+    .btn-primary:hover {
+      /* On inverse le dégradé au survol */
+      background-image: linear-gradient(to right, var(--pataphysique-theme), var(--pataphysique-primary));
+      color: var(--pataphysique-primary-text);
+      box-shadow: 0 0 15px var(--pataphysique-theme-light); /* Ajoute un halo lumineux */
+    }
+
+    /* * ================================================
+     * 🎨 TES STYLES 'PATAPHYSIQUES (CONSERVÉS)
+     * ================================================
+     */
+
+    /*
+     * ✅ MODIFIÉ : Curseur 'Pataphysique (Fourmi)
      * Cible: <html> (tout le site)
      */
     html {
-      /*
-       * Astuce : Ceci utilise un "Data URI" SVG pour forcer
-       * l'emoji 🌀 comme curseur. Aucun fichier image requis !
-       * Une "solution imaginaire" qui fonctionne.
-       */
-      cursor: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" width="32" height="32" style="font-size: 24px;"><text y="24">🌀</text></svg>'), auto;
+      /* Nous remplaçons la spirale par la fourmi */
+      cursor: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" width="32" height="32" style="font-size: 24px;"><text y="24">🐜</text></svg>'), auto;
     }
 
     /*
@@ -72,33 +154,25 @@
     }
 
     /*
-     * ✅ MODIFIÉ : Blocs de citation (v2.0 - Spirale)
-     * Remplace la v1.0 (bordure orange)
+     * Objectif : Blocs de citation (Spirale - Inchangé)
      */
     .prose blockquote {
-      /* 1. Annuler la bordure orange */
-      border-left: none !important; /* Nécessaire pour battre le style de base */
-      
-      /* 2. Garder le fond et la marge */
+      border-left: none !important;
       background-color: rgba(253, 126, 20, 0.05);
       margin: 0 0 20px 0;
-
-      /* 3. Préparer le conteneur pour la spirale */
       position: relative;
-      padding: 15px 20px 15px 50px; /* Augmenter le padding GAUCHE */
+      padding: 15px 20px 15px 50px; 
     }
 
-    /* 4. Dessiner la spirale */
     .prose blockquote::before {
-      content: '🌀';
+      content: '🌀'; /* La spirale reste ici ! */
       position: absolute;
-      left: 15px; /* Placer la spirale dans le nouveau padding */
-      top: 15px; /* Aligner en haut */
+      left: 15px; 
+      top: 15px;
       font-size: 24px;
-      color: #fd7e14; /* La couleur orange originale */
+      color: #fd7e14;
     }
 
-    /* 5. Le texte de la citation (inchangé) */
     .prose blockquote p {
       color: #E67E22;
       margin-bottom: 0;
@@ -119,6 +193,22 @@
       padding: 0;
       margin: 0;
     }
+
+    /*
+     * ✅ NOUVEAU : Esthétique "tout en minuscules" (Inchangé)
+     * Cible: Navigation et Titres de contenu
+     */
+    .navbar-brand, /* Logo/Titre du site dans la nav */
+    .nav-link,     /* Liens de navigation */
+    .prose h1,
+    .prose h2,
+    .prose h3,
+    .prose h4,
+    .prose h5,
+    .prose h6 {
+      text-transform: lowercase;
+    }
+
   </style>
   </head>
 <body class="hb-page {{ .Kind }} {{ .Type | lower }} {{- with .File -}}{{ .TranslationBaseName | lower }}{{- end -}} {{ if site.Params.appearance.font | default "sans" | eq "sans" }}font-sans{{ else }}font-serif{{ end }}" id="top">
