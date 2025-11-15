@@ -1,92 +1,17 @@
 <style>
-  /*
-   * ==================================================
-   * HOOK CSS 'PATAPHYSIQUE (Simplifié)
-   * Rôle : Gérer les exceptions que le plugin 
-   * Tailwind Typography ne peut pas gérer.
-   * ==================================================
+  /* * =================================
+   * TEST "BAIN D'ACIDE"
+   * Objectif : Vérifier si ce fichier est lu.
+   * =================================
    */
 
-  /*
-   * Objectif : Titres en dégradé de bleu
-   * Raison : Le plugin typography ne gère pas les dégradés.
-   */
-  .prose h1,
-  .prose h2,
-  .prose h3,
-  .prose h4,
-  .prose h5,
-  .prose h6 {
-    /* 1. Définir le dégradé */
-    background-image: linear-gradient(
-      45deg,
-      #0055a4, /* Bleu français */
-      #00bfff /* Bleu ciel */
-    );
-
-    /* 2. Clipper le fond au texte */
-    -webkit-background-clip: text;
-    background-clip: text;
-
-    /* 3. Rendre le texte transparent */
-    -webkit-text-fill-color: transparent;
-    color: transparent;
-
-    /* 4. Correction pour l'affichage */
-    display: inline-block;
+  body {
+    /* * Si la page devient violette, le 'hook' fonctionne.
+     * Le problème est UNIQUEMENT le sélecteur.
+     *
+     * Si la page NE change PAS, le 'hook' est cassé
+     * ou n'est pas chargé par le thème.
+     */
+    background-color: #EE82EE !important; /* Violet 'pataphysique */
   }
-
-  /*
-   * Objectif : Gras en blanc pur lumineux
-   * Raison : Style 'pataphysique' personnalisé
-   */
-  .dark .prose strong {
-    color: #ffffff; /* Blanc pur */
-    font-weight: 700;
-    text-shadow: 0 0 8px rgba(255, 255, 255, 0.7);
-  }
-
-  /*
-   * Objectif : Gras + Italique en violet
-   * Raison : Style 'pataphysique' personnalisé
-   */
-  .prose strong em,
-  .prose em strong {
-    color: #ee82ee; /* "violet" */
-    font-style: italic;
-    font-weight: 700;
-  }
-
-  /*
-   * --- STYLES SUPPRIMÉS D'ICI ---
-   * 'em', 'blockquote', et 'pre' sont maintenant
-   * gérés par tailwind.config.js.
-   */
 </style>
-
-/* Forcer les minuscules sur les éléments structurels */
-.navbar-brand a, /* Logo du site */
-.nav-link, /* Liens de navigation */
-.prose h1, /* Titres de page */
-.prose h2,
-.prose h3 {
-  text-transform: lowercase;
-}
-
-/* Remplacer la bordure de citation par une spirale */
-.prose blockquote {
-  border-left: none !important; /* Annule le style tailwind */
-  position: relative;
-  padding-left: 40px; /* Faire de la place pour la spirale */
-}
-
-/* Dessiner la spirale avec du CSS */
-.prose blockquote::before {
-  content: '🌀'; /* Ou une icône SVG, ou un caractère unicode */
-  position: absolute;
-  left: 0;
-  top: 15px; /* Ajustez au besoin */
-  font-size: 24px;
-  color: #fd7e14; /* Orange 'pataphysique */
-}
-
