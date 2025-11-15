@@ -18,7 +18,7 @@ fonts:
     families:
       - name: 'Playfair Display:400,700' # Titres savants
       - name: 'EB Garamond:400,400i,700' # Corps de texte (régulier, italique, gras)
-      - name: 'Special Elite'             # Machine à écrire
+      - name: 'Special Elite'            # Machine à écrire
     subsets:
       - latin
   # Définir les familles de polices
