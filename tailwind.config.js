@@ -1,53 +1,19 @@
-// const plugin = require('./_vendor/github.com/HugoBlox/hugo-blox-builder/modules/blox-tailwind/plugin') // <- ligne supprimée
+/** @type {import('tailwindcss').Config} */
 
-module.exports = {
+// 1. on restaure le "traducteur" (le plugin)
+//    (c'est le chemin que `hugo mod vendor` a créé)
+const { withHugoBlox } = require('./_vendor/github.com/hugoblox/hugo-blox-builder/modules/blox-tailwind/v0/content/tailwind/plugin.js');
+
+// 2. on utilise le plugin "withHugoBlox" pour envelopper la configuration.
+//    c'est lui qui va lire ton `params.yaml` (pour les polices)
+//    et ton `assets/css/themes/custom.css` (pour les couleurs).
+module.exports = withHugoBlox({
+  
+  // 3. on indique juste à tailwind quels *autres* fichiers surveiller.
+  //    (le plugin s'occupe déjà de surveiller les fichiers du thème)
   content: [
-    './hugo_stats.json',
     './layouts/**/*.html',
-    './content/**/*.md',
-    './_vendor/github.com/HugoBlox/hugo-blox-builder/modules/blox-tailwind/layouts/**/*.html',
-    './_vendor/github.com/HugoBlox/hugo-blox-builder/modules/blox-tailwind/blox/**/*.html',
-    './_vendor/github.com/HugoBlox/hugo-blox-builder/modules/blox-tailwind/assets/js/hb-header-blur.js',
+    './content/**/*.{md,html}',
+    './hugo_stats.json',
   ],
-  darkMode: ['class', '[data-theme="dark"]'],
-  theme: {
-    extend: {
-      colors: {
-        primary: 'var(--hb-color-primary)',
-        secondary: 'var(--hb-color-secondary)',
-        neutral: 'var(--hb-color-neutral)',
-        background: 'var(--hb-color-background)',
-        darkBackground: 'var(--hb-color-dark-background)',
-      },
-      fontFamily: {
-        sans: ['var(--font-family-sans)', 'sans-serif'],
-        serif: ['var(--font-family-serif)', 'serif'],
-        mono: ['var(--font-family-mono)', 'monospace'],
-      },
-      lineHeight: {
-        normal: '1.6',
-      },
-      letterSpacing: {
-        'tighter': '-.06em',
-        'tight': '-.03em',
-        'normal': '0',
-        'wide': '.03em',
-        'wider': '.06em',
-        'widest': '.09em',
-      },
-      fontSize: {
-        'xs': '.8rem',
-        'sm': '.9rem',
-        'base': '1rem',
-        'lg': '1.1rem',
-        'xl': '1.2rem',
-        '2xl': '1.5rem',
-        '3xl': '1.8rem',
-        '4xl': '2.2rem',
-        '5xl': '2.6rem',
-        '6xl': '3rem',
-      },
-    },
-  },
-  // plugins: [plugin], // <- ligne supprimée
-}
+});
