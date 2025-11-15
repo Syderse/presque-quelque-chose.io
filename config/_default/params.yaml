@@ -6,7 +6,6 @@
 # Appearance
 appearance:
   mode: system
-  color: custom  # Ceci est correct, il dit à Hugo de chercher notre custom.css
 
 # ---------------------------------------------------------------------------
 # Typographie ('Pataphysique)

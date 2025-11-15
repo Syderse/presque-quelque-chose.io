@@ -106,3 +106,18 @@ h2.section-title,
 h3.section-title {
     text-transform: lowercase !important;
 }
+/* =================================================================
+--- Injection des directives de base Tailwind ---
+=================================================================
+*/
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+/* =================================================================
+--- Injection des directives de base Tailwind ---
+=================================================================
+*/
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
