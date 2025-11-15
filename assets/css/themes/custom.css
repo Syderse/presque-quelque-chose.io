@@ -1,31 +1,30 @@
 /*
-  SOLUTION RADICALE v3.1 - CODE DE STABILISATION
-  Ce fichier ne contient QUE l'import des polices
-  et le patch des minuscules.
-  Les couleurs "Obsidian" sont absentes.
+  SOLUTION RADICALE v3.3 - GREFFE OBSIDIAN (CORRIGÉE)
+  Combine la base stable (v3.1) avec le patch
+  de couleur pour le contenu.
 */
 
-/* 1. Importer manuellement les polices (comme avant) */
+/* 1. Importer manuellement les polices (stable) */
 @import url('https://fonts.googleapis.com/css2?family=EB+Garamond:ital,wght@0,400;0,700;1,400&family=Playfair+Display:wght@400;700&family=Special+Elite&display=swap');
 
 /*
 =================================================================
---- 2. patch 'pataphysique : forcer les minuscules (comme avant) ---
+--- 2. patch 'pataphysique : forcer les minuscules (stable) ---
 =================================================================
 */
 
-/* 1. forcer les liens du menu principal (la navbar) en minuscules */
+/* 1. forcer les liens du menu principal (la navbar) */
 .navbar-nav .nav-link {
   text-transform: lowercase !important;
 }
 
-/* 2. forcer les titres et sous-titres des sections en minuscules */
+/* 2. forcer les titres et sous-titres des sections */
 .section-heading h2,
 .section-heading p {
   text-transform: lowercase !important;
 }
 
-/* 3. forcer le titre du bloc biographie (ton nom "admin") */
+/* 3. forcer le titre du bloc biographie ("admin") */
 .resume-biography h1 {
   text-transform: lowercase !important;
 }
@@ -40,4 +39,59 @@ h3.section-title {
 /* 5. Forcer les titres des articles (H1) */
 .article-title {
   text-transform: lowercase !important;
+}
+
+/*
+=================================================================
+--- 3. patch 'obsidian' : couleurs du contenu (markdown) ---
+=================================================================
+*/
+
+/* Hugo Blox enveloppe le contenu de vos articles dans la classe '.prose'.
+  Nous ciblons donc spécifiquement à l'intérieur de cette classe.
+*/
+
+/* --- TITRES (Dégradé Bleu) --- */
+/* Cible les titres H2, H3, etc. DANS vos articles */
+.prose h2,
+.prose h3,
+.prose h4,
+.prose h5,
+.prose h6 {
+  background-image: linear-gradient(to right, #38bdf8, #67e8f9);
+  background-clip: text;
+  -webkit-background-clip: text; /* Compatibilité Safari */
+  color: transparent !important; /* !important pour surcharger le thème */
+  text-transform: lowercase !important; /* On combine avec le patch minuscule */
+}
+
+/* --- ITALIQUE (Vert) --- */
+.prose em {
+  color: #a6e22e; /* Vert 'Obsidian' */
+  font-style: italic; /* Maintenir le style */
+}
+
+/* --- GRAS (Orange) --- */
+.prose strong {
+  color: #fd971f; /* Orange 'Obsidian' */
+  font-weight: 700; /* Maintenir le style */
+}
+
+/* --- GRAS ET ITALIQUE (Violet) --- */
+.prose strong em,
+.prose em strong {
+  color: #e879f9 !important; /* Violet stylé 'Obsidian' */
+  font-style: italic;
+  font-weight: 700;
+}
+
+/* --- BONUS : Liens de contenu (Bleu 'Obsidian') --- */
+.prose a {
+  color: #80bfff;
+}
+
+/* --- BONUS : Code (Rose 'Obsidian') --- */
+/* Cible le code 'inline' (pas les blocs de code) */
+.prose code:not(pre > code) {
+  color: #f92672;
 }
