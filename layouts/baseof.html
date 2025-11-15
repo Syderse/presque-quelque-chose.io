@@ -11,39 +11,47 @@
 
   <style>
     /*
-     * Objectif : Italique en vert
-     * Sélecteur :.prose em
+     * ✅ NOUVEAU : Curseur 'Pataphysique
+     * Cible: <html> (tout le site)
+     */
+    html {
+      /*
+       * Astuce : Ceci utilise un "Data URI" SVG pour forcer
+       * l'emoji 🌀 comme curseur. Aucun fichier image requis !
+       * Une "solution imaginaire" qui fonctionne.
+       */
+      cursor: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" width="32" height="32" style="font-size: 24px;"><text y="24">🌀</text></svg>'), auto;
+    }
+
+    /*
+     * Objectif : Italique en vert (Inchangé)
      */
     .prose em {
-      color: #008000; /* Vert naturel */
+      color: #008000;
       font-style: italic;
     }
 
     /*
-     * Objectif : Gras en blanc pur lumineux
-     * Sélecteur :.prose strong
-     * Note : Cible le mode sombre (.dark)
+     * Objectif : Gras en blanc pur (Inchangé)
      */
     .dark .prose strong {
-      color: #FFFFFF; /* Blanc pur */
+      color: #FFFFFF;
       font-weight: 700;
       text-shadow: 0 0 8px rgba(255, 255, 255, 0.7);
     }
 
     /*
-     * Objectif : Gras + Italique en violet
-     * Sélecteurs :.prose strong em,.prose em strong
+     * Objectif : Gras + Italique en violet (Inchangé)
      */
     .prose strong em,
     .prose em strong {
-      color: #EE82EE; /* "violet" */
+      color: #EE82EE;
       font-style: italic;
       font-weight: 700;
     }
 
     /*
-     * Objectif : Titres en dégradé de bleu
-     * Sélecteurs :.prose h1,.prose h2,...
+     * Objectif : Titres en dégradé de bleu (Inchangé)
      */
     .prose h1,
     .prose h2,
@@ -51,44 +59,53 @@
     .prose h4,
     .prose h5,
     .prose h6 {
-      /* 1. Définir le dégradé */
       background-image: linear-gradient(
         45deg,
-        #0055a4, /* Un bleu français profond */
-        #00BFFF  /* Bleu ciel (DeepSkyBlue) */
+        #0055a4,
+        #00BFFF
       );
-
-      /* 2. Clipper le fond au texte */
       -webkit-background-clip: text;
       background-clip: text;
-
-      /* 3. Rendre la couleur du texte transparente */
       -webkit-text-fill-color: transparent;
       color: transparent;
-
-      /* 4. (Facultatif) */
       display: inline-block;
     }
 
     /*
-     * Objectif : Blocs de citation en orange
-     * Sélecteur :.prose blockquote
+     * ✅ MODIFIÉ : Blocs de citation (v2.0 - Spirale)
+     * Remplace la v1.0 (bordure orange)
      */
     .prose blockquote {
-      border-left: 5px solid #fd7e14;
+      /* 1. Annuler la bordure orange */
+      border-left: none !important; /* Nécessaire pour battre le style de base */
+      
+      /* 2. Garder le fond et la marge */
       background-color: rgba(253, 126, 20, 0.05);
-      padding: 15px 20px;
       margin: 0 0 20px 0;
+
+      /* 3. Préparer le conteneur pour la spirale */
+      position: relative;
+      padding: 15px 20px 15px 50px; /* Augmenter le padding GAUCHE */
     }
 
+    /* 4. Dessiner la spirale */
+    .prose blockquote::before {
+      content: '🌀';
+      position: absolute;
+      left: 15px; /* Placer la spirale dans le nouveau padding */
+      top: 15px; /* Aligner en haut */
+      font-size: 24px;
+      color: #fd7e14; /* La couleur orange originale */
+    }
+
+    /* 5. Le texte de la citation (inchangé) */
     .prose blockquote p {
       color: #E67E22;
       margin-bottom: 0;
     }
 
     /*
-     * Objectif : Blocs de code en orange
-     * Sélecteur :.prose .highlight
+     * Objectif : Blocs de code en orange (Inchangé)
      */
     .prose .highlight {
       background-color: rgba(253, 126, 20, 0.05);
@@ -97,9 +114,6 @@
       padding: 1em;
     }
 
-    /*
-     *!! IMPORTANT : Neutralise le fond du <pre> de Chroma
-     */
     .prose .highlight pre {
       background-color: transparent !important;
       padding: 0;
