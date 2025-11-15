@@ -11,6 +11,9 @@
   "pnpm": {
     "allowedBuildScripts": [
       "@parcel/watcher"
+    ],
+    "onlyBuiltDependencies": [
+      "@parcel/watcher"
     ]
   },
   "dependencies": {
