@@ -21,7 +21,6 @@ sections:
   - block: markdown
     id: manifeste
     content:
-      title: "ceci n'est (presque) pas un site"
       text: |
         > _"la 'pataphysique est la science des solutions imaginaires, qui accorde symboliquement aux linéaments les propriétés des objets décrits par leur virtualité."_ 
         >
@@ -29,7 +28,7 @@ sections:
         
         <br>
         
-        **bienvenue.** cet espace est un laboratoire pour les exceptions, un catalogue d'inoccupations, et une humble tentative de défier le minimalisme ambiant.
+        ***une certaine science du particulier***
     design:
       # On centre le texte pour un effet "manifeste"
       css_style: 'text-align: center;'
@@ -42,10 +41,9 @@ sections:
   - block: features
     id: principes
     content:
-      title: "quelques principes directeurs"
       items:
         - name: 'la spirale'
-          description: 'pour la récurrence et le vertige.'
+          description: '?'
           icon: '🌀' 
           icon_pack: 'emoji' # On dit à Hugo Blox que c'est un emoji
         - name: 'la fourmi'
