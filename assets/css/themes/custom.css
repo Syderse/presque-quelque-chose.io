@@ -1,16 +1,10 @@
 /*
-  SOLUTION RADICALE v16.0 - NEUTRALISATION
-  Toutes les règles de couleur ont été déplacées
-  dans le "hook" HTML pour gagner la guerre de la cascade.
-  Seul l'import des polices reste ici.
-*/
+ * ==================================================
+ * FICHIER DE THÈME POUR HUGO BLOX (TAILWIND)
+ * Emplacement : /assets/css/themes/custom.css
+ * Rôle : Importer les polices Google.
+ * ==================================================
+ */
 
 /* 1. Importer manuellement les polices (stable) */
 @import url('https://fonts.googleapis.com/css2?family=EB+Garamond:ital,wght@0,400;0,700;1,400&family=Playfair+Display:wght@400;700&family=Special+Elite&display=swap');
-
-/*
-=================================================================
---- 2. patch 'obsidian' : (SUPPRIMÉ D'ICI) ---
---- 3. patch 'pataphysique' : (SUPPRIMÉ D'ICI) ---
-=================================================================
-*/

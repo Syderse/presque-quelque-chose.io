@@ -1,0 +1,102 @@
+/*
+ * ==================================================
+ * FICHIER DE STYLES PERSONNALISÉS POUR HUGO BLOX (TAILWIND)
+ * Emplacement : /assets/css/custom.css
+ * ==================================================
+ */
+
+/*
+ * Objectif : Italique en vert
+ * Sélecteur :.article-body em
+ */
+.article-body em {
+  color: #008000; /* Vert naturel */
+  font-style: italic;
+}
+
+/*
+ * Objectif : Gras en blanc pur lumineux
+ * Sélecteur :.article-body strong
+ * Note : Suppose un fond sombre.
+ */
+.article-body strong {
+  color: #FFFFFF; /* Blanc pur */
+  font-weight: 700; /* Valeur numérique pour 'bold' */
+  text-shadow: 0 0 8px rgba(255, 255, 255, 0.7);
+}
+
+/*
+ * Objectif : Gras + Italique en violet
+ * Sélecteurs :.article-body strong em,.article-body em strong
+ */
+.article-body strong em,
+.article-body em strong {
+  color: #EE82EE; /* "violet" */
+  font-style: italic;
+  font-weight: 700;
+}
+
+/*
+ * Objectif : Titres en dégradé de bleu
+ * Sélecteurs :.article-body h1,.article-body h2,...
+ */
+.article-body h1,
+.article-body h2,
+.article-body h3,
+.article-body h4,
+.article-body h5,
+.article-body h6 {
+  /* 1. Définir le dégradé comme image de fond */
+  background-image: linear-gradient(
+    45deg,
+    #0055a4, /* Un bleu français profond */
+    #00BFFF  /* Bleu ciel (DeepSkyBlue) */
+  );
+
+  /* 2. Clipper le fond à la forme du texte */
+  -webkit-background-clip: text;
+  background-clip: text;
+
+  /* 3. Rendre la couleur du texte transparente */
+  -webkit-text-fill-color: transparent;
+  color: transparent;
+
+  /* 4. (Facultatif) */
+  display: inline-block;
+}
+
+/*
+ * Objectif : Blocs de citation en orange
+ * Sélecteur :.article-body blockquote
+ */
+.article-body blockquote {
+  border-left: 5px solid #fd7e14;
+  background-color: rgba(253, 126, 20, 0.05);
+  padding: 15px 20px;
+  margin: 0 0 20px 0;
+}
+
+.article-body blockquote p {
+  color: #E67E22;
+  margin-bottom: 0;
+}
+
+/*
+ * Objectif : Blocs de code en orange
+ * Sélecteur :.article-body.highlight
+ */
+.article-body .highlight {
+  background-color: rgba(253, 126, 20, 0.05);
+  border: 1px solid #fd7e14;
+  border-radius: 5px;
+  padding: 1em;
+}
+
+/*
+ *!! IMPORTANT : Neutralise le fond du <pre> de Chroma
+ */
+.article-body .highlight pre {
+  background-color: transparent !important;
+  padding: 0;
+  margin: 0;
+}
