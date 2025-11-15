@@ -1,7 +1,8 @@
 /*
-  SOLUTION RADICALE v3.3 - GREFFE OBSIDIAN (CORRIGÉE)
-  Combine la base stable (v3.1) avec le patch
-  de couleur pour le contenu.
+  SOLUTION RADICALE v3.5 - PRIORITÉ ABSOLUE
+  1. Import Polices
+  2. Patch 'Obsidian' (Corrigé avec !important)
+  3. Patch 'Pataphysique' (Minuscules + Titres en Bleu)
 */
 
 /* 1. Importer manuellement les polices (stable) */
@@ -9,72 +10,22 @@
 
 /*
 =================================================================
---- 2. patch 'pataphysique : forcer les minuscules (stable) ---
+--- 2. patch 'obsidian' : couleurs du contenu (markdown) ---
 =================================================================
 */
 
-/* 1. forcer les liens du menu principal (la navbar) */
-.navbar-nav .nav-link {
-  text-transform: lowercase !important;
-}
-
-/* 2. forcer les titres et sous-titres des sections */
-.section-heading h2,
-.section-heading p {
-  text-transform: lowercase !important;
-}
-
-/* 3. forcer le titre du bloc biographie ("admin") */
-.resume-biography h1 {
-  text-transform: lowercase !important;
-}
-
-/* 4. une règle "au cas où" pour d'autres titres de blocs */
-h1.section-title,
-h2.section-title,
-h3.section-title {
-  text-transform: lowercase !important;
-}
-
-/* 5. Forcer les titres des articles (H1) */
-.article-title {
-  text-transform: lowercase !important;
-}
-
-/*
-=================================================================
---- 3. patch 'obsidian' : couleurs du contenu (markdown) ---
-=================================================================
-*/
-
-/* Hugo Blox enveloppe le contenu de vos articles dans la classe '.prose'.
-  Nous ciblons donc spécifiquement à l'intérieur de cette classe.
-*/
-
-/* --- TITRES (Dégradé Bleu) --- */
-/* Cible les titres H2, H3, etc. DANS vos articles */
-.prose h2,
-.prose h3,
-.prose h4,
-.prose h5,
-.prose h6 {
-  background-image: linear-gradient(to right, #38bdf8, #67e8f9);
-  background-clip: text;
-  -webkit-background-clip: text; /* Compatibilité Safari */
-  color: transparent !important; /* !important pour surcharger le thème */
-  text-transform: lowercase !important; /* On combine avec le patch minuscule */
-}
+/* Cible les éléments DANS le corps de l'article (.prose) */
 
 /* --- ITALIQUE (Vert) --- */
 .prose em {
-  color: #a6e22e; /* Vert 'Obsidian' */
-  font-style: italic; /* Maintenir le style */
+  color: #a6e22e !important; /* Vert 'Obsidian' - AJOUT DE !IMPORTANT */
+  font-style: italic;
 }
 
 /* --- GRAS (Orange) --- */
 .prose strong {
-  color: #fd971f; /* Orange 'Obsidian' */
-  font-weight: 700; /* Maintenir le style */
+  color: #fd971f !important; /* Orange 'Obsidian' - AJOUT DE !IMPORTANT */
+  font-weight: 700;
 }
 
 /* --- GRAS ET ITALIQUE (Violet) --- */
@@ -87,11 +38,36 @@ h3.section-title {
 
 /* --- BONUS : Liens de contenu (Bleu 'Obsidian') --- */
 .prose a {
-  color: #80bfff;
+  color: #80bfff !important; /* AJOUT DE !IMPORTANT */
 }
 
 /* --- BONUS : Code (Rose 'Obsidian') --- */
-/* Cible le code 'inline' (pas les blocs de code) */
 .prose code:not(pre > code) {
-  color: #f92672;
+  color: #f92672 !important; /* AJOUT DE !IMPORTANT */
+}
+
+/*
+=================================================================
+--- 3. patch 'pataphysique' (minuscules + titres en bleu) ---
+=================================================================
+*/
+
+/* --- Règle 3a : Titres (Minuscules + Dégradé Bleu) --- */
+/* (Ceci fonctionnait déjà car il contient !important) */
+h1.article-title,
+.prose h1, .prose h2, .prose h3, .prose h4, .prose h5, .prose h6,
+h1.section-title, h2.section-title, h3.section-title,
+.section-heading h2,
+.resume-biography h1 {
+  background-image: linear-gradient(to right, #38bdf8, #67e8f9);
+  background-clip: text;
+  -webkit-background-clip: text;
+  color: transparent !important;
+  text-transform: lowercase !important; 
+}
+
+/* --- Règle 3b : Autres Minuscules (non-titres) --- */
+.navbar-nav .nav-link,
+.section-heading p {
+  text-transform: lowercase !important;
 }
