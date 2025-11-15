@@ -43,6 +43,7 @@ removePathAccents: true
 ############################
 
 build:
+  _merge: deep 
   writeStats: true
 enableGitInfo: false
 summaryLength: 30
