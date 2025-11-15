@@ -18,3 +18,32 @@
   --hb-color-dark-background: #2a2a2a; /* Un fond encore plus sombre (optionnel) */
   --hb-color-border: #5a5a5a;
 }
+/*
+=================================================================
+--- patch forcer les minuscules partout ---
+=================================================================
+*/
+
+/* 1. forcer les liens du menu principal (la navbar) en minuscules */
+.navbar-nav .nav-link {
+  text-transform: lowercase !important;
+}
+
+/* 2. forcer les titres et sous-titres des sections en minuscules */
+/* (ceci cible le "almanach des inoccupations...") */
+.section-heading h2,
+.section-heading p {
+  text-transform: lowercase !important;
+}
+
+/* 3. forcer le titre du bloc biographie (ton nom "admin") */
+.resume-biography h1 {
+    text-transform: lowercase !important;
+}
+
+/* 4. une règle "au cas où" pour d'autres titres de blocs */
+h1.section-title,
+h2.section-title,
+h3.section-title {
+    text-transform: lowercase !important;
+}
