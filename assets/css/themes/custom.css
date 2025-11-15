@@ -1,18 +1,16 @@
 /*
-  SOLUTION RADICALE - ÉTAPE 1 : IMPORTATION MANUELLE DES POLICES
-  Nous contournons params.yaml et le plugin.
+  SOLUTION RADICALE v3 - CSS SIMPLIFIÉ
+  Les variables de couleur (:root) ont été supprimées.
+  Elles sont maintenant générées par tailwind.config.js.
+  Ce fichier ne gère plus que les imports et les patchs.
 */
+
+/* 1. Importer manuellement les polices (comme avant) */
 @import url('https://fonts.googleapis.com/css2?family=EB+Garamond:ital,wght@0,400;0,700;1,400&family=Playfair+Display:wght@400;700&family=Special+Elite&display=swap');
 
 /*
-  Les blocs @theme {...} ont été supprimés.
-  L'erreur "Unknown at rule @theme" est donc résolue.
-  Les couleurs sont maintenant câblées directement dans tailwind.config.js.
-*/
-
-/*
 =================================================================
---- patch 'pataphysique : forcer les minuscules partout ---
+--- 2. patch 'pataphysique : forcer les minuscules (comme avant) ---
 =================================================================
 */
 
@@ -22,7 +20,6 @@
 }
 
 /* 2. forcer les titres et sous-titres des sections en minuscules */
-/* (ceci cible le "almanach des inoccupations...") */
 .section-heading h2,
 .section-heading p {
   text-transform: lowercase !important;
@@ -37,5 +34,10 @@
 h1.section-title,
 h2.section-title,
 h3.section-title {
+  text-transform: lowercase !important;
+}
+
+/* 5. Forcer les titres des articles (H1) */
+.article-title {
   text-transform: lowercase !important;
 }
