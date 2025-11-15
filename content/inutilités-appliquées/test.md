@@ -6,7 +6,7 @@ summary: "Ceci est le test v2 pour vérifier la solution radicale. il teste à l
 
 # CECI EST UN TITRE H1 EN MAJUSCULES
 
-Si le patch `custom.css` fonctionne, ce titre doit apparaître en **minuscules** et en police **Playfair Display**.
+Si le patch `custom.css` fonctionne, ce titre doit apparaître en ***minuscules*** et en police **Playfair Display**.
 
 ## CECI EST UN TITRE H2, ÉGALEMENT EN PLAYFAIR
 

@@ -1,8 +1,8 @@
 /*
-  SOLUTION RADICALE v3.2 - PATCH 'PATAPHYSIQUE-OBSIDIAN'
-  Ce fichier gère les polices, les patchs minuscules,
-  et maintenant les couleurs de contenu style Obsidian.
-  Les couleurs du THÈME (laiton, etc.) sont dans tailwind.config.js.
+  TEST DE STABILISATION (RETOUR à v3.1)
+  Nous retirons temporairement le patch 'Obsidian' pour
+  confirmer qu'il est la source de l'échec.
+  Les couleurs LAITON/PARCHEMIN doivent revenir.
 */
 
 /* 1. Importer manuellement les polices (comme avant) */
@@ -10,79 +10,34 @@
 
 /*
 =================================================================
---- 2. patch 'pataphysique : forcer les minuscules ---
-(Les règles pour les titres sont maintenant dans la section 3)
+--- 2. patch 'pataphysique : forcer les minuscules (comme avant) ---
 =================================================================
 */
 
-/* Liens de navigation */
+/* 1. forcer les liens du menu principal (la navbar) en minuscules */
 .navbar-nav .nav-link {
   text-transform: lowercase !important;
 }
 
-/* Titres de section (ex: "almanach") */
+/* 2. forcer les titres et sous-titres des sections en minuscules */
 .section-heading h2,
 .section-heading p {
   text-transform: lowercase !important;
 }
 
-/* Titre de la biographie ("admin") */
+/* 3. forcer le titre du bloc biographie (ton nom "admin") */
 .resume-biography h1 {
   text-transform: lowercase !important;
 }
 
-/*
-=================================================================
---- 3. patch 'obsidian' : couleurs du contenu (markdown) ---
-=================================================================
-*/
-
-/* --- TITRES (Dégradé Bleu + Minuscules) --- */
-/* Cible les titres dans le contenu .prose ET les titres de blocs */
-.prose h1, .prose h2, .prose h3, .prose h4, .prose h5, .prose h6,
-h1.article-title, h1.section-title, h2.section-title, h3.section-title {
-  /* Le dégradé de bleu stylé */
-  background-image: linear-gradient(to right, #38bdf8, #67e8f9);
-  background-clip: text;
-  -webkit-background-clip: text; /* Compatibilité Safari */
-  color: transparent;
-  
-  /* Votre patch minuscule, combiné ici */
-  text-transform: lowercase !important; 
+/* 4. une règle "au cas où" pour d'autres titres de blocs */
+h1.section-title,
+h2.section-title,
+h3.section-title {
+  text-transform: lowercase !important;
 }
 
-/* --- ITALIQUE (Vert) --- */
-/* Cible 'em' dans le contenu .prose (articles de blog, etc.) */
-.prose em, em {
-  color: #a6e22e; /* Vert 'Obsidian' */
-  font-style: italic; /* Maintenir le style */
-  text-shadow: 0 0 2px rgba(166, 226, 46, 0.3); /* Léger halo */
-}
-
-/* --- GRAS (Orange) --- */
-/* Cible 'strong' dans le contenu .prose */
-.prose strong, strong {
-  color: #fd971f; /* Orange 'Obsidian' */
-  font-weight: 700; /* Maintenir le style */
-  text-shadow: 0 0 2px rgba(253, 151, 31, 0.3); /* Léger halo */
-}
-
-/* --- GRAS ET ITALIQUE (Violet) --- */
-/* Cible les deux en même temps */
-.prose strong em, .prose em strong,
-strong em, em strong {
-  color: #e879f9; /* Violet stylé 'Obsidian' */
-  font-style: italic;
-  font-weight: 700;
-  text-shadow: 0 0 3px rgba(232, 121, 249, 0.4); /* Léger halo */
-}
-
-/* --- BONUS : Liens de contenu (Bleu 'Obsidian') --- */
-.prose a {
-  color: #80bfff; /* Un bleu lien plus vibrant */
-}
-
-/* --- BONUS : Code (Rose 'Obsidian') --- */
-.prose code {
-  color: #f92672; /* Un rose/rouge pour le code */
+/* 5. Forcer les titres des articles (H1) */
+.article-title {
+  text-transform: lowercase !important;
 }
