@@ -1,16 +1,14 @@
-/** @type {import('tailwindcss').Config} */
-
 /*
-  SOLUTION RADICALE v3.1 - L'UNIFICATION (CORRIGÉE)
-  Correction des erreurs de syntaxe (suppression des guillemets
-  autour des noms de variables 'pataphysiqueColors).
+  SOLUTION RADICALE v4.0 - LA CORRUPTION DU PLUGIN
+  Nous cessons de nous battre avec custom.css et injectons
+  nos couleurs 'Obsidian' directement dans le plugin @tailwindcss/typography.
 */
 
-// 1. Importer le 'plugin' de base de tailwind
+// 1. Importer les 'plugins' de base
 const plugin = require('tailwindcss/plugin');
+const typography = require('@tailwindcss/typography'); // <-- AJOUTÉ
 
-// 2. Définir nos couleurs 'pataphysiques
-// ERREUR CORRIGÉE : pas de guillemets autour de pataphysiqueColors
+// 2. Définir nos couleurs 'pataphysiques (inchangé)
 const pataphysiqueColors = {
   // Fonds & Bordures (Mode Clair)
   background: '#fbf5e9',
@@ -48,19 +46,12 @@ const pataphysiqueColors = {
   },
 };
 
-// 3. Définir nos couleurs pour le mode sombre
-// ERREUR CORRIGÉE : pas de guillemets autour de pataphysiqueDarkColors
+// 3. Définir nos couleurs pour le mode sombre (inchangé)
 const pataphysiqueDarkColors = {
-  // Fonds & Bordures (Mode Sombre)
   background: '#3a3a3a',
   'dark-background': '#fbf5e9',
   border: '#5a5a5a',
-
-  // Palette Primaire Sombre (Laiton - inchangée)
-  // ERREUR CORRIGÉE : référence à la variable sans guillemets
   primary: pataphysiqueColors.primary,
-
-  // Palette Secondaire Sombre (Rouge clair)
   secondary: {
     50: '#fefafa',
     100: '#fcf4f4',
@@ -94,15 +85,47 @@ module.exports = {
         code: ['Special Elite', 'monospace'],
       },
       // --- CÂBLAGE MANUEL DES COULEURS (pour les classes tailwind) ---
-      // ERREUR CORRIGÉE : référence à la variable sans guillemets
       colors: pataphysiqueColors,
+      
+      // =================================================================
+      // --- DÉBUT DE LA CORRUPTION 'OBSIDIAN' (v4.0) ---
+      // =================================================================
+      // On dit au plugin de typographie quelles couleurs utiliser
+      // pour les éléments .prose (le markdown)
+      typography: ({ theme }) => ({
+        DEFAULT: {
+          css: {
+            // GRAS (Orange)
+            '--tw-prose-bold': '#fd971f',
+            // ITALIQUE (Vert)
+            '--tw-prose-italic': '#a6e22e',
+            // GRAS & ITALIQUE (Violet)
+            // Note : le plugin ne gère pas strong+em, on force
+            'strong em': { color: '#e879f9' },
+            'em strong': { color: '#e879f9' },
+            // LIENS (Bleu)
+            '--tw-prose-links': '#80bfff',
+            // CODE INLINE (Rose)
+            '--tw-prose-code': '#f92672',
+            // On s'assure que les couleurs sombres sont héritées
+            // (le plugin utilise des variables --tw-prose-invert-...)
+            '--tw-prose-invert-bold': '#fd971f',
+            '--tw-prose-invert-italic': '#a6e22e',
+            '--tw-prose-invert-links': '#80bfff',
+            '--tw-prose-invert-code': '#f92672',
+          },
+        },
+      }),
+      // =================================================================
+      // --- FIN DE LA CORRUPTION 'OBSIDIAN' ---
+      // =================================================================
     },
   },
 
-  // 5. LE NOUVEAU PLUGIN UNIFICATEUR
+  // 5. LE PLUGIN UNIFICATEUR (couleurs) ET LE PLUGIN TYPO (corrompu)
   plugins: [
+    // Plugin pour les variables CSS (inchangé)
     plugin(function ({ addBase, theme }) {
-      // Fonction pour aplatir les objets de couleur (ex: primary.50 -> --color-primary-50)
       function extractColorVariables(colorObject, colorGroup = '') {
         return Object.keys(colorObject).reduce((vars, colorKey) => {
           const value = colorObject[colorKey];
@@ -115,17 +138,15 @@ module.exports = {
           return vars;
         }, {});
       }
-
-      // Générer les variables pour le mode clair
       addBase({
         ':root': extractColorVariables(theme('colors')),
       });
-
-      // Générer les variables pour le mode sombre
       addBase({
-        // ERREUR CORRIGÉE : référence à la variable sans guillemets
         "[data-theme='dark']": extractColorVariables(pataphysiqueDarkColors),
       });
     }),
+    
+    // Plugin de typographie (maintenant activé et configuré)
+    typography, // <-- AJOUTÉ
   ],
 };

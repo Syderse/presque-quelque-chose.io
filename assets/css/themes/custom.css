@@ -1,8 +1,8 @@
 /*
-  SOLUTION RADICALE v3.5 - PRIORITÉ ABSOLUE
-  1. Import Polices
-  2. Patch 'Obsidian' (Corrigé avec !important)
-  3. Patch 'Pataphysique' (Minuscules + Titres en Bleu)
+  SOLUTION RADICALE v4.0 - LE NETTOYAGE
+  1. Import Polices (inchangé)
+  2. Patch 'Obsidian' (SUPPRIMÉ - Déménagé dans tailwind.config.js)
+  3. Patch 'Pataphysique' (Titres + Minuscules)
 */
 
 /* 1. Importer manuellement les polices (stable) */
@@ -10,41 +10,17 @@
 
 /*
 =================================================================
---- 2. patch 'obsidian' : couleurs du contenu (markdown) ---
+--- 2. patch 'obsidian' : (SUPPRIMÉ) ---
+=================================================================
+
+  Les règles pour .prose em, .prose strong, .prose a, 
+  et .prose code ont été retirées d'ici.
+  Elles sont maintenant gérées par le plugin 
+  @tailwindcss/typography dans tailwind.config.js
+
 =================================================================
 */
 
-/* Cible les éléments DANS le corps de l'article (.prose) */
-
-/* --- ITALIQUE (Vert) --- */
-.prose em {
-  color: #a6e22e !important; /* Vert 'Obsidian' - AJOUT DE !IMPORTANT */
-  font-style: italic;
-}
-
-/* --- GRAS (Orange) --- */
-.prose strong {
-  color: #fd971f !important; /* Orange 'Obsidian' - AJOUT DE !IMPORTANT */
-  font-weight: 700;
-}
-
-/* --- GRAS ET ITALIQUE (Violet) --- */
-.prose strong em,
-.prose em strong {
-  color: #e879f9 !important; /* Violet stylé 'Obsidian' */
-  font-style: italic;
-  font-weight: 700;
-}
-
-/* --- BONUS : Liens de contenu (Bleu 'Obsidian') --- */
-.prose a {
-  color: #80bfff !important; /* AJOUT DE !IMPORTANT */
-}
-
-/* --- BONUS : Code (Rose 'Obsidian') --- */
-.prose code:not(pre > code) {
-  color: #f92672 !important; /* AJOUT DE !IMPORTANT */
-}
 
 /*
 =================================================================
@@ -53,7 +29,7 @@
 */
 
 /* --- Règle 3a : Titres (Minuscules + Dégradé Bleu) --- */
-/* (Ceci fonctionnait déjà car il contient !important) */
+/* (Ceci fonctionne et reste ici) */
 h1.article-title,
 .prose h1, .prose h2, .prose h3, .prose h4, .prose h5, .prose h6,
 h1.section-title, h2.section-title, h3.section-title,
@@ -67,6 +43,7 @@ h1.section-title, h2.section-title, h3.section-title,
 }
 
 /* --- Règle 3b : Autres Minuscules (non-titres) --- */
+/* (Ceci fonctionne et reste ici) */
 .navbar-nav .nav-link,
 .section-heading p {
   text-transform: lowercase !important;
