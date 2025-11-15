@@ -1,38 +1,15 @@
 <style>
   /*
-   * Objectif : Italique en vert
-   * Sélecteur :.prose em
+   * ==================================================
+   * HOOK CSS 'PATAPHYSIQUE (Simplifié)
+   * Rôle : Gérer les exceptions que le plugin 
+   * Tailwind Typography ne peut pas gérer.
+   * ==================================================
    */
-  .prose em {
-    color: #008000; /* Vert naturel */
-    font-style: italic;
-  }
-
-  /*
-   * Objectif : Gras en blanc pur lumineux
-   * Sélecteur :.prose strong
-   * Note : Suppose un fond sombre.
-   */
-  .prose strong {
-    color: #FFFFFF; /* Blanc pur */
-    font-weight: 700;
-    text-shadow: 0 0 8px rgba(255, 255, 255, 0.7);
-  }
-
-  /*
-   * Objectif : Gras + Italique en violet
-   * Sélecteurs :.prose strong em,.prose em strong
-   */
-  .prose strong em,
-  .prose em strong {
-    color: #EE82EE; /* "violet" */
-    font-style: italic;
-    font-weight: 700;
-  }
 
   /*
    * Objectif : Titres en dégradé de bleu
-   * Sélecteurs :.prose h1,.prose h2,...
+   * Raison : Le plugin typography ne gère pas les dégradés.
    */
   .prose h1,
   .prose h2,
@@ -40,58 +17,76 @@
   .prose h4,
   .prose h5,
   .prose h6 {
-    /* 1. Définir le dégradé comme image de fond */
+    /* 1. Définir le dégradé */
     background-image: linear-gradient(
       45deg,
-      #0055a4, /* Un bleu français profond */
-      #00BFFF  /* Bleu ciel (DeepSkyBlue) */
+      #0055a4, /* Bleu français */
+      #00bfff /* Bleu ciel */
     );
 
-    /* 2. Clipper le fond à la forme du texte */
+    /* 2. Clipper le fond au texte */
     -webkit-background-clip: text;
     background-clip: text;
 
-    /* 3. Rendre la couleur du texte transparente */
+    /* 3. Rendre le texte transparent */
     -webkit-text-fill-color: transparent;
     color: transparent;
 
-    /* 4. (Facultatif) */
+    /* 4. Correction pour l'affichage */
     display: inline-block;
   }
 
   /*
-   * Objectif : Blocs de citation en orange
-   * Sélecteur :.prose blockquote
+   * Objectif : Gras en blanc pur lumineux
+   * Raison : Style 'pataphysique' personnalisé
    */
-  .prose blockquote {
-    border-left: 5px solid #fd7e14;
-    background-color: rgba(253, 126, 20, 0.05);
-    padding: 15px 20px;
-    margin: 0 0 20px 0;
-  }
-
-  .prose blockquote p {
-    color: #E67E22;
-    margin-bottom: 0;
+  .dark .prose strong {
+    color: #ffffff; /* Blanc pur */
+    font-weight: 700;
+    text-shadow: 0 0 8px rgba(255, 255, 255, 0.7);
   }
 
   /*
-   * Objectif : Blocs de code en orange
-   * Sélecteur :.prose .highlight
+   * Objectif : Gras + Italique en violet
+   * Raison : Style 'pataphysique' personnalisé
    */
-  .prose .highlight {
-    background-color: rgba(253, 126, 20, 0.05);
-    border: 1px solid #fd7e14;
-    border-radius: 5px;
-    padding: 1em;
+  .prose strong em,
+  .prose em strong {
+    color: #ee82ee; /* "violet" */
+    font-style: italic;
+    font-weight: 700;
   }
 
   /*
-   *!! IMPORTANT : Neutralise le fond du <pre> de Chroma
+   * --- STYLES SUPPRIMÉS D'ICI ---
+   * 'em', 'blockquote', et 'pre' sont maintenant
+   * gérés par tailwind.config.js.
    */
-  .prose .highlight pre {
-    background-color: transparent !important;
-    padding: 0;
-    margin: 0;
-  }
 </style>
+
+/* Forcer les minuscules sur les éléments structurels */
+.navbar-brand a, /* Logo du site */
+.nav-link, /* Liens de navigation */
+.prose h1, /* Titres de page */
+.prose h2,
+.prose h3 {
+  text-transform: lowercase;
+}
+
+/* Remplacer la bordure de citation par une spirale */
+.prose blockquote {
+  border-left: none !important; /* Annule le style tailwind */
+  position: relative;
+  padding-left: 40px; /* Faire de la place pour la spirale */
+}
+
+/* Dessiner la spirale avec du CSS */
+.prose blockquote::before {
+  content: '🌀'; /* Ou une icône SVG, ou un caractère unicode */
+  position: absolute;
+  left: 0;
+  top: 15px; /* Ajustez au besoin */
+  font-size: 24px;
+  color: #fd7e14; /* Orange 'pataphysique */
+}
+

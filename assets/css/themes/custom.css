@@ -10,6 +10,6 @@
 @import url('https://fonts.googleapis.com/css2?family=EB+Garamond:ital,wght@0,400;0,700;1,400&family=Playfair+Display:wght@400;700&family=Special+Elite&display=swap');
 
 /*
- * NOTE : Tous les autres styles ont été déplacés dans le
- * hook HTML pour contourner la purge de Tailwind.
+ * NOTE : Tous les autres styles sont gérés par
+ * tailwind.config.js ou le hook custom.html.
  */
