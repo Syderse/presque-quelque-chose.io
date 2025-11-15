@@ -1,8 +1,8 @@
 /*
  * ==================================================
- * FICHIER DE THÈME ET STYLES 'PATAPHYSIQUES UNIFIÉS
+ * FICHIER DE THÈME 'PATAPHYSIQUE
  * Emplacement : /assets/css/themes/custom.css
- * Rôle : 1. Importer les polices. 2. CIBLER .PROSE
+ * Rôle : 1. Importer les polices Google.
  * ==================================================
  */
 
@@ -10,105 +10,6 @@
 @import url('https://fonts.googleapis.com/css2?family=EB+Garamond:ital,wght@0,400;0,700;1,400&family=Playfair+Display:wght@400;700&family=Special+Elite&display=swap');
 
 /*
- * ==================================================
- * 2. STYLES 'PATAPHYSIQUES (CIBLANT .PROSE DANS LE CALQUE 'UTILITIES')
- * ==================================================
+ * NOTE : Tous les autres styles ont été déplacés dans le
+ * hook HTML pour contourner la purge de Tailwind.
  */
-
-@layer utilities {
-  /*
-   * Objectif : Italique en vert
-   * Sélecteur :.prose em
-   */
-  .prose em {
-    color: #008000; /* Vert naturel */
-    font-style: italic;
-  }
-
-  /*
-   * Objectif : Gras en blanc pur lumineux
-   * Sélecteur :.prose strong
-   * Note : Suppose un fond sombre.
-   */
-  .prose strong {
-    color: #FFFFFF; /* Blanc pur */
-    font-weight: 700;
-    text-shadow: 0 0 8px rgba(255, 255, 255, 0.7);
-  }
-
-  /*
-   * Objectif : Gras + Italique en violet
-   * Sélecteurs :.prose strong em,.prose em strong
-   */
-  .prose strong em,
-  .prose em strong {
-    color: #EE82EE; /* "violet" */
-    font-style: italic;
-    font-weight: 700;
-  }
-
-  /*
-   * Objectif : Titres en dégradé de bleu
-   * Sélecteurs :.prose h1,.prose h2,...
-   */
-  .prose h1,
-  .prose h2,
-  .prose h3,
-  .prose h4,
-  .prose h5,
-  .prose h6 {
-    /* 1. Définir le dégradé comme image de fond */
-    background-image: linear-gradient(
-      45deg,
-      #0055a4, /* Un bleu français profond */
-      #00BFFF  /* Bleu ciel (DeepSkyBlue) */
-    );
-
-    /* 2. Clipper le fond à la forme du texte */
-    -webkit-background-clip: text;
-    background-clip: text;
-
-    /* 3. Rendre la couleur du texte transparente */
-    -webkit-text-fill-color: transparent;
-    color: transparent;
-
-    /* 4. (Facultatif) */
-    display: inline-block;
-  }
-
-  /*
-   * Objectif : Blocs de citation en orange
-   * Sélecteur :.prose blockquote
-   */
-  .prose blockquote {
-    border-left: 5px solid #fd7e14;
-    background-color: rgba(253, 126, 20, 0.05);
-    padding: 15px 20px;
-    margin: 0 0 20px 0;
-  }
-
-  .prose blockquote p {
-    color: #E67E22;
-    margin-bottom: 0;
-  }
-
-  /*
-   * Objectif : Blocs de code en orange
-   * Sélecteur :.prose .highlight
-   */
-  .prose .highlight {
-    background-color: rgba(253, 126, 20, 0.05);
-    border: 1px solid #fd7e14;
-    border-radius: 5px;
-    padding: 1em;
-  }
-
-  /*
-   *!! IMPORTANT : Neutralise le fond du <pre> de Chroma
-   */
-  .prose .highlight pre {
-    background-color: transparent !important;
-    padding: 0;
-    margin: 0;
-  }
-} /* Fin du @layer utilities */
