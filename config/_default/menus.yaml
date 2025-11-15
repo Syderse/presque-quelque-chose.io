@@ -3,16 +3,16 @@ main:
     url: /
     weight: 10
   - name: inutilités appliquées
-    url: /non-fiction/
+    url: /inutilités-appliquées/
     weight: 20
   - name: solutions imaginaires
-    url: /fiction/
+    url: /solutions-imaginaires/
     weight: 30
-  - name: parcours académique
-    url: /parcours/
+  - name: recherches
+    url: /recherches/
     weight: 40
   - name: ondes & pixels
-    url: /media/
+    url: /ondes-pixels/
     weight: 50
   - name: almanach
     url: /almanach/  # pointe vers votre dossier content/agenda

@@ -35,7 +35,7 @@ sections:
       subtitle: "scènes, poèmes, chansons et autres clinamens"
       filters:
         folders:
-          - fiction
+          - solutions-imaginaires
     design:
       view: card 
       spacing:
@@ -43,13 +43,13 @@ sections:
 
   # --- feed 3: académique ---
   - block: collection
-    id: parcours
+    id: recherches
     content:
       title: "parcours académique"
       subtitle: "recherches en histoire de l'art, cinéma et radio"
       filters:
         folders:
-          - parcours
+          - recherches
     design:
       view: citation 
       spacing:
@@ -57,13 +57,13 @@ sections:
 
   # --- feed 4: media ---
   - block: collection
-    id: ondes-et-pixels
+    id: ondes-pixels
     content:
       title: "ondes & pixels"
       subtitle: "podcasts, vidéos et expérimentations audiovisuelles"
       filters:
         folders:
-          - media
+          - ondes-pixels
     design:
       view: card  # <-- corrigé (showcase n'existe pas)
       spacing:
@@ -71,7 +71,7 @@ sections:
 
   # --- feed 5: agenda ---
   - block: collection
-    id: almanach-inoccupations
+    id: almanach
     content:
       title: "l'agenda des inoccupations"
       subtitle: "recensement des flâneries et non-rendez-vous à venir"
