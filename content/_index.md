@@ -45,9 +45,6 @@ sections:
             margin-bottom: 0;
             padding-bottom: 0;
           }
-          /* * modification : 
-           * le header n'est plus en 'flex' 
-           */
           .almanac-header {
             border-bottom: 1px solid var(--tw-prose-borders);
             padding-bottom: 1rem;
@@ -58,10 +55,6 @@ sections:
             font-weight: bold;
             color: var(--tw-prose-headings);
           }
-          /*
-           * modification :
-           * la classe .almanac-category a été supprimée
-           */
           .almanac-content {
             font-size: 1.25rem;
             line-height: 1.7;
@@ -110,10 +103,18 @@ sections:
             const endOfWeek = new Date(startOfWeek);
             endOfWeek.setDate(startOfWeek.getDate() + 6);
             
+            // 
+            // ----- CORRECTION N°1 : on met la fin de la semaine à 23:59:59 -----
+            //
+            endOfWeek.setHours(23, 59, 59, 999);
+            
             // --- fin de la logique ---
 
             // 1. fetcher le flux rss (xml)
-            fetch('/almanach/index.xml')
+            //
+            // ----- CORRECTION N°2 : on ajoute un cache-buster -----
+            //
+            fetch('/almanach/index.xml?v=' + new Date().getTime())
               .then(response => response.text())
               .then(str => new window.DOMParser().parseFromString(str, 'text/xml'))
               .then(data => {
@@ -124,12 +125,12 @@ sections:
                     title: item.querySelector('title').textContent,
                     description: item.querySelector('description').textContent,
                     pubDate: item.querySelector('pubDate').textContent
-                    // modification : la 'category' n'est plus lue
                   });
                 });
 
                 // 2. filtrer les événements pour la semaine en cours
                 const weekEvents = allEvents.filter(event => {
+                  // on normalise la date de l'événement (qui vient du xml)
                   const eventDate = normalizeDate(event.pubDate);
                   return eventDate >= startOfWeek && eventDate <= endOfWeek;
                 });
@@ -143,10 +144,6 @@ sections:
                   
                   weekEvents.forEach(event => {
                     const eventDate = new Date(event.pubDate);
-                    
-                    // modification : la logique 'categoryHtml' est supprimée
-                    // le html est simplifié
-
                     htmlContent += `
                       <div class="almanac-entry">
                         <div class="almanac-header">
