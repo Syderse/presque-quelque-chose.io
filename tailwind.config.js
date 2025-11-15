@@ -117,6 +117,6 @@ module.exports = {
       });
     }),
     
-    // Le plugin 'typography' (v4.0) a été retiré.
+    // Le plugin 'typography' (v4.0) a été retiré. C'ÉTAIT LE CONFLIT.
   ],
 };
