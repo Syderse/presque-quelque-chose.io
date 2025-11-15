@@ -16,7 +16,7 @@ sections:
         shape: circle
 
   #
-  # ----- voici le bloc almanach corrigé -----
+  # ----- bloc almanach sans catégorie -----
   #
   - block: markdown
     id: almanach
@@ -35,7 +35,6 @@ sections:
             margin-bottom: 2rem;
             min-height: 300px;
           }
-          /* (nouvelle classe pour séparer les événements) */
           .almanac-entry {
             margin-bottom: 2rem;
             padding-bottom: 1.5rem;
@@ -46,10 +45,10 @@ sections:
             margin-bottom: 0;
             padding-bottom: 0;
           }
+          /* * modification : 
+           * le header n'est plus en 'flex' 
+           */
           .almanac-header {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
             border-bottom: 1px solid var(--tw-prose-borders);
             padding-bottom: 1rem;
             margin-bottom: 1.5rem;
@@ -59,14 +58,10 @@ sections:
             font-weight: bold;
             color: var(--tw-prose-headings);
           }
-          .almanac-category {
-            font-family: 'courier new', monospace;
-            font-size: 1rem;
-            font-style: italic;
-            background-color: var(--tw-prose-invert-bg);
-            color: var(--tw-prose-invert-body);
-            padding: 0.25rem 0.5rem;
-          }
+          /*
+           * modification :
+           * la classe .almanac-category a été supprimée
+           */
           .almanac-content {
             font-size: 1.25rem;
             line-height: 1.7;
@@ -101,24 +96,21 @@ sections:
               return d;
             };
 
-            // --- nouvelle logique : calculer le début et la fin de la semaine ---
+            // --- logique : calculer le début et la fin de la semaine ---
             
             const today = new Date();
             const todayNormalized = normalizeDate(new Date());
             const dayOfWeek = today.getDay(); // 0=dimanche, 1=lundi, ..., 6=samedi
 
-            // on calcule le décalage pour trouver le lundi
-            // si on est dimanche (0), on recule de 6 jours. sinon, on recule de (jour - 1)
             const daysToSubtract = (dayOfWeek === 0) ? 6 : (dayOfWeek - 1);
             
             const startOfWeek = new Date(todayNormalized);
             startOfWeek.setDate(todayNormalized.getDate() - daysToSubtract);
             
-            // le dimanche de la semaine est 6 jours après le lundi
             const endOfWeek = new Date(startOfWeek);
             endOfWeek.setDate(startOfWeek.getDate() + 6);
             
-            // --- fin de la nouvelle logique ---
+            // --- fin de la logique ---
 
             // 1. fetcher le flux rss (xml)
             fetch('/almanach/index.xml')
@@ -131,15 +123,14 @@ sections:
                   allEvents.push({
                     title: item.querySelector('title').textContent,
                     description: item.querySelector('description').textContent,
-                    pubDate: item.querySelector('pubDate').textContent,
-                    category: item.querySelector('category') ? item.querySelector('category').textContent : '(général)'
+                    pubDate: item.querySelector('pubDate').textContent
+                    // modification : la 'category' n'est plus lue
                   });
                 });
 
                 // 2. filtrer les événements pour la semaine en cours
                 const weekEvents = allEvents.filter(event => {
                   const eventDate = normalizeDate(event.pubDate);
-                  // vérifier si la date de l'événement est dans la fenêtre [lundi, dimanche]
                   return eventDate >= startOfWeek && eventDate <= endOfWeek;
                 });
 
@@ -150,14 +141,16 @@ sections:
                 if (weekEvents.length > 0) {
                   let htmlContent = '';
                   
-                  // on boucle sur chaque événement trouvé et on crée son html
                   weekEvents.forEach(event => {
                     const eventDate = new Date(event.pubDate);
+                    
+                    // modification : la logique 'categoryHtml' est supprimée
+                    // le html est simplifié
+
                     htmlContent += `
                       <div class="almanac-entry">
                         <div class="almanac-header">
                           <div class="almanac-date">${eventDate.toLocaleDateString(userLocale, dateOptions)}</div>
-                          <div class="almanac-category">${event.category}</div>
                         </div>
                         <div class="almanac-content">
                           ${event.description}
