@@ -1,5 +1,5 @@
 /*
-  SOLUTION RADICALE v3.1 (Restaurée)
+  SOLUTION RADICALE v3.1 (Purgée)
   Toute la corruption v4.0 (le plugin 'typography') a été
   retirée. Ce fichier ne gère que les polices et les
   variables de couleur de base.
@@ -92,7 +92,6 @@ module.exports = {
   // 5. LE PLUGIN UNIFICATEUR (UNIQUEMENT POUR LES VARIABLES CSS)
   plugins: [
     plugin(function ({ addBase, theme }) {
-      // Fonction pour aplatir les objets de couleur (ex: primary.50 -> --color-primary-50)
       function extractColorVariables(colorObject, colorGroup = '') {
         return Object.keys(colorObject).reduce((vars, colorKey) => {
           const value = colorObject[colorKey];
@@ -105,13 +104,9 @@ module.exports = {
           return vars;
         }, {});
       }
-
-      // Générer les variables pour le mode clair
       addBase({
         ':root': extractColorVariables(theme('colors')),
       });
-
-      // Générer les variables pour le mode sombre
       addBase({
         "[data-theme='dark']": extractColorVariables(pataphysiqueDarkColors),
       });
