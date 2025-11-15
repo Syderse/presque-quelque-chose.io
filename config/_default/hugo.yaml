@@ -43,7 +43,7 @@ removePathAccents: true
 ############################
 
 build:
-  _merge: deep 
+  _merge: deep  # <-- LA CORRECTION DE LA PISTE N°5
   writeStats: true
 enableGitInfo: false
 summaryLength: 30
