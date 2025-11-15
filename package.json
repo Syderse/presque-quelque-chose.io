@@ -8,6 +8,11 @@
     "dev": "hugo server --disableFastRender",
     "build": "hugo --minify"
   },
+  "pnpm": {
+    "allowedBuildScripts": [
+      "@parcel/watcher"
+    ]
+  },
   "dependencies": {
     "@tailwindcss/cli": "^4.1.12",
     "@tailwindcss/typography": "^0.5.19",
