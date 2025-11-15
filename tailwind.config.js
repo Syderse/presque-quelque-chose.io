@@ -9,7 +9,7 @@ const { withHugoBlox } = require('./_vendor/github.com/hugoblox/hugo-blox-builde
 //    et ton `assets/css/themes/custom.css` (pour les couleurs).
 //    C'EST CETTE LIGNE QUI CORRIGE LE BUG ACTUEL (le nil pointer)
 module.exports = withHugoBlox({
-
+  
   // 3. on indique juste à tailwind quels *autres* fichiers surveiller.
   //    (le plugin s'occupe déjà de surveiller les fichiers du thème)
   content: [
