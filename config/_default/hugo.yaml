@@ -86,7 +86,7 @@ taxonomies:
   category: categories
   author: authors
 
-# --- DÉBUT DE L'AJOUT WIKILINKS ---
+# --- DÉBUT DE L'AJOUT WIKILINKS (MODIFIÉ) ---
 markup:
   goldmark:
     renderer:
@@ -94,10 +94,7 @@ markup:
       # utilise mon fichier render-link.html à la place."
       unsafe: true # Nécessaire pour que le hook fonctionne
   renderHooks:
-    link:
-      # DIT À HUGO : "Quand tu traites un lien, utilise aussi les
-      # informations de la page vers laquelle il pointe."
-      useEmbedded: true
+    link: {} # On laisse cet objet vide
 # --- FIN DE L'AJOUT WIKILINKS ---
 
 related:
