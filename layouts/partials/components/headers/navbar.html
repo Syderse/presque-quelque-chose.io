@@ -53,6 +53,7 @@
       {{ $pageURL:= $currentPage.Permalink | absLangURL }}
       {{ $active := eq $menuURL $pageURL }}
       {{ if .HasChildren }}
+      
       <li class="nav-item nav-dropdown group relative" {{ with .Identifier }}id="{{ . | safeHTMLAttr }}"{{ end }}>
             <span
               role="button"
@@ -84,6 +85,7 @@
           {{- else -}}
             {{- $url = .URL | relLangURL -}}
           {{- end -}}
+          
           <li class="nav-dropdown-item" {{ with .Identifier }}id="{{ . | safeHTMLAttr }}"{{ end }}>
             <a
               class="nav-dropdown-link {{ if $active }}active{{- end -}}"
@@ -108,9 +110,12 @@
         {{- $url = .URL | relLangURL -}}
       {{- end -}}
       
-      <li class="nav-item" {{ with .Identifier }}id="{{ . | safeHTMLAttr }}"{{ end }}>
+      <li class="nav-item">
         <a
           class="nav-link {{ if $active }}active{{- end -}}"
+          
+          {{ with .Identifier }}id="{{ . | safeHTMLAttr }}"{{ end }}
+          
           {{ if findRE `^http` .URL }}
           target="_blank" rel="noopener"
           {{ end }}

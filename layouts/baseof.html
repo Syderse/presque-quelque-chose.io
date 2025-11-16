@@ -1,6 +1,5 @@
 <!doctype html>
-<html lang="{{ site.LanguageCode | default "en" }}" {{ if site.Params.appearance.mode | default "system" | eq "system" }} x-data="hbTheme" :data-theme="ALPINO_THEME" {{ else }} data-theme="{{ site.Params.appearance.mode | default "light" }}" {{ end }}>
-<head>
+<html lang="{{ site.LanguageCode | default "en" }}" {{ if site.Params.appearance.mode | default "system" | eq "system" }} data-hb-theme-mode="system" {{ else }} data-hb-theme-mode="{{ site.Params.appearance.mode | default "light" }}" {{ end }}><head>
   <meta charset="utf-t8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <meta http-equiv="X-UA-Compatible" content="IE=edge" />

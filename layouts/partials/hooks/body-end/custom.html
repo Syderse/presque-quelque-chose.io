@@ -1,34 +1,23 @@
 <script>
 document.addEventListener('DOMContentLoaded', function() {
   
-  // 1. Cherche un élément dont l'ID SE TERMINE par "login_link"
-  // C'est beaucoup plus robuste que de deviner le préfixe (nav-, hb-, etc.)
-  let loginElement = document.querySelector('[id$="login_link"]');
+  // 1. Cherche directement le lien dont l'ID se termine par "login_link"
+  // (Le sélecteur [id$="..."] est toujours bon pour éviter les préfixes)
+  let loginLink = document.querySelector('[id$="login_link"]');
   
-  if (loginElement) {
-    let loginLink;
-
-    // 2. Vérifie si l'élément trouvé est le lien (<a>) ou son parent (<li>)
-    if (loginElement.tagName === 'A') {
-      loginLink = loginElement; // C'est directement le lien
-    } else {
-      loginLink = loginElement.querySelector('a'); // C'est le parent, on cherche le lien <a> à l'intérieur
-    }
-
-    // 3. Si on a bien trouvé le lien final, on attache l'événement
-    if (loginLink) {
-      loginLink.addEventListener('click', function(event) {
-        // 4. Empêche le navigateur de suivre le lien '#'
-        event.preventDefault();
-        
-        // 5. Affiche l'alerte 'pataphysique !
-        alert("Réservé au Dr. Faustroll.");
-      });
-    }
-
+  if (loginLink) {
+    // 2. On a trouvé le lien ! On attache l'événement.
+    loginLink.addEventListener('click', function(event) {
+      
+      // 3. Empêche le navigateur de suivre le lien '#'
+      event.preventDefault();
+      
+      // 4. Affiche l'alerte !
+      alert("Réservé au Dr. Faustroll.");
+    });
   } else {
     // Message pour nous, au cas où, visible dans la console du navigateur (F12)
-    console.error("Assistant Hugo Blox: Impossible de trouver l'élément [id$=\"login_link\"]");
+    console.error("Assistant Hugo Blox: Impossible de trouver le lien [id$=\"login_link\"]");
   }
 });
 </script>
