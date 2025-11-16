@@ -191,7 +191,7 @@
     {{- if not .IsHome }}
       {{ partial "components/breadcrumb" . }}
     {{- end }}
-    {{- block "main" . }}{{- end }}
+{{- block "main" . }}{{- end }}
   </div>
   {{- partialCached "components/footers/minimal" . }}
   {{- partial "libraries" . }}
@@ -200,7 +200,5 @@
 
   {{/* ✅ NOUVEAU : C'est la ligne qui manquait pour charger les "hooks" */}}
   {{- partial "functions/get_hook" (dict "hook" "body-end" "page" .) -}}
-</body>
-</html>
 </body>
 </html>

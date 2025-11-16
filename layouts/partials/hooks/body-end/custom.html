@@ -1,17 +1,23 @@
 <script>
-  // Attend que la page soit entièrement chargée
-  document.addEventListener('DOMContentLoaded', function() {
-    
-    // 1. Sélectionne notre lien de connexion grace à l'identifiant
-    // Note : Hugo Blox ajoute un préfixe 'nav-' à l'identifier que nous avons défini
-    const loginButton = document.getElementById('nav-login_link');
+document.addEventListener('DOMContentLoaded', function() {
+  
+  // 1. Cherche un élément dont l'ID SE TERMINE par "login_link"
+  // C'est beaucoup plus robuste que de deviner le préfixe (nav-, hb-, etc.)
+  let loginElement = document.querySelector('[id$="login_link"]');
+  
+  if (loginElement) {
+    let loginLink;
 
-    // 2. Vérifie si le bouton existe sur la page
-    if (loginButton) {
-      
-      // 3. Ajoute un écouteur d'événement au clic
-      loginButton.addEventListener('click', function(event) {
-        
+    // 2. Vérifie si l'élément trouvé est le lien (<a>) ou son parent (<li>)
+    if (loginElement.tagName === 'A') {
+      loginLink = loginElement; // C'est directement le lien
+    } else {
+      loginLink = loginElement.querySelector('a'); // C'est le parent, on cherche le lien <a> à l'intérieur
+    }
+
+    // 3. Si on a bien trouvé le lien final, on attache l'événement
+    if (loginLink) {
+      loginLink.addEventListener('click', function(event) {
         // 4. Empêche le navigateur de suivre le lien '#'
         event.preventDefault();
         
@@ -19,5 +25,10 @@
         alert("Réservé au Dr. Faustroll.");
       });
     }
-  });
+
+  } else {
+    // Message pour nous, au cas où, visible dans la console du navigateur (F12)
+    console.error("Assistant Hugo Blox: Impossible de trouver l'élément [id$=\"login_link\"]");
+  }
+});
 </script>
