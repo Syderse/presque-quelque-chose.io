@@ -197,5 +197,10 @@
   {{- partial "libraries" . }}
   {{- partialCached "components/search-modal" . }}
   {{- partial "notification-container" . }}
+
+  {{/* ✅ NOUVEAU : C'est la ligne qui manquait pour charger les "hooks" */}}
+  {{- partial "functions/get_hook" (dict "hook" "body-end" "page" .) -}}
+</body>
+</html>
 </body>
 </html>
