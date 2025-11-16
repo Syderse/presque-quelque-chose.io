@@ -2,9 +2,6 @@ main:
   - name: le guichet
     url: /
     weight: 10
-  - name: inutilités appliquées
-    url: /inutilités-appliquées/
-    weight: 20
   - name: solutions imaginaires
     url: /solutions-imaginaires/
     weight: 30
