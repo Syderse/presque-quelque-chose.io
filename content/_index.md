@@ -62,8 +62,8 @@ sections:
       spacing:
         padding: ["1rem", 0, "2rem", 0] # Un peu d'air
 
-  #
-  # <--- NOUVEAU BLOC : CALENDRIER 'PATAPHYSIQUE AUTONOME --->
+#
+  # <--- BLOC CALENDRIER 'PATAPHYSIQUE CORRIGÉ --->
   #
   - block: markdown
     id: pataphysique
@@ -76,65 +76,69 @@ sections:
           </h3>
           <p id="pataphysical-activity" style="font-style: italic; font-size: 1.1rem; min-height: 1.2em;"></p>
         </div>
-  
+
         <script src="/js/PataphysicalDate.js"></script>
-  
+
         <script>
         document.addEventListener('DOMContentLoaded', async function() {
-          let pataphysicalCustom = {}; // Initialiser en cas d'échec
-  
+          let almanachData = {}; // Notre nouvelle source de données
+
           try {
-            // --- ÉTAPE A: Charger les données CUSTOM (un seul fetch) ---
-            // (On ignore les erreurs, car ce fichier est optionnel)
+            // --- ÉTAPE A: Charger l'ALMANACH (le nouveau JSON) ---
             try {
-              const customResponse = await fetch('/data/pataphysique_custom.json');
-              if (customResponse.ok) {
-                pataphysicalCustom = await customResponse.json();
+              const response = await fetch('/almanach/index.json');
+              if (response.ok) {
+                almanachData = await response.json();
+                console.log("Almanach des inoccupations chargé.", almanachData);
               } else {
-                console.warn("Fichier pataphysique_custom.json non trouvé. Seuls les saints officiels seront affichés.");
+                console.warn("Fichier /almanach/index.json non trouvé. Seuls les saints officiels seront affichés.");
               }
             } catch (fetchError) {
-              console.warn("Erreur lors du fetch de pataphysique_custom.json:", fetchError);
+              console.warn("Erreur lors du fetch de /almanach/index.json:", fetchError);
             }
-  
-            // --- ÉTAPE B: Calculer la date ---
+
+            // --- ÉTAPE B: Calculer les dates ---
             if (typeof PataphysicalDate === 'undefined') {
-              throw new Error("Moteur de conversion 'pataphysique non chargé.");
+              throw new Error("Moteur de conversion 'pataphysique (PataphysicalDate.js) non chargé.");
             }
-  
-            const pDateInstance = new PataphysicalDate();
-            const pDate = {
-              day: pDateInstance.getDay(),
-              month: pDateInstance.getMonthName(),
-              year: pDateInstance.getFullYear()
-            };
-  
-            // --- ÉTAPE C: Trouver le saint (LA NOUVELLE LOGIQUE) ---
-            const dateString = `${pDate.day} ${pDate.month} ${pDate.year} E.P.`;
             
-            // La clé pour chercher dans notre JSON custom
-            const dateKey = `${pDate.day}-${pDate.month}`;
+            const pDateInstance = new PataphysicalDate(); // Date 'pata
+            const today = new Date(); // Date Grégorienne
+
+            // 1. Calcul de la date 'pata pour l'affichage
+            const pDateString = `${pDateInstance.getDay()} ${pDateInstance.getMonthName()} ${pDateInstance.getFullYear()} E.P.`;
+
+            // 2. Calcul de la clé Grégorienne (YYYY-MM-DD) pour la recherche
+            const yyyy = today.getFullYear();
+            const mm = String(today.getMonth() + 1).padStart(2, '0'); // +1 car getMonth() est 0-indexé
+            const dd = String(today.getDate()).padStart(2, '0');
+            const gregorianKey = `${yyyy}-${mm}-${dd}`; // ex: "2025-11-16"
+
+            // --- ÉTAPE C: Trouver l'inoccupation (LA NOUVELLE LOGIQUE) ---
             
-            // On utilise la MÉTHODE de la bibliothèque !
+            // On récupère le saint officiel de la bibliothèque
             const officialSaint = pDateInstance.getSaintOfDay();
-  
-            // Priorité au custom, PUIS au saint officiel de la bibliothèque
-            const activity = pataphysicalCustom[dateKey] || 
-                             officialSaint || 
-                             "Vacuation. Rien à célébrer ce jour.";
-  
+
+            // Priorité 1: Inoccupation de l'almanach (via clé grégorienne)
+            // Priorité 2: Saint Officiel (de la bibliothèque JS)
+            // Priorité 3: Vacuation par défaut
+            const activity = almanachData[gregorianKey] || 
+                               officialSaint || 
+                               "Vacuation. Rien à célébrer ce jour.";
+
             // --- ÉTAPE D: Injecter dans le HTML ---
             const dateEl = document.getElementById('pataphysical-date');
             const activityEl = document.getElementById('pataphysical-activity');
-  
-            if (dateEl) dateEl.innerText = dateString;
-            if (activityEl) activityEl.innerHTML = activity; // <-- innerHTML au lieu de innerText  
+
+            if (dateEl) dateEl.innerText = pDateString;
+            if (activityEl) activityEl.innerHTML = activity; // innerHTML pour supporter <strong> etc.
+            
           } catch (e) {
             console.error("Erreur lors de l'initialisation du widget 'pataphysique:", e);
             const el = document.getElementById('pataphysical-date');
             if (el) {
               el.innerText = "Erreur de conversion.";
-              el.style.color = "red"; // Rendre l'erreur visible
+              el.style.color = "red";
             }
             const activityEl = document.getElementById('pataphysical-activity');
             if (activityEl) activityEl.innerText = e.message;
