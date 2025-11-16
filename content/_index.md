@@ -1,84 +1,51 @@
 ---
-title: 'home'
+title: 'Home'
 date: 2023-10-24
 type: landing
 sections:
+  # --- Bloc 1 : Biographie (Existant) ---
   - block: resume-biography
     content:
+      # The user's folder name in content/authors/
       username: admin
     design:
       spacing:
         padding: [0, 0, 0, 0]
       biography:
         style: 'text-align: justify; font-size: 0.8em;'
+      # Avatar customization
       avatar:
-        size: medium
-        shape: circle
+        size: medium  # Options: small (150px), medium (200px, default), large (320px), xl (400px), xxl (500px)
+        shape: circle # Options: circle (default), square, rounded
 
-  #
-  # <--- NOUVEAU BLOC : LE MANIFESTE --->
-  #
+  # --- Bloc 2 : NOUVEAU (Calendrier 'Pataphysique) ---
   - block: markdown
-    id: manifeste
+    id: calendrier
     content:
-      text: |
-        > _"la 'pataphysique est la science des solutions imaginaires, qui accorde symboliquement aux linéaments les propriétés des objets décrits par leur virtualité."_ 
-        >
-        > — alfred jarry
-        
-        <br>
-        
-        ***une certaine science du particulier***
+      # Titre du bloc (vide)
+      title: ""
+      # Le HTML du widget
+      text: |-
+        <div id="pataphysique-widget" aria-live="polite">
+            <div id="pataphysical-date">Chargement de la date 'pataphysique...</div>
+            <div id="pataphysical-activity">Observation de l'activité du jour...</div>
+        </div>
     design:
-      # On centre le texte pour un effet "manifeste"
-      css_style: 'text-align: center;'
+      # Design pleine largeur
+      columns: '1'
       spacing:
-        padding: ["2rem", 0, "1rem", 0] # Un peu d'air
+        padding: ['3rem', 0, '0', 0] # Ajout d'un peu d'espace au-dessus
 
-  #
-  # <--- NOUVEAU BLOC : LES PRINCIPES --->
-  #
-  - block: features
-    id: principes
-    content:
-      items:
-        - name: 'la spirale'
-          description: '?'
-          icon: '🌀' 
-          icon_pack: 'emoji' # On dit à Hugo Blox que c'est un emoji
-        - name: 'la fourmi'
-          description: 'pour le travail méticuleux et absurde.'
-          icon: '🐜'
-          icon_pack: 'emoji'
-        - name: 'l''alambic'
-          description: 'pour distiller l''exception en règle.'
-          icon: '⚗️'
-          icon_pack: 'emoji'
-    design:
-      columns: '3'
-      # On force les minuscules, car ce bloc n'est pas "prose"
-      css_style: 'text-transform: lowercase;'
-      spacing:
-        padding: ["1rem", 0, "2rem", 0] # Un peu d'air
-
-  #
-  # ----- bloc almanach sans catégorie (INCHANGÉ) -----
-  #
+  # --- Bloc 3 : NOUVEAU (Almanach des Inoccupations) ---
   - block: markdown
     id: almanach
     content:
-      title: "almanach des inoccupations personnelles"
-      subtitle: "les inoccupations de la semaine en cours."
-      text: |
+      # Titre de la section
+      title: "Almanach des Inoccupations"
+      # Le HTML, CSS, et JS de l'almanach
+      text: |-
         <style>
           .almanac-container {
-            font-family: 'georgia', 'times new roman', serif;
-            border: 4px double var(--tw-prose-bold);
-            border-radius: 0;
-            background: var(--tw-prose-bg);
-            box-shadow: 5px 5px 0px 0px var(--tw-prose-bold);
-            padding: 2rem;
-            margin-bottom: 2rem;
             min-height: 300px;
           }
           .almanac-entry {
@@ -117,7 +84,7 @@ sections:
             </div>
           </div>
         </div>
-        
+
         <script>
           document.addEventListener('DOMContentLoaded', () => {
             let allEvents = [];
@@ -149,17 +116,10 @@ sections:
             const endOfWeek = new Date(startOfWeek);
             endOfWeek.setDate(startOfWeek.getDate() + 6);
             
-            // 
-            // ----- CORRECTION N°1 : on met la fin de la semaine à 23:59:59 -----
-            //
             endOfWeek.setHours(23, 59, 59, 999);
             
             // --- fin de la logique ---
 
-            // 1. fetcher le flux rss (xml)
-            //
-            // ----- CORRECTION N°2 : on ajoute un cache-buster -----
-            //
             fetch('/almanach/index.xml?v=' + new Date().getTime())
               .then(response => response.text())
               .then(str => new window.DOMParser().parseFromString(str, 'text/xml'))
@@ -176,7 +136,6 @@ sections:
 
                 // 2. filtrer les événements pour la semaine en cours
                 const weekEvents = allEvents.filter(event => {
-                  // on normalise la date de l'événement (qui vient du xml)
                   const eventDate = normalizeDate(event.pubDate);
                   return eventDate >= startOfWeek && eventDate <= endOfWeek;
                 });
@@ -204,11 +163,9 @@ sections:
 
                   contentEl.innerHTML = htmlContent;
                 } else {
-                  // pas d'événement cette semaine
                   contentEl.innerHTML = "<p>aucune inoccupation n'est prévue pour cette semaine. profitez du vide.</p>";
                 }
 
-                // quoi qu'il arrive, on affiche le conteneur
                 wrapperEl.style.display = 'block';
                 
               })
@@ -219,4 +176,17 @@ sections:
               });
           });
         </script>
+    design:
+      # Design pleine largeur
+      columns: '1'
+
+  # --- Bloc 4 : Collection (Existant) ---
+  - block: collection
+    content:
+      filters:
+        folders:
+          - blog
+    design:
+      spacing:
+        padding: ['3rem', 0, '6rem', 0]
 ---
