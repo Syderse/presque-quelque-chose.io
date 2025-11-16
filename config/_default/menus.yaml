@@ -11,9 +11,3 @@ main:
   - name: ondes & pixels
     url: /ondes-pixels/
     weight: 50
-  # === DEBUT DU NOUVEAU BLOC ===
-  - name: Se connecter
-    url: '#'
-    weight: 60
-    identifier: login_link
-  # === FIN DU NOUVEAU BLOC ===

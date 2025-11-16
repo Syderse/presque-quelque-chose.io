@@ -186,9 +186,10 @@
   </head>
 <body class="hb-page {{ .Kind }} {{ .Type | lower }} {{- with .File -}}{{ .TranslationBaseName | lower }}{{- end -}} {{ if site.Params.appearance.font | default "sans" | eq "sans" }}font-sans{{ else }}font-serif{{ end }}" id="top">
   {{- partialCached "components/headers/navbar" . }}
-  <div class="hb-container-xl" {{ with .Params.design.css_style }}style="{{ . | safeCSS }}"{{ end }} {{ with .Params.design.css_class }}class="{{ . | safeHTMLAttr }}"{{ end }}>
+<div class="hb-container-xl" {{ with .Params.design.css_style }}style="{{ . | safeCSS }}"{{ end }} {{ with .Params.design.css_class }}class="{{ . | safeHTMLAttr }}"{{ end }}>
     {{- if not .IsHome }}
-      {{ partial "components/breadcrumb" . }}
+      {{/* ✅ Fil d'Ariane désactivé pour éviter le titre en double */}}
+      {{/* {{ partial "components/breadcrumb" . }} */}}
     {{- end }}
 {{- block "main" . }}{{- end }}
   </div>

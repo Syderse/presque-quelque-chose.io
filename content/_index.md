@@ -28,7 +28,7 @@ sections:
         
         <br>
         
-        **une certaine science du particulier**
+        ***une certaine science du particulier***
     design:
       # On centre le texte pour un effet "manifeste"
       css_style: 'text-align: center;'
