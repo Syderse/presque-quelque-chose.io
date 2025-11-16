@@ -1,6 +1,7 @@
 ---
 title: "almanach des inoccupations"
 type: landing # utilise une page 'landing' pour la pleine largeur
+outputs: ["HTML", "JSON-ALMANACH"]
 sections:
   - block: markdown
     id: almanac-viewer

@@ -42,7 +42,6 @@ sections:
   - block: features
     id: principes
     content:
-      title: "quelques principes directeurs"
       items:
         - name: 'la spirale'
           description: 'pour la récurrence et le vertige.'
@@ -69,7 +68,7 @@ sections:
   - block: markdown
     id: pataphysique
     content:
-      title: "éphéméride 'pataphysique"
+      title: "almanach 'pataphysique"
       text: |
         <div style="text-align: center; font-family: 'Times New Roman', serif;">
           <h3 id="pataphysical-date" style="font-weight: bold; font-size: 1.5rem; color: var(--pataphysique-primary);">

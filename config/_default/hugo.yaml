@@ -11,23 +11,23 @@ baseURL: 'https://syderse.github.io/'
 ############################
 
 cascade:
-  # Blog post options
-  - _target:
-      path: /blog/**
-      kind: page
-    pager: true
-    editable: true
-    hide_date: false
-    show_date_updated: true
-    reading_time: true
-    commentable: true
-    show_related: true
-    share: true
-    # Just use Breadcrumb for navigation on blog post pages?
-    show_breadcrumb: false
-    header:
-      navbar:
-        enable: true
+  # Blog post options
+  - _target:
+      path: /blog/**
+      kind: page
+    pager: true
+    editable: true
+    hide_date: false
+    show_date_updated: true
+    reading_time: true
+    commentable: true
+    show_related: true
+    share: true
+    # Just use Breadcrumb for navigation on blog post pages?
+    show_breadcrumb: false
+    header:
+      navbar:
+        enable: true
 
 ############################
 ## LANGUAGE
@@ -43,44 +43,62 @@ removePathAccents: true
 ############################
 
 build:
-  _merge: deep  # <-- LA CORRECTION DE LA PISTE N°5
-  writeStats: true
+  _merge: deep  # <-- LA CORRECTION DE LA PISTE N°5
+  writeStats: true
 enableGitInfo: false
 summaryLength: 30
 pagination:
-  pagerSize: 10
+  pagerSize: 10
 enableEmoji: true
 enableRobotsTXT: true
 footnotereturnlinkcontents: <sup>^</sup>
 ignoreFiles: [\.ipynb$, .ipynb_checkpoints$, \.Rmd$, \.Rmarkdown$, _cache$]
 disableAliases: true
+
+# --- DÉBUT DE L'AJOUT NÉCESSAIRE ---
+# 1. Définir un nouveau format de sortie personnalisé pour notre almanach
+outputFormats:
+  JSON-ALMANACH:
+    mediaType: "application/json"
+    baseName: "index" # Le fichier s'appellera index.json
+    isPlainText: true
+    notAlternative: true # Ne pas l'ajouter au <head> des pages
+
+# 2. Définir quels types de pages peuvent utiliser quels formats
 outputs:
-  home: [HTML, RSS, headers, redirects, backlinks]
-  section: [HTML, RSS]
+  home: [HTML, RSS, headers, redirects, backlinks] # Votre config existante
+  section: [HTML, RSS] # Votre config existante
+  page: ["HTML"] # Ajout pour les pages simples
+  taxonomy: ["HTML"] # Ajout pour les taxonomies
+  term: ["HTML"] # Ajout pour les termes de taxonomie
+  # On autorise le type "landing" (utilisé par almanach.md) à générer notre JSON
+  landing: ["HTML", "JSON-ALMANACH"] 
+# --- FIN DE L'AJOUT NÉCESSAIRE ---
+
 imaging:
-  resampleFilter: lanczos
-  quality: 90
-  anchor: smart
-  hint: picture
+  resampleFilter: lanczos
+  quality: 90
+  anchor: smart
+  hint: picture
 timeout: 600000
 taxonomies:
-  tag: tags
-  category: categories
-  author: authors
+  tag: tags
+  category: categories
+  author: authors
 markup:
-  _merge: deep
+  _merge: deep
 related:
-  threshold: 80
-  includeNewer: true
-  toLower: true
-  indices:
-    - name: tags
-      weight: 100
-    - name: categories
-      weight: 70
+  threshold: 80
+  includeNewer: true
+  toLower: true
+  indices:
+    - name: tags
+      weight: 100
+    - name: categories
+      weight: 70
 security:
-  _merge: deep
+  _merge: deep
 sitemap:
-  _merge: deep
+  _merge: deep
 minify:
-  _merge: deep
+  _merge: deep

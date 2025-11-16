@@ -1,0 +1,10 @@
+{{- $data := dict -}}
+{{- /* On cherche toutes les pages *dans* la section "almanach" */ -}}
+{{- range .Site.RegularPages.InSection "almanach" -}}
+  {{- /* La clé est la date au format YYYY-MM-DD (ex: 2026-01-01) */ -}}
+  {{- $dateKey := .Date.Format "2006-01-02" -}}
+  {{- /* La valeur est le titre de la page (ex: "inoccupation du 2026-01-01") */ -}}
+  {{- $data = merge $data (dict $dateKey .Title) -}}
+{{- end -}}
+{{- /* On génère le fichier JSON final */ -}}
+{{- $data | jsonify -}}
