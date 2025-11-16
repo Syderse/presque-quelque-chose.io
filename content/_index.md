@@ -128,8 +128,7 @@ sections:
             const activityEl = document.getElementById('pataphysical-activity');
   
             if (dateEl) dateEl.innerText = dateString;
-            if (activityEl) activityEl.innerText = activity;
-  
+            if (activityEl) activityEl.innerHTML = activity; // <-- innerHTML au lieu de innerText  
           } catch (e) {
             console.error("Erreur lors de l'initialisation du widget 'pataphysique:", e);
             const el = document.getElementById('pataphysical-date');
