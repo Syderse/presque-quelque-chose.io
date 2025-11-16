@@ -13,3 +13,30 @@
  * NOTE : Tous les autres styles sont gérés par
  * tailwind.config.js ou le hook custom.html.
  */
+
+ /* /assets/css/themes/custom.css */
+
+/* --- Styles pour le Widget 'Pataphysique --- */
+#pataphysique-widget {
+  border: 1px solid #ccc;
+  padding: 1rem;
+  background-color: #f9f9f9;
+  border-radius: 4px;
+  font-family: 'Times New Roman', serif;
+  /* Une police appropriée */
+  margin-top: 2rem; /* Ajout d'un peu d'espace au-dessus */
+}
+
+#pataphysical-date {
+  font-weight: bold;
+  font-size: 1.1rem;
+  color: #333;
+}
+
+#pataphysical-activity {
+  font-style: italic;
+  margin-top: 0.5rem;
+  color: #555;
+}
+
+/* --- Fin des Styles Widget --- */

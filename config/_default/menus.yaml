@@ -1,5 +1,5 @@
 main:
-  - name: atelier
+  - name: home
     url: /
     weight: 10
   - name: inutilités appliquées
