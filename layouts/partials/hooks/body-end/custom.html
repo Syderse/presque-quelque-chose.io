@@ -1,0 +1,55 @@
+{{/* 1. Pont de Données : Transformer les données Hugo en JSON pour JavaScript */}}
+<script>
+  const pataphysicalSaints = {{.Site.Data.pataphysique_saints | jsonify }};
+  const pataphysicalCustom = {{.Site.Data.pataphysique_custom | jsonify }};
+</script>
+
+{{/* 2. CHARGEMENT DU SCRIPT : Inclure la logique de conversion. */}}
+<script src="{{ "/js/PataphysicalDate.js" | relURL }}"></script>
+
+{{/* 3. SCRIPT PRINCIPAL : Exécuter la logique */}}
+<script>
+  document.addEventListener('DOMContentLoaded', function() {
+    try {
+      let pDate; 
+
+      // --- Option A (Bibliothèque) ---
+      if (typeof PataphysicalDate !== 'undefined') {
+        const pDateInstance = new PataphysicalDate();
+        pDate = {
+          day: pDateInstance.getDay(),
+          month: pDateInstance.getMonthName(),
+          year: pDateInstance.getFullYear()
+        };
+      } 
+      // --- Option B (From Scratch) ---
+      else if (typeof getPataphysicalDate !== 'undefined') {
+        pDate = getPataphysicalDate(new Date());
+      } 
+      else {
+        throw new Error("Moteur de conversion 'pataphysique non chargé.");
+      }
+
+      // --- Logique commune de rendu --- 
+      
+      const dateString = `${pDate.day} ${pDate.month} ${pDate.year} E.P.`;
+      const dateKey = `${pDate.day}-${pDate.month}`;
+
+      const activity = pataphysicalCustom[dateKey] || 
+                       pataphysicalSaints[dateKey] || 
+                       "Vacuation. Rien à célébrer ce jour.";
+
+      // Injection des résultats dans le HTML
+      const dateEl = document.getElementById('pataphysical-date');
+      const activityEl = document.getElementById('pataphysical-activity');
+      
+      if (dateEl) dateEl.innerText = dateString;
+      if (activityEl) activityEl.innerText = activity;
+
+    } catch (e) {
+      console.error("Erreur lors de l'initialisation du widget 'pataphysique:", e);
+      const el = document.getElementById('pataphysical-date');
+      if (el) el.innerText = "Erreur de conversion 'pataphysique.";
+    }
+  });
+</script>
