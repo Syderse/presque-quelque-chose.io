@@ -63,10 +63,18 @@ outputFormats:
     baseName: "index" # Le fichier s'appellera index.json
     isPlainText: true
     notAlternative: true # Ne pas l'ajouter au <head> des pages
+  
+  # ✅ NOUVELLE DÉFINITION POUR NOTRE LISTE ALÉATOIRE
+  JSON-RANDOM:
+    mediaType: "application/json"
+    baseName: "articles-aleatoires" # Le fichier s'appellera articles-aleatoires.json
+    isPlainText: true
+    notAlternative: true
 
 # 2. Définir quels types de pages peuvent utiliser quels formats
 outputs:
-  home: [HTML, RSS, headers, redirects, backlinks] # Votre config existante
+  # ✅ ON AJOUTE NOTRE NOUVEAU FORMAT À LA PAGE D'ACCUEIL (home)
+  home: [HTML, RSS, headers, redirects, backlinks, JSON-RANDOM] 
   section: [HTML, RSS] # Votre config existante
   page: ["HTML"] # Ajout pour les pages simples
   taxonomy: ["HTML"] # Ajout pour les taxonomies

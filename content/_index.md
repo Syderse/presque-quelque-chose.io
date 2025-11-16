@@ -16,24 +16,68 @@ sections:
         shape: circle
 
   #
-  # <--- NOUVEAU BLOC : LE MANIFESTE --->
+  # <--- NOUVEAU BLOC : GUICHET ALÉATOIRE --->
   #
   - block: markdown
-    id: manifeste
+    id: guichet-aleatoire
     content:
       text: |
-        > _"la 'pataphysique est la science des solutions imaginaires, qui accorde symboliquement aux linéaments les propriétés des objets décrits par leur virtualité."_ 
-        >
-        > — alfred jarry
-        
-        <br>
-        
-        ***une certaine science du particulier***
+        <div style="text-align: center; margin-top: 1rem; margin-bottom: 2rem;">
+          <a href="#" id="random-article-button" style="font-size: 3rem; text-decoration: none; line-height: 1;" title="Guichet Aléatoire">
+            🌀
+          </a>
+          <br>
+          <small>guichet aléatoire</small>
+        </div>
+
+        <script>
+        document.addEventListener('DOMContentLoaded', function() {
+          // On cible le bouton que nous venons de créer
+          const randomButton = document.getElementById('random-article-button');
+          
+          if (randomButton) {
+            // On attache un écouteur d'événement au clic
+            randomButton.addEventListener('click', async function(e) {
+              e.preventDefault(); // Annule le clic sur le lien (le "#")
+              
+              try {
+                // ÉTAPE C.1 : Récupérer notre fichier JSON
+                // (Note : le nom correspond au "baseName" de l'Étape 1)
+                const response = await fetch('/articles-aleatoires.json');
+                
+                if (!response.ok) {
+                  throw new Error('La liste des articles est introuvable (réponse: ' + response.status + ')');
+                }
+                
+                const articles = await response.json();
+                
+                if (!articles || articles.length === 0) {
+                  throw new Error("Aucun article n'a été trouvé dans la liste.");
+                }
+
+                // ÉTAPE C.2 : Choisir un élément au hasard
+                const randomIndex = Math.floor(Math.random() * articles.length);
+                const randomArticle = articles[randomIndex];
+
+                // ÉTAPE C.3 : Rediriger l'utilisateur
+                if (randomArticle && randomArticle.url) {
+                  window.location.href = randomArticle.url;
+                } else {
+                  throw new Error("L'article aléatoire sélectionné est invalide.");
+                }
+
+              } catch (error) {
+                // En cas d'erreur (ex: JSON non trouvé), on prévient l'utilisateur
+                console.error("Erreur du guichet aléatoire:", error);
+                randomButton.innerText = "Erreur 😵";
+              }
+            });
+          }
+        });
+        </script>
     design:
-      # On centre le texte pour un effet "manifeste"
-      css_style: 'text-align: center;'
-      spacing:
-        padding: ["2rem", 0, "1rem", 0] # Un peu d'air
+      # On le met dans une seule colonne
+      columns: '1'
 
 #
   # <--- BLOC CALENDRIER 'PATAPHYSIQUE CORRIGÉ --->
@@ -41,7 +85,6 @@ sections:
   - block: markdown
     id: pataphysique
     content:
-      title: "almanach 'pataphysique"
       text: |
         <div style="text-align: center; font-family: 'Times New Roman', serif;">
           <h3 id="pataphysical-date" style="font-weight: bold; font-size: 1.5rem; color: var(--pataphysique-primary);">
@@ -123,6 +166,6 @@ sections:
       columns: '1'
       # On ajoute un peu d'espace
       spacing:
-        padding: ["2rem", 0, "2rem", 0]
-
+        padding: ["1rem", 0, "1rem", 0]
+  
 ---

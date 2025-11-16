@@ -1,0 +1,12 @@
+{{/*
+  Gabarit pour /articles-aleatoires.json
+  Ce fichier génère une liste JSON de toutes les pages souhaitées
+  pour la fonctionnalité "article aléatoire".
+*/}}
+{{- $includeSections := (slice "recherches" "solutions-imaginaires" "ondes-pixels") -}}
+{{- $pages := where .Site.RegularPages ".Section" "in" $includeSections -}}
+{{- $list := slice -}}
+{{- range $pages -}}
+  {{- $list = $list | append (dict "title" .Title "url" .RelPermalink) -}}
+{{- end -}}
+{{- $list | jsonify -}}
