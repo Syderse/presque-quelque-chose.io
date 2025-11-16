@@ -1,5 +1,5 @@
 main:
-  - name: home
+  - name: le guichet
     url: /
     weight: 10
   - name: inutilités appliquées
