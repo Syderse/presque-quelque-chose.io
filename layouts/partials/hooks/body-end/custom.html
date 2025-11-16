@@ -1,72 +1,61 @@
 {{/* 1. Pont de Données : Transformer les données Hugo en JSON pour JavaScript */}}
-{{/* Nous utilisons le filtre 'jsonify' pour injecter les données en toute sécurité */}}
 <script>
-  const pataphysicalSaints = {{.Site.Data.pataphysique_saints | jsonify }};
-  const pataphysicalCustom = {{.Site.Data.pataphysique_custom | jsonify }};
+  // On ajoute des "|| null" pour éviter que le script plante si le JSON est invalide
+  const pataphysicalSaints = {{.Site.Data.pataphysique_saints | jsonify | default "null" }};
+  const pataphysicalCustom = {{.Site.Data.pataphysique_custom | jsonify | default "null" }};
 </script>
 
 {{/* 2. CHARGEMENT DU SCRIPT : Inclure la logique de conversion. */}}
-
-{{/* --- OPTION A (Bibliothèque) --- */}}
-{{/* Ligne décommentée pour la Voie A (le fichier doit être dans /static/js/) */}}
 <script src="{{ "/js/PataphysicalDate.js" | relURL }}"></script>
 
-{{/* --- OPTION B (From Scratch) --- */}}
-{{/* Laissez ces lignes commentées */}}
-{{/* {{ $converter := resources.Get "js/pataphysique_converter.js" | js.Build }}
-  <script src="{{ $converter.RelPermalink }}"></script>*/}}
-
-{{/* 3. SCRIPT PRINCIPAL : Exécuter la logique après le chargement de la page */}}
+{{/* 3. SCRIPT PRINCIPAL (VERSION DE DÉBOGAGE) */}}
 <script>
   document.addEventListener('DOMContentLoaded', function() {
-    try {
-      let pDate; // L'objet { day, month, year }
+    // Cibler les éléments HTML
+    const dateEl = document.getElementById('pataphysical-date');
+    const activityEl = document.getElementById('pataphysical-activity');
 
-      // --- Logique d'initialisation (Dépend de votre choix A ou B) ---
+    try {
+      // --- Étape 1 : Vérifier les données ---
+      if (!pataphysicalSaints || Object.keys(pataphysicalSaints).length === 0) {
+        throw new Error("DONNÉES ÉCHOUÉES : 'pataphysique_saints.json' est vide ou invalide. Vérifiez le copier-coller du JSON.");
+      }
+      if (!pataphysicalCustom) {
+        throw new Error("DONNÉES ÉCHOUÉES : 'pataphysique_custom.json' n'a pas pu être chargé.");
+      }
       
-      // Si vous utilisez l'Option A (Bibliothèque)
-      if (typeof PataphysicalDate !== 'undefined') {
-        const pDateInstance = new PataphysicalDate();
-        pDate = {
-          day: pDateInstance.getDay(),
-          month: pDateInstance.getMonthName(),
-          year: pDateInstance.getFullYear()
-        };
-      } 
-      // Si vous utilisez l'Option B (From Scratch)
-      else if (typeof getPataphysicalDate !== 'undefined') {
-        pDate = getPataphysicalDate(new Date());
-      } 
-      // Si aucun script n'est chargé
-      else {
-        throw new Error("Moteur de conversion 'pataphysique non chargé.");
+      // --- Étape 2 : Vérifier la bibliothèque (Voie A) ---
+      if (typeof PataphysicalDate === 'undefined') {
+        throw new Error("BIBLIOTHÈQUE ÉCHOUÉE : 'PataphysicalDate.js' n'a pas pu être chargé. Vérifiez que le fichier existe bien dans /static/js/");
       }
 
-      // --- Logique commune de rendu --- 
-      
-      // Formatage de la date (ex: "1 Absolu 151 E.P.")
-      const dateString = `${pDate.day} ${pDate.month} ${pDate.year} E.P.`;
-      
-      // Création de la clé de recherche (ex: "1-Absolu")
-      const dateKey = `${pDate.day}-${pDate.month}`;
+      // --- Étape 3 : Exécuter la logique (si tout va bien) ---
+      const pDateInstance = new PataphysicalDate();
+      const pDate = {
+        day: pDateInstance.getDay(),
+        month: pDateInstance.getMonthName(),
+        year: pDateInstance.getFullYear()
+      };
 
-      // Stratégie de surcharge : Custom d'abord, puis Saints, puis Vacuation
-      // (Une "Vacuation" est un jour vide, sans célébration)
+      // --- Étape 4 : Rendu ---
+      const dateString = `${pDate.day} ${pDate.month} ${pDate.year} E.P.`;
+      const dateKey = `${pDate.day}-${pDate.month}`;
+      
       const activity = pataphysicalCustom[dateKey] || 
                        pataphysicalSaints[dateKey] || 
                        "Vacuation. Rien à célébrer ce jour.";
 
-      // Injection des résultats dans le HTML
-      const dateEl = document.getElementById('pataphysical-date');
-      const activityEl = document.getElementById('pataphysical-activity');
-      
+      // Injection des résultats
       if (dateEl) dateEl.innerText = dateString;
       if (activityEl) activityEl.innerText = activity;
 
     } catch (e) {
-      console.error("Erreur lors de l'initialisation du widget 'pataphysique:", e);
-      const el = document.getElementById('pataphysical-date');
-      if (el) el.innerText = "Erreur de conversion 'pataphysique.";
+      // --- Afficher l'erreur SPÉCIFIQUE sur la page ---
+      console.error("Erreur 'Pataphysique DÉTAILLÉE:", e.message);
+      if (dateEl) dateEl.innerText = "Erreur de conversion 'pataphysique.";
+      
+      // Affiche le message d'erreur détaillé directement dans le widget !
+      if (activityEl) activityEl.innerText = e.message; 
     }
   });
 </script>
