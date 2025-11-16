@@ -85,8 +85,21 @@ taxonomies:
   tag: tags
   category: categories
   author: authors
+
+# --- DÉBUT DE L'AJOUT WIKILINKS ---
 markup:
-  _merge: deep
+  goldmark:
+    renderer:
+      # DIT À HUGO : "Si tu vois un lien, ne le rends pas tout de suite,
+      # utilise mon fichier render-link.html à la place."
+      unsafe: true # Nécessaire pour que le hook fonctionne
+  renderHooks:
+    link:
+      # DIT À HUGO : "Quand tu traites un lien, utilise aussi les
+      # informations de la page vers laquelle il pointe."
+      useEmbedded: true
+# --- FIN DE L'AJOUT WIKILINKS ---
+
 related:
   threshold: 80
   includeNewer: true

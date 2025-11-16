@@ -1,0 +1,21 @@
+{{- /*
+Notre "render hook" intelligent pour les liens (VERSION CORRIGÉE).
+La logique est basée sur la variable .Destination.
+*/ -}}
+
+{{- /*
+Cas 1 : .Destination est REMPLI.
+C'est un lien externe (http) ou un lien interne qu'Hugo n'a pas trouvé.
+On utilise .Destination tel quel.
+*/ -}}
+{{- if .Destination -}}
+  <a href="{{ .Destination | safeURL }}"{{ with .Title}} title="{{ . | safeHTMLAttr }}"{{ end }}{{ if strings.HasPrefix .Destination "http" }} target="_blank" rel="noopener"{{ end }}>{{ .Text | safeHTML }}</a>
+
+{{- /*
+Cas 2 : .Destination est VIDE.
+Hugo a trouvé une page interne !
+.Page contient la page de DESTINATION. On utilise son .RelPermalink.
+*/ -}}
+{{- else -}}
+  <a href="{{ .Page.RelPermalink }}"{{ with .Page.Title }} title="{{ . | safeHTMLAttr }}"{{ end }}>{{ .Text | safeHTML }}</a>
+{{- end -}}
