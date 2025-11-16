@@ -1,0 +1,23 @@
+<script>
+  // Attend que la page soit entièrement chargée
+  document.addEventListener('DOMContentLoaded', function() {
+    
+    // 1. Sélectionne notre lien de connexion grace à l'identifiant
+    // Note : Hugo Blox ajoute un préfixe 'nav-' à l'identifier que nous avons défini
+    const loginButton = document.getElementById('nav-login_link');
+
+    // 2. Vérifie si le bouton existe sur la page
+    if (loginButton) {
+      
+      // 3. Ajoute un écouteur d'événement au clic
+      loginButton.addEventListener('click', function(event) {
+        
+        // 4. Empêche le navigateur de suivre le lien '#'
+        event.preventDefault();
+        
+        // 5. Affiche l'alerte 'pataphysique !
+        alert("Réservé au Dr. Faustroll.");
+      });
+    }
+  });
+</script>
