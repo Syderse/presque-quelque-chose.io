@@ -153,3 +153,4 @@ sections:
     # On ajoute un peu d'espace
     spacing:
       padding: ["2rem", 0, "2rem", 0]
+---
