@@ -1,6 +1,6 @@
 ---
 title: "[2/3] autour du pot : plat de résistance"
-date: 2024-09-27
+date: 2024-10-04
 summary: "documentaire en trois parties avec les agent·e·s du service de restauration de l'ENS"
 authors: Kenza Benyahia & Mathieu Allag
   - admin
