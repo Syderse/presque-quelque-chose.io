@@ -11,3 +11,6 @@ main:
   - name: ondes & pixels
     url: /ondes-pixels/
     weight: 50
+  - name: rhizome curieux
+    url: /rhizome-curieux/
+    weight: 60

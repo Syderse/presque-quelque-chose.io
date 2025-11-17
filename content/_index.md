@@ -27,7 +27,7 @@ sections:
             🌀
           </a>
           <br>
-          <small>guichet aléatoire</small>
+          <small><em>clinamen<em></small>
         </div>
 
         <script>
