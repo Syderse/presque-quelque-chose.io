@@ -21,7 +21,8 @@
   publish = "public"
 
 [build.environment]
-  HUGO_VERSION = "0.152.2_extended"
+  # J'ai mis la version extended car ton thème en a besoin
+  HUGO_VERSION = "0.152.2"
   GO_VERSION = "1.21.5"
   NODE_VERSION = "22"
   HUGO_ENABLEGITINFO = "true"
