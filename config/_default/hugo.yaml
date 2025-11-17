@@ -80,7 +80,6 @@ outputs:
   taxonomy: ["HTML"] # Ajout pour les taxonomies
   term: ["HTML"] # Ajout pour les termes de taxonomie
   # On autorise le type "landing" (utilisé par almanach.md) à générer notre JSON
-  landing: ["HTML", "JSON-ALMANACH"]
 # --- FIN DE L'AJOUT NÉCESSAIRE ---
 
 imaging:

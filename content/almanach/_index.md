@@ -1,7 +1,7 @@
 ---
 title: "almanach des inoccupations"
-type: landing # utilise une page 'landing' pour la pleine largeur
-outputs: ["HTML", "JSON-ALMANACH"]
+type: landing 
+outputs: ["HTML", "JSON-ALMANACH"] # <--- C'est la ligne CRUCIALE qui active le JSON uniquement pour cette page
 sections:
   - block: markdown
     id: almanac-viewer
@@ -48,9 +48,6 @@ sections:
           .almanac-content strong {
             color: var(--hb-color-primary-600);
           }
-          
-          /* les boutons de navigation ont disparu du css, car ils ont disparu du html */
-
         </style>
 
         <div id="almanac-wrapper" style="display: none;">
@@ -63,25 +60,22 @@ sections:
               <p>recherche de l'inoccupation correspondante...</p>
             </div>
           </div>
-          </div>
+        </div>
         
         <script>
           document.addEventListener('DOMContentLoaded', () => {
             let allEvents = [];
-            // currentEventIndex n'est plus nécessaire
 
             // formats de date
             const userLocale = 'fr-fr';
             const dateOptions = { day: 'numeric', month: 'long', year: 'numeric' };
 
             // éléments de l'interface
-            const wrapperEl = document.getElementById('almanac-wrapper'); // <- nouvel élément
+            const wrapperEl = document.getElementById('almanac-wrapper');
             const dateEl = document.getElementById('almanac-date');
             const categoryEl = document.getElementById('almanac-category');
             const contentEl = document.getElementById('almanac-content');
             
-            // modification clé 3 : les variables prevBtn et nextBtn sont supprimées.
-
             // fonction pour normaliser la date (enlève l'heure)
             const normalizeDate = (date) => {
               let d = new Date(date);
@@ -93,73 +87,65 @@ sections:
             const displayEvent = (event) => {
               if (!event) return;
               
-              const eventDate = new Date(event.pubDate);
+              // Note: event.date vient du JSON
+              const eventDate = new Date(event.date); 
               
               dateEl.textContent = eventDate.toLocaleDateString(userLocale, dateOptions);
-              categoryEl.textContent = event.category;
-              contentEl.innerHTML = event.description; // utilise innerhtml pour les balises <strong>
+              categoryEl.textContent = event.category || 'inoccupation';
+              contentEl.innerHTML = event.content; 
             };
 
             // fonction pour trouver l'événement du jour
             const findEventForDate = (date) => {
               const normalizedToday = normalizeDate(date);
               
-              // on trie les événements par date au cas où
-              allEvents.sort((a, b) => new Date(a.pubDate) - new Date(b.pubDate));
+              // on trie les événements par date
+              allEvents.sort((a, b) => new Date(a.date) - new Date(b.date));
 
-              // on utilise .find() au lieu de .findIndex() pour avoir l'événement directement
               const eventToday = allEvents.find(event => {
-                return normalizeDate(event.pubDate).getTime() === normalizedToday.getTime();
+                return normalizeDate(event.date).getTime() === normalizedToday.getTime();
               });
 
-              return eventToday; // retourne l'événement ou 'undefined'
+              return eventToday; 
             };
 
             // --- exécution ---
-            // 1. fetcher le flux rss
-            fetch('/almanach/index.xml')
-              .then(response => response.text())
-              .then(str => new window.DOMParser().parseFromString(str, 'text/xml'))
+            // 1. Fetcher le JSON (et non plus le XML/RSS)
+            fetch('/almanach/index.json')
+              .then(response => {
+                if (!response.ok) {
+                   throw new Error("HTTP error " + response.status);
+                }
+                return response.json();
+              })
               .then(data => {
-                const items = data.querySelectorAll('item');
-                
-                items.forEach(item => {
+                // Hugo retourne généralement un tableau d'objets
+                // Nous adaptons la lecture pour le format JSON standard de Hugo
+                data.forEach(item => {
                   allEvents.push({
-                    title: item.querySelector('title').textContent,
-                    description: item.querySelector('description').textContent,
-                    pubDate: item.querySelector('pubDate').textContent,
-                    category: item.querySelector('category') ? item.querySelector('category').textContent : '(général)'
+                    title: item.title,
+                    content: item.content || item.summary || item.description, // Supporte plusieurs formats de sortie
+                    date: item.date,
+                    category: item.categories ? item.categories[0] : (item.category || '(général)')
                   });
                 });
 
                 // 2. trouver l'événement d'aujourd'hui
                 const today = new Date();
-                let eventFound = findEventForDate(today); // c'est l'objet événement, ou 'undefined'
+                let eventFound = findEventForDate(today); 
 
-                // 
-                // modification clé 4 : la logique d'affichage
-                //
                 if (eventFound) {
-                  // un événement est trouvé !
                   displayEvent(eventFound);
-                  // on affiche le conteneur
                   wrapperEl.style.display = 'block';
                 } else {
-                  // pas d'événement pour aujourd'hui.
-                  // on ne fait rien. la page reste blanche.
-                  // la 'div' almanac-wrapper reste en 'display: none'.
-                  console.log("aucune inoccupation n'est prévue pour aujourd'hui. profitez du vide.");
+                  console.log("aucune inoccupation n'est prévue pour aujourd'hui.");
+                  // Optionnel : afficher un message par défaut
+                  // wrapperEl.style.display = 'block';
+                  // contentEl.innerHTML = "Rien à signaler aujourd'hui. Vacuation totale.";
                 }
-
-                //
-                // modification clé 5 : 
-                // les 'event listeners' pour prevBtn et nextBtn ont été supprimés.
-                //
-                
               })
               .catch(err => {
-                console.error("erreur pataphysique:", err);
-                // on n'affiche rien à l'utilisateur, on log juste en console.
+                console.error("erreur chargement almanach:", err);
               });
           });
         </script>

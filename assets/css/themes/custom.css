@@ -40,3 +40,66 @@
 }
 
 /* --- Fin des Styles Widget --- */
+
+/* --- STYLE DU RHIZOME CURIEUX --- */
+
+.rhizome-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(300px, 1fr)); /* Grille responsive automatique */
+  gap: 1.5rem;
+  margin-top: 2rem;
+}
+
+.rhizome-card {
+  display: flex;
+  align-items: center;
+  background: rgba(255, 255, 255, 0.05); /* Fond très léger */
+  border: 1px solid rgba(0, 0, 0, 0.1);
+  border-radius: 12px;
+  padding: 1.5rem;
+  text-decoration: none !important; /* Pas de soulignement moche */
+  transition: all 0.3s ease;
+  backdrop-filter: blur(5px);
+}
+
+/* Mode sombre pour la carte */
+[data-hb-theme-mode="dark"] .rhizome-card {
+  background: rgba(255, 255, 255, 0.03);
+  border-color: rgba(255, 255, 255, 0.1);
+}
+
+/* Effet au survol : on lève la carte et on colore la bordure */
+.rhizome-card:hover {
+  transform: translateY(-5px);
+  border-color: var(--pataphysique-theme); /* Ta couleur Cyan */
+  box-shadow: 0 10px 20px rgba(0, 0, 0, 0.1);
+}
+
+.rhizome-icon {
+  font-size: 2.5rem;
+  margin-right: 1rem;
+  line-height: 1;
+}
+
+.rhizome-content h3 {
+  margin: 0;
+  font-size: 1.1rem;
+  font-weight: bold;
+  color: inherit;
+  text-transform: lowercase; /* On garde ton style lowercase */
+  background: none !important; /* On enlève le dégradé des titres globaux pour plus de lisibilité ici */
+  -webkit-text-fill-color: inherit !important;
+}
+
+/* Couleur du titre au survol */
+.rhizome-card:hover .rhizome-content h3 {
+  color: var(--pataphysique-primary); /* Ta couleur Magenta */
+}
+
+.rhizome-content p {
+  margin: 0.3rem 0 0 0;
+  font-size: 0.9rem;
+  opacity: 0.8;
+  line-height: 1.4;
+  color: inherit;
+}
