@@ -8,7 +8,8 @@ sections:
       username: admin
     design:
       spacing:
-        padding: [0, 0, 0, 0]
+        # Réduction drastique des marges (Haut, Droite, Bas, Gauche)
+        padding: ["0", "0", "1rem", "0"]
       biography:
         style: 'text-align: justify; font-size: 0.8em;'
       avatar:
@@ -16,71 +17,7 @@ sections:
         shape: circle
 
   #
-  # <--- NOUVEAU BLOC : GUICHET ALÉATOIRE --->
-  #
-  - block: markdown
-    id: guichet-aleatoire
-    content:
-      text: |
-        <div style="text-align: center; margin-top: 1rem; margin-bottom: 2rem;">
-          <a href="#" id="random-article-button" style="font-size: 3rem; text-decoration: none; line-height: 1;" title="Guichet Aléatoire">
-            🌀
-          </a>
-          <br>
-          <small><em>clinamen<em></small>
-        </div>
-
-        <script>
-        document.addEventListener('DOMContentLoaded', function() {
-          // On cible le bouton que nous venons de créer
-          const randomButton = document.getElementById('random-article-button');
-          
-          if (randomButton) {
-            // On attache un écouteur d'événement au clic
-            randomButton.addEventListener('click', async function(e) {
-              e.preventDefault(); // Annule le clic sur le lien (le "#")
-              
-              try {
-                // ÉTAPE C.1 : Récupérer notre fichier JSON
-                // (Note : le nom correspond au "baseName" de l'Étape 1)
-                const response = await fetch('/articles-aleatoires.json');
-                
-                if (!response.ok) {
-                  throw new Error('La liste des articles est introuvable (réponse: ' + response.status + ')');
-                }
-                
-                const articles = await response.json();
-                
-                if (!articles || articles.length === 0) {
-                  throw new Error("Aucun article n'a été trouvé dans la liste.");
-                }
-
-                // ÉTAPE C.2 : Choisir un élément au hasard
-                const randomIndex = Math.floor(Math.random() * articles.length);
-                const randomArticle = articles[randomIndex];
-
-                // ÉTAPE C.3 : Rediriger l'utilisateur
-                if (randomArticle && randomArticle.url) {
-                  window.location.href = randomArticle.url;
-                } else {
-                  throw new Error("L'article aléatoire sélectionné est invalide.");
-                }
-
-              } catch (error) {
-                // En cas d'erreur (ex: JSON non trouvé), on prévient l'utilisateur
-                console.error("Erreur du guichet aléatoire:", error);
-                randomButton.innerText = "Erreur 😵";
-              }
-            });
-          }
-        });
-        </script>
-    design:
-      # On le met dans une seule colonne
-      columns: '1'
-
-#
-  # <--- BLOC CALENDRIER 'PATAPHYSIQUE CORRIGÉ --->
+  # <--- BLOC CALENDRIER 'PATAPHYSIQUE --->
   #
   - block: markdown
     id: pataphysique
@@ -97,75 +34,112 @@ sections:
 
         <script>
         document.addEventListener('DOMContentLoaded', async function() {
-          let almanachData = {}; // Notre nouvelle source de données
+          let almanachData = {}; 
 
           try {
-            // --- ÉTAPE A: Charger l'ALMANACH (le nouveau JSON) ---
             try {
               const response = await fetch('/almanach/index.json');
               if (response.ok) {
                 almanachData = await response.json();
-                console.log("Almanach des inoccupations chargé.", almanachData);
-              } else {
-                console.warn("Fichier /almanach/index.json non trouvé. Seuls les saints officiels seront affichés.");
-              }
+              } 
             } catch (fetchError) {
-              console.warn("Erreur lors du fetch de /almanach/index.json:", fetchError);
+              console.warn("Erreur fetch almanach", fetchError);
             }
 
-            // --- ÉTAPE B: Calculer les dates ---
             if (typeof PataphysicalDate === 'undefined') {
-              throw new Error("Moteur de conversion 'pataphysique (PataphysicalDate.js) non chargé.");
+              throw new Error("Moteur 'pataphysique non chargé.");
             }
             
-            const pDateInstance = new PataphysicalDate(); // Date 'pata
-            const today = new Date(); // Date Grégorienne
+            const pDateInstance = new PataphysicalDate();
+            const today = new Date();
 
-            // 1. Calcul de la date 'pata pour l'affichage
             const pDateString = `${pDateInstance.getDay()} ${pDateInstance.getMonthName()} ${pDateInstance.getFullYear()} E.P.`;
 
-            // 2. Calcul de la clé Grégorienne (YYYY-MM-DD) pour la recherche
             const yyyy = today.getFullYear();
-            const mm = String(today.getMonth() + 1).padStart(2, '0'); // +1 car getMonth() est 0-indexé
+            const mm = String(today.getMonth() + 1).padStart(2, '0'); 
             const dd = String(today.getDate()).padStart(2, '0');
-            const gregorianKey = `${yyyy}-${mm}-${dd}`; // ex: "2025-11-16"
+            const gregorianKey = `${yyyy}-${mm}-${dd}`;
 
-            // --- ÉTAPE C: Trouver l'inoccupation (LA NOUVELLE LOGIQUE) ---
-            
-            // On récupère le saint officiel de la bibliothèque
             const officialSaint = pDateInstance.getSaintOfDay();
+            const activity = almanachData[gregorianKey] || officialSaint || "Vacuation.";
 
-            // Priorité 1: Inoccupation de l'almanach (via clé grégorienne)
-            // Priorité 2: Saint Officiel (de la bibliothèque JS)
-            // Priorité 3: Vacuation par défaut
-            const activity = almanachData[gregorianKey] || 
-                               officialSaint || 
-                               "Vacuation. Rien à célébrer ce jour.";
-
-            // --- ÉTAPE D: Injecter dans le HTML ---
             const dateEl = document.getElementById('pataphysical-date');
             const activityEl = document.getElementById('pataphysical-activity');
 
             if (dateEl) dateEl.innerText = pDateString;
-            if (activityEl) activityEl.innerHTML = activity; // innerHTML pour supporter <strong> etc.
+            if (activityEl) activityEl.innerHTML = activity; 
             
           } catch (e) {
-            console.error("Erreur lors de l'initialisation du widget 'pataphysique:", e);
-            const el = document.getElementById('pataphysical-date');
-            if (el) {
-              el.innerText = "Erreur de conversion.";
-              el.style.color = "red";
-            }
-            const activityEl = document.getElementById('pataphysical-activity');
-            if (activityEl) activityEl.innerText = e.message;
+            console.error("Erreur widget:", e);
           }
         });
         </script>
     design:
-      # On le met dans une seule colonne
       columns: '1'
-      # On ajoute un peu d'espace
       spacing:
-        padding: ["1rem", 0, "1rem", 0]
-  
+        # Espace réduit pour coller au bloc suivant
+        padding: ["1rem", "0", "0.5rem", "0"]
+
+  #
+  # <--- BLOC FUSIONNÉ : GUICHET & COMPTEUR (CÔTE À CÔTE) --->
+  #
+  - block: markdown
+    id: dashboard-mixte
+    content:
+      text: |
+        <div class="grid grid-cols-1 md:grid-cols-2 gap-8 items-center justify-center max-w-4xl mx-auto">
+          
+          <div class="text-center border-r-0 md:border-r md:border-gray-200 dark:md:border-gray-700 p-4">
+            <div style="margin-bottom: 1rem;">
+              <a href="#" id="random-article-button" style="font-size: 4rem; text-decoration: none; line-height: 1; transition: transform 0.2s;" title="Guichet Aléatoire" onmouseover="this.style.transform='scale(1.2)'" onmouseout="this.style.transform='scale(1)'">
+                🌀
+              </a>
+              <br>
+              <span class="text-xs font-mono uppercase tracking-widest text-gray-500">Clinamen</span>
+            </div>
+          </div>
+
+          <div class="text-center p-4">
+            {{< compteur-pataphysique >}}
+          </div>
+
+        </div>
+
+        <script>
+        document.addEventListener('DOMContentLoaded', function() {
+          const randomButton = document.getElementById('random-article-button');
+          if (randomButton) {
+            randomButton.addEventListener('click', async function(e) {
+              e.preventDefault(); 
+              try {
+                const response = await fetch('/articles-aleatoires.json');
+                if (!response.ok) throw new Error('Erreur index');
+                const articles = await response.json();
+                if (!articles || articles.length === 0) throw new Error("Vide");
+                
+                const randomIndex = Math.floor(Math.random() * articles.length);
+                const randomArticle = articles[randomIndex];
+
+                if (randomArticle && randomArticle.url) {
+                  // Petit effet visuel avant redirection
+                  randomButton.innerText = "🚀";
+                  setTimeout(() => { window.location.href = randomArticle.url; }, 300);
+                } else {
+                  throw new Error("URL invalide");
+                }
+              } catch (error) {
+                console.error(error);
+                randomButton.innerText = "⛔️";
+              }
+            });
+          }
+        });
+        </script>
+    design:
+      columns: '1'
+      background:
+        color: 'bg-gray-50 dark:bg-slate-900' # Fond unifié pour la zone "Outils"
+      spacing:
+        # Padding interne au bloc
+        padding: ["2rem", "0", "3rem", "0"]
 ---
