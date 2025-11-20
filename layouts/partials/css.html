@@ -1,0 +1,23 @@
+{{/* Architecture Robuste 2025 : Intégration Native Tailwind v4 
+   Ce partial remplace l'ancienne chaîne PostCSS.
+*/}}
+
+{{ $opts := dict "inlineImports" true }}
+
+{{/* CORRECTIF : Ciblage du nouveau point d'entrée standard (main.css) */}}
+{{ $styles := resources.Get "css/main.css" }}
+
+{{ if $styles }}
+  {{ if hugo.IsDevelopment }}
+    {{/* EN DEV : Compilation rapide via CLI natif ou Module Go */}}
+    {{ $styles = $styles | css.TailwindCSS $opts }}
+  {{ else }}
+    {{/* EN PROD : Minification et Fingerprinting obligatoire */}}
+    {{ $styles = $styles | css.TailwindCSS $opts | minify | fingerprint }}
+  {{ end }}
+  
+  <link rel="stylesheet" href="{{ $styles.RelPermalink }}" {{ if not hugo.IsDevelopment }}integrity="{{ $styles.Data.Integrity }}"{{ end }} />
+{{ else }}
+  {{/* Sécurité : Si le fichier est mal nommé, le build échoue explicitement */}}
+  {{ errorf "Architecture Error: assets/css/main.css est introuvable. Vérifiez le dossier assets/." }}
+{{ end }}

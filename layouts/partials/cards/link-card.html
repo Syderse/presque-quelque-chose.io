@@ -1,0 +1,26 @@
+{{/* Partial: Link Card */}}
+{{ $color := .color | default "mauve" }}
+{{ $hoverBorder := printf "hover:border-ctp-%s" $color }}
+{{ $hoverText := printf "group-hover:text-ctp-%s" $color }}
+
+<a href="{{ .url }}" {{ if hasPrefix .url "http" }}target="_blank" rel="noopener"{{ end }} 
+   class="not-prose group relative flex flex-col items-center text-center p-6 rounded-2xl border border-ctp-surface1 bg-ctp-surface0/40 backdrop-blur-md transition-all duration-300 hover:-translate-y-1 hover:shadow-xl {{ $hoverBorder }} outline-none h-full">
+   
+   {{/* NOTE : Plus besoin de !no-underline ici, le Reset Global s'en charge */}}
+
+  {{ with .icon }}
+    <div class="text-4xl mb-4 transform group-hover:scale-110 transition-transform duration-300">
+      {{ . }}
+    </div>
+  {{ end }}
+
+  <h3 class="text-xl font-bold lowercase text-ctp-text {{ $hoverText }} transition-colors m-0">
+    {{ .title }}
+  </h3>
+
+  {{ with .subtitle }}
+    <p class="text-sm text-ctp-overlay1 mt-2 font-mono leading-tight">
+      {{ . }}
+    </p>
+  {{ end }}
+</a>

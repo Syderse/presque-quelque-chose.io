@@ -1,178 +1,221 @@
-SYSTEM CONTEXT & ARCHITECTURE
+System Context: Presque Quelque Chose
 
-Projet : Presque Quelque Chose
+Dernière Mise à jour : 20 Novembre 2025
+Architecture : Hugo Native + Tailwind CSS v4 (Hybrid Hugo Blox)
+Statut : ✅ Validé & Robuste
+Philosophie : "Native Pure", JIT Synchronisé, Zero-Config JS.
 
-Dernière mise à jour : 18 Novembre 2025
-Statut : En développement actif
-Type : Blog expérimental, Portfolio Hybride & Almanach 'Pataphysique
+1. Stack Technique & Versions
 
-1. IDENTITÉ & VISION
+Générateur : Hugo Extended (v0.128.0+ requis).
 
-Nom du projet : Presque Quelque Chose.
+Moteur CSS : Tailwind CSS v4 (via CLI Binaire).
 
-URL Actuelle : presque-quelque-chose.io (Hébergé sur Netlify).
+Framework Base : Hugo Blox (Customisé).
 
-URL Cible : presque-quelque-chose.com.
+Package Manager : pnpm (v10.x).
 
-Concept : Un site de documentation personnelle et créative, intégrant des concepts de 'Pataphysique (calendrier, esthétique).
+Langage Template : Go Template.
 
-Esthétique Clé :
+2. Architecture : "Native Tailwind Integration"
 
-Thème sombre/clair avec couleurs spécifiques (Laiton, Sang séché, Cyan, Magenta).
+Ce projet suit l'architecture Standard 2025. Il élimine totalement la dépendance à Node.js/PostCSS pour la compilation des styles en production.
 
-Curseur personnalisé (Fourmi 🐜).
+2.1 Le Pipeline JIT (Boucle Critique)
 
-Titres et liens en dégradés animés.
+L'architecture repose sur une synchronisation précise pour éviter les "Race Conditions" :
 
-Structure en "Almanach" quotidien.
+Génération : Hugo compile le HTML et écrit les classes utilisées dans hugo_stats.json.
 
-2. ENVIRONNEMENT TECHNIQUE (La Machine)
+Détection : Le fichier hugo_stats.json est monté virtuellement dans assets/watching/.
 
-Ce projet nécessite un environnement spécifique pour compiler les assets (images WebP et CSS Tailwind v4).
+Compilation : Tailwind (via la directive @source dans le CSS) détecte le changement et régénère les styles instantanément.
 
-Machine : Apple Silicon (M1/M2/M3 - arm64).
+3. Règles d'Or (Do's & Don'ts)
 
-Système : macOS.
+🟢 OBLIGATOIRE (Do's)
 
-Moteur (Vital) : Hugo Extended v0.152.2+ (La version "Extended" est OBLIGATOIRE).
+Point d'entrée unique : Tout le CSS part de assets/css/main.css.
 
-Langage : Go 1.25.4 (Gère les modules Hugo).
+Imports CSS : Les styles personnalisés doivent être gérés via @import ou @plugin CSS, jamais via SASS/SCSS.
 
-Runtime JS : Node.js v25.2.1.
+Hugo Stats : Le fichier hugo_stats.json est la source de vérité absolue.
 
-Package Manager : pnpm v10.14.0 (Utilisé pour la rapidité et l'économie d'espace).
+Classes Complètes : Toujours écrire les noms de classes en entier dans le HTML (ex: bg-red-500). Jamais de concaténation dynamique (bg-{{ $color }}).
 
-Git : v2.39.5.
+🔴 INTERDIT (Don'ts)
 
-3. ARCHITECTURE LOGICIELLE (Le Moteur)
+Pas de PostCSS Legacy : Ne jamais réintroduire postcss.config.js ou resources.PostCSS.
 
-Stack
+Pas de dossier Static : Le CSS source ne doit jamais être dans static/. Il doit vivre dans assets/ pour être traité par Hugo Pipes.
 
-Base : Hugo Blox (Template "Blog Starter").
+Pas de tailwind.config.js : La configuration v4 se fait exclusivement en CSS (@theme).
 
-CSS Framework : Tailwind CSS v4 (Configuration avancée).
+4. Structure & Responsabilités
 
-Modules : Gérés via hugo.yaml et go.mod.
+Vue Arborescente
 
-La "Solution Radicale v3.2" (Gestion du Style)
+.
+├── assets/
+│   ├── css/
+│   │   └── main.css           <-- SOURCE DE VÉRITÉ (@import "tailwindcss", @theme)
+│   └── watching/              <-- Dossier virtuel (Mount) pour la synchro JIT
+├── config/
+│   └── _default/
+│       └── hugo.yaml          <-- Config Build (writeStats: true)
+├── layouts/
+│   ├── _default/
+│   │   └── baseof.html        <-- Layout Maître (Appelle css.html)
+│   └── partials/
+│       └── css.html           <-- Pipeline Hugo Pipes (css.TailwindCSS)
+├── hugo_stats.json            <-- Artefact de build (Ignoré par Git)
+└── package.json               <-- Sert uniquement à installer le binaire CLI
 
-Le site utilise une configuration Tailwind v4 forcée manuellement pour contourner les limitations du thème standard.
 
-Fichier maître : tailwind.config.js.
+5. Configuration Critique
 
-Mécanisme : Le plugin @tailwindcss/typography est câblé manuellement dans la config JS pour appliquer les couleurs 'Pataphysiques à la prose (italiques verts, citations oranges, etc.).
+A. Montage des Modules (hugo.yaml)
 
-Overrides CSS :
+build:
+  writeStats: true # INDISPENSABLE
 
-Les styles globaux et animations (dégradés, curseur fourmi) sont définis dans <style> à l'intérieur de layouts/baseof.html.
+module:
+  mounts:
+    - source: assets
+      target: assets
+    - source: hugo_stats.json
+      target: assets/watching/hugo_stats.json  # Le "Hack" officiel pour le JIT
 
-C'est un override critique : ne pas supprimer ce bloc <style> sans précaution.
 
-Structure des Dossiers Clés
+B. Configuration CSS (main.css)
 
-content/ : Tout le contenu rédactionnel (Markdown).
+C'est ici que réside le Design System "Pastel".
 
-almanach/ : Entrées journalières (une page par jour).
+@import "tailwindcss";
 
-solutions-imaginaires/ : Contenu créatif et fictionnel.
+/* Sources surveillées par le moteur JIT */
+@source "../../layouts/**/*.html";
+@source "../../content/**/*.md";
+@source "../watching/hugo_stats.json";
 
-layouts/ : Les fichiers HTML qui structurent le site (contient les overrides critiques).
+@theme {
+  /* Palette Pastel Custom */
+  --color-pastel-bg:   #fdfbf7;
+  --color-pastel-text: #334155;
+  --color-pastel-a:    #8b5cf6;
+  /* ... */
+}
 
-static/ : Fichiers servis tels quels (PDFs, JS pur).
 
-js/PataphysicalDate.js : Script du calendrier.
+6. Workflow de Développement
 
-_vendor/ : Dossier généré par hugo mod vendor (contient le code du thème téléchargé).
+Commandes
 
-4. SCRIPTS & FONCTIONNALITÉS "MAISON"
+Lancer le serveur :
+pnpm dev
+(Alias pour hugo server --disableFastRender)
+Note : --disableFastRender assure le rafraîchissement correct du CSS lors des modifications de structure.
 
-A. Le Calendrier 'Pataphysique
+Construire pour la Prod :
+pnpm build
+(Alias pour hugo --minify)
 
-Fichiers : static/js/PataphysicalDate.js et static/data/pataphysique_custom.json.
+Dépannage (Troubleshooting)
 
-Fonction : Convertit la date grégorienne en date 'Pataphysique affichée sur le site.
+Styles cassés ? Vérifiez que hugo_stats.json existe à la racine. Si non, vérifiez hugo.yaml.
 
-État : Fonctionnel.
+Erreur de build ? Assurez-vous que vous n'avez pas de node_modules orphelins contenant d'anciennes versions de PostCSS qui entreraient en conflit.
 
-5. WORKFLOW DE DÉVELOPPEMENT
+Design System non appliqué ? Vérifiez que la classe .prose-pastel est bien présente sur le conteneur <article> dans baseof.html.
 
-Dépôt & Déploiement
+7. Git Ignore
 
-Repo GitHub : https://github.com/Syderse/presque-quelque-chose.io
+Ces fichiers ne doivent jamais être versionnés :
 
-Hébergeur : Netlify.
+hugo_stats.json
 
-Mode : Continuous Deployment (CD). Chaque git push sur la branche main déclenche une mise à jour du site.
+resources/
 
-Commandes Quotidiennes (Terminal)
+public/
 
-Lancer le site en local :
+node_modules/
 
-hugo server -D
+.hugo_build.lock
 
+Architecture auditée et validée le 20/11/2025.
 
-(Note : Pas besoin de npm run dev avec cette config Tailwind v4, Hugo gère tout).
+---
+Mise à Jour : 20 Novembre 2025 (Update 2)
+Objet : Refonte Homepage & Architecture Hybride
+Statut : ✅ En Production
+---
 
-Mettre à jour les dépendances (si besoin) :
+8. Architecture Spécifique : Homepage "Hybride"
 
-pnpm install
-hugo mod get -u
-hugo mod tidy
+Problème Résolu :
+L'injection de widgets HTML complexes (Compteurs, Grilles) directement dans le Markdown (`content/_index.md`) causait des conflits de rendu (Goldmark transformant le HTML en blocs de code) et rendait la maintenance illisible.
 
-6. DOCUMENTATION DES COULEURS (Charte)
+Solution : Le Modèle "Layout-First"
+Pour la page d'accueil uniquement, l'architecture est inversée :
+- Layout (`layouts/index.html`) : Contient toute la structure structurelle (Hero, Grille, appels de scripts). C'est le "Squelette".
+- Content (`content/_index.md`) : Ne contient que le texte éditorial (Intro). C'est la "Chair".
+- Injection : Le Layout appelle `{{ .Content }}` à un endroit précis et sécurisé.
 
-Les couleurs sont définies en dur dans tailwind.config.js et layouts/baseof.html.
+9. Standards de Composants (Design System)
 
-Primaire (Laiton) : Gamme #c09f61 (Gold/Bronze).
+A. Widgets & Partials
+- Règle : Tout composant interactif (JS + HTML) doit être un Partial, pas un Shortcode, s'il est utilisé dans un layout dur.
+- Emplacement : `layouts/partials/widgets/` (ex: `compteur.html`).
+- Style : Utilisation de `bg-ctp-surface0/40` + `backdrop-blur-md` pour l'effet de profondeur Catppuccin.
 
-Secondaire (Sang) : Gamme #a96a6a (Rouge sombre).
+B. Header "Bold"
+- Typographie : Logo en `text-3xl font-black`.
+- Navigation : Style "Pill" (`rounded-full`) au survol pour une affordance moderne.
+- Verre : `backdrop-blur-xl` obligatoire pour la lisibilité sur le scroll.
 
-Italique : #008000 (Vert naturel).
+C. Surcharges CSS "Brutales" (JIT)
+Dans certains contextes (comme le Hero), nous devons forcer le contraste contre les réglages par défaut de `.prose`.
+Méthode validée : Sélecteurs arbitraires Tailwind.
+Exemple : `[&>p]:text-ctp-subtext0` force la couleur de tous les paragraphes enfants directs, ignorant la cascade CSS standard.
 
-Citations : #E67E22 (Orange).
+10. Arborescence Mise à Jour
 
-Animations : Cycle Magenta (#CC00CC) -> Cyan (#00CCCC).
+layouts/
+├── index.html                  <-- Structure Maître Homepage
+└── partials/
+    ├── header.html             <-- Version "Bold & Chunky"
+    └── widgets/
+        └── compteur.html       <-- Composant isolé (ex-Shortcode)
 
-7. Gestion de mes conversations avec toi (Gemini)
+---
+Mise à Jour : 20 Novembre 2025 (Update 3)
+Objet : Harmonisation des Sections & Réparation Wiki Links
+Statut : ✅ Validé
+---
 
-Quand je dis "initie le prompt de réamorçage", produis un prompt suivant ce modèle : Bonjour Gemini.
+11. Standardisation des Listes (Architecture Hybride)
 
-Notre session de travail actuelle arrive à son terme. Pour garantir une reprise efficace lors de notre prochaine conversation, ta mission est de générer un "prompt de réamorçage" complet et structuré.
+A. Le Template Maître (`layouts/_default/list.html`)
+Une "Machine à Cartes" unifiée qui remplace les layouts spécifiques du thème. Elle gère deux modes :
+- Mode Manuel : Itère sur `params.items` défini dans le Front Matter (ex: Rhizome Curieux).
+- Mode Automatique : Itère sur `.Pages` si aucun item n'est défini (ex: Ondes & Pixels).
+- Design DRY : Tout le visuel des cartes est isolé dans `partials/cards/link-card.html`.
 
-Ce prompt me servira à démarrer une nouvelle conversation avec toi, en te fournissant immédiatement tout le contexte nécessaire.
+B. Nettoyage du Markdown (Clean Code)
+- Suppression totale des blocs `<div>` HTML brut dans les fichiers `content/**/*.md`.
+- Adoption de métadonnées standardisées dans le Front Matter pour piloter l'affichage :
+  - `icon`: Emoji représentant l'entrée.
+  - `color`: Nom du token couleur Catppuccin (ex: "mauve", "peach", "teal") pour la thématisation des bordures et survols.
 
-Pour cela, tu vas analyser et synthétiser l'intégralité de notre conversation actuelle.
+12. Moteur de Liens Internes (Wiki Links 2.0)
 
-Le prompt que tu vas générer doit impérativement suivre la structure suivante, en remplissant chaque section avec les informations pertinentes issues de nos échanges :
+Refonte du Render Hook `layouts/_markup/render-link.html` :
+- Correction du bug de résolution sur les Page Bundles (conflits `index.md`).
+- Support natif des liens relatifs (ex: `../mon-article`).
+- Sécurisation du code (remplacement de `.IsFragment` par `strings.HasPrefix`).
 
-1. Objectif Global :
+13. Décision Stratégique : Pivot Navigation (À venir)
+- Constat : Le Header horizontal limite la représentation de la profondeur du site ("Rhizome").
+- Décision : Transition validée vers une **Sidebar Latérale (Navigation Gauche)**.
+- Contrainte technique : Utilisation de `<details>`/`<summary>` pour une arborescence sans JavaScript.
 
-    Résume en une phrase le but final de mon projet (par exemple, "Mettre en place une section d'articles similaires fonctionnelle").
-
-2. Le Problème Spécifique Actuel :
-
-    Décris le point de blocage exact où nous nous sommes arrêtés.
-
-3. Résumé des Tentatives et Apprentissages :
-
-    Liste de manière chronologique les différentes approches que nous avons testées.
-
-    Pour chaque tentative, mentionne le code que nous avons utilisé et le résultat obtenu (succès partiel, erreur, etc.).
-
-    Ceci est crucial pour ne pas refaire les mêmes erreurs.
-
-4. Contexte Technique Établi :
-
-    Rappelle les informations techniques confirmées : version de Hugo, nom du thème, structure des fichiers, etc.
-
-5. État Actuel des Fichiers Clés :
-
-    Présente la version la plus récente et pertinente des fichiers sur lesquels nous travaillions (par exemple, layouts/_default/single.html, layouts/partials/related.html, config.toml, etc.). Affiche le code complet de ces fichiers dans leur état actuel.
-
-6. Prochaine Étape / Demande Claire :
-
-    Formule la question ou la demande précise pour la nouvelle conversation. Que devons-nous faire ou résoudre au début de la prochaine session ?
-
-L'objectif final est que je puisse simplement copier-coller l'intégralité de ta réponse pour lancer notre prochaine session de travail de manière fluide et sans perte de temps.
-
-Génère maintenant ce prompt de réamorçage.

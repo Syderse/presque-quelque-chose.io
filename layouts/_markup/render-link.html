@@ -1,55 +1,37 @@
 {{- $dest := .Destination -}}
-{{- $is_remote := (strings.HasPrefix $dest "http") -}}
-{{- $is_anchor := (strings.HasPrefix $dest "#") -}}
+{{- $is_anchor := strings.HasPrefix $dest "#" -}}
+{{- $is_remote := or (strings.HasPrefix $dest "http") (strings.HasPrefix $dest "//") -}}
 
-{{- /*
-================================================================================
-  CAS 1 : LIEN EXTERNE ou ANCRE
-  Si le lien commence par "http" ou "#", on ne fait rien de spécial.
-================================================================================
+{{- /* LOGIQUE :
+  1. Si c'est un lien web (http) ou une ancre (#top), on affiche direct.
+  2. Sinon, on essaie de trouver la page Hugo correspondante avec .GetPage (Liens relatifs)
 */ -}}
+
 {{- if or $is_remote $is_anchor -}}
-  <a href="{{ $dest | safeURL }}"{{ with .Title}} title="{{ . | safeHTMLAttr }}"{{ end }}{{ if $is_remote }} target="_blank" rel="noopener"{{ end }}>{{ .Text | safeHTML }}</a>
-
-{{- /*
-================================================================================
-  CAS 2 : LIEN INTERNE (ce qui nous intéresse)
-  On va chercher la page par son nom de fichier.
-================================================================================
-*/ -}}
-{{- else -}}
-  {{- $found_page := "" -}}
-  {{- $link_filename := $dest | path.Base -}} {{/* Prend "foo/bar/page.md" et garde "page.md" */}}
-
-  {{- /* On ne lance la recherche que si le lien se termine par .md */ -}}
-  {{- if strings.HasSuffix $link_filename ".md" -}}
-    {{- /* C'est la magie : on boucle sur TOUTES les pages du site.
-    C'est lent sur un site de 10 000 pages, mais parfait pour un blog.
-    */ -}}
-    {{- range site.RegularPages -}}
-      {{- /* On compare le nom de fichier du lien (page.md) avec le nom de fichier de la page (.File.LogicalName) */ -}}
-      {{- if eq .File.LogicalName $link_filename -}}
-        {{- $found_page = . -}} {{/* On l'a trouvée ! */}}
-      {{- end -}}
-    {{- end -}}
-  {{- end -}}
-
-  {{- /*
-  ==============================================================================
-    RÉSULTAT : On a trouvé la page !
-    On utilise le lien permanent (.RelPermalink) de la page trouvée.
-  ==============================================================================
-  */ -}}
-  {{- if $found_page -}}
-    <a href="{{ $found_page.RelPermalink }}"{{ with $found_page.Title }} title="{{ . | safeHTMLAttr }}"{{ end }}>{{ .Text | safeHTML }}</a>
   
-  {{- /*
-  ==============================================================================
-    RÉSULTAT : Pas trouvé (c'est un lien cassé ou un lien vers une image /static/...)
-    On laisse le lien tel quel.
-  ==============================================================================
-  */ -}}
+  <a href="{{ $dest | safeURL }}"
+    {{ with .Title }} title="{{ . }}"{{ end }}
+    {{ if $is_remote }} target="_blank" rel="noopener noreferrer"{{ end }}>
+    {{ .Text | safeHTML }}
+  </a>
+
+{{- else -}}
+
+  {{- /* Tentative de résolution interne */ -}}
+  {{- $page := .Page.GetPage $dest -}}
+
+  {{- if $page -}}
+    {{- /* CAS A : Page trouvée ! On utilise son permalien canonique */ -}}
+    <a href="{{ $page.RelPermalink }}" 
+       class="text-ctp-mauve hover:text-ctp-mauve/80 underline decoration-ctp-mauve/30 underline-offset-4 transition-colors"
+       {{ with .Title }} title="{{ . }}"{{ end }}>
+      {{ .Text | safeHTML }}
+    </a>
+  
   {{- else -}}
-    <a href="{{ $dest | safeURL }}"{{ with .Title}} title="{{ . | safeHTMLAttr }}"{{ end }}>{{ .Text | safeHTML }}</a>
+    {{- /* CAS B : Pas trouvé (Fichier statique, PDF, ou lien cassé). On laisse tel quel. */ -}}
+    <a href="{{ $dest | safeURL }}" {{ with .Title }} title="{{ . }}"{{ end }} class="text-red-500 decoration-wavy underline">
+      {{ .Text | safeHTML }} </a>
   {{- end -}}
+
 {{- end -}}

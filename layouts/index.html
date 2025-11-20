@@ -1,0 +1,176 @@
+{{ define "main" }}
+  {{/* LAYOUT HOMEPAGE - REFACTORING "ULTRA-COMPACT V3"
+       Objectif : Rendu Widget strict.
+       - Cartes très basses (140px)
+       - Typographie standard (pas de headline size)
+  */}}
+  
+  <div class="w-full flex flex-col gap-6 animate-fade-in">
+
+    {{/* --- SECTION HERO (Ajustée aussi pour l'équilibre) --- */}}
+    <section class="flex flex-col items-center text-center pt-2 pb-2 space-y-4">
+      
+      <div class="relative group">
+        <div class="absolute -inset-1 bg-gradient-to-r from-ctp-mauve to-ctp-blue rounded-full blur opacity-20 group-hover:opacity-60 transition duration-1000 group-hover:duration-200"></div>
+        
+        {{/* Avatar : w-32 (128px) conservé */}}
+        <img src="/media/avatar.jpg" 
+             alt="Avatar" 
+             class="relative w-32 h-32 rounded-full border-4 border-ctp-base bg-ctp-surface0 object-cover shadow-xl"
+             onerror="this.style.display='none'; this.nextElementSibling.style.display='flex';"
+        >
+        <div class="hidden relative w-32 h-32 rounded-full border-4 border-ctp-surface1 bg-ctp-base items-center justify-center text-3xl">👻</div>
+      </div>
+
+      <div class="max-w-xl mx-auto space-y-3 px-0">
+        {{/* Titre : Encore un peu plus fin */}}
+        <h1 class="text-2xl md:text-4xl font-black tracking-tight text-ctp-text drop-shadow-md">
+          Presque <span class="text-transparent bg-clip-text bg-gradient-to-r from-ctp-mauve via-ctp-pink to-ctp-peach animate-gradient-x">Quelque Chose</span>
+        </h1>
+        
+        <div class="prose prose-sm prose-invert mx-auto text-center 
+                    text-ctp-text font-serif italic leading-normal
+                    [&>p]:text-ctp-subtext0 [&>p]:text-sm [&>p]:md:text-base [&>p]:font-medium
+                    [&>blockquote]:border-none [&>blockquote]:text-ctp-pink">
+            {{ .Content }}
+        </div>
+      </div>
+
+    </section>
+
+    <div class="w-full h-px bg-gradient-to-r from-transparent via-ctp-surface1 to-transparent opacity-40"></div>
+
+    {{/* --- DASHBOARD GRID --- */}}
+    <div class="grid grid-cols-1 md:grid-cols-2 gap-3 w-full">
+
+      {{/* CARTE 1 : CALENDRIER PATAPHYSIQUE */}}
+      {{/* Ultra-Compact: min-h-[140px], p-4 */}}
+      <div class="bg-ctp-surface0/40 backdrop-blur-md border border-ctp-surface1 rounded-xl p-4 flex flex-col items-center justify-center text-center shadow-sm min-h-[140px] hover:border-ctp-mauve/30 transition-colors">
+        <div class="text-3xl mb-2">📅</div> {{/* Emoji 3xl */}}
+        <h3 class="text-[10px] font-mono uppercase tracking-widest text-ctp-overlay1 mb-1">'patadate</h3>
+        
+        <div class="space-y-0.5">
+          <div id="pataphysical-date" class="text-base font-bold text-ctp-mauve min-h-[1.5rem] animate-pulse">
+            Calcul...
+          </div>
+          <div id="pataphysical-activity" class="text-xs text-ctp-text font-serif italic leading-snug">
+            </div>
+        </div>
+      </div>
+
+      {{/* CARTE 2 : CLINAMEN */}}
+      <a href="#" id="random-article-button" class="group relative bg-ctp-surface0/40 backdrop-blur-md border border-ctp-surface1 rounded-xl p-4 flex flex-col items-center justify-center text-center shadow-sm min-h-[140px] hover:bg-ctp-surface0/60 hover:border-ctp-mauve hover:shadow-ctp-mauve/10 transition-all duration-300 no-underline cursor-pointer z-10">
+        
+        <div class="absolute top-2 right-2 text-ctp-surface2 group-hover:text-ctp-mauve transition-colors scale-75">
+          <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14"/><path d="m12 5 7 7-7 7"/></svg>
+        </div>
+        
+        {{/* Icone : text-3xl */}}
+        <span class="text-3xl mb-2 transform group-hover:scale-110 group-hover:rotate-12 transition-transform duration-300 grayscale group-hover:grayscale-0">
+          🎲
+        </span>
+        
+        <h3 class="text-base font-bold text-ctp-text group-hover:text-ctp-mauve transition-colors mb-0">
+          Clinamen
+        </h3>
+        <p class="text-[10px] text-ctp-subtext0 group-hover:text-ctp-text transition-colors mt-1">
+          Page aléatoire
+        </p>
+      </a>
+
+      {{/* CARTE 3 : COMPTEUR */}}
+      <div class="md:col-span-2 w-full">
+        {{ partial "widgets/compteur.html" . }}
+      </div>
+
+    </div>
+
+    <div class="py-4"></div>
+
+  </div>
+
+  {{/* --- SCRIPTS --- */}}
+  <script src="/js/PataphysicalDate.js"></script>
+  <script>
+  document.addEventListener('DOMContentLoaded', async function() {
+    
+    // 1. CALENDRIER
+    let almanachData = {}; 
+    try {
+      const response = await fetch('/almanach/index.json');
+      if (response.ok) almanachData = await response.json();
+    } catch (e) { console.warn("Almanach non chargé"); }
+
+    if (typeof PataphysicalDate !== 'undefined') {
+      const pDateInstance = new PataphysicalDate();
+      const today = new Date();
+      const pDateString = `${pDateInstance.getDay()} ${pDateInstance.getMonthName()} ${pDateInstance.getFullYear()} E.P.`;
+      
+      const yyyy = today.getFullYear();
+      const mm = String(today.getMonth() + 1).padStart(2, '0'); 
+      const dd = String(today.getDate()).padStart(2, '0');
+      const gregorianKey = `${yyyy}-${mm}-${dd}`; 
+
+      const officialSaint = pDateInstance.getSaintOfDay();
+      const activity = almanachData[gregorianKey] || officialSaint || "Vacuation.";
+
+      const dateEl = document.getElementById('pataphysical-date');
+      dateEl.innerText = pDateString;
+      dateEl.classList.remove('animate-pulse'); 
+      
+      document.getElementById('pataphysical-activity').innerHTML = activity; 
+    }
+
+// ... Code précédent ...
+
+    // 2. CLINAMEN
+    const randomButton = document.getElementById('random-article-button');
+    if (randomButton) {
+      randomButton.addEventListener('click', async function(e) {
+        e.preventDefault(); 
+        
+        // MISE A JOUR SELECTEUR JS : text-3xl
+        const iconSpan = randomButton.querySelector('span.text-3xl'); 
+        const titleH3 = randomButton.querySelector('h3');
+        const originalIcon = iconSpan.innerText;
+        
+        try {
+            iconSpan.innerText = "⏳";
+            titleH3.innerText = "...";
+            
+            // --- MODIFICATION ICI : On appelle le bon fichier défini dans hugo.yaml ---
+            const response = await fetch('/articles-aleatoires.json'); 
+            // -------------------------------------------------------------------------
+            
+            if (!response.ok) throw new Error('Erreur JSON');
+            
+            const data = await response.json();
+            // Le filtre window.location.href fonctionne maintenant car on a "permalink" dans le JSON
+            const articles = data.filter(item => item.permalink && item.title && item.permalink !== window.location.href);
+
+            if (!articles || articles.length === 0) throw new Error("Aucune destination");
+            
+            const randomIndex = Math.floor(Math.random() * articles.length);
+            const randomArticle = articles[randomIndex];
+
+            if (randomArticle && randomArticle.permalink) {
+                iconSpan.innerText = "🚀";
+                titleH3.innerText = "Go";
+                setTimeout(() => { window.location.href = randomArticle.permalink; }, 500);
+            }
+        } catch (error) {
+            console.error("Erreur Clinamen:", error);
+            iconSpan.innerText = "💥";
+            titleH3.innerText = "Err";
+            setTimeout(() => { 
+                iconSpan.innerText = originalIcon; 
+                titleH3.innerText = "Clinamen";
+            }, 2000);
+        }
+      });
+    }
+// ... Fin du script ...
+
+  });
+  </script>
+{{ end }}

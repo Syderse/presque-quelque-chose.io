@@ -1,0 +1,65 @@
+<nav class="sticky top-0 h-screen overflow-y-auto w-full p-6">
+
+  {{/* HEADER SIDEBAR AVEC TOGGLE */}}
+  <div class="flex justify-between items-start pb-8 border-b border-ctp-surface0/40 mb-8">
+    
+    {{/* Logo & Baseline */}}
+    <div class="flex flex-col">
+      <a href="{{ .Site.Home.RelPermalink }}" class="text-4xl font-black tracking-tighter font-sans group block">
+        <span class="text-transparent bg-clip-text bg-gradient-to-br from-ctp-mauve to-ctp-blue group-hover:from-ctp-pink group-hover:to-ctp-mauve transition-all duration-500">
+          Presque.
+        </span>
+      </a>
+    </div>
+
+    {{/* --- BOUTON FERMER (COLLAPSE) --- */}}
+    <button onclick="toggleSidebar()" 
+            class="p-1.5 -mr-2 -mt-2 rounded-md text-ctp-overlay0 hover:text-ctp-mauve hover:bg-ctp-surface0/50 transition-colors"
+            aria-label="Réduire le menu">
+      <svg xmlns="http://www.w3.org/2000/svg" class="w-5 h-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M11 19l-7-7 7-7m8 14l-7-7 7-7" />
+      </svg>
+    </button>
+
+  </div>
+
+  {{/* ================================================================
+      1. CONSTRUCTION DE LA "BLACKLIST" D'URLS
+      ================================================================  
+  */}}
+  {{ $menuURLs := slice }}
+  {{ range .Site.Menus.main }}
+    {{ $menuURLs = $menuURLs | append .URL }}
+  {{ end }}
+
+  {{/* --- NAVIGATION PRINCIPALE --- */}}
+  <div class="space-y-3">
+    <h3 class="text-sm font-bold text-ctp-subtext0 uppercase tracking-wider">Navigation</h3>
+    <ul class="space-y-1">
+      {{ range .Site.Menus.main }}
+        <li>
+          <a href="{{ .URL }}" 
+             class="flex items-center p-3 text-ctp-text font-semibold rounded-lg transition-colors duration-200 
+                  {{ if $.IsMenuCurrent "main" . }}bg-ctp-surface0 text-ctp-mauve shadow-lg shadow-ctp-mauve/10{{ else }}hover:bg-ctp-surface0/60 hover:text-ctp-mauve{{ end }}">
+            {{ .Name | title }}
+          </a>
+        </li>
+      {{ end }}
+    </ul>
+  </div>
+
+  {{/* ================================================================
+      2. FILTRAGE DU RHIZOME
+      ================================================================  
+  */}}
+  {{ $rhizomeSections := slice }}
+  {{ range .Site.Sections.ByTitle }}
+    {{ if and 
+        (not (or (eq .Kind "term") (eq .Kind "taxonomy"))) 
+        (not (in $menuURLs .RelPermalink)) 
+    }}
+      {{ $rhizomeSections = $rhizomeSections | append . }}
+    {{ end }}
+  {{ end }}
+
+</nav>

@@ -1,0 +1,93 @@
+<!doctype html>
+<html lang="{{ .Site.Language.Lang | default "fr" }}" class="h-full antialiased scroll-smooth dark">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    
+    <title>{{ if .IsHome }}{{ .Site.Title }}{{ else }}{{ .Title }} | {{ .Site.Title }}{{ end }}</title>
+    
+    {{- partial "css.html" . -}}
+    
+    <meta name="description" content="{{ with .Description }}{{ . }}{{ else }}{{ .Site.Params.description }}{{ end }}" />
+    
+    {{/* --- SCRIPT ANTI-FOUC --- */}}
+    <script>
+      const savedState = localStorage.getItem('sidebar-state') || 'open';
+      document.documentElement.style.setProperty('--sidebar-width', savedState === 'closed' ? '0px' : '280px');
+    </script>
+  </head>
+
+  <body class="min-h-screen bg-ctp-base text-ctp-text selection:bg-ctp-surface2 selection:text-ctp-mauve font-sans">
+
+    <div id="app-layout" 
+         class="hidden md:grid lg:grid-cols-[var(--sidebar-width)_minmax(0,1fr)] min-h-screen transition-[grid-template-columns] duration-300 ease-in-out"
+         style="--sidebar-width: 280px;">
+
+      {{/* COLONNE GAUCHE (SIDEBAR) */}}
+      <aside class="relative overflow-hidden bg-ctp-mantle border-r border-ctp-surface0/40">
+        <div class="w-[280px] h-full">
+           {{- partial "sidebar.html" . -}}
+        </div>
+      </aside>
+
+      {{/* COLONNE DROITE (CONTENU) */}}
+      <main class="flex-grow w-full bg-ctp-base overflow-y-auto relative">
+        
+        {{/* BOUTON "OUVRIR" */}}
+        <button id="sidebar-open-btn" 
+                onclick="toggleSidebar()"
+                class="fixed top-4 left-4 z-50 p-2 rounded-lg bg-ctp-surface0/50 text-ctp-subtext0 hover:text-ctp-mauve hover:bg-ctp-surface1 backdrop-blur-md transition-all duration-300 hidden"
+                aria-label="Ouvrir le menu">
+            <svg xmlns="http://www.w3.org/2000/svg" class="w-6 h-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 5l7 7-7 7M5 5l7 7-7 7" />
+            </svg>
+        </button>
+        
+        <div class="mx-auto max-w-7xl px-4 py-12 sm:px-6 lg:px-8">
+          <article class="prose prose-lg md:prose-xl prose-catppuccin max-w-none">
+            {{ block "main" . }}{{ end }}
+          </article>
+        </div>
+
+        {{/* FOOTER SUPPRIMÉ ICI */}}
+      </main>
+    </div>
+
+    {{/* MOBILE */}}
+    <div class="md:hidden flex flex-col min-h-screen">
+      <main class="flex-grow w-full bg-ctp-base overflow-y-auto pb-20">
+        <div class="mx-auto max-w-4xl px-4 py-12">
+          <article class="prose prose-lg prose-catppuccin max-w-none">
+            {{ block "main" . }}{{ end }}
+          </article>
+        </div>
+      </main>
+      {{- partial "mobile-nav.html" . -}}
+    </div>
+
+    {{/* --- LOGIQUE JAVASCRIPT --- */}}
+    <script>
+      const layout = document.getElementById('app-layout');
+      const openBtn = document.getElementById('sidebar-open-btn');
+      
+      if (localStorage.getItem('sidebar-state') === 'closed') {
+        openBtn.classList.remove('hidden');
+      }
+
+      function toggleSidebar() {
+        const isClosed = layout.style.getPropertyValue('--sidebar-width') === '0px';
+        
+        if (isClosed) {
+          layout.style.setProperty('--sidebar-width', '280px');
+          openBtn.classList.add('hidden');
+          localStorage.setItem('sidebar-state', 'open');
+        } else {
+          layout.style.setProperty('--sidebar-width', '0px');
+          setTimeout(() => openBtn.classList.remove('hidden'), 100);
+          localStorage.setItem('sidebar-state', 'closed');
+        }
+      }
+    </script>
+
+  </body>
+</html>

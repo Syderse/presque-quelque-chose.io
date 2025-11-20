@@ -1,0 +1,99 @@
+{{/* Shortcode: Compteur de Clics 'Pataphysique - Version Catppuccin Native
+   Usage: {{< compteur-pataphysique >}}
+*/}}
+
+<div class="click-counter-wrapper w-full h-full flex flex-col justify-between p-6 rounded-2xl bg-ctp-surface0/40 border border-ctp-surface1 backdrop-blur-sm shadow-lg transition-all hover:border-ctp-mauve/50 group hover:shadow-ctp-mauve/10">
+  
+  <div class="mb-6 font-mono text-xs uppercase tracking-widest text-ctp-overlay1 text-center">
+  </div>
+
+  <button id="btn-pataphysique" 
+          class="group relative w-full flex items-center justify-center py-4 text-lg font-bold text-ctp-base transition-all duration-300 bg-gradient-to-r from-ctp-mauve to-ctp-blue rounded-xl shadow-md hover:shadow-ctp-mauve/40 hover:-translate-y-0.5 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-offset-ctp-base focus:ring-ctp-mauve active:scale-95 overflow-hidden">
+    
+    {{/* Shine effect on hover */}}
+    <span class="absolute inset-0 w-full h-full bg-gradient-to-b from-white/20 to-transparent opacity-0 group-hover:opacity-100 transition-opacity"></span>
+    
+    <span class="relative flex items-center gap-2 z-10">
+      <span class="text-xl transition-transform duration-700 group-hover:rotate-[360deg]">🌀</span>
+      <span>Perturber</span>
+    </span>
+  </button>
+
+  <div class="mt-6 flex flex-col items-center">
+    <span class="font-mono text-xs text-ctp-subtext0 mb-1">Perturbations Totales</span>
+    <span id="compteur-affichage" class="text-4xl font-black text-transparent bg-clip-text bg-gradient-to-br from-ctp-mauve to-ctp-pink font-sans">0</span>
+  </div>
+
+  <div class="h-8 mt-2 flex items-center justify-center min-h-[2rem]">
+    <p id="message-feedback" class="text-xs font-medium text-ctp-teal italic transition-all duration-500 opacity-0 transform translate-y-2 text-center"></p>
+  </div>
+
+</div>
+
+<script>
+(function() {
+  const STORAGE_KEY = 'pqc_compteur_clics';
+  const btn = document.getElementById('btn-pataphysique');
+  const display = document.getElementById('compteur-affichage');
+  const feedback = document.getElementById('message-feedback');
+
+  if (!btn || !display) return;
+
+  // 1. Initialisation
+  let count = parseInt(localStorage.getItem(STORAGE_KEY) || '0');
+  display.innerText = count;
+
+  // 2. La Grande Liste de l'Infini (Messages inchangés)
+  const baseMessages = [
+    "Calibrage des gidouilles...",
+    "L'inutilité progresse...",
+    "Rotation axiale confirmée.",
+    "Ceci n'est pas un clic.",
+    "Le vide se remplit de vide.",
+    "Analyse spectrale...",
+    "Veuillez ne pas insister.",
+    "Un chat de Schrödinger vient de miauler.",
+    "La fourmi a senti cette secousse.",
+    "Pixel #43029 défectueux.",
+    "J'espère que vous êtes payé.",
+    "Quelle dextérité remarquable.",
+    "Vous cliquez comme un poète.",
+    "Je note ça dans le registre.",
+    "On arrive bientôt à l'infini."
+  ];
+
+  let availableMessages = [];
+
+  function getNextMessage() {
+    if (availableMessages.length === 0) {
+      availableMessages = [...baseMessages];
+      for (let i = availableMessages.length - 1; i > 0; i--) {
+        const j = Math.floor(Math.random() * (i + 1));
+        [availableMessages[i], availableMessages[j]] = [availableMessages[j], availableMessages[i]];
+      }
+    }
+    return availableMessages.pop();
+  }
+
+  btn.addEventListener('click', function(e) {
+    e.preventDefault();
+    
+    btn.classList.add('scale-95');
+    setTimeout(() => btn.classList.remove('scale-95'), 100);
+    
+    count++;
+    display.innerText = count;
+    localStorage.setItem(STORAGE_KEY, count);
+
+    const msg = getNextMessage();
+    feedback.style.opacity = '0';
+    feedback.style.transform = 'translateY(10px)';
+    
+    setTimeout(() => {
+      feedback.innerText = msg;
+      feedback.style.opacity = '1';
+      feedback.style.transform = 'translateY(0)';
+    }, 150); 
+  });
+})();
+</script>

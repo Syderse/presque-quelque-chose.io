@@ -7,6 +7,7 @@
 {{- $pages := where .Site.RegularPages ".Section" "in" $includeSections -}}
 {{- $list := slice -}}
 {{- range $pages -}}
-  {{- $list = $list | append (dict "title" .Title "url" .RelPermalink) -}}
+  {{/* NOTE : On utilise la clé "permalink" pour matcher le JS du index.html */}}
+  {{- $list = $list | append (dict "title" .Title "permalink" .RelPermalink) -}}
 {{- end -}}
 {{- $list | jsonify -}}

@@ -1,0 +1,43 @@
+{{ $page := .page }}
+{{ $current := .current }}
+{{ $isContainer := or $page.IsSection (and $page.IsPage $page.File.Dir) }}
+{{ $hasChildren := or $page.Sections $page.Pages }}
+{{ $isActiveAncestor := or ($page.IsAncestor $current) (eq $page $current) }}
+
+<li class="pl-2 border-l border-ctp-surface0/50 ml-1">
+  {{ if and $isContainer $hasChildren }}
+    {{/* --- MODE DOSSIER --- */}}
+    <details class="group my-1" {{ if $isActiveAncestor }}open{{ end }}>
+      <summary class="flex items-center cursor-pointer p-1.5 rounded-md transition-colors duration-200 
+                      text-ctp-subtext1 hover:text-ctp-mauve hover:bg-ctp-surface0/50 list-none no-underline
+                      {{ if eq $page $current }}text-ctp-mauve font-semibold{{ end }}">
+        
+        <span class="mr-2 transition-transform duration-200 group-open:rotate-90 text-ctp-overlay0 group-hover:text-ctp-mauve">
+           <svg class="w-3 h-3" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="3" d="M9 5l7 7-7 7" /></svg>
+        </span>
+
+        {{ $page.Title }}
+      </summary>
+
+      <ul class="ml-2 mt-1 space-y-1">
+        {{ range $page.Sections.ByTitle }}
+          {{ partial "sidebar/tree-item.html" (dict "page" . "current" $current) }}
+        {{ end }}
+        {{ range $page.Pages.ByTitle }}
+          {{ if not .IsHome }}
+            {{ partial "sidebar/tree-item.html" (dict "page" . "current" $current) }}
+          {{ end }}
+        {{ end }}
+      </ul>
+    </details>
+
+  {{ else }}
+    {{/* --- MODE PAGE TERMINALE --- */}}
+    <a href="{{ $page.RelPermalink }}"
+       class="block p-1.5 pl-6 rounded-md transition-colors duration-200 no-underline
+              text-ctp-subtext0 hover:text-ctp-text hover:bg-ctp-surface0/30
+              {{ if eq $page.RelPermalink $current.RelPermalink }}text-ctp-mauve font-bold bg-ctp-surface0 border-r-2 border-ctp-mauve{{ end }}">
+      {{ $page.Title }}
+    </a>
+  {{ end }}
+</li>

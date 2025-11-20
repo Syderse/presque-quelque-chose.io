@@ -1,16 +1,13 @@
 main:
-  - name: le guichet
-    url: /
-    weight: 10
   - name: solutions imaginaires
     url: /solutions-imaginaires/
-    weight: 30
+    weight: 10
   - name: recherches
     url: /recherches/
-    weight: 40
+    weight: 20
   - name: ondes & pixels
     url: /ondes-pixels/
-    weight: 50
+    weight: 30
   - name: rhizome curieux
     url: /rhizome-curieux/
-    weight: 60
+    weight: 40
