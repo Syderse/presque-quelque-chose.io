@@ -1,5 +1,5 @@
 ---
-title: "Rhizome Curieux"
+title: "rhizome curieux"
 date: 2023-10-24
 items:
   - title: "le collège"

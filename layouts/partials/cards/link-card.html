@@ -1,25 +1,23 @@
-{{/* Partial: Link Card */}}
+{{/* Partial: Link Card (Compact Edition) */}}
 {{ $color := .color | default "mauve" }}
 {{ $hoverBorder := printf "hover:border-ctp-%s" $color }}
 {{ $hoverText := printf "group-hover:text-ctp-%s" $color }}
 
 <a href="{{ .url }}" {{ if hasPrefix .url "http" }}target="_blank" rel="noopener"{{ end }} 
-   class="not-prose group relative flex flex-col items-center text-center p-6 rounded-2xl border border-ctp-surface1 bg-ctp-surface0/40 backdrop-blur-md transition-all duration-300 hover:-translate-y-1 hover:shadow-xl {{ $hoverBorder }} outline-none h-full">
+   class="not-prose group relative flex flex-col items-center text-center p-4 rounded-2xl border border-ctp-surface1 bg-ctp-surface0/40 backdrop-blur-md transition-all duration-300 hover:-translate-y-1 hover:shadow-xl {{ $hoverBorder }} outline-none h-full min-h-[120px] justify-center">
    
-   {{/* NOTE : Plus besoin de !no-underline ici, le Reset Global s'en charge */}}
-
   {{ with .icon }}
-    <div class="text-4xl mb-4 transform group-hover:scale-110 transition-transform duration-300">
+    <div class="text-2xl mb-2 transform group-hover:scale-110 transition-transform duration-300 opacity-80">
       {{ . }}
     </div>
   {{ end }}
 
-  <h3 class="text-xl font-bold lowercase text-ctp-text {{ $hoverText }} transition-colors m-0">
+  <h3 class="text-lg font-bold lowercase text-ctp-text {{ $hoverText }} transition-colors m-0 leading-tight">
     {{ .title }}
   </h3>
 
   {{ with .subtitle }}
-    <p class="text-sm text-ctp-overlay1 mt-2 font-mono leading-tight">
+    <p class="text-xs text-ctp-overlay1 mt-2 font-mono leading-tight line-clamp-2">
       {{ . }}
     </p>
   {{ end }}

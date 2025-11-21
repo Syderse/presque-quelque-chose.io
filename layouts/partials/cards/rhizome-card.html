@@ -1,0 +1,55 @@
+{{/* Partial: Rhizome Card 
+  Context: Un dictionnaire normalisé (voir get-rhizome-items.html)
+*/}}
+
+{{/* --- 1. Calcul de l'Entropie --- */}}
+{{ $rotations := slice "rotate-1" "-rotate-1" "rotate-2" "-rotate-2" "rotate-0" "rotate-3" "-rotate-3" }}
+{{ $randomRotation := index ($rotations | shuffle) 0 }}
+
+{{/* --- 2. Définition des Styles Conditionnels --- */}}
+{{ $isInternal := eq .Type "internal" }}
+{{ $color := .Color }}
+
+{{/* Base commune : break-inside-avoid est CRUCIAL pour le CSS Columns */}}
+{{ $baseClass := "break-inside-avoid mb-6 w-full rounded-xl transition-all duration-300 hover:scale-[1.02] hover:z-10 group" }}
+
+{{/* Style Spécifique */}}
+{{ $styleClass := "" }}
+{{ if $isInternal }}
+  {{/* Style RACINE : Solide, Sérieux, Ancré */}}
+  {{ $styleClass = "bg-ctp-surface0 border border-ctp-surface2 shadow-md hover:shadow-xl p-6 font-serif text-ctp-text" }}
+{{ else }}
+  {{/* Style SPORE : Aérien, Technique, Éphémère */}}
+  {{ $styleClass = printf "bg-ctp-base/40 backdrop-blur-sm border-2 border-dashed border-ctp-%s/30 hover:border-ctp-%s/80 p-4 font-sans text-ctp-subtext0" $color $color }}
+{{ end }}
+
+{{/* --- 3. Rendu HTML --- */}}
+<a href="{{ .Url }}" 
+   {{ if not $isInternal }}target="_blank" rel="noopener noreferrer"{{ end }}
+   class="{{ $baseClass }} {{ $styleClass }} {{ $randomRotation }} block decoration-0">
+
+  {{/* En-tête : Icône + Titre */}}
+  <div class="flex items-baseline gap-3 mb-2">
+    <span class="text-2xl filter grayscale-[0.5] group-hover:grayscale-0 transition-all">
+      {{ .Icon }}
+    </span>
+    <h3 class="{{ if $isInternal }}text-xl font-bold italic{{ else }}text-lg font-medium lowercase{{ end }} leading-tight group-hover:text-ctp-{{ $color }} transition-colors">
+      {{ .Title }}
+    </h3>
+  </div>
+
+  {{/* Résumé (Si disponible) */}}
+  {{ with .Summary }}
+    <p class="text-sm opacity-80 mt-2 leading-relaxed font-sans text-ctp-overlay1 line-clamp-3">
+      {{ . }}
+    </p>
+  {{ end }}
+
+  {{/* Indicateur visuel discret pour les liens externes */}}
+  {{ if not $isInternal }}
+  <div class="mt-3 flex justify-end opacity-0 group-hover:opacity-100 transition-opacity">
+    {{/* CORRECTION ICI : Accès direct à la propriété .Host de l'objet URL */}}
+    <span class="text-xs font-mono text-ctp-{{ $color }}">↗ {{ (urls.Parse .Url).Host }}</span>
+  </div>
+  {{ end }}
+</a>

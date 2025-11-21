@@ -1,12 +1,12 @@
+{{- /* Architecture : Data-to-JSON
+    Source : data/almanach.yaml
+    Objectif : Exposer le journal au JS du frontend
+*/ -}}
 {{- $data := dict -}}
-{{- /* On cherche toutes les pages *dans* la section "almanach" */ -}}
-{{- range where .Site.RegularPages "Section" "almanach" -}}
-  {{- /* La clé est la date au format YYYY-MM-DD (ex: 2026-01-01) */ -}}
-  {{- $dateKey := .Date.Format "2006-01-02" -}}
-  {{- /* CORRECTION : On prend le .Plain (le contenu en texte brut) 
-  	au lieu de .Title (le titre) 
-  */ -}}
-  {{- $data = merge $data (dict $dateKey .Plain) -}}
+
+{{- /* On vérifie si le fichier de données existe pour éviter le crash */ -}}
+{{- if .Site.Data.almanach -}}
+    {{- $data = .Site.Data.almanach -}}
 {{- end -}}
-{{- /* On génère le fichier JSON final */ -}}
+
 {{- $data | jsonify -}}

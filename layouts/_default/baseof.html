@@ -10,8 +10,9 @@
     
     <meta name="description" content="{{ with .Description }}{{ . }}{{ else }}{{ .Site.Params.description }}{{ end }}" />
     
-    {{/* --- SCRIPT ANTI-FOUC --- */}}
+    {{/* --- SCRIPT ANTI-FOUC & ETAT INITIAL --- */}}
     <script>
+      // On définit la variable sur la racine (documentElement) pour qu'elle cascade partout
       const savedState = localStorage.getItem('sidebar-state') || 'open';
       document.documentElement.style.setProperty('--sidebar-width', savedState === 'closed' ? '0px' : '280px');
     </script>
@@ -19,9 +20,12 @@
 
   <body class="min-h-screen bg-ctp-base text-ctp-text selection:bg-ctp-surface2 selection:text-ctp-mauve font-sans">
 
+    {{/* CORRECTION ICI : 
+        1. Suppression de style="--sidebar-width: 280px;" (Le style inline écrasait le script du head)
+        2. La variable --sidebar-width est désormais héritée du :root définie par le script du head.
+    */}}
     <div id="app-layout" 
-         class="hidden md:grid lg:grid-cols-[var(--sidebar-width)_minmax(0,1fr)] min-h-screen transition-[grid-template-columns] duration-300 ease-in-out"
-         style="--sidebar-width: 280px;">
+         class="hidden md:grid lg:grid-cols-[var(--sidebar-width)_minmax(0,1fr)] min-h-screen transition-[grid-template-columns] duration-300 ease-in-out">
 
       {{/* COLONNE GAUCHE (SIDEBAR) */}}
       <aside class="relative overflow-hidden bg-ctp-mantle border-r border-ctp-surface0/40">
@@ -30,7 +34,7 @@
         </div>
       </aside>
 
-      {{/* COLONNE DROITE (CONTENU) */}}
+{{/* COLONNE DROITE (CONTENU) */}}
       <main class="flex-grow w-full bg-ctp-base overflow-y-auto relative">
         
         {{/* BOUTON "OUVRIR" */}}
@@ -43,20 +47,27 @@
             </svg>
         </button>
         
-        <div class="mx-auto max-w-7xl px-4 py-12 sm:px-6 lg:px-8">
+        {{/* MODIFICATION "HOME UNLEASHED" :
+            - Logic : Si Homepage -> max-w-7xl (Large)
+            - Logic : Sinon -> max-w-3xl (Standard Prose)
+            - Ajout de w-full pour assurer l'étirement dans le conteneur parent
+         */}}
+        <div class="mx-auto px-4 py-12 sm:px-6 lg:px-8 {{ if .IsHome }}w-full max-w-7xl{{ else }}max-w-3xl{{ end }}">
           <article class="prose prose-lg md:prose-xl prose-catppuccin max-w-none">
             {{ block "main" . }}{{ end }}
           </article>
         </div>
 
-        {{/* FOOTER SUPPRIMÉ ICI */}}
       </main>
     </div>
 
-    {{/* MOBILE */}}
+    {{/* MOBILE NAV */}}
     <div class="md:hidden flex flex-col min-h-screen">
       <main class="flex-grow w-full bg-ctp-base overflow-y-auto pb-20">
-        <div class="mx-auto max-w-4xl px-4 py-12">
+        {{/* MODIFICATION MOBILE/TABLETTE :
+             Même logique pour les tablettes qui n'auraient pas la sidebar
+        */}}
+        <div class="mx-auto px-4 py-12 {{ if .IsHome }}w-full max-w-7xl{{ else }}max-w-3xl{{ end }}">
           <article class="prose prose-lg prose-catppuccin max-w-none">
             {{ block "main" . }}{{ end }}
           </article>
@@ -67,22 +78,27 @@
 
     {{/* --- LOGIQUE JAVASCRIPT --- */}}
     <script>
-      const layout = document.getElementById('app-layout');
       const openBtn = document.getElementById('sidebar-open-btn');
       
+      // Synchronisation initiale du bouton (si fermé au chargement)
       if (localStorage.getItem('sidebar-state') === 'closed') {
         openBtn.classList.remove('hidden');
       }
 
       function toggleSidebar() {
-        const isClosed = layout.style.getPropertyValue('--sidebar-width') === '0px';
+        // On lit directement sur le root element car c'est là que le script Head l'a mis
+        const rootStyle = document.documentElement.style;
+        const isClosed = rootStyle.getPropertyValue('--sidebar-width') === '0px';
         
         if (isClosed) {
-          layout.style.setProperty('--sidebar-width', '280px');
+          // OUVERTURE
+          rootStyle.setProperty('--sidebar-width', '280px');
           openBtn.classList.add('hidden');
           localStorage.setItem('sidebar-state', 'open');
         } else {
-          layout.style.setProperty('--sidebar-width', '0px');
+          // FERMETURE
+          rootStyle.setProperty('--sidebar-width', '0px');
+          // Petit délai pour laisser l'animation CSS commencer proprement avant d'afficher le bouton
           setTimeout(() => openBtn.classList.remove('hidden'), 100);
           localStorage.setItem('sidebar-state', 'closed');
         }
