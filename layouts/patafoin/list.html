@@ -1,0 +1,84 @@
+{{ define "main" }}
+<div class="not-prose min-h-screen w-full max-w-4xl mx-auto px-4 py-12 font-sans">
+
+  <header class="flex flex-col md:flex-row justify-between items-end mb-12 border-b border-ctp-surface1 pb-6">
+    <div>
+      <h1 class="text-4xl font-bold text-ctp-mauve mb-2 lowercase">
+        {{ .Title }}
+      </h1>
+      <p class="text-ctp-subtext0 text-lg lowercase">
+        {{ .Description | default "glosons" }}
+      </p>
+    </div>
+    
+    <button id="btn-new-topic" 
+      class="relative z-50 mt-4 md:mt-0 bg-ctp-peach text-ctp-base font-bold py-2 px-6 rounded-lg hover:bg-ctp-yellow transition-all duration-300 shadow-[4px_4px_0px_0px_var(--color-ctp-surface1)] hover:translate-x-[2px] hover:translate-y-[2px] hover:shadow-[2px_2px_0px_0px_var(--color-ctp-surface1)] lowercase">
+      nouveau sujet
+    </button>
+  </header>
+
+  <div id="create-topic-panel" class="hidden mb-12 bg-ctp-mantle p-6 rounded-xl border border-ctp-surface1 animate-fade-in-up">
+    <h2 class="text-xl text-ctp-pink mb-4 lowercase">créer un nouveau fil</h2>
+    <form id="form-new-topic" class="space-y-4">
+        <div>
+            <label class="block text-ctp-subtext1 mb-1 text-sm lowercase">titre du sujet</label>
+            <input type="text" id="topic-title" required minlength="3" class="w-full bg-ctp-base border border-ctp-surface1 rounded p-3 text-ctp-text focus:outline-none focus:border-ctp-mauve transition-colors placeholder-ctp-overlay0" placeholder="ex: de l'utilité des cure-dents...">
+        </div>
+        <div>
+            <label class="block text-ctp-subtext1 mb-1 text-sm lowercase">votre pseudo (optionnel)</label>
+            <input type="text" id="topic-author" class="w-full bg-ctp-base border border-ctp-surface1 rounded p-3 text-ctp-text focus:outline-none focus:border-ctp-mauve transition-colors placeholder-ctp-overlay0" placeholder="pataphysicien anonyme">
+        </div>
+        <div>
+            <label class="block text-ctp-subtext1 mb-1 text-sm lowercase">premier message</label>
+            <textarea id="topic-content" required rows="4" class="w-full bg-ctp-base border border-ctp-surface1 rounded p-3 text-ctp-text focus:outline-none focus:border-ctp-mauve transition-colors placeholder-ctp-overlay0 resize-y normal-case" placeholder="Exprimez votre pensée..."></textarea>
+        </div>
+        <div class="flex justify-end gap-4 pt-2">
+            <button type="button" id="btn-cancel-topic" class="text-ctp-overlay1 hover:text-ctp-red transition-colors lowercase">annuler</button>
+            <button type="submit" class="bg-ctp-mauve text-ctp-base font-bold py-2 px-6 rounded hover:bg-ctp-lavender transition-colors lowercase">publier</button>
+        </div>
+    </form>
+  </div>
+
+  <div id="topics-container" class="space-y-4">
+    <div class="text-center py-12 text-ctp-overlay1 animate-pulse lowercase">
+      bosse-de-nage trie les fichiers...
+    </div>
+  </div>
+
+  <div id="topic-detail-view" class="hidden">
+    <button id="btn-back-home" class="mb-6 flex items-center text-ctp-blue hover:text-ctp-sky transition-colors lowercase gap-2">
+      <span>← retour aux sujets</span>
+    </button>
+
+    <div id="detail-header" class="mb-8 pb-6 border-b border-ctp-surface1"></div>
+    <div id="posts-container" class="space-y-6 mb-12"></div>
+
+    <div class="bg-ctp-mantle p-6 rounded-xl border border-ctp-surface1">
+      <h3 class="text-lg text-ctp-teal mb-4 lowercase">répondre</h3>
+      <form id="form-reply">
+        <div class="grid grid-cols-1 gap-4">
+          <input type="text" id="reply-author" class="w-full bg-ctp-base border border-ctp-surface1 rounded p-3 text-ctp-text focus:outline-none focus:border-ctp-teal transition-colors placeholder-ctp-overlay0" placeholder="votre pseudo (optionnel)">
+          <textarea id="reply-content" required rows="3" class="w-full bg-ctp-base border border-ctp-surface1 rounded p-3 text-ctp-text focus:outline-none focus:border-ctp-teal transition-colors placeholder-ctp-overlay0 normal-case" placeholder="Votre réponse..."></textarea>
+        </div>
+        <div class="mt-4 flex justify-end">
+          <button type="submit" class="bg-ctp-teal text-ctp-base font-bold py-2 px-6 rounded hover:bg-ctp-sky transition-colors lowercase">envoyer</button>
+        </div>
+      </form>
+    </div>
+  </div>
+
+</div>
+
+<script>
+  window.SUPABASE_CONFIG = {
+    url: "{{ .Site.Params.supabase_url }}",
+    key: "{{ .Site.Params.supabase_key }}"
+  };
+</script>
+
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+
+{{ $js := resources.Get "js/patafoin.js" | js.Build (dict "minify" true) | fingerprint }}
+<script src="{{ $js.RelPermalink }}" integrity="{{ $js.Data.Integrity }}" defer></script>
+
+{{ end }}

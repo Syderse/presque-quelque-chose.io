@@ -16,45 +16,45 @@
   :root {
     /* Palette Catppuccin Mocha */
     --ctp-rosewater: #f5c2e7;
-    --ctp-flamingo:  #f2cdcd;
-    --ctp-pink:      #f5c2e7;
-    --ctp-mauve:     #cba6f7;
-    --ctp-red:       #f38ba8;
-    --ctp-maroon:    #eba0ac;
-    --ctp-peach:     #fab387;
-    --ctp-yellow:    #f9e2af;
-    --ctp-green:     #a6e3a1;
-    --ctp-teal:      #94e2d5;
-    --ctp-sky:       #89dceb;
-    --ctp-sapphire:  #74c7ec;
-    --ctp-blue:      #89b4fa;
-    --ctp-lavender:  #b4befe;
-    
-    --ctp-text:      #cdd6f4;
-    --ctp-subtext1:  #bac2de;
-    --ctp-subtext0:  #a6adc8;
-    --ctp-overlay2:  #9399b2;
-    --ctp-overlay1:  #7f849c;
-    --ctp-overlay0:  #6c7086;
-    --ctp-surface2:  #585b70;
-    --ctp-surface1:  #45475a;
-    --ctp-surface0:  #313244;
-    --ctp-base:      #1e1e2e;
-    --ctp-mantle:    #181825;
-    --ctp-crust:     #11111b;
+    --ctp-flamingo: #f2cdcd;
+    --ctp-pink: #f5c2e7;
+    --ctp-mauve: #cba6f7;
+    --ctp-red: #f38ba8;
+    --ctp-maroon: #eba0ac;
+    --ctp-peach: #fab387;
+    --ctp-yellow: #f9e2af;
+    --ctp-green: #a6e3a1;
+    --ctp-teal: #94e2d5;
+    --ctp-sky: #89dceb;
+    --ctp-sapphire: #74c7ec;
+    --ctp-blue: #89b4fa;
+    --ctp-lavender: #b4befe;
+
+    --ctp-text: #cdd6f4;
+    --ctp-subtext1: #bac2de;
+    --ctp-subtext0: #a6adc8;
+    --ctp-overlay2: #9399b2;
+    --ctp-overlay1: #7f849c;
+    --ctp-overlay0: #6c7086;
+    --ctp-surface2: #585b70;
+    --ctp-surface1: #45475a;
+    --ctp-surface0: #313244;
+    --ctp-base: #1e1e2e;
+    --ctp-mantle: #181825;
+    --ctp-crust: #11111b;
   }
 
   body {
     background-color: var(--ctp-base);
     color: var(--ctp-text);
     font-family: "Varela Round", sans-serif;
-    
+
     /* UI GLOBALE : Minuscules par défaut (Menu, Sidebar, Footer) */
     text-transform: lowercase;
-    
-    letter-spacing: 0.04em; 
+
+    letter-spacing: 0.04em;
     line-height: 1.75;
-    font-weight: 400; 
+    font-weight: 400;
   }
 }
 
@@ -78,7 +78,7 @@
   --color-ctp-sapphire: var(--ctp-sapphire);
   --color-ctp-blue: var(--ctp-blue);
   --color-ctp-lavender: var(--ctp-lavender);
-    
+
   --color-ctp-text: var(--ctp-text);
   --color-ctp-subtext1: var(--ctp-subtext1);
   --color-ctp-subtext0: var(--ctp-subtext0);
@@ -115,12 +115,12 @@
 
     /* 1. CORPS DE TEXTE */
     & :where(p, ul, ol, li) {
-      color: #e6e9ef !important; 
-      font-weight: 400; 
+      color: #e6e9ef !important;
+      font-weight: 400;
       line-height: 1.8;
       margin-bottom: 1.5em;
       /* Double sécurité : on réaffirme la casse normale ici */
-      text-transform: none !important; 
+      text-transform: none !important;
     }
 
     /* 2. TITRES (H1-H6) */
@@ -129,19 +129,20 @@
     & :where(h1, h2, h3, h4, h5, h6) {
       color: var(--ctp-mauve) !important;
       font-weight: 400 !important;
-      letter-spacing: 0.02em; 
-      text-transform: none !important; 
+      letter-spacing: 0.02em;
+      text-transform: none !important;
     }
 
     /* 3. GRAS & ITALIQUE */
     & :where(strong, b) {
       color: var(--ctp-peach) !important;
-      font-weight: 400 !important; 
+      font-weight: 400 !important;
       text-transform: none !important;
     }
+
     & :where(em, i) {
       color: var(--ctp-green) !important;
-      font-family: var(--font-serif); 
+      font-family: var(--font-serif);
       font-style: italic;
       text-transform: none !important;
     }
@@ -150,16 +151,36 @@
     & :where(a):not(.not-prose) {
       color: var(--ctp-blue) !important;
       text-decoration: none !important;
-      border-bottom: 1px solid var(--ctp-blue); 
+      border-bottom: 1px solid var(--ctp-blue);
       transition: all 0.2s ease;
       text-transform: none !important;
     }
 
     /* 5. CODE */
-    & pre, & code {
+    & pre,
+    & code {
       font-family: var(--font-mono) !important;
-      text-transform: none !important; 
+      text-transform: none !important;
       font-size: 0.9em;
     }
+  }
+}
+
+/* --- 6. ANIMATIONS --- */
+@layer utilities {
+  @keyframes fadeInUp {
+    from {
+      opacity: 0;
+      transform: translateY(20px);
+    }
+
+    to {
+      opacity: 1;
+      transform: translateY(0);
+    }
+  }
+
+  .animate-fade-in-up {
+    animation: fadeInUp 0.5s ease-out forwards;
   }
 }

@@ -11,3 +11,6 @@ main:
   - name: rhizome curieux
     url: /rhizome-curieux/
     weight: 40
+  - name: patafoin
+    url: /patafoin/
+    weight: 50

@@ -68,3 +68,7 @@ features:
     url: 'https://github.com/HugoBlox/hugo-blox-builder/'
     content_dir: templates/blog/content
     branch: main
+
+# Supabase Configuration (Forum)
+supabase_url: "https://esrqmmnghliwqvxldyzo.supabase.co" 
+supabase_key: "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImVzcnFtbW5naGxpd3F2eGxkeXpvIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NjM4NDE3NTksImV4cCI6MjA3OTQxNzc1OX0.sLsfkbFFQ0L81MUCTh5i6smtGtbeHzHocIv9xS9Iv7g"

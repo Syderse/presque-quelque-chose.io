@@ -1,39 +1,40 @@
 {{/* Fonction: get-rhizome-items
-  Objectif: Fusionner et normaliser le contenu Markdown (Racines) et les liens YAML (Spores).
-  Retourne: Une Slice mélangée d'objets standardisés.
+Objectif: Séparer le contenu Markdown (Racines) et les liens YAML (Spores).
+Retourne: Un Dict avec deux clés : "internal" et "external".
 */}}
 
-{{ $items := slice }}
+{{ $internalItems := slice }}
+{{ $externalItems := slice }}
 
 {{/* 1. Traitement des Racines (Pages Markdown locales) */}}
 {{ range .Pages }}
-  {{ $item := dict 
-    "Title" .Title 
-    "Url" .RelPermalink 
-    "Summary" .Description 
-    "Icon" (.Params.icon | default "🥕") 
-    "Color" (.Params.color | default "mauve") 
-    "Type" "internal" 
-    "Date" .Date
-  }}
-  {{ $items = $items | append $item }}
+{{ $item := dict
+"Title" .Title
+"Url" .RelPermalink
+"Summary" .Description
+"Icon" (.Params.icon | default "🥕")
+"Color" (.Params.color | default "mauve")
+"Type" "internal"
+"Date" .Date
+}}
+{{ $internalItems = $internalItems | append $item }}
 {{ end }}
 
 {{/* 2. Traitement des Spores (Liens externes YAML) */}}
 {{ if .Params.items }}
-  {{ range .Params.items }}
-    {{ $item := dict 
-      "Title" .title 
-      "Url" .url 
-      "Summary" "" 
-      "Icon" (.icon | default "🦠") 
-      "Color" (.color | default "subtext0") 
-      "Type" "external" 
-      "Date" .Date 
-    }}
-    {{ $items = $items | append $item }}
-  {{ end }}
+{{ range .Params.items }}
+{{ $item := dict
+"Title" .title
+"Url" .url
+"Summary" ""
+"Icon" (.icon | default "🦠")
+"Color" (.color | default "subtext0")
+"Type" "external"
+"Date" .Date
+}}
+{{ $externalItems = $externalItems | append $item }}
+{{ end }}
 {{ end }}
 
-{{/* 3. Mélange entropique (Shuffle) */}}
-{{ return ($items | shuffle) }}
+{{/* 3. Retour structuré */}}
+{{ return dict "internal" ($internalItems | shuffle) "external" ($externalItems | shuffle) }}

@@ -1,32 +1,168 @@
 {{ define "main" }}
 
-  {{/* --- 1. Header (Simplifié pour laisser place au chaos) --- */}}
-  <div class="text-center mb-16 not-prose">
-    <h1 class="text-5xl md:text-7xl font-black text-ctp-mauve lowercase tracking-tighter mb-4 blur-[0.5px] hover:blur-0 transition-all duration-700">
-      {{ .Title }}
-    </h1>
-    {{ with .Description }}
-      <p class="text-xl font-serif italic text-ctp-overlay0 max-w-2xl mx-auto">
-        {{ . }}
-      </p>
-    {{ end }}
+{{/* --- 0. Data Loading --- */}}
+{{ $rhizomeData := partial "functions/get-rhizome-items.html" . }}
+
+{{/* --- 1. Header --- */}}
+<div class="text-center mb-12 not-prose">
+
+  {{/* Title */}}
+  <h1
+    class="text-5xl md:text-7xl font-black text-ctp-mauve lowercase tracking-tighter mb-8 blur-[0.5px] hover:blur-0 transition-all duration-700">
+    {{ .Title }}
+  </h1>
+
+  {{/* Description */}}
+  {{ with .Description }}
+  <p class="text-xl font-serif italic text-ctp-overlay0 max-w-2xl mx-auto mb-12">
+    {{ . }}
+  </p>
+  {{ end }}
+
+  {{/* --- 2. The Dual Entry Gate (Bulb vs Spore) --- */}}
+  <div class="flex justify-center gap-16 md:gap-32 mb-16">
+
+    {{/* Bulb Control (Internal) */}}
+    <button id="btn-rhizome"
+      class="group relative z-10 cursor-pointer flex flex-col items-center gap-4 transition-all duration-500 focus:outline-none hover:scale-105">
+      <div class="text-6xl md:text-8xl transition-transform duration-500 group-hover:-translate-y-2">
+        🧅
+      </div>
+      <span
+        class="font-serif italic text-ctp-mauve text-lg opacity-0 group-hover:opacity-100 transition-opacity duration-300">
+        rhizomes
+      </span>
+    </button>
+
+    {{/* Spore Control (External) */}}
+    <button id="btn-spores"
+      class="group relative z-10 cursor-pointer flex flex-col items-center gap-4 transition-all duration-500 focus:outline-none hover:scale-105">
+      <div class="text-6xl md:text-8xl transition-transform duration-500 group-hover:-translate-y-2">
+        🦠
+      </div>
+      <span class="font-mono text-ctp-green text-lg opacity-0 group-hover:opacity-100 transition-opacity duration-300">
+        spores
+      </span>
+    </button>
+
   </div>
 
-  {{/* --- 2. La Friche Rhizomatique (Masonry Layout) --- */}}
-  {{/* - columns-1 (mobile) -> columns-2 (tablette) -> columns-3 (desktop)
-     - gap-6 : Espace entre les colonnes
-     - space-y-0 : On gère l'espacement vertical via le margin-bottom des cartes (mb-6)
-  */}}
-  <div class="columns-1 md:columns-2 lg:columns-3 gap-6 w-full not-prose px-2 md:px-0">
-    
-    {{/* Récupération des items normalisés et mélangés */}}
-    {{ $rhizomeItems := partial "functions/get-rhizome-items.html" . }}
+  {{/* --- 3. Content Containers --- */}}
 
-    {{/* Itération et Rendu */}}
-    {{ range $rhizomeItems }}
+  {{/* Internal Content (Rhizome) */}}
+  <div id="content-rhizome" class="hidden w-full">
+    <div class="columns-1 md:columns-2 lg:columns-3 gap-6 w-full px-2 md:px-0">
+      {{ range $rhizomeData.internal }}
       {{ partial "cards/rhizome-card.html" . }}
-    {{ end }}
-
+      {{ end }}
+    </div>
   </div>
+
+  {{/* External Content (Spores) */}}
+  <div id="content-spores" class="hidden w-full">
+    <div class="columns-1 md:columns-2 lg:columns-3 gap-6 w-full px-2 md:px-0">
+      {{ range $rhizomeData.external }}
+      {{ partial "cards/rhizome-card.html" . }}
+      {{ end }}
+    </div>
+  </div>
+
+</div>
+
+{{/* --- 4. Interaction Logic (Vanilla JS) --- */}}
+<script>
+  (function () {
+    function initRhizome() {
+      const btnInternal = document.getElementById('btn-rhizome');
+      const btnExternal = document.getElementById('btn-spores');
+      const contentInternal = document.getElementById('content-rhizome');
+      const contentExternal = document.getElementById('content-spores');
+
+      if (!btnInternal || !btnExternal) {
+        console.warn('Rhizome buttons not found');
+        return;
+      }
+
+      // Remove existing listeners (not easily possible with anonymous functions, but init should run once per page load)
+      // We'll assume standard page load.
+
+      function toggleSection(section) {
+        // Reset both
+        if (section === 'internal') {
+          const isHidden = contentInternal.classList.contains('hidden');
+
+          // Close external
+          contentExternal.classList.add('hidden');
+          contentExternal.classList.remove('animate-fade-in-up');
+          // Reset external button style (colored by default)
+          btnExternal.classList.remove('scale-110', 'grayscale', 'opacity-60');
+
+          // Toggle internal
+          if (isHidden) {
+            // Open Internal
+            contentInternal.classList.remove('hidden');
+            contentInternal.classList.add('animate-fade-in-up');
+
+            // Active Internal
+            btnInternal.classList.add('scale-110');
+            btnInternal.classList.remove('grayscale', 'opacity-60');
+
+            // Dim External (Focus on Internal)
+            btnExternal.classList.add('grayscale', 'opacity-60');
+          } else {
+            // Close Internal
+            contentInternal.classList.add('hidden');
+
+            // Reset Internal (Back to default colored)
+            btnInternal.classList.remove('scale-110', 'grayscale', 'opacity-60');
+
+            // Reset External (Back to default colored)
+            btnExternal.classList.remove('grayscale', 'opacity-60');
+          }
+        } else {
+          const isHidden = contentExternal.classList.contains('hidden');
+
+          // Close internal
+          contentInternal.classList.add('hidden');
+          contentInternal.classList.remove('animate-fade-in-up');
+          // Reset internal button style
+          btnInternal.classList.remove('scale-110', 'grayscale', 'opacity-60');
+
+          // Toggle external
+          if (isHidden) {
+            // Open External
+            contentExternal.classList.remove('hidden');
+            contentExternal.classList.add('animate-fade-in-up');
+
+            // Active External
+            btnExternal.classList.add('scale-110');
+            btnExternal.classList.remove('grayscale', 'opacity-60');
+
+            // Dim Internal
+            btnInternal.classList.add('grayscale', 'opacity-60');
+          } else {
+            // Close External
+            contentExternal.classList.add('hidden');
+
+            // Reset External
+            btnExternal.classList.remove('scale-110', 'grayscale', 'opacity-60');
+
+            // Reset Internal
+            btnInternal.classList.remove('grayscale', 'opacity-60');
+          }
+        }
+      }
+
+      btnInternal.onclick = () => toggleSection('internal');
+      btnExternal.onclick = () => toggleSection('external');
+    }
+
+    if (document.readyState === 'loading') {
+      document.addEventListener('DOMContentLoaded', initRhizome);
+    } else {
+      initRhizome();
+    }
+  })();
+</script>
 
 {{ end }}

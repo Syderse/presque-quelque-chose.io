@@ -1,0 +1,181 @@
+{{/* Widget: L'Intrus (Ex-Compteur) */}}
+<div id="intrus-wrapper"
+    class="absolute top-0 right-2 md:right-0 z-50 select-none rotate-6 hover:rotate-0 transition-transform duration-500 ease-out">
+
+    {{/* LE BOUTON (EMOJI + COMPTEUR) */}}
+    <div class="relative group cursor-pointer flex flex-col items-center">
+
+        {{/* 1. L'Emoji (Le Déclencheur) */}}
+        <button id="btn-intrus"
+            class="text-5xl md:text-6xl filter drop-shadow-lg hover:scale-110 active:scale-95 transition-transform duration-200 focus:outline-none"
+            aria-label="Perturber l'entropie">
+            👾
+        </button>
+
+        {{/* 2. Le Compteur (Timbre discret) */}}
+        <div id="intrus-counter-bg"
+            class="absolute -bottom-3 -right-3 bg-ctp-surface0/80 backdrop-blur-sm border border-ctp-surface1 text-ctp-text text-[10px] font-mono font-bold px-2 py-0.5 rounded-md shadow-sm -rotate-12 group-hover:rotate-0 transition-all duration-300">
+            <span id="intrus-valeur">0</span>
+        </div>
+
+    </div>
+
+    {{/* ZONE DE BAVARDAGE (Flottante, ancrée au wrapper) */}}
+    <div id="intrus-bavardage-zone" class="absolute top-10 right-10 w-[300px] h-[300px] pointer-events-none"></div>
+
+</div>
+
+<style>
+    @keyframes popAndRead {
+        0% {
+            opacity: 0;
+            transform: translate(20px, 20px) scale(0.8) rotate(var(--tw-rotate));
+        }
+
+        10% {
+            opacity: 1;
+            transform: translate(0, 0) scale(1.05) rotate(var(--tw-rotate));
+        }
+
+        15% {
+            transform: translate(0, 0) scale(1) rotate(var(--tw-rotate));
+        }
+
+        85% {
+            opacity: 1;
+            transform: translate(-10px, -10px) scale(1) rotate(var(--tw-rotate));
+        }
+
+        100% {
+            opacity: 0;
+            transform: translate(-20px, -40px) scale(0.95) rotate(var(--tw-rotate));
+        }
+    }
+
+    .bubble-smart-anim {
+        animation-name: popAndRead;
+        animation-timing-function: cubic-bezier(0.2, 0.8, 0.2, 1);
+        animation-fill-mode: forwards;
+        will-change: transform, opacity;
+    }
+
+    .hell-mode-shake {
+        animation: nervousShake 0.4s cubic-bezier(.36, .07, .19, .97) both infinite;
+    }
+
+    @keyframes nervousShake {
+
+        0%,
+        100% {
+            transform: translateX(0);
+        }
+
+        10%,
+        30%,
+        50%,
+        70%,
+        90% {
+            transform: translateX(-2px) rotate(-1deg);
+        }
+
+        20%,
+        40%,
+        60%,
+        80% {
+            transform: translateX(2px) rotate(1deg);
+        }
+    }
+</style>
+
+<script>
+    (function () {
+        const STORAGE_KEY_COUNT = 'pqc_entropy_count';
+        // Phrases conservées de l'ancien widget
+        const phrases = ["Rien ne s'est passé.", "Absolument rien.", "Quelle dextérité !", "Vous devriez être payé pour faire ça.", "Pauvre souris :/", "Vous avez réussi à ne rien faire avec brio.", "Ce clic a été enregistré par le bureau des choses vaines.", "Aïe ! Vous avez appuyé sur mon coup de soleil.", "Robert le caillou vous juge en silence.", "J'accepte les paiements en boutons de manchette orphelins.", "Erreur 404 : J'ai perdu mes clés dans le cyberespace.", "Une mouche vient de voler à reculons au Japon à cause de vous.", "Pouf. (C'est le bruit de votre temps qui s'évapore).", "Ce bouton est en grève illimitée.", "J'ai prévenu Barnabé, il arrive avec sa fougère.", "Vous avez décalé l'univers de 0,0001 millimètre vers la gauche.", "Encore ? Vous n'avez pas de chaussettes à classer ?", "Ce bouton est purement décoratif, comme les mamelons sur une armure.", "Je suis un bouton incompris.", "Téléchargement de l'ennui en cours... (99%)", "Échec du téléchargement. L'ennui est trop lourd.", "Si vous continuez, je me transforme en brocoli.", "Ceci n'est pas un bouton. C'est une pipe.", "Bravo, vous avez éteint une étoile dans une galaxie lointaine.", "Le poisson invisible vous regarde. Il a l'air déçu.", "Arrêtez, ça chatouille !", "Votre demande a été faxée à un arbre.", "Traitement en cours. Durée estimée : 4 siècles.", "Vous cherchez le sens ? J'ai trouvé un ticket de métro de 1998.", "C'est mou. C'est normal que ce soit mou ?", "J'aimerais être une touche de piano, mais je suis coincé ici.", "Miam. Donnez-moi encore des clics.", "Je me sens moins seul quand vous appuyez.", "C'est gênant ce silence, non ?", "On parle météo ? Il pleut à l'horizontal ici.", "Attention, bouton fragile émotionnellement.", "Vous usez vos pixels pour rien.", "J'ai oublié ma fonction. C'était peut-être 'faire du café'.", "Non, décidément, je ne sais rien faire.", "Vous êtes le cliqueur numéro 0. Félicitations.", "Ce message s'autodétruira dans... bof, la flemme.", "J'ai vu votre reflet dans l'écran. Coiffez-vous.", "L'Empereur (le mouton de poussière) exige un tribut.", "Veuillez ne pas nourrir le bouton après minuit.", "Ce bouton est végan et sans gluten.", "Il ne se passe rien, mais avec panache.", "C'est tout ? Oui, c'est tout.", "Je suis parti vérifier si la lumière du frigo s'éteint vraiment.", "Je suis en RTT (Récupération de Temps Tordu).", "Vous avez activé le mode 'Rien du tout'.", "Le mode 'Rien du tout' fonctionne à merveille.", "Cliquez plus fort, je suis un peu dur de la feuille.", "Vous avez réveillé une loutre qui dormait en vous.", "Ce clic n'a aucun impact carbone. C'est déjà ça.", "Barnabé demande si vous avez vu son chlorophylle.", "J'ai cru sentir une vibration. Ah non, c'est vous.", "Vous essayez de communiquer en Morse ?", "... --- ... (C'est 'au secours' en langage bouton).", "Je suis occupé à calculer la dernière décimale de Pi.", "Ne me touchez pas, je suis contagieux (je transmets la flemme).", "Ce bouton est sponsorisé par l'Amicale des Portes Fermées.", "Vous avez gagné un voyage gratuit dans votre tête.", "L'action demandée nécessite un formulaire B-28 rose.", "Vous appuyez, donc je suis.", "Descartes avait tort, je ne pense pas mais je suis quand même.", "C'est une excellente journée pour ne rien produire.", "J'ai mal à la tête. Revenez demain.", "Si j'étais rouge, je serais un bouton d'urgence. Mais je suis gris.", "Gris anthracite, comme le bruit du frigo.", "Vous avez la touche douce. C'est agréable.", "Un peu plus à gauche... Oui, là. Parfait.", "Vous faites ça souvent ?", "Je ne suis pas ce genre de bouton.", "Votre obstination est fascinante.", "J'ai noté votre nom dans mon registre des gens têtus.", "Le plafond complote contre nous, je le sais.", "J'ai faim. Envoyez des cookies (pas ceux du navigateur).", "Phantôme le poisson vient de faire une bulle carrée.", "Vous perturbez mes ondes gravitationnelles.", "Laissez-moi méditer en paix.", "Ommmmm... (Bruit de bouton zen).", "Ce clic a un arrière-goût de vanille.", "Non, plutôt de carton. Comme le concept de porte.", "Vous avez activé l'autodestruction de... rien.", "Fausse alerte.", "Je suis un bouton existentialiste.", "L'enfer, c'est les autres (boutons).", "Vous attendez Godot ? Il ne viendra pas. Moi non plus.", "Cliquez ici pour annuler votre dernier clic.", "Ça n'a pas marché, hein ?", "J'ai stocké cette seconde précise dans un bocal à cornichons.", "Chaque clic vous vieillit de 0,5 seconde.", "C'est effrayant, vu comme ça.", "Voilà, c'est fait.", "C'est une spirale d'étonnement mou.", "Mais vous aimez ça. Avouez.", "C'est notre petit secret.", "L'inutilité est le luxe ultime.", "Merci d'avoir partagé ce néant avec moi.", "À la prochaine."];
+        const textColors = ['text-ctp-mauve', 'text-ctp-pink', 'text-ctp-peach', 'text-ctp-green', 'text-ctp-blue', 'text-ctp-lavender', 'text-ctp-yellow'];
+
+        class ShuffleBag {
+            constructor(data) { this.data = [...data]; this.current = []; }
+            shuffle(array) { let c = array.length, r; while (c != 0) { r = Math.floor(Math.random() * c); c--;[array[c], array[r]] = [array[r], array[c]]; } return array; }
+            next() { if (this.current.length === 0) this.current = this.shuffle([...this.data]); return this.current.pop(); }
+        }
+
+        const btn = document.getElementById('btn-intrus');
+        const display = document.getElementById('intrus-valeur');
+        const counterBg = document.getElementById('intrus-counter-bg');
+        const zone = document.getElementById('intrus-bavardage-zone');
+        const bag = new ShuffleBag(phrases);
+
+        if (!btn || !display || !zone) return;
+        if (btn.getAttribute('data-initialized') === 'true') return;
+        btn.setAttribute('data-initialized', 'true');
+
+        let count = parseInt(localStorage.getItem(STORAGE_KEY_COUNT) || '0');
+        display.innerText = count;
+
+        function setHellMode(active) {
+            if (active) {
+                btn.innerText = "👹";
+                btn.classList.add('hell-mode-shake');
+                counterBg.classList.replace('bg-ctp-surface0/80', 'bg-ctp-red');
+                counterBg.classList.replace('text-ctp-text', 'text-ctp-base');
+            } else {
+                btn.innerText = "👾";
+                btn.classList.remove('hell-mode-shake');
+                counterBg.classList.replace('bg-ctp-red', 'bg-ctp-surface0/80');
+                counterBg.classList.replace('text-ctp-base', 'text-ctp-text');
+            }
+        }
+
+        btn.addEventListener('click', (e) => {
+            count++;
+            display.innerText = count;
+            localStorage.setItem(STORAGE_KEY_COUNT, count);
+
+            if (count === 666) {
+                setHellMode(true);
+                createFloatingText("😈 SATAN EST EN RÉUNION.", true);
+                return;
+            }
+            if (count === 667) {
+                setHellMode(false);
+                createFloatingText("Ouf... Apocalypse annulée.", false);
+                return;
+            }
+
+            createFloatingText(bag.next(), false);
+        });
+
+        function createFloatingText(text, isHell) {
+            const el = document.createElement('div');
+            const wordCount = text.split(' ').length;
+            const duration = isHell ? 6 : Math.max(2.5, 1.5 + (wordCount * 0.35));
+
+            let classes = `absolute w-max max-w-[200px] px-4 py-2 rounded-xl backdrop-blur-md border text-sm font-bold text-center shadow-lg bubble-smart-anim z-50 pointer-events-none `;
+
+            if (isHell) {
+                classes += `bg-ctp-base/95 border-ctp-red text-ctp-red scale-125`;
+            } else {
+                const randomColor = textColors[Math.floor(Math.random() * textColors.length)];
+                classes += `bg-ctp-mantle/90 border-ctp-surface1 ${randomColor}`;
+            }
+
+            el.className = classes;
+
+            // Positionnement aléatoire autour du bouton (dans la zone)
+            const randomTop = Math.floor(Math.random() * 80);
+            const randomRight = Math.floor(Math.random() * 100);
+
+            el.style.top = randomTop + '%';
+            el.style.right = randomRight + '%';
+
+            const randomRotate = isHell ? '0deg' : (Math.random() * 10 - 5).toFixed(1) + 'deg';
+            el.style.setProperty('--tw-rotate', randomRotate);
+            el.style.animationDuration = `${duration}s`;
+            el.innerText = text;
+
+            zone.appendChild(el);
+            setTimeout(() => { if (el.parentNode) el.parentNode.removeChild(el); }, duration * 1000 + 100);
+        }
+    })();
+</script>
