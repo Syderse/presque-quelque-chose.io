@@ -94,14 +94,14 @@
 /* --- 5. CONFIGURATION PROSE (CONTENU ARTICLE) --- */
 @layer components {
   .prose-catppuccin {
-    /* A. Reset Brutal de la Casse (Le Marteau) */
-    /* On force le conteneur ET tous ses enfants directs à ignorer le body */
+    /* A. Reset Brutal */
     text-transform: none !important;
 
-    /* B. Variables Typography */
+    /* B. Mapping Variables Typography */
     --tw-prose-body: var(--ctp-text);
     --tw-prose-headings: var(--ctp-mauve);
     --tw-prose-lead: var(--ctp-subtext1);
+    --tw-prose-links: var(--ctp-blue);
     --tw-prose-bold: var(--ctp-peach);
     --tw-prose-counters: var(--ctp-mauve);
     --tw-prose-bullets: var(--ctp-mauve);
@@ -112,35 +112,39 @@
     --tw-prose-code: var(--ctp-pink);
     --tw-prose-pre-code: var(--ctp-text);
     --tw-prose-pre-bg: var(--ctp-mantle);
-    --tw-prose-links: var(--ctp-blue);
 
-    /* 1. CORPS DE TEXTE */
+    /* C. Surcharges Directes */
+
+    /* 1. Corps de texte générique */
     & :where(p, ul, ol, li) {
-      color: #e6e9ef !important;
-      font-weight: 400;
+      color: var(--ctp-text) !important;
       line-height: 1.8;
       margin-bottom: 1.5em;
-      /* Double sécurité : on réaffirme la casse normale ici */
       text-transform: none !important;
     }
 
-    /* 2. TITRES (H1-H6) */
-    /* J'ai mis "none" ici aussi pour la lisibilité. 
-       Si tu veux les titres en minuscules, remplace 'none' par 'lowercase' */
+    /* 2. Titres */
     & :where(h1, h2, h3, h4, h5, h6) {
       color: var(--ctp-mauve) !important;
-      font-weight: 400 !important;
-      letter-spacing: 0.02em;
+      font-weight: 700 !important;
       text-transform: none !important;
     }
 
-    /* 3. GRAS & ITALIQUE */
+    /* 3. Liens */
+    & :where(a):not(.not-prose) {
+      color: var(--ctp-blue) !important;
+      text-decoration-color: var(--ctp-blue) !important;
+      text-transform: none !important;
+    }
+
+    /* 4. Gras (Bold/Strong) */
     & :where(strong, b) {
       color: var(--ctp-peach) !important;
-      font-weight: 400 !important;
+      font-weight: 700 !important;
       text-transform: none !important;
     }
 
+    /* 5. Italique (C'est ce qui manquait !) */
     & :where(em, i) {
       color: var(--ctp-green) !important;
       font-family: var(--font-serif);
@@ -148,21 +152,14 @@
       text-transform: none !important;
     }
 
-    /* 4. LIENS */
-    & :where(a):not(.not-prose) {
-      color: var(--ctp-blue) !important;
-      text-decoration: none !important;
-      border-bottom: 1px solid var(--ctp-blue);
-      transition: all 0.2s ease;
-      text-transform: none !important;
-    }
-
-    /* 5. CODE */
-    & pre,
-    & code {
+    /* 6. Code Inline */
+    & :where(:not(pre) > code) {
+      color: var(--ctp-pink) !important;
+      background-color: var(--ctp-surface0);
+      padding: 0.2em 0.4em;
+      border-radius: 0.25rem;
+      font-weight: normal;
       font-family: var(--font-mono) !important;
-      text-transform: none !important;
-      font-size: 0.9em;
     }
   }
 }

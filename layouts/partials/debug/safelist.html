@@ -14,3 +14,16 @@
   
   <span class="decoration-ctp-mauve decoration-ctp-peach decoration-ctp-blue decoration-ctp-green"></span>
 </div>
+
+{{/* --- ANCRE TYPOGRAPHY ---
+  Force la génération de la classe de configuration Prose.
+  Essentiel pour Tailwind v4 qui peut manquer la classe dans baseof.html en mode JIT pur.
+*/}}
+<div class="hidden">
+  <div class="prose-catppuccin">
+    <h1>H1</h1>
+    <a href="#">Link</a>
+    <strong>Bold</strong>
+    <code>Code</code>
+  </div>
+</div>
