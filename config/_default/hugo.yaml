@@ -19,14 +19,20 @@ module:
   mounts:
     - source: assets
       target: assets
-    - source: hugo_stats.json
-      target: assets/watching/hugo_stats.json
+    
+    # [CORRECTIF NETLIFY] 
+    # Suppression du mount hugo_stats.json pour éviter les erreurs de "Cold Build".
+    # Tailwind v4 utilisera désormais le scanner sur layouts/ (via safelist.html)
+    # - source: hugo_stats.json
+    #   target: assets/watching/hugo_stats.json
+    
     - source: layouts
       target: layouts
     - source: content
       target: content
     - source: static
       target: static
+      
     # Imports Hugo Blox (Conservés de votre config)
     - source: hugo-blox/blox/community
       target: layouts/_partials/blox/community/
@@ -37,6 +43,7 @@ module:
     - source: hugo-blox/blox
       target: assets/dist/community/blox/
       includeFiles: '**.css'
+
   imports:
     - path: github.com/HugoBlox/hugo-blox-builder/modules/blox-plugin-netlify
     - path: github.com/HugoBlox/hugo-blox-builder/modules/blox-tailwind

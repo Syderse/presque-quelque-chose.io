@@ -7,9 +7,10 @@
 @plugin "@tailwindcss/typography";
 
 /* --- 2. Sources JIT --- */
+/* Le scanner va trouver layouts/partials/debug/safelist.html et générer les couleurs */
 @source "../../layouts/**/*.html";
 @source "../../content/**/*.md";
-@source "../watching/hugo_stats.json";
+/* SUPPRIMÉ : @source "../watching/hugo_stats.json"; (Trop fragile en CI) */
 
 /* --- 3. DÉFINITION DES VARIABLES --- */
 @layer base {
