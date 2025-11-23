@@ -1,16 +1,14 @@
+@import url('https://fonts.googleapis.com/css2?family=Varela+Round&family=JetBrains+Mono:wght@400;500&display=swap');
 @import "tailwindcss";
 
-/* --- 0. Typography Imports --- */
-@import url('https://fonts.googleapis.com/css2?family=Varela+Round&family=JetBrains+Mono:wght@400;500&display=swap');
-
-/* --- 1. Plugins --- */
+/* --- 1. Plugins (Après les imports standards) --- */
 @plugin "@tailwindcss/typography";
 
 /* --- 2. Sources JIT --- */
-/* Le scanner va trouver layouts/partials/debug/safelist.html et générer les couleurs */
+/* On pointe explicitement vers le safelist pour aider le scanner */
+@source "../../layouts/partials/debug/safelist.html";
 @source "../../layouts/**/*.html";
 @source "../../content/**/*.md";
-/* SUPPRIMÉ : @source "../watching/hugo_stats.json"; (Trop fragile en CI) */
 
 /* --- 3. DÉFINITION DES VARIABLES --- */
 @layer base {
