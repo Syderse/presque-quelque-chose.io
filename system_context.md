@@ -91,4 +91,21 @@ date: 2025-11-23
 icon: "🚀"             # Emoji obligatoire pour les cartes
 color: "mauve"         # Token couleur Catppuccin (mauve, peach, teal, etc.)
 description: "Court résumé pour la carte."
+
+---
+
+## 7. Pipeline Frontend & Stratégie CSS (Tailwind v4 Alpha)
+
+Architecture spécifique établie pour résoudre le bug critique de **"Color Loss / CSS Purge" en Production (Netlify)**, causé par une incompatibilité entre le moteur Tailwind v4 et le pipeline de minification Hugo.
+
+* **Symptôme Résolu :** Disparition des styles `.prose-catppuccin` (couleurs, typo) sur les articles en Prod, malgré un fonctionnement correct en Local.
+* **Contrainte Technique (Minification) :**
+    * Le minifieur standard de Hugo (`tdewolff`) corrompt la syntaxe native **CSS Nesting** (`& :where(...)`) utilisée par Tailwind v4.
+    * **Stratégie :** Désactivation explicite du pipe `| minify` dans `layouts/partials/css.html` pour la production. On délègue l'optimisation à Tailwind et on ne garde que le Fingerprinting (`integrity`) côté Hugo.
+* **Hygiène du fichier source (`assets/css/main.css`) :**
+    * Règle W3C stricte appliquée pour éviter le crash du parser CSS en Prod : Les `@import` (fontes, tailwind) doivent être **absolument les premières lignes**.
+    * Tout commentaire ou `@plugin` avant les imports invalide le fichier aux yeux des parseurs stricts.
+* **Mécanisme de Secours (Safelist) :**
+    * Maintien de `layouts/partials/debug/safelist.html` (non rendu) pour forcer le scanner JIT à détecter les classes de couleurs dynamiques, sécurisant le build contre les "faux négatifs" du scanner.
+
 ---
