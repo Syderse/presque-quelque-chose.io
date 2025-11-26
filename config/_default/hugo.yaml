@@ -60,10 +60,16 @@ outputFormats:
     baseName: "articles-aleatoires"
     isPlainText: true
     notAlternative: true
+  JSON-RHIZOME:
+    mediaType: "application/json"
+    baseName: "index"
+    isPlainText: true
+    notAlternative: true
 
 outputs:
   home: [HTML, RSS, headers, redirects, backlinks, JSON-RANDOM] 
-  section: [HTML, RSS]
+  # 👇 AJOUTE "JSON-RHIZOME" ICI POUR QUE LE FICHIER index.json SOIT GÉNÉRÉ
+  section: [HTML, RSS, JSON-RHIZOME] 
   page: ["HTML"]
   taxonomy: ["HTML"]
   term: ["HTML"]

@@ -1,168 +1,123 @@
 {{ define "main" }}
-
-{{/* --- 0. Data Loading --- */}}
 {{ $rhizomeData := partial "functions/get-rhizome-items.html" . }}
 
-{{/* --- 1. Header --- */}}
-<div class="text-center mb-12 not-prose">
+<style>
+/* --- STYLES CAPSULE & ORBIT --- */
+:root {
+    --ctp-base: #24273a;
+    --ctp-mantle: #1e2030;
+    --ctp-text: #cad3f5;
+    --ctp-mauve: #c6a0f6;
+    --ctp-green: #a6da95;
+    --ctp-surface2: #5b6078;
+    --ctp-overlay1: #7f849c;
+}
 
-  {{/* Title */}}
-  <h1
-    class="text-5xl md:text-7xl font-black text-ctp-mauve lowercase tracking-tighter mb-8 blur-[0.5px] hover:blur-0 transition-all duration-700">
-    {{ .Title }}
-  </h1>
+/* 1. Base Nodes */
+.node-body {
+    transition: all 0.3s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+    rx: 15px; 
+    cursor: pointer;
+}
 
-  {{/* Description */}}
-  {{ with .Description }}
-  <p class="text-xl font-serif italic text-ctp-overlay0 max-w-2xl mx-auto mb-12">
-    {{ . }}
-  </p>
-  {{ end }}
+/* 2. Noyau (Roots) - Solid & Pulsing */
+.node-root {
+    fill: var(--ctp-mantle);
+    stroke: var(--ctp-mauve);
+    stroke-width: 2px;
+}
 
-  {{/* --- 2. The Dual Entry Gate (Bulb vs Spore) --- */}}
-  <div class="flex justify-center gap-16 md:gap-32 mb-16">
+/* 3. Orbite (Spores) - Hollow & Sharp */
+.node-spore {
+    fill: var(--ctp-base); /* Transparent-ish look */
+    stroke: var(--ctp-green);
+    stroke-width: 1.5px;
+    stroke-dasharray: 4 2; /* Texture pointillée pour l'effet "gaz/spore" */
+}
 
-    {{/* Bulb Control (Internal) */}}
-    <button id="btn-rhizome"
-      class="group relative z-10 cursor-pointer flex flex-col items-center gap-4 transition-all duration-500 focus:outline-none hover:scale-105">
-      <div class="text-6xl md:text-8xl transition-transform duration-500 group-hover:-translate-y-2">
-        🧅
-      </div>
-      <span
-        class="font-serif italic text-ctp-mauve text-lg opacity-0 group-hover:opacity-100 transition-opacity duration-300">
-        rhizomes
-      </span>
-    </button>
+/* 4. ÉTAT HOVER */
+.node-body.is-hovered {
+    stroke-width: 4px;
+    fill: var(--ctp-surface2);
+    stroke-dasharray: 0; /* Solidifie le contour au survol */
+    filter: drop-shadow(0px 0px 12px var(--ctp-mauve));
+}
 
-    {{/* Spore Control (External) */}}
-    <button id="btn-spores"
-      class="group relative z-10 cursor-pointer flex flex-col items-center gap-4 transition-all duration-500 focus:outline-none hover:scale-105">
-      <div class="text-6xl md:text-8xl transition-transform duration-500 group-hover:-translate-y-2">
-        🦠
-      </div>
-      <span class="font-mono text-ctp-green text-lg opacity-0 group-hover:opacity-100 transition-opacity duration-300">
-        spores
-      </span>
-    </button>
+/* Tooltip */
+#rhizome-tooltip {
+    position: absolute;
+    transform: translate(-50%, 0); 
+    pointer-events: none; 
+    z-index: 50; 
+    transition: opacity 0.15s ease;
+}
 
+.label-text {
+    background-color: var(--ctp-base);
+    color: var(--ctp-text);
+    border: 1px solid var(--ctp-overlay1);
+    padding: 6px 10px;
+    font-size: 11px;
+    font-family: 'JetBrains Mono', monospace;
+    font-weight: bold;
+    box-shadow: 4px 4px 0px rgba(0,0,0,0.5);
+    white-space: nowrap;
+    text-transform: uppercase;
+}
+
+/* Animation Noyau */
+@keyframes breathe {
+    0%, 100% { stroke-opacity: 1; }
+    50% { stroke-opacity: 0.5; }
+}
+.node-root { animation: breathe 5s infinite; }
+
+</style>
+
+<div class="relative h-[calc(100vh-6rem)] w-full overflow-hidden bg-ctp-base font-mono group">
+  
+  {{/* Grid Background - Radar Style */}}
+  <div class="absolute inset-0 z-0 opacity-10 pointer-events-none" 
+       style="background-image: radial-gradient(var(--ctp-surface2) 1px, transparent 1px); background-size: 30px 30px;">
   </div>
 
-  {{/* --- 3. Content Containers --- */}}
+  {{/* CANVAS D3 */}}
+  <div id="rhizome-viz" class="absolute inset-0 z-10 w-full h-full"></div>
 
-  {{/* Internal Content (Rhizome) */}}
-  <div id="content-rhizome" class="hidden w-full">
-    <div class="columns-1 md:columns-2 lg:columns-3 gap-6 w-full px-2 md:px-0">
-      {{ range $rhizomeData.internal }}
-      {{ partial "cards/rhizome-card.html" . }}
-      {{ end }}
+  {{/* TOOLTIP */}}
+  <div id="rhizome-tooltip" class="opacity-0 pointer-events-none">
+      <div class="label-text">DATA</div>
+  </div>
+
+  {{/* UI CONTROL STACK (RIGHT) */}}
+  <div class="absolute top-6 right-6 z-20 flex flex-col items-end gap-6 pointer-events-none w-64">
+    
+    {{/* BLOC TITRE */}}
+    <div class="bg-ctp-base border-2 border-ctp-surface2 p-4 shadow-[6px_6px_0px_#111] pointer-events-auto w-full text-right">
+       <h2 class="text-xl font-bold text-ctp-text uppercase tracking-widest leading-none">{{ .Title }}</h2>
+       <div class="text-[10px] text-ctp-surface2 mt-2 font-bold flex justify-end gap-2 items-center">
+         <span class="w-2 h-2 rounded-full bg-ctp-green animate-pulse"></span>
+         <span id="stat-nodes">--</span> NODES ONLINE
+       </div>
     </div>
-  </div>
 
-  {{/* External Content (Spores) */}}
-  <div id="content-spores" class="hidden w-full">
-    <div class="columns-1 md:columns-2 lg:columns-3 gap-6 w-full px-2 md:px-0">
-      {{ range $rhizomeData.external }}
-      {{ partial "cards/rhizome-card.html" . }}
-      {{ end }}
+    {{/* BLOC FILTRES */}}
+    <div class="flex flex-col gap-3 items-end pointer-events-auto w-full">
+      <button id="filter-internal" class="w-full bg-ctp-mantle border-2 border-ctp-mauve text-ctp-mauve px-4 py-3 text-xs font-bold hover:bg-ctp-mauve hover:text-ctp-base transition-colors shadow-[4px_4px_0px_#111] text-right flex justify-between items-center group">
+        <span class="opacity-50 group-hover:opacity-100 transition-opacity">●</span>
+        NUCLEUS (ROOTS)
+      </button>
+      <button id="filter-external" class="w-full bg-ctp-mantle border-2 border-ctp-green text-ctp-green px-4 py-3 text-xs font-bold hover:bg-ctp-green hover:text-ctp-base transition-colors shadow-[4px_4px_0px_#111] text-right flex justify-between items-center group">
+        <span class="opacity-50 group-hover:opacity-100 transition-opacity">○</span>
+        ORBIT (SPORES)
+      </button>
     </div>
-  </div>
 
+  </div>
 </div>
 
-{{/* --- 4. Interaction Logic (Vanilla JS) --- */}}
-<script>
-  (function () {
-    function initRhizome() {
-      const btnInternal = document.getElementById('btn-rhizome');
-      const btnExternal = document.getElementById('btn-spores');
-      const contentInternal = document.getElementById('content-rhizome');
-      const contentExternal = document.getElementById('content-spores');
-
-      if (!btnInternal || !btnExternal) {
-        console.warn('Rhizome buttons not found');
-        return;
-      }
-
-      // Remove existing listeners (not easily possible with anonymous functions, but init should run once per page load)
-      // We'll assume standard page load.
-
-      function toggleSection(section) {
-        // Reset both
-        if (section === 'internal') {
-          const isHidden = contentInternal.classList.contains('hidden');
-
-          // Close external
-          contentExternal.classList.add('hidden');
-          contentExternal.classList.remove('animate-fade-in-up');
-          // Reset external button style (colored by default)
-          btnExternal.classList.remove('scale-110', 'grayscale', 'opacity-60');
-
-          // Toggle internal
-          if (isHidden) {
-            // Open Internal
-            contentInternal.classList.remove('hidden');
-            contentInternal.classList.add('animate-fade-in-up');
-
-            // Active Internal
-            btnInternal.classList.add('scale-110');
-            btnInternal.classList.remove('grayscale', 'opacity-60');
-
-            // Dim External (Focus on Internal)
-            btnExternal.classList.add('grayscale', 'opacity-60');
-          } else {
-            // Close Internal
-            contentInternal.classList.add('hidden');
-
-            // Reset Internal (Back to default colored)
-            btnInternal.classList.remove('scale-110', 'grayscale', 'opacity-60');
-
-            // Reset External (Back to default colored)
-            btnExternal.classList.remove('grayscale', 'opacity-60');
-          }
-        } else {
-          const isHidden = contentExternal.classList.contains('hidden');
-
-          // Close internal
-          contentInternal.classList.add('hidden');
-          contentInternal.classList.remove('animate-fade-in-up');
-          // Reset internal button style
-          btnInternal.classList.remove('scale-110', 'grayscale', 'opacity-60');
-
-          // Toggle external
-          if (isHidden) {
-            // Open External
-            contentExternal.classList.remove('hidden');
-            contentExternal.classList.add('animate-fade-in-up');
-
-            // Active External
-            btnExternal.classList.add('scale-110');
-            btnExternal.classList.remove('grayscale', 'opacity-60');
-
-            // Dim Internal
-            btnInternal.classList.add('grayscale', 'opacity-60');
-          } else {
-            // Close External
-            contentExternal.classList.add('hidden');
-
-            // Reset External
-            btnExternal.classList.remove('scale-110', 'grayscale', 'opacity-60');
-
-            // Reset Internal
-            btnInternal.classList.remove('grayscale', 'opacity-60');
-          }
-        }
-      }
-
-      btnInternal.onclick = () => toggleSection('internal');
-      btnExternal.onclick = () => toggleSection('external');
-    }
-
-    if (document.readyState === 'loading') {
-      document.addEventListener('DOMContentLoaded', initRhizome);
-    } else {
-      initRhizome();
-    }
-  })();
-</script>
+<script src="https://d3js.org/d3.v7.min.js"></script>
+{{ $script := resources.Get "js/rhizome-engine.js" | minify | fingerprint }}
+<script src="{{ $script.RelPermalink }}" integrity="{{ $script.Data.Integrity }}"></script>
 
 {{ end }}

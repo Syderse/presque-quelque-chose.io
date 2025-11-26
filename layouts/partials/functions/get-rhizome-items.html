@@ -1,40 +1,82 @@
 {{/* Fonction: get-rhizome-items
-Objectif: Séparer le contenu Markdown (Racines) et les liens YAML (Spores).
-Retourne: Un Dict avec deux clés : "internal" et "external".
+Objectif: Séparer le contenu Markdown et les liens YAML + Mapper les couleurs HEX.
+Retourne: Un Dict avec "internal" et "external".
 */}}
+
+{{/* 1. La Rosetta Stone Catppuccin (Mapping Name -> Hex) */}}
+{{ $palette := dict
+  "rosewater" "#f5c2e7"
+  "flamingo"  "#f2cdcd"
+  "pink"      "#f5c2e7"
+  "mauve"     "#cba6f7"
+  "red"       "#f38ba8"
+  "maroon"    "#eba0ac"
+  "peach"     "#fab387"
+  "yellow"    "#f9e2af"
+  "green"     "#a6e3a1"
+  "teal"      "#94e2d5"
+  "sky"       "#89dceb"
+  "sapphire"  "#74c7ec"
+  "blue"      "#89b4fa"
+  "lavender"  "#b4befe"
+  "text"      "#cdd6f4"
+  "subtext1"  "#bac2de"
+  "subtext0"  "#a6adc8"
+  "overlay2"  "#9399b2"
+  "overlay1"  "#7f849c"
+  "overlay0"  "#6c7086"
+  "surface2"  "#585b70"
+  "surface1"  "#45475a"
+  "surface0"  "#313244"
+  "base"      "#1e1e2e"
+  "mantle"    "#181825"
+  "crust"     "#11111b"
+}}
 
 {{ $internalItems := slice }}
 {{ $externalItems := slice }}
 
-{{/* 1. Traitement des Racines (Pages Markdown locales) */}}
+{{/* 2. Traitement des Racines (Markdown) */}}
 {{ range .Pages }}
-{{ $item := dict
-"Title" .Title
-"Url" .RelPermalink
-"Summary" .Description
-"Icon" (.Params.icon | default "🥕")
-"Color" (.Params.color | default "mauve")
-"Type" "internal"
-"Date" .Date
-}}
-{{ $internalItems = $internalItems | append $item }}
+  {{ $colorName := .Params.color | default "mauve" }}
+  {{ $hex := index $palette $colorName | default "#cba6f7" }}
+  
+  {{ $item := dict
+    "id" (printf "int-%s" .File.UniqueID)
+    "title" .Title
+    "url" .RelPermalink
+    "summary" .Description
+    "icon" (.Params.icon | default "🥕")
+    "colorName" $colorName
+    "colorHex" $hex
+    "type" "internal"
+    "date" .Date
+  }}
+  {{ $internalItems = $internalItems | append $item }}
 {{ end }}
 
-{{/* 2. Traitement des Spores (Liens externes YAML) */}}
+{{/* 3. Traitement des Spores (YAML) */}}
 {{ if .Params.items }}
-{{ range .Params.items }}
-{{ $item := dict
-"Title" .title
-"Url" .url
-"Summary" ""
-"Icon" (.icon | default "🦠")
-"Color" (.color | default "subtext0")
-"Type" "external"
-"Date" .Date
-}}
-{{ $externalItems = $externalItems | append $item }}
-{{ end }}
+  {{ range $index, $element := .Params.items }}
+    {{ $colorName := .color | default "subtext0" }}
+    {{ $hex := index $palette $colorName | default "#a6adc8" }}
+    
+    {{/* Création d'un ID unique stable basé sur l'index */}}
+    {{ $id := printf "ext-%d" $index }}
+
+    {{ $item := dict
+      "id" $id
+      "title" .title
+      "url" .url
+      "summary" ""
+      "icon" (.icon | default "🦠")
+      "colorName" $colorName
+      "colorHex" $hex
+      "type" "external"
+      "date" .Date
+    }}
+    {{ $externalItems = $externalItems | append $item }}
+  {{ end }}
 {{ end }}
 
-{{/* 3. Retour structuré */}}
 {{ return dict "internal" ($internalItems | shuffle) "external" ($externalItems | shuffle) }}

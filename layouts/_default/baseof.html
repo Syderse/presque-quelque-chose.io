@@ -30,10 +30,10 @@
         </div>
       </aside>
 
-      {{/* ZONE 2 : CONTENU PRINCIPAL (Généré UNE SEULE FOIS) */}}
+{{/* ZONE 2 : CONTENU PRINCIPAL */}}
       <main class="flex-grow w-full bg-ctp-base overflow-y-auto relative flex flex-col">
         
-        {{/* Bouton Toggle Sidebar (Desktop uniquement) */}}
+        {{/* Bouton Toggle Sidebar */}}
         <button id="sidebar-open-btn" 
                 onclick="toggleSidebar()"
                 class="fixed top-4 left-4 z-50 p-2 rounded-lg bg-ctp-surface0/50 text-ctp-subtext0 hover:text-ctp-mauve hover:bg-ctp-surface1 backdrop-blur-md transition-all duration-300 hidden"
@@ -43,19 +43,28 @@
             </svg>
         </button>
         
-        {{/* CONTENEUR RESPONSIVE */}}
-        <div class="flex-grow mx-auto px-4 py-12 sm:px-6 lg:px-8 {{ if .IsHome }}w-full max-w-7xl{{ else }}max-w-3xl{{ end }}">
-          <article class="prose prose-lg md:prose-xl prose-catppuccin max-w-none">
+        {{/* LOGIQUE DE CONTENEUR : Si full_width est activé, on retire les contraintes */}}
+        {{ if .Params.full_width }}
+          {{/* MODE PLEIN ÉCRAN (Pour D3.js) */}}
+          <div class="w-full h-full flex-grow">
             {{ block "main" . }}{{ end }}
-          </article>
-        </div>
+          </div>
+        {{ else }}
+          {{/* MODE ARTICLE STANDARD */}}
+          <div class="flex-grow mx-auto px-4 py-12 sm:px-6 lg:px-8 {{ if .IsHome }}w-full max-w-7xl{{ else }}max-w-3xl{{ end }}">
+            <article class="prose prose-lg md:prose-xl prose-catppuccin max-w-none">
+              {{ block "main" . }}{{ end }}
+            </article>
+          </div>
+        {{ end }}
 
-        {{/* NAVIGATION MOBILE (Sticky bottom, masquée sur Desktop) */}}
+        {{/* NAVIGATION MOBILE */}}
         <div class="md:hidden mt-auto sticky bottom-0 z-40 w-full border-t border-ctp-surface0">
             {{- partial "mobile-nav.html" . -}}
         </div>
 
       </main>
+
     </div>
 
     {{/* LOGIQUE UI */}}

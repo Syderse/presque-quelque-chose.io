@@ -1,6 +1,10 @@
 ---
 title: "rhizome curieux"
-date: 2023-10-24
+full_width: true   # <--- INDISPENSABLE pour sortir du mode "Article"
+outputs: 
+  - HTML
+  - JSON-RHIZOME
+
 items:
   - title: "le collège"
     icon: "🥨"

@@ -1,0 +1,15 @@
+{{- $data := partial "functions/get-rhizome-items.html" . -}}
+
+{{- /* Création d'une slice vide */ -}}
+{{- $allNodes := slice -}}
+
+{{- /* Concaténation manuelle (Sûr & Robuste) */ -}}
+{{- range $data.internal -}}
+  {{- $allNodes = $allNodes | append . -}}
+{{- end -}}
+{{- range $data.external -}}
+  {{- $allNodes = $allNodes | append . -}}
+{{- end -}}
+
+{{- /* Génération du JSON */ -}}
+{{- dict "nodes" $allNodes "meta" (dict "count" (len $allNodes) "generated" now) | jsonify -}}
