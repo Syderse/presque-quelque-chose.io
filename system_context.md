@@ -108,4 +108,76 @@ Architecture spécifique établie pour résoudre le bug critique de **"Color Los
 * **Mécanisme de Secours (Safelist) :**
     * Maintien de `layouts/partials/debug/safelist.html` (non rendu) pour forcer le scanner JIT à détecter les classes de couleurs dynamiques, sécurisant le build contre les "faux négatifs" du scanner.
 
+## 📦 MODULE: RHIZOME (V6 - ORBITAL PHYSICS)
+**Date de mise à jour :** 26/11/2025
+**Dépendances :** D3.js v7, Hugo Pipes, Partial `get-rhizome-items.html`
+
+### 1. Philosophie : "Noyau & Cytoplasme"
+L'architecture verticale a été abandonnée pour une physique orbitale concentrique (Horror Vacui).
+- **Le Noyau (Roots) :** Agrégat central dense (Rayon 0px). Contenu interne (`internal`) relié par un maillage solide (Mesh).
+- **L'Orbite (Spores) :** Ceinture périphérique flottante (Rayon ~400px). Liens externes (`external`) sans connexions visibles.
+
+### 2. Architecture des Données
+Les données sont normalisées par un partial avant d'être exposées en JSON local au sein de la section `rhizome-curieux`.
+
+| Type | Source | ID | Rôle Physique |
+| :--- | :--- | :--- | :--- |
+| **Internal** | Pages de la section | `int-{UniqueID}` | Attracteur Central (0,0). |
+| **External** | FrontMatter (`params.items`) | `ext-{index}` | Attracteur Orbital (r=400). |
+
+### 3. Guide d'Utilisation
+* **Ajout de Contenu :**
+    * *Racine :* Créer un fichier Markdown dans `content/rhizome-curieux/` (ou dossier associé).
+    * *Spore :* Ajouter l'URL et le titre dans le FrontMatter `items` de la page section (`_index.md`).
+* **Tuning Physique :**
+    * Modifier `CONFIG` dans `assets/js/rhizome-engine.js` (Rayon d'orbite, force de répulsion).
+
+### 4. Cartographie des Fichiers (Source of Truth)
+* **Logique JS :** `assets/js/rhizome-engine.js` (Moteur physique).
+* **Normalisation :** `layouts/partials/functions/get-rhizome-items.html` (Typage & Couleurs).
+* **Template UI :** `layouts/rhizome-curieux/list.html` (Conteneur Canvas & Stack UI).
+* **Endpoint Data :** `layouts/rhizome-curieux/list.json` (Structure: `{ nodes: [], meta: {} }`).
+
+## Patafoin forum Supabase
+
+🛠️ ARCHITECTURE LOG: MODULE PATAFOIN (v3.2)
+
+1. Modèle de Données (Supabase)
+
+    Séparation Strictes :
+
+        topics (Conteneur) : id, title, created_at.
+
+        posts (Contenu & Hiérarchie) : id, topic_id, parent_id, content, author.
+
+    Concept du "Root Post" : Le corps d'un sujet est techniquement le premier post (parent_id: null) associé au topic_id.
+
+2. Logique d'Écriture (JS)
+
+    Création Atomique : Séquence obligatoire await createTopic() ➝ await createFirstPost(topic_id, parent: null).
+
+    Réponses : Insertion standard avec parent_id ciblant le post parent (ou le Root Post).
+
+3. Algorithme de Lecture & Hydratation
+
+    Problème Résolu : "Paradoxe de l'Orphelin" (les réponses au sujet principal disparaissaient).
+
+    Stratégie de Rendu :
+
+        Fetch topics + Fetch posts.
+
+        Extraction du rootPost (celui sans parent) pour injecter son contenu dans l'affichage du Topic.
+
+        Fix Critique : La fonction récursive buildHierarchy(posts, relativeRootId) prend l'ID du Root Post comme contexte pour rattacher correctement les réponses de premier niveau.
+
+4. UI/UX (Terminal Style)
+
+    Palette : Catppuccin Mocha (assets/css/main.css).
+
+    Curseur : "Soft Ghost" (Underscore gris, animation lente) pour éviter la fatigue visuelle.
+
+    Indentation : "Rainbow Depth" (couleur de ligne changeant modulo 6 selon la profondeur).
+
+
+
 ---

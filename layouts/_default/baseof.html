@@ -43,19 +43,23 @@
             </svg>
         </button>
         
-        {{/* LOGIQUE DE CONTENEUR : Si full_width est activé, on retire les contraintes */}}
+{{/* LOGIQUE DE CONTENEUR : Stricte via Front Matter uniquement */}}
         {{ if .Params.full_width }}
-          {{/* MODE PLEIN ÉCRAN (Pour D3.js) */}}
+        
+          {{/* MODE PLEIN ÉCRAN */}}
           <div class="w-full h-full flex-grow">
             {{ block "main" . }}{{ end }}
           </div>
+
         {{ else }}
-          {{/* MODE ARTICLE STANDARD */}}
+        
+          {{/* MODE ARTICLE STANDARD (Par défaut) */}}
           <div class="flex-grow mx-auto px-4 py-12 sm:px-6 lg:px-8 {{ if .IsHome }}w-full max-w-7xl{{ else }}max-w-3xl{{ end }}">
             <article class="prose prose-lg md:prose-xl prose-catppuccin max-w-none">
               {{ block "main" . }}{{ end }}
             </article>
           </div>
+          
         {{ end }}
 
         {{/* NAVIGATION MOBILE */}}

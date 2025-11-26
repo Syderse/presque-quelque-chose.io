@@ -1,213 +1,311 @@
 document.addEventListener('DOMContentLoaded', async () => {
-    console.log("🚀 [Patafoin] v2.1 - Unified Architecture");
+    console.log("🟢 [SYSTEM] Patafoin Kernel v3.2 (Recursion Fix) booting...");
 
+    // --- 1. CONFIGURATION & INIT ---
+    let sb;
+    const dom = {
+        tree: document.getElementById('system-tree'),
+        btnRoot: document.getElementById('btn-create-root'),
+        panelRoot: document.getElementById('root-form-panel'),
+        formRoot: document.getElementById('form-new-topic'),
+        btnCancelRoot: document.getElementById('btn-cancel-root'),
+        // Templates
+        tmplTopic: document.getElementById('tmpl-topic'),
+        tmplPost: document.getElementById('tmpl-post'),
+        tmplReplyForm: document.getElementById('tmpl-reply-form')
+    };
+
+    // Initialisation Supabase
     try {
-        // --- 1. INITIALISATION ---
-        let sb;
-        if (typeof supabase === 'undefined') {
-            console.warn("⚠️ [Patafoin] Supabase not ready yet, waiting 100ms...");
-            await new Promise(r => setTimeout(r, 100));
-            if (typeof supabase === 'undefined') {
-                const errMsg = '<div class="text-ctp-red p-4 border border-ctp-red rounded">Erreur critique: Impossible de charger le moteur de base de données. Vérifiez votre connexion ou bloqueur de publicité.</div>';
-                const container = document.getElementById('topics-container');
-                if(container) container.innerHTML = errMsg;
-                console.error("❌ [Patafoin] Supabase failed to load from CDN.");
-                return;
+        if (typeof supabase === 'undefined') throw new Error("Supabase Library Missing");
+        sb = supabase.createClient(window.SUPABASE_CONFIG.url, window.SUPABASE_CONFIG.key);
+    } catch (e) {
+        dom.tree.innerHTML = `<div class="text-ctp-red font-mono p-4 border border-ctp-red bg-ctp-mantle">[FATAL ERROR] Driver failure: ${e.message}</div>`;
+        return;
+    }
+
+    // --- 2. FONCTIONS UTILITAIRES ---
+    const utils = {
+        hex: (str) => str ? str.split('-')[0] : '????', 
+        date: (str) => new Date(str).toISOString().replace('T', ' ').substring(0, 16),
+        escape: (str) => (str || '').replace(/[&<>"']/g, m => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;' }[m]))
+    };
+
+    // --- 3. MOTEUR DE RENDU RÉCURSIF (CORRIGÉ) ---
+    
+    /**
+     * Construit l'arbre hiérarchique.
+     * @param {Array} flatPosts - La liste des posts
+     * @param {String|null} relativeRootId - Si un post a ce parent_id, il devient une racine locale.
+     */
+    function buildHierarchy(flatPosts, relativeRootId = null) {
+        const map = {};
+        const roots = []; 
+        
+        // 1. Indexation
+        flatPosts.forEach(post => {
+            post.children = [];
+            map[post.id] = post;
+        });
+
+        // 2. Assemblage
+        flatPosts.forEach(post => {
+            // Cas A : C'est une réponse directe au sujet (Racine relative)
+            // On vérifie cela AVANT de chercher le parent dans la map, car le parent (RootPost) n'est PAS dans flatPosts
+            if (post.parent_id === relativeRootId && relativeRootId !== null) {
+                roots.push(post);
             }
+            // Cas B : C'est une réponse à une réponse (Enfant standard)
+            // Le parent doit exister dans la map (donc être une réponse aussi)
+            else if (post.parent_id && map[post.parent_id]) {
+                map[post.parent_id].children.push(post);
+            } 
+            // Cas C : C'est une racine absolue (Topic legacy ou erreur de données)
+            else if (!post.parent_id) {
+                roots.push(post);
+            } 
+            // Cas D : Orphelin réel (Parent supprimé ou introuvable)
+            else {
+                console.warn(`[WARN] Orphan node detected: ${post.id} (Parent: ${post.parent_id})`);
+            }
+        });
+        
+        return roots;
+    }
+
+    // Rendu d'un Post (Noeud de l'arbre)
+    function renderNode(post, depth = 0) {
+        const clone = dom.tmplPost.content.cloneNode(true);
+        
+        // Injection Données
+        clone.querySelector('.slot-author').textContent = post.author_name || 'ghost_user';
+        clone.querySelector('.slot-date').textContent = utils.date(post.created_at);
+        clone.querySelector('.slot-id').textContent = `0x${utils.hex(post.id)}`;
+        clone.querySelector('.slot-content').innerHTML = utils.escape(post.content);
+
+        // Styling Dynamique
+        const connector = clone.querySelector('.line-connector');
+        connector.classList.add(`depth-${depth % 6}`); 
+
+        // Bouton Répondre
+        const btnReply = clone.querySelector('.btn-reply-trigger');
+        btnReply.dataset.id = post.id;
+        btnReply.dataset.topicId = post.topic_id;
+
+        // Récursion
+        const subContainer = clone.querySelector('.sub-replies');
+        if (post.children && post.children.length > 0) {
+            post.children.sort((a, b) => new Date(a.created_at) - new Date(b.created_at))
+                .forEach(child => {
+                    subContainer.appendChild(renderNode(child, depth + 1));
+                });
         }
 
-        const { createClient } = supabase;
-        const config = window.SUPABASE_CONFIG;
+        return clone;
+    }
 
-        if (!config || !config.url || !config.key) {
-            console.error("❌ [Patafoin] Config missing.");
+    // Rendu d'un Topic (Dossier Racine)
+    function renderTopic(topic) {
+        const clone = dom.tmplTopic.content.cloneNode(true);
+        
+        clone.querySelector('.slot-title').textContent = topic.title;
+        clone.querySelector('.slot-meta').textContent = `uid:${utils.hex(topic.id)} | root_auth:${topic.root_author || 'sys'}`;
+        clone.querySelector('.slot-content').innerHTML = utils.escape(topic.content);
+
+        // Bouton répondre au topic (cible le Root Post ID)
+        const btnReply = clone.querySelector('.btn-reply-trigger');
+        btnReply.dataset.id = topic.root_post_id; 
+        btnReply.dataset.topicId = topic.id;
+
+        const treeContainer = clone.querySelector('.replies-tree');
+        
+        if (topic.children && topic.children.length > 0) {
+            topic.children.sort((a, b) => new Date(a.created_at) - new Date(b.created_at))
+                .forEach(child => {
+                    treeContainer.appendChild(renderNode(child, 0));
+                });
+        } else {
+            treeContainer.innerHTML = '<div class="text-ctp-surface2 text-xs italic pl-4 border-l border-dashed border-ctp-surface1 opacity-50">dir_empty...</div>';
+        }
+
+        return clone;
+    }
+
+    // Fonction Principale de Chargement
+    async function loadSystem() {
+        dom.tree.innerHTML = '<div class="text-ctp-blue animate-pulse font-mono pl-2">> scanning_sectors...</div>';
+
+        // 1. Fetch Topics
+        const { data: topics, error: errT } = await sb.from('topics').select('*').order('created_at', { ascending: false });
+        if (errT) return console.error(errT);
+
+        // 2. Fetch Posts
+        const { data: posts, error: errP } = await sb.from('posts').select('*');
+        if (errP) return console.error(errP);
+
+        const fullTree = [];
+        
+        // 3. Assemblage
+        topics.forEach(t => {
+            const allTopicPosts = posts.filter(p => p.topic_id === t.id);
+            
+            // Le Root Post est celui sans parent
+            const rootPost = allTopicPosts.find(p => p.parent_id === null);
+
+            // Les réponses sont tout sauf le Root Post
+            const replies = allTopicPosts.filter(p => p.id !== rootPost?.id);
+
+            // Objet Topic enrichi
+            const topicObj = { 
+                ...t, 
+                content: rootPost ? rootPost.content : '[DATA_CORRUPTED: Missing Root Post]',
+                root_author: rootPost ? rootPost.author_name : 'unknown',
+                root_post_id: rootPost ? rootPost.id : null,
+                children: [],
+                type: 'topic' 
+            };
+            
+            // CORRECTION CRITIQUE : On passe l'ID du RootPost comme "Racine Relative"
+            // Ainsi, buildHierarchy sait que les posts ayant parent_id === rootPost.id sont les premiers enfants
+            if (rootPost) {
+                topicObj.children = buildHierarchy(replies, rootPost.id);
+            }
+            
+            fullTree.push(topicObj);
+        });
+
+        // Rendu DOM
+        dom.tree.innerHTML = '';
+        if(fullTree.length === 0) {
+            dom.tree.innerHTML = '<div class="text-ctp-overlay0 pl-2">> /dev/null (no data found)</div>';
             return;
         }
 
-        sb = createClient(config.url, config.key);
-        console.log("✅ [Patafoin] Supabase Connected");
-
-        // --- 2. DOM ELEMENTS ---
-        const els = {
-            btnNewTopic: document.getElementById('btn-new-topic'),
-            panelCreate: document.getElementById('create-topic-panel'),
-            topicsContainer: document.getElementById('topics-container'),
-            detailView: document.getElementById('topic-detail-view'),
-            detailHeader: document.getElementById('detail-header'),
-            postsContainer: document.getElementById('posts-container')
-        };
-
-        // VISUAL FEEDBACK: Enable button
-        if (els.btnNewTopic) {
-            els.btnNewTopic.classList.remove('opacity-50', 'cursor-not-allowed');
-            console.log("✅ [Patafoin] Button activated");
-        }
-
-        let currentTopicId = null;
-
-        // --- 3. UTILS ---
-        function escapeHTML(str) {
-            if (!str) return '';
-            return str.replace(/[&<>'"]/g, tag => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', "'": '&#39;', '"': '&quot;' }[tag]));
-        }
-
-        function formatDate(dateStr) {
-            return new Date(dateStr).toLocaleDateString('fr-FR', { day: 'numeric', month: 'short', hour: '2-digit', minute: '2-digit' });
-        }
-
-        // --- 4. LOGIC ---
-        async function fetchAndRenderTopics() {
-            if(!els.topicsContainer) return;
-            
-            els.topicsContainer.innerHTML = '<div class="text-center py-12 text-ctp-overlay1 animate-pulse lowercase">chargement...</div>';
-            const { data: topics, error } = await sb.from('topics').select('*').order('created_at', { ascending: false });
-
-            if (error) {
-                els.topicsContainer.innerHTML = `<div class="text-ctp-red">Erreur: ${error.message}</div>`;
-                return;
-            }
-
-            if (!topics || topics.length === 0) {
-                els.topicsContainer.innerHTML = '<div class="text-center text-ctp-subtext0 italic lowercase">le néant.</div>';
-                return;
-            }
-
-            els.topicsContainer.innerHTML = '';
-            topics.forEach(topic => {
-                const div = document.createElement('div');
-                div.className = `group cursor-pointer bg-ctp-mantle border border-ctp-surface1 rounded-xl p-6 hover:border-ctp-mauve hover:shadow-[4px_4px_0px_0px_var(--color-ctp-surface1)] transition-all duration-300`;
-                div.dataset.topicId = topic.id;
-                div.dataset.action = 'open-topic';
-
-                div.innerHTML = `
-                    <h3 class="text-xl font-bold text-ctp-text group-hover:text-ctp-mauve transition-colors mb-2 lowercase pointer-events-none">
-                        ${escapeHTML(topic.title)}
-                    </h3>
-                    <div class="flex justify-between text-sm text-ctp-overlay1 lowercase pointer-events-none">
-                        <span>par ${escapeHTML(topic.author_name || 'inconnu')}</span>
-                        <span>${formatDate(topic.created_at)}</span>
-                    </div>
-                `;
-                els.topicsContainer.appendChild(div);
-            });
-        }
-
-        async function openTopic(topicId) {
-            currentTopicId = topicId;
-            const { data: topic } = await sb.from('topics').select('*').eq('id', topicId).single();
-
-            if (!topic) return;
-
-            if(els.topicsContainer) els.topicsContainer.classList.add('hidden');
-            if(els.btnNewTopic) els.btnNewTopic.classList.add('hidden');
-            if(els.panelCreate) els.panelCreate.classList.add('hidden');
-            if(els.detailView) els.detailView.classList.remove('hidden');
-
-            if(els.detailHeader) {
-                els.detailHeader.innerHTML = `
-                    <h2 class="text-3xl font-bold text-ctp-mauve mb-2 lowercase">${escapeHTML(topic.title)}</h2>
-                    <div class="text-ctp-subtext0 lowercase">
-                        lancé par <span class="text-ctp-teal">${escapeHTML(topic.author_name)}</span> 
-                        le ${formatDate(topic.created_at)}
-                    </div>
-                `;
-            }
-
-            if(els.postsContainer) {
-                els.postsContainer.innerHTML = '<div class="text-center py-8 text-ctp-overlay1 animate-pulse">récupération...</div>';
-                const { data: posts } = await sb.from('posts').select('*').eq('topic_id', currentTopicId).order('created_at', { ascending: true });
-
-                els.postsContainer.innerHTML = '';
-                posts.forEach((post, index) => {
-                    const div = document.createElement('div');
-                    div.className = `flex flex-col gap-2 p-6 rounded-xl ${index === 0 ? 'bg-ctp-surface0 border border-ctp-mauve/20' : 'bg-ctp-mantle border border-ctp-surface1'}`;
-                    div.innerHTML = `
-                        <div class="flex justify-between items-baseline mb-2 border-b border-ctp-surface1 pb-2">
-                            <span class="font-bold text-ctp-peach lowercase">${escapeHTML(post.author_name)}</span>
-                            <span class="text-xs text-ctp-overlay0">${formatDate(post.created_at)}</span>
-                        </div>
-                        <div class="text-ctp-text normal-case leading-relaxed whitespace-pre-wrap">${escapeHTML(post.content)}</div>
-                    `;
-                    els.postsContainer.appendChild(div);
-                });
-            }
-        }
-
-        // --- 5. EVENT DELEGATION (CLEAN & ROBUST) ---
-        document.addEventListener('click', async (e) => {
-            const target = e.target;
-
-            // 1. New Topic Button
-            if (target.closest('#btn-new-topic')) {
-                console.log("🖱️ [Patafoin] Click New Topic");
-                if(els.panelCreate) els.panelCreate.classList.toggle('hidden');
-                return;
-            }
-
-            // 2. Cancel Button
-            if (target.closest('#btn-cancel-topic')) {
-                if(els.panelCreate) els.panelCreate.classList.add('hidden');
-                return;
-            }
-
-            // 3. Back Button
-            if (target.closest('#btn-back-home')) {
-                if(els.detailView) els.detailView.classList.add('hidden');
-                if(els.topicsContainer) els.topicsContainer.classList.remove('hidden');
-                if(els.btnNewTopic) els.btnNewTopic.classList.remove('hidden');
-                currentTopicId = null;
-                fetchAndRenderTopics();
-                return;
-            }
-
-            // 4. Topic Card (Delegation from container)
-            const topicCard = target.closest('[data-action="open-topic"]');
-            if (topicCard) {
-                const id = topicCard.dataset.topicId;
-                openTopic(id);
-                return;
-            }
+        fullTree.forEach(topic => {
+            dom.tree.appendChild(renderTopic(topic));
         });
-
-        // --- 6. FORMS ---
-        const formNew = document.getElementById('form-new-topic');
-        if (formNew) {
-            formNew.addEventListener('submit', async (e) => {
-                e.preventDefault();
-                const title = document.getElementById('topic-title').value;
-                const author = document.getElementById('topic-author').value || 'Anonyme';
-                const content = document.getElementById('topic-content').value;
-
-                const { data: topic, error } = await sb.from('topics').insert([{ title, author_name: author }]).select().single();
-                if (error) { alert(error.message); return; }
-
-                await sb.from('posts').insert([{ topic_id: topic.id, author_name: author, content }]);
-
-                formNew.reset();
-                els.panelCreate.classList.add('hidden');
-                fetchAndRenderTopics();
-            });
-        }
-
-        const formReply = document.getElementById('form-reply');
-        if (formReply) {
-            formReply.addEventListener('submit', async (e) => {
-                e.preventDefault();
-                if (!currentTopicId) return;
-                const author = document.getElementById('reply-author').value || 'Anonyme';
-                const content = document.getElementById('reply-content').value;
-
-                await sb.from('posts').insert([{ topic_id: currentTopicId, author_name: author, content }]);
-
-                document.getElementById('reply-content').value = '';
-                openTopic(currentTopicId);
-            });
-        }
-
-        // Initial Load
-        fetchAndRenderTopics();
-
-    } catch (err) {
-        console.error("🔥 [Patafoin] CRASH:", err);
     }
+
+    // --- 4. GESTION DES INTERACTIONS ---
+
+    dom.btnRoot?.addEventListener('click', () => {
+        dom.panelRoot.classList.toggle('hidden');
+        if(!dom.panelRoot.classList.contains('hidden')) {
+            document.getElementById('topic-title').focus();
+        }
+    });
+    
+    dom.btnCancelRoot?.addEventListener('click', () => {
+        dom.panelRoot.classList.add('hidden');
+    });
+
+    // Soumission Nouveau Topic
+    dom.formRoot?.addEventListener('submit', async (e) => {
+        e.preventDefault();
+        const btnSubmit = dom.formRoot.querySelector('button[type="submit"]');
+        const originalText = btnSubmit.textContent;
+        btnSubmit.textContent = "[WRITING...]";
+        btnSubmit.disabled = true;
+
+        const title = document.getElementById('topic-title').value;
+        const author = document.getElementById('topic-author').value || 'anon_sys';
+        const content = document.getElementById('topic-content').value;
+
+        try {
+            // Création Topic
+            const { data: topicData, error: topicError } = await sb.from('topics').insert([{ title: title }]).select().single();
+            if (topicError) throw new Error(topicError.message);
+            
+            // Création Root Post
+            const { error: postError } = await sb.from('posts').insert([{ 
+                topic_id: topicData.id, 
+                parent_id: null,
+                author_name: author, 
+                content: content 
+            }]);
+
+            if (postError) throw new Error(postError.message);
+
+            dom.formRoot.reset();
+            dom.panelRoot.classList.add('hidden');
+            loadSystem(); 
+        } catch (err) {
+            alert(`[SYSTEM_ERROR] ${err.message}`);
+        } finally {
+            btnSubmit.textContent = originalText;
+            btnSubmit.disabled = false;
+        }
+    });
+
+    // Clics (Répondre / Annuler)
+    dom.tree.addEventListener('click', (e) => {
+        const target = e.target;
+
+        if (target.classList.contains('btn-reply-trigger')) {
+            e.preventDefault();
+            document.querySelectorAll('.reply-form').forEach(el => el.remove());
+
+            const parentId = target.dataset.id;
+            const topicId = target.dataset.topicId;
+            
+            if(!parentId || !topicId) return alert("Error: ID context missing.");
+
+            const formClone = dom.tmplReplyForm.content.cloneNode(true);
+            const form = formClone.querySelector('form');
+            form.dataset.parentId = parentId;
+            form.dataset.topicId = topicId;
+            formClone.querySelector('.slot-target').textContent = `0x${utils.hex(parentId)}`;
+
+            const details = target.closest('details');
+            const wrapper = target.closest('.node-wrapper');
+
+            if (details && !wrapper) {
+                // Si on répond au Topic lui-même, on insert en haut de la liste des réponses
+                const tree = details.querySelector('.replies-tree');
+                tree.insertBefore(formClone, tree.firstChild);
+            } else {
+                // Si on répond à un Post, on insert juste après lui
+                target.parentNode.appendChild(formClone);
+            }
+            form.querySelector('textarea').focus();
+        }
+
+        if (target.classList.contains('btn-cancel')) {
+            target.closest('form').remove();
+        }
+    });
+
+    // Soumission Réponse
+    dom.tree.addEventListener('submit', async (e) => {
+        if (!e.target.classList.contains('reply-form')) return;
+        e.preventDefault();
+        
+        const form = e.target;
+        const btn = form.querySelector('button[type="submit"]');
+        btn.textContent = "...";
+        btn.disabled = true;
+
+        const content = form.content.value;
+        const author = form.author.value || 'anon_sys';
+        const parentId = form.dataset.parentId;
+        const topicId = form.dataset.topicId;
+
+        const { error } = await sb.from('posts').insert([{
+            topic_id: topicId,
+            parent_id: parentId,
+            author_name: author,
+            content: content
+        }]);
+
+        if (error) {
+            alert(`[WRITE_ERROR]: ${error.message}`);
+            btn.textContent = "[RETRY]";
+            btn.disabled = false;
+        } else {
+            form.remove();
+            loadSystem();
+        }
+    });
+
+    loadSystem();
 });

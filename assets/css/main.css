@@ -88,13 +88,14 @@
   --color-ctp-surface2: var(--ctp-surface2);
 }
 
-/* --- 5. CONFIGURATION PROSE (CONTENU ARTICLE) --- */
+/* --- 5. CONFIGURATION PROSE & COMPONENTS --- */
 @layer components {
+  /* A. CONFIGURATION PROSE */
   .prose-catppuccin {
-    /* A. Reset Brutal */
+    /* Reset Brutal */
     text-transform: none !important;
 
-    /* B. Mapping Variables Typography */
+    /* Mapping Variables Typography */
     --tw-prose-body: var(--ctp-text);
     --tw-prose-headings: var(--ctp-mauve);
     --tw-prose-lead: var(--ctp-subtext1);
@@ -110,7 +111,7 @@
     --tw-prose-pre-code: var(--ctp-text);
     --tw-prose-pre-bg: var(--ctp-mantle);
 
-    /* C. Surcharges Directes */
+    /* Surcharges Directes */
 
     /* 1. Corps de texte générique */
     & :where(p, ul, ol, li) {
@@ -141,7 +142,7 @@
       text-transform: none !important;
     }
 
-    /* 5. Italique (C'est ce qui manquait !) */
+    /* 5. Italique */
     & :where(em, i) {
       color: var(--ctp-green) !important;
       font-family: var(--font-serif);
@@ -158,6 +159,96 @@
       font-weight: normal;
       font-family: var(--font-mono) !important;
     }
+  }
+
+  /* B. COMPOSANTS TERMINAL */
+  .terminal-tree-line {
+    /* La ligne verticale de hiérarchie */
+    border-left-width: 1px;
+    border-left-style: dashed;
+    border-color: var(--ctp-surface1);
+    transition: border-color 0.3s ease;
+    
+    &:hover {
+      border-color: var(--ctp-mauve);
+    }
+  }
+
+  /* Coloration cyclique de la profondeur (Rainbow Indent) */
+  .depth-0 { border-left-color: var(--ctp-mauve); }
+  .depth-1 { border-left-color: var(--ctp-blue); }
+  .depth-2 { border-left-color: var(--ctp-green); }
+  .depth-3 { border-left-color: var(--ctp-yellow); }
+  .depth-4 { border-left-color: var(--ctp-peach); }
+  .depth-5 { border-left-color: var(--ctp-red); }
+
+  /* FIX CURSEUR : Version "Soft Ghost" */
+  .terminal-cursor::after {
+    content: '_';
+    animation: blink 1.5s steps(2, start) infinite;
+    color: var(--ctp-overlay2);
+    font-weight: bold;
+    margin-left: 2px;
+  }
+
+  @keyframes blink { 
+    0%, 100% { opacity: 1; } 
+    50% { opacity: 0; } 
+  }
+
+  /* C. NOUVEAUX ELEMENTS : DOSSIER CLASSIFIÉ (VINTAGE ACADEMIC) */
+  
+  /* 1. Le Tampon "ARCHIVED" ou "REVIEWED" */
+  .doc-stamp {
+    border: 3px double var(--ctp-red);
+    color: var(--ctp-red);
+    padding: 0.5rem 1rem;
+    text-transform: uppercase;
+    font-family: var(--font-mono); 
+    font-weight: 900;
+    letter-spacing: 0.1em;
+    transform: rotate(-5deg);
+    opacity: 0.8;
+    mix-blend-mode: plus-lighter; /* Ajusté pour le dark mode */
+    display: inline-block;
+    /* Effet de bruit subtil pour simuler l'encre */
+    mask-image: url("data:image/svg+xml,%3Csvg width='200' height='100' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.8' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noise)' opacity='0.5'/%3E%3C/svg%3E");
+    mask-mode: luminance;
+  }
+
+  /* 2. Lignes de guidage technique (Bordures complexes) */
+  .tech-border-top {
+    position: relative;
+    border-top: 1px solid var(--ctp-surface2);
+  }
+  .tech-border-top::before {
+    content: '';
+    position: absolute;
+    top: -3px;
+    left: 0;
+    width: 20px;
+    height: 5px;
+    background: var(--ctp-mauve);
+  }
+  .tech-border-top::after {
+    content: '';
+    position: absolute;
+    top: -5px;
+    right: 0;
+    width: 5px;
+    height: 5px;
+    border: 1px solid var(--ctp-subtext0);
+  }
+
+  /* 3. Numéro de série vertical */
+  .serial-number-v {
+    writing-mode: vertical-rl;
+    text-orientation: mixed;
+    font-family: var(--font-mono);
+    font-size: 0.6rem;
+    letter-spacing: 0.2em;
+    color: var(--ctp-surface2);
+    user-select: none;
   }
 }
 
@@ -179,7 +270,7 @@
     animation: fadeInUp 0.5s ease-out forwards;
   }
 
-  /* B. Nouveaux Utilitaires UI (Maximalisme Catppuccin) */
+  /* B. Utilitaires UI (Maximalisme Catppuccin) */
   
   /* TEXTURE DE FOND "TECH-ORGANIC" */
   .bg-grid-pattern {
@@ -209,5 +300,4 @@
   .animate-breathe {
     animation: breathe 4s ease-in-out infinite;
   }
-} 
-/* Fin de @layer utilities - Assure-toi que c'est la toute dernière accolade du fichier */
+}

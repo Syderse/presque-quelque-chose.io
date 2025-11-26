@@ -1,73 +1,114 @@
 {{ define "main" }}
-<div class="not-prose min-h-screen w-full max-w-4xl mx-auto px-4 py-12 font-sans">
+<div class="min-h-screen w-full max-w-6xl mx-auto px-2 py-8 font-mono text-sm md:text-base">
 
-  <header class="flex flex-col md:flex-row justify-between items-end mb-12 border-b border-ctp-surface1 pb-6">
-    <div>
-      <h1 class="text-4xl font-bold text-ctp-mauve mb-2 lowercase">
-        {{ .Title }}
-      </h1>
-      <p class="text-ctp-subtext0 text-lg lowercase">
-        {{ .Description | default "glosons" }}
-      </p>
+  <header class="mb-8 border-b-2 border-ctp-surface1 pb-4">
+    <div class="flex flex-col md:flex-row justify-between items-start md:items-end gap-4">
+      <div>
+        <h1 class="text-3xl font-bold text-ctp-mauve mb-1">
+          <span class="text-ctp-surface2">root@presque-qc:</span><span class="text-ctp-blue">/dev/patafoin</span><span class="terminal-cursor"></span>
+        </h1>
+        <p class="text-ctp-subtext0 text-xs">
+          [SYS] MEM: 64KB OK | PROCESS: {{ .Title | upper }} | MODE: <span class="text-ctp-green">R/W</span>
+        </p>
+      </div>
+      
+      <button id="btn-create-root" 
+        class="group relative px-4 py-2 bg-ctp-base border border-ctp-green text-ctp-green hover:bg-ctp-green hover:text-ctp-base transition-colors uppercase text-xs font-bold tracking-widest">
+        <span class="absolute -inset-1 border border-ctp-green opacity-30 group-hover:opacity-100 transition-opacity"></span>
+        [+ MKDIR NEW_TOPIC]
+      </button>
     </div>
-    
-    <button id="btn-new-topic" 
-      class="relative z-50 mt-4 md:mt-0 bg-ctp-peach text-ctp-base font-bold py-2 px-6 rounded-lg hover:bg-ctp-yellow transition-all duration-300 shadow-[4px_4px_0px_0px_var(--color-ctp-surface1)] hover:translate-x-[2px] hover:translate-y-[2px] hover:shadow-[2px_2px_0px_0px_var(--color-ctp-surface1)] lowercase">
-      nouveau sujet
-    </button>
   </header>
 
-  <div id="create-topic-panel" class="hidden mb-12 bg-ctp-mantle p-6 rounded-xl border border-ctp-surface1 animate-fade-in-up">
-    <h2 class="text-xl text-ctp-pink mb-4 lowercase">créer un nouveau fil</h2>
-    <form id="form-new-topic" class="space-y-4">
-        <div>
-            <label class="block text-ctp-subtext1 mb-1 text-sm lowercase">titre du sujet</label>
-            <input type="text" id="topic-title" required minlength="3" class="w-full bg-ctp-base border border-ctp-surface1 rounded p-3 text-ctp-text focus:outline-none focus:border-ctp-mauve transition-colors placeholder-ctp-overlay0" placeholder="ex: de l'utilité des cure-dents...">
-        </div>
-        <div>
-            <label class="block text-ctp-subtext1 mb-1 text-sm lowercase">votre pseudo (optionnel)</label>
-            <input type="text" id="topic-author" class="w-full bg-ctp-base border border-ctp-surface1 rounded p-3 text-ctp-text focus:outline-none focus:border-ctp-mauve transition-colors placeholder-ctp-overlay0" placeholder="pataphysicien anonyme">
-        </div>
-        <div>
-            <label class="block text-ctp-subtext1 mb-1 text-sm lowercase">premier message</label>
-            <textarea id="topic-content" required rows="4" class="w-full bg-ctp-base border border-ctp-surface1 rounded p-3 text-ctp-text focus:outline-none focus:border-ctp-mauve transition-colors placeholder-ctp-overlay0 resize-y normal-case" placeholder="Exprimez votre pensée..."></textarea>
-        </div>
-        <div class="flex justify-end gap-4 pt-2">
-            <button type="button" id="btn-cancel-topic" class="text-ctp-overlay1 hover:text-ctp-red transition-colors lowercase">annuler</button>
-            <button type="submit" class="bg-ctp-mauve text-ctp-base font-bold py-2 px-6 rounded hover:bg-ctp-lavender transition-colors lowercase">publier</button>
-        </div>
+  <div id="root-form-panel" class="hidden mb-8 border border-dashed border-ctp-overlay1 p-4 bg-ctp-mantle/50">
+    <div class="text-ctp-red mb-2 text-xs">Warning: New Thread Initiation Sequence</div>
+    <form id="form-new-topic" class="flex flex-col gap-3">
+      <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+        <input type="text" id="topic-title" required 
+           class="bg-ctp-crust border border-ctp-surface1 p-2 text-ctp-text focus:border-ctp-mauve focus:outline-none placeholder-ctp-overlay0" 
+           placeholder="> input_title_here">
+        <input type="text" id="topic-author" 
+           class="bg-ctp-crust border border-ctp-surface1 p-2 text-ctp-text focus:border-ctp-mauve focus:outline-none placeholder-ctp-overlay0" 
+           placeholder="> input_user_id">
+      </div>
+      <textarea id="topic-content" required rows="3" 
+        class="bg-ctp-crust border border-ctp-surface1 p-2 text-ctp-text focus:border-ctp-mauve focus:outline-none placeholder-ctp-overlay0 resize-y"
+        placeholder="> input_stream_data..."></textarea>
+      <div class="flex justify-end gap-4">
+        <button type="button" id="btn-cancel-root" class="text-ctp-red hover:underline">[ABORT]</button>
+        <button type="submit" class="text-ctp-green hover:bg-ctp-green hover:text-ctp-base px-3 py-1">[EXECUTE]</button>
+      </div>
     </form>
   </div>
 
-  <div id="topics-container" class="space-y-4">
-    <div class="text-center py-12 text-ctp-overlay1 animate-pulse lowercase">
-      bosse-de-nage trie les fichiers...
-    </div>
-  </div>
-
-  <div id="topic-detail-view" class="hidden">
-    <button id="btn-back-home" class="mb-6 flex items-center text-ctp-blue hover:text-ctp-sky transition-colors lowercase gap-2">
-      <span>← retour aux sujets</span>
-    </button>
-
-    <div id="detail-header" class="mb-8 pb-6 border-b border-ctp-surface1"></div>
-    <div id="posts-container" class="space-y-6 mb-12"></div>
-
-    <div class="bg-ctp-mantle p-6 rounded-xl border border-ctp-surface1">
-      <h3 class="text-lg text-ctp-teal mb-4 lowercase">répondre</h3>
-      <form id="form-reply">
-        <div class="grid grid-cols-1 gap-4">
-          <input type="text" id="reply-author" class="w-full bg-ctp-base border border-ctp-surface1 rounded p-3 text-ctp-text focus:outline-none focus:border-ctp-teal transition-colors placeholder-ctp-overlay0" placeholder="votre pseudo (optionnel)">
-          <textarea id="reply-content" required rows="3" class="w-full bg-ctp-base border border-ctp-surface1 rounded p-3 text-ctp-text focus:outline-none focus:border-ctp-teal transition-colors placeholder-ctp-overlay0 normal-case" placeholder="Votre réponse..."></textarea>
-        </div>
-        <div class="mt-4 flex justify-end">
-          <button type="submit" class="bg-ctp-teal text-ctp-base font-bold py-2 px-6 rounded hover:bg-ctp-sky transition-colors lowercase">envoyer</button>
-        </div>
-      </form>
-    </div>
+  <div id="system-tree" class="space-y-1">
+    <div class="text-ctp-overlay1 animate-pulse">> mounting_filesystem...</div>
   </div>
 
 </div>
+
+<template id="tmpl-topic">
+  <details class="group border border-ctp-surface0 bg-ctp-base mb-2 open:border-ctp-mauve/50 open:bg-ctp-mantle/30 transition-all">
+    <summary class="list-none cursor-pointer p-3 hover:bg-ctp-surface0 flex items-baseline gap-3 select-none">
+      <span class="text-ctp-subtext1 font-bold font-mono group-open:text-ctp-mauve group-open:rotate-90 transition-transform">►</span>
+      <span class="text-ctp-overlay0 text-xs font-mono">drwxr-xr-x</span>
+      <span class="text-ctp-mauve font-bold text-lg decoration-ctp-surface2 hover:underline decoration-dashed decoration-1 underline-offset-4 slot-title">TITRE</span>
+      <span class="text-ctp-overlay1 text-xs ml-auto font-mono slot-meta">META_INFO</span>
+    </summary>
+    
+    <div class="p-4 pt-0 pl-4 md:pl-8 border-l border-ctp-surface0 ml-3 md:ml-4 my-2">
+      <div class="mb-6 font-sans text-ctp-text leading-relaxed border-b border-dashed border-ctp-surface1 pb-4 slot-content">
+        CONTENT
+      </div>
+      
+      <button class="text-xs text-ctp-blue hover:text-ctp-green hover:underline mb-4 btn-reply-trigger" data-type="topic">
+        [↳ REPLY_TO_ROOT]
+      </button>
+
+      <div class="replies-tree space-y-4"></div>
+    </div>
+  </details>
+</template>
+
+<template id="tmpl-post">
+  <div class="node-wrapper relative pl-4 md:pl-6 pt-2">
+    <div class="absolute left-0 top-0 bottom-0 border-l border-dashed border-ctp-surface1 hover:border-ctp-subtext0 transition-colors line-connector"></div>
+    <div class="absolute left-0 top-5 w-3 md:w-5 h-px bg-ctp-surface1 border-t border-dashed border-ctp-surface1"></div>
+
+    <div class="relative group">
+      <div class="flex items-baseline gap-2 text-xs mb-1 font-mono">
+        <span class="text-ctp-peach font-bold slot-author">USER</span>
+        <span class="text-ctp-surface2">@</span>
+        <span class="text-ctp-overlay0 slot-date">DATE</span>
+        <span class="text-ctp-surface1 slot-id hidden md:inline">ID</span>
+      </div>
+
+      <div class="text-ctp-subtext0 hover:text-ctp-text transition-colors border-l-2 border-transparent hover:border-ctp-peach pl-2 mb-2 slot-content whitespace-pre-wrap">
+        CONTENT
+      </div>
+
+      <button class="text-xs text-ctp-overlay1 hover:text-ctp-blue btn-reply-trigger">
+        [↳ fork_process]
+      </button>
+
+      <div class="sub-replies mt-2"></div>
+    </div>
+  </div>
+</template>
+
+<template id="tmpl-reply-form">
+  <form class="reply-form mt-2 mb-4 ml-4 p-3 bg-ctp-crust border border-ctp-surface1 border-l-4 border-l-ctp-yellow animate-fade-in-up">
+    <div class="text-xs text-ctp-yellow mb-2">> inserting_packet_to: <span class="slot-target">ID</span></div>
+    <div class="grid gap-2">
+      <input type="text" class="w-full bg-ctp-base border-none text-xs text-ctp-text focus:ring-0 placeholder-ctp-overlay0" placeholder="user_id (opt)" name="author">
+      <textarea class="w-full bg-ctp-base border border-ctp-surface0 p-2 text-sm text-ctp-text focus:border-ctp-yellow focus:outline-none font-mono" rows="3" required placeholder="write_buffer..." name="content"></textarea>
+    </div>
+    <div class="flex justify-end gap-3 mt-2">
+      <button type="button" class="text-xs text-ctp-red hover:underline btn-cancel">[KILL]</button>
+      <button type="submit" class="text-xs bg-ctp-yellow text-ctp-base font-bold px-2 py-1 hover:bg-ctp-peach">[COMMIT]</button>
+    </div>
+  </form>
+</template>
 
 <script>
   window.SUPABASE_CONFIG = {
@@ -75,10 +116,7 @@
     key: "{{ .Site.Params.supabase_key }}"
   };
 </script>
-
 <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
-
 {{ $js := resources.Get "js/patafoin.js" | js.Build (dict "minify" true) | fingerprint }}
 <script src="{{ $js.RelPermalink }}" integrity="{{ $js.Data.Integrity }}" defer></script>
-
 {{ end }}

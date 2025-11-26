@@ -1,0 +1,165 @@
+{{ define "main" }}
+
+{{/* --- CONFIGURATION --- */}}
+{{/* Définition du format de date technique */}}
+{{ $dateFormat := "2006-01-02" }}
+
+<div class="w-full min-h-screen bg-ctp-base text-ctp-text selection:bg-ctp-mauve selection:text-ctp-base">
+
+{{/* HEADER DE LA SECTION : Full Width avec Padding */}}
+  <header class="w-full px-6 md:px-12 pt-16 pb-8">
+    <div class="border-b-4 border-ctp-surface2 pb-6 relative">
+      
+      {{/* Éléments décoratifs Top-Right */}}
+      <div class="absolute top-0 right-0 flex flex-col items-end text-[10px] font-mono text-ctp-overlay1 leading-tight opacity-70">
+        <span>SEC: RESEARCH_DEPT</span>
+        <span>AUTH: {{ .Site.Title | upper }}</span>
+        <span>REF: {{ .Title | upper }}</span>
+      </div>
+
+      {{/* TITRE PRINCIPAL : TAILLE RÉDUITE (text-4xl md:text-6xl) */}}
+      <h1 class="font-serif text-4xl md:text-6xl font-black text-ctp-mauve tracking-tight leading-snug mb-6 uppercase max-w-4xl">
+        {{ .Title }}
+      </h1>
+
+      <div class="flex flex-col md:flex-row gap-6 md:items-end justify-between">
+        {{/* Description avec barre latérale technique */}}
+        <div class="font-mono text-ctp-subtext0 text-sm md:text-base border-l-[3px] border-ctp-mauve pl-4 max-w-3xl">
+          {{ .Content }} 
+        </div>
+
+        {{/* Bloc Statistique "System Status" */}}
+        <div class="bg-ctp-surface0/50 border border-ctp-surface2 p-3 min-w-[200px]">
+          <div class="grid grid-cols-2 gap-x-4 gap-y-1 font-mono text-xs">
+            <span class="text-ctp-overlay1">TOTAL_LOGS:</span>
+            <span class="text-ctp-green text-right">{{ len .Pages }}</span>
+            
+            <span class="text-ctp-overlay1">STATUS:</span>
+            <span class="text-ctp-peach text-right animate-pulse">ACTIVE</span>
+          </div>
+        </div>
+      </div>
+    </div>
+  </header>
+
+  {{/* LE REGISTRE (INVENTORY LOG) - Full Width */}}
+  <main class="w-full px-6 md:px-12 pb-24">
+    
+    {{/* Cadre global du tableau */}}
+    <div class="border border-ctp-surface2 bg-ctp-mantle/50 relative">
+      
+      {{/* Décoration de coin "Tech" */}}
+      <div class="absolute -top-[1px] -left-[1px] w-4 h-4 border-t-2 border-l-2 border-ctp-mauve"></div>
+      <div class="absolute -bottom-[1px] -right-[1px] w-4 h-4 border-b-2 border-r-2 border-ctp-mauve"></div>
+
+      {{/* EN-TÊTE DU TABLEAU (Desktop) */}}
+      {{/* Grid ajustée pour prendre plus de place sur le sujet */}}
+      <div class="hidden md:grid grid-cols-[90px_110px_150px_1fr_200px] border-b border-ctp-surface2 bg-ctp-surface0 text-ctp-overlay2 font-mono text-[10px] uppercase tracking-widest select-none">
+        <div class="p-4 border-r border-ctp-surface2 text-center">ID</div>
+        <div class="p-4 border-r border-ctp-surface2 text-center">Status</div>
+        <div class="p-4 border-r border-ctp-surface2">Logged Date</div>
+        <div class="p-4 border-r border-ctp-surface2">Subject / Hypothesis</div>
+        <div class="p-4 text-center">Access Protocol</div>
+      </div>
+
+      {{/* BOUCLE DES ENTRÉES */}}
+      <div class="flex flex-col divide-y divide-ctp-surface1">
+        {{ range .Pages }}
+          
+          {{/* Calcul d'ID Unique */}}
+          {{ $id := substr (md5 .RelPermalink) 0 6 | upper }}
+
+          {{/* LIGNE (ITEM) */}}
+          <article class="group relative md:grid md:grid-cols-[90px_110px_150px_1fr_200px] hover:bg-ctp-surface0 transition-colors duration-150">
+            
+            {{/* 1. COLONNE ID */}}
+            <div class="hidden md:flex items-center justify-center border-r border-ctp-surface1/50 p-6 font-mono text-xs text-ctp-overlay0 group-hover:text-ctp-mauve transition-colors">
+              {{ $id }}
+            </div>
+
+            {{/* 2. COLONNE STATUS */}}
+            <div class="hidden md:flex flex-col items-center justify-center border-r border-ctp-surface1/50 p-6">
+              {{ if .Draft }}
+                <div class="w-2 h-2 rounded-full bg-ctp-red mb-1"></div>
+                <span class="font-mono text-[9px] text-ctp-red">DRAFT</span>
+              {{ else }}
+                <div class="w-2 h-2 rounded-full bg-ctp-green mb-1 shadow-[0_0_8px_rgba(166,227,161,0.5)]"></div>
+                <span class="font-mono text-[9px] text-ctp-green">INDEXED</span>
+              {{ end }}
+            </div>
+
+            {{/* 3. COLONNE DATE */}}
+            <div class="p-6 md:border-r border-ctp-surface1/50 flex md:flex-col items-center md:items-start justify-between md:justify-center gap-2">
+              <span class="md:hidden font-mono text-xs text-ctp-overlay1">#{{ $id }}</span>
+              <time class="font-mono text-xs text-ctp-subtext1" datetime="{{ .Date.Format $dateFormat }}">
+                {{ .Date.Format $dateFormat }}
+              </time>
+            </div>
+
+            {{/* 4. COLONNE CONTENU (SUJET) */}}
+            <div class="p-6 md:border-r border-ctp-surface1/50 flex flex-col justify-center gap-3 relative">
+              {{/* Titre : Interlignage "normal" pour éviter l'écrasement */}}
+              <h2 class="font-serif text-2xl md:text-3xl font-bold text-ctp-text group-hover:text-ctp-mauve transition-colors leading-normal">
+                <a href="{{ .RelPermalink }}" class="focus:outline-none decoration-ctp-mauve decoration-2 underline-offset-4">
+                  {{ .Title }}
+                </a>
+              </h2>
+              
+              {{/* Résumé */}}
+              <p class="text-sm text-ctp-overlay2 font-sans line-clamp-2 leading-relaxed max-w-4xl">
+                {{ .Summary | plainify | truncate 200 }}
+              </p>
+
+              {{/* Tags */}}
+              <div class="flex flex-wrap gap-2 mt-2">
+                {{ range first 4 (or .Params.tags slice) }}
+                <span class="inline-flex items-center px-2 py-1 border border-ctp-surface2 bg-ctp-base/50 text-[10px] font-mono text-ctp-subtext0 uppercase tracking-wider">
+                  {{ . }}
+                </span>
+                {{ end }}
+              </div>
+            </div>
+
+            {{/* 5. COLONNE ACTION (Toujours "OPEN_FILE") */}}
+            <div class="p-6 flex items-center justify-center bg-ctp-base/30 group-hover:bg-transparent transition-colors">
+              <a href="{{ .RelPermalink }}" class="w-full h-12 flex items-center justify-center gap-2 border border-dashed border-ctp-overlay1 text-ctp-overlay1 group-hover:border-ctp-mauve group-hover:text-ctp-mauve group-hover:bg-ctp-mauve/10 font-mono text-xs uppercase transition-all duration-300">
+                <span>OPEN_FILE</span>
+                <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="1.5">
+                  <path stroke-linecap="round" stroke-linejoin="round" d="M14 5l7 7m0 0l-7 7m7-7H3" />
+                </svg>
+              </a>
+            </div>
+
+          </article>
+        {{ end }}
+      </div>
+
+      {{/* FOOTER DU TABLEAU */}}
+      <div class="bg-ctp-surface0 border-t border-ctp-surface2 p-3 flex justify-between items-center font-mono text-[10px] text-ctp-overlay1 uppercase">
+        <div class="flex gap-6">
+          <span>// END_OF_STREAM</span>
+          <span>CHECK_SUM: {{ md5 now }}</span>
+        </div>
+        <div class="hidden md:block">
+          PAGE GENERATED IN {{ .Site.Params.buildTime | default "0.24s" }}
+        </div>
+      </div>
+
+    </div>
+
+    {{/* Pagination */}}
+    {{ if gt .Paginator.TotalPages 1 }}
+    <div class="mt-8 flex justify-center font-mono text-sm gap-4 text-ctp-subtext0">
+      {{ if .Paginator.HasPrev }}
+        <a href="{{ .Paginator.Prev.URL }}" class="hover:text-ctp-mauve">[ PREV_PAGE ]</a>
+      {{ end }}
+      <span>PAGE {{ .Paginator.PageNumber }} / {{ .Paginator.TotalPages }}</span>
+      {{ if .Paginator.HasNext }}
+        <a href="{{ .Paginator.Next.URL }}" class="hover:text-ctp-mauve">[ NEXT_PAGE ]</a>
+      {{ end }}
+    </div>
+    {{ end }}
+
+  </main>
+</div>
+{{ end }}
