@@ -1,150 +1,74 @@
-<nav class="sticky top-0 h-screen overflow-y-auto w-full p-6 flex flex-col gap-8">
+{{/* COMPONENT: SIDEBAR CONTENT (DUMB COMPONENT)
+  Rôle : Contenu pur. Ne gère PAS son positionnement ni son affichage.
+  Parent : layouts/_default/baseof.html
+*/}}
 
-  {{/* --- HEADER (LOGO) --- */}}
-  <div class="flex justify-between items-start border-b border-ctp-surface0/40 pb-6">
-    <div class="flex flex-col">
-      <a href="{{ .Site.Home.RelPermalink }}" class="text-4xl font-black tracking-tighter font-sans group block no-underline">
-        <span class="text-transparent bg-clip-text bg-gradient-to-br from-ctp-mauve to-ctp-blue group-hover:from-ctp-pink group-hover:to-ctp-mauve transition-all duration-500">
-          Presque.
-        </span>
-      </a>
-    </div>
-    <button onclick="toggleSidebar()" 
-            class="p-1.5 -mr-2 -mt-2 rounded-md text-ctp-overlay0 hover:text-ctp-mauve hover:bg-ctp-surface0/50 transition-colors"
-            aria-label="Réduire le menu">
-      <svg xmlns="http://www.w3.org/2000/svg" class="w-5 h-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M11 19l-7-7 7-7m8 14l-7-7 7-7" />
-      </svg>
-    </button>
+<div class="h-full flex flex-col bg-ctp-mantle border-r border-ctp-surface0/40 shadow-2xl overflow-hidden">
+  
+  {{/* HEADER LOGO */}}
+  <div class="h-20 flex items-center px-6 shrink-0 border-b border-ctp-surface0/50">
+    <a href="/" class="flex items-center gap-3 no-underline group">
+      <div class="w-10 h-10 rounded-lg bg-gradient-to-br from-ctp-mauve to-ctp-blue flex items-center justify-center shadow-lg group-hover:scale-105 transition-transform duration-300">
+        <span class="text-ctp-base font-black text-xl">P.</span>
+      </div>
+      <div class="flex flex-col">
+        <span class="font-bold text-xl text-ctp-text tracking-tight group-hover:text-ctp-mauve transition-colors">Presque.</span>
+      </div>
+    </a>
   </div>
 
-  {{/* --- 1. NAVIGATION PRINCIPALE (Full Color Mode) --- */}}
-  <div class="space-y-2">
+  {{/* NAVIGATION PRINCIPALE */}}
+  <nav class="flex-1 overflow-y-auto py-6 px-4 space-y-2 scrollbar-hide">
+    
+    {{/* FIX COULEURS TAILWIND JIT :
+       Simplification pour l'approche maximaliste.
+       On définit uniquement la classe de base, car elle sera toujours visible.
+    */}}
+    {{ $colors := slice 
+      (dict "base" "text-ctp-mauve")
+      (dict "base" "text-ctp-blue")
+      (dict "base" "text-ctp-peach")
+      (dict "base" "text-ctp-green")
+      (dict "base" "text-ctp-red")
+      (dict "base" "text-ctp-yellow")
+    }}
     
     {{ range $index, $item := .Site.Menus.main }}
-      
-      {{ $activeClass := "" }}
-      {{ $inactiveClass := "" }}
-      {{ $mod := mod $index 4 }}
-
-      {{/* LOGIQUE : 
-          - Inactif : Couleur visible (opacity-80) sans fond.
-          - Hover : Opacité 100% + Fond léger.
-          - Actif : Opacité 100% + Fond marqué + Bordure.
-      */}}
-
-      {{ if eq $mod 0 }} 
-         {{/* --- PEACH (Orange) --- */}}
-         {{ $activeClass = "bg-ctp-peach/15 text-ctp-peach shadow-sm border border-ctp-peach/20" }}
-         {{ $inactiveClass = "text-ctp-peach/80 hover:text-ctp-peach hover:bg-ctp-peach/10" }}
-      
-      {{ else if eq $mod 1 }}
-         {{/* --- GREEN (Vert) --- */}}
-         {{ $activeClass = "bg-ctp-green/15 text-ctp-green shadow-sm border border-ctp-green/20" }}
-         {{ $inactiveClass = "text-ctp-green/80 hover:text-ctp-green hover:bg-ctp-green/10" }}
-      
-      {{ else if eq $mod 2 }}
-         {{/* --- BLUE (Bleu) --- */}}
-         {{ $activeClass = "bg-ctp-blue/15 text-ctp-blue shadow-sm border border-ctp-blue/20" }}
-         {{ $inactiveClass = "text-ctp-blue/80 hover:text-ctp-blue hover:bg-ctp-blue/10" }}
-
-      {{ else }}
-         {{/* --- YELLOW (Jaune) --- */}}
-         {{ $activeClass = "bg-ctp-yellow/15 text-ctp-yellow shadow-sm border border-ctp-yellow/20" }}
-         {{ $inactiveClass = "text-ctp-yellow/80 hover:text-ctp-yellow hover:bg-ctp-yellow/10" }}
-      {{ end }}
+      {{ $active := $.IsMenuCurrent "main" . }}
+      {{/* Sélection cyclique */}}
+      {{ $theme := index $colors (mod $index (len $colors)) }}
 
       <a href="{{ .URL }}" 
-         class="block w-full p-3 rounded-lg transition-all duration-300 font-semibold no-underline {{ if $.IsMenuCurrent "main" . }}{{ $activeClass }}{{ else }}{{ $inactiveClass }}{{ end }}">
-        {{ .Name | title }}
-      </a>
-
-    {{ end }}
-  </div>
-
-{{/* --- 2. OUTILS (CLINAMEN) --- */}}
-  <div class="w-full mt-auto pt-6 border-t border-ctp-surface0/40">
-    <a href="#" id="sidebar-random-btn" 
-       class="group relative flex items-center justify-center w-full p-4 rounded-xl 
-              bg-ctp-lavender/5 border border-ctp-lavender/20 text-ctp-lavender
-              hover:bg-ctp-lavender/10 hover:border-ctp-lavender/50 hover:shadow-[0_0_15px_rgba(180,190,254,0.15)]
-              transition-all duration-300 no-underline">
-      
-      <span class="text-3xl transform transition-transform duration-500 group-hover:rotate-180 group-hover:scale-110">
-        🌀
-      </span>
-    </a>
-
-    {{/* --- 3. LE SCHRÖDINGER COPYRIGHT (AJOUT PROPOSÉ) --- */}}
-    <div id="pataphysical-footer" 
-         class="mt-6 text-center font-mono text-[10px] text-ctp-overlay0 select-none cursor-help opacity-60 hover:opacity-100 transition-opacity duration-500">
+         class="group flex items-center gap-4 px-4 py-3 rounded-xl transition-all duration-200 border border-transparent
+                {{ if $active }}bg-ctp-surface0 shadow-inner border-ctp-surface1{{ else }}hover:bg-ctp-surface0/50{{ end }}">
         
-        <span class="inline-block hover:animate-spin">©</span> 
-        <span id="footer-text" class="hover:text-ctp-pink transition-colors duration-300">
-            {{ now.Year }} Presque.
+        {{/* MODIFICATION : 
+           Suppression de la condition active/inactive pour la couleur du texte.
+           La classe {{ $theme.base }} est appliquée directement.
+        */}}
+        <span class="font-bold text-lg transition-colors duration-300 {{ $theme.base }}">
+          {{ .Name }}
         </span>
 
-    </div>
+        {{/* Point Actif */}}
+        {{ if $active }}
+          <div class="ml-auto w-1.5 h-1.5 rounded-full bg-ctp-text animate-pulse"></div>
+        {{ end }}
+      </a>
+    {{ end }}
+  </nav>
+
+  {{/* FOOTER ACTIONS */}}
+  <div class="p-4 bg-ctp-crust/50 border-t border-ctp-surface0/50 backdrop-blur-sm">
+      <a href="/manuel/" class="flex items-center gap-3 px-4 py-3 rounded-lg text-ctp-subtext0 hover:bg-ctp-surface0 hover:text-ctp-maroon transition-colors group">
+        <span class="grayscale group-hover:grayscale-0 transition-all">🧭</span>
+        <span class="font-medium text-sm">Le Manuel</span>
+      </a>
+      
+      <button onclick="randomArticle()" class="w-full flex items-center gap-3 px-4 py-3 rounded-lg text-ctp-subtext0 hover:bg-ctp-surface0 hover:text-ctp-teal transition-colors text-left cursor-pointer group">
+        <span class="group-hover:rotate-180 transition-transform duration-500">🌀</span>
+        <span class="font-medium text-sm">Aléatoire</span>
+      </button>
   </div>
 
-</nav>
-
-<script>
-  document.addEventListener('DOMContentLoaded', () => {
-    // --- LOGIQUE BOUTON ALÉATOIRE (Existante) ---
-    const btn = document.getElementById('sidebar-random-btn');
-    if (btn) {
-      btn.addEventListener('click', async (e) => {
-        e.preventDefault();
-        const icon = btn.querySelector('span');
-        const originalIcon = "🌀"; 
-        try {
-          icon.classList.add('animate-spin'); 
-          const r = await fetch('/articles-aleatoires.json');
-          if (!r.ok) throw new Error('Erreur réseau');
-          const data = await r.json();
-          const list = data.filter(i => i.permalink !== window.location.href);
-          if (!list.length) { window.location.reload(); return; }
-          const dest = list[Math.floor(Math.random() * list.length)];
-          icon.classList.remove('animate-spin');
-          icon.innerText = "🚀"; 
-          setTimeout(() => window.location.href = dest.permalink, 400);
-        } catch (err) {
-          console.error(err);
-          icon.classList.remove('animate-spin');
-          icon.innerText = "💥";
-          setTimeout(() => { icon.innerText = originalIcon; }, 2000);
-        }
-      });
-    }
-
-    // --- LOGIQUE SCHRÖDINGER COPYRIGHT (Nouvelle) ---
-    const footerText = document.getElementById('footer-text');
-    if (footerText) {
-        const phrases = [
-            "{{ now.Year }} Presque.",                 // La base
-            "Tous torts partagés.",                    // L'inverse de droits réservés
-            "Copie autorisée si incomprise.",          // Provocation
-            "152 Ère 'Pataphysique.",                  // Calendrier Jarry (2025 - 1873)
-            "Ceci n'est pas un site.",                 // Magritte
-            "Aucun droit, que du gauche.",             // Jeu de mot douteux
-            "Approximativement vôtre.",                // Politesse
-            "Code source : Hasard."                    // Vérité technique
-        ];
-
-        // Changement au clic (Mobile & Desktop)
-        footerText.parentElement.addEventListener('click', () => {
-            // On prend une phrase au hasard différente de l'actuelle
-            let current = footerText.innerText;
-            let next = phrases.filter(p => p !== current)[Math.floor(Math.random() * (phrases.length - 1))];
-            
-            // Petit effet "Glitch" textuel
-            footerText.style.opacity = 0;
-            setTimeout(() => {
-                footerText.innerText = next;
-                footerText.style.opacity = 1;
-            }, 150);
-        });
-    }
-  });
-</script>
+</div>

@@ -571,7 +571,11 @@
                ]
            }
        ];
+// MODIFICATION: Force l'attachement à window pour la compatibilité Hugo Pipes/ESBuild
+        if (typeof window !== 'undefined') {
+            window.PataphysicalDate = PataphysicalDate;
+        }
+        
+        exports = PataphysicalDate;
 
-       exports = PataphysicalDate;
-
-   })(typeof exports === 'undefined'? {}: exports);
+    })(typeof exports === 'undefined'? {}: exports);

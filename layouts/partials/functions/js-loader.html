@@ -1,0 +1,25 @@
+{{/* Partial: JS Loader
+  But: Charger, compiler et sécuriser les scripts JS via Hugo Pipes
+  Usage: {{ partial "functions/js-loader.html" (slice "script1" "script2") }}
+  Note: Les fichiers doivent être dans assets/js/ et sans l'extension .js dans l'appel
+*/}}
+
+{{ $scripts := . }}
+{{ $isProd := hugo.IsProduction }}
+{{ $opts := dict "minify" $isProd "target" "es2015" }}
+
+{{ range $scripts }}
+  {{/* Définition du chemin source */}}
+  {{ $srcPath := printf "js/%s.js" . }}
+  {{ $resource := resources.Get $srcPath }}
+
+  {{ if $resource }}
+    {{/* Compilation ESBuild + Minification + Fingerprint */}}
+    {{ $build := $resource | js.Build $opts | fingerprint }}
+    
+    <script src="{{ $build.RelPermalink }}" integrity="{{ $build.Data.Integrity }}" defer></script>
+  {{ else }}
+    {{/* Sécurité : Affiche une erreur dans la console serveur si le fichier manque */}}
+    {{ errorf "ERREUR CRITIQUE (js-loader) : Le script '%s' est introuvable dans assets/js/" $srcPath }}
+  {{ end }}
+{{ end }}

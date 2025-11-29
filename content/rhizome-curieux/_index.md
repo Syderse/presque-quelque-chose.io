@@ -1,9 +1,10 @@
 ---
 title: "rhizome curieux"
-full_width: true   # <--- INDISPENSABLE pour sortir du mode "Article"
+full_width: true
+layout: "list"  # <--- FORCE LA RÉSOLUTION vers list.rhizome.json
 outputs: 
   - HTML
-  - JSON-RHIZOME
+  - RHIZOME
 
 items:
   - title: "le collège"

@@ -1,115 +1,72 @@
 {{ define "main" }}
-{{/* LAYOUT V11 : EDITORIAL HAUNTED
-Objectif : Design éditorial épuré avec un "Intrus" flottant.
-
-Changements :
-1. Suppression de la grille Dashboard (Zone A & B).
-2. Ajout du widget "Intrus" en position absolute.
-3. Mise en page centrée "Page de livre" pour le contenu.
+{{/* LAYOUT v3.2 : "BALANCED DASHBOARD - REFINED"
+Changelog :
+- Header : Fixe.
+- Band "NEXUS" (Milieu) : Elastique (flex-grow).
+- Band "ALMANACH" (Bas) : Réduit à 200px pour maximiser l'espace de l'Identity Card.
 */}}
 
-<div class="relative w-full flex flex-col items-center justify-start -mt-8 md:-mt-10 min-h-[60vh]">
+<div class="w-full h-[calc(100vh-6rem)] flex flex-col gap-4 px-4 pb-4">
 
-  {{/* --- L'INTRUS (Flottant en haut à droite) --- */}}
-  <div class="absolute top-0 right-0 w-0 h-0">
-    {{ partial "widgets/intrus.html" . }}
-  </div>
-
-  {{/* --- 1. HEADER & CONTENU ÉDITORIAL --- */}}
-  <section class="w-full max-w-2xl mx-auto flex flex-col items-center text-center space-y-6 pt-4 md:pt-10 z-10">
-
-    {{/* Avatar : Marges réduites */}}
-    <div class="relative group cursor-pointer">
-      <div
-        class="absolute inset-0 bg-ctp-mauve blur-2xl opacity-20 group-hover:opacity-40 transition-opacity duration-500 rounded-full">
-      </div>
-      <img src="/media/avatar.jpg" alt="Avatar"
-        class="relative z-10 w-24 h-24 rounded-full border-2 border-ctp-surface1 bg-ctp-base object-cover shadow-2xl transition-transform duration-500 ease-out group-hover:rotate-6 group-hover:scale-110"
-        onerror="this.style.display='none';">
-    </div>
-
-    <div class="w-full px-4">
-      <h1 class="text-4xl md:text-5xl font-serif font-black tracking-tight mb-2 text-ctp-text">
-        presque quelque chose
-      </h1>
-
-      {{/* --- PATAPHYSICAL ALMANAC (Editorial Style) --- */}}
-      <div class="mb-8 flex flex-col items-center justify-center space-y-2 opacity-80">
-        <div id="pataphysical-date" class="text-xs font-mono font-bold text-ctp-mauve tracking-widest uppercase">
-          Calcul...
+    {{/* --- ZONE 1 : SYSTEM HEADER (Top) --- */}}
+    <div class="w-full h-10 shrink-0 pl-14 flex items-center z-30">
+        <div class="w-full h-full border-b border-ctp-surface1 flex items-center justify-between px-4 bg-ctp-mantle/50 backdrop-blur-sm rounded-t-lg">
+            <span class="text-xs font-mono text-ctp-overlay1">[ SYSTEM_READY ]</span>
+            <span class="text-xs font-mono text-ctp-mauve animate-pulse">:: WAITING FOR INPUT ::</span>
         </div>
-        <div id="pataphysical-activity"
-          class="text-lg font-serif italic text-ctp-subtext0 leading-snug max-w-md mx-auto">
+    </div>
+
+    {{/* --- ZONE 2 : NEXUS BAND (Centre) ---
+    C'est la zone élastique. Elle va récupérer les 40px libérés par le bas.
+    */}}
+    <div class="w-full flex-grow min-h-0 grid grid-cols-1 md:grid-cols-4 gap-4 z-20">
+
+        {{/* COL 1 (Ouest) : DOM */}}
+        <div class="md:col-span-1 h-full overflow-hidden relative">
+            {{ partial "widgets/dom-card.html" . }}
         </div>
-      </div>
 
-      <div class="prose prose-lg prose-catppuccin mx-auto text-center">
-        {{ .Content }}
-      </div>
-    </div>
-  </section>
+        {{/* COL 2-3 (Centre) : IDENTITY */}}
+        <div class="md:col-span-2 h-full overflow-hidden relative">
+            {{ partial "widgets/identity-card.html" . }}
+        </div>
 
-  {{/* --- 2. COMPACT RECENTS (Style plus discret) --- */}}
-  {{ $targetSections := slice "ondes-pixels" "solutions-imaginaires" }}
-  {{ $recentPosts := where .Site.RegularPages "Section" "in" $targetSections }}
-  {{ $recentPosts = sort $recentPosts "Date" "desc" | first 3 }}
+        {{/* COL 4 (Est) : LOGS */}}
+        <div class="md:col-span-1 h-full overflow-hidden relative">
+            {{ partial "widgets/latest-posts.html" . }}
+        </div>
 
-  {{ if gt (len $recentPosts) 0 }}
-  <section class="w-full max-w-3xl mx-auto mt-16 px-4">
-    <div class="flex items-center gap-4 mb-6 opacity-60">
-      <div class="h-px bg-ctp-surface1 flex-1"></div>
-      <h2 class="text-xs font-bold text-ctp-mauve uppercase tracking-[0.2em]">Récemment</h2>
-      <div class="h-px bg-ctp-surface1 flex-1"></div>
     </div>
 
-    <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
-      {{ range $recentPosts }}
-      {{ partial "cards/link-card.html" (dict
-      "url" .RelPermalink
-      "title" .Title
-      "subtitle" (.Description | default .Summary | truncate 60)
-      "icon" (.Params.icon | default "📄")
-      "color" (.Params.color | default "mauve")
-      ) }}
-      {{ end }}
+    {{/* --- ZONE 3 : ALMANACH (Bas) ---
+    MODIFICATION : h-[240px] -> h-[200px].
+    Compacté pour laisser la vedette à la zone centrale.
+    */}}
+    <div class="w-full h-[200px] shrink-0 z-10 relative">
+        {{ partial "widgets/almanach-card.html" . }}
     </div>
-  </section>
-  {{ end }}
 
 </div>
 
-{{/* LOGIQUE JS ALMANACH */}}
-<script src="/js/PataphysicalDate.js"></script>
-<script>
-  document.addEventListener('DOMContentLoaded', async function () {
-    let almanachData = {};
-    try {
-      const r = await fetch('/almanach/index.json');
-      if (r.ok) almanachData = await r.json();
-    } catch (e) { }
-
-    if (typeof PataphysicalDate !== 'undefined') {
-      const p = new PataphysicalDate();
-      const d = new Date();
-      const key = d.toISOString().split('T')[0];
-      const saint = p.getSaintOfDay();
-      const entry = almanachData[key];
-
-      let html = '<span class="opacity-50 italic text-sm">Pas de données.</span>';
-
-      if (entry) {
-        html = `<span class="text-ctp-text font-medium">« ${entry} »</span>`;
-        if (saint) html += `<br><span class="text-[10px] text-ctp-subtext0 mt-1 block not-italic font-sans uppercase tracking-widest opacity-80">— ${saint}</span>`;
-      } else if (saint) {
-        html = saint;
-      }
-
-      const dateEl = document.getElementById('pataphysical-date');
-      if (dateEl) dateEl.innerText = `${p.getDay()} ${p.getMonthName()} ${p.getFullYear()} E.P.`;
-
-      const actEl = document.getElementById('pataphysical-activity');
-      if (actEl) actEl.innerHTML = html;
+<style>
+    /* Scrollbar invisible mais fonctionnelle pour l'esthétique */
+    ::-webkit-scrollbar {
+        width: 4px;
+        height: 4px;
     }
-  });
-</script>
+
+    ::-webkit-scrollbar-track {
+        background: transparent;
+    }
+
+    ::-webkit-scrollbar-thumb {
+        background: var(--ctp-surface1);
+        border-radius: 2px;
+    }
+</style>
+{{ end }}
+
+{{/* UN SEUL BLOC SCRIPTS AUTORISÉ */}}
+{{ define "scripts" }}
+    {{ partial "functions/js-loader.html" (slice "PataphysicalDate" "almanach" "dom-engine") }}
 {{ end }}

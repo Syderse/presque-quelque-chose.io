@@ -1,16 +1,15 @@
 @import url('https://fonts.googleapis.com/css2?family=Ubuntu:wght@300;400;500;700&family=JetBrains+Mono:wght@400;500&display=swap');
 @import "tailwindcss";
 
-/* --- 1. Plugins (Après les imports standards) --- */
+/* --- 1. Plugins --- */
 @plugin "@tailwindcss/typography";
 
 /* --- 2. Sources JIT --- */
-/* On pointe explicitement vers le safelist pour aider le scanner */
 @source "../../layouts/partials/debug/safelist.html";
 @source "../../layouts/**/*.html";
 @source "../../content/**/*.md";
 
-/* --- 3. DÉFINITION DES VARIABLES --- */
+/* --- 3. THEME & VARIABLES --- */
 @layer base {
   :root {
     /* Palette Catppuccin Mocha */
@@ -47,16 +46,11 @@
     background-color: var(--ctp-base);
     color: var(--ctp-text);
     font-family: "Ubuntu", sans-serif;
-
-    /* UI GLOBALE : Minuscules par défaut (Menu, Sidebar, Footer) */
-    text-transform: lowercase;
-
-    letter-spacing: 0.04em;
-    line-height: 1.75;
+    letter-spacing: 0.02em; /* Réduit un peu par rapport au terminal */
+    line-height: 1.6;
   }
 }
 
-/* --- 4. Mapping Tailwind --- */
 @theme {
   --font-sans: "Ubuntu", ui-sans-serif, system-ui, sans-serif;
   --font-serif: "Georgia", Cambria, "Times New Roman", Times, serif;
@@ -88,14 +82,12 @@
   --color-ctp-surface2: var(--ctp-surface2);
 }
 
-/* --- 5. CONFIGURATION PROSE & COMPONENTS --- */
+/* --- 4. COMPONENTS LAYER --- */
 @layer components {
-  /* A. CONFIGURATION PROSE */
+  
+  /* A. PROSE RESET (Pour les articles Markdown) */
   .prose-catppuccin {
-    /* Reset Brutal */
-    text-transform: none !important;
-
-    /* Mapping Variables Typography */
+    /* Pas de force lowercase ici, on veut du texte naturel */
     --tw-prose-body: var(--ctp-text);
     --tw-prose-headings: var(--ctp-mauve);
     --tw-prose-lead: var(--ctp-subtext1);
@@ -111,46 +103,28 @@
     --tw-prose-pre-code: var(--ctp-text);
     --tw-prose-pre-bg: var(--ctp-mantle);
 
-    /* Surcharges Directes */
-
-    /* 1. Corps de texte générique */
     & :where(p, ul, ol, li) {
       color: var(--ctp-text) !important;
       line-height: 1.8;
       margin-bottom: 1.5em;
-      text-transform: none !important;
     }
-
-    /* 2. Titres */
     & :where(h1, h2, h3, h4, h5, h6) {
       color: var(--ctp-mauve) !important;
       font-weight: 700 !important;
-      text-transform: none !important;
     }
-
-    /* 3. Liens */
     & :where(a):not(.not-prose) {
       color: var(--ctp-blue) !important;
       text-decoration-color: var(--ctp-blue) !important;
-      text-transform: none !important;
     }
-
-    /* 4. Gras (Bold/Strong) */
     & :where(strong, b) {
       color: var(--ctp-peach) !important;
       font-weight: 700 !important;
-      text-transform: none !important;
     }
-
-    /* 5. Italique */
     & :where(em, i) {
       color: var(--ctp-green) !important;
       font-family: var(--font-serif);
       font-style: italic;
-      text-transform: none !important;
     }
-
-    /* 6. Code Inline */
     & :where(:not(pre) > code) {
       color: var(--ctp-pink) !important;
       background-color: var(--ctp-surface0);
@@ -161,118 +135,57 @@
     }
   }
 
-  /* B. COMPOSANTS TERMINAL */
-  .terminal-tree-line {
-    /* La ligne verticale de hiérarchie */
-    border-left-width: 1px;
-    border-left-style: dashed;
-    border-color: var(--ctp-surface1);
-    transition: border-color 0.3s ease;
+  /* B. BENTO UI SYSTEM (Nouveau Design System) */
+  .bento-card {
+    background-color: var(--ctp-surface0);
+    /* Bordure subtile pour la définition */
+    border: 1px solid rgba(147, 153, 178, 0.1); /* ctp-overlay2 avec alpha */
+    border-radius: 0.75rem; /* rounded-xl */
+    transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
     
+    /* Ombre portée douce pour détacher du fond */
+    box-shadow: 
+      0 1px 2px 0 rgba(0, 0, 0, 0.05),
+      0 1px 3px 0 rgba(0, 0, 0, 0.1); /* shadow-sm */
+
+    /* Effet de survol "Premium" */
     &:hover {
-      border-color: var(--ctp-mauve);
+      border-color: rgba(203, 166, 247, 0.3); /* ctp-mauve */
+      transform: translateY(-2px);
+      box-shadow: 
+        0 4px 6px -1px rgba(0, 0, 0, 0.1), 
+        0 2px 4px -1px rgba(0, 0, 0, 0.06); /* shadow-md */
     }
   }
 
-  /* Coloration cyclique de la profondeur (Rainbow Indent) */
-  .depth-0 { border-left-color: var(--ctp-mauve); }
-  .depth-1 { border-left-color: var(--ctp-blue); }
-  .depth-2 { border-left-color: var(--ctp-green); }
-  .depth-3 { border-left-color: var(--ctp-yellow); }
-  .depth-4 { border-left-color: var(--ctp-peach); }
-  .depth-5 { border-left-color: var(--ctp-red); }
-
-  /* FIX CURSEUR : Version "Soft Ghost" */
-  .terminal-cursor::after {
-    content: '_';
-    animation: blink 1.5s steps(2, start) infinite;
-    color: var(--ctp-overlay2);
-    font-weight: bold;
-    margin-left: 2px;
+  /* Style spécifique pour les textes de labeur (intro, articles) */
+  .bento-text {
+    font-family: var(--font-sans);
+    line-height: 1.6;
+    color: var(--ctp-text);
   }
 
-  @keyframes blink { 
-    0%, 100% { opacity: 1; } 
-    50% { opacity: 0; } 
-  }
-
-  /* C. NOUVEAUX ELEMENTS : DOSSIER CLASSIFIÉ (VINTAGE ACADEMIC) */
-  
-  /* 1. Le Tampon "ARCHIVED" ou "REVIEWED" */
-  .doc-stamp {
-    border: 3px double var(--ctp-red);
-    color: var(--ctp-red);
-    padding: 0.5rem 1rem;
-    text-transform: uppercase;
-    font-family: var(--font-mono); 
-    font-weight: 900;
-    letter-spacing: 0.1em;
-    transform: rotate(-5deg);
-    opacity: 0.8;
-    mix-blend-mode: plus-lighter; /* Ajusté pour le dark mode */
-    display: inline-block;
-    /* Effet de bruit subtil pour simuler l'encre */
-    mask-image: url("data:image/svg+xml,%3Csvg width='200' height='100' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.8' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noise)' opacity='0.5'/%3E%3C/svg%3E");
-    mask-mode: luminance;
-  }
-
-  /* 2. Lignes de guidage technique (Bordures complexes) */
-  .tech-border-top {
-    position: relative;
-    border-top: 1px solid var(--ctp-surface2);
-  }
-  .tech-border-top::before {
-    content: '';
-    position: absolute;
-    top: -3px;
-    left: 0;
-    width: 20px;
-    height: 5px;
-    background: var(--ctp-mauve);
-  }
-  .tech-border-top::after {
-    content: '';
-    position: absolute;
-    top: -5px;
-    right: 0;
-    width: 5px;
-    height: 5px;
-    border: 1px solid var(--ctp-subtext0);
-  }
-
-  /* 3. Numéro de série vertical */
-  .serial-number-v {
-    writing-mode: vertical-rl;
-    text-orientation: mixed;
+  /* Style pour les micro-labels techniques */
+  .bento-label {
     font-family: var(--font-mono);
-    font-size: 0.6rem;
-    letter-spacing: 0.2em;
+    font-size: 0.7rem;
+    text-transform: uppercase;
+    letter-spacing: 0.1em;
     color: var(--ctp-surface2);
-    user-select: none;
   }
+
 }
 
-/* --- 6. ANIMATIONS & UTILITAIRES --- */
+/* --- 5. UTILITIES --- */
 @layer utilities {
-  /* A. Animations existantes */
   @keyframes fadeInUp {
-    from {
-      opacity: 0;
-      transform: translateY(20px);
-    }
-    to {
-      opacity: 1;
-      transform: translateY(0);
-    }
+    from { opacity: 0; transform: translateY(20px); }
+    to { opacity: 1; transform: translateY(0); }
   }
-
   .animate-fade-in-up {
     animation: fadeInUp 0.5s ease-out forwards;
   }
 
-  /* B. Utilitaires UI (Maximalisme Catppuccin) */
-  
-  /* TEXTURE DE FOND "TECH-ORGANIC" */
   .bg-grid-pattern {
     background-size: 40px 40px;
     background-image: 
@@ -281,23 +194,35 @@
     mask-image: radial-gradient(circle at center, black 40%, transparent 100%);
   }
 
-  /* EFFET DE LUEUR INTERNE (HUD) */
   .glass-panel {
-    background: rgba(30, 30, 46, 0.6); /* Base with opacity */
+    background: rgba(30, 30, 46, 0.6);
     backdrop-filter: blur(12px);
-    border: 1px solid rgba(203, 166, 247, 0.1); /* Mauve low opacity */
+    border: 1px solid rgba(203, 166, 247, 0.1);
     box-shadow: 
       0 4px 30px rgba(0, 0, 0, 0.1),
-      inset 0 0 20px rgba(203, 166, 247, 0.05); /* Inner glow */
+      inset 0 0 20px rgba(203, 166, 247, 0.05);
   }
 
-  /* ANIMATION DE PULSATION ORGANIQUE */
   @keyframes breathe {
     0%, 100% { opacity: 0.5; transform: scale(1); }
     50% { opacity: 1; transform: scale(1.1); }
   }
-  
   .animate-breathe {
     animation: breathe 4s ease-in-out infinite;
+  }
+
+.image-pixelated {
+  image-rendering: pixelated;
+  image-rendering: -moz-crisp-edges;
+  image-rendering: crisp-edges;
+}
+
+  /* Hide Scrollbar util */
+  .scrollbar-hide {
+    -ms-overflow-style: none;  /* IE and Edge */
+    scrollbar-width: none;  /* Firefox */
+  }
+  .scrollbar-hide::-webkit-scrollbar {
+    display: none; /* Chrome, Safari and Opera */
   }
 }

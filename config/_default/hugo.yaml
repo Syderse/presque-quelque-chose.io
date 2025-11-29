@@ -1,11 +1,13 @@
 title: "presque-quelque-chose"
 baseURL: 'https://syderse.github.io/'
 
-# --- CORE BUILD SETTINGS ---
+# ===========================================================================
+# CORE BUILD SETTINGS
+# ===========================================================================
 build:
   # Indispensable pour Tailwind JIT
   writeStats: true
-  
+
 # Fusion des paramètres de sécurité et minify
 security:
   enableInlineShortcodes: true
@@ -13,7 +15,9 @@ minify:
   disableXML: true
   minifyOutput: true
 
-# --- MODULES & THEME ---
+# ===========================================================================
+# MODULES & THEME MOUNTS
+# ===========================================================================
 module:
   # C'est ici que l'on définit les "Mounts" critiques pour la synchro Tailwind
   mounts:
@@ -33,7 +37,7 @@ module:
     - source: static
       target: static
       
-    # Imports Hugo Blox (Conservés de votre config)
+    # Imports Hugo Blox
     - source: hugo-blox/blox/community
       target: layouts/_partials/blox/community/
       includeFiles: '**.html'
@@ -48,33 +52,58 @@ module:
     - path: github.com/HugoBlox/hugo-blox-builder/modules/blox-plugin-netlify
     - path: github.com/HugoBlox/hugo-blox-builder/modules/blox-tailwind
 
-# --- OUTPUTS (Vos personnalisations Almanach) ---
+# ===========================================================================
+# OUTPUTS & FORMATS (API STATIC)
+# ===========================================================================
 outputFormats:
-  JSON-ALMANACH:
+  ALMANACH:
     mediaType: "application/json"
     baseName: "index"
     isPlainText: true
     notAlternative: true
-  JSON-RANDOM:
+  RANDOMIZER:
     mediaType: "application/json"
     baseName: "articles-aleatoires"
     isPlainText: true
     notAlternative: true
-  JSON-RHIZOME:
+  RHIZOME:
     mediaType: "application/json"
     baseName: "index"
     isPlainText: true
     notAlternative: true
 
 outputs:
-  home: [HTML, RSS, headers, redirects, backlinks, JSON-RANDOM] 
-  # 👇 AJOUTE "JSON-RHIZOME" ICI POUR QUE LE FICHIER index.json SOIT GÉNÉRÉ
-  section: [HTML, RSS, JSON-RHIZOME] 
+  # On applique les nouveaux noms
+  home: [HTML, RSS, RANDOMIZER] 
+  section: [HTML, RSS, ALMANACH] 
   page: ["HTML"]
   taxonomy: ["HTML"]
   term: ["HTML"]
 
-# --- PAGE OPTIONS ---
+# ===========================================================================
+# NAVIGATION & MENUS
+# ===========================================================================
+menus:
+  main:
+    - name: solutions imaginaires
+      url: /solutions-imaginaires/
+      weight: 10
+    - name: recherches
+      url: /recherches/
+      weight: 20
+    - name: ondes & pixels
+      url: /ondes-pixels/
+      weight: 30
+    - name: rhizome curieux
+      url: /rhizome-curieux/
+      weight: 40
+    - name: patafoin
+      url: /patafoin/
+      weight: 50
+
+# ===========================================================================
+# PAGE & CONTENT OPTIONS
+# ===========================================================================
 cascade:
   - _target:
       path: /blog/**
@@ -90,6 +119,15 @@ cascade:
     header:
       navbar:
         enable: true
+  - _target:
+      path: /recherches/**
+    params:
+      full_width: true
+
+  - _target:
+      path: /rhizome-curieux/**
+    params:
+      full_width: true
 
 # --- MARKUP & HOOKS ---
 markup:
@@ -99,7 +137,7 @@ markup:
   renderHooks:
     link: {} 
 
-# --- OTHER SETTINGS ---
+# --- GLOBAL SETTINGS ---
 defaultContentLanguage: fr
 removePathAccents: true
 enableGitInfo: false
@@ -130,3 +168,73 @@ imaging:
   quality: 90
   anchor: smart
   hint: picture
+
+# ===========================================================================
+# SITE PARAMETERS (Anciennement params.yaml)
+# ===========================================================================
+params:
+  # SITE SETUP
+  # Guide: https://docs.hugoblox.com/tutorial/
+  # Documentation: https://docs.hugoblox.com/
+
+  # Appearance
+  appearance:
+    mode: dark
+    color: custom  # Dit à Hugo de chercher notre custom.css
+
+  # SEO / Marketing
+  marketing:
+    seo:
+      site_type: Person
+      local_business_type: ''
+      org_name: ''
+      description: 'A highly-customizable Hugo blog theme powered by Hugo Blox Builder.'
+      twitter: 'GetResearchDev'
+    analytics:
+      google_analytics: ''
+      baidu_tongji: ''
+      plausible: ''
+      fathom: ''
+      pirsch: ''
+    verification:
+      google: ''
+      baidu: ''
+
+  # Site header
+  header:
+    navbar:
+      enable: true
+      show_search: true
+      show_theme_chooser: false
+
+  # Site footer
+  footer:
+    copyright:
+      notice: '© {year} Me. This work is licensed under {license}'
+      license:
+        enable: true
+        allow_derivatives: false
+        share_alike: true
+        allow_commercial: false
+
+  # Localization
+  locale:
+    date_format: 'Jan 2, 2006'
+    time_format: '3:04 PM'
+
+  # Site features
+  features:
+    math:
+      enable: false
+    privacy_pack:
+      enable: false
+    repository:
+      url: 'https://github.com/HugoBlox/hugo-blox-builder/'
+      content_dir: templates/blog/content
+      branch: main
+
+  # ---------------------------------------------------------------------------
+  # Supabase Configuration (Forum Patafoin)
+  # ---------------------------------------------------------------------------
+  supabase_url: "https://esrqmmnghliwqvxldyzo.supabase.co" 
+  supabase_key: "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImVzcnFtbW5naGxpd3F2eGxkeXpvIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NjM4NDE3NTksImV4cCI6MjA3OTQxNzc1OX0.sLsfkbFFQ0L81MUCTh5i6smtGtbeHzHocIv9xS9Iv7g"

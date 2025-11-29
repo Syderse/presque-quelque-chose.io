@@ -1,0 +1,241 @@
+{{/* Widget: DOM Story (Containment Unit) - V4.1 (Unchained Narrative)
+File: layouts/partials/widgets/dom-card.html
+Context: Grid Cell 1x1
+Aesthetic: Cyber-Diagnostic / Decay / Horror Vacui
+*/}}
+<div class="relative w-full h-full group select-none z-0" id="dom-container">
+
+    {{/* --- LAYER 1: CHASSIS (THE MACHINE) --- */}}
+    {{/* Contient tout ce qui doit être coupé par les bords arrondis */}}
+    <div id="dom-chassis"
+        class="absolute inset-0 bg-ctp-mantle/50 border border-ctp-surface1 rounded-xl overflow-hidden z-10">
+
+        {{/* BACKGROUND NOISE & GRID */}}
+        <div class="absolute inset-0 z-0 opacity-20 pointer-events-none">
+            <div class="w-full h-full"
+                style="background-image: radial-gradient(var(--ctp-surface2) 1px, transparent 1px); background-size: 20px 20px;">
+            </div>
+            <div class="absolute inset-0 bg-gradient-to-t from-ctp-base via-transparent to-transparent"></div>
+        </div>
+
+        {{/* HUD: HEADER */}}
+        <div class="absolute top-0 left-0 w-full p-3 flex justify-between items-start z-10 pointer-events-none">
+            <div class="flex flex-col">
+                <span class="text-[9px] font-mono text-ctp-overlay2 uppercase tracking-widest">Subject ID</span>
+                <span class="text-xs font-mono font-bold text-ctp-mauve">BTN-0x8F</span>
+            </div>
+            <div class="flex flex-col items-end">
+                <span class="text-[9px] font-mono text-ctp-overlay2 uppercase tracking-widest">Integrity</span>
+                <div class="flex gap-0.5 mt-1" id="integrity-bar">
+                    {{/* Généré par JS */}}
+                </div>
+            </div>
+        </div>
+
+        {{/* HUD: LATERAL DATA */}}
+        <div class="absolute left-3 top-1/2 -translate-y-1/2 flex flex-col gap-2 z-10 pointer-events-none opacity-50">
+            <span class="text-[8px] font-mono text-ctp-surface2 writing-vertical-lr rotate-180">CPU_TEMP: 42°C</span>
+            <span class="text-[8px] font-mono text-ctp-surface2 writing-vertical-lr rotate-180">VOLTAGE: 3.3V</span>
+        </div>
+
+        {{/* COUCHE PRINCIPALE : LE BOUTON */}}
+        <div class="absolute inset-0 flex items-center justify-center z-20">
+            <div id="dom-wrapper" class="relative transition-all duration-300 ease-out will-change-transform">
+
+                {{/* Halo de résonance */}}
+                <div id="click-ripple"
+                    class="absolute inset-0 rounded-full bg-ctp-mauve/20 scale-0 transition-transform duration-500">
+                </div>
+
+                <button id="btn-dom"
+                    class="relative flex flex-col items-center justify-center gap-2 focus:outline-none group active:scale-95 transition-all duration-75 p-6 rounded-2xl border border-transparent hover:border-ctp-surface1 hover:bg-ctp-surface0/30"
+                    aria-label="Interagir avec le Sujet">
+
+                    {{/* L'Icône */}}
+                    <span id="dom-icon"
+                        class="text-6xl filter drop-shadow-2xl transition-transform duration-200 relative">
+                        <span class="relative z-10">👾</span>
+                        <span class="absolute top-0 left-0 text-ctp-red opacity-0 mix-blend-screen"
+                            id="dom-icon-ghost">👾</span>
+                    </span>
+
+                    {{/* Le Label */}}
+                    <span id="dom-label"
+                        class="text-xs font-mono font-bold text-ctp-subtext0 uppercase tracking-[0.2em] transition-all">
+                        INITIALIZE
+                    </span>
+                </button>
+            </div>
+        </div>
+
+        {{/* HUD: FOOTER (Console Log) */}}
+        <div
+            class="absolute bottom-0 left-0 w-full h-16 bg-ctp-crust/80 backdrop-blur-sm border-t border-ctp-surface1 z-40 flex flex-col p-2">
+            <div class="flex justify-between items-center mb-1">
+                <span class="text-[9px] font-mono text-ctp-blue">>> SYSTEM_LOG</span>
+                {{/* TARGET DU CLIC DROIT POUR ADMIN PANEL */}}
+                <span id="dom-counter-display"
+                    class="text-[9px] font-mono text-ctp-red font-bold cursor-help hover:text-ctp-mauve transition-colors">000
+                    / 999</span>
+            </div>
+            <div id="console-output"
+                class="text-[10px] font-mono text-ctp-subtext1 leading-tight overflow-hidden opacity-80 h-full w-full whitespace-nowrap">
+                <span class="animate-pulse">_</span>
+            </div>
+        </div>
+
+        {{/* COUCHE 50 : TOMBSTONE (FIN) */}}
+        {{/* Note: Doit être dans le chassis pour masquer le reste, mais accessible */}}
+        <div id="dom-tombstone"
+            class="hidden absolute inset-0 z-50 bg-black flex flex-col items-center justify-center text-center p-6 border-4 border-ctp-surface1 cursor-help">
+            <div class="text-6xl mb-6 animate-pulse grayscale">⚰️</div>
+            <div class="space-y-4">
+                <div class="text-sm font-serif italic text-ctp-text leading-relaxed opacity-80">
+                    Ici repose<br>
+                    <span class="text-ctp-mauve font-bold">DOM, un bouton</span><br>
+                    Il a bien cliqué.<br>
+                </div>
+                <p class="text-[10px] font-mono text-ctp-red mt-4 blinking-cursor">Connection terminated.</p>
+            </div>
+        </div>
+
+        {{/* COUCHE 60 : BOSSE-DE-NAGE (ADMIN) */}}
+        <div id="admin-modal"
+            class="hidden absolute inset-0 z-[60] bg-ctp-base/95 backdrop-blur-md flex-col items-center justify-center text-center p-4">
+            <div class="font-mono text-ctp-green text-xs mb-4">/// ROOT ACCESS REQUESTED ///</div>
+
+            {{/* LOGIN STATE */}}
+            <div id="admin-login-view" class="w-full max-w-[200px] flex flex-col gap-3">
+                <div class="text-4xl animate-bounce">🙈</div>
+                <input type="password" id="admin-pwd-input"
+                    class="w-full bg-transparent border-b border-ctp-surface2 text-center text-ctp-text font-mono text-sm focus:outline-none focus:border-ctp-green placeholder-ctp-overlay1"
+                    placeholder="Password..." autocomplete="off">
+                <div class="text-[9px] text-ctp-red hidden" id="admin-error-msg">ACCESS DENIED</div>
+            </div>
+
+            {{/* DASHBOARD STATE */}}
+            <div id="admin-dashboard-view" class="hidden w-full flex flex-col gap-3">
+                <div class="text-4xl">🐵</div>
+                <div class="text-xs text-ctp-green font-bold">ACCESS GRANTED</div>
+
+                <div class="flex flex-col gap-1 mt-2 text-left">
+                    <label class="text-[9px] text-ctp-overlay2">SET COUNT:</label>
+                    <input type="number" id="admin-set-count"
+                        class="bg-ctp-surface0 p-1 text-xs font-mono text-ctp-text rounded border border-ctp-surface1">
+                </div>
+
+                <button id="admin-btn-save"
+                    class="mt-2 bg-ctp-green/20 text-ctp-green border border-ctp-green text-xs py-1 px-2 rounded hover:bg-ctp-green/40 transition-colors">
+                    UPDATE
+                </button>
+
+                <button id="admin-btn-reset" class="mt-4 text-[9px] text-ctp-red hover:underline decoration-wavy">
+                    [FACTORY RESET]
+                </button>
+            </div>
+
+            {{/* Close helper */}}
+            <div class="absolute top-2 right-2 text-ctp-overlay0 text-xs cursor-pointer hover:text-ctp-text"
+                id="admin-close-btn">[X]</div>
+        </div>
+
+        {{/* COUCHE 70 : VIRUS LAYER (HA-HA FLOOD) */}}
+        <div id="virus-layer" class="hidden absolute inset-0 z-[70] bg-black/80 pointer-events-none overflow-hidden">
+            {{/* JS creates spans here */}}
+        </div>
+
+    </div> {{/* FIN DU CHASSIS */}}
+
+    {{/* --- LAYER 2: AURA (NARRATIVE ZONE) --- */}}
+    {{/* Doit être en dehors du Chassis pour overflow le widget parent */}}
+    {{/* Pointer-events-none vital pour cliquer au travers */}}
+    <div id="dom-narrative-zone" class="absolute inset-0 z-50 pointer-events-none overflow-visible">
+        {{/* Les bulles sont injectées ici par JS via spawnMessage() */}}
+    </div>
+
+</div>
+
+{{/* Styles Locaux */}}
+<style>
+    @keyframes text-glitch {
+        0% {
+            transform: translate(0);
+        }
+
+        20% {
+            transform: translate(-2px, 2px);
+        }
+
+        40% {
+            transform: translate(-2px, -2px);
+        }
+
+        60% {
+            transform: translate(2px, 2px);
+        }
+
+        80% {
+            transform: translate(2px, -2px);
+        }
+
+        100% {
+            transform: translate(0);
+        }
+    }
+
+    .glitch-active {
+        animation: text-glitch 0.3s cubic-bezier(.25, .46, .45, .94) both infinite;
+        color: var(--ctp-red) !important;
+    }
+
+    .blinking-cursor::after {
+        content: "█";
+        animation: blink 1s step-end infinite;
+    }
+
+    @keyframes blink {
+
+        0%,
+        100% {
+            opacity: 1;
+        }
+
+        50% {
+            opacity: 0;
+        }
+    }
+
+    /* Float Animation V4.1 - Optimized for Overflow */
+    @keyframes floatMessageV4 {
+        0% {
+            opacity: 0;
+            transform: translate(-50%, -50%) scale(0.8);
+        }
+
+        10% {
+            opacity: 1;
+            transform: translate(-50%, -50%) scale(1);
+        }
+
+        80% {
+            opacity: 1;
+            transform: translate(-50%, -50%) scale(1);
+            filter: blur(0px);
+        }
+
+        100% {
+            opacity: 0;
+            transform: translate(-50%, -150%) scale(0.9);
+            filter: blur(4px);
+        }
+    }
+
+    .msg-bubble-v4 {
+        position: absolute;
+        /* Force Hardware Acceleration to prevent jagged movement */
+        will-change: transform, opacity;
+        animation: floatMessageV4 5s ease-out forwards;
+        /* Ensure bubbles are always ON TOP of everything on the page */
+        z-index: 100;
+    }
+</style>

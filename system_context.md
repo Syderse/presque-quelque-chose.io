@@ -38,7 +38,7 @@ Le parent de toutes les pages. Il orchestre la mise en page globale "Sidebar".
 * **Responsabilité Markdown (`content/_index.md`) :** Ne contient *que* le texte introductif.
 * **Injection :** Le Layout appelle `{{ .Content }}` dans un conteneur prose sécurisé.
 * **Composants Exclusifs :**
-    * `partials/widgets/intrus.html` : Bouton flottant (👾) et logique de bavardage aléatoire.
+    * `partials/widgets/dom-card.html` : Bouton flottant (👾) et logique de bavardage aléatoire.
 
 ### B. La "Machine à Cartes" (`layouts/_default/list.html`)
 Template générique unifié pour les sections standards (ex: "Ondes & Pixels").
@@ -178,6 +178,20 @@ Les données sont normalisées par un partial avant d'être exposées en JSON lo
 
     Indentation : "Rainbow Depth" (couleur de ligne changeant modulo 6 selon la profondeur).
 
+## 🔧 PIPELINE UPDATE: JS & API (27/11/2025)
 
+**1. Gestion des Assets JS (Hugo Pipes)**
+* **Source of Truth :** Tous les scripts résident désormais dans `assets/js/` (et non plus `static/`).
+* **Mécanisme :** Utilisation exclusive du partial `functions/js-loader.html`.
+    * *Features :* ESBuild (Target ES2020), Minification (Prod), Fingerprinting (Cache).
+* **Injection :**
+    * *Global :* `baseof.html` (avant `</body>`).
+    * *Scoped :* Via le bloc `{{ define "scripts" }}` dans les layouts spécifiques (Rhizome, Patafoin).
+
+**2. Architecture API (JSON)**
+* **Fix Config :** `outputFormats` (RANDOMIZER, RHIZOME) correctement indentés dans `hugo.yaml`.
+* **Outputs Validés :**
+    * `RANDOMIZER` -> `articles-aleatoires.json` (Home).
+    * `RHIZOME` -> `index.json` (Section Rhizome).
 
 ---

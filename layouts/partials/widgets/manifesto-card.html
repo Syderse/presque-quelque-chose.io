@@ -1,0 +1,49 @@
+{{/* Widget: Manifesto (Zone B) - Manuel de Vol */}}
+<div class="bento-card h-full flex flex-col relative overflow-hidden bg-ctp-base">
+    
+    {{/* Fake Terminal Header */}}
+    <div class="absolute top-0 left-0 right-0 h-8 bg-ctp-mantle/80 border-b border-ctp-surface1 flex items-center px-3 gap-2 backdrop-blur-md z-20">
+        <div class="flex gap-1.5">
+            <div class="w-2.5 h-2.5 rounded-full bg-ctp-red opacity-60"></div>
+            <div class="w-2.5 h-2.5 rounded-full bg-ctp-yellow opacity-60"></div>
+            <div class="w-2.5 h-2.5 rounded-full bg-ctp-green opacity-60"></div>
+        </div>
+        <div class="ml-auto text-[10px] font-mono text-ctp-overlay0 flex items-center gap-2">
+            <span class="hidden md:inline text-ctp-mauve">cat manuel_de_vol.txt</span>
+            <span class="w-2 h-3 bg-ctp-mauve/50 animate-pulse"></span>
+        </div>
+    </div>
+
+    {{/* Content Scrollable Container */}}
+    <div class="flex-1 overflow-y-auto p-6 mt-8 scrollbar-thin scrollbar-track-transparent scrollbar-thumb-ctp-surface2">
+        <div class="prose prose-sm prose-catppuccin max-w-none font-serif leading-relaxed text-ctp-text">
+            
+            <p class="font-bold text-ctp-mauve uppercase tracking-widest text-xs mb-4">/// Initialisation</p>
+
+            <p>
+                Bienvenue dans l'interstice. Ce lieu n'est pas un site web, c'est une <strong>texture</strong>.
+                Une tentative de capturer ce qui se passe quand on ne regarde pas.
+            </p>
+
+            <ul class="list-none pl-0 space-y-4 mt-6">
+                <li class="relative pl-6 before:content-['⚡'] before:absolute before:left-0 before:text-ctp-yellow">
+                    <strong class="text-ctp-teal">Le Rhizome</strong> (Navigation)<br>
+                    Ne cherchez pas de ligne droite. Cliquez sur les cartes pour descendre en profondeur. C'est une architecture orbitale : plus vous creusez, plus les liens se tissent.
+                </li>
+                
+                <li class="relative pl-6 before:content-['👁️'] before:absolute before:left-0 before:text-ctp-blue">
+                    <strong class="text-ctp-pink">Le Patafoin</strong> (Communication)<br>
+                    Le forum n'est pas une archive, c'est un feu de camp. On y parle en <code>Markdown</code>, on y laisse des traces éphémères. Le curseur y est un fantôme.
+                </li>
+            </ul>
+
+            <blockquote class="border-l-2 border-ctp-mauve pl-4 mt-6 italic text-ctp-subtext0 text-xs">
+                "Nous sommes des explorateurs de flaques et des navigateurs de fissures."
+            </blockquote>
+
+        </div>
+    </div>
+
+    {{/* Footer Decoratif */}}
+    <div class="h-0.5 w-full bg-gradient-to-r from-ctp-mauve/0 via-ctp-mauve/50 to-ctp-mauve/0 opacity-30"></div>
+</div>
