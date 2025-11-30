@@ -1,7 +1,7 @@
 /* --- 1. FONTS --- */
 /* (Ubuntu + JetBrains) */
 @import url('https://fonts.googleapis.com/css2?family=Ubuntu:wght@300;400;500;700&family=JetBrains+Mono:wght@400;500&display=swap');
-/* Crimson Text pour le widget Almanach */
+/* Crimson Text for the Almanach widget */
 @import url('https://fonts.googleapis.com/css2?family=Crimson+Text:ital,wght@0,400;0,600;0,700;1,400&display=swap');
 
 @import "tailwindcss";
@@ -51,7 +51,7 @@
     background-color: var(--ctp-base);
     color: var(--ctp-text);
     font-family: "Ubuntu", sans-serif;
-    letter-spacing: 0.02em; /* Réduit un peu par rapport au terminal */
+    letter-spacing: 0.02em;
     line-height: 1.6;
   }
 }
@@ -89,12 +89,17 @@
 
 /* --- 4. COMPONENTS LAYER (SOLID ARCHITECTURE) --- */
 @layer components {
+
+  /* DEFINING THE GRADIENT ACCENT (Reusable) */
+  :root {
+    --ctp-gradient-heading: linear-gradient(135deg, var(--ctp-mauve) 0%, var(--ctp-pink) 100%);
+    --ctp-gradient-link: linear-gradient(to right, var(--ctp-blue), var(--ctp-sapphire));
+  }
   
-  /* A. PROSE RESET (Clean & Solid) */
+  /* A. PROSE RESET (Polished & Textured) */
   .prose-catppuccin {
     --tw-prose-body: var(--ctp-text);
-    --tw-prose-headings: var(--ctp-mauve);
-    --tw-prose-lead: var(--ctp-subtext1);
+    /* Headings no longer use a single color variable, we handle them manually below */
     --tw-prose-links: var(--ctp-blue);
     --tw-prose-bold: var(--ctp-peach);
     --tw-prose-counters: var(--ctp-mauve);
@@ -107,68 +112,111 @@
     --tw-prose-pre-code: var(--ctp-text);
     --tw-prose-pre-bg: var(--ctp-mantle);
 
+    /* 1. TEXTURE: Body Text */
     & :where(p, ul, ol, li) {
       color: var(--ctp-text) !important;
       line-height: 1.8;
       margin-bottom: 1.5em;
     }
+
+    /* 2. POLISH: Gradient Headings */
+    /* Instead of flat color, we clip a gradient to the text. */
     & :where(h1, h2, h3, h4, h5, h6) {
-      color: var(--ctp-mauve) !important;
-      font-weight: 700 !important;
+      background: var(--ctp-gradient-heading);
+      -webkit-background-clip: text;
+      background-clip: text;
+      color: transparent !important; /* Required for clip to work */
+      font-weight: 800 !important;
+      letter-spacing: -0.025em; /* Tighten slightly for modern feel */
+      margin-top: 2em;
     }
+
+    /* 3. POLISH: Interactive Links */
     & :where(a):not(.not-prose) {
       color: var(--ctp-blue) !important;
-      text-decoration-color: var(--ctp-blue) !important;
-      font-weight: 500;
+      text-decoration: none !important; /* Remove default underline */
+      border-bottom: 2px solid var(--ctp-surface2); /* Solid underline */
+      font-weight: 600;
+      transition: border-color 0.2s ease, color 0.2s ease;
     }
+    
+    & :where(a):not(.not-prose):hover {
+      color: var(--ctp-sapphire) !important;
+      border-color: var(--ctp-sapphire);
+    }
+
     & :where(strong, b) {
       color: var(--ctp-peach) !important;
       font-weight: 700 !important;
     }
+
+    & :where(em, i) {
+      color: var(--ctp-green) !important;
+      font-style: italic !important;
+      font-weight: 500;
+    }
+
+    /* 4. POLISH: Inline Code "Chip" Style */
     & :where(:not(pre) > code) {
       color: var(--ctp-pink) !important;
-      background-color: var(--ctp-surface1); /* Plus contrasté */
+      background-color: var(--ctp-surface0); 
       padding: 0.2em 0.4em;
-      border-radius: 0.25rem;
+      border-radius: 4px;
       font-family: var(--font-mono) !important;
-      border: 1px solid var(--ctp-surface2); /* Définition solide */
+      
+      /* The Solid State Polish: Hard Border + Slight Shadow */
+      border: 1px solid var(--ctp-surface2);
+      box-shadow: 2px 2px 0 var(--ctp-surface1); 
+      
+      font-size: 0.9em;
     }
   }
 
-  /* B. BENTO UI SYSTEM (SOLID STATE) 
-     Objectif : 0 Paint Cost inutile. 
-  */
+  /* 5. GLOBAL POLISH: Selection & Scrollbar */
+  ::selection {
+    background: var(--ctp-surface2);
+    color: var(--ctp-pink);
+  }
+  
+  /* Webkit Scrollbar Customization */
+  ::-webkit-scrollbar {
+    width: 10px;
+    height: 10px;
+  }
+  ::-webkit-scrollbar-track {
+    background: var(--ctp-base);
+  }
+  ::-webkit-scrollbar-thumb {
+    background: var(--ctp-surface2);
+    border: 2px solid var(--ctp-base); /* Creates padding effect */
+    border-radius: 4px;
+  }
+  ::-webkit-scrollbar-thumb:hover {
+    background: var(--ctp-overlay0);
+  }
+
+  /* B. BENTO UI SYSTEM (SOLID STATE) */
   .bento-card {
     @apply relative h-full w-full flex flex-col;
-    /* FOND SOLIDE OPAQUE - CRUCIAL POUR PERF */
     background-color: var(--ctp-surface0); 
-    @apply rounded-xl; /* 2xl est parfois trop rond, xl est plus "tech" */
+    @apply rounded-xl;
     
-    /* BORDURE SOLIDE */
     border: 1px solid var(--ctp-surface1);
-    
-    /* OMBRE OPTIMISÉE (Pas de spread excessif) */
     box-shadow: 0 1px 2px 0 rgba(0, 0, 0, 0.3);
 
-    /* TRANSITIONS */
-    /* On ne transitionne QUE ce qui bouge. Pas 'all'. */
     transition: transform 0.2s ease-out, border-color 0.2s ease, box-shadow 0.2s ease;
-    
-    /* Hardware Acceleration Hint */
     will-change: transform;
 
     &:hover {
-      @apply border-ctp-mauve; /* Feedback couleur clair */
-      transform: translateY(-2px); /* Mouvement plus court = plus "snappy" */
+      @apply border-ctp-mauve;
+      transform: translateY(-2px);
       z-index: 20;
-      /* Ombre portée plus nette */
       box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.4);
     }
   }
 
   .bento-content {
     @apply relative z-10 w-full h-full overflow-hidden rounded-xl;
-    /* Isolation du contexte d'empilement */
     isolation: isolate;
   }
 
@@ -183,9 +231,9 @@
     font-size: 0.7rem;
     text-transform: uppercase;
     letter-spacing: 0.1em;
-    color: var(--ctp-overlay1); /* Plus lisible sur fond surface0 */
+    color: var(--ctp-overlay1);
   }
-}
+} /* END OF LAYER COMPONENTS */
 
 /* --- 5. UTILITIES --- */
 @layer utilities {
@@ -198,13 +246,11 @@
     to { opacity: 1; transform: translateY(0); }
   }
 
-  /* Pattern léger et performant (SVG encoded ou CSS gradient simple) */
   .bg-grid-pattern {
     background-image: radial-gradient(var(--ctp-surface1) 1px, transparent 1px);
     background-size: 20px 20px;
   }
 
-  /* Remplacement du glass-panel par solid-panel */
   .solid-panel {
     background-color: var(--ctp-mantle);
     border: 1px solid var(--ctp-surface1);
@@ -219,7 +265,6 @@
     display: none;
   }
 
-  /* Performance Hint global */
   .hardware-accelerated {
     transform: translateZ(0);
     backface-visibility: hidden;

@@ -5,8 +5,16 @@
 
 <div class="h-full flex flex-col bg-ctp-mantle border-r border-ctp-surface0/40 shadow-2xl overflow-hidden">
   
-  {{/* HEADER LOGO */}}
-  <div class="h-20 flex items-center px-6 shrink-0 border-b border-ctp-surface0/50">
+  {{/* 1. VERTICAL SPACER (The "Ghost" Header)
+      Purpose: Reserves space for the floating Toggle Button (z-50) defined in baseof.html.
+      Height: h-20 (80px) matches the Logo Header rhythm for symmetry.
+  */}}
+  <div class="shrink-0 h-20 w-full pointer-events-none"></div>
+
+  {{/* 2. HEADER LOGO 
+      Now shifted down by h-20 to clear the UI collision.
+  */}}
+  <div class="h-20 flex items-center px-6 shrink-0 border-y border-ctp-surface0/50 bg-ctp-mantle/50">
     <a href="/" class="flex items-center gap-3 no-underline group">
       <div class="w-10 h-10 rounded-lg bg-gradient-to-br from-ctp-mauve to-ctp-blue flex items-center justify-center shadow-lg group-hover:scale-105 transition-transform duration-300">
         <span class="text-ctp-base font-black text-xl">P.</span>
@@ -17,12 +25,12 @@
     </a>
   </div>
 
-  {{/* NAVIGATION PRINCIPALE */}}
+  {{/* 3. NAVIGATION PRINCIPALE 
+  */}}
   <nav class="flex-1 overflow-y-auto py-6 px-4 space-y-2 scrollbar-hide">
     
     {{/* FIX COULEURS TAILWIND JIT :
-       Simplification pour l'approche maximaliste.
-       On définit uniquement la classe de base, car elle sera toujours visible.
+        Simplification pour l'approche maximaliste.
     */}}
     {{ $colors := slice 
       (dict "base" "text-ctp-mauve")
@@ -40,12 +48,8 @@
 
       <a href="{{ .URL }}" 
          class="group flex items-center gap-4 px-4 py-3 rounded-xl transition-all duration-200 border border-transparent
-                {{ if $active }}bg-ctp-surface0 shadow-inner border-ctp-surface1{{ else }}hover:bg-ctp-surface0/50{{ end }}">
+               {{ if $active }}bg-ctp-surface0 shadow-inner border-ctp-surface1{{ else }}hover:bg-ctp-surface0/50{{ end }}">
         
-        {{/* MODIFICATION : 
-           Suppression de la condition active/inactive pour la couleur du texte.
-           La classe {{ $theme.base }} est appliquée directement.
-        */}}
         <span class="font-bold text-lg transition-colors duration-300 {{ $theme.base }}">
           {{ .Name }}
         </span>
@@ -58,8 +62,9 @@
     {{ end }}
   </nav>
 
-  {{/* FOOTER ACTIONS */}}
-  <div class="p-4 bg-ctp-crust/50 border-t border-ctp-surface0/50 backdrop-blur-sm">
+  {{/* 4. FOOTER ACTIONS 
+  */}}
+  <div class="p-4 bg-ctp-crust/50 border-t border-ctp-surface0/50 backdrop-blur-sm shrink-0">
       <a href="/manuel/" class="flex items-center gap-3 px-4 py-3 rounded-lg text-ctp-subtext0 hover:bg-ctp-surface0 hover:text-ctp-maroon transition-colors group">
         <span class="grayscale group-hover:grayscale-0 transition-all">🧭</span>
         <span class="font-medium text-sm">Le Manuel</span>
