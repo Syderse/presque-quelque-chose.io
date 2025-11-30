@@ -1,15 +1,20 @@
+/* --- 1. FONTS --- */
+/* (Ubuntu + JetBrains) */
 @import url('https://fonts.googleapis.com/css2?family=Ubuntu:wght@300;400;500;700&family=JetBrains+Mono:wght@400;500&display=swap');
+/* Crimson Text pour le widget Almanach */
+@import url('https://fonts.googleapis.com/css2?family=Crimson+Text:ital,wght@0,400;0,600;0,700;1,400&display=swap');
+
 @import "tailwindcss";
 
-/* --- 1. Plugins --- */
+/* --- 2. Plugins --- */
 @plugin "@tailwindcss/typography";
 
-/* --- 2. Sources JIT --- */
+/* --- 3. Sources JIT --- */
 @source "../../layouts/partials/debug/safelist.html";
 @source "../../layouts/**/*.html";
 @source "../../content/**/*.md";
 
-/* --- 3. THEME & VARIABLES --- */
+/* --- 4. THEME & VARIABLES --- */
 @layer base {
   :root {
     /* Palette Catppuccin Mocha */
@@ -53,7 +58,7 @@
 
 @theme {
   --font-sans: "Ubuntu", ui-sans-serif, system-ui, sans-serif;
-  --font-serif: "Georgia", Cambria, "Times New Roman", Times, serif;
+  --font-serif: "Crimson Text", "Georgia", Cambria, "Times New Roman", Times, serif;
   --font-mono: "JetBrains Mono", ui-monospace, SFMono-Regular, monospace;
 
   --color-ctp-rosewater: var(--ctp-rosewater);
@@ -135,27 +140,41 @@
     }
   }
 
-  /* B. BENTO UI SYSTEM (Nouveau Design System) */
+/* B. BENTO UI SYSTEM (Harmonized & Warm) */
   .bento-card {
-    background-color: var(--ctp-surface0);
-    /* Bordure subtile pour la définition */
-    border: 1px solid rgba(147, 153, 178, 0.1); /* ctp-overlay2 avec alpha */
-    border-radius: 0.75rem; /* rounded-xl */
-    transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+    /* 1. Architecture de base (Remplacement des classes utilitaires répétitives) */
+    @apply relative h-full w-full flex flex-col;
+    @apply bg-ctp-mantle/80 backdrop-blur-md; /* Transparence subtile pour le fond */
+    @apply rounded-2xl; /* Arrondi standardisé à 2xl pour le côté "friendly" */
+    @apply border border-ctp-surface1/50; /* Bordure base discrète */
     
-    /* Ombre portée douce pour détacher du fond */
-    box-shadow: 
-      0 1px 2px 0 rgba(0, 0, 0, 0.05),
-      0 1px 3px 0 rgba(0, 0, 0, 0.1); /* shadow-sm */
+    /* 2. Gestion de la transition physique */
+    transition: 
+      transform 0.4s cubic-bezier(0.2, 0.8, 0.2, 1),
+      border-color 0.3s ease,
+      box-shadow 0.3s ease;
 
-    /* Effet de survol "Premium" */
+    /* 3. Profondeur Initiale (Ombre douce) */
+    box-shadow: 
+      0 4px 6px -1px rgba(0, 0, 0, 0.1), 
+      inset 0 1px 0 0 rgba(255, 255, 255, 0.02); /* Highlight supérieur très fin */
+
+    /* 4. Interaction : "Warm Embrace" */
     &:hover {
-      border-color: rgba(203, 166, 247, 0.3); /* ctp-mauve */
-      transform: translateY(-2px);
+      @apply border-ctp-peach/60; /* La touche de chaleur (Orange Pêche) */
+      transform: translateY(-4px) scale-[1.005]; /* Lévitation */
+      z-index: 20; /* Passe au-dessus des voisins */
+      
+      /* Glow chaleureux en background de l'ombre */
       box-shadow: 
-        0 4px 6px -1px rgba(0, 0, 0, 0.1), 
-        0 2px 4px -1px rgba(0, 0, 0, 0.06); /* shadow-md */
+        0 20px 25px -5px rgba(0, 0, 0, 0.2), 
+        0 0 20px -5px rgba(250, 179, 135, 0.15); /* Lueur Pêche diffuse */
     }
+  }
+
+  /* Helper pour le contenu interne */
+  .bento-content {
+    @apply relative z-10 w-full h-full overflow-hidden rounded-2xl;
   }
 
   /* Style spécifique pour les textes de labeur (intro, articles) */
@@ -165,7 +184,7 @@
     color: var(--ctp-text);
   }
 
-  /* Style pour les micro-labels techniques */
+/* Style pour les micro-labels techniques */
   .bento-label {
     font-family: var(--font-mono);
     font-size: 0.7rem;
@@ -173,7 +192,6 @@
     letter-spacing: 0.1em;
     color: var(--ctp-surface2);
   }
-
 }
 
 /* --- 5. UTILITIES --- */

@@ -1,7 +1,6 @@
-{{/* WIDGET: RPG INVENTORY (LATEST POSTS)
+{{/* WIDGET: RPG INVENTORY (LATEST POSTS) - Bento Standardized
     Zone: Column 4
     Concept: Une étagère d'objets où chaque item est un lien vers un article récent.
-    Assets: static/media/inventory/
 */}}
 
 {{/* 1. CONFIGURATION & DATA FETCHING */}}
@@ -10,85 +9,80 @@
 {{ $posts := sort $posts "Date" "desc" | first 8 }}
 
 {{/* 2. INVENTORY MANAGER (DYNAMIC ASSET LOADING) */}}
-{{/* On scanne le dossier static pour trouver les items */}}
 {{ $inventoryPath := "static/media/inventory" }}
 {{ $items := slice }}
 
-{{/* Sécurité : on vérifie que le dossier existe pour éviter le crash en local si pas encore créé */}}
 {{ if (fileExists $inventoryPath) }}
     {{ range (readDir $inventoryPath) }}
-        {{/* On ne prend que les fichiers PNG qui contiennent 'item' et pas 'shelf' */}}
         {{ if and (in .Name "item") (not (in .Name "shelf")) (strings.HasSuffix .Name ".png") }}
             {{ $items = $items | append .Name }}
         {{ end }}
     {{ end }}
 {{ end }}
 
-{{/* Mélange aléatoire des items (Deterministic at build time) */}}
 {{ $shuffledItems := shuffle $items }}
 
-<div class="h-full w-full flex flex-col bg-ctp-mantle/80 backdrop-blur-md border border-ctp-surface0 rounded-2xl overflow-hidden shadow-lg relative group">
+{{/* WRAPPER PRINCIPAL HARMONISÉ */}}
+<div class="bento-card group">
+    
+    {{/* CONTENU INTERNE (Clipping & Layout) */}}
+    <div class="bento-content flex flex-col">
 
-    {{/* --- HEADER (Style RPG) --- */}}
-    <div class="shrink-0 px-3 py-2 border-b border-ctp-surface0 bg-ctp-crust/90 flex justify-between items-center select-none z-20">
-        <div class="flex items-center gap-2">
-            <span class="text-lg">🎒</span>
-            <span class="text-[10px] font-mono text-ctp-subtext1 uppercase tracking-widest font-bold">
-                INVENTORY
-            </span>
-        </div>
-        <span class="text-[9px] font-mono text-ctp-overlay0">{{ len $posts }} / 8 SLOTS</span>
-    </div>
-
-    {{/* --- SHELVES CONTAINER --- */}}
-    <div class="flex-1 relative flex flex-col justify-center px-2 py-4 gap-6 bg-ctp-base/30">
-        
-        {{/* On boucle deux fois pour créer 2 étagères de 4 items */}}
-        {{ range $rowIndex := seq 0 1 }} {{/* ROW CONTAINER (L'étagère) */}}
-            <div class="relative w-full h-[70px] flex items-end justify-around px-2">
-                
-                {{/* BACKGROUND ETAGERE */}}
-                {{/* L'image fait 30px de haut, on la colle en bas en répétition */}}
-                <div class="absolute bottom-0 left-0 right-0 h-[30px] z-0 opacity-80 pointer-events-none"
-                     style="background-image: url('/media/inventory/shelf-bg.png'); background-repeat: repeat-x; background-position: bottom center;">
-                </div>
-
-                {{/* ITEMS LOOP (4 items par rangée) */}}
-                {{/* Calcul des index : Rangée 0 = items 0-3, Rangée 1 = items 4-7 */}}
-                {{ $startIndex := mul $rowIndex 4 }}
-                {{ $rowPosts := first 4 (after $startIndex $posts) }}
-
-                {{ range $index, $post := $rowPosts }}
-                    
-                    {{/* Récupération sécurisée de l'image (Modulo pour boucler si pas assez d'images) */}}
-                    {{ $globalIndex := add $startIndex $index }}
-                    {{ $imgName := index $shuffledItems (mod $globalIndex (len $shuffledItems)) }}
-
-                    {{/* ITEM SLOT */}}
-                    <a href="{{ $post.RelPermalink }}" 
-                       class="relative group/item z-10 transition-transform duration-300 hover:-translate-y-2 hover:scale-110 focus:outline-none">
-                        
-                        {{/* TOOLTIP (Nom de l'article au survol) */}}
-                        <div class="absolute -top-12 left-1/2 -translate-x-1/2 w-max max-w-[150px] opacity-0 group-hover/item:opacity-100 transition-opacity duration-200 pointer-events-none z-50">
-                            <div class="bg-ctp-crust border border-ctp-surface1 text-ctp-text text-[10px] px-2 py-1 rounded shadow-xl text-center font-mono leading-tight">
-                                <span class="text-ctp-mauve block text-[9px] mb-0.5">{{ $post.Date.Format "02/01" }}</span>
-                                {{ $post.Title }}
-                            </div>
-                            {{/* Flèche du tooltip */}}
-                            <div class="w-2 h-2 bg-ctp-crust border-b border-r border-ctp-surface1 transform rotate-45 absolute left-1/2 -translate-x-1/2 -bottom-1"></div>
-                        </div>
-
-                        {{/* L'ICONE PIXEL ART */}}
-                        {{/* Note: image-pixelated est dans ton main.css */}}
-                        <img src="/media/inventory/{{ $imgName }}" 
-                             alt="{{ $post.Title }}"
-                             class="h-[64px] w-auto object-contain drop-shadow-lg image-pixelated filter brightness-90 group-hover/item:brightness-110"
-                             loading="lazy">
-                             
-                    </a>
-                {{ end }}
+        {{/* --- HEADER (Style RPG) --- */}}
+        <div class="shrink-0 px-3 py-2 border-b border-ctp-surface1/20 bg-ctp-crust/50 flex justify-between items-center select-none z-20">
+            <div class="flex items-center gap-2">
+                <span class="text-lg">🎒</span>
+                <span class="text-[10px] font-mono text-ctp-subtext1 uppercase tracking-widest font-bold">
+                    INVENTORY
+                </span>
             </div>
-        {{ end }}
+            <span class="text-[9px] font-mono text-ctp-overlay0">{{ len $posts }} / 8 SLOTS</span>
+        </div>
 
+        {{/* --- SHELVES CONTAINER --- */}}
+        <div class="flex-1 relative flex flex-col justify-center px-2 py-4 gap-6 bg-ctp-base/30">
+            
+            {{/* On boucle deux fois pour créer 2 étagères de 4 items */}}
+            {{ range $rowIndex := seq 0 1 }} 
+                <div class="relative w-full h-[70px] flex items-end justify-around px-2">
+                    
+                    {{/* BACKGROUND ETAGERE */}}
+                    <div class="absolute bottom-0 left-0 right-0 h-[30px] z-0 opacity-80 pointer-events-none"
+                         style="background-image: url('/media/inventory/shelf-bg.png'); background-repeat: repeat-x; background-position: bottom center;">
+                    </div>
+
+                    {{/* ITEMS LOOP */}}
+                    {{ $startIndex := mul $rowIndex 4 }}
+                    {{ $rowPosts := first 4 (after $startIndex $posts) }}
+
+                    {{ range $index, $post := $rowPosts }}
+                        
+                        {{ $globalIndex := add $startIndex $index }}
+                        {{ $imgName := index $shuffledItems (mod $globalIndex (len $shuffledItems)) }}
+
+                        {{/* ITEM SLOT */}}
+                        <a href="{{ $post.RelPermalink }}" 
+                           class="relative group/item z-10 transition-transform duration-300 hover:-translate-y-2 hover:scale-110 focus:outline-none">
+                            
+                            {{/* TOOLTIP */}}
+                            <div class="absolute -top-12 left-1/2 -translate-x-1/2 w-max max-w-[150px] opacity-0 group-hover/item:opacity-100 transition-opacity duration-200 pointer-events-none z-50">
+                                <div class="bg-ctp-crust border border-ctp-surface1 text-ctp-text text-[10px] px-2 py-1 rounded shadow-xl text-center font-mono leading-tight">
+                                    <span class="text-ctp-mauve block text-[9px] mb-0.5">{{ $post.Date.Format "02/01" }}</span>
+                                    {{ $post.Title }}
+                                </div>
+                                <div class="w-2 h-2 bg-ctp-crust border-b border-r border-ctp-surface1 transform rotate-45 absolute left-1/2 -translate-x-1/2 -bottom-1"></div>
+                            </div>
+
+                            {{/* ICONE PIXEL ART */}}
+                            <img src="/media/inventory/{{ $imgName }}" 
+                                 alt="{{ $post.Title }}"
+                                 class="h-[64px] w-auto object-contain drop-shadow-lg image-pixelated filter brightness-90 group-hover/item:brightness-110"
+                                 loading="lazy">
+                        </a>
+                    {{ end }}
+                </div>
+            {{ end }}
+
+        </div>
     </div>
 </div>

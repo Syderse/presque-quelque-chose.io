@@ -5,8 +5,7 @@ baseURL: 'https://syderse.github.io/'
 # CORE BUILD SETTINGS
 # ===========================================================================
 build:
-  # Indispensable pour Tailwind JIT
-  writeStats: true
+  writeStats: true # Indispensable pour Tailwind JIT
 
 # Fusion des paramètres de sécurité et minify
 security:
@@ -19,17 +18,12 @@ minify:
 # MODULES & THEME MOUNTS
 # ===========================================================================
 module:
-  # C'est ici que l'on définit les "Mounts" critiques pour la synchro Tailwind
   mounts:
     - source: assets
       target: assets
     
     # [CORRECTIF NETLIFY] 
     # Suppression du mount hugo_stats.json pour éviter les erreurs de "Cold Build".
-    # Tailwind v4 utilisera désormais le scanner sur layouts/ (via safelist.html)
-    # - source: hugo_stats.json
-    #   target: assets/watching/hugo_stats.json
-    
     - source: layouts
       target: layouts
     - source: content
@@ -73,7 +67,6 @@ outputFormats:
     notAlternative: true
 
 outputs:
-  # On applique les nouveaux noms
   home: [HTML, RSS, RANDOMIZER] 
   section: [HTML, RSS, ALMANACH] 
   page: ["HTML"]
@@ -107,7 +100,8 @@ menus:
 cascade:
   - _target:
       path: /blog/**
-      kind: page
+    # Suppression de la ligne "kind: page" qui provoquait l'erreur
+    # Hugo détecte automatiquement le type de page selon le fichier (index.md vs _index.md)
     pager: true
     editable: true
     show_date_updated: true
@@ -170,13 +164,16 @@ imaging:
   hint: picture
 
 # ===========================================================================
-# SITE PARAMETERS (Anciennement params.yaml)
+# SITE PARAMETERS
 # ===========================================================================
 params:
-  # SITE SETUP
-  # Guide: https://docs.hugoblox.com/tutorial/
-  # Documentation: https://docs.hugoblox.com/
+  # ---------------------------------------------------------------------------
+  # IDENTITY / AUTHOR DATA (Single Source of Truth)
+  # ---------------------------------------------------------------------------
+  author:
+    birthdate: "2002-01-15" # Format strict YYYY-MM-DD
 
+  # SITE SETUP
   # Appearance
   appearance:
     mode: dark

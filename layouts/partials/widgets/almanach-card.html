@@ -1,69 +1,48 @@
-{{/* WIDGET: ALMANACH RPG STYLE (The Quest Log) */}}
-<div class="relative w-full overflow-hidden rounded-xl bg-ctp-mantle shadow-xl border-t-2 border-b-2 border-ctp-surface1 flex flex-col md:flex-row group isolate">
+{{/* Fichier : layouts/partials/widgets/almanach-card.html */}}
 
-    {{/* --- DÉCORATION D'AMBIANCE --- */}}
-    {{/* Lueur chaude "Torche" en bas à droite */}}
-    <div class="absolute -bottom-20 -right-20 w-64 h-64 bg-ctp-peach/10 blur-[80px] rounded-full pointer-events-none -z-10"></div>
-    
-    {{/* --- COLONNE GAUCHE : LE SCEAU TEMPOREL (15-20%) --- */}}
-    {{/* Fond sombre texturé pour faire ressortir le "gold" */}}
-    <div class="relative w-full md:w-48 min-w-[160px] bg-ctp-crust flex flex-row md:flex-col items-center justify-between md:justify-center p-6 border-b md:border-b-0 md:border-r border-ctp-surface0 z-20">
-        
-        {{/* Ornement Haut (Barre verticale sur mobile, trait sur desktop) */}}
-        <div class="hidden md:block w-[1px] h-8 bg-gradient-to-b from-transparent via-ctp-peach/50 to-transparent mb-4"></div>
+<div class="bento-card isolate group h-full"> {{/* Force h-full */}}
 
-        {{/* Bloc Date */}}
-        <div class="flex flex-col items-center text-center">
-            <span id="pata-day-name" class="font-serif text-ctp-subtext0 italic text-sm mb-1">
-                ...
-            </span>
-            
-            {{/* Le Numéro : Traitement "Drop Cap" ancien */}}
-            <span id="pata-day-number" class="text-6xl font-serif font-black text-ctp-peach drop-shadow-[0_2px_10px_rgba(250,179,135,0.2)] leading-none">
-                --
-            </span>
-            
-            <span id="pata-month" class="font-serif text-xs font-bold text-ctp-maroon uppercase tracking-widest mt-2 border-t border-ctp-surface1 pt-2 w-full">
-                CHARGEMENT
-            </span>
-        </div>
+    <div class="bento-content flex flex-col md:flex-row relative h-full">
 
-        {{/* Ornement Bas */}}
-        <div class="hidden md:block w-[1px] h-8 bg-gradient-to-b from-transparent via-ctp-peach/50 to-transparent mt-4"></div>
-        
-        {{/* Info Grégorienne (Discrète, style note de bas de page) */}}
-        <div class="md:absolute md:bottom-4 md:left-0 w-full text-center">
-             <span id="gregorian-ref" class="text-[10px] font-mono text-ctp-surface2">--/--/----</span>
-        </div>
-    </div>
+        {{/* --- FOND D'AMBIANCE --- */}}
+        <div class="absolute inset-0 opacity-[0.05] pointer-events-none mix-blend-overlay bg-[url('https://www.transparenttextures.com/patterns/paper.png')] z-0"></div>
+        <div class="absolute inset-y-0 left-0 w-1/3 bg-gradient-to-r from-ctp-mantle/80 to-transparent pointer-events-none z-0"></div>
 
-    {{/* --- COLONNE DROITE : LE RÉCIT (CONTENU ROI) --- */}}
-    <div class="relative flex-grow flex flex-col justify-center p-6 md:p-8 z-10">
-        
-        {{/* 1. Le Titre (Le Saint) - Traitement "Header de Chapitre" */}}
-        <div class="mb-4">
-            <h3 id="pata-saint" class="font-serif text-xl md:text-2xl text-ctp-rosewater font-bold leading-tight">
-                Recherche de la Sainteté...
-            </h3>
-            <div class="h-[2px] w-12 bg-ctp-maroon/50 mt-2 rounded-full"></div>
-        </div>
-
-        {{/* 2. Le Contenu (La citation) - Traitement "Manuscrit" */}}
-        {{/* C'est ici qu'on met le paquet sur la lisibilité et l'importance */}}
-        <div class="relative">
-            {{/* Guillemet décoratif géant en fond */}}
-            <div class="absolute -top-4 -left-2 text-6xl text-ctp-surface1 opacity-20 font-serif leading-none select-none">“</div>
-            
-            <p id="almanach-content" class="relative text-lg md:text-xl font-serif text-ctp-text italic leading-relaxed text-balance pl-4 border-l-2 border-ctp-surface1/50">
-                Connexion aux archives du Collège de 'Pataphysique en cours...
-            </p>
-        </div>
-
-        {{/* 3. Metadata (Année EP) - En haut à droite absolute pour ne pas gêner */}}
-        <div class="absolute top-4 right-5">
-            <div class="px-2 py-1 bg-ctp-surface0 rounded text-[10px] font-mono text-ctp-subtext0 border border-ctp-surface1">
-                <span id="pata-year">E.P. --</span>
+        {{/* --- GAUCHE : LA MARGE --- */}}
+        <div class="relative z-10 w-full md:w-[300px] flex-shrink-0 flex flex-col justify-between p-6 border-b md:border-b-0 md:border-r border-ctp-surface1/20 backdrop-blur-sm">
+            {{/* Le contenu ici est OK, pas de changement majeur nécessaire */}}
+            <div class="text-left">
+                <span id="pata-day-name" class="block font-mono text-[10px] uppercase tracking-[0.25em] text-ctp-overlay2 mb-1 pl-1">--</span>
+                <div class="flex items-baseline gap-3">
+                    <span id="pata-day-number" class="font-serif font-black text-5xl text-ctp-mauve leading-none group-hover:text-ctp-peach transition-colors duration-300">--</span>
+                    <div class="flex flex-col">
+                        <span id="pata-month" class="font-bold text-xs text-ctp-text uppercase tracking-widest">...</span>
+                        <span id="pata-year" class="font-mono text-[9px] text-ctp-subtext0 opacity-60">--</span>
+                    </div>
+                </div>
             </div>
+            <div class="mt-6 md:mt-0 pt-4 border-t border-white/5">
+                <span class="block text-[9px] font-mono text-ctp-surface2 uppercase tracking-widest mb-1">Patronage</span>
+                <h2 id="pata-saint" class="font-serif text-xl italic leading-tight text-ctp-rosewater text-pretty group-hover:text-ctp-peach/80 transition-colors duration-300">Chargement...</h2>
+            </div>
+        </div>
+
+        {{/* --- DROITE : LE RÉCIT --- */}}
+        <div class="flex-1 relative z-10 p-6 md:p-8 flex items-center justify-start overflow-hidden"> {{/* overflow-hidden added */}}
+
+            {{/* Guillemet sécurisé : leading-[0] et positionnement absolu strict */}}
+            <div class="absolute top-4 left-6 text-[8rem] leading-[0] font-serif text-ctp-surface1/20 select-none pointer-events-none font-bold group-hover:text-ctp-peach/10 transition-colors duration-300">
+                “
+            </div>
+
+            <div class="relative z-10 w-full">
+                {{/* Line-clamp-4 pour couper proprement le texte si l'écran est trop petit, au lieu de déborder */}}
+                <p id="almanach-content"
+                   class="font-serif text-xl md:text-2xl text-ctp-text/90 italic leading-relaxed text-left drop-shadow-sm line-clamp-4 md:line-clamp-none">
+                    ...
+                </p>
+            </div>
+
         </div>
     </div>
 </div>

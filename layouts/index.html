@@ -1,72 +1,63 @@
 {{ define "main" }}
-{{/* LAYOUT v3.2 : "BALANCED DASHBOARD - REFINED"
-Changelog :
-- Header : Fixe.
-- Band "NEXUS" (Milieu) : Elastique (flex-grow).
-- Band "ALMANACH" (Bas) : Réduit à 200px pour maximiser l'espace de l'Identity Card.
+{{/*
+  LAYOUT STRATEGY: FULL VIEWPORT DASHBOARD
+  Desktop: No scroll. Grid proportions fill the screen perfectly.
+  Mobile: Standard stack with scroll.
 */}}
+<div class="w-full h-full bg-[#050505] text-ctp-text selection:bg-ctp-mauve selection:text-ctp-base flex flex-col p-4 md:p-6 gap-6">
 
-<div class="w-full h-[calc(100vh-6rem)] flex flex-col gap-4 px-4 pb-4">
-
-    {{/* --- ZONE 1 : SYSTEM HEADER (Top) --- */}}
-    <div class="w-full h-10 shrink-0 pl-14 flex items-center z-30">
-        <div class="w-full h-full border-b border-ctp-surface1 flex items-center justify-between px-4 bg-ctp-mantle/50 backdrop-blur-sm rounded-t-lg">
-            <span class="text-xs font-mono text-ctp-overlay1">[ SYSTEM_READY ]</span>
-            <span class="text-xs font-mono text-ctp-mauve animate-pulse">:: WAITING FOR INPUT ::</span>
-        </div>
+    {{/* 1. HEADER SYSTÈME (Flex Item: Fixed Height) */}}
+    <div class="flex-none z-50 w-full">
+        {{ partial "widgets/system-header.html" . }}
     </div>
 
-    {{/* --- ZONE 2 : NEXUS BAND (Centre) ---
-    C'est la zone élastique. Elle va récupérer les 40px libérés par le bas.
+    {{/* 2. LA GRILLE BENTO (Flex Item: Grows to fill remaining space)
+         - md:grid-rows-[1.75fr_1fr] : Ratio ~65/35 pour reproduire ton design original de façon responsive.
+         - min-h-0 : Crucial pour éviter que le grid ne déborde du conteneur flex parent.
     */}}
-    <div class="w-full flex-grow min-h-0 grid grid-cols-1 md:grid-cols-4 gap-4 z-20">
+    <div class="flex-1 min-h-0 w-full max-w-[1920px] mx-auto">
+{{/* MODIFICATION : Ajout de minmax(0, ...) pour forcer le respect du viewport */}}
+<div class="grid grid-cols-1 md:grid-cols-4 md:grid-rows-[minmax(0,1.75fr)_minmax(0,1fr)] gap-4 md:gap-6 h-full">
 
-        {{/* COL 1 (Ouest) : DOM */}}
-        <div class="md:col-span-1 h-full overflow-hidden relative">
+    {{/* --- ROW 1 --- */}}
+    
+    {{/* CELL 1: DOM CARD */}}
+    {{/* Ajout de min-h-0 pour autoriser la compression du flex child interne */}}
+    <section class="md:col-span-1 md:row-span-1 h-[300px] md:h-full min-h-0 relative group rounded-2xl border border-white/5 bg-ctp-mantle/20 overflow-hidden">
+        <div class="absolute inset-0 bg-ctp-mantle/40 transition-colors group-hover:bg-ctp-mantle/60 -z-10"></div>
+        <div class="h-full w-full">
             {{ partial "widgets/dom-card.html" . }}
         </div>
+    </section>
 
-        {{/* COL 2-3 (Centre) : IDENTITY */}}
-        <div class="md:col-span-2 h-full overflow-hidden relative">
+    {{/* CELL 2: IDENTITY */}}
+    <section class="md:col-span-2 md:row-span-1 h-[300px] md:h-full min-h-0 relative">
+        <div class="h-full w-full">
             {{ partial "widgets/identity-card.html" . }}
         </div>
+    </section>
 
-        {{/* COL 4 (Est) : LOGS */}}
-        <div class="md:col-span-1 h-full overflow-hidden relative">
+    {{/* CELL 3: LATEST POSTS */}}
+    <section class="md:col-span-1 md:row-span-1 h-[300px] md:h-full min-h-0 relative rounded-2xl border border-white/5 bg-ctp-mantle/20 overflow-hidden">
+        <div class="h-full w-full">
             {{ partial "widgets/latest-posts.html" . }}
         </div>
+    </section>
 
-    </div>
+    {{/* --- ROW 2 --- */}}
 
-    {{/* --- ZONE 3 : ALMANACH (Bas) ---
-    MODIFICATION : h-[240px] -> h-[200px].
-    Compacté pour laisser la vedette à la zone centrale.
-    */}}
-    <div class="w-full h-[200px] shrink-0 z-10 relative">
-        {{ partial "widgets/almanach-card.html" . }}
-    </div>
+    {{/* CELL 4: ALMANACH */}}
+    <section class="md:col-span-4 md:row-span-1 h-[250px] md:h-full min-h-0 relative">
+        <div class="w-full h-full rounded-2xl overflow-hidden relative group transition-all duration-500 hover:shadow-[0_0_30px_rgba(203,166,247,0.15)] border border-white/5 bg-ctp-mantle/50">
+            {{ partial "widgets/almanach-card.html" . }}
+        </div>
+    </section>
 
 </div>
-
-<style>
-    /* Scrollbar invisible mais fonctionnelle pour l'esthétique */
-    ::-webkit-scrollbar {
-        width: 4px;
-        height: 4px;
-    }
-
-    ::-webkit-scrollbar-track {
-        background: transparent;
-    }
-
-    ::-webkit-scrollbar-thumb {
-        background: var(--ctp-surface1);
-        border-radius: 2px;
-    }
-</style>
+    </div>
+</div>
 {{ end }}
 
-{{/* UN SEUL BLOC SCRIPTS AUTORISÉ */}}
 {{ define "scripts" }}
     {{ partial "functions/js-loader.html" (slice "PataphysicalDate" "almanach" "dom-engine") }}
 {{ end }}

@@ -1,5 +1,6 @@
+{{/* Fichier : layouts/_default/baseof.html */}}
 <!doctype html>
-<html lang="{{ .Site.Language.Lang | default " fr" }}" class="h-full antialiased scroll-smooth dark">
+<html lang="{{ .Site.Language.Lang | default "fr" }}" class="h-full antialiased scroll-smooth dark">
 
 <head>
   <meta charset="utf-8" />
@@ -47,8 +48,10 @@
     {{/* ZONE CONTENU PRINCIPAL */}}
     <main class="relative h-full flex flex-col overflow-hidden bg-ctp-base shadow-2xl z-10">
 
-      {{/* HEADER / TOOLBAR (Sticky Top) */}}
-      <header class="absolute top-0 left-0 w-full z-40 p-4 flex items-start justify-between pointer-events-none">
+      {{/* HEADER / TOOLBAR (Sticky Top) 
+           FIX CRITIQUE : z-[60] pour passer au-dessus du z-50 des widgets dashboard 
+      */}}
+      <header class="absolute top-0 left-0 w-full z-[60] p-4 flex items-start justify-between pointer-events-none">
 
         {{/* BOUTON TOGGLE "ONGLET"
         Il vit dans le main mais est positionné pour coller à la sidebar.
@@ -70,7 +73,7 @@
       </header>
 
       {{/* SCROLLABLE CONTENT AREA */}}
-      <div class="flex-grow overflow-y-auto w-full scroll-smooth pt-16"> {{ if .Params.full_width }}
+      <div class="flex-grow overflow-y-auto w-full scroll-smooth"> {{ if .Params.full_width }}
         <div class="w-full h-full">
           {{ block "main" . }}{{ end }}
         </div>
