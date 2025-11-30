@@ -1,0 +1,56 @@
+{{/* SHORTCODE: SIDENOTE (Alternating)
+   - Usage: {{< sidenote >}} Note Content {{< /sidenote >}}
+   - Logic: 
+     1. Calculate Human Number (Ordinal + 1).
+     2. Modulo 2 to determine Side.
+     3. Apply classes 'sn-left' or 'sn-right' for JS hooks.
+*/}}
+
+{{ $num := add .Ordinal 1 }}
+{{ $isEven := eq (mod $num 2) 0 }}
+{{ $sideClass := cond $isEven "sn-right" "sn-left" }}
+
+<span class="inline group/note">
+    {{/* 1. The Trigger (Reference Number) */}}
+    <label for="sn-{{ $num }}" 
+           class="cursor-pointer text-ctp-peach font-serif italic text-sm align-super hover:text-ctp-red transition-colors duration-200 select-none px-0.5"
+           title="View Note {{ $num }}">
+        {{ $num }}
+    </label>
+
+    {{/* 2. Checkbox State */}}
+    <input type="checkbox" id="sn-{{ $num }}" class="peer hidden" />
+    
+    {{/* 3. The Note */}}
+    <span class="side-note-content {{ $sideClass }}
+        /* MOBILE (Default < lg): Stacked Block */
+        hidden peer-checked:block peer-checked:my-4 peer-checked:p-4 peer-checked:bg-ctp-surface0/50 peer-checked:border-l-2 peer-checked:border-ctp-peach peer-checked:rounded-r-lg
+        
+        /* DESKTOP (lg+): Absolute Positioning relative to ARTICLE */
+        lg:block lg:peer-checked:block 
+        lg:absolute 
+        lg:w-[15rem]
+        lg:p-0 lg:bg-transparent lg:border-0 lg:rounded-none
+        
+        /* SIDE LOGIC */
+        {{ if $isEven }}
+            /* RIGHT SIDE (Even): Pushed right of Article + Gap */
+            lg:left-[100%] lg:ml-8 lg:text-left
+        {{ else }}
+            /* LEFT SIDE (Odd): Pushed left of Article + Gap */
+            lg:right-[100%] lg:mr-8 lg:text-right
+        {{ end }}
+
+        font-serif text-[0.95rem] text-ctp-subtext0 italic leading-relaxed
+        lg:opacity-70 lg:hover:opacity-100 lg:transition-opacity lg:duration-300
+        z-20
+    ">
+        {{/* Note Header */}}
+        <span class="hidden lg:inline text-ctp-peach font-bold {{ if $isEven }} mr-1 {{ else }} ml-1 float-right {{ end }}">
+            {{ $num }}.
+        </span>
+        
+        {{/* Note Body */}}
+        {{ .Inner | markdownify }}
+    </span>
+</span>

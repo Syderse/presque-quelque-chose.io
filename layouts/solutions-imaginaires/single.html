@@ -1,0 +1,103 @@
+{{ define "main" }}
+{{/* LAYOUT: MARGINALIA MANUSCRIPT (REFACTORED 2-1-6-3)
+     - Structure: 12-Column Grid.
+     - Col 1-2: Sidebar (Nav).
+     - Col 3:   Left Spacer (Tight Gutter).
+     - Col 4-9: Prose (Perfect Center).
+     - Col 10-12: Right Spacer (Wide Gutter for Notes).
+*/}}
+
+<div class="w-full min-h-screen bg-ctp-base text-ctp-text font-serif selection:bg-ctp-peach/30 selection:text-ctp-text relative overflow-x-hidden">
+
+  {{/* 1. ATMOSPHERE */}}
+  <div class="fixed top-0 left-0 right-0 h-[80vh] bg-gradient-to-b from-ctp-peach/5 via-ctp-mauve/5 to-transparent pointer-events-none z-0"></div>
+
+  {{/* 2. PROGRESS BAR */}}
+  <div class="fixed top-0 left-0 h-1 bg-ctp-peach/20 w-full z-50">
+    <div class="h-full bg-ctp-peach origin-left scale-x-0" style="animation: scrollProgress auto linear forwards; animation-timeline: scroll();"></div>
+  </div>
+
+  <main class="relative z-10 max-w-[96rem] mx-auto px-6 md:px-12 py-20 md:py-32">
+
+    {{/* 3. HEADER */}}
+    <header class="max-w-3xl mx-auto text-center mb-24 relative">
+        <div class="mb-8 flex justify-center opacity-60"><span class="text-ctp-peach text-2xl">❦</span></div>
+        <div class="flex justify-center items-center gap-4 text-sm font-sans tracking-widest text-ctp-overlay1 mb-6 uppercase">
+            <time datetime="{{ .Date }}">{{ .Date.Format "January 02, 2006" }}</time>
+            <span class="w-1 h-1 rounded-full bg-ctp-peach"></span>
+            <span>Est. {{ .ReadingTime }} min</span>
+        </div>
+        <h1 class="text-5xl md:text-7xl lg:text-8xl font-serif font-medium text-ctp-text leading-[0.9] mb-8 tracking-tight drop-shadow-lg">{{ .Title }}</h1>
+        {{ with .Params.summary }}
+        <p class="text-xl md:text-2xl text-ctp-subtext0 italic font-light leading-relaxed px-8">{{ . }}</p>
+        {{ end }}
+        <div class="mt-12 h-px w-full bg-gradient-to-r from-transparent via-ctp-surface1 to-transparent"></div>
+    </header>
+
+    {{/* 4. THE MANUSCRIPT GRID (12 Cols) */}}
+    {{/* GEOMETRY UPDATE: 2 (Sidebar) + 1 (Space) + 6 (Prose) + 3 (Space) = 12 */}}
+    <div class="grid grid-cols-1 lg:grid-cols-12 gap-4 lg:gap-8 relative">
+
+        {{/* A. SIDEBAR (Cols 1-2) */}}
+        <aside class="hidden lg:block lg:col-span-2 sticky top-32 h-fit text-right pr-6 border-r border-ctp-surface1/30 z-30">
+            <div class="flex flex-col gap-6">
+                <a href="/solutions-imaginaires" class="group flex items-center justify-end gap-2 text-ctp-overlay1 hover:text-ctp-peach transition-colors font-sans text-sm tracking-wide">
+                    <span class="opacity-0 group-hover:-translate-x-1 transition-transform">←</span> Return
+                </a>
+                <div class="flex flex-wrap justify-end gap-2 mt-4">
+                    {{ range .Params.tags }}
+                    <span class="px-2 py-1 text-[10px] font-mono border border-ctp-surface1 rounded text-ctp-subtext1">{{ . }}</span>
+                    {{ end }}
+                </div>
+            </div>
+        </aside>
+
+        {{/* B. LEFT GUTTER (Col 3) - REDUCED to 1 Col */}}
+        {{/* This tightens the left side, pulling the centered prose into alignment. */}}
+        <div class="hidden lg:block lg:col-span-1 pointer-events-none"></div>
+
+        {{/* C. CONTENT (Cols 4-9) - 6 Cols Wide */}}
+        {{/* Centered perfectly in the grid (3 cols left space / 3 cols right space) */}}
+        <article class="col-span-1 lg:col-span-6 px-0 lg:px-4 overflow-visible z-10 relative">
+            
+            {{ with .Resources.GetMatch "featured.*" }}
+            <figure class="mb-16 relative rounded-sm overflow-hidden shadow-2xl shadow-black/20 group">
+                <div class="absolute inset-0 bg-ctp-peach/10 mix-blend-overlay z-10"></div>
+                {{ $img := .Resize "1200x webp" }}
+                <img src="{{ $img.RelPermalink }}" alt="{{ $.Title }}" class="w-full h-auto grayscale-[20%] sepia-[10%] contrast-[1.1]">
+            </figure>
+            {{ end }}
+
+            <div class="prose prose-xl prose-catppuccin max-w-none 
+                font-serif
+                prose-headings:font-serif prose-headings:font-normal prose-headings:text-ctp-text prose-headings:italic
+                prose-p:text-ctp-text prose-p:leading-[1.8] prose-p:font-light
+                prose-a:text-ctp-peach prose-a:no-underline prose-a:border-b prose-a:border-ctp-peach/30 hover:prose-a:border-ctp-peach
+                prose-blockquote:border-l-ctp-peach prose-blockquote:bg-transparent prose-blockquote:pl-6 prose-blockquote:italic prose-blockquote:text-ctp-subtext0
+                first-letter:text-6xl first-letter:font-serif first-letter:text-ctp-peach first-letter:float-left first-letter:mr-3 first-letter:mt-[-0.2em]
+            ">
+                {{ .Content }}
+            </div>
+
+            <div class="mt-24 flex justify-center opacity-40">
+                <img src="https://upload.wikimedia.org/wikipedia/commons/7/70/Ornament_from_The_Works_of_Horace_%281740%29_pg_143.png" class="w-24 h-auto invert opacity-50 mix-blend-screen" alt="Finis">
+            </div>
+        </article>
+
+        {{/* D. RIGHT GUTTER (Cols 10-12) - INCREASED to 3 Cols */}}
+        {{/* 3 Cols (~330px) easily fits the 15rem (240px) sidenote without clipping. */}}
+        <div class="hidden lg:block lg:col-span-3 pointer-events-none"></div>
+
+    </div>
+  </main>
+</div>
+
+<style>
+@keyframes scrollProgress { from { transform: scaleX(0); } to { transform: scaleX(1); } }
+</style>
+{{ end }}
+
+{{ define "scripts" }}
+  {{ $js := resources.Get "js/sidenote-adjuster.js" | minify | fingerprint }}
+  <script src="{{ $js.RelPermalink }}" integrity="{{ $js.Data.Integrity }}" defer></script>
+{{ end }}

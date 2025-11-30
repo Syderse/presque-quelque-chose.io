@@ -1,142 +1,205 @@
-{{/* --- 1. TELEMETRY EXTRACTION LAYER (UNCHANGED LOGIC) --- */}}
+{{/* --- 1. TELEMETRY EXTRACTION LAYER --- */}}
 
-{{/* A. Time Calculation */}}
+{{/* A. Time Calculation (VOL) */}}
 {{ $creationDate := time.AsTime "2025-11-13T16:16:00" }}
 {{ $hoursAlive := math.Floor (div (sub time.Now.Unix $creationDate.Unix) 3600) }}
 
-{{/* B. Target Corpus Definition */}}
-{{ $targetSections := slice "ondes-pixels" "recherches" "rhizome-curieux" "solutions-imaginaires" }}
-{{ $corpus := where site.RegularPages "Section" "in" $targetSections }}
-
-{{/* C. Data Accumulation */}}
+{{/* B. Corpus Analysis */}}
+{{ $corpus := site.AllPages }}
 {{ $scratch := newScratch }}
-{{ $scratch.Set "totalDivs" 0 }}
-{{ $scratch.Set "totalChars" 0 }}
 {{ $scratch.Set "totalWords" 0 }}
 {{ $scratch.Set "totalSentences" 0 }}
 {{ $scratch.Set "totalQMarks" 0 }}
 {{ $scratch.Set "totalLinks" 0 }}
+{{ $scratch.Set "lastMod" $creationDate }}
+{{ $giantString := "" }}
 
 {{ range $corpus }}
-  {{ $html := .Content }}
   {{ $text := .Plain }}
+  {{ $html := .Content }}
 
-  {{/* 1. HTML Structure Stats */}}
-  {{ $divCount := strings.Count "<div" $html }}
-  {{ $scratch.Add "totalDivs" $divCount }}
+  {{/* 1. VOCAB DATA COLLECT */}}
+  {{ $giantString = print $giantString " " $text }}
 
-  {{/* 2. Volume Stats */}}
-  {{ $scratch.Add "totalChars" (len $text) }}
-  
-  {{/* 3. Linguistics */}}
+  {{/* 2. DENSITY DATA */}}
   {{ $scratch.Add "totalWords" .WordCount }}
-  {{ $s := add (strings.Count "." $text) (strings.Count "!" $text) }}
-  {{ $s = add $s (strings.Count "?" $text) }}
-  {{ $scratch.Add "totalSentences" $s }}
-  
-  {{/* 4. Punctuation Specifics */}}
+  {{/* Heuristic: Count punctuation */}}
+  {{ $sCount := add (strings.Count "." $text) (strings.Count "!" $text) (strings.Count "?" $text) }}
+  {{ if eq $sCount 0 }}{{ $sCount = 1 }}{{ end }} 
+  {{ $scratch.Add "totalSentences" $sCount }}
+
+  {{/* 3. QUEST Metric */}}
   {{ $scratch.Add "totalQMarks" (strings.Count "?" $text) }}
 
-  {{/* 5. Interconnectivity */}}
+  {{/* 4. LINKS Metric */}}
   {{ $scratch.Add "totalLinks" (strings.Count "href=" $html) }}
+
+  {{/* 5. LAST SIGNAL Logic */}}
+  {{ if .Lastmod.After ($scratch.Get "lastMod") }}
+    {{ $scratch.Set "lastMod" .Lastmod }}
+  {{ end }}
 {{ end }}
 
-{{/* D. Averages Calculation */}}
-{{ $avgWPS := 0 }}
-{{ if gt ($scratch.Get "totalSentences") 0 }}
-  {{ $avgWPS = div ($scratch.Get "totalWords") ($scratch.Get "totalSentences") }}
+{{/* C. Heavy Processing */}}
+{{ $cleanText := replaceRE "[^a-zA-Z0-9À-ÿ ]" " " $giantString }}
+{{ $uniqueWords := split (lower $cleanText) " " | uniq }}
+{{ $vocabCount := len $uniqueWords }}
+
+{{/* D. Derived Calcs */}}
+{{ $avgDensity := 0 }}
+{{ $totalSentences := $scratch.Get "totalSentences" }}
+{{ if gt $totalSentences 0 }}
+  {{ $avgDensity = div ($scratch.Get "totalWords") $totalSentences }}
 {{ end }}
 
-{{/* E. External Data Sources */}}
+{{/* Last Signal Days */}}
+{{ $lastMod := $scratch.Get "lastMod" }}
+{{ $daysSilence := math.Floor (div (sub time.Now.Unix $lastMod.Unix) 86400) }}
+
+{{/* Almanac Entries */}}
 {{ $almanacCount := 0 }}
 {{ if site.Data.almanach }}
   {{ $almanacCount = len site.Data.almanach }}
 {{ end }}
 
-{{ $gitCommits := os.Getenv "HUGO_GIT_COMMITS" | default "N/A" }}
 
-
-{{/* --- 2. UI PRESENTATION LAYER (MICRO-HUD REFACTOR) --- */}}
-{{/* STYLE STRATEGY: 
-    - Removed margin-bottom (mb-8). Spacing is now handled by the parent flex gap.
-    - Converted "Cards" to "Status Strip".
-    - Font: JetBrains Mono (Variable 'font-mono' from config).
-    - Grid: 2 Cols (Mobile) -> 4 Cols (Tablet) -> 8 Cols (Desktop).
+{{/* --- 2. UI PRESENTATION LAYER --- */}}
+{{/* WIDGET: SYSTEM HEADER
+     Refactor: 
+     - Adopted .bento-card for visual consistency (border/shadow/radius).
+     - Applied 'hover:transform-none' to keep the header static (stable UI).
+     - Overridden background to 'bg-ctp-mantle' for Status Bar look.
 */}}
-<div class="w-full font-mono text-[10px] select-none bg-ctp-mantle border border-ctp-surface0 rounded-lg overflow-hidden shadow-sm">
-  <div class="grid grid-cols-2 md:grid-cols-4 lg:grid-cols-8 divide-x divide-y md:divide-y-0 lg:divide-y-0 divide-ctp-surface0/50">
+<div class="bento-card w-full font-mono text-[10px] select-none bg-ctp-mantle hover:transform-none hover:shadow-[4px_4px_0px_0px_rgba(0,0,0,0.3)]">
+  
+  {{/* Grid Dividers: Updated to ctp-surface1 for solid definition */}}
+  <div class="grid grid-cols-2 md:grid-cols-4 lg:grid-cols-8 divide-x divide-y md:divide-y-0 lg:divide-y-0 divide-ctp-surface1">
 
-    {{/* CELL 1: TEMPS DE VOL */}}
-    <div class="px-3 py-2 flex flex-row items-center justify-between hover:bg-ctp-surface0/30 transition-colors cursor-help" title="Heures depuis l'initialisation">
+    {{/* --- CELL 1: TEMPS DE VOL --- */}}
+    <div class="group relative px-3 py-3 flex flex-row items-center justify-between hover:bg-ctp-surface0/30 transition-colors cursor-help">
       <div class="flex items-center gap-2 text-ctp-overlay1">
-        <span class="text-ctp-green text-[8px]">●</span>
+        <span class="text-ctp-green text-[8px] animate-pulse">●</span>
         <span class="uppercase tracking-wider">VOL</span>
       </div>
       <span class="font-bold text-ctp-text">{{ $hoursAlive | lang.FormatNumber 0 }}H</span>
-    </div>
-
-    {{/* CELL 2: NOEUDS DOM */}}
-    <div class="px-3 py-2 flex flex-row items-center justify-between hover:bg-ctp-surface0/30 transition-colors">
-      <div class="flex items-center gap-2 text-ctp-overlay1">
-        <span class="text-ctp-mauve text-[8px]">&lt;/&gt;</span>
-        <span class="uppercase tracking-wider">DOM</span>
+      
+      <div class="pointer-events-none opacity-0 group-hover:opacity-100 absolute top-full left-0 mt-2 w-56 bg-ctp-base border border-ctp-surface1 p-3 z-50 shadow-[4px_4px_0px_0px_rgba(0,0,0,0.5)] transition-opacity duration-200">
+        <p class="text-xs text-ctp-yellow font-bold mb-1">DURÉE DE LA MISSION</p>
+        <p class="text-xs text-ctp-subtext0 leading-tight">Heures écoulées depuis l'initialisation du noyau système.</p>
       </div>
-      <span class="font-bold text-ctp-text">{{ $scratch.Get "totalDivs" | lang.FormatNumber 0 }}</span>
     </div>
 
-    {{/* CELL 3: VOLUME (CHARS) */}}
-    <div class="px-3 py-2 flex flex-row items-center justify-between hover:bg-ctp-surface0/30 transition-colors">
+    {{/* --- CELL 2: GAMME (VOCABULAIRE) --- */}}
+    <div class="group relative px-3 py-3 flex flex-row items-center justify-between hover:bg-ctp-surface0/30 transition-colors cursor-help">
       <div class="flex items-center gap-2 text-ctp-overlay1">
-        <span class="text-ctp-blue text-[8px]">TXT</span>
-        <span class="uppercase tracking-wider">MASSE</span>
+        <span class="text-ctp-mauve text-[8px]">AZ</span>
+        <span class="uppercase tracking-wider">GAMME</span>
       </div>
-      <span class="font-bold text-ctp-text">{{ $scratch.Get "totalChars" | lang.FormatNumber 0 }}</span>
+      <span class="font-bold text-ctp-text">{{ $vocabCount | lang.FormatNumber 0 }}</span>
+
+      <div class="pointer-events-none opacity-0 group-hover:opacity-100 absolute top-full left-0 mt-2 w-56 bg-ctp-base border border-ctp-surface1 p-3 z-50 shadow-[4px_4px_0px_0px_rgba(0,0,0,0.5)] transition-opacity duration-200">
+        <p class="text-xs text-ctp-yellow font-bold mb-1">RICHESSE LEXICALE</p>
+        <p class="text-xs text-ctp-subtext0 leading-tight">Nombre de mots uniques (lemmes distincts) identifiés dans la base de données.</p>
+      </div>
     </div>
 
-    {{/* CELL 4: DENSITÉ */}}
-    <div class="px-3 py-2 flex flex-row items-center justify-between hover:bg-ctp-surface0/30 transition-colors">
+    {{/* --- CELL 3: LAST SIGNAL --- */}}
+    <div class="group relative px-3 py-3 flex flex-row items-center justify-between hover:bg-ctp-surface0/30 transition-colors cursor-help">
+      <div class="flex items-center gap-2 text-ctp-overlay1">
+        <span class="text-ctp-blue text-[8px] animate-pulse">((o))</span>
+        <span class="uppercase tracking-wider">LAST.SIG</span>
+      </div>
+      <span class="font-bold text-ctp-text">T-{{ $daysSilence }}J</span>
+
+      <div class="pointer-events-none opacity-0 group-hover:opacity-100 absolute top-full left-0 mt-2 w-56 bg-ctp-base border border-ctp-surface1 p-3 z-50 shadow-[4px_4px_0px_0px_rgba(0,0,0,0.5)] transition-opacity duration-200">
+        <p class="text-xs text-ctp-yellow font-bold mb-1">SILENCE RADIO</p>
+        <p class="text-xs text-ctp-subtext0 leading-tight">Temps écoulé (T-Minus) depuis la dernière transmission de données (Post/Edit).</p>
+      </div>
+    </div>
+
+    {{/* --- CELL 4: DENSITÉ --- */}}
+    <div class="group relative px-3 py-3 flex flex-row items-center justify-between hover:bg-ctp-surface0/30 transition-colors cursor-help">
       <div class="flex items-center gap-2 text-ctp-overlay1">
         <span class="text-ctp-peach text-[8px]">AVG</span>
         <span class="uppercase tracking-wider">DENS.</span>
       </div>
-      <span class="font-bold text-ctp-text">{{ $avgWPS }}</span>
+      <span class="font-bold text-ctp-text">{{ $avgDensity | lang.FormatNumber 0 }}</span>
+
+      <div class="pointer-events-none opacity-0 group-hover:opacity-100 absolute top-full left-0 mt-2 w-56 bg-ctp-base border border-ctp-surface1 p-3 z-50 shadow-[4px_4px_0px_0px_rgba(0,0,0,0.5)] transition-opacity duration-200">
+        <p class="text-xs text-ctp-yellow font-bold mb-1">DENSITÉ LINGUISTIQUE</p>
+        <p class="text-xs text-ctp-subtext0 leading-tight">Moyenne de mots par phrase. Indice de complexité sémantique.</p>
+      </div>
     </div>
 
-    {{/* CELL 5: INTERROGATIONS */}}
-    <div class="px-3 py-2 flex flex-row items-center justify-between hover:bg-ctp-surface0/30 transition-colors">
+    {{/* --- CELL 5: INTERROGATIONS --- */}}
+    <div class="group relative px-3 py-3 flex flex-row items-center justify-between hover:bg-ctp-surface0/30 transition-colors cursor-help">
       <div class="flex items-center gap-2 text-ctp-overlay1">
         <span class="text-ctp-yellow text-[8px]">?</span>
         <span class="uppercase tracking-wider">QUEST.</span>
       </div>
       <span class="font-bold text-ctp-text">{{ $scratch.Get "totalQMarks" }}</span>
+
+      <div class="pointer-events-none opacity-0 group-hover:opacity-100 absolute top-full md:left-1/2 md:-translate-x-1/2 mt-2 w-56 bg-ctp-base border border-ctp-surface1 p-3 z-50 shadow-[4px_4px_0px_0px_rgba(0,0,0,0.5)] transition-opacity duration-200">
+        <p class="text-xs text-ctp-yellow font-bold mb-1">INDICE D'INCERTITUDE</p>
+        <p class="text-xs text-ctp-subtext0 leading-tight">Nombre total de questions posées dans le corpus.</p>
+      </div>
     </div>
 
-    {{/* CELL 6: CONNECTIVITÉ */}}
-    <div class="px-3 py-2 flex flex-row items-center justify-between hover:bg-ctp-surface0/30 transition-colors">
+    {{/* --- CELL 6: CONNECTIVITÉ --- */}}
+    <div class="group relative px-3 py-3 flex flex-row items-center justify-between hover:bg-ctp-surface0/30 transition-colors cursor-help">
       <div class="flex items-center gap-2 text-ctp-overlay1">
         <span class="text-ctp-teal text-[8px]">LNK</span>
         <span class="uppercase tracking-wider">LIENS</span>
       </div>
       <span class="font-bold text-ctp-text">{{ $scratch.Get "totalLinks" }}</span>
-    </div>
 
-    {{/* CELL 7: VERSION GIT */}}
-    <div class="px-3 py-2 flex flex-row items-center justify-between hover:bg-ctp-surface0/30 transition-colors">
-      <div class="flex items-center gap-2 text-ctp-overlay1">
-        <span class="text-ctp-maroon text-[8px]">GIT</span>
-        <span class="uppercase tracking-wider">VER</span>
+      <div class="pointer-events-none opacity-0 group-hover:opacity-100 absolute top-full md:left-1/2 md:-translate-x-1/2 mt-2 w-56 bg-ctp-base border border-ctp-surface1 p-3 z-50 shadow-[4px_4px_0px_0px_rgba(0,0,0,0.5)] transition-opacity duration-200">
+        <p class="text-xs text-ctp-yellow font-bold mb-1">SYSTÈME NERVEUX</p>
+        <p class="text-xs text-ctp-subtext0 leading-tight">Maillage hypertexte (Total des liens internes et externes).</p>
       </div>
-      <span class="font-bold text-ctp-text">{{ $gitCommits }}</span>
     </div>
 
-    {{/* CELL 8: ALMANACH */}}
-    <div class="px-3 py-2 flex flex-row items-center justify-between hover:bg-ctp-surface0/30 transition-colors">
+    {{/* --- CELL 7: PIXELS (LIVE) --- */}}
+    <div class="group relative px-3 py-3 flex flex-row items-center justify-between hover:bg-ctp-surface0/30 transition-colors cursor-help">
       <div class="flex items-center gap-2 text-ctp-overlay1">
-        <span class="text-ctp-lavender text-[8px]">DAT</span>
-        <span class="uppercase tracking-wider">LOGS</span>
+        <span class="text-ctp-maroon text-[8px]">PX</span>
+        <span class="uppercase tracking-wider">RES</span>
+      </div>
+      <span id="sys-pixel-count" class="font-bold text-ctp-text">---</span>
+
+      <div class="pointer-events-none opacity-0 group-hover:opacity-100 absolute top-full right-0 mt-2 w-56 bg-ctp-base border border-ctp-surface1 p-3 z-50 shadow-[4px_4px_0px_0px_rgba(0,0,0,0.5)] transition-opacity duration-200">
+        <p class="text-xs text-ctp-yellow font-bold mb-1">MATRICE D'AFFICHAGE</p>
+        <p class="text-xs text-ctp-subtext0 leading-tight">Pixels rendus actuellement (Viewport Width x Height).</p>
+      </div>
+    </div>
+
+    {{/* --- CELL 8: ALMANACH --- */}}
+    <div class="group relative px-3 py-3 flex flex-row items-center justify-between hover:bg-ctp-surface0/30 transition-colors cursor-help">
+      <div class="flex items-center gap-2 text-ctp-overlay1">
+        <span class="text-ctp-lavender text-[8px]">LOG</span>
+        <span class="uppercase tracking-wider">ALM</span>
       </div>
       <span class="font-bold text-ctp-text">{{ $almanacCount }}</span>
+
+      <div class="pointer-events-none opacity-0 group-hover:opacity-100 absolute top-full right-0 mt-2 w-56 bg-ctp-base border border-ctp-surface1 p-3 z-50 shadow-[4px_4px_0px_0px_rgba(0,0,0,0.5)] transition-opacity duration-200">
+        <p class="text-xs text-ctp-yellow font-bold mb-1">JOURNAL DE BORD</p>
+        <p class="text-xs text-ctp-subtext0 leading-tight">Entrées consignées dans l'Almanach personnel.</p>
+      </div>
     </div>
 
   </div>
 </div>
+
+<script>
+  (function() {
+    const p = document.getElementById('sys-pixel-count');
+    if(p) {
+      const calc = () => {
+        const val = window.innerWidth * window.innerHeight;
+        p.innerText = val > 1000000 ? (val / 1000000).toFixed(1) + 'M' : val.toLocaleString();
+      };
+      calc();
+      window.addEventListener('resize', calc);
+    }
+  })();
+</script>

@@ -2,16 +2,18 @@
 {{/* WIDGET: ALMANACH (Permanent Warmth Edition)
     Architecture: Bento Card.
     Layout: Split 25% Spine | 75% Canvas.
-    Updates: 
-    - Permanent Colors (No Hover states).
-    - Full Width Text (Removed prose max-width).
+    Refactor: 
+    - Removed 'h-full' from root (Global CSS).
+    - Removed redundant 'bg-ctp-surface0' from canvas (Inherited).
+    - Kept 'overflow-hidden' to clip spine/canvas corners.
 */}}
-<div class="bento-card group select-none h-full overflow-hidden">
+<div class="bento-card group select-none overflow-hidden">
     
     <div class="bento-content flex flex-col md:flex-row h-full">
 
         {{/* --- SECTION 1: THE SPINE (Metadata) - 25% --- 
              Visual: Darker (Crust). 
+             Border: Internal border to separate from Canvas.
         */}}
         <div class="relative w-full md:w-[25%] shrink-0 bg-ctp-crust border-b md:border-b-0 md:border-r border-ctp-surface1 p-5 md:p-6 flex flex-row md:flex-col justify-between items-center md:items-start overflow-hidden">
             
@@ -49,20 +51,17 @@
         </div>
 
         {{/* --- SECTION 2: THE CANVAS (Daily Entry) - 75% --- 
-             Visual: Lighter (Surface0).
+             Visual: Lighter (Inherits Surface0 from Parent).
         */}}
-        <div class="relative flex-1 bg-ctp-surface0 p-6 flex flex-col justify-center">
+        <div class="relative flex-1 p-6 flex flex-col justify-center">
             
             {{/* Texture Layer */}}
             <div class="absolute inset-0 opacity-[0.03] pointer-events-none bg-[url('https://www.transparenttextures.com/patterns/paper.png')] z-0"></div>
 
-            {{/* Main Content Area 
-               - Removed 'max-w-prose' to allow full width usage.
-               - Added 'w-full' to ensure explicit width control.
-            */}}
+            {{/* Main Content Area */}}
             <div class="relative z-10 w-full">
                 <p id="almanach-content" 
-                   class="font-serif text-base md:text-xl text-ctp-green italic leading-relaxed text-pretty break-words drop-shadow-sm selection:bg-ctp-maroon selection:text-ctp-base">
+                   class="font-serif text-base md:text-xl text-ctp-teal italic leading-relaxed text-pretty break-words drop-shadow-sm selection:bg-ctp-maroon selection:text-ctp-base">
                     L'initialisation du calendrier est en cours...
                 </p>
                 

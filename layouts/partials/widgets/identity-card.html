@@ -1,17 +1,21 @@
 {{/* Fichier : layouts/partials/widgets/identity-card.html */}}
-<div class="bento-card group select-none h-full overflow-hidden">
+{{/* WIDGET: IDENTITY CARD
+     Refactored for System Design (Bento V4).
+     - Relies on .bento-card for root sizing/positioning.
+     - Maintains internal rounding logic to allow Tooltip overflow.
+*/}}
+<div class="bento-card group select-none">
     
-    <div class="bento-content flex flex-col md:flex-row h-full">
+    <div class="flex flex-col md:flex-row h-full">
 
         {{/* --- 1. THE AVATAR --- */}}
-        <div class="relative h-64 md:h-full w-full md:w-auto md:aspect-[582/652] shrink-0 border-r border-ctp-surface1 bg-ctp-crust flex items-center justify-center overflow-hidden">
+        <div class="relative h-64 md:h-full w-full md:w-auto md:aspect-[582/652] shrink-0 border-r border-ctp-surface1 bg-ctp-crust flex items-center justify-center overflow-hidden rounded-t-xl md:rounded-l-xl md:rounded-tr-none">
             
             <img src="/media/avatar-explorer.jpg" 
                  alt="Avatar Explorateur" 
                  class="h-full w-full object-cover md:object-fill image-pixelated hover:scale-105 transition-transform duration-700 ease-in-out">
 
             <div class="absolute inset-0 shadow-[inset_0_0_20px_rgba(0,0,0,0.8)] pointer-events-none z-10"></div>
-            {{/* Solid State: Removed mix-blend-overlay if possible, kept minimal for effect */}}
             <div class="absolute inset-0 bg-ctp-mauve/5 pointer-events-none z-10"></div>
 
             <div class="absolute top-3 left-3 z-20 flex items-center gap-2 px-2 py-1 bg-ctp-crust/95 backdrop-blur-none rounded border border-ctp-surface1 shadow-lg">
@@ -23,10 +27,8 @@
             </div>
         </div>
 
-        {{/* --- 2. CHARACTER SHEET --- 
-              Performance: Removed transparent bg for a solid gradient.
-        */}}
-        <div class="relative flex-1 flex flex-col px-4 md:px-6 py-4 bg-gradient-to-br from-ctp-base to-ctp-surface0 overflow-y-auto scrollbar-hide">
+        {{/* --- 2. CHARACTER SHEET --- */}}
+        <div class="relative flex-1 flex flex-col px-4 md:px-6 py-4 bg-gradient-to-br from-ctp-base to-ctp-surface0 rounded-b-xl md:rounded-r-xl md:rounded-bl-none">
             
             {{/* HEADER */}}
             <div class="flex flex-col gap-0.5 mb-2 shrink-0">
@@ -34,7 +36,7 @@
                     presque-quelque-chose
                 </h2>
                 <div class="flex items-center gap-2">
-                    <span class="text-xs font-mono text-ctp-peach/80 italic">
+                    <span class="text-xs font-mono text-ctp-blue/80 italic">
                         &lt;cartographe-de-rosée&gt;
                     </span>
                 </div>
@@ -48,14 +50,32 @@
             {{ $birthDate := time.AsTime $birthDateStr }}
             {{ $daysAlive := div (sub now.Unix $birthDate.Unix) 86400 | int }}
             
-            <div class="w-full bg-ctp-surface0 rounded-lg p-3 border border-ctp-peach/30 mb-4 transition-colors duration-300 shrink-0">
+            <div class="group/stats relative w-full bg-ctp-surface0 rounded-lg p-3 border border-ctp-peach/30 mb-4 transition-colors duration-300 shrink-0">
+                
+                {{/* TOOLTIP */}}
+                <div class="opacity-0 group-hover/stats:opacity-100 transition-opacity duration-200 absolute bottom-full left-1/2 -translate-x-1/2 mb-3 w-max max-w-[250px] pointer-events-none z-50">
+                    <div class="bg-ctp-base border border-ctp-surface1 p-3 shadow-[4px_4px_0px_0px_rgba(0,0,0,0.5)]">
+                         <p class="text-xs text-ctp-yellow font-bold mb-1">Roue de la vie</p>
+                         <p class="text-xs text-ctp-subtext0 leading-tight">
+                            Jours écoulés depuis la naissance de presque quelqu'un : <span class="text-ctp-peach font-bold">{{ $daysAlive }}</span>
+                         </p>
+                    </div>
+                </div>
+
+                {{/* Labels */}}
                 <div class="flex justify-between items-end mb-1">
                     <span class="text-[10px] font-mono text-ctp-subtext0 uppercase">Expérience</span>
                     <span class="text-xs font-mono font-bold text-ctp-peach transition-colors">LVL. {{ printf "%d" $daysAlive }}</span>
                 </div>
+                
+                {{/* Progress Bar */}}
                 <div class="w-full h-2 bg-ctp-surface1 rounded-full overflow-hidden relative">
-                    <div class="absolute inset-y-0 left-0 bg-gradient-to-r from-ctp-peach to-ctp-red w-[65%] shadow-[0_0_10px_rgba(203,166,247,0.5)] transition-all duration-500"></div>
-                    <div class="absolute inset-0 bg-white/10 opacity-30 w-full animate-[shimmer_2s_infinite]"></div>
+                    <div id="daily-exp-bar" 
+                         style="width: 0%"
+                         class="absolute inset-y-0 left-0 bg-gradient-to-r from-ctp-peach to-ctp-red shadow-[0_0_10px_rgba(203,166,247,0.5)] transition-all duration-1000 ease-out">
+                    </div>
+                    
+                    <div class="absolute inset-0 bg-white/10 opacity-30 w-full animate-[shimmer_2s_infinite] pointer-events-none"></div>
                 </div>
             </div>
 
@@ -93,3 +113,6 @@
         </div>
     </div>
 </div>
+
+{{/* --- SCRIPT LOADING --- */}}
+{{ partial "functions/js-loader.html" (slice "daily-exp") }}
