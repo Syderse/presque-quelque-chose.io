@@ -194,4 +194,17 @@ Les données sont normalisées par un partial avant d'être exposées en JSON lo
     * `RANDOMIZER` -> `articles-aleatoires.json` (Home).
     * `RHIZOME` -> `index.json` (Section Rhizome).
 
+## 8. Performance Standard & Esthétique "Solid State" (Mise à jour v5 - 30/11/2025)
+
+**Changement de Paradigme :** Abandon total du "Glassmorphism" au profit d'une UI "Solid State" (Brute/Instrument de Labo).
+**Objectif :** 60FPS constants, zéro lag lors des reflows (resize sidebar), clarté visuelle maximale.
+
+* **Règles CSS Strictes :**
+    * 🚫 **INTERDICTION :** `backdrop-filter`, `blur()`, ombres diffuses complexes, mélange de couleurs Alpha (rgba) excessif.
+    * ✅ **OBLIGATION :** Fonds opaques (`bg-ctp-mantle`, `bg-ctp-surface0`), Bordures nettes (`border-ctp-surface1`), Ombres portées courtes ("Hard shadows").
+    * **Animations :** Exclusivement limitées aux propriétés *composite-only* : `transform` et `opacity`. Pas de transition sur `width`, `height` ou `margin` (sauf layout grid global).
+* **Design System :**
+    * L'esthétique repose sur la hiérarchie des couleurs Catppuccin solides et non sur la profondeur de champ.
+    * Les composants doivent ressembler à des instruments physiques (solides, tactiles) plutôt qu'à des vitres flottantes.
+
 ---

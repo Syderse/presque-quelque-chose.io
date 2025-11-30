@@ -1,94 +1,142 @@
-{{/* --- 1. DATA MINING LAYER --- */}}
-{{ $start := time.AsTime "2025-11-13T16:16:00+01:00" }}
-{{ $uptimeHours := math.Floor (div (sub time.Now.Unix $start.Unix) 3600) }}
+{{/* --- 1. TELEMETRY EXTRACTION LAYER (UNCHANGED LOGIC) --- */}}
 
+{{/* A. Time Calculation */}}
+{{ $creationDate := time.AsTime "2025-11-13T16:16:00" }}
+{{ $hoursAlive := math.Floor (div (sub time.Now.Unix $creationDate.Unix) 3600) }}
+
+{{/* B. Target Corpus Definition */}}
+{{ $targetSections := slice "ondes-pixels" "recherches" "rhizome-curieux" "solutions-imaginaires" }}
+{{ $corpus := where site.RegularPages "Section" "in" $targetSections }}
+
+{{/* C. Data Accumulation */}}
 {{ $scratch := newScratch }}
-{{ $scratch.Set "charCount" 0 }}
-{{ $scratch.Set "qMarkCount" 0 }}
-{{ $scratch.Set "divCount" 0 }}
-{{ $scratch.Set "sentenceCount" 0 }}
-{{ $scratch.Set "linkCount" 0 }}
+{{ $scratch.Set "totalDivs" 0 }}
+{{ $scratch.Set "totalChars" 0 }}
+{{ $scratch.Set "totalWords" 0 }}
+{{ $scratch.Set "totalSentences" 0 }}
+{{ $scratch.Set "totalQMarks" 0 }}
+{{ $scratch.Set "totalLinks" 0 }}
 
-{{ $allPosts := where site.RegularPages "Section" "in" (slice "posts" "articles" "notes") }}
+{{ range $corpus }}
+  {{ $html := .Content }}
+  {{ $text := .Plain }}
 
-{{ range $allPosts }}
-  {{ $content := .Content }}
-  {{ $raw := .Plain }}
-  {{ $scratch.Add "charCount" (len $raw) }}
-  {{ $q := strings.Count "?" $raw }}
-  {{ $scratch.Add "qMarkCount" $q }}
-  {{ $d := strings.Count "<div" $content }}
-  {{ $scratch.Add "divCount" $d }}
-  {{ $l := strings.Count "href=\"" $content }}
-  {{ $scratch.Add "linkCount" $l }}
-  {{ $s := add (strings.Count "." $raw) (strings.Count "!" $raw) }}
-  {{ $s = add $s $q }}
-  {{ $scratch.Add "sentenceCount" $s }}
+  {{/* 1. HTML Structure Stats */}}
+  {{ $divCount := strings.Count "<div" $html }}
+  {{ $scratch.Add "totalDivs" $divCount }}
+
+  {{/* 2. Volume Stats */}}
+  {{ $scratch.Add "totalChars" (len $text) }}
+  
+  {{/* 3. Linguistics */}}
+  {{ $scratch.Add "totalWords" .WordCount }}
+  {{ $s := add (strings.Count "." $text) (strings.Count "!" $text) }}
+  {{ $s = add $s (strings.Count "?" $text) }}
+  {{ $scratch.Add "totalSentences" $s }}
+  
+  {{/* 4. Punctuation Specifics */}}
+  {{ $scratch.Add "totalQMarks" (strings.Count "?" $text) }}
+
+  {{/* 5. Interconnectivity */}}
+  {{ $scratch.Add "totalLinks" (strings.Count "href=" $html) }}
 {{ end }}
 
-{{ $totalWords := 0 }}
-{{ range $allPosts }}{{ $totalWords = add $totalWords .WordCount }}{{ end }}
-{{ $avgSentence := 0 }}
-{{ if gt ($scratch.Get "sentenceCount") 0 }}
-  {{ $avgSentence = div $totalWords ($scratch.Get "sentenceCount") }}
+{{/* D. Averages Calculation */}}
+{{ $avgWPS := 0 }}
+{{ if gt ($scratch.Get "totalSentences") 0 }}
+  {{ $avgWPS = div ($scratch.Get "totalWords") ($scratch.Get "totalSentences") }}
 {{ end }}
 
-{{ $writerStyle := "Standard" }}
-{{ if lt $avgSentence 15 }}{{ $writerStyle = "Hemingway (Concis)" }}
-{{ else if gt $avgSentence 25 }}{{ $writerStyle = "Proust (Verbeux)" }}{{ end }}
+{{/* E. External Data Sources */}}
+{{ $almanacCount := 0 }}
+{{ if site.Data.almanach }}
+  {{ $almanacCount = len site.Data.almanach }}
+{{ end }}
 
-{{/* --- 2. PRESENTATION LAYER (Bento Harmonized) --- */}}
-<header class="w-full h-14 flex items-center z-40 pr-4 pl-16 md:pl-24 md:pr-20 font-mono text-xs select-none">
-    
-    {{/* CONTAINER PRINCIPAL HARMONISÉ */}}
-    {{/* On replique l'esthétique Bento manuellement ici pour éviter le 'scale' qui ferait bouger le header */}}
-    <div class="w-full h-full flex items-center justify-between 
-                bg-ctp-mantle/80 backdrop-blur-md 
-                rounded-2xl 
-                border border-ctp-surface1/50 
-                shadow-sm
-                transition-all duration-300
-                hover:border-ctp-peach/50 hover:shadow-[0_0_20px_-5px_rgba(250,179,135,0.15)]
-                overflow-hidden group">
-        
-        {{/* ZONE GAUCHE : STATS ARCHITECTE */}}
-        <div class="flex items-center h-full px-4 border-r border-ctp-surface1/20 bg-ctp-mantle/50 gap-4 min-w-fit">
-            <div class="flex flex-col justify-center">
-                <span class="text-[9px] text-ctp-subtext0 uppercase tracking-widest">Architecte</span>
-                <span class="text-ctp-mauve font-bold group-hover:text-ctp-peach transition-colors">LVL : {{ $uptimeHours }}</span>
-            </div>
-        </div>
+{{ $gitCommits := os.Getenv "HUGO_GIT_COMMITS" | default "N/A" }}
 
-        {{/* ZONE CENTRALE : TICKER */}}
-        <div class="flex-1 overflow-hidden relative h-full flex items-center cursor-help">
-            {{/* Masques de gradient ajustés pour fondre avec le Mantle */}}
-            <div class="absolute left-0 top-0 bottom-0 w-8 bg-gradient-to-r from-ctp-mantle to-transparent z-10"></div>
-            <div class="absolute right-0 top-0 bottom-0 w-8 bg-gradient-to-l from-ctp-mantle to-transparent z-10"></div>
 
-            <div class="whitespace-nowrap animate-marquee flex items-center gap-8 text-ctp-overlay1 group-hover:pause">
-                <span class="flex items-center gap-2"><span class="text-ctp-blue">ℹ</span> Style: <span class="text-ctp-text">{{ $writerStyle }}</span> ({{ $avgSentence }} mots/phr)</span>
-                <span class="text-ctp-surface2">///</span>
-                <span class="flex items-center gap-2"><span class="text-ctp-peach">✎</span> Chars: <span class="text-ctp-text">{{ $scratch.Get "charCount" }}</span></span>
-                <span class="text-ctp-surface2">///</span>
-                <span class="flex items-center gap-2"><span class="text-ctp-teal">⚓</span> Interliens: <span class="text-ctp-text">{{ $scratch.Get "linkCount" }}</span></span>
-                <span class="text-ctp-surface2">///</span>
-                <span class="flex items-center gap-2"><span class="text-ctp-pink">☢</span> Divs: <span class="text-ctp-text">{{ $scratch.Get "divCount" }}</span></span>
-                <span class="text-ctp-surface2">///</span>
-                <span class="flex items-center gap-2"><span class="text-ctp-lavender">👁</span> DOM Readers: <span class="text-ctp-text">412</span></span>
-            </div>
-        </div>
+{{/* --- 2. UI PRESENTATION LAYER (MICRO-HUD REFACTOR) --- */}}
+{{/* STYLE STRATEGY: 
+    - Removed margin-bottom (mb-8). Spacing is now handled by the parent flex gap.
+    - Converted "Cards" to "Status Strip".
+    - Font: JetBrains Mono (Variable 'font-mono' from config).
+    - Grid: 2 Cols (Mobile) -> 4 Cols (Tablet) -> 8 Cols (Desktop).
+*/}}
+<div class="w-full font-mono text-[10px] select-none bg-ctp-mantle border border-ctp-surface0 rounded-lg overflow-hidden shadow-sm">
+  <div class="grid grid-cols-2 md:grid-cols-4 lg:grid-cols-8 divide-x divide-y md:divide-y-0 lg:divide-y-0 divide-ctp-surface0/50">
 
-        {{/* ZONE DROITE : INDICATEURS CRITIQUES */}}
-        <div class="flex items-center h-full px-4 border-l border-ctp-surface1/20 bg-ctp-mantle/50 min-w-fit gap-4">
-             <div class="flex flex-col items-end justify-center text-right">
-                 <span class="text-[9px] text-ctp-subtext0 uppercase">Articles</span>
-                 <span class="text-ctp-blue font-bold group-hover:text-ctp-peach transition-colors">{{ len $allPosts }}</span>
-            </div>
-            <span class="relative flex h-2 w-2">
-                <span class="animate-ping absolute inline-flex h-full w-full rounded-full bg-ctp-green opacity-75"></span>
-                <span class="relative inline-flex rounded-full h-2 w-2 bg-ctp-green"></span>
-            </span>
-        </div>
-
+    {{/* CELL 1: TEMPS DE VOL */}}
+    <div class="px-3 py-2 flex flex-row items-center justify-between hover:bg-ctp-surface0/30 transition-colors cursor-help" title="Heures depuis l'initialisation">
+      <div class="flex items-center gap-2 text-ctp-overlay1">
+        <span class="text-ctp-green text-[8px]">●</span>
+        <span class="uppercase tracking-wider">VOL</span>
+      </div>
+      <span class="font-bold text-ctp-text">{{ $hoursAlive | lang.FormatNumber 0 }}H</span>
     </div>
-</header>
+
+    {{/* CELL 2: NOEUDS DOM */}}
+    <div class="px-3 py-2 flex flex-row items-center justify-between hover:bg-ctp-surface0/30 transition-colors">
+      <div class="flex items-center gap-2 text-ctp-overlay1">
+        <span class="text-ctp-mauve text-[8px]">&lt;/&gt;</span>
+        <span class="uppercase tracking-wider">DOM</span>
+      </div>
+      <span class="font-bold text-ctp-text">{{ $scratch.Get "totalDivs" | lang.FormatNumber 0 }}</span>
+    </div>
+
+    {{/* CELL 3: VOLUME (CHARS) */}}
+    <div class="px-3 py-2 flex flex-row items-center justify-between hover:bg-ctp-surface0/30 transition-colors">
+      <div class="flex items-center gap-2 text-ctp-overlay1">
+        <span class="text-ctp-blue text-[8px]">TXT</span>
+        <span class="uppercase tracking-wider">MASSE</span>
+      </div>
+      <span class="font-bold text-ctp-text">{{ $scratch.Get "totalChars" | lang.FormatNumber 0 }}</span>
+    </div>
+
+    {{/* CELL 4: DENSITÉ */}}
+    <div class="px-3 py-2 flex flex-row items-center justify-between hover:bg-ctp-surface0/30 transition-colors">
+      <div class="flex items-center gap-2 text-ctp-overlay1">
+        <span class="text-ctp-peach text-[8px]">AVG</span>
+        <span class="uppercase tracking-wider">DENS.</span>
+      </div>
+      <span class="font-bold text-ctp-text">{{ $avgWPS }}</span>
+    </div>
+
+    {{/* CELL 5: INTERROGATIONS */}}
+    <div class="px-3 py-2 flex flex-row items-center justify-between hover:bg-ctp-surface0/30 transition-colors">
+      <div class="flex items-center gap-2 text-ctp-overlay1">
+        <span class="text-ctp-yellow text-[8px]">?</span>
+        <span class="uppercase tracking-wider">QUEST.</span>
+      </div>
+      <span class="font-bold text-ctp-text">{{ $scratch.Get "totalQMarks" }}</span>
+    </div>
+
+    {{/* CELL 6: CONNECTIVITÉ */}}
+    <div class="px-3 py-2 flex flex-row items-center justify-between hover:bg-ctp-surface0/30 transition-colors">
+      <div class="flex items-center gap-2 text-ctp-overlay1">
+        <span class="text-ctp-teal text-[8px]">LNK</span>
+        <span class="uppercase tracking-wider">LIENS</span>
+      </div>
+      <span class="font-bold text-ctp-text">{{ $scratch.Get "totalLinks" }}</span>
+    </div>
+
+    {{/* CELL 7: VERSION GIT */}}
+    <div class="px-3 py-2 flex flex-row items-center justify-between hover:bg-ctp-surface0/30 transition-colors">
+      <div class="flex items-center gap-2 text-ctp-overlay1">
+        <span class="text-ctp-maroon text-[8px]">GIT</span>
+        <span class="uppercase tracking-wider">VER</span>
+      </div>
+      <span class="font-bold text-ctp-text">{{ $gitCommits }}</span>
+    </div>
+
+    {{/* CELL 8: ALMANACH */}}
+    <div class="px-3 py-2 flex flex-row items-center justify-between hover:bg-ctp-surface0/30 transition-colors">
+      <div class="flex items-center gap-2 text-ctp-overlay1">
+        <span class="text-ctp-lavender text-[8px]">DAT</span>
+        <span class="uppercase tracking-wider">LOGS</span>
+      </div>
+      <span class="font-bold text-ctp-text">{{ $almanacCount }}</span>
+    </div>
+
+  </div>
+</div>

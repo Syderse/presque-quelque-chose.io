@@ -1,7 +1,6 @@
 /**
- * DOM ENGINE V4.3 - "SELF-MOUNTING PORTAL"
- * Update: Auto-injection of the narrative layer into Body.
- * No changes to baseof.html required.
+ * DOM ENGINE V5.0 - "SOLID STATE"
+ * Optimized for 60FPS. Removed all backdrop-filters and heavy blur calculations.
  */
 
 (function () {
@@ -22,8 +21,7 @@
         }
     };
 
-    // --- DOM CACHE (PARTIAL) ---
-    // Note: narrative is handled dynamically in init()
+    // --- DOM CACHE ---
     const ui = {
         container: document.getElementById('dom-container'),
         chassis: document.getElementById('dom-chassis'),
@@ -65,22 +63,17 @@
 
     // --- INITIALIZATION ---
     async function init() {
-        // 1. Mount the Narrative Layer (The Portal)
         mountNarrativeLayer();
-
         renderIntegrityBar();
 
-        // Si déjà mort
         if (state.count >= CONFIG.maxClicks) {
             triggerEndgame(true);
         } else {
             updateScene(state.count);
         }
 
-        // Core Listeners
+        // Listeners
         ui.btn.addEventListener('click', handleClick);
-
-        // Admin Listeners
         ui.counter.addEventListener('contextmenu', handleRightClick);
         ui.tombstone.addEventListener('contextmenu', handleRightClick);
 
@@ -91,7 +84,7 @@
         ui.adminSave.addEventListener('click', updateFromAdmin);
         ui.adminReset.addEventListener('click', factoryReset);
 
-        // Silent Data Load
+        // Load Data
         try {
             const req = await fetch(CONFIG.dataUrl);
             state.story = await req.json();
@@ -104,7 +97,7 @@
         }
     }
 
-    // --- ARCHITECTURE: PORTAL MOUNTING ---
+    // --- PORTAL MOUNTING (GLOBAL) ---
     function mountNarrativeLayer() {
         const ID = 'dom-narrative-zone-global';
         let layer = document.getElementById(ID);
@@ -112,18 +105,16 @@
         if (!layer) {
             layer = document.createElement('div');
             layer.id = ID;
-            // Tailwind-like styling via JS to ensure isolation
             layer.style.position = 'fixed';
             layer.style.top = '0';
             layer.style.left = '0';
             layer.style.width = '100vw';
             layer.style.height = '100vh';
-            layer.style.pointerEvents = 'none'; // Click-through
-            layer.style.zIndex = '9999'; // Always on top
+            layer.style.pointerEvents = 'none';
+            layer.style.zIndex = '9999';
             layer.style.overflow = 'hidden';
             
             document.body.appendChild(layer);
-            console.log("[DOM] Narrative Layer injected into Body.");
         }
         
         ui.narrative = layer;
@@ -154,7 +145,8 @@
         localStorage.setItem(CONFIG.storageKey, state.count);
     }
 
-    // --- VISUAL ENGINE (ENTROPY) ---
+    // --- VISUAL ENGINE (OPTIMIZED ENTROPY) ---
+    // No blur calculation here to save FPS
     function updateScene(n) {
         ui.counter.innerText = `${n.toString().padStart(3, '0')} / ${CONFIG.maxClicks}`;
 
@@ -174,120 +166,129 @@
     }
 
     function applyEntropy(n, life, act) {
+        // Reset cheap props
         ui.wrapper.style.filter = 'none';
         ui.wrapper.style.transform = 'rotate(0deg)';
         ui.label.classList.remove('glitch-active');
         ui.ghost.style.opacity = 0;
 
+        // Grayscale is hardware accelerated and cheap
         if (act >= 3) {
             const desat = (n - CONFIG.acts.ACT_3) / 300;
-            ui.wrapper.style.filter = `grayscale(${desat * 0.5})`;
+            ui.wrapper.style.filter = `grayscale(${desat * 0.8})`;
         }
 
         if (act >= 4) {
             const intensity = (n - CONFIG.acts.ACT_4) / 200;
-            ui.wrapper.style.filter = `grayscale(${0.5 + intensity * 0.5}) blur(${intensity * 2}px)`;
+            // Removed BLUR. Kept Grayscale. Added slight rotation.
+            ui.wrapper.style.filter = `grayscale(${0.8 + intensity * 0.2})`;
 
-            const rot = (Math.random() - 0.5) * intensity * 10;
+            const rot = (Math.random() - 0.5) * intensity * 5; // Reduced rotation
             ui.wrapper.style.transform = `rotate(${rot}deg)`;
-
-            ui.wrapper.style.opacity = 0.5 + (life * 0.5);
-
-            ui.ghost.style.opacity = intensity * 0.8;
-            ui.ghost.style.transform = `translate(${intensity * 5}px, ${intensity * -2}px)`;
+            
+            ui.ghost.style.opacity = intensity * 1; // Solid ghost appears
+            // Translate is cheap
+            ui.ghost.style.transform = `translate(${intensity * 4}px, ${intensity * -2}px)`;
         }
 
         if (act === 5) {
-            ui.wrapper.style.filter = `grayscale(1) contrast(1.5) blur(1px)`;
+            ui.wrapper.style.filter = `grayscale(1) contrast(1.2)`;
             ui.label.classList.add('glitch-active');
-            ui.wrapper.style.opacity = Math.max(0.1, life * 2);
+            ui.wrapper.style.opacity = Math.max(0.2, life * 3);
         }
     }
 
     function updateLabel(act) {
         const labels = { 1: "init", 2: "run", 3: "wait", 4: "fail", 5: "..." };
         ui.label.innerText = labels[act] || "ERROR";
-        ui.label.style.letterSpacing = `${0.2 + (state.count / 1000) * 0.5}em`;
+        ui.label.style.letterSpacing = `${0.2 + (state.count / 1000) * 0.2}em`;
     }
 
-// --- SCATTERING ENGINE (V4.5: CENTER-OFFSET CORRECTION) ---
-    function spawnMessage(text) {
-        if (!ui.narrative) return;
+// --- SCATTERING ENGINE (SOLID BUBBLES) ---
+function spawnMessage(text) {
+    if (!ui.narrative) return;
 
-        const bubble = document.createElement('div');
+    const bubble = document.createElement('div');
 
-        // Styles conditionnels
-        let bgClass = "bg-ctp-surface0/90 text-ctp-text border-ctp-surface2";
-        if (state.act >= 4) bgClass = "bg-ctp-crust/95 text-ctp-red border-ctp-red border-dashed";
+    // We use a prominent border color and a solid background to achieve a "pop" without transparency.
+    let baseClass = "msg-bubble-solid fixed whitespace-nowrap px-3 py-1 rounded shadow-lg border-2 text-xs font-mono font-bold";
+    let colorClass = ""; // High-contrast style based on Act
 
-        bubble.className = `msg-bubble-v4 fixed whitespace-nowrap px-4 py-2 rounded-lg border shadow-xl backdrop-blur-md text-xs font-mono ${bgClass}`;
-        bubble.innerText = text;
-
-        // --- POSITION RELATIVE AU BOUTON (VIEWPORT COORDS) ---
-        const btnRect = ui.btn.getBoundingClientRect();
-        // On part du centre du bouton
-        const btnCenterX = btnRect.left + btnRect.width / 2;
-        const btnCenterY = btnRect.top + btnRect.height / 2;
-
-        // --- DIRECTIONAL MATH ---
-        const minRadius = 100;  
-        const maxRadius = 450; // On augmente la portée pour compenser le décalage
-
-        // Cône de visée vers la droite (Est)
-        // On resserre un peu l'angle vertical pour éviter que ça parte trop bas/haut hors écran
-        const minAngle = -Math.PI / 5; // ~ -36 deg
-        const maxAngle = Math.PI / 2;  // ~ +90 deg
-        
-        const angle = minAngle + Math.random() * (maxAngle - minAngle);
-        const distance = minRadius + Math.random() * (maxRadius - minRadius);
-
-        const offsetX = Math.cos(angle) * distance;
-        const offsetY = Math.sin(angle) * distance;
-
-        let finalX = btnCenterX + offsetX;
-        let finalY = btnCenterY + offsetY;
-
-        // --- SAFETY CLAMP
-        
-        // 1. COMPENSATION DE CENTRAGE :
-        // L'animation CSS fait un translate(-50%, -50%). 
-        // Donc finalX est le CENTRE de la bulle.
-        // Si la bulle fait 300px de large, il faut que finalX soit à 150px du bord du bouton.
-        const estimatedHalfWidth = 140; // Marge de sécurité pour texte long
-        
-        // Le "Mur Invisible" à gauche est maintenant décalé de cette demi-largeur
-        const safeLeft = btnRect.right + estimatedHalfWidth; 
-        
-        // 2. COMPENSATION BORD DROIT ÉCRAN :
-        // Idem, on ne veut pas que la moitié droite sorte de l'écran
-        const safeRight = window.innerWidth - estimatedHalfWidth - 20;
-
-        // Application des contraintes
-        finalX = Math.max(safeLeft, Math.min(safeRight, finalX));
-        
-        // Contraintes Verticales (Marge simple)
-        const marginY = 40;
-        finalY = Math.max(marginY, Math.min(window.innerHeight - marginY, finalY));
-
-        bubble.style.left = `${finalX}px`;
-        bubble.style.top = `${finalY}px`;
-        bubble.style.zIndex = '10000'; 
-
-        ui.narrative.appendChild(bubble);
-
-        setTimeout(() => {
-            if (bubble.parentNode) bubble.parentNode.removeChild(bubble);
-        }, 5000); 
+    switch (state.act) {
+        case 1:
+            // INIT/Normal: High visibility, reassuring blue/surface contrast.
+            colorClass = "bg-ctp-surface0 text-ctp-blue border-ctp-blue";
+            break;
+        case 2:
+            // RUN: Energetic, but not critical (Mauve/Peach).
+            colorClass = "bg-ctp-surface0 text-ctp-mauve border-ctp-peach";
+            break;
+        case 3:
+            // WAIT/Warning: Yellow for caution.
+            colorClass = "bg-ctp-surface0 text-ctp-yellow border-ctp-yellow";
+            break;
+        case 4:
+            // FAIL/Entropy: Red for critical state, dashed border for instability.
+            colorClass = "bg-ctp-crust text-ctp-red border-ctp-red border-dashed";
+            break;
+        case 5:
+            // ENDGAME: Deep red and pulsing.
+            colorClass = "bg-ctp-crust text-ctp-red border-ctp-red animate-pulse";
+            break;
+        default:
+            colorClass = "bg-ctp-surface0 text-ctp-text border-ctp-surface1";
+            break;
     }
 
-    // --- BOSSE-DE-NAGE (ADMIN MODULE) ---
+    bubble.className = `${baseClass} ${colorClass}`;
+    bubble.innerText = text;
+
+    // Positioning (Centered on button + offset)
+    const btnRect = ui.btn.getBoundingClientRect();
+    const btnCenterX = btnRect.left + btnRect.width / 2;
+    const btnCenterY = btnRect.top + btnRect.height / 2;
+
+    const minRadius = 100;
+    const maxRadius = 400;
+
+    const minAngle = -Math.PI / 5;
+    const maxAngle = Math.PI / 2;
+
+    const angle = minAngle + Math.random() * (maxAngle - minAngle);
+    const distance = minRadius + Math.random() * (maxRadius - minRadius);
+
+    const offsetX = Math.cos(angle) * distance;
+    const offsetY = Math.sin(angle) * distance;
+
+    let finalX = btnCenterX + offsetX;
+    let finalY = btnCenterY + offsetY;
+
+    // Safety Clamps
+    const estimatedHalfWidth = 140;
+    const safeLeft = btnRect.right + estimatedHalfWidth;
+    const safeRight = window.innerWidth - estimatedHalfWidth - 20;
+
+    finalX = Math.max(safeLeft, Math.min(safeRight, finalX));
+    const marginY = 40;
+    finalY = Math.max(marginY, Math.min(window.innerHeight - marginY, finalY));
+
+    bubble.style.left = `${finalX}px`;
+    bubble.style.top = `${finalY}px`;
+
+    ui.narrative.appendChild(bubble);
+
+    setTimeout(() => {
+        if (bubble.parentNode) bubble.parentNode.removeChild(bubble);
+    }, 4000);
+}
+
+    // --- BOSSE-DE-NAGE (ADMIN) ---
     function handleRightClick(e) {
         e.preventDefault();
         state.adminOpen = true;
         ui.adminModal.classList.remove('hidden');
         ui.adminModal.classList.add('flex');
 
-        // Reset View
         ui.adminLogin.classList.remove('hidden');
         ui.adminDashboard.classList.add('hidden');
         ui.adminError.classList.add('hidden');
@@ -315,7 +316,7 @@
         let count = 0;
 
         const interval = setInterval(() => {
-            if (count > 50) {
+            if (count > 30) { // Reduced count for performance
                 clearInterval(interval);
                 ui.virusLayer.innerHTML = '';
                 ui.virusLayer.classList.add('hidden');
@@ -326,13 +327,13 @@
             const span = document.createElement('span');
             span.innerText = phrases[Math.floor(Math.random() * phrases.length)];
             span.className = "absolute text-ctp-red font-bold font-mono animate-ping";
-            span.style.left = `${Math.random() * 100}%`;
-            span.style.top = `${Math.random() * 100}%`;
+            span.style.left = `${Math.random() * 90}%`;
+            span.style.top = `${Math.random() * 90}%`;
             span.style.fontSize = `${10 + Math.random() * 40}px`;
 
             ui.virusLayer.appendChild(span);
             count++;
-        }, 50);
+        }, 80);
     }
 
     function updateFromAdmin() {
@@ -352,7 +353,7 @@
         }
 
         closeAdmin();
-        logConsole(`ADMIN OVERRIDE: COUNT SET TO ${newCount}`);
+        logConsole(`ADMIN OVERRIDE: ${newCount}`);
     }
 
     function factoryReset() {
@@ -372,7 +373,7 @@
         ui.integrityBar.innerHTML = '';
         for (let i = 0; i < 10; i++) {
             const dash = document.createElement('div');
-            dash.className = "w-1 h-2 bg-ctp-green rounded-[1px] transition-colors duration-500";
+            dash.className = "w-1 h-2 bg-ctp-green rounded-[1px]";
             ui.integrityBar.appendChild(dash);
         }
     }
@@ -381,9 +382,14 @@
         const dashes = ui.integrityBar.children;
         const activeCount = Math.ceil(ratio * 10);
         for (let i = 0; i < 10; i++) {
-            dashes[i].className = i < activeCount
-                ? (ratio > 0.6 ? "w-1 h-2 bg-ctp-green rounded-[1px]" : (ratio > 0.3 ? "w-1 h-2 bg-ctp-yellow rounded-[1px]" : "w-1 h-2 bg-ctp-red rounded-[1px] animate-pulse"))
-                : "w-1 h-2 bg-ctp-surface0 rounded-[1px]";
+            dash = dashes[i];
+            if (i < activeCount) {
+                if (ratio > 0.6) dash.className = "w-1 h-2 bg-ctp-green rounded-[1px]";
+                else if (ratio > 0.3) dash.className = "w-1 h-2 bg-ctp-yellow rounded-[1px]";
+                else dash.className = "w-1 h-2 bg-ctp-red rounded-[1px] animate-pulse";
+            } else {
+                dash.className = "w-1 h-2 bg-ctp-surface0 rounded-[1px]";
+            }
         }
     }
 
@@ -400,13 +406,18 @@
     }
 
     function triggerRipple() {
+        // Updated for Solid State Ripple (Border scale)
         ui.ripple.classList.remove('scale-0', 'opacity-0');
         ui.ripple.style.transition = 'none';
-        ui.ripple.style.transform = 'scale(0)';
+        ui.ripple.style.transform = 'scale(0.8)';
         ui.ripple.style.opacity = '1';
+        
+        // Force Reflow
         void ui.ripple.offsetWidth;
-        ui.ripple.style.transition = 'transform 0.4s ease-out, opacity 0.4s ease-out';
-        ui.ripple.style.transform = 'scale(1.5)';
+        
+        // Animate
+        ui.ripple.style.transition = 'transform 0.3s ease-out, opacity 0.3s ease-out';
+        ui.ripple.style.transform = 'scale(1.4)';
         ui.ripple.style.opacity = '0';
     }
 

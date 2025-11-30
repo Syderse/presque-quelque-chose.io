@@ -87,12 +87,11 @@
   --color-ctp-surface2: var(--ctp-surface2);
 }
 
-/* --- 4. COMPONENTS LAYER --- */
+/* --- 4. COMPONENTS LAYER (SOLID ARCHITECTURE) --- */
 @layer components {
   
-  /* A. PROSE RESET (Pour les articles Markdown) */
+  /* A. PROSE RESET (Clean & Solid) */
   .prose-catppuccin {
-    /* Pas de force lowercase ici, on veut du texte naturel */
     --tw-prose-body: var(--ctp-text);
     --tw-prose-headings: var(--ctp-mauve);
     --tw-prose-lead: var(--ctp-subtext1);
@@ -120,127 +119,109 @@
     & :where(a):not(.not-prose) {
       color: var(--ctp-blue) !important;
       text-decoration-color: var(--ctp-blue) !important;
+      font-weight: 500;
     }
     & :where(strong, b) {
       color: var(--ctp-peach) !important;
       font-weight: 700 !important;
     }
-    & :where(em, i) {
-      color: var(--ctp-green) !important;
-      font-family: var(--font-serif);
-      font-style: italic;
-    }
     & :where(:not(pre) > code) {
       color: var(--ctp-pink) !important;
-      background-color: var(--ctp-surface0);
+      background-color: var(--ctp-surface1); /* Plus contrasté */
       padding: 0.2em 0.4em;
       border-radius: 0.25rem;
-      font-weight: normal;
       font-family: var(--font-mono) !important;
+      border: 1px solid var(--ctp-surface2); /* Définition solide */
     }
   }
 
-/* B. BENTO UI SYSTEM (Harmonized & Warm) */
+  /* B. BENTO UI SYSTEM (SOLID STATE) 
+     Objectif : 0 Paint Cost inutile. 
+  */
   .bento-card {
-    /* 1. Architecture de base (Remplacement des classes utilitaires répétitives) */
     @apply relative h-full w-full flex flex-col;
-    @apply bg-ctp-mantle/80 backdrop-blur-md; /* Transparence subtile pour le fond */
-    @apply rounded-2xl; /* Arrondi standardisé à 2xl pour le côté "friendly" */
-    @apply border border-ctp-surface1/50; /* Bordure base discrète */
+    /* FOND SOLIDE OPAQUE - CRUCIAL POUR PERF */
+    background-color: var(--ctp-surface0); 
+    @apply rounded-xl; /* 2xl est parfois trop rond, xl est plus "tech" */
     
-    /* 2. Gestion de la transition physique */
-    transition: 
-      transform 0.4s cubic-bezier(0.2, 0.8, 0.2, 1),
-      border-color 0.3s ease,
-      box-shadow 0.3s ease;
+    /* BORDURE SOLIDE */
+    border: 1px solid var(--ctp-surface1);
+    
+    /* OMBRE OPTIMISÉE (Pas de spread excessif) */
+    box-shadow: 0 1px 2px 0 rgba(0, 0, 0, 0.3);
 
-    /* 3. Profondeur Initiale (Ombre douce) */
-    box-shadow: 
-      0 4px 6px -1px rgba(0, 0, 0, 0.1), 
-      inset 0 1px 0 0 rgba(255, 255, 255, 0.02); /* Highlight supérieur très fin */
+    /* TRANSITIONS */
+    /* On ne transitionne QUE ce qui bouge. Pas 'all'. */
+    transition: transform 0.2s ease-out, border-color 0.2s ease, box-shadow 0.2s ease;
+    
+    /* Hardware Acceleration Hint */
+    will-change: transform;
 
-    /* 4. Interaction : "Warm Embrace" */
     &:hover {
-      @apply border-ctp-peach/60; /* La touche de chaleur (Orange Pêche) */
-      transform: translateY(-4px) scale-[1.005]; /* Lévitation */
-      z-index: 20; /* Passe au-dessus des voisins */
-      
-      /* Glow chaleureux en background de l'ombre */
-      box-shadow: 
-        0 20px 25px -5px rgba(0, 0, 0, 0.2), 
-        0 0 20px -5px rgba(250, 179, 135, 0.15); /* Lueur Pêche diffuse */
+      @apply border-ctp-mauve; /* Feedback couleur clair */
+      transform: translateY(-2px); /* Mouvement plus court = plus "snappy" */
+      z-index: 20;
+      /* Ombre portée plus nette */
+      box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.4);
     }
   }
 
-  /* Helper pour le contenu interne */
   .bento-content {
-    @apply relative z-10 w-full h-full overflow-hidden rounded-2xl;
+    @apply relative z-10 w-full h-full overflow-hidden rounded-xl;
+    /* Isolation du contexte d'empilement */
+    isolation: isolate;
   }
 
-  /* Style spécifique pour les textes de labeur (intro, articles) */
   .bento-text {
     font-family: var(--font-sans);
     line-height: 1.6;
     color: var(--ctp-text);
   }
 
-/* Style pour les micro-labels techniques */
   .bento-label {
     font-family: var(--font-mono);
     font-size: 0.7rem;
     text-transform: uppercase;
     letter-spacing: 0.1em;
-    color: var(--ctp-surface2);
+    color: var(--ctp-overlay1); /* Plus lisible sur fond surface0 */
   }
 }
 
 /* --- 5. UTILITIES --- */
 @layer utilities {
+  .animate-fade-in-up {
+    animation: fadeInUp 0.4s cubic-bezier(0.25, 0.46, 0.45, 0.94) forwards;
+  }
+
   @keyframes fadeInUp {
-    from { opacity: 0; transform: translateY(20px); }
+    from { opacity: 0; transform: translateY(10px); }
     to { opacity: 1; transform: translateY(0); }
   }
-  .animate-fade-in-up {
-    animation: fadeInUp 0.5s ease-out forwards;
-  }
 
+  /* Pattern léger et performant (SVG encoded ou CSS gradient simple) */
   .bg-grid-pattern {
-    background-size: 40px 40px;
-    background-image: 
-      linear-gradient(to right, var(--ctp-surface0) 1px, transparent 1px),
-      linear-gradient(to bottom, var(--ctp-surface0) 1px, transparent 1px);
-    mask-image: radial-gradient(circle at center, black 40%, transparent 100%);
+    background-image: radial-gradient(var(--ctp-surface1) 1px, transparent 1px);
+    background-size: 20px 20px;
   }
 
-  .glass-panel {
-    background: rgba(30, 30, 46, 0.6);
-    backdrop-filter: blur(12px);
-    border: 1px solid rgba(203, 166, 247, 0.1);
-    box-shadow: 
-      0 4px 30px rgba(0, 0, 0, 0.1),
-      inset 0 0 20px rgba(203, 166, 247, 0.05);
+  /* Remplacement du glass-panel par solid-panel */
+  .solid-panel {
+    background-color: var(--ctp-mantle);
+    border: 1px solid var(--ctp-surface1);
+    box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.3);
   }
 
-  @keyframes breathe {
-    0%, 100% { opacity: 0.5; transform: scale(1); }
-    50% { opacity: 1; transform: scale(1.1); }
-  }
-  .animate-breathe {
-    animation: breathe 4s ease-in-out infinite;
-  }
-
-.image-pixelated {
-  image-rendering: pixelated;
-  image-rendering: -moz-crisp-edges;
-  image-rendering: crisp-edges;
-}
-
-  /* Hide Scrollbar util */
   .scrollbar-hide {
-    -ms-overflow-style: none;  /* IE and Edge */
-    scrollbar-width: none;  /* Firefox */
+    -ms-overflow-style: none;
+    scrollbar-width: none;
   }
   .scrollbar-hide::-webkit-scrollbar {
-    display: none; /* Chrome, Safari and Opera */
+    display: none;
+  }
+
+  /* Performance Hint global */
+  .hardware-accelerated {
+    transform: translateZ(0);
+    backface-visibility: hidden;
   }
 }

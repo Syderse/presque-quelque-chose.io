@@ -1,14 +1,14 @@
-{{/* WIDGET: RPG INVENTORY (LATEST POSTS) - Bento Standardized
-    Zone: Column 4
-    Concept: Une étagère d'objets où chaque item est un lien vers un article récent.
+{{/* FILE: layouts/partials/widgets/latest-posts.html */}}
+{{/* WIDGET: RPG INVENTORY (LATEST POSTS) - Solid State
+    Fix: Tooltip Clipping Resolved via Parent Overflow Removal + Z-Index Elevation
 */}}
 
-{{/* 1. CONFIGURATION & DATA FETCHING */}}
+{{/* 1. DATA FETCHING */}}
 {{ $targetSections := slice "ondes-pixels" "recherches" "solutions-imaginaires" }}
 {{ $posts := where site.RegularPages "Section" "in" $targetSections }}
 {{ $posts := sort $posts "Date" "desc" | first 8 }}
 
-{{/* 2. INVENTORY MANAGER (DYNAMIC ASSET LOADING) */}}
+{{/* 2. INVENTORY MANAGER */}}
 {{ $inventoryPath := "static/media/inventory" }}
 {{ $items := slice }}
 
@@ -19,28 +19,43 @@
         {{ end }}
     {{ end }}
 {{ end }}
-
 {{ $shuffledItems := shuffle $items }}
 
-{{/* WRAPPER PRINCIPAL HARMONISÉ */}}
-<div class="bento-card group">
+{{/* MAIN WRAPPER 
+    - .bento-card: Provides the Border, Background, and rounded-xl.
+    - No 'overflow-hidden' here strictly, relying on inner rounding.
+*/}}
+<div class="bento-card group h-full w-full">
     
-    {{/* CONTENU INTERNE (Clipping & Layout) */}}
-    <div class="bento-content flex flex-col">
+    {{/* INTERNAL LAYOUT 
+         Utilise 'flex-col' pour la structure.
+         Pas de 'bento-content' pour éviter le clipping accidentel.
+    */}}
+    <div class="flex flex-col h-full w-full relative">
 
-        {{/* --- HEADER (Style RPG) --- */}}
-        <div class="shrink-0 px-3 py-2 border-b border-ctp-surface1/20 bg-ctp-crust/50 flex justify-between items-center select-none z-20">
+        {{/* --- HEADER (Style RPG) --- 
+            rounded-t-[11px] calculé pour s'emboîter dans le rounded-xl (12px) du parent
+            border-b solide pour la définition "Solid State".
+        */}}
+        <div class="shrink-0 px-3 py-2 border-b border-ctp-surface1 bg-ctp-crust/50 flex justify-between items-center select-none rounded-t-[11px]">
             <div class="flex items-center gap-2">
-                <span class="text-lg">🎒</span>
+                {{/* Bag Icon */}}
+                <img src="/media/inventory/sac_aventurier.png" 
+                     alt="Sac Inventaire" 
+                     class="w-5 h-5 object-contain image-pixelated filter drop-shadow-sm">
+                
                 <span class="text-[10px] font-mono text-ctp-subtext1 uppercase tracking-widest font-bold">
-                    INVENTORY
+                    trouvailles récentes
                 </span>
             </div>
             <span class="text-[9px] font-mono text-ctp-overlay0">{{ len $posts }} / 8 SLOTS</span>
         </div>
 
-        {{/* --- SHELVES CONTAINER --- */}}
-        <div class="flex-1 relative flex flex-col justify-center px-2 py-4 gap-6 bg-ctp-base/30">
+        {{/* --- SHELVES CONTAINER --- 
+            rounded-b-[11px] pour fermer le bas de la carte.
+            bg-ctp-base/30 ajoute de la profondeur sans flou.
+        */}}
+        <div class="flex-1 relative flex flex-col justify-center px-2 py-4 gap-6 bg-ctp-base/30 rounded-b-[11px]">
             
             {{/* On boucle deux fois pour créer 2 étagères de 4 items */}}
             {{ range $rowIndex := seq 0 1 }} 
@@ -62,21 +77,31 @@
 
                         {{/* ITEM SLOT */}}
                         <a href="{{ $post.RelPermalink }}" 
-                           class="relative group/item z-10 transition-transform duration-300 hover:-translate-y-2 hover:scale-110 focus:outline-none">
+                           class="relative group/item z-10 transition-transform duration-200 hover:-translate-y-2 hover:scale-110 focus:outline-none">
                             
-                            {{/* TOOLTIP */}}
-                            <div class="absolute -top-12 left-1/2 -translate-x-1/2 w-max max-w-[150px] opacity-0 group-hover/item:opacity-100 transition-opacity duration-200 pointer-events-none z-50">
-                                <div class="bg-ctp-crust border border-ctp-surface1 text-ctp-text text-[10px] px-2 py-1 rounded shadow-xl text-center font-mono leading-tight">
-                                    <span class="text-ctp-mauve block text-[9px] mb-0.5">{{ $post.Date.Format "02/01" }}</span>
-                                    {{ $post.Title }}
+                            {{/* TOOLTIP SYSTEM
+                                - Position: Absolute top outside the flow.
+                                - Z-Index: 50 local to the row, but requires parent section z-index to win globally.
+                                - Min-width: Prevents squashed text.
+                            */}}
+                            <div class="absolute bottom-full left-1/2 -translate-x-1/2 mb-3 w-max max-w-[200px] min-w-[120px] 
+                                        opacity-0 group-hover/item:opacity-100 
+                                        translate-y-2 group-hover/item:translate-y-0
+                                        transition-all duration-200 ease-out pointer-events-none z-50">
+                                
+                                <div class="bg-ctp-mantle border border-ctp-surface2 text-ctp-text text-[10px] px-3 py-2 rounded shadow-[0_4px_6px_rgba(0,0,0,0.5)] text-center font-mono leading-tight relative">
+                                    <span class="text-ctp-mauve block text-[9px] mb-1 font-bold tracking-wide uppercase">{{ $post.Date.Format "02 Jan" }}</span>
+                                    <span class="block line-clamp-2">{{ $post.Title }}</span>
+                                    
+                                    {{/* Triangle Arrow (CSS Pure Solid) */}}
+                                    <div class="w-2 h-2 bg-ctp-mantle border-b border-r border-ctp-surface2 transform rotate-45 absolute left-1/2 -translate-x-1/2 -bottom-[5px]"></div>
                                 </div>
-                                <div class="w-2 h-2 bg-ctp-crust border-b border-r border-ctp-surface1 transform rotate-45 absolute left-1/2 -translate-x-1/2 -bottom-1"></div>
                             </div>
 
                             {{/* ICONE PIXEL ART */}}
                             <img src="/media/inventory/{{ $imgName }}" 
                                  alt="{{ $post.Title }}"
-                                 class="h-[64px] w-auto object-contain drop-shadow-lg image-pixelated filter brightness-90 group-hover/item:brightness-110"
+                                 class="h-[64px] w-auto object-contain drop-shadow-md image-pixelated filter brightness-90 group-hover/item:brightness-110"
                                  loading="lazy">
                         </a>
                     {{ end }}

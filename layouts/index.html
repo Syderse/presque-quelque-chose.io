@@ -21,24 +21,28 @@
 
     {{/* --- ROW 1 --- */}}
     
-    {{/* CELL 1: DOM CARD */}}
-    {{/* Ajout de min-h-0 pour autoriser la compression du flex child interne */}}
-    <section class="md:col-span-1 md:row-span-1 h-[300px] md:h-full min-h-0 relative group rounded-2xl border border-white/5 bg-ctp-mantle/20 overflow-hidden">
-        <div class="absolute inset-0 bg-ctp-mantle/40 transition-colors group-hover:bg-ctp-mantle/60 -z-10"></div>
+{{/* CELL 1: DOM CARD */}}
+    {{/* FIX: Migrated to "Autonomous Widget" pattern.
+       - Removed: 'group', 'rounded-2xl', 'border', 'bg-ctp-mantle/20', 'overflow-hidden'.
+       - Removed: Inner absolute div that was creating conflicting background layers.
+       - Added: 'z-10 relative transition-all duration-300 hover:z-50' for proper stacking.
+    */}}
+    <section class="md:col-span-1 md:row-span-1 h-[300px] md:h-full min-h-0 z-10 relative transition-all duration-300 hover:z-50">
         <div class="h-full w-full">
             {{ partial "widgets/dom-card.html" . }}
         </div>
     </section>
 
-    {{/* CELL 2: IDENTITY */}}
-    <section class="md:col-span-2 md:row-span-1 h-[300px] md:h-full min-h-0 relative">
+{{/* CELL 2: IDENTITY */}}
+    {{/* FIX: Added 'z-10 relative transition-all duration-300 hover:z-50' to match the Stacking Context pattern. */}}
+    <section class="md:col-span-2 md:row-span-1 h-[300px] md:h-full min-h-0 z-10 relative transition-all duration-300 hover:z-50">
         <div class="h-full w-full">
             {{ partial "widgets/identity-card.html" . }}
         </div>
     </section>
 
-    {{/* CELL 3: LATEST POSTS */}}
-    <section class="md:col-span-1 md:row-span-1 h-[300px] md:h-full min-h-0 relative rounded-2xl border border-white/5 bg-ctp-mantle/20 overflow-hidden">
+    {{/* CELL 3: LATEST POSTS (Already Fixed - Context Only) */}}
+    <section class="md:col-span-1 md:row-span-1 h-[300px] md:h-full min-h-0 z-10 relative transition-all duration-300 hover:z-50">
         <div class="h-full w-full">
             {{ partial "widgets/latest-posts.html" . }}
         </div>
@@ -47,8 +51,13 @@
     {{/* --- ROW 2 --- */}}
 
     {{/* CELL 4: ALMANACH */}}
-    <section class="md:col-span-4 md:row-span-1 h-[250px] md:h-full min-h-0 relative">
-        <div class="w-full h-full rounded-2xl overflow-hidden relative group transition-all duration-500 hover:shadow-[0_0_30px_rgba(203,166,247,0.15)] border border-white/5 bg-ctp-mantle/50">
+    {{/* FIX: COMPLETE REFACTOR
+       - Removed the inner <div class="w-full h-full rounded-2xl..."> wrapper.
+       - Moved styling responsibility to 'widgets/almanach-card.html'.
+       - Added Stacking Context classes to the section.
+    */}}
+    <section class="md:col-span-4 md:row-span-1 h-[250px] md:h-full min-h-0 z-10 relative transition-all duration-300 hover:z-50">
+        <div class="h-full w-full">
             {{ partial "widgets/almanach-card.html" . }}
         </div>
     </section>

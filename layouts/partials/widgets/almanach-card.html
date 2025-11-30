@@ -1,48 +1,79 @@
 {{/* Fichier : layouts/partials/widgets/almanach-card.html */}}
+{{/* WIDGET: ALMANACH (Permanent Warmth Edition)
+    Architecture: Bento Card.
+    Layout: Split 25% Spine | 75% Canvas.
+    Updates: 
+    - Permanent Colors (No Hover states).
+    - Full Width Text (Removed prose max-width).
+*/}}
+<div class="bento-card group select-none h-full overflow-hidden">
+    
+    <div class="bento-content flex flex-col md:flex-row h-full">
 
-<div class="bento-card isolate group h-full"> {{/* Force h-full */}}
+        {{/* --- SECTION 1: THE SPINE (Metadata) - 25% --- 
+             Visual: Darker (Crust). 
+        */}}
+        <div class="relative w-full md:w-[25%] shrink-0 bg-ctp-crust border-b md:border-b-0 md:border-r border-ctp-surface1 p-5 md:p-6 flex flex-row md:flex-col justify-between items-center md:items-start overflow-hidden">
+            
+            {{/* Decorative: Top Gradient Shim */}}
+            <div class="absolute top-0 left-0 w-full h-1 bg-gradient-to-r from-ctp-peach to-ctp-green opacity-80"></div>
 
-    <div class="bento-content flex flex-col md:flex-row relative h-full">
-
-        {{/* --- FOND D'AMBIANCE --- */}}
-        <div class="absolute inset-0 opacity-[0.05] pointer-events-none mix-blend-overlay bg-[url('https://www.transparenttextures.com/patterns/paper.png')] z-0"></div>
-        <div class="absolute inset-y-0 left-0 w-1/3 bg-gradient-to-r from-ctp-mantle/80 to-transparent pointer-events-none z-0"></div>
-
-        {{/* --- GAUCHE : LA MARGE --- */}}
-        <div class="relative z-10 w-full md:w-[300px] flex-shrink-0 flex flex-col justify-between p-6 border-b md:border-b-0 md:border-r border-ctp-surface1/20 backdrop-blur-sm">
-            {{/* Le contenu ici est OK, pas de changement majeur nécessaire */}}
-            <div class="text-left">
-                <span id="pata-day-name" class="block font-mono text-[10px] uppercase tracking-[0.25em] text-ctp-overlay2 mb-1 pl-1">--</span>
-                <div class="flex items-baseline gap-3">
-                    <span id="pata-day-number" class="font-serif font-black text-5xl text-ctp-mauve leading-none group-hover:text-ctp-peach transition-colors duration-300">--</span>
-                    <div class="flex flex-col">
-                        <span id="pata-month" class="font-bold text-xs text-ctp-text uppercase tracking-widest">...</span>
-                        <span id="pata-year" class="font-mono text-[9px] text-ctp-subtext0 opacity-60">--</span>
+            {{/* DATE MATRIX */}}
+            <div class="flex items-center md:block gap-4 md:gap-0 z-10 mt-1 md:mt-0">
+                
+                {{/* Number & Month Group */}}
+                <div class="flex items-baseline gap-3 md:block">
+                    {{/* Day Number: Permanent Peach Color */}}
+                    <span id="pata-day-number" class="block font-serif font-black text-4xl md:text-5xl text-ctp-peach leading-[0.8] md:-ml-0.5 transition-colors duration-300">
+                        --
+                    </span>
+                    
+                    <div class="flex flex-col md:mt-2">
+                        {{/* Month */}}
+                        <span id="pata-month" class="font-bold text-xs text-ctp-green uppercase tracking-widest">...</span>
+                        <span id="pata-year" class="font-mono text-[9px] text-ctp-overlay1 mt-0.5">--</span>
                     </div>
                 </div>
             </div>
-            <div class="mt-6 md:mt-0 pt-4 border-t border-white/5">
-                <span class="block text-[9px] font-mono text-ctp-surface2 uppercase tracking-widest mb-1">Patronage</span>
-                <h2 id="pata-saint" class="font-serif text-xl italic leading-tight text-ctp-rosewater text-pretty group-hover:text-ctp-peach/80 transition-colors duration-300">Chargement...</h2>
+
+            {{/* SAINT / PATRONAGE (Desktop Only) */}}
+            <div class="hidden md:block w-full z-10 pt-6 border-t border-ctp-surface1/20 mt-auto">
+                <span class="block text-[9px] font-mono text-ctp-overlay0 uppercase tracking-widest mb-1">
+                    Éphéméride
+                </span>
+                {{/* Saint: Permanent Maroon Color */}}
+                <h2 id="pata-saint" class="font-serif text-sm italic leading-tight text-ctp-rosewater line-clamp-3">
+                    Chargement...
+                </h2>
             </div>
         </div>
 
-        {{/* --- DROITE : LE RÉCIT --- */}}
-        <div class="flex-1 relative z-10 p-6 md:p-8 flex items-center justify-start overflow-hidden"> {{/* overflow-hidden added */}}
+        {{/* --- SECTION 2: THE CANVAS (Daily Entry) - 75% --- 
+             Visual: Lighter (Surface0).
+        */}}
+        <div class="relative flex-1 bg-ctp-surface0 p-6 flex flex-col justify-center">
+            
+            {{/* Texture Layer */}}
+            <div class="absolute inset-0 opacity-[0.03] pointer-events-none bg-[url('https://www.transparenttextures.com/patterns/paper.png')] z-0"></div>
 
-            {{/* Guillemet sécurisé : leading-[0] et positionnement absolu strict */}}
-            <div class="absolute top-4 left-6 text-[8rem] leading-[0] font-serif text-ctp-surface1/20 select-none pointer-events-none font-bold group-hover:text-ctp-peach/10 transition-colors duration-300">
-                “
-            </div>
-
+            {{/* Main Content Area 
+               - Removed 'max-w-prose' to allow full width usage.
+               - Added 'w-full' to ensure explicit width control.
+            */}}
             <div class="relative z-10 w-full">
-                {{/* Line-clamp-4 pour couper proprement le texte si l'écran est trop petit, au lieu de déborder */}}
-                <p id="almanach-content"
-                   class="font-serif text-xl md:text-2xl text-ctp-text/90 italic leading-relaxed text-left drop-shadow-sm line-clamp-4 md:line-clamp-none">
-                    ...
+                <p id="almanach-content" 
+                   class="font-serif text-base md:text-xl text-ctp-green italic leading-relaxed text-pretty break-words drop-shadow-sm selection:bg-ctp-maroon selection:text-ctp-base">
+                    L'initialisation du calendrier est en cours...
                 </p>
+                
+                {{/* Mobile Only Saint Display (Footer) */}}
+                <div class="md:hidden mt-4 pt-3 border-t border-ctp-surface1/20 flex items-center gap-2">
+                    <span class="text-[10px] font-mono text-ctp-overlay1 uppercase">Fête :</span>
+                    <span class="text-xs font-serif italic text-ctp-maroon truncate" id="pata-saint-mobile">...</span>
+                </div>
             </div>
 
         </div>
+
     </div>
 </div>
