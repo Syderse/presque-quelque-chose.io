@@ -37,8 +37,8 @@
         <div class="relative group">
           {{/* Ligne technique au dessus de l'image */}}
           <div class="flex justify-between items-center text-[10px] font-mono text-ctp-surface2 mb-1 px-1">
-            <span>FIG. A</span>
-            <span>SCALE 1:1</span>
+            <span>figure</span>
+            <span>échelle ?</span>
           </div>
 
           <div class="relative overflow-hidden border-2 border-ctp-surface1 p-1 bg-ctp-surface0/50">
@@ -51,18 +51,11 @@
                 {{ .Params.icon | default "📄" }}
               </div>
             {{ end }}
-            
-            {{/* Tampon CSS par dessus l'image (Coin inférieur droit) */}}
-            <div class="absolute bottom-4 right-4 rotate-[-15deg] pointer-events-none z-10">
-               <span class="doc-stamp border-ctp-mauve text-ctp-mauve text-xs">Fig. Verified</span>
-            </div>
-          </div>
-        </div>
 
         {{/* 3. Métadonnées (Style Tableau de bord) */}}
         <div class="bg-ctp-mantle/50 border border-ctp-surface1 p-6 font-mono text-sm space-y-5">
           <div class="text-xs font-bold text-ctp-mauve uppercase tracking-widest mb-4 border-b border-ctp-surface1 pb-2">
-            Données Signalétiques
+            index
           </div>
           
           {{/* Date */}}
@@ -73,7 +66,7 @@
 
           {{/* Auteur (Logique de remplacement) */}}
           <div class="grid grid-cols-3 gap-2">
-            <span class="text-ctp-overlay1 text-xs uppercase">Agent</span>
+            <span class="text-ctp-overlay1 text-xs uppercase">Auteur</span>
             <span class="col-span-2 text-ctp-text border-b border-dotted border-ctp-surface1">
               {{ range .Params.authors }}
                 {{ if eq . "admin" }}
@@ -87,7 +80,7 @@
 
           {{/* KEYWORDS / TAGS CONSOLIDÉS */}}
           <div class="pt-4">
-             <span class="text-ctp-overlay1 text-xs uppercase block mb-2">Mots-Clés (Tags)</span>
+             <span class="text-ctp-overlay1 text-xs uppercase block mb-2">mots-clés</span>
              <div class="flex flex-wrap gap-2">
                 {{ range .Params.tags }}
                   <a href="/tags/{{ . | urlize }}" class="px-2 py-1 bg-ctp-surface0 border border-ctp-surface2 text-xs text-ctp-mauve hover:bg-ctp-mauve hover:text-ctp-base transition-colors uppercase font-bold tracking-wider">
@@ -107,8 +100,8 @@
             <div class="flex items-center gap-3">
               <span class="text-2xl">📎</span>
               <div class="flex flex-col">
-                <span class="font-bold text-ctp-text font-serif italic">Consulter le Mémoire</span>
-                <span class="font-mono text-[10px] text-ctp-overlay1 uppercase">Format PDF • Archive Complète</span>
+                <span class="font-bold text-ctp-text font-serif italic">Lire des mots</span>
+                <span class="font-mono text-[10px] text-ctp-overlay1 uppercase">Format PDF • Archive complète</span>
               </div>
             </div>
             <span class="text-ctp-mauve font-mono text-xs border border-ctp-mauve px-1">DL</span>
