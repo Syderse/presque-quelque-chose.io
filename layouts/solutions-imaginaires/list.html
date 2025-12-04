@@ -1,129 +1,104 @@
 {{ define "main" }}
-{{/* LAYOUT: ORGANIC ARCHIVE (Solutions Imaginaires)
-   - Vibe: Warm, Fantasy, "Cabinet of Curiosities".
-   - Context: Matches the 'Peach/Rosewater' warmth of the homepage.
-   - Texture: Soft glass, rounded corners, atmospheric glow.
-*/}}
 
-{{ $dateFormat := "Jan 02, 2006" }}
+{{/* --- 0. DATA SETUP --- */}}
+{{ $leaves := slice 
+    "feuille_01_chene.png" 
+    "feuille_02_erable.png" 
+    "feuille_03_eucalyptus.png" 
+    "feuille_04_ginko.png" 
+    "feuille_05_hetre.png" 
+    "feuille_06_monstera.png" 
+    "feuille_07_nenuphare.png" 
+}}
 
-<div class="w-full min-h-screen bg-ctp-base text-ctp-text selection:bg-ctp-peach selection:text-ctp-base relative overflow-hidden">
+{{/* 1. HEADER: The Title Page (TAILLE RÉDUITE ICI) */}}
+<div class="relative z-30 w-full flex justify-center items-center px-6 mb-2 mt-4 md:mt-0 animate-fade-in-up">
+     {{/* UPDATE: max-w-lg (mobile) et lg:max-w-xl (desktop) pour réduire la taille */}}
+     <img src="/media/solution-imaginaire/solutions_imaginaires_titre.png" 
+          alt="Solutions Imaginaires" 
+          class="block w-full max-w-lg lg:max-w-xl h-auto object-contain drop-shadow-xl hover:scale-[1.01] transition-transform duration-500 ease-out select-none">
+</div>
 
-  {{/* 1. ATMOSPHERE: Warm "Golden Hour" Gradient */}}
-  {{/* This creates the 'organic' light coming from above, matching the 'forest' vibe of your image */}}
-  <div class="absolute top-0 left-0 right-0 h-[60vh] bg-gradient-to-b from-ctp-peach/10 via-ctp-mauve/5 to-transparent pointer-events-none z-0"></div>
+{{/* WRAPPER */}}
+<div class="relative w-full min-h-screen">
 
-  <div class="relative z-10 max-w-7xl mx-auto px-6 md:px-12 py-16 md:py-24">
-
-    {{/* 2. HEADER: The "Storybook" Title */}}
-    <header class="text-center mb-20 space-y-6">
-      
-      {{/* Badge: Soft Pill (replacing the technical mono block) */}}
-      <div class="inline-flex items-center gap-2 px-4 py-1.5 rounded-full bg-ctp-surface0/50 border border-ctp-surface1/50 backdrop-blur-sm animate-fade-in-up">
-        <span class="w-2 h-2 rounded-full bg-ctp-peach animate-pulse"></span>
-        <span class="font-mono text-[10px] uppercase tracking-widest text-ctp-peach/90">Imaginary Archives</span>
+     {{/* 2. THE SPINE (The Ant Line) */}}
+      <div class="absolute top-0 bottom-0 left-1/2 -translate-x-1/2 w-26 lg:w-36 z-0 pointer-events-none select-none overflow-hidden">
+           <div class="flex flex-col w-full h-auto opacity-100 brightness-125 saturate-150">
+                {{ $antSequence := slice 1 4 2 5 3 6 }}
+                {{ range seq 15 }}
+                    {{ range $antSequence }}
+                        <img src="/media/solution-imaginaire/ant_line_{{ . }}.png" alt="" class="block w-full h-auto object-contain select-none" loading="lazy">
+                    {{ end }}
+                {{ end }}
+           </div>
       </div>
 
-      {{/* Title: Warm Peach Serif */}}
-      <h1 class="font-serif text-5xl md:text-7xl font-medium text-ctp-peach drop-shadow-sm leading-tight animate-fade-in-up [animation-delay:100ms]">
-        {{ .Title | default "Solutions Imaginaires" }}
-      </h1>
-
-      {{/* Subtitle */}}
-      <div class="max-w-xl mx-auto animate-fade-in-up [animation-delay:200ms]">
-        <p class="font-sans text-lg text-ctp-subtext0 font-light leading-relaxed">
-          {{ .Content | default "A collection of pataphysical artifacts, non-existent problems, and fragments of reality found in the forest of the mind." }}
-        </p>
-        
-        {{/* Decorative Flourish (The "Book" separator) */}}
-        <div class="mt-8 flex items-center justify-center gap-4 opacity-40">
-          <span class="h-px w-12 bg-gradient-to-r from-transparent to-ctp-peach"></span>
-          <span class="text-ctp-peach font-serif italic text-xl">❦</span>
-          <span class="h-px w-12 bg-gradient-to-l from-transparent to-ctp-peach"></span>
-        </div>
-      </div>
-
-    </header>
-
-    {{/* 3. GRID: Soft Masonry */}}
-    <div class="columns-1 md:columns-2 lg:columns-3 gap-8 space-y-8">
-      
-      {{ range .Pages }}
-        {{/* CARD: Rounded, Dark Glass, Warm Hover Glow */}}
-        <article class="break-inside-avoid group relative w-full rounded-2xl bg-ctp-surface0/40 border border-ctp-surface1/60 hover:border-ctp-peach/40 transition-all duration-500 hover:bg-ctp-surface0/80 hover:-translate-y-1 hover:shadow-2xl hover:shadow-ctp-peach/5 backdrop-blur-sm overflow-hidden">
+     {{/* 3. THE ECLECTIC GRID */}}
+     <section class="relative z-10 w-full max-w-full mx-auto mt-20 md:mt-32 overflow-visible px-4 pb-48">
           
-          {{/* Optional: Featured Image Cap */}}
-          {{ $img := .Resources.GetMatch "featured.*" }}
-          {{ if $img }}
-             <div class="w-full aspect-video overflow-hidden border-b border-ctp-surface1/50">
-               {{ $r := $img.Resize "600x webp" }}
-               <img src="{{ $r.RelPermalink }}" class="w-full h-full object-cover opacity-80 group-hover:opacity-100 group-hover:scale-105 transition-all duration-700 ease-out" alt="">
-             </div>
-          {{ end }}
+          <div class="grid grid-cols-1 md:grid-cols-[1fr_10rem_1fr] lg:grid-cols-[1fr_14rem_1fr] gap-y-0">
 
-          <div class="p-8 flex flex-col gap-5">
-            
-            {{/* Meta: Date & ID */}}
-            <div class="flex justify-between items-center text-xs font-mono text-ctp-overlay1">
-               <span class="flex items-center gap-2">
-                 {{/* The "Online" dot from your UI */}}
-                 <span class="w-1.5 h-1.5 rounded-full bg-ctp-surface2 group-hover:bg-ctp-peach transition-colors"></span>
-                 {{ .Date.Format $dateFormat }}
-               </span>
-               <span class="opacity-0 group-hover:opacity-50 transition-opacity text-[9px] tracking-widest">REF.{{ substr (md5 .Title) 0 4 | upper }}</span>
-            </div>
+                {{ range $index, $page := .Pages }}
+                {{ $isEven := eq (mod $index 2) 0 }}
+                {{ $leafImage := index $leaves (mod $index 7) }}
 
-            {{/* Title: Underline Animation (Left to Right) */}}
-            <h2 class="font-serif text-3xl text-ctp-text group-hover:text-ctp-peach transition-colors duration-300 leading-none">
-              <a href="{{ .RelPermalink }}">
-                <span class="bg-gradient-to-r from-ctp-peach to-ctp-maroon bg-[length:0%_2px] bg-no-repeat bg-left-bottom group-hover:bg-[length:100%_2px] transition-all duration-500 pb-1">
-                  {{ .Title }}
-                </span>
-              </a>
-            </h2>
+                {{/* CARD COMPONENT */}}
+                <div class="{{ if $isEven }}
+                           {{/* LEFT COLUMN */}}
+                           md:col-start-1 md:justify-self-end 
+                           md:-mr-6 lg:-mr-8
+                           rotate-[12deg] hover:rotate-[10deg] origin-right
+                         {{ else }}
+                           {{/* RIGHT COLUMN */}}
+                           md:col-start-3 md:justify-self-start 
+                           md:mt-32 lg:mt-40 
+                           md:-ml-6 lg:-ml-8
+                           -rotate-[12deg] hover:-rotate-[10deg] origin-left
+                         {{ end }} 
+                         
+                         {{/* SIZE UPDATE: Slightly more compact */}}
+                         w-[85%] md:w-[90%] lg:w-[100%] 
+                         
+                         md:-mb-40 lg:-mb-56
+                         max-w-none perspective-1000 transition-transform duration-700 ease-out z-10">
 
-            {{/* Excerpt */}}
-            <p class="font-sans text-sm text-ctp-subtext0 leading-relaxed line-clamp-3 group-hover:text-ctp-text transition-colors duration-300">
-              {{ .Summary | plainify }}
-            </p>
+                     <a href="{{ .RelPermalink }}"
+                        class="group relative block w-full aspect-[16/10] hover:scale-[1.05] transition-transform duration-500 ease-out">
 
-            {{/* Tags: Pills style (Inventory Items) */}}
-            <div class="pt-4 flex flex-wrap gap-2">
-              {{ range first 3 .Params.tags }}
-                <span class="px-3 py-1 rounded-full text-[10px] font-mono tracking-wide border border-ctp-surface1 bg-ctp-base/50 text-ctp-overlay2 group-hover:border-ctp-peach/30 group-hover:text-ctp-peach transition-colors">
-                  {{ . }}
-                </span>
-              {{ end }}
-            </div>
+                          {{/* A. THE LEAF IMAGE */}}
+                          <img src="/media/solution-imaginaire/{{ $leafImage }}" 
+                               alt="" 
+                               class="absolute inset-0 w-full h-full object-contain z-0 
+                                      drop-shadow-2xl opacity-100
+                                      {{ if $isEven }}scale-x-[-1]{{ end }}">
+
+                         {{/* B. THE CONTENT ZONE (Improved Geometry) */}}
+                          <div class="absolute inset-0 z-10 flex flex-col items-center justify-center p-8 pb-10">
+
+                               {{/* LOGIC: Counter-Rotation.
+                                  If card rotates +12deg, Text rotates -6deg.
+                                  Result: Text is tilted 6deg (readable but still "tossed").
+                               */}}
+                               <div class="max-w-[65%] text-center transform 
+                                           {{ if $isEven }} -rotate-[6deg] {{ else }} rotate-[6deg] {{ end }}">
+
+                                    <h3 class="font-hand leading-[0.85] font-bold text-ctp-lavender 
+                                               drop-shadow-hard
+                                               {{ if gt (len .Title) 25 }}
+                                                    text-2xl md:text-3xl
+                                               {{ else }}
+                                                    text-3xl md:text-5xl
+                                               {{ end }}">
+                                         {{ .Title | lower }}
+                                    </h3>
+                               </div>
+                          </div>
+                     </a>
+                </div>
+                {{ end }}
 
           </div>
-
-        </article>
-      {{ end }}
-
-    </div>
-
-    {{/* 4. PAGINATION: Organic Text Links */}}
-    {{ if gt .Paginator.TotalPages 1 }}
-      <div class="mt-24 flex justify-center items-center gap-8 animate-fade-in-up">
-        {{ if .Paginator.HasPrev }}
-          <a href="{{ .Paginator.Prev.URL }}" class="group flex items-center gap-2 font-serif italic text-ctp-subtext0 hover:text-ctp-peach transition-colors">
-            <span>←</span> <span class="group-hover:translate-x-[-2px] transition-transform">Earlier</span>
-          </a>
-        {{ end }}
-        
-        <span class="font-mono text-xs text-ctp-overlay1 tracking-widest bg-ctp-surface0 px-3 py-1 rounded-full border border-ctp-surface1">
-           PAGE {{ .Paginator.PageNumber }}
-        </span>
-        
-        {{ if .Paginator.HasNext }}
-          <a href="{{ .Paginator.Next.URL }}" class="group flex items-center gap-2 font-serif italic text-ctp-subtext0 hover:text-ctp-peach transition-colors">
-            <span class="group-hover:translate-x-[2px] transition-transform">Older</span> <span>→</span>
-          </a>
-        {{ end }}
-      </div>
-    {{ end }}
-
-  </div>
+     </section>
 </div>
 {{ end }}

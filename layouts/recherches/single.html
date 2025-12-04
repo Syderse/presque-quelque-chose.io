@@ -1,3 +1,4 @@
+{{/* Fichier : layouts/recherches/single.html */}}
 {{ define "main" }}
 
 {{/* CONTENEUR DOSSIER - Effet "Papier Millimétré subtil" via CSS bg-grid-pattern */}}
@@ -51,6 +52,8 @@
                 {{ .Params.icon | default "📄" }}
               </div>
             {{ end }}
+          </div>
+        </div>
 
         {{/* 3. Métadonnées (Style Tableau de bord) */}}
         <div class="bg-ctp-mantle/50 border border-ctp-surface1 p-6 font-mono text-sm space-y-5">
@@ -82,11 +85,9 @@
           <div class="pt-4">
              <span class="text-ctp-overlay1 text-xs uppercase block mb-2">mots-clés</span>
              <div class="flex flex-wrap gap-2">
-                {{ range .Params.tags }}
-                  <a href="/tags/{{ . | urlize }}" class="px-2 py-1 bg-ctp-surface0 border border-ctp-surface2 text-xs text-ctp-mauve hover:bg-ctp-mauve hover:text-ctp-base transition-colors uppercase font-bold tracking-wider">
-                    {{ . }}
-                  </a>
-                {{ end }}
+               {{ range .Params.tags }}
+                 {{ partial "ui/tag-chip.html" . }}
+               {{ end }}
              </div>
           </div>
         </div>
@@ -127,9 +128,9 @@
 
         {{/* Contenu Prose */}}
         <div class="prose prose-lg prose-catppuccin max-w-none 
-                    prose-p:text-lg prose-p:leading-8 prose-p:font-light
-                    prose-headings:font-sans prose-headings:uppercase prose-headings:tracking-widest prose-headings:text-base prose-headings:border-b prose-headings:border-ctp-surface1 prose-headings:pb-2 prose-headings:mt-12
-                    first-letter:text-5xl first-letter:font-serif first-letter:font-bold first-letter:mr-3 first-letter:float-left first-letter:text-ctp-mauve">
+                  prose-p:text-lg prose-p:leading-8 prose-p:font-light
+                  prose-headings:font-sans prose-headings:uppercase prose-headings:tracking-widest prose-headings:text-base prose-headings:border-b prose-headings:border-ctp-surface1 prose-headings:pb-2 prose-headings:mt-12
+                  first-letter:text-5xl first-letter:font-serif first-letter:font-bold first-letter:mr-3 first-letter:float-left first-letter:text-ctp-mauve">
           
           {{ .Content }}
         

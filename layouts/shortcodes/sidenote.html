@@ -1,56 +1,72 @@
-{{/* SHORTCODE: SIDENOTE (Alternating)
-   - Usage: {{< sidenote >}} Note Content {{< /sidenote >}}
-   - Logic: 
-     1. Calculate Human Number (Ordinal + 1).
-     2. Modulo 2 to determine Side.
-     3. Apply classes 'sn-left' or 'sn-right' for JS hooks.
+{{/* SHORTCODE: SIDENOTE (Solid State V3.1 - Fix Position)
+   - FIX: Removed 'relative' from the wrapper span. 
+     Now the absolute positioning anchors to the <article> container, not the number.
 */}}
 
 {{ $num := add .Ordinal 1 }}
 {{ $isEven := eq (mod $num 2) 0 }}
 {{ $sideClass := cond $isEven "sn-right" "sn-left" }}
 
+{{/* CRITICAL FIX: No 'relative' class here. */}}
 <span class="inline group/note">
-    {{/* 1. The Trigger (Reference Number) */}}
+
+    {{/* 1. THE TRIGGER */}}
     <label for="sn-{{ $num }}" 
-           class="cursor-pointer text-ctp-peach font-serif italic text-sm align-super hover:text-ctp-red transition-colors duration-200 select-none px-0.5"
-           title="View Note {{ $num }}">
-        {{ $num }}
+           class="cursor-pointer font-mono text-[0.7em] text-ctp-peach align-super select-none 
+                  hover:text-ctp-mauve hover:underline decoration-1 underline-offset-2 
+                  peer-checked:text-ctp-red peer-checked:font-bold
+                  transition-colors duration-200"
+           title="Voir la note {{ $num }}">
+        [{{ $num }}]
     </label>
 
-    {{/* 2. Checkbox State */}}
+    {{/* 2. STATE MANAGEMENT */}}
     <input type="checkbox" id="sn-{{ $num }}" class="peer hidden" />
     
-    {{/* 3. The Note */}}
+    {{/* 3. THE NOTE CONTENT */}}
     <span class="side-note-content {{ $sideClass }}
-        /* MOBILE (Default < lg): Stacked Block */
-        hidden peer-checked:block peer-checked:my-4 peer-checked:p-4 peer-checked:bg-ctp-surface0/50 peer-checked:border-l-2 peer-checked:border-ctp-peach peer-checked:rounded-r-lg
+        /* --- BASE MOBILE STYLES (Default) --- */
+        hidden peer-checked:block 
+        w-full my-4 p-4 
+        bg-ctp-surface0 border-l-2 border-ctp-peach 
+        text-sm text-ctp-subtext0 font-serif leading-relaxed
+        rounded-r shadow-md
+        relative /* Mobile needs relative flow */
         
-        /* DESKTOP (lg+): Absolute Positioning relative to ARTICLE */
-        lg:block lg:peer-checked:block 
-        lg:absolute 
-        lg:w-[15rem]
-        lg:p-0 lg:bg-transparent lg:border-0 lg:rounded-none
+        /* --- DESKTOP STYLES (Physics Layer) --- */
+        lg:block lg:absolute lg:top-auto
+        lg:w-56 lg:p-3 lg:m-0 lg:rounded-md
+        lg:text-xs lg:font-mono lg:leading-tight
         
-        /* SIDE LOGIC */
-        {{ if $isEven }}
-            /* RIGHT SIDE (Even): Pushed right of Article + Gap */
-            lg:left-[100%] lg:ml-8 lg:text-left
-        {{ else }}
-            /* LEFT SIDE (Odd): Pushed left of Article + Gap */
-            lg:right-[100%] lg:mr-8 lg:text-right
-        {{ end }}
+        /* VISUAL STATE: PASSIVE */
+        lg:bg-transparent lg:border-0 
+        lg:opacity-60 lg:hover:opacity-100 
+        lg:transition-all lg:duration-300 lg:ease-out
+        
+        /* VISUAL STATE: ACTIVE */
+        lg:peer-checked:opacity-100 
+        lg:peer-checked:bg-ctp-mantle 
+        lg:peer-checked:border lg:peer-checked:border-ctp-peach
+        lg:peer-checked:shadow-[4px_4px_0px_0px_rgba(0,0,0,0.4)]
+        lg:peer-checked:z-50 lg:peer-checked:scale-105
 
-        font-serif text-[0.95rem] text-ctp-subtext0 italic leading-relaxed
-        lg:opacity-70 lg:hover:opacity-100 lg:transition-opacity lg:duration-300
-        z-20
+        /* LEFT/RIGHT LOGIC (Anchored to Article) */
+        {{ if $isEven }}
+            /* RIGHT STACK */
+            lg:left-full lg:ml-8 lg:text-left
+            lg:border-l lg:border-ctp-surface1 
+            lg:peer-checked:border-l-ctp-peach
+        {{ else }}
+            /* LEFT STACK */
+            lg:right-full lg:mr-8 lg:text-right
+            lg:border-r lg:border-ctp-surface1
+            lg:peer-checked:border-r-ctp-peach
+        {{ end }}
     ">
-        {{/* Note Header */}}
-        <span class="hidden lg:inline text-ctp-peach font-bold {{ if $isEven }} mr-1 {{ else }} ml-1 float-right {{ end }}">
-            {{ $num }}.
+        <span class="block">
+            <span class="text-ctp-peach font-bold mr-1">{{ $num }}.</span>
+            {{ .Inner | markdownify }}
         </span>
-        
-        {{/* Note Body */}}
-        {{ .Inner | markdownify }}
     </span>
+
 </span>

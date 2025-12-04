@@ -1,41 +1,42 @@
 {{ define "main" }}
 
-  {{/* --- EN-TÊTE DE L'ARTICLE --- */}}
-  <header class="mb-10 text-center not-prose">
-    {{/* Tags / Catégorie (Optionnel, affiché en petit au dessus) */}}
-    {{ with .Params.tags }}
-    <div class="flex justify-center gap-2 mb-4">
-      {{ range first 1 . }}
-        <span class="px-3 py-1 text-xs font-bold uppercase tracking-widest rounded-full bg-ctp-surface1 text-ctp-mauve">
-          {{ . }}
-        </span>
-      {{ end }}
-    </div>
-    {{ end }}
+<div class="animate-fade-in-up">
 
-    <h1 class="text-4xl md:text-5xl lg:text-6xl font-black text-transparent bg-clip-text bg-gradient-to-br from-ctp-text to-ctp-subtext1 mb-4">
+  <header class="mb-16 pt-12 pb-8 border-b border-ctp-surface0">
+    <h1 class="text-4xl md:text-5xl font-serif font-bold text-ctp-peach leading-tight mb-8">
       {{ .Title }}
     </h1>
 
-    {{ with .Description }}
-      <p class="text-xl md:text-2xl font-serif italic text-ctp-subtext0 max-w-2xl mx-auto leading-relaxed">
-        {{ . }}
-      </p>
-    {{ end }}
+    <div class="flex flex-wrap items-center justify-between gap-y-4 gap-x-6 text-sm font-medium">
+      <div class="flex flex-wrap gap-2">
+        {{ with .Params.tags }}
+          {{ range . }}
+            <a href="{{ "tags/" | relLangURL }}{{ . | urlize }}" 
+               class="px-3 py-1 rounded-full border border-ctp-surface1 text-ctp-subtext0 hover:border-ctp-mauve hover:text-ctp-mauve transition-colors">
+              #{{ . }}
+            </a>
+          {{ end }}
+        {{ end }}
+      </div>
 
-    <div class="mt-6 flex items-center justify-center gap-4 text-sm font-medium text-ctp-overlay2">
-      <time datetime="{{ .Date.Format "2006-01-02" }}">
-        {{ .Date | time.Format ":date_long" }}
-      </time>
-      <span>•</span>
-      <span>{{ .ReadingTime }} min de lecture</span>
+      <div class="flex items-center gap-2 text-ctp-overlay2">
+        <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="opacity-70"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg>
+        <span>{{ .ReadingTime }} min</span>
+      </div>
     </div>
   </header>
 
-  {{/* --- CONTENU DE L'ARTICLE --- */}}
-  {{/* Note: La classe .prose-catppuccin est déjà dans baseof.html, inutile de la remettre ici */}}
-  <div class="content">
+  {{/* --- CONTENU --- */}}
+  <article class="relative mx-auto content max-w-[60ch] overflow-visible prose prose-lg prose-catppuccin">
     {{ .Content }}
-  </div>
+  </article>
+
+  {{/* --- FOOTER (NEW) --- */}}
+  {{ partial "article-footer.html" . }}
+
+</div>
+
+{{ $physics := resources.Get "js/sidenote-adjuster.js" | minify | fingerprint }}
+<script src="{{ $physics.RelPermalink }}" integrity="{{ $physics.Data.Integrity }}" defer></script>
 
 {{ end }}

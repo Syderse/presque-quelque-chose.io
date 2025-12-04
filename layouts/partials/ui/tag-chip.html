@@ -1,0 +1,33 @@
+{{/* Usage: {{ partial "ui/tag-chip.html" . }}
+Context: Can be a Taxonomy Term Page Object OR a String (tag name)
+*/}}
+{{ $page := . }}
+{{ if reflect.IsSlice . }}
+{{/* Handle case where it might be passed as a slice (defensive) */}}
+{{ $page = index . 0 }}
+{{ end }}
+
+{{ if reflect.IsMap . }}
+{{/* It's likely a Page object */}}
+{{ else }}
+{{/* It's a string, try to find the page */}}
+{{ $page = site.GetPage (printf "/tags/%s" (urlize .)) }}
+{{ end }}
+
+{{ if $page }}
+<a href="{{ $page.RelPermalink }}" class="inline-flex items-center px-2 py-1 
+            bg-ctp-mantle border border-ctp-surface1 
+            font-mono text-[9px] text-ctp-subtext0 uppercase tracking-widest 
+            hover:border-ctp-mauve hover:text-ctp-mauve hover:bg-ctp-surface0 
+            transition-colors duration-200 no-underline">
+    #{{ $page.LinkTitle }}
+</a>
+{{ else }}
+{{/* Fallback for missing tags */}}
+<span class="inline-flex items-center px-2 py-1 
+            bg-ctp-mantle border border-ctp-surface1 
+            font-mono text-[9px] text-ctp-subtext0 uppercase tracking-widest 
+            opacity-50 cursor-not-allowed">
+    #{{ . }}
+</span>
+{{ end }}

@@ -1,4 +1,3 @@
-{{/* Fichier : layouts/_default/baseof.html */}}
 <!doctype html>
 <html lang="{{ .Site.Language.Lang | default "fr" }}" class="h-full antialiased scroll-smooth dark">
 
@@ -31,7 +30,6 @@
     </aside>
 
     {{/* LAYER 3: TOGGLE BUTTON (Always on top) */}}
-    {{/* GEOMETRY: p-4 ensures button top starts at 1rem (16px) */}}
     <header class="absolute top-0 left-0 w-full z-50 p-4 flex items-start justify-between pointer-events-none">
       <button id="sidebar-toggle-btn" onclick="toggleSidebar()"
         class="pointer-events-auto p-2 rounded-lg bg-ctp-surface0 hover:bg-ctp-surface1 text-ctp-mauve border border-ctp-surface1 shadow-md transition-all duration-200 group"
@@ -50,18 +48,18 @@
     <main class="relative z-0 w-full h-full flex flex-col overflow-hidden bg-ctp-base">
       
       {{/* SCROLLABLE AREA */}}
-      {{/* LOGIC: Standard pages need pt-20 to clear the absolute header. 
-                  Home page needs pt-0 to manage its own layout. */}}
       <div class="flex-grow overflow-y-auto w-full scroll-smooth {{ if not .IsHome }}pt-20{{ end }}"> 
+        
         {{ if .Params.full_width }}
+        {{/* Case 1: Full Width (D3.js, Maps, Bento Grid) */}}
         <div class="w-full h-full">
           {{ block "main" . }}{{ end }}
         </div>
         {{ else }}
+        {{/* Case 2: Standard Container (Articles, Pages) */}}
+        {{/* SOLID STATE: Logic Cleaned. No more class injection here. */}}
         <div class="container mx-auto px-4 pb-12 sm:px-6 lg:px-8 max-w-5xl">
-          <article class="prose prose-lg md:prose-xl prose-catppuccin max-w-none animate-fade-in-up">
             {{ block "main" . }}{{ end }}
-          </article>
         </div>
         {{ end }}
 

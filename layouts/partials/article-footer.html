@@ -1,0 +1,61 @@
+<footer class="mx-auto max-w-[60ch] mt-16 pt-8 border-t-2 border-dashed border-ctp-surface1">
+  
+  <div class="flex flex-col md:flex-row justify-between items-start gap-8 mb-12">
+    
+    <div class="font-mono text-sm grid grid-cols-[auto_1fr] gap-x-6 gap-y-2 text-ctp-subtext0">
+      <span class="text-ctp-overlay1 uppercase tracking-wider">Published</span>
+      <span class="text-ctp-text font-bold">{{ .Date.Format "2006-01-02" }}</span>
+
+      <span class="text-ctp-overlay1 uppercase tracking-wider">Words</span>
+      <span class="text-ctp-text">{{ .WordCount }}</span>
+
+      {{ with .GitInfo }}
+        <span class="text-ctp-overlay1 uppercase tracking-wider">Version</span>
+        <code class="text-ctp-pink bg-ctp-surface0 px-1 rounded border border-ctp-surface1 text-xs">
+          {{ .AbbreviatedHash }}
+        </code>
+      {{ end }}
+    </div>
+
+    <button class="group px-4 py-2 bg-ctp-surface0 border border-ctp-surface1 hover:border-ctp-mauve text-ctp-subtext0 hover:text-ctp-mauve font-mono text-sm transition-all shadow-[2px_2px_0_0_rgba(0,0,0,0.2)] hover:shadow-[4px_4px_0_0_rgba(0,0,0,0.3)] hover:-translate-y-0.5 active:translate-y-0 active:shadow-none">
+      <span class="flex items-center gap-2">
+        <span>SHARE_NODE</span>
+        <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 12v8a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2v-8"/><polyline points="16 6 12 2 8 6"/><line x1="12" y1="2" x2="12" y2="15"/></svg>
+      </span>
+    </button>
+  </div>
+
+  <nav class="grid grid-cols-1 md:grid-cols-2 gap-4 font-mono text-sm">
+    
+    {{ with .PrevInSection }}
+      <a href="{{ .RelPermalink }}" class="group relative flex flex-col p-4 bg-ctp-mantle border border-ctp-surface1 hover:border-ctp-mauve transition-all shadow-[2px_2px_0_0_rgba(0,0,0,0.2)] hover:shadow-[4px_4px_0_0_rgba(0,0,0,0.3)] hover:-translate-y-0.5">
+        <span class="text-xs text-ctp-overlay1 mb-2 group-hover:text-ctp-mauve transition-colors">
+          &lt;&lt; PREVIOUS_LOG
+        </span>
+        <span class="text-ctp-text font-bold truncate">
+          {{ .Title }}
+        </span>
+      </a>
+    {{ else }}
+      <div class="p-4 border border-dashed border-ctp-surface1 opacity-50 select-none">
+        <span class="text-xs text-ctp-overlay1">&lt;&lt; END_OF_TAPE</span>
+      </div>
+    {{ end }}
+
+    {{ with .NextInSection }}
+      <a href="{{ .RelPermalink }}" class="group relative flex flex-col items-end p-4 bg-ctp-mantle border border-ctp-surface1 hover:border-ctp-mauve transition-all shadow-[2px_2px_0_0_rgba(0,0,0,0.2)] hover:shadow-[4px_4px_0_0_rgba(0,0,0,0.3)] hover:-translate-y-0.5">
+        <span class="text-xs text-ctp-overlay1 mb-2 group-hover:text-ctp-mauve transition-colors">
+          NEXT_LOG &gt;&gt;
+        </span>
+        <span class="text-ctp-text font-bold truncate text-right w-full">
+          {{ .Title }}
+        </span>
+      </a>
+    {{ else }}
+      <div class="flex flex-col items-end p-4 border border-dashed border-ctp-surface1 opacity-50 select-none">
+        <span class="text-xs text-ctp-overlay1">LIVE_FEED &gt;&gt;</span>
+      </div>
+    {{ end }}
+    
+  </nav>
+</footer>

@@ -6,7 +6,6 @@ description: "Princesse Mononoké et Nausicaä de la vallée du vent"
 tags: 
   - animal studies
   - mythocritique
-  - zoopoétique
   - bestiaire
   - studio ghibli
   - animation
