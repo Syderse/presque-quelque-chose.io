@@ -3,6 +3,11 @@ title: "Autour du pot #1 : Coup de feu"
 date: 2024-09-27
 description: "Immersion sonore lors du coup de feu en cuisine."
 icon: "🔥"
+tags: 
+  - documentaire sonore
+  - radio fréquens
+  - école normale
+  - cuisine
 color: "maroon"
 authors: 
   - Kenza Benyahia 

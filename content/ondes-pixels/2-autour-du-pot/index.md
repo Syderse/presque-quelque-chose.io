@@ -4,6 +4,11 @@ date: 2024-10-04
 description: "Au cœur des marmites et de la méthode HACCP."
 icon: "🍲"
 color: "peach"
+tags: 
+  - documentaire sonore
+  - radio fréquens
+  - école normale
+  - cuisine
 authors: 
   - Kenza Benyahia 
   - Mathieu Allag

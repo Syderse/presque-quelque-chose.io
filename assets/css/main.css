@@ -53,6 +53,11 @@
     letter-spacing: 0.02em;
     line-height: 1.6;
   }
+
+  /* Global Link Reset: No underlines by default */
+  a {
+    text-decoration: none !important;
+  }
 }
 
 @theme {
@@ -119,21 +124,22 @@
       background: var(--ctp-gradient-heading);
       -webkit-background-clip: text;
       background-clip: text;
-      color: transparent !important; /* Required for clip to work */
+      color: transparent !important;
+      /* Required for clip to work */
       font-weight: 800 !important;
-      letter-spacing: -0.025em; /* Tighten slightly for modern feel */
+      letter-spacing: -0.025em;
+      /* Tighten slightly for modern feel */
       margin-top: 2em;
     }
 
     /* 3. POLISH: Interactive Links */
     & :where(a):not(.not-prose) {
       color: var(--ctp-blue) !important;
-      text-decoration: none !important; /* Remove default underline */
-      border-bottom: 2px solid var(--ctp-surface2); /* Solid underline */
+      text-decoration: none !important;
       font-weight: 600;
-      transition: border-color 0.2s ease, color 0.2s ease;
+      transition: color 0.2s ease;
     }
-    
+
     & :where(a):not(.not-prose):hover {
       color: var(--ctp-sapphire) !important;
       border-color: var(--ctp-sapphire);
@@ -153,15 +159,15 @@
     /* 4. POLISH: Inline Code "Chip" Style */
     & :where(:not(pre) > code) {
       color: var(--ctp-pink) !important;
-      background-color: var(--ctp-surface0); 
+      background-color: var(--ctp-surface0);
       padding: 0.2em 0.4em;
       border-radius: 4px;
       font-family: var(--font-mono) !important;
-      
+
       /* The Solid State Polish: Hard Border + Slight Shadow */
       border: 1px solid var(--ctp-surface2);
-      box-shadow: 2px 2px 0 var(--ctp-surface1); 
-      
+      box-shadow: 2px 2px 0 var(--ctp-surface1);
+
       font-size: 0.9em;
     }
   }
@@ -169,9 +175,9 @@
   /* B. BENTO UI SYSTEM (SOLID STATE) */
   .bento-card {
     @apply relative h-full w-full flex flex-col;
-    background-color: var(--ctp-surface0); 
+    background-color: var(--ctp-surface0);
     @apply rounded-xl;
-    
+
     /* SYSTEM DESIGN: HARD BORDERS & SHADOWS */
     border: 1px solid var(--ctp-surface1);
     /* The specific System Header shadow: 4px 4px 0 0 rgba(...) */
@@ -218,16 +224,19 @@
     flex-direction: column;
     align-items: center;
     justify-content: center;
-    
+
     /* Safety margins to ensure text doesn't hit the leaf edges */
     width: 100%;
     height: 100%;
-    padding: 2rem; 
+    padding: 2rem;
   }
-} /* END OF LAYER COMPONENTS */
+}
+
+/* END OF LAYER COMPONENTS */
 
 /* --- 5. UTILITIES --- */
 @layer components {
+
   /* DEFINING THE GRADIENT ACCENT (Reusable) */
   :root {
     --ctp-gradient-heading: linear-gradient(135deg, var(--ctp-mauve) 0%, var(--ctp-pink) 100%);
@@ -245,10 +254,11 @@
     text-shadow: 0px 1px 0px rgba(255, 255, 255, 0.5);
   }
 
-/* NEW: High Contrast Shadow for Leaf Text */
+  /* NEW: High Contrast Shadow for Leaf Text */
   /* Creates a dark outline effect suitable for "Lavender" text on complex backgrounds */
   .drop-shadow-hard {
-    filter: drop-shadow(2px 2px 0px rgba(24, 24, 37, 0.8)); /* ctp-mantle with opacity */
+    filter: drop-shadow(2px 2px 0px rgba(24, 24, 37, 0.8));
+    /* ctp-mantle with opacity */
   }
 
   /* REFINED: Leaf specific hover */
@@ -257,8 +267,15 @@
   }
 
   @keyframes fadeInUp {
-    from { opacity: 0; transform: translateY(10px); }
-    to { opacity: 1; transform: translateY(0); }
+    from {
+      opacity: 0;
+      transform: translateY(10px);
+    }
+
+    to {
+      opacity: 1;
+      transform: translateY(0);
+    }
   }
 
   .bg-grid-pattern {
@@ -276,6 +293,7 @@
     -ms-overflow-style: none;
     scrollbar-width: none;
   }
+
   .scrollbar-hide::-webkit-scrollbar {
     display: none;
   }
@@ -284,8 +302,10 @@
     transform: translateZ(0);
     backface-visibility: hidden;
   }
+
   .text-ink {
     color: color-mix(in srgb, var(--ctp-text), var(--ctp-peach) 15%);
-    text-shadow: 0 0 1px rgba(250, 179, 135, 0.1); /* Slight bleed effect */
+    text-shadow: 0 0 1px rgba(250, 179, 135, 0.1);
+    /* Slight bleed effect */
   }
 }

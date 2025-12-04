@@ -3,35 +3,33 @@
 {{- $is_remote := or (strings.HasPrefix $dest "http") (strings.HasPrefix $dest "//") -}}
 
 {{- /* LOGIQUE :
-  1. Si c'est un lien web (http) ou une ancre (#top), on affiche direct.
-  2. Sinon, on essaie de trouver la page Hugo correspondante avec .GetPage (Liens relatifs)
+1. Si c'est un lien web (http) ou une ancre (#top), on affiche direct.
+2. Sinon, on essaie de trouver la page Hugo correspondante avec .GetPage (Liens relatifs)
 */ -}}
 
 {{- if or $is_remote $is_anchor -}}
-  
-  <a href="{{ $dest | safeURL }}"
-    {{ with .Title }} title="{{ . }}"{{ end }}
-    {{ if $is_remote }} target="_blank" rel="noopener noreferrer"{{ end }}>
-    {{ .Text | safeHTML }}
-  </a>
+
+<a href="{{ $dest | safeURL }}" {{ with .Title }} title="{{ . }}" {{ end }} {{ if $is_remote }} target="_blank"
+  rel="noopener noreferrer" {{ end }}>
+  {{ .Text | safeHTML }}
+</a>
 
 {{- else -}}
 
-  {{- /* Tentative de résolution interne */ -}}
-  {{- $page := .Page.GetPage $dest -}}
+{{- /* Tentative de résolution interne */ -}}
+{{- $page := .Page.GetPage $dest -}}
 
-  {{- if $page -}}
-    {{- /* CAS A : Page trouvée ! On utilise son permalien canonique */ -}}
-    <a href="{{ $page.RelPermalink }}" 
-       class="text-ctp-mauve hover:text-ctp-mauve/80 underline decoration-ctp-mauve/30 underline-offset-4 transition-colors"
-       {{ with .Title }} title="{{ . }}"{{ end }}>
-      {{ .Text | safeHTML }}
-    </a>
-  
-  {{- else -}}
-    {{- /* CAS B : Pas trouvé (Fichier statique, PDF, ou lien cassé). On laisse tel quel. */ -}}
-    <a href="{{ $dest | safeURL }}" {{ with .Title }} title="{{ . }}"{{ end }} class="text-red-500 decoration-wavy underline">
-      {{ .Text | safeHTML }} </a>
-  {{- end -}}
+{{- if $page -}}
+{{- /* CAS A : Page trouvée ! On utilise son permalien canonique */ -}}
+<a href="{{ $page.RelPermalink }}" class="text-ctp-mauve hover:text-ctp-mauve/80 transition-colors" {{ with .Title }}
+  title="{{ . }}" {{ end }}>
+  {{ .Text | safeHTML }}
+</a>
+
+{{- else -}}
+{{- /* CAS B : Pas trouvé (Fichier statique, PDF, ou lien cassé). On laisse tel quel. */ -}}
+<a href="{{ $dest | safeURL }}" {{ with .Title }} title="{{ . }}" {{ end }} class="text-red-500">
+  {{ .Text | safeHTML }} </a>
+{{- end -}}
 
 {{- end -}}

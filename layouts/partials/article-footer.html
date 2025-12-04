@@ -1,61 +1,138 @@
 <footer class="mx-auto max-w-[60ch] mt-16 pt-8 border-t-2 border-dashed border-ctp-surface1">
-  
+
   <div class="flex flex-col md:flex-row justify-between items-start gap-8 mb-12">
-    
+
     <div class="font-mono text-sm grid grid-cols-[auto_1fr] gap-x-6 gap-y-2 text-ctp-subtext0">
-      <span class="text-ctp-overlay1 uppercase tracking-wider">Published</span>
+      <span class="text-ctp-overlay1 uppercase tracking-wider">publié</span>
       <span class="text-ctp-text font-bold">{{ .Date.Format "2006-01-02" }}</span>
 
-      <span class="text-ctp-overlay1 uppercase tracking-wider">Words</span>
-      <span class="text-ctp-text">{{ .WordCount }}</span>
+      <span class="text-ctp-overlay1 uppercase tracking-wider">caractères</span>
+      <span class="text-ctp-text">{{ len .RawContent }}</span>
 
       {{ with .GitInfo }}
-        <span class="text-ctp-overlay1 uppercase tracking-wider">Version</span>
-        <code class="text-ctp-pink bg-ctp-surface0 px-1 rounded border border-ctp-surface1 text-xs">
+      <span class="text-ctp-overlay1 uppercase tracking-wider">version</span>
+      <code class="text-ctp-pink bg-ctp-surface0 px-1 rounded border border-ctp-surface1 text-xs">
           {{ .AbbreviatedHash }}
         </code>
       {{ end }}
     </div>
 
-    <button class="group px-4 py-2 bg-ctp-surface0 border border-ctp-surface1 hover:border-ctp-mauve text-ctp-subtext0 hover:text-ctp-mauve font-mono text-sm transition-all shadow-[2px_2px_0_0_rgba(0,0,0,0.2)] hover:shadow-[4px_4px_0_0_rgba(0,0,0,0.3)] hover:-translate-y-0.5 active:translate-y-0 active:shadow-none">
+    <button id="btn-share-article"
+      class="group px-4 py-2 bg-ctp-surface0 border border-ctp-surface1 hover:border-ctp-mauve text-ctp-subtext0 hover:text-ctp-mauve font-mono text-sm transition-all shadow-[2px_2px_0_0_rgba(0,0,0,0.2)] hover:shadow-[4px_4px_0_0_rgba(0,0,0,0.3)] hover:-translate-y-0.5 active:translate-y-0 active:shadow-none">
       <span class="flex items-center gap-2">
-        <span>SHARE_NODE</span>
-        <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 12v8a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2v-8"/><polyline points="16 6 12 2 8 6"/><line x1="12" y1="2" x2="12" y2="15"/></svg>
+        <span>PARTAGER</span>
+        <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none"
+          stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+          <path d="M4 12v8a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2v-8" />
+          <polyline points="16 6 12 2 8 6" />
+          <line x1="12" y1="2" x2="12" y2="15" />
+        </svg>
       </span>
     </button>
+
+
+    <script>
+      (function () {
+        const btn = document.getElementById('btn-share-article');
+        if (!btn) return;
+
+        // Create tooltip dynamically and append to body to escape any transform context
+        const tooltip = document.createElement('div');
+        tooltip.id = 'share-tooltip';
+        tooltip.setAttribute('aria-hidden', 'true');
+        tooltip.style.cssText = 'position: fixed; top: 50%; left: 50%; transform: translate(-50%, -50%); z-index: 9999; pointer-events: none; opacity: 0; transition: opacity 0.2s ease-in-out;';
+        tooltip.innerHTML = '<div style="padding: 1.5rem; background: var(--ctp-surface0, #313244); border: 1px solid var(--ctp-mauve, #cba6f7); color: var(--ctp-text, #cdd6f4); font-family: monospace; font-size: 0.875rem; max-width: 20rem; text-align: center; box-shadow: 0 10px 15px -3px rgba(0,0,0,0.3);">le lien est pressé dans le papier, vous pouvez le décompresser où vous voulez 📋</div>';
+        document.body.appendChild(tooltip);
+
+        btn.addEventListener('click', async function () {
+          try {
+            await navigator.clipboard.writeText(window.location.href);
+
+            // Show tooltip
+            tooltip.style.opacity = '2';
+
+            // Hide after 1 second
+            setTimeout(function () {
+              tooltip.style.opacity = '0';
+            }, 1000);
+          } catch (err) {
+            console.error('Failed to copy link:', err);
+          }
+        });
+      })();
+    </script>
   </div>
 
-  <nav class="grid grid-cols-1 md:grid-cols-2 gap-4 font-mono text-sm">
-    
+  <!-- Bouton Patafoin CTA -->
+  <a href="/patafoin/?sujet={{ .Title | urlquery }}"
+    class="group block w-full mb-8 p-4 bg-ctp-mantle border-2 border-dashed border-ctp-mauve hover:border-solid hover:bg-ctp-mauve/10 transition-all text-center">
+    <span class="flex items-center justify-center gap-3 text-ctp-mauve font-mono">
+      <span class="text-2xl group-hover:animate-bounce">💬</span>
+      <span class="text-base md:text-lg font-bold uppercase tracking-wide">voulez-vous en parler dans 'patafoin ?</span>
+      <span class="text-2xl group-hover:animate-bounce">💬</span>
+    </span>
+    <span class="block mt-2 text-xs text-ctp-subtext0 opacity-80">
+      cliquez pour ouvrir un nouveau sujet de discussion
+    </span>
+  </a>
+
+  {{/* --- RELATED ARTICLES SECTION --- */}}
+  {{ $related := slice }}
+
+  {{/* 1. Try Hugo's built-in related content (requires tags/categories) */}}
+  {{ $relatedRaw := .Site.RegularPages.Related . | first 3 }}
+  {{ if gt (len $relatedRaw) 0 }}
+  {{ $related = $relatedRaw }}
+  {{ else }}
+  {{/* 2. Fallback: Same section, excluding current page, sorted by date */}}
+  {{ $sameSection := where .Site.RegularPages "Section" .Section }}
+  {{ $sameSection = where $sameSection "Permalink" "!=" .Permalink }}
+  {{ $related = $sameSection | first 3 }}
+  {{ end }}
+
+  {{ if gt (len $related) 0 }}
+  <section class="mb-12">
+    <h3 class="font-mono text-xs text-ctp-overlay1 uppercase tracking-widest mb-6 flex items-center gap-3">
+      <span class="flex-1 h-px bg-ctp-surface1"></span>
+      <span>à lire aussi</span>
+      <span class="flex-1 h-px bg-ctp-surface1"></span>
+    </h3>
+
+    <div class="grid grid-cols-1 md:grid-cols-3 gap-4">
+      {{ range $related }}
+      {{ partial "cards/related-article-card.html" . }}
+      {{ end }}
+    </div>
+  </section>
+  {{ end }}
+
+  {{/* --- PREV/NEXT NAVIGATION (Secondary) --- */}}
+  <nav class="grid grid-cols-2 gap-4 font-mono text-xs">
+
     {{ with .PrevInSection }}
-      <a href="{{ .RelPermalink }}" class="group relative flex flex-col p-4 bg-ctp-mantle border border-ctp-surface1 hover:border-ctp-mauve transition-all shadow-[2px_2px_0_0_rgba(0,0,0,0.2)] hover:shadow-[4px_4px_0_0_rgba(0,0,0,0.3)] hover:-translate-y-0.5">
-        <span class="text-xs text-ctp-overlay1 mb-2 group-hover:text-ctp-mauve transition-colors">
-          &lt;&lt; PREVIOUS_LOG
-        </span>
-        <span class="text-ctp-text font-bold truncate">
-          {{ .Title }}
-        </span>
-      </a>
+    <a href="{{ .RelPermalink }}"
+      class="group flex items-center gap-2 p-3 bg-ctp-mantle border border-ctp-surface1 hover:border-ctp-mauve transition-all text-ctp-subtext0 hover:text-ctp-mauve">
+      <span class="text-ctp-overlay1 group-hover:text-ctp-mauve transition-colors">&lt;&lt;</span>
+      <span class="truncate">{{ .Title }}</span>
+    </a>
     {{ else }}
-      <div class="p-4 border border-dashed border-ctp-surface1 opacity-50 select-none">
-        <span class="text-xs text-ctp-overlay1">&lt;&lt; END_OF_TAPE</span>
-      </div>
+    <div class="p-3 border border-dashed border-ctp-surface1 opacity-40 text-ctp-overlay1">
+      <span>&lt;&lt; fin</span>
+    </div>
     {{ end }}
 
     {{ with .NextInSection }}
-      <a href="{{ .RelPermalink }}" class="group relative flex flex-col items-end p-4 bg-ctp-mantle border border-ctp-surface1 hover:border-ctp-mauve transition-all shadow-[2px_2px_0_0_rgba(0,0,0,0.2)] hover:shadow-[4px_4px_0_0_rgba(0,0,0,0.3)] hover:-translate-y-0.5">
-        <span class="text-xs text-ctp-overlay1 mb-2 group-hover:text-ctp-mauve transition-colors">
-          NEXT_LOG &gt;&gt;
-        </span>
-        <span class="text-ctp-text font-bold truncate text-right w-full">
-          {{ .Title }}
-        </span>
-      </a>
+    <a href="{{ .RelPermalink }}"
+      class="group flex items-center justify-end gap-2 p-3 bg-ctp-mantle border border-ctp-surface1 hover:border-ctp-mauve transition-all text-ctp-subtext0 hover:text-ctp-mauve text-right">
+      <span class="truncate">{{ .Title }}</span>
+      <span class="text-ctp-overlay1 group-hover:text-ctp-mauve transition-colors">&gt;&gt;</span>
+    </a>
     {{ else }}
-      <div class="flex flex-col items-end p-4 border border-dashed border-ctp-surface1 opacity-50 select-none">
-        <span class="text-xs text-ctp-overlay1">LIVE_FEED &gt;&gt;</span>
-      </div>
+    <div
+      class="flex items-center justify-end p-3 border border-dashed border-ctp-surface1 opacity-40 text-ctp-overlay1">
+      <span>fin &gt;&gt;</span>
+    </div>
     {{ end }}
-    
+
   </nav>
 </footer>

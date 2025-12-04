@@ -3,7 +3,12 @@ title: "Autour du pot #3 : Pot-au-feu"
 date: 2024-10-11
 description: "Exploration finale des chambres froides."
 icon: "🧊"
-color: "teal"
+color: "lavender"
+tags: 
+  - documentaire sonore
+  - radio fréquens
+  - école normale
+  - cuisine
 authors: 
   - Kenza Benyahia 
   - Mathieu Allag

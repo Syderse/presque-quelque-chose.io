@@ -9,6 +9,9 @@ tags:
   - bestiaire
   - studio ghibli
   - animation
+  - école normale
+  - Miyazaki
+  - études asiatiques
 authors:
   - mathieu-allag
 

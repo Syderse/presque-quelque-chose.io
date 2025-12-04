@@ -1,16 +1,16 @@
 {{/* Widget: DOM Story (Solid State Version)
-    File: layouts/partials/widgets/dom-card.html
-    Architecture: Autonomous Widget (Self-contained Border/BG)
-    Refactor:
-    - Cleaned root classes (removed relative/h-full/w-full).
-    - Standardized Background Grid (.bg-grid-pattern).
-    - Enforced Hard Shadows on interactive elements.
+File: layouts/partials/widgets/dom-card.html
+Architecture: Autonomous Widget (Self-contained Border/BG)
+Refactor:
+- Cleaned root classes (removed relative/h-full/w-full).
+- Standardized Background Grid (.bg-grid-pattern).
+- Enforced Hard Shadows on interactive elements.
 */}}
 
-{{/* MAIN WRAPPER 
-    - .bento-card: Provides Border & Structure.
-    - bg-ctp-mantle: Overrides default surface0 for "Console" look.
-    - overflow-hidden: MANDATORY for Virus Layer & Admin Modal clipping.
+{{/* MAIN WRAPPER
+- .bento-card: Provides Border & Structure.
+- bg-ctp-mantle: Overrides default surface0 for "Console" look.
+- overflow-hidden: MANDATORY for Virus Layer & Admin Modal clipping.
 */}}
 <div class="bento-card group select-none overflow-hidden bg-ctp-mantle" id="dom-container">
 
@@ -35,7 +35,8 @@
         </div>
 
         {{/* HUD: LATERAL DATA */}}
-        <div class="absolute left-3 top-1/2 -translate-y-1/2 flex flex-col gap-2 z-10 pointer-events-none text-ctp-surface1">
+        <div
+            class="absolute left-3 top-1/2 -translate-y-1/2 flex flex-col gap-2 z-10 pointer-events-none text-ctp-surface1">
             <span class="text-[8px] font-mono writing-vertical-lr rotate-180">MODE: PERFORMANCE</span>
             <span class="text-[8px] font-mono writing-vertical-lr rotate-180">V: 4.5.0</span>
         </div>
@@ -45,26 +46,26 @@
             <div id="dom-wrapper" class="relative transition-transform duration-100 ease-out will-change-transform">
 
                 {{/* Ripple Effect */}}
-                <div id="click-ripple" 
-                     class="absolute inset-0 rounded-full border-2 border-ctp-peach scale-0 opacity-0 pointer-events-none">
+                <div id="click-ripple"
+                    class="absolute inset-0 rounded-full border-2 border-ctp-peach scale-0 opacity-0 pointer-events-none">
                 </div>
 
-                <button id="btn-dom" 
+                <button id="btn-dom"
                     class="relative flex flex-col items-center justify-center gap-2 focus:outline-none active:scale-95 transition-transform duration-75 p-6 rounded-2xl bg-ctp-surface0 border border-ctp-surface1 hover:border-ctp-mauve hover:shadow-[4px_4px_0px_0px_rgba(0,0,0,0.3)] hover:-translate-y-0.5 group/btn"
                     aria-label="Interagir avec le Sujet">
 
                     {{/* L'Icône */}}
-                    <span id="dom-icon" 
+                    <span id="dom-icon"
                         class="text-6xl filter drop-shadow-md transition-transform duration-200 relative z-10">
                         👾
                     </span>
-                    
+
                     {{/* Ghost (Décalage solide sans flou) */}}
-                    <span class="absolute top-6 left-6 text-6xl text-ctp-red opacity-0 z-0 pointer-events-none" 
+                    <span class="absolute top-6 left-6 text-6xl text-ctp-red opacity-0 z-0 pointer-events-none"
                         id="dom-icon-ghost">👾</span>
 
                     {{/* Le Label */}}
-                    <span id="dom-label" 
+                    <span id="dom-label"
                         class="text-xs font-mono font-bold text-ctp-subtext0 uppercase tracking-[0.2em] mt-2 transition-colors group-hover/btn:text-ctp-text">
                         INITIALISER
                     </span>
@@ -73,23 +74,24 @@
         </div>
 
         {{/* HUD: FOOTER (Solid Panel) */}}
-        <div class="absolute bottom-0 left-0 w-full h-14 bg-ctp-crust border-t border-ctp-surface1 z-40 flex flex-col p-2">
+        <div
+            class="absolute bottom-0 left-0 w-full h-14 bg-ctp-crust border-t border-ctp-surface1 z-40 flex flex-col p-2">
             <div class="flex justify-between items-center mb-1">
                 <span class="text-[9px] font-mono text-ctp-blue">>> SYSTEM_LOG</span>
                 {{/* Clic droit Admin Target */}}
-                <span id="dom-counter-display" 
+                <span id="dom-counter-display"
                     class="text-[9px] font-mono text-ctp-red font-bold cursor-help hover:text-ctp-mauve transition-colors">
                     000 / 999
                 </span>
             </div>
-            <div id="console-output" 
+            <div id="console-output"
                 class="text-[10px] font-mono text-ctp-subtext1 leading-tight overflow-hidden opacity-90 h-full w-full whitespace-nowrap">
                 <span class="animate-pulse">_</span>
             </div>
         </div>
 
         {{/* COUCHE 50 : TOMBSTONE (Opaque) */}}
-        <div id="dom-tombstone" 
+        <div id="dom-tombstone"
             class="hidden absolute inset-0 z-50 bg-ctp-crust flex flex-col items-center justify-center text-center p-6 border-4 border-ctp-surface1 cursor-help">
             <div class="text-6xl mb-6 grayscale">⚰️</div>
             <div class="space-y-4">
@@ -103,15 +105,15 @@
         </div>
 
         {{/* COUCHE 60 : ADMIN (Opaque) */}}
-        <div id="admin-modal" 
+        <div id="admin-modal"
             class="hidden absolute inset-0 z-[60] bg-ctp-base flex flex-col items-center justify-center text-center p-4 border-2 border-ctp-red">
             <div class="font-mono text-ctp-green text-xs mb-4">/// CLÉ D'ACCÈS REQUISE ///</div>
 
             {{/* LOGIN STATE */}}
             <div id="admin-login-view" class="w-full max-w-[200px] flex flex-col gap-3">
                 <div class="text-4xl animate-bounce">🙈</div>
-                <input type="password" id="admin-pwd-input" 
-                    class="w-full bg-ctp-surface0 border border-ctp-surface2 text-center text-ctp-text font-mono text-sm p-2 rounded focus:outline-none focus:border-ctp-green placeholder-ctp-overlay1" 
+                <input type="password" id="admin-pwd-input"
+                    class="w-full bg-ctp-surface0 border border-ctp-surface2 text-center text-ctp-text font-mono text-sm p-2 rounded focus:outline-none focus:border-ctp-green placeholder-ctp-overlay1"
                     placeholder="Password..." autocomplete="off">
                 <div class="text-[9px] text-ctp-red hidden" id="admin-error-msg">ACCÈS REFUSÉ</div>
             </div>
@@ -123,21 +125,21 @@
 
                 <div class="flex flex-col gap-1 mt-2 text-left">
                     <label class="text-[9px] text-ctp-overlay2">SET COUNT:</label>
-                    <input type="number" id="admin-set-count" 
+                    <input type="number" id="admin-set-count"
                         class="bg-ctp-surface0 p-1 text-xs font-mono text-ctp-text rounded border border-ctp-surface1">
                 </div>
 
-                <button id="admin-btn-save" 
+                <button id="admin-btn-save"
                     class="mt-2 bg-ctp-green text-ctp-base font-bold text-xs py-1 px-2 rounded hover:bg-ctp-green/80 transition-colors">
                     SAUVEGARDER
                 </button>
 
-                <button id="admin-btn-reset" class="mt-4 text-[9px] text-ctp-red hover:underline decoration-wavy">
+                <button id="admin-btn-reset" class="mt-4 text-[9px] text-ctp-red hover:text-ctp-red/80">
                     [RECONDITIONNEMENT USINE]
                 </button>
             </div>
 
-            <div class="absolute top-2 right-2 text-ctp-overlay0 text-xs cursor-pointer hover:text-ctp-text" 
+            <div class="absolute top-2 right-2 text-ctp-overlay0 text-xs cursor-pointer hover:text-ctp-text"
                 id="admin-close-btn">[X]</div>
         </div>
 
@@ -156,37 +158,81 @@
 {{/* Styles spécifiques pour animations légères (Legacy Preserved for Widget Logic) */}}
 <style>
     @keyframes text-glitch {
-        0% { transform: translate(0); }
-        20% { transform: translate(-2px, 2px); }
-        40% { transform: translate(-2px, -2px); }
-        60% { transform: translate(2px, 2px); }
-        80% { transform: translate(2px, -2px); }
-        100% { transform: translate(0); }
+        0% {
+            transform: translate(0);
+        }
+
+        20% {
+            transform: translate(-2px, 2px);
+        }
+
+        40% {
+            transform: translate(-2px, -2px);
+        }
+
+        60% {
+            transform: translate(2px, 2px);
+        }
+
+        80% {
+            transform: translate(2px, -2px);
+        }
+
+        100% {
+            transform: translate(0);
+        }
     }
+
     .glitch-active {
         animation: text-glitch 0.3s cubic-bezier(.25, .46, .45, .94) both infinite;
         color: var(--ctp-red) !important;
         font-weight: bold;
     }
+
     .blinking-cursor::after {
         content: "█";
         animation: blink 1s step-end infinite;
     }
+
     @keyframes blink {
-        0%, 100% { opacity: 1; }
-        50% { opacity: 0; }
+
+        0%,
+        100% {
+            opacity: 1;
+        }
+
+        50% {
+            opacity: 0;
+        }
     }
+
     @keyframes floatMessageSolid {
-        0% { opacity: 0; transform: translate(-50%, -50%) scale(0.8); }
-        10% { opacity: 1; transform: translate(-50%, -50%) scale(1); }
-        80% { opacity: 1; transform: translate(-50%, -50%) scale(1); }
-        100% { opacity: 0; transform: translate(-50%, -150%) scale(0.9); }
+        0% {
+            opacity: 0;
+            transform: translate(-50%, -50%) scale(0.8);
+        }
+
+        10% {
+            opacity: 1;
+            transform: translate(-50%, -50%) scale(1);
+        }
+
+        80% {
+            opacity: 1;
+            transform: translate(-50%, -50%) scale(1);
+        }
+
+        100% {
+            opacity: 0;
+            transform: translate(-50%, -150%) scale(0.9);
+        }
     }
+
     .msg-bubble-solid {
         position: absolute;
         will-change: transform, opacity;
         animation: floatMessageSolid 4s ease-out forwards;
         z-index: 100;
-        transform: translateZ(0); 
+        transform: translateZ(0);
     }
 </style>

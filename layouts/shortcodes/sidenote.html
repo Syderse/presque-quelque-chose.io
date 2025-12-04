@@ -1,30 +1,28 @@
 {{/* SHORTCODE: SIDENOTE (Solid State V3.1 - Fix Position)
-   - FIX: Removed 'relative' from the wrapper span. 
-     Now the absolute positioning anchors to the <article> container, not the number.
-*/}}
+- FIX: Removed 'relative' from the wrapper span.
+Now the absolute positioning anchors to the <article> container, not the number.
+    */}}
 
-{{ $num := add .Ordinal 1 }}
-{{ $isEven := eq (mod $num 2) 0 }}
-{{ $sideClass := cond $isEven "sn-right" "sn-left" }}
+    {{ $num := add .Ordinal 1 }}
+    {{ $isEven := eq (mod $num 2) 0 }}
+    {{ $sideClass := cond $isEven "sn-right" "sn-left" }}
 
-{{/* CRITICAL FIX: No 'relative' class here. */}}
-<span class="inline group/note">
+    {{/* CRITICAL FIX: No 'relative' class here. */}}
+    <span class="inline group/note">
 
-    {{/* 1. THE TRIGGER */}}
-    <label for="sn-{{ $num }}" 
-           class="cursor-pointer font-mono text-[0.7em] text-ctp-peach align-super select-none 
-                  hover:text-ctp-mauve hover:underline decoration-1 underline-offset-2 
+        {{/* 1. THE TRIGGER */}}
+        <label for="sn-{{ $num }}" class="cursor-pointer font-mono text-[0.7em] text-ctp-peach align-super select-none 
+                  hover:text-ctp-mauve
                   peer-checked:text-ctp-red peer-checked:font-bold
-                  transition-colors duration-200"
-           title="Voir la note {{ $num }}">
-        [{{ $num }}]
-    </label>
+                  transition-colors duration-200" title="Voir la note {{ $num }}">
+            [{{ $num }}]
+        </label>
 
-    {{/* 2. STATE MANAGEMENT */}}
-    <input type="checkbox" id="sn-{{ $num }}" class="peer hidden" />
-    
-    {{/* 3. THE NOTE CONTENT */}}
-    <span class="side-note-content {{ $sideClass }}
+        {{/* 2. STATE MANAGEMENT */}}
+        <input type="checkbox" id="sn-{{ $num }}" class="peer hidden" />
+
+        {{/* 3. THE NOTE CONTENT */}}
+        <span class="side-note-content {{ $sideClass }}
         /* --- BASE MOBILE STYLES (Default) --- */
         hidden peer-checked:block 
         w-full my-4 p-4 
@@ -63,10 +61,10 @@
             lg:peer-checked:border-r-ctp-peach
         {{ end }}
     ">
-        <span class="block">
-            <span class="text-ctp-peach font-bold mr-1">{{ $num }}.</span>
-            {{ .Inner | markdownify }}
+            <span class="block">
+                <span class="text-ctp-peach font-bold mr-1">{{ $num }}.</span>
+                {{ .Inner | markdownify }}
+            </span>
         </span>
-    </span>
 
-</span>
+    </span>

@@ -1,7 +1,7 @@
 ---
-title: bulbe bleu
+title: bulbe rouge
 description: test visuel
-color: blue
+color: red
 ---
 
 ce bulbe a le malheur d'être le premier. le seul de son genre pour l'instant. mais il sert désormais de **pierre angulaire** {{< sidenote "Structure" >}}Une fondation instable est souvent la meilleure garantie d'une croissance organique imprévisible, typique de l'architecture Rhizome.{{< /sidenote >}} pour vérifier la solidité de l'édifice. voici le protocole de test complet de la *charte graphique catppuccin*.
