@@ -1,8 +1,56 @@
 {{ define "main" }}
 
+{{/* --- TOC OVERLAY SYSTEM --- */}}
+{{ if .TableOfContents }}
+<div id="toc-backdrop" 
+     onclick="closeToc()"
+     class="fixed inset-0 z-30 bg-ctp-crust/60 cursor-pointer opacity-0 pointer-events-none transition-opacity duration-250 ease-out"
+     aria-hidden="true">
+</div>
+
+<aside id="toc-panel" 
+       class="toc-panel toc-closed fixed top-4 right-4 bottom-4 z-40 w-[280px] transition-[transform,opacity] duration-250 ease-out will-change-[transform,opacity] overflow-y-auto scrollbar-hide">
+  <div class="p-5">
+    <div class="flex items-center justify-between mb-5 pb-3 border-b border-ctp-surface0/50">
+      <h2 class="text-sm font-mono uppercase tracking-widest text-ctp-lavender/80">Plan</h2>
+      <button onclick="closeToc()" class="p-1 rounded-full text-ctp-overlay0 hover:text-ctp-mauve hover:bg-ctp-mauve/10 transition-all duration-200" aria-label="Fermer">
+        <svg xmlns="http://www.w3.org/2000/svg" class="w-4 h-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+          <line x1="18" y1="6" x2="6" y2="18"></line>
+          <line x1="6" y1="6" x2="18" y2="18"></line>
+        </svg>
+      </button>
+    </div>
+    <nav class="toc-tree" aria-label="Table des matières">
+      {{/* Clean shortcode placeholders (HAHAHUGOSHORTCODE...HBHB) from TOC */}}
+      {{ $toc := .TableOfContents | replaceRE `HAHAHUGOSHORTCODE-?\d+s\d+HBHB` "" | safeHTML }}
+      {{ $toc }}
+    </nav>
+  </div>
+</aside>
+{{ end }}
+
 <div class="animate-fade-in-up">
 
-  <header class="mb-16 pt-12 pb-8 border-b border-ctp-surface0">
+  {{/* --- BREADCRUMB --- */}}
+  <nav class="breadcrumb" aria-label="Fil d'Ariane">
+    <a href="{{ " /" | relURL }}">accueil</a>
+    <span class="breadcrumb-separator">›</span>
+    {{- $ancestors := slice -}}
+    {{- $current := .Parent -}}
+    {{- range seq 10 -}}{{/* Safety limit for nesting depth */}}
+    {{- if $current -}}
+    {{- $ancestors = $ancestors | append $current -}}
+    {{- $current = $current.Parent -}}
+    {{- end -}}
+    {{- end -}}
+    {{- range $ancestors | collections.Reverse -}}
+    <a href="{{ .Permalink }}">{{ .Title | plainify | lower | safeHTML }}</a>
+    <span class="breadcrumb-separator">›</span>
+    {{- end -}}
+    <span class="breadcrumb-current">{{ .Title | plainify | truncate 40 "…" | lower | safeHTML }}</span>
+  </nav>
+
+  <header class="mb-16 pt-4 pb-8 border-b border-ctp-surface0">
     <h1 class="text-4xl md:text-5xl font-serif font-bold text-ctp-peach leading-tight mb-8">
       {{ .Title }}
     </h1>
@@ -10,19 +58,29 @@
     <div class="flex flex-wrap items-center justify-between gap-y-4 gap-x-6 text-sm font-medium">
       <div class="flex flex-wrap gap-2">
         {{ with .Params.tags }}
-          {{ range . }}
-            <a href="{{ "tags/" | relLangURL }}{{ . | urlize }}" 
-               class="px-3 py-1 rounded-full border border-ctp-surface1 text-ctp-subtext0 hover:border-ctp-mauve hover:text-ctp-mauve transition-colors">
-              #{{ . }}
-            </a>
-          {{ end }}
+        {{ range . }}
+        {{ partial "ui/tag-chip.html" . }}
+        {{ end }}
         {{ end }}
       </div>
 
-      <div class="flex items-center gap-2 text-ctp-overlay2">
-        <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="opacity-70"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg>
-        <span>{{ .ReadingTime }} min</span>
-      </div>
+      {{/* TOC Button */}}
+      {{ if .TableOfContents }}
+      <button onclick="openToc()" 
+              class="flex items-center gap-2 px-3 py-1.5 rounded-lg bg-ctp-surface0 hover:bg-ctp-surface1 text-ctp-overlay1 hover:text-ctp-mauve border border-ctp-surface1 transition-all duration-200"
+              aria-label="Afficher le plan de l'article">
+        <svg xmlns="http://www.w3.org/2000/svg" class="w-4 h-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+          <line x1="8" y1="6" x2="21" y2="6"></line>
+          <line x1="8" y1="12" x2="21" y2="12"></line>
+          <line x1="8" y1="18" x2="21" y2="18"></line>
+          <line x1="3" y1="6" x2="3.01" y2="6"></line>
+          <line x1="3" y1="12" x2="3.01" y2="12"></line>
+          <line x1="3" y1="18" x2="3.01" y2="18"></line>
+        </svg>
+        <span class="text-xs font-mono uppercase tracking-wide">Plan</span>
+      </button>
+      {{ end }}
+
     </div>
   </header>
 
@@ -32,11 +90,48 @@
   </article>
 
   {{/* --- FOOTER (NEW) --- */}}
+  {{ if not .Params.hide_footer }}
   {{ partial "article-footer.html" . }}
+  {{ end }}
 
 </div>
 
 {{ $physics := resources.Get "js/sidenote-adjuster.js" | minify | fingerprint }}
 <script src="{{ $physics.RelPermalink }}" integrity="{{ $physics.Data.Integrity }}" defer></script>
+
+{{/* TOC Panel Logic */}}
+{{ if .TableOfContents }}
+<script>
+  const tocPanel = document.getElementById('toc-panel');
+  const tocBackdrop = document.getElementById('toc-backdrop');
+
+  function openToc() {
+    tocPanel.classList.remove('toc-closed');
+    tocPanel.classList.add('toc-open');
+    tocBackdrop.classList.remove('opacity-0', 'pointer-events-none');
+    tocBackdrop.classList.add('opacity-100', 'pointer-events-auto');
+  }
+
+  function closeToc() {
+    tocPanel.classList.remove('toc-open');
+    tocPanel.classList.add('toc-closed');
+    tocBackdrop.classList.remove('opacity-100', 'pointer-events-auto');
+    tocBackdrop.classList.add('opacity-0', 'pointer-events-none');
+  }
+
+  document.addEventListener('keydown', (e) => {
+    if (e.key === 'Escape' && tocPanel.classList.contains('toc-open')) {
+      closeToc();
+    }
+  });
+
+  // Close TOC when clicking a link inside it
+  tocPanel.querySelectorAll('a').forEach(link => {
+    link.addEventListener('click', () => {
+      setTimeout(closeToc, 100);
+    });
+  });
+</script>
+{{ end }}
 
 {{ end }}

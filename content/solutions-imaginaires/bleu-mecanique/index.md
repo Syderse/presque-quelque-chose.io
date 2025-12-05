@@ -4,6 +4,8 @@ description: test visuel
 color: blue
 ---
 
+# niveau 1 : test de la première coloration bulbaire
+
 ce bulbe a le malheur d'être le premier. le seul de son genre pour l'instant. mais il sert désormais de **pierre angulaire** {{< sidenote "Structure" >}}Une fondation instable est souvent la meilleure garantie d'une croissance organique imprévisible, typique de l'architecture Rhizome.{{< /sidenote >}} pour vérifier la solidité de l'édifice. voici le protocole de test complet de la *charte graphique catppuccin*.
 
 ## niveau 2 : la structure du terrier {{< sidenote "Layout" >}}La profondeur sémantique ne doit jamais compromettre la lisibilité. Vérifier l'alignement vertical sur mobile.{{< /sidenote >}}

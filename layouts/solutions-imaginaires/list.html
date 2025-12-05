@@ -11,94 +11,171 @@
     "feuille_07_nenuphare.png" 
 }}
 
-{{/* 1. HEADER: The Title Page (TAILLE RÉDUITE ICI) */}}
-<div class="relative z-30 w-full flex justify-center items-center px-6 mb-2 mt-4 md:mt-0 animate-fade-in-up">
-     {{/* UPDATE: max-w-lg (mobile) et lg:max-w-xl (desktop) pour réduire la taille */}}
-     <img src="/media/solution-imaginaire/solutions_imaginaires_titre.png" 
-          alt="Solutions Imaginaires" 
-          class="block w-full max-w-lg lg:max-w-xl h-auto object-contain drop-shadow-xl hover:scale-[1.01] transition-transform duration-500 ease-out select-none">
-</div>
+{{/* OUTER WRAPPER: Apply Light Theme */}}
+<div class="solutions-imaginaires-page">
 
-{{/* WRAPPER */}}
-<div class="relative w-full min-h-screen">
+  {{/* POLLEN FLOTTANT — Touches de vie dorées */}}
+  <div class="pollen-container" aria-hidden="true">
+    <span class="pollen"></span>
+    <span class="pollen"></span>
+    <span class="pollen"></span>
+    <span class="pollen"></span>
+    <span class="pollen"></span>
+    <span class="pollen"></span>
+    <span class="pollen"></span>
+    <span class="pollen"></span>
+  </div>
 
-     {{/* 2. THE SPINE (The Ant Line) */}}
-      <div class="absolute top-0 bottom-0 left-1/2 -translate-x-1/2 w-26 lg:w-36 z-0 pointer-events-none select-none overflow-hidden">
-           <div class="flex flex-col w-full h-auto opacity-100 brightness-125 saturate-150">
-                {{ $antSequence := slice 1 4 2 5 3 6 }}
-                {{ range seq 15 }}
-                    {{ range $antSequence }}
-                        <img src="/media/solution-imaginaire/ant_line_{{ . }}.png" alt="" class="block w-full h-auto object-contain select-none" loading="lazy">
-                    {{ end }}
-                {{ end }}
-           </div>
+  {{/* 1. HEADER: The Title */}}
+  <div class="relative z-30 w-full flex justify-center items-center px-6 mb-4 animate-fade-in-up">
+      <img src="/media/solution-imaginaire/solutions_imaginaires_titre.png" 
+           alt="Solutions Imaginaires" 
+           loading="eager"
+           class="block w-full max-w-lg lg:max-w-xl h-auto object-contain 
+                  drop-shadow-xl hover:scale-[1.01] transition-transform duration-500 ease-out select-none">
+  </div>
+
+  {{/* CONTENT WRAPPER */}}
+  <div class="relative w-full min-h-screen">
+
+      {{/* 2. THE SPINE — Ligne organique simple avec points décoratifs */}}
+      <div class="organic-spine absolute top-0 bottom-0 left-1/2 -translate-x-1/2 w-1 z-0 pointer-events-none select-none" aria-hidden="true">
+          {{/* Ligne centrale */}}
+          <div class="absolute inset-0 w-0.5 left-1/2 -translate-x-1/2 bg-gradient-to-b from-amber-300/40 via-orange-400/50 to-amber-600/40 rounded-full"></div>
+          
+          {{/* Points décoratifs espacés — tons automnaux */}}
+          {{ range $i := seq 12 }}
+            {{ $colors := slice "bg-amber-400" "bg-orange-400" "bg-rose-400" "bg-emerald-500" }}
+            {{ $color := index $colors (mod $i 4) }}
+            {{ $size := cond (eq (mod $i 3) 0) "w-3 h-3" "w-2 h-2" }}
+            {{ $offset := cond (eq (mod $i 2) 0) "-left-1" "left-0.5" }}
+            <div class="absolute {{ $size }} {{ $color }} rounded-full opacity-60 {{ $offset }}"
+                 style="top: {{ mul $i 8 }}%;"></div>
+          {{ end }}
       </div>
 
-     {{/* 3. THE ECLECTIC GRID */}}
-     <section class="relative z-10 w-full max-w-full mx-auto mt-20 md:mt-32 overflow-visible px-4 pb-48">
+      {{/* 3. THE ECLECTIC GRID */}}
+      <section class="relative z-10 w-full max-w-full mx-auto mt-20 md:mt-32 overflow-visible px-4 pb-48">
           
           <div class="grid grid-cols-1 md:grid-cols-[1fr_10rem_1fr] lg:grid-cols-[1fr_14rem_1fr] gap-y-0">
 
-                {{ range $index, $page := .Pages }}
-                {{ $isEven := eq (mod $index 2) 0 }}
-                {{ $leafImage := index $leaves (mod $index 7) }}
+              {{ range $index, $page := .Pages }}
+              {{ $isEven := eq (mod $index 2) 0 }}
+              {{ $leafImage := index $leaves (mod $index 7) }}
 
-                {{/* CARD COMPONENT */}}
-                <div class="{{ if $isEven }}
-                           {{/* LEFT COLUMN */}}
-                           md:col-start-1 md:justify-self-end 
-                           md:-mr-6 lg:-mr-8
-                           rotate-[12deg] hover:rotate-[10deg] origin-right
-                         {{ else }}
-                           {{/* RIGHT COLUMN */}}
-                           md:col-start-3 md:justify-self-start 
-                           md:mt-32 lg:mt-40 
-                           md:-ml-6 lg:-ml-8
-                           -rotate-[12deg] hover:-rotate-[10deg] origin-left
-                         {{ end }} 
-                         
-                         {{/* SIZE UPDATE: Slightly more compact */}}
-                         w-[85%] md:w-[90%] lg:w-[100%] 
-                         
-                         md:-mb-40 lg:-mb-56
-                         max-w-none perspective-1000 transition-transform duration-700 ease-out z-10">
+              {{/* CARD COMPONENT */}}
+              <div class="{{ if $isEven }}
+                          {{/* LEFT COLUMN */}}
+                          md:col-start-1 md:justify-self-end 
+                          md:-mr-6 lg:-mr-8
+                          rotate-[12deg] hover:rotate-[10deg] origin-right
+                        {{ else }}
+                          {{/* RIGHT COLUMN */}}
+                          md:col-start-3 md:justify-self-start 
+                          md:mt-32 lg:mt-40 
+                          md:-ml-6 lg:-ml-8
+                          -rotate-[12deg] hover:-rotate-[10deg] origin-left
+                        {{ end }} 
+                        
+                        w-[85%] md:w-[90%] lg:w-[100%] 
+                        md:-mb-40 lg:-mb-56
+                        max-w-none transition-transform duration-500 ease-out z-10
+                        si-leaf-card"
+                   style="content-visibility: auto; contain-intrinsic-size: 400px 250px;">
 
-                     <a href="{{ .RelPermalink }}"
-                        class="group relative block w-full aspect-[16/10] hover:scale-[1.05] transition-transform duration-500 ease-out">
+                  <a href="{{ .RelPermalink }}"
+                     class="group relative block w-full aspect-[16/10] hover:scale-[1.05] transition-transform duration-500 ease-out">
 
-                          {{/* A. THE LEAF IMAGE */}}
-                          <img src="/media/solution-imaginaire/{{ $leafImage }}" 
-                               alt="" 
-                               class="absolute inset-0 w-full h-full object-contain z-0 
-                                      drop-shadow-2xl opacity-100
-                                      {{ if $isEven }}scale-x-[-1]{{ end }}">
+                      {{/* A. THE LEAF IMAGE — OPTIMIZED: lightweight shadow, explicit dimensions */}}
+                      <img src="/media/solution-imaginaire/{{ $leafImage }}" 
+                           alt="Feuille décorative" 
+                           width="400" height="250"
+                           loading="lazy"
+                           decoding="async"
+                           class="absolute inset-0 w-full h-full object-contain z-0 
+                                  si-leaf-shadow
+                                  {{ if $isEven }}scale-x-[-1]{{ end }}">
 
-                         {{/* B. THE CONTENT ZONE (Improved Geometry) */}}
-                          <div class="absolute inset-0 z-10 flex flex-col items-center justify-center p-8 pb-10">
+                      {{/* B. THE CONTENT ZONE */}}
+                      <div class="absolute inset-0 z-10 flex flex-col items-center justify-center p-8 pb-10">
 
-                               {{/* LOGIC: Counter-Rotation.
-                                  If card rotates +12deg, Text rotates -6deg.
-                                  Result: Text is tilted 6deg (readable but still "tossed").
-                               */}}
-                               <div class="max-w-[65%] text-center transform 
-                                           {{ if $isEven }} -rotate-[6deg] {{ else }} rotate-[6deg] {{ end }}">
+                          {{/* Counter-Rotation for readable text */}}
+                          <div class="max-w-[65%] text-center transform 
+                                      {{ if $isEven }} -rotate-[6deg] {{ else }} rotate-[6deg] {{ end }}">
 
-                                    <h3 class="font-hand leading-[0.85] font-bold text-ctp-lavender 
-                                               drop-shadow-hard
-                                               {{ if gt (len .Title) 25 }}
-                                                    text-2xl md:text-3xl
-                                               {{ else }}
-                                                    text-3xl md:text-5xl
-                                               {{ end }}">
-                                         {{ .Title | lower }}
-                                    </h3>
-                               </div>
+                              <h3 class="leaf-card-title font-hand leading-[0.85]
+                                          {{ if gt (len .Title) 25 }}
+                                              text-2xl md:text-3xl
+                                          {{ else }}
+                                              text-3xl md:text-5xl
+                                          {{ end }}">
+                                  {{ .Title | lower }}
+                              </h3>
                           </div>
-                     </a>
-                </div>
-                {{ end }}
+                      </div>
+                  </a>
+              </div>
+              {{ end }}
 
           </div>
-     </section>
+      </section>
+  </div>
+
+  {{/* 4. LA VIE CACHÉE — 42 Fourmis statiques dispersées avec 9 poses naturelles */}}
+  {{/* Distribution pseudo-aléatoire avec 3 couleurs automnales */}}
+  {{/* 
+    Les 9 poses naturelles :
+    0 = grimpe vers le haut (verticale)
+    1 = descend (verticale inversée)
+    2 = marche vers la droite (horizontal)
+    3 = marche vers la gauche (horizontal inversé)
+    4 = diagonale montante droite
+    5 = diagonale montante gauche
+    6 = diagonale descendante droite
+    7 = diagonale descendante gauche
+    8 = au repos (légère inclinaison)
+  */}}
+  <div class="static-ants-container" aria-hidden="true">
+    {{ range $i := seq 42 }}
+      {{/* Calcul pseudo-aléatoire des positions */}}
+      {{ $seed := mul $i 7 }}
+      {{ $xBase := mod (add (mul $seed 17) 23) 100 }}
+      
+      {{/* Redistribuer vers les bords (zones feuilles) */}}
+      {{ $x := 0 }}
+      {{ if lt (mod $i 3) 2 }}
+        {{ if eq (mod $i 2) 0 }}
+          {{ $x = mod (add $xBase 5) 28 }}
+        {{ else }}
+          {{ $x = add 72 (mod $xBase 26) }}
+        {{ end }}
+      {{ else }}
+        {{ $x = add 30 (mod $xBase 40) }}
+      {{ end }}
+      
+      {{ $y := mod (add (mul $seed 13) 41) 95 }}
+      {{ $size := add 85 (mod (mul $seed 11) 50) }}
+      {{ $opacity := add 65 (mod (mul $seed 7) 20) }}
+      
+      {{/* Sélection de la pose (0-8) — géré par CSS */}}
+      {{ $pose := mod $i 9 }}
+      {{ $poseClass := printf "si-ant-pose-%d" $pose }}
+      
+      {{/* Couleur : 0=terracotta, 1=forest, 2=wine */}}
+      {{ $colorClass := "" }}
+      {{ $colorIndex := mod $i 3 }}
+      {{ if eq $colorIndex 0 }}
+        {{ $colorClass = "si-ant-terra" }}
+      {{ else if eq $colorIndex 1 }}
+        {{ $colorClass = "si-ant-forest" }}
+      {{ else }}
+        {{ $colorClass = "si-ant-wine" }}
+      {{ end }}
+      
+      <span class="static-ant {{ $colorClass }} {{ $poseClass }}" 
+            style="left: {{ $x }}%; top: {{ $y }}%; font-size: {{ printf "%.2f" (div (float $size) 100) }}rem; opacity: {{ printf "%.2f" (div (float $opacity) 100) }};">🐜</span>
+    {{ end }}
+  </div>
+
 </div>
 {{ end }}

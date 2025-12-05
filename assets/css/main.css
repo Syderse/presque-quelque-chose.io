@@ -2,6 +2,7 @@
 @import url('https://fonts.googleapis.com/css2?family=Ubuntu:wght@300;400;500;700&family=JetBrains+Mono:wght@400;500&display=swap');
 @import url('https://fonts.googleapis.com/css2?family=Crimson+Text:ital,wght@0,400;0,600;0,700;1,400&display=swap');
 @import url('https://fonts.googleapis.com/css2?family=Caveat:wght@400;700&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Bebas+Neue&display=swap');
 
 @import "tailwindcss";
 
@@ -24,7 +25,7 @@
     --ctp-red: #f38ba8;
     --ctp-maroon: #eba0ac;
     --ctp-peach: #fab387;
-    --ctp-yellow: #f9e2af;
+    --ctp-yellow: #c9b93d;
     --ctp-green: #a6e3a1;
     --ctp-teal: #94e2d5;
     --ctp-sky: #89dceb;
@@ -44,6 +45,27 @@
     --ctp-base: #1e1e2e;
     --ctp-mantle: #181825;
     --ctp-crust: #11111b;
+
+    /* Violet Palette (Legible, Harmonious) */
+    /* Used for prose headings: h1 (lightest) → h6 (darkest) */
+    --ctp-violet-1: #d4b4f7;
+    /* Wisteria — soft lavender */
+    --ctp-violet-2: #c19bf7;
+    /* Orchid — gentle mauve */
+    --ctp-violet-3: #a97cf7;
+    /* Amethyst — vibrant purple */
+    --ctp-violet-4: #915df5;
+    /* Iris — rich violet */
+    --ctp-violet-5: #7a42e0;
+    /* Grape — deep purple */
+    --ctp-violet-6: #6230b3;
+    /* Plum — dramatic darkest */
+
+    /* Prose Accent Colors (Deep, Legible) */
+    --ctp-deep-blue: #5b8fb9;
+    /* Prose bold: rich steel blue */
+    --ctp-deep-gold: #c9a227;
+    /* Prose links: warm amber gold */
   }
 
   body {
@@ -65,6 +87,7 @@
   --font-serif: "Crimson Text", "Georgia", Cambria, "Times New Roman", Times, serif;
   --font-mono: "JetBrains Mono", ui-monospace, SFMono-Regular, monospace;
   --font-hand: "Caveat", cursive;
+  --font-display: "Bebas Neue", "Impact", "Arial Narrow", sans-serif;
 
   --color-ctp-rosewater: var(--ctp-rosewater);
   --color-ctp-flamingo: var(--ctp-flamingo);
@@ -90,6 +113,14 @@
   --color-ctp-surface0: var(--ctp-surface0);
   --color-ctp-surface1: var(--ctp-surface1);
   --color-ctp-surface2: var(--ctp-surface2);
+
+  /* Violet Palette (for Tailwind utilities) */
+  --color-ctp-violet-1: var(--ctp-violet-1);
+  --color-ctp-violet-2: var(--ctp-violet-2);
+  --color-ctp-violet-3: var(--ctp-violet-3);
+  --color-ctp-violet-4: var(--ctp-violet-4);
+  --color-ctp-violet-5: var(--ctp-violet-5);
+  --color-ctp-violet-6: var(--ctp-violet-6);
 }
 
 /* --- 4. COMPONENTS LAYER (SOLID ARCHITECTURE) --- */
@@ -118,35 +149,54 @@
       margin-bottom: 1.5em;
     }
 
-    /* 2. POLISH: Gradient Headings */
-    /* Instead of flat color, we clip a gradient to the text. */
+    /* 2. VISUAL HIERARCHY: Violet Headings */
+    /* Each heading level has its own distinct shade: h1 (light) → h6 (dark) */
     & :where(h1, h2, h3, h4, h5, h6) {
-      background: var(--ctp-gradient-heading);
-      -webkit-background-clip: text;
-      background-clip: text;
-      color: transparent !important;
-      /* Required for clip to work */
       font-weight: 800 !important;
       letter-spacing: -0.025em;
-      /* Tighten slightly for modern feel */
       margin-top: 2em;
     }
 
-    /* 3. POLISH: Interactive Links */
+    & :where(h1) {
+      color: var(--ctp-violet-1) !important;
+    }
+
+    & :where(h2) {
+      color: var(--ctp-violet-2) !important;
+    }
+
+    & :where(h3) {
+      color: var(--ctp-violet-3) !important;
+    }
+
+    & :where(h4) {
+      color: var(--ctp-violet-4) !important;
+    }
+
+    & :where(h5) {
+      color: var(--ctp-violet-5) !important;
+    }
+
+    & :where(h6) {
+      color: var(--ctp-violet-6) !important;
+    }
+
+    /* 3. POLISH: Interactive Links (Deep Gold) */
     & :where(a):not(.not-prose) {
-      color: var(--ctp-blue) !important;
+      color: var(--ctp-deep-gold) !important;
       text-decoration: none !important;
       font-weight: 600;
       transition: color 0.2s ease;
     }
 
     & :where(a):not(.not-prose):hover {
-      color: var(--ctp-sapphire) !important;
-      border-color: var(--ctp-sapphire);
+      color: var(--ctp-yellow) !important;
+      border-color: var(--ctp-yellow);
     }
 
+    /* 4. POLISH: Bold Text (Deep Blue) */
     & :where(strong, b) {
-      color: var(--ctp-peach) !important;
+      color: var(--ctp-deep-blue) !important;
       font-weight: 700 !important;
     }
 
@@ -229,6 +279,486 @@
     width: 100%;
     height: 100%;
     padding: 2rem;
+  }
+
+  /* D. BREADCRUMB (Path Ribbon — Smooth & Spacious) */
+  .breadcrumb {
+    /* Color Palette: Muted violet tones for consistency with site accent */
+    --breadcrumb-link: color-mix(in srgb, var(--ctp-lavender) 80%, var(--ctp-overlay1) 20%);
+    --breadcrumb-current: var(--ctp-mauve);
+    --breadcrumb-separator: var(--ctp-overlay0);
+
+    /* Layout: Full-width ribbon */
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    gap: 0.75rem;
+
+    /* Typography: Larger, elegant serif */
+    font-family: var(--font-serif);
+    font-size: 1.05rem;
+    font-style: italic;
+    letter-spacing: 0.01em;
+
+    /* Background: Subtle gradient from mantle to surface0 */
+    background: linear-gradient(
+      to right,
+      var(--ctp-mantle),
+      var(--ctp-surface0)
+    );
+
+    /* Spacing: Generous padding for breathing room */
+    padding: 0.85rem 1.5rem;
+    margin-bottom: 0.5rem;
+
+    /* Border: Bottom accent only — acts as visual anchor */
+    border: none;
+    border-bottom: 2px solid var(--ctp-surface1);
+    border-radius: 0;
+
+    /* Base color for links */
+    color: var(--breadcrumb-link);
+
+    /* Smooth transitions (60FPS safe) */
+    transition: border-color 0.2s ease;
+
+    &:hover {
+      border-bottom-color: var(--ctp-mauve);
+    }
+
+    & a {
+      color: var(--breadcrumb-link);
+      transition: color 0.15s ease;
+      padding: 0.15rem 0;
+
+      &:hover {
+        color: var(--ctp-mauve);
+      }
+    }
+
+    & .breadcrumb-separator {
+      color: var(--breadcrumb-separator);
+      user-select: none;
+      font-style: normal;
+      opacity: 0.5;
+      font-size: 0.9em;
+    }
+
+    & .breadcrumb-current {
+      color: var(--breadcrumb-current);
+      font-weight: 600;
+    }
+  }
+
+  /* E. TABLE OF CONTENTS — "Brume de Plan" (Optimized 60fps) */
+  .toc-panel {
+    /* Solid translucent background (no blur = fast) */
+    background: linear-gradient(
+      135deg,
+      rgba(24, 24, 37, 0.97),
+      rgba(17, 17, 27, 0.98)
+    );
+
+    /* Subtle left accent glow (simplified) */
+    border-left: 1px solid rgba(203, 166, 247, 0.2);
+    box-shadow: -8px 0 20px -10px rgba(203, 166, 247, 0.15);
+
+    /* Rounded left edge */
+    border-radius: 1rem 0 0 1rem;
+
+    /* GPU acceleration */
+    transform: translateZ(0);
+    backface-visibility: hidden;
+  }
+
+  /* Animation: opacity + translateX only (no scale = smoother) */
+  .toc-panel.toc-open {
+    transform: translateX(0) translateZ(0);
+    opacity: 1;
+  }
+
+  .toc-panel.toc-closed {
+    transform: translateX(16px) translateZ(0);
+    opacity: 0;
+    pointer-events: none;
+  }
+
+  .toc-tree {
+    font-family: var(--font-serif);
+    font-size: 0.9rem;
+    line-height: 1.8;
+    letter-spacing: 0.01em;
+
+    /* Hugo's .TableOfContents outputs a nav > ul structure */
+    & nav,
+    & > ul {
+      list-style: none;
+      padding: 0;
+      margin: 0;
+    }
+
+    /* Top-level items (h2) */
+    & > ul > li {
+      margin-bottom: 0.5rem;
+    }
+
+    /* All list items — branch connector */
+    & li {
+      position: relative;
+      padding-left: 0.25rem;
+    }
+
+    /* Branch icon before each link */
+    & li::before {
+      content: "›";
+      position: absolute;
+      left: -0.75rem;
+      top: 0.25rem;
+      color: var(--ctp-overlay0);
+      font-size: 0.85em;
+      opacity: 0.6;
+      transition: opacity 0.2s ease, color 0.2s ease, transform 0.2s ease;
+    }
+
+    & li:hover::before {
+      opacity: 1;
+      color: var(--ctp-mauve);
+      transform: translateX(2px);
+    }
+
+    /* All links — minimal, elegant */
+    & a {
+      display: inline-block;
+      padding: 0.15rem 0;
+      color: var(--ctp-subtext0);
+      border-radius: 0;
+      background: none;
+      position: relative;
+      transition: color 0.2s ease;
+
+      /* Underline animation on hover */
+      &::after {
+        content: "";
+        position: absolute;
+        bottom: 0;
+        left: 0;
+        width: 0;
+        height: 1px;
+        background: linear-gradient(to right, var(--ctp-mauve), var(--ctp-lavender));
+        transition: width 0.25s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+      }
+
+      &:hover {
+        color: var(--ctp-text);
+
+        &::after {
+          width: 100%;
+        }
+      }
+    }
+
+    /* Nested lists: dotted connector, lighter feel */
+    & ul ul {
+      margin-left: 0.5rem;
+      padding-left: 1rem;
+      border-left: 1px dashed color-mix(in srgb, var(--ctp-surface1) 60%, transparent);
+    }
+
+    /* Level-specific colors (soft violet cascade) */
+    & > ul > li > a { color: var(--ctp-violet-1); font-weight: 500; }
+    & > ul > li > ul > li > a { color: color-mix(in srgb, var(--ctp-violet-2) 80%, var(--ctp-subtext0)); }
+    & > ul > li > ul > li > ul > li > a { color: color-mix(in srgb, var(--ctp-violet-3) 70%, var(--ctp-subtext0)); }
+    & > ul > li > ul > li > ul > li > ul > li > a { color: color-mix(in srgb, var(--ctp-violet-4) 60%, var(--ctp-subtext0)); }
+  }
+
+  /* ==========================================================================
+     F. SOLUTIONS IMAGINAIRES — "Jardin d'Automne Ensoleillé"
+     ==========================================================================
+     An intentional LIGHT exception in the Catppuccin Mocha site.
+     Celebrates the vibrancy of autumn leaves with warmth & enthusiasm.
+  */
+
+  /* Light Palette: Warm Autumn Garden */
+  :root {
+    /* Core Backgrounds (Light, Creamy, Golden) — More buttery */
+    --si-cream: #faf5eb;           /* Beurre frais — warmer */
+    --si-parchment: #f3e8da;       /* Parchemin doré */
+    --si-honey: #faecd3;           /* Golden honey glow */
+    --si-latte: #efe6d9;           /* Café au lait */
+
+    /* Accent Colors (Forest & Terra) */
+    --si-forest: #4a6c4b;          /* Deep moss green */
+    --si-terracotta: #c96d4e;      /* Warm clay orange */
+    --si-bark: #5d4037;            /* Rich tree bark brown */
+    --si-wine: #8b4049;            /* Deep berry wine */
+    --si-gold: #c9a227;            /* Sunlit gold */
+
+    /* Text (Readable on light) */
+    --si-text: #3d3229;            /* Warm charcoal */
+    --si-text-soft: #5a4d42;       /* Muted earth */
+  }
+
+  /* Main Container Styling */
+  .solutions-imaginaires-page {
+    /* VITALITÉ MAXIMALE — Verts saturés + touches dorées solaires */
+    background-color: var(--si-cream);
+    background-image: 
+      /* === HAUT DE PAGE — Emeraude vif === */
+      radial-gradient(circle 320px at 0% 0%, rgba(34, 139, 34, 0.55), transparent 55%),
+      radial-gradient(circle 180px at 18% 3%, rgba(201, 162, 39, 0.25), transparent 45%),
+      radial-gradient(circle 240px at 25% 8%, rgba(50, 205, 50, 0.45), transparent 50%),
+      radial-gradient(circle 350px at 100% 0%, rgba(46, 139, 87, 0.52), transparent 55%),
+      radial-gradient(circle 140px at 85% 6%, rgba(218, 165, 32, 0.22), transparent 45%),
+      
+      /* === CÔTÉ GAUCHE — Forêt luxuriante === */
+      radial-gradient(circle 280px at 0% 28%, rgba(60, 179, 113, 0.50), transparent 55%),
+      radial-gradient(circle 160px at 5% 42%, rgba(201, 162, 39, 0.18), transparent 45%),
+      radial-gradient(circle 220px at 0% 55%, rgba(34, 139, 34, 0.48), transparent 50%),
+      radial-gradient(circle 300px at 0% 78%, rgba(50, 205, 50, 0.52), transparent 55%),
+      
+      /* === CÔTÉ DROIT — Canopée dorée === */
+      radial-gradient(circle 260px at 100% 32%, rgba(46, 139, 87, 0.48), transparent 55%),
+      radial-gradient(circle 150px at 92% 45%, rgba(218, 165, 32, 0.20), transparent 45%),
+      radial-gradient(circle 240px at 100% 58%, rgba(60, 179, 113, 0.45), transparent 50%),
+      radial-gradient(circle 320px at 100% 82%, rgba(34, 139, 34, 0.50), transparent 55%),
+      
+      /* === BAS DE PAGE — Sol forestier === */
+      radial-gradient(circle 340px at 0% 100%, rgba(50, 205, 50, 0.55), transparent 55%),
+      radial-gradient(circle 200px at 35% 95%, rgba(201, 162, 39, 0.22), transparent 45%),
+      radial-gradient(circle 280px at 55% 92%, rgba(46, 139, 87, 0.42), transparent 50%),
+      radial-gradient(circle 320px at 100% 100%, rgba(60, 179, 113, 0.52), transparent 55%);
+    min-height: 100vh;
+
+    /* Aggressively cover the dark body/main behind */
+    margin: -5rem -1rem 0 -1rem;
+    padding: 5rem 1rem 0 1rem;
+    
+    position: relative;
+    isolation: isolate;
+  }
+
+  /* Override body background when on this page */
+  body:has(.solutions-imaginaires-page) {
+    background-color: var(--si-cream) !important;
+  }
+  
+  body:has(.solutions-imaginaires-page) main {
+    background-color: var(--si-cream) !important;
+  }
+
+  /* Title Enhancement for Light Background */
+  .solutions-imaginaires-page .leaf-title {
+    color: var(--si-bark);
+    filter: drop-shadow(1px 1px 0px rgba(255, 255, 255, 0.8))
+            drop-shadow(2px 2px 0px rgba(93, 64, 55, 0.3));
+    font-weight: 700;
+  }
+
+  /* Ant Spine — Warmer tones on light (OPTIMIZED: removed filter) */
+  .solutions-imaginaires-page .ant-spine {
+    opacity: 0.8;
+    /* Removed filter: brightness/saturate — causes expensive repaints */
+  }
+
+  /* Card Title Styling (on Leaves) */
+  .solutions-imaginaires-page .leaf-card-title {
+    color: var(--si-bark);
+    text-shadow:
+      0px 1px 0px rgba(255, 255, 255, 0.9),
+      1px 2px 2px rgba(93, 64, 55, 0.4);
+    font-weight: 700;
+    letter-spacing: 0.02em;
+  }
+
+  /* ==========================================================================
+     LA VIE CACHÉE — 42 Fourmis statiques
+     ========================================================================== */
+  
+  .static-ants-container {
+    position: absolute;
+    inset: 0;
+    pointer-events: none;
+    z-index: 2;
+    overflow: hidden;
+  }
+
+  .static-ant {
+    position: absolute;
+    line-height: 1;
+    user-select: none;
+  }
+
+  /* Terracotta — brun-rouge chaud */
+  .si-ant-terra {
+    filter: sepia(0.5) saturate(1.8) hue-rotate(-15deg) brightness(0.8);
+  }
+
+  /* Forêt — vert mousse profond */
+  .si-ant-forest {
+    filter: sepia(0.4) saturate(1.4) hue-rotate(75deg) brightness(0.75);
+  }
+
+  /* Bourgogne — rouge vin automnal */
+  .si-ant-wine {
+    filter: sepia(0.5) saturate(2) hue-rotate(-40deg) brightness(0.7);
+  }
+
+  /* 9 Poses naturelles — Attitudes variées via scaleX + rotate */
+  .si-ant-pose-0 { transform: rotate(-10deg); }                     /* Marche droite */
+  .si-ant-pose-1 { transform: scaleX(-1) rotate(10deg); }           /* Marche gauche */
+  .si-ant-pose-2 { transform: rotate(-80deg); }                     /* Grimpe */
+  .si-ant-pose-3 { transform: rotate(80deg); }                      /* Descend */
+  .si-ant-pose-4 { transform: rotate(-45deg); }                     /* Diag haut-droite */
+  .si-ant-pose-5 { transform: scaleX(-1) rotate(-45deg); }          /* Diag haut-gauche */
+  .si-ant-pose-6 { transform: rotate(45deg); }                      /* Diag bas-droite */
+  .si-ant-pose-7 { transform: scaleX(-1) rotate(45deg); }           /* Diag bas-gauche */
+  .si-ant-pose-8 { transform: rotate(5deg) skewX(-5deg); }          /* Repos nonchalant */
+
+  /* Responsive: réduire le nombre sur mobile */
+  @media (max-width: 640px) {
+    .static-ant:nth-child(n+22) {
+      display: none;
+    }
+  }
+
+  /* ==========================================================================
+     PERFORMANCE OPTIMIZED LEAF CARDS
+     - Removed infinite float animation (major FPS drain)
+     - Using will-change for smooth hover only
+     - GPU-accelerated transforms
+  ========================================================================== */
+
+  .si-leaf-card {
+    will-change: transform;
+    transform: translateZ(0);
+    backface-visibility: hidden;
+  }
+  
+  /* Lightweight leaf shadow (replaces expensive drop-shadow-2xl) */
+  .si-leaf-shadow {
+    filter: drop-shadow(0 4px 6px rgba(0, 0, 0, 0.15));
+  }
+  
+  /* Hover-only subtle lift (no infinite animation) */
+  .si-leaf-card:hover {
+    transform: translateY(-4px) translateZ(0);
+  }
+
+  /* ==========================================================================
+     G. VITALITÉ — Effets vivifiants
+     ==========================================================================
+     Touches de vie subtiles : pollen flottant, lueurs, micro-brillances.
+     Toutes les animations respectent 60fps (transform/opacity only).
+  */
+
+  /* --- G.1 PARTICULES DE POLLEN FLOTTANTES --- */
+  .pollen-container {
+    position: absolute;
+    inset: 0;
+    pointer-events: none;
+    z-index: 1;
+    overflow: hidden;
+  }
+
+  .pollen {
+    position: absolute;
+    width: 4px;
+    height: 4px;
+    border-radius: 50%;
+    background: radial-gradient(circle, rgba(218, 165, 32, 0.8), rgba(201, 162, 39, 0.4));
+    box-shadow: 0 0 6px 2px rgba(218, 165, 32, 0.3);
+    animation: pollenFloat 12s ease-in-out infinite;
+    will-change: transform, opacity;
+  }
+
+  .pollen:nth-child(2n) {
+    width: 3px;
+    height: 3px;
+    animation-duration: 15s;
+    animation-delay: -5s;
+    background: radial-gradient(circle, rgba(255, 223, 128, 0.7), rgba(218, 165, 32, 0.3));
+  }
+
+  .pollen:nth-child(3n) {
+    width: 5px;
+    height: 5px;
+    animation-duration: 18s;
+    animation-delay: -8s;
+    background: radial-gradient(circle, rgba(144, 238, 144, 0.6), rgba(60, 179, 113, 0.2));
+    box-shadow: 0 0 8px 2px rgba(144, 238, 144, 0.25);
+  }
+
+  @keyframes pollenFloat {
+    0%, 100% {
+      transform: translate(0, 0) scale(1);
+      opacity: 0;
+    }
+    10% {
+      opacity: 0.8;
+    }
+    50% {
+      transform: translate(30px, -60px) scale(1.2);
+      opacity: 0.6;
+    }
+    90% {
+      opacity: 0.4;
+    }
+  }
+
+  /* Positions des 8 pollens */
+  .pollen:nth-child(1) { left: 5%; top: 20%; animation-delay: 0s; }
+  .pollen:nth-child(2) { left: 12%; top: 45%; animation-delay: -3s; }
+  .pollen:nth-child(3) { left: 8%; top: 70%; animation-delay: -6s; }
+  .pollen:nth-child(4) { right: 6%; top: 25%; animation-delay: -2s; }
+  .pollen:nth-child(5) { right: 10%; top: 55%; animation-delay: -7s; }
+  .pollen:nth-child(6) { right: 8%; top: 80%; animation-delay: -4s; }
+  .pollen:nth-child(7) { left: 25%; top: 85%; animation-delay: -9s; }
+  .pollen:nth-child(8) { right: 22%; top: 15%; animation-delay: -11s; }
+
+  /* --- G.2 TITRES VIVANTS — Lueur dorée au hover --- */
+  .solutions-imaginaires-page .leaf-card-title {
+    transition: text-shadow 0.4s ease, transform 0.3s ease;
+  }
+
+  .solutions-imaginaires-page .si-leaf-card:hover .leaf-card-title {
+    text-shadow:
+      0px 1px 0px rgba(255, 255, 255, 0.95),
+      1px 2px 2px rgba(93, 64, 55, 0.5),
+      0 0 20px rgba(218, 165, 32, 0.4),
+      0 0 35px rgba(201, 162, 39, 0.25);
+    transform: scale(1.02);
+  }
+
+  /* --- G.3 BRILLANCE SOLAIRE SUR FEUILLES --- */
+  .si-leaf-card::after {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background: radial-gradient(
+      circle at 30% 30%,
+      rgba(255, 255, 255, 0.15),
+      transparent 50%
+    );
+    opacity: 0;
+    transition: opacity 0.4s ease;
+    pointer-events: none;
+    z-index: 5;
+    border-radius: inherit;
+  }
+
+  .si-leaf-card:hover::after {
+    opacity: 1;
+  }
+
+  /* Reduce motion for accessibility */
+  @media (prefers-reduced-motion: reduce) {
+    .pollen {
+      animation: none;
+      opacity: 0.5;
+    }
+    .solutions-imaginaires-page .leaf-card-title {
+      transition: none;
+    }
   }
 }
 

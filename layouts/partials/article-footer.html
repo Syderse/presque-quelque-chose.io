@@ -18,7 +18,7 @@
     </div>
 
     <button id="btn-share-article"
-      class="group px-4 py-2 bg-ctp-surface0 border border-ctp-surface1 hover:border-ctp-mauve text-ctp-subtext0 hover:text-ctp-mauve font-mono text-sm transition-all shadow-[2px_2px_0_0_rgba(0,0,0,0.2)] hover:shadow-[4px_4px_0_0_rgba(0,0,0,0.3)] hover:-translate-y-0.5 active:translate-y-0 active:shadow-none">
+      class="group px-4 py-2 bg-ctp-surface0 border border-ctp-mauve text-ctp-mauve font-mono text-sm transition-all shadow-[2px_2px_0_0_rgba(0,0,0,0.2)] hover:shadow-[4px_4px_0_0_rgba(0,0,0,0.3)] hover:-translate-y-0.5 active:translate-y-0 active:shadow-none">
       <span class="flex items-center gap-2">
         <span>PARTAGER</span>
         <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none"
@@ -65,7 +65,7 @@
 
   <!-- Bouton Patafoin CTA -->
   <a href="/patafoin/?sujet={{ .Title | urlquery }}"
-    class="group block w-full mb-8 p-4 bg-ctp-mantle border-2 border-dashed border-ctp-mauve hover:border-solid hover:bg-ctp-mauve/10 transition-all text-center">
+    class="group block w-full mb-8 p-4 bg-ctp-mantle border-2 border-solid border-ctp-mauve hover:bg-ctp-mauve/10 transition-all text-center">
     <span class="flex items-center justify-center gap-3 text-ctp-mauve font-mono">
       <span class="text-2xl group-hover:animate-bounce">💬</span>
       <span class="text-base md:text-lg font-bold uppercase tracking-wide">voulez-vous en parler dans 'patafoin ?</span>
@@ -111,8 +111,8 @@
 
     {{ with .PrevInSection }}
     <a href="{{ .RelPermalink }}"
-      class="group flex items-center gap-2 p-3 bg-ctp-mantle border border-ctp-surface1 hover:border-ctp-mauve transition-all text-ctp-subtext0 hover:text-ctp-mauve">
-      <span class="text-ctp-overlay1 group-hover:text-ctp-mauve transition-colors">&lt;&lt;</span>
+      class="group flex items-center gap-2 p-3 bg-ctp-mantle border border-ctp-mauve transition-all text-ctp-mauve">
+      <span class="text-ctp-mauve">&lt;&lt;</span>
       <span class="truncate">{{ .Title }}</span>
     </a>
     {{ else }}
@@ -123,9 +123,9 @@
 
     {{ with .NextInSection }}
     <a href="{{ .RelPermalink }}"
-      class="group flex items-center justify-end gap-2 p-3 bg-ctp-mantle border border-ctp-surface1 hover:border-ctp-mauve transition-all text-ctp-subtext0 hover:text-ctp-mauve text-right">
+      class="group flex items-center justify-end gap-2 p-3 bg-ctp-mantle border border-ctp-mauve transition-all text-ctp-mauve text-right">
       <span class="truncate">{{ .Title }}</span>
-      <span class="text-ctp-overlay1 group-hover:text-ctp-mauve transition-colors">&gt;&gt;</span>
+      <span class="text-ctp-mauve">&gt;&gt;</span>
     </a>
     {{ else }}
     <div

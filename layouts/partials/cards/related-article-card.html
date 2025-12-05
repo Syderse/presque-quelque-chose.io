@@ -4,12 +4,12 @@ Context: A Regular Page Object
 Design: Solid State (opaque bg, hard borders, hard shadows)
 */}}
 <article
-    class="group relative flex flex-col h-full bg-ctp-mantle border border-ctp-surface1 hover:border-ctp-mauve transition-all duration-200 shadow-[2px_2px_0_0_rgba(0,0,0,0.2)] hover:shadow-[4px_4px_0_0_rgba(0,0,0,0.3)] hover:-translate-y-0.5">
+    class="group relative flex flex-col h-full bg-ctp-mantle border border-ctp-mauve transition-all duration-200 shadow-[2px_2px_0_0_rgba(0,0,0,0.2)] hover:shadow-[4px_4px_0_0_rgba(0,0,0,0.3)] hover:-translate-y-0.5">
 
     {{/* 1. Header: Reference ID */}}
     <header class="flex justify-between items-center px-3 py-2 border-b border-ctp-surface1 bg-ctp-surface0">
         <div class="flex items-center gap-2 font-mono text-[9px] text-ctp-overlay1 uppercase tracking-widest">
-            <div class="w-1.5 h-1.5 bg-ctp-surface2 group-hover:bg-ctp-green transition-colors"></div>
+            <div class="w-1.5 h-1.5 bg-ctp-green"></div>
             <span>{{ .Section | upper | truncate 8 "" }}</span>
         </div>
         <time class="font-mono text-[9px] text-ctp-subtext0" datetime="{{ .Date.Format " 2006-01-02" }}">
@@ -21,8 +21,7 @@ Design: Solid State (opaque bg, hard borders, hard shadows)
     <div class="p-4 flex flex-col flex-grow relative">
 
         {{/* Title */}}
-        <h4
-            class="font-serif text-base font-bold text-ctp-text group-hover:text-ctp-mauve transition-colors mb-2 leading-tight line-clamp-2">
+        <h4 class="font-serif text-base font-bold text-ctp-mauve mb-2 leading-tight line-clamp-2">
             {{/* The Card Link: Z-Index 0. Covers everything except Z-10 elements. */}}
             <a href="{{ .RelPermalink }}" class="focus:outline-none">
                 <span class="absolute inset-0 z-0" aria-hidden="true"></span>

@@ -1,5 +1,5 @@
 title: "presque-quelque-chose"
-baseURL: 'https://syderse.github.io/'
+baseURL: "https://syderse.github.io/"
 
 # ===========================================================================
 # CORE BUILD SETTINGS
@@ -21,8 +21,8 @@ module:
   mounts:
     - source: assets
       target: assets
-    
-    # [CORRECTIF NETLIFY] 
+
+    # [CORRECTIF NETLIFY]
     # Suppression du mount hugo_stats.json pour éviter les erreurs de "Cold Build".
     - source: layouts
       target: layouts
@@ -30,17 +30,17 @@ module:
       target: content
     - source: static
       target: static
-      
+
     # Imports Hugo Blox
     - source: hugo-blox/blox/community
       target: layouts/_partials/blox/community/
-      includeFiles: '**.html'
+      includeFiles: "**.html"
     - source: hugo-blox/blox/all-access
       target: layouts/_partials/blox/
-      includeFiles: '**.html'
+      includeFiles: "**.html"
     - source: hugo-blox/blox
       target: assets/dist/community/blox/
-      includeFiles: '**.css'
+      includeFiles: "**.css"
 
   imports:
     - path: github.com/HugoBlox/hugo-blox-builder/modules/blox-plugin-netlify
@@ -67,8 +67,8 @@ outputFormats:
     notAlternative: true
 
 outputs:
-  home: [HTML, RSS, RANDOMIZER] 
-  section: [HTML, RSS, ALMANACH] 
+  home: [HTML, RSS, RANDOMIZER]
+  section: [HTML, RSS, ALMANACH]
   page: ["HTML"]
   taxonomy: ["HTML"]
   term: ["HTML"]
@@ -128,8 +128,12 @@ markup:
   goldmark:
     renderer:
       unsafe: true
+  tableOfContents:
+    startLevel: 1
+    endLevel: 6
+    ordered: false
   renderHooks:
-    link: {} 
+    link: {}
 
 # --- GLOBAL SETTINGS ---
 defaultContentLanguage: fr
@@ -177,25 +181,25 @@ params:
   # Appearance
   appearance:
     mode: dark
-    color: custom  # Dit à Hugo de chercher notre custom.css
+    color: custom # Dit à Hugo de chercher notre custom.css
 
   # SEO / Marketing
   marketing:
     seo:
       site_type: Person
-      local_business_type: ''
-      org_name: ''
-      description: 'A highly-customizable Hugo blog theme powered by Hugo Blox Builder.'
-      twitter: 'GetResearchDev'
+      local_business_type: ""
+      org_name: ""
+      description: "A highly-customizable Hugo blog theme powered by Hugo Blox Builder."
+      twitter: "GetResearchDev"
     analytics:
-      google_analytics: ''
-      baidu_tongji: ''
-      plausible: ''
-      fathom: ''
-      pirsch: ''
+      google_analytics: ""
+      baidu_tongji: ""
+      plausible: ""
+      fathom: ""
+      pirsch: ""
     verification:
-      google: ''
-      baidu: ''
+      google: ""
+      baidu: ""
 
   # Site header
   header:
@@ -207,7 +211,7 @@ params:
   # Site footer
   footer:
     copyright:
-      notice: '© {year} Me. This work is licensed under {license}'
+      notice: "© {year} Me. This work is licensed under {license}"
       license:
         enable: true
         allow_derivatives: false
@@ -216,8 +220,8 @@ params:
 
   # Localization
   locale:
-    date_format: 'Jan 2, 2006'
-    time_format: '3:04 PM'
+    date_format: "Jan 2, 2006"
+    time_format: "3:04 PM"
 
   # Site features
   features:
@@ -226,12 +230,12 @@ params:
     privacy_pack:
       enable: false
     repository:
-      url: 'https://github.com/HugoBlox/hugo-blox-builder/'
+      url: "https://github.com/HugoBlox/hugo-blox-builder/"
       content_dir: templates/blog/content
       branch: main
 
   # ---------------------------------------------------------------------------
   # Supabase Configuration (Forum Patafoin)
   # ---------------------------------------------------------------------------
-  supabase_url: "https://esrqmmnghliwqvxldyzo.supabase.co" 
+  supabase_url: "https://esrqmmnghliwqvxldyzo.supabase.co"
   supabase_key: "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImVzcnFtbW5naGxpd3F2eGxkeXpvIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NjM4NDE3NTksImV4cCI6MjA3OTQxNzc1OX0.sLsfkbFFQ0L81MUCTh5i6smtGtbeHzHocIv9xS9Iv7g"

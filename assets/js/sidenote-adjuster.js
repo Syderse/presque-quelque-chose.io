@@ -1,23 +1,28 @@
 /**
- * SIDENOTE PHYSICS ENGINE V2.1 (LG-Sync)
+ * SIDENOTE PHYSICS ENGINE V3.0 (Stable Anchor)
  * Purpose: Manages collision detection for alternating marginalia.
- * Stack A: Left Gutter (Odd)
- * Stack B: Right Gutter (Even)
- * Note: Syncs with CSS 'lg' breakpoint (1024px).
+ * 
+ * CRITICAL FIX: Uses offsetTop relative to the article container
+ * for scroll-independent positioning. No more "falling notes" bug.
+ * 
+ * Stack A: Left Gutter (Odd notes)
+ * Stack B: Right Gutter (Even notes)
  */
 
 const SidenoteManager = {
     settings: {
-        noteSelector: '.side-note-content', 
-        containerSelector: 'article', 
-        gap: 32, 
-        minWidth: 1024 // UPDATED: Matches Tailwind 'lg' breakpoint
+        noteSelector: '.side-note-content',
+        triggerSelector: '.group\\/note', // The inline wrapper span
+        containerSelector: 'article',
+        gap: 24,
+        minWidth: 1024 // Tailwind 'lg' breakpoint
     },
 
     init() {
+        // Initial adjustment after DOM is ready
         this.adjust();
 
-        // Performance: Debounced Resize
+        // Debounced resize handler
         let resizeTimeout;
         window.addEventListener('resize', () => {
             clearTimeout(resizeTimeout);
@@ -25,83 +30,117 @@ const SidenoteManager = {
                 requestAnimationFrame(() => this.adjust());
             }, 100);
         });
-        
-        // Reliability: Load & Post-Load Checks
+
+        // Additional safety checks for late-loading content
         window.addEventListener('load', () => this.adjust());
-        setTimeout(() => this.adjust(), 500); 
-        setTimeout(() => this.adjust(), 2000); // Catch late webfonts
+        setTimeout(() => this.adjust(), 500);
+        setTimeout(() => this.adjust(), 1500); // Catch late webfonts
+    },
+
+    /**
+     * Gets the offset from an element to a specific ancestor.
+     * This is scroll-independent and stable.
+     */
+    getOffsetToAncestor(element, ancestor) {
+        let offset = 0;
+        let current = element;
+
+        while (current && current !== ancestor && current !== document.body) {
+            offset += current.offsetTop;
+            current = current.offsetParent;
+        }
+
+        return offset;
     },
 
     adjust() {
         const isDesktop = window.innerWidth >= this.settings.minWidth;
-        const notes = document.querySelectorAll(this.settings.noteSelector);
         const container = document.querySelector(this.settings.containerSelector);
+        const notes = document.querySelectorAll(this.settings.noteSelector);
 
-        // A. Reset Phase
-        // Always reset margins first to get the "Natural" top position (top: auto)
+        // Reset phase - always reset first
         this.reset(notes, container);
 
-        if (!isDesktop || notes.length === 0) {
+        if (!isDesktop || !container || notes.length === 0) {
             return;
         }
 
-        // B. Physics Phase
+        // Get container's position for reference
+        const containerRect = container.getBoundingClientRect();
+        const containerTop = container.offsetTop;
+
+        // Track the bottom of the last note in each stack
         let lastBottomLeft = 0;
         let lastBottomRight = 0;
-        const scrollY = window.scrollY || document.documentElement.scrollTop;
 
         notes.forEach((note) => {
-            // 1. Identify Side
+            // 1. Identify which side this note belongs to
             const isLeft = note.classList.contains('sn-left');
-            
-            // 2. Measure Geometry (This gets the position set by CSS top:auto)
-            const rect = note.getBoundingClientRect();
-            const absoluteTop = rect.top + scrollY;
-            const height = rect.height;
 
-            // 3. Determine Collision Target
-            // If Left, check Left Stack. If Right, check Right Stack.
-            let lastBottom = isLeft ? lastBottomLeft : lastBottomRight;
-            
-            // 4. Apply Force
-            if (absoluteTop < lastBottom + this.settings.gap) {
-                const push = (lastBottom + this.settings.gap) - absoluteTop;
-                note.style.marginTop = `${push}px`;
-                
-                // Update specific stack
-                const newBottom = absoluteTop + push + height;
-                if (isLeft) lastBottomLeft = newBottom;
-                else lastBottomRight = newBottom;
+            // 2. Find the trigger (parent span) to get anchor position
+            const trigger = note.closest(this.settings.triggerSelector);
+            if (!trigger) return;
+
+            // 3. Get a stable, scroll-independent position
+            // This is the key fix: offsetTop doesn't change with scroll
+            const anchorTop = this.getOffsetToAncestor(trigger, container);
+
+            // 4. Get note height (use getBoundingClientRect for accurate measurement)
+            const noteRect = note.getBoundingClientRect();
+            const noteHeight = noteRect.height;
+
+            // 5. Determine collision target for this stack
+            const lastBottom = isLeft ? lastBottomLeft : lastBottomRight;
+
+            // 6. Calculate the desired top position
+            let targetTop = anchorTop;
+
+            // 7. Apply collision avoidance if needed
+            if (targetTop < lastBottom + this.settings.gap) {
+                targetTop = lastBottom + this.settings.gap;
+            }
+
+            // 8. Apply the position using CSS top (not marginTop)
+            // This is more reliable as it sets an explicit position
+            note.style.top = `${targetTop}px`;
+
+            // 9. Update the stack's last bottom position
+            const newBottom = targetTop + noteHeight;
+            if (isLeft) {
+                lastBottomLeft = newBottom;
             } else {
-                // No collision, register natural bottom
-                const newBottom = absoluteTop + height;
-                if (isLeft) lastBottomLeft = newBottom;
-                else lastBottomRight = newBottom;
+                lastBottomRight = newBottom;
             }
         });
 
-        // C. Container Extension Phase
+        // Container extension phase
         // Ensure article is long enough for the longest stack
         const lowestPoint = Math.max(lastBottomLeft, lastBottomRight);
 
-        if (container && lowestPoint > 0) {
-            const containerRect = container.getBoundingClientRect();
-            const containerBottom = containerRect.bottom + scrollY;
+        if (lowestPoint > 0) {
+            const containerHeight = container.offsetHeight;
 
-            if (lowestPoint > containerBottom) {
-                const diff = lowestPoint - containerBottom;
-                // Add generous padding to footer
-                container.style.paddingBottom = `${diff + 60}px`; 
+            if (lowestPoint > containerHeight) {
+                const diff = lowestPoint - containerHeight;
+                container.style.paddingBottom = `${diff + 60}px`;
             }
         }
     },
 
     reset(notes, container) {
-        if (notes) notes.forEach(n => n.style.marginTop = '');
-        if (container) container.style.paddingBottom = '';
+        if (notes) {
+            notes.forEach(n => {
+                n.style.marginTop = '';
+                n.style.top = '';
+            });
+        }
+        if (container) {
+            container.style.paddingBottom = '';
+        }
     }
 };
 
+// Initialize
 if (document.readyState === 'loading') {
     document.addEventListener('DOMContentLoaded', () => SidenoteManager.init());
 } else {

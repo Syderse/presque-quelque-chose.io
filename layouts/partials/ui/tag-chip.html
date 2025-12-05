@@ -10,15 +10,25 @@ Context: Can be a Taxonomy Term Page Object OR a String (tag name)
 {{ if reflect.IsMap . }}
 {{/* It's likely a Page object */}}
 {{ else }}
-{{/* It's a string, try to find the page */}}
-{{ $page = site.GetPage (printf "/tags/%s" (urlize .)) }}
+{{/* It's a string, we need to find the matching tag page.
+Problem: urlize doesn't respect removePathAccents config,
+so "école normale" -> "école-normale" but Hugo generates "ecole-normale".
+Solution: Iterate through all tag pages and match by comparing titles. */}}
+{{ $tagName := . | lower }}
+{{ $page = false }}
+{{ range site.Taxonomies.tags }}
+{{ $termTitle := .Page.Title | lower }}
+{{ if eq $termTitle $tagName }}
+{{ $page = .Page }}
+{{ end }}
+{{ end }}
 {{ end }}
 
 {{ if $page }}
 <a href="{{ $page.RelPermalink }}" class="inline-flex items-center px-2 py-1 
-            bg-ctp-mantle border border-ctp-surface1 
-            font-mono text-[9px] text-ctp-subtext0 uppercase tracking-widest 
-            hover:border-ctp-mauve hover:text-ctp-mauve hover:bg-ctp-surface0 
+            bg-ctp-mantle border border-ctp-mauve 
+            font-mono text-[9px] text-ctp-mauve uppercase tracking-widest 
+            hover:bg-ctp-surface0 
             transition-colors duration-200 no-underline">
     #{{ $page.LinkTitle }}
 </a>

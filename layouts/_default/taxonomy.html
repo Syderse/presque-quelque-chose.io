@@ -7,7 +7,7 @@
 
       {{/* Breadcrumbs / Up Link */}}
       <nav class="flex items-center gap-2 text-xs uppercase tracking-widest text-ctp-overlay1">
-        <a href="/tags/" class="hover:text-ctp-mauve transition-colors">
+        <a href="/tags/" class="text-ctp-mauve transition-colors">
           Portail des Étiquettes
         </a>
         <span class="text-ctp-surface2">/</span>
@@ -58,7 +58,7 @@
     <div class="inline-flex border border-ctp-surface2 bg-ctp-mantle">
       {{ if .Paginator.HasPrev }}
       <a href="{{ .Paginator.Prev.URL }}"
-        class="px-4 py-2 border-r border-ctp-surface2 hover:bg-ctp-surface0 hover:text-ctp-mauve text-xs uppercase tracking-wider">
+        class="px-4 py-2 border-r border-ctp-surface2 text-ctp-mauve hover:bg-ctp-surface0 text-xs uppercase tracking-wider">
         &lt; Préc.
       </a>
       {{ end }}
@@ -67,7 +67,7 @@
       </span>
       {{ if .Paginator.HasNext }}
       <a href="{{ .Paginator.Next.URL }}"
-        class="px-4 py-2 border-l border-ctp-surface2 hover:bg-ctp-surface0 hover:text-ctp-mauve text-xs uppercase tracking-wider">
+        class="px-4 py-2 border-l border-ctp-surface2 text-ctp-mauve hover:bg-ctp-surface0 text-xs uppercase tracking-wider">
         Suiv. &gt;
       </a>
       {{ end }}

@@ -71,7 +71,7 @@
 
           {{/* 1. COLONNE ID */}}
           <div
-            class="hidden md:flex items-center justify-center border-r border-ctp-surface1/50 p-6 font-mono text-xs text-ctp-overlay0 group-hover:text-ctp-mauve transition-colors">
+            class="hidden md:flex items-center justify-center border-r border-ctp-surface1/50 p-6 font-mono text-xs text-ctp-mauve transition-colors">
             {{ $id }}
           </div>
 
@@ -98,8 +98,7 @@
           {{/* 4. COLONNE CONTENU (SUJET) */}}
           <div class="p-6 md:border-r border-ctp-surface1/50 flex flex-col justify-center gap-3 relative">
             {{/* Titre : Interlignage "normal" pour éviter l'écrasement */}}
-            <h2
-              class="font-serif text-2xl md:text-3xl font-bold text-ctp-text group-hover:text-ctp-mauve transition-colors leading-normal">
+            <h2 class="font-serif text-2xl md:text-3xl font-bold text-ctp-mauve transition-colors leading-normal">
               <a href="{{ .RelPermalink }}" class="focus:outline-none">
                 {{ .Title }}
               </a>
@@ -121,7 +120,7 @@
           {{/* 5. COLONNE ACTION (Toujours "OPEN_FILE") */}}
           <div class="p-6 flex items-center justify-center bg-ctp-base/30 group-hover:bg-transparent transition-colors">
             <a href="{{ .RelPermalink }}"
-              class="w-full h-12 flex items-center justify-center gap-2 border border-dashed border-ctp-overlay1 text-ctp-overlay1 group-hover:border-ctp-mauve group-hover:text-ctp-mauve group-hover:bg-ctp-mauve/10 font-mono text-xs uppercase transition-all duration-300">
+              class="w-full h-12 flex items-center justify-center gap-2 border border-dashed border-ctp-mauve text-ctp-mauve group-hover:bg-ctp-mauve/10 font-mono text-xs uppercase transition-all duration-300">
               <span>OPEN_FILE</span>
               <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4" fill="none" viewBox="0 0 24 24"
                 stroke="currentColor" stroke-width="1.5">
@@ -152,11 +151,11 @@
     {{ if gt .Paginator.TotalPages 1 }}
     <div class="mt-8 flex justify-center font-mono text-sm gap-4 text-ctp-subtext0">
       {{ if .Paginator.HasPrev }}
-      <a href="{{ .Paginator.Prev.URL }}" class="hover:text-ctp-mauve">[ PREV_PAGE ]</a>
+      <a href="{{ .Paginator.Prev.URL }}" class="text-ctp-mauve">[ PREV_PAGE ]</a>
       {{ end }}
       <span>PAGE {{ .Paginator.PageNumber }} / {{ .Paginator.TotalPages }}</span>
       {{ if .Paginator.HasNext }}
-      <a href="{{ .Paginator.Next.URL }}" class="hover:text-ctp-mauve">[ NEXT_PAGE ]</a>
+      <a href="{{ .Paginator.Next.URL }}" class="text-ctp-mauve">[ NEXT_PAGE ]</a>
       {{ end }}
     </div>
     {{ end }}
