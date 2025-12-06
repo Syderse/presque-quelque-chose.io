@@ -1,49 +1,78 @@
 {{ define "main" }}
 
-  {{/* --- 1. HEADER DE SECTION --- */}}
-  <div class="text-center mb-12 not-prose">
-    <h1 class="text-4xl md:text-5xl font-black text-transparent bg-clip-text bg-gradient-to-r from-ctp-mauve to-ctp-blue lowercase mb-4">
+{{/* ═══════════════════════════════════════════════════════════════════════════
+    ONDES & PIXELS — "Fréquences Ambiantes"
+    Un espace immersif pour captations sonores et textures numériques.
+    Design inspiré de sources lumineuses fluides sur fond Catppuccin Crust.
+════════════════════════════════════════════════════════════════════════════ */}}
+
+<div class="ondes-pixels-page relative min-h-screen overflow-hidden">
+
+  {{/* ════════ AMBIENT LIGHT SOURCES ════════ */}}
+  {{/* Gradient orbs that drift slowly, creating organic depth */}}
+  <div class="ambient-light" aria-hidden="true">
+    <div class="light-source source-mauve"></div>
+    <div class="light-source source-peach"></div>
+    <div class="light-source source-lavender"></div>
+  </div>
+
+  {{/* ════════ HEADER SECTION ════════ */}}
+  <header class="relative z-10 pt-20 pb-12 px-6 max-w-5xl mx-auto">
+    <h1 class="text-5xl md:text-7xl font-extralight lowercase tracking-tight leading-none mb-6"
+        style="background: linear-gradient(120deg, var(--ctp-mauve), var(--ctp-lavender));
+               -webkit-background-clip: text;
+               -webkit-text-fill-color: transparent;
+               background-clip: text;">
       {{ .Title }}
     </h1>
+    
     {{ with .Description }}
-      <p class="text-xl italic opacity-80 font-serif text-ctp-subtext0">
-        {{ . }}
-      </p>
+    <div class="intro-accent max-w-md pl-4 text-lg text-ctp-green/80 italic font-serif">
+      {{ . }}
+    </div>
     {{ end }}
-  </div>
-
-  {{/* --- 2. INTRO TEXT (Optionnel) --- */}}
-  {{ if .Content }}
-    <div class="mb-12 text-center mx-auto max-w-2xl">
+    
+    {{ if .Content }}
+    <div class="mt-6 text-ctp-subtext0 max-w-2xl prose-catppuccin">
       {{ .Content }}
     </div>
-  {{ end }}
+    {{ end }}
+  </header>
 
-  {{/* --- 3. GRID SYSTEM --- */}}
-  {{/* On utilise 'not-prose' pour s'évader des contraintes de typography */}}
-  <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 w-full not-prose">
+  {{/* ════════ WAVE GRID — Asymmetric Card Layout ════════ */}}
+  <div class="wave-grid relative z-10 max-w-5xl mx-auto px-6 pb-20">
     
-    {{/* A. Cas : Items définis manuellement dans le Front Matter (ex: Rhizome) */}}
+    {{ $pages := .Pages }}
     {{ if .Params.items }}
-      {{ range .Params.items }}
-        {{ partial "cards/link-card.html" . }}
+      {{/* Manual items from Front Matter */}}
+      {{ range $i, $item := .Params.items }}
+        {{ partial "cards/wave-card.html" (dict "item" $item "index" $i "isPage" false) }}
       {{ end }}
-
-    {{/* B. Cas : Sous-pages automatiques (ex: Blog, ou Ondes si transformé en pages) */}}
-    {{ else if .Pages }}
-      {{ range .Pages }}
-        {{/* On passe un contexte hybride pour réutiliser la même carte */}}
+    {{ else if $pages }}
+      {{/* Automatic sub-pages */}}
+      {{ range $i, $page := $pages }}
         {{ $data := dict 
-          "title" .Title 
-          "subtitle" .Description 
-          "icon" .Params.icon 
-          "url" .RelPermalink 
-          "color" (.Params.color | default "mauve") 
+          "title" $page.Title 
+          "description" $page.Description 
+          "icon" $page.Params.icon 
+          "url" $page.RelPermalink 
+          "color" ($page.Params.color | default "mauve")
+          "tags" $page.Params.tags
+          "date" $page.Date
+          "authors" $page.Params.authors
+          "content" $page.RawContent
         }}
-        {{ partial "cards/link-card.html" $data }}
+        {{ partial "cards/wave-card.html" (dict "item" $data "index" $i "isPage" true) }}
       {{ end }}
+    {{ else }}
+      {{/* Empty State */}}
+      <div class="col-span-full text-center py-20 text-ctp-overlay1 italic">
+        Aucune fréquence captée pour l'instant...
+      </div>
     {{ end }}
 
   </div>
+
+</div>
 
 {{ end }}

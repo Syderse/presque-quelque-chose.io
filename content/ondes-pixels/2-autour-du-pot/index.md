@@ -2,7 +2,6 @@
 title: "Autour du pot #2 : Plat de résistance"
 date: 2024-10-04
 description: "Au cœur des marmites et de la méthode HACCP."
-icon: "🍲"
 color: "peach"
 tags: 
   - documentaire sonore

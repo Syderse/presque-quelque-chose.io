@@ -9,14 +9,15 @@
 {{ $scratch := newScratch }}
 {{ $scratch.Set "totalWords" 0 }}
 {{ $scratch.Set "totalSentences" 0 }}
-{{ $scratch.Set "totalQMarks" 0 }}
+{{ $scratch.Set "totalParentheses" 0 }}
+{{ $scratch.Set "totalAsterisks" 0 }}
+{{ $scratch.Set "totalSidenotes" 0 }}
 {{ $scratch.Set "totalLinks" 0 }}
-{{ $scratch.Set "lastMod" $creationDate }}
 {{ $giantString := "" }}
 
 {{ range $corpus }}
   {{ $text := .Plain }}
-  {{ $html := .Content }}
+  {{ $raw := .RawContent }}
 
   {{/* 1. VOCAB DATA COLLECT */}}
   {{ $giantString = print $giantString " " $text }}
@@ -28,21 +29,29 @@
   {{ if eq $sCount 0 }}{{ $sCount = 1 }}{{ end }} 
   {{ $scratch.Add "totalSentences" $sCount }}
 
-  {{/* 3. QUEST Metric */}}
-  {{ $scratch.Add "totalQMarks" (strings.Count "?" $text) }}
+  {{/* 3. PARENTHESES Metric */}}
+  {{ $scratch.Add "totalParentheses" (strings.Count "(" $text) }}
 
-  {{/* 4. LINKS Metric */}}
-  {{ $scratch.Add "totalLinks" (strings.Count "href=" $html) }}
+  {{/* 4. ASTERISKS Metric (emphases) */}}
+  {{ $scratch.Add "totalAsterisks" (strings.Count "*" $raw) }}
 
-  {{/* 5. LAST SIGNAL Logic */}}
-  {{ if .Lastmod.After ($scratch.Get "lastMod") }}
-    {{ $scratch.Set "lastMod" .Lastmod }}
-  {{ end }}
+  {{/* 5. SIDENOTES Metric */}}
+  {{ $scratch.Add "totalSidenotes" (strings.Count "{{< sidenote" $raw) }}
+
+  {{/* 6. LINKS Metric (markdown links) */}}
+  {{ $scratch.Add "totalLinks" (strings.Count "](" $raw) }}
 {{ end }}
 
-{{/* C. Heavy Processing */}}
-{{ $cleanText := replaceRE "[^a-zA-Z0-9À-ÿ ]" " " $giantString }}
-{{ $uniqueWords := split (lower $cleanText) " " | uniq }}
+{{/* C. Heavy Processing - Vocabulary */}}
+{{ $cleanText := replaceRE "[^a-zA-ZÀ-ÿ ]" " " $giantString }}
+{{ $wordList := split (lower $cleanText) " " }}
+{{ $filteredWords := slice }}
+{{ range $wordList }}
+  {{ if gt (len .) 1 }}
+    {{ $filteredWords = $filteredWords | append . }}
+  {{ end }}
+{{ end }}
+{{ $uniqueWords := $filteredWords | uniq }}
 {{ $vocabCount := len $uniqueWords }}
 
 {{/* D. Derived Calcs */}}
@@ -52,10 +61,6 @@
   {{ $avgDensity = div ($scratch.Get "totalWords") $totalSentences }}
 {{ end }}
 
-{{/* Last Signal Days */}}
-{{ $lastMod := $scratch.Get "lastMod" }}
-{{ $daysSilence := math.Floor (div (sub time.Now.Unix $lastMod.Unix) 86400) }}
-
 {{/* Almanac Entries */}}
 {{ $almanacCount := 0 }}
 {{ if site.Data.almanach }}
@@ -64,28 +69,21 @@
 
 
 {{/* --- 2. UI PRESENTATION LAYER --- */}}
-{{/* WIDGET: SYSTEM HEADER
-     Refactor: 
-     - Adopted .bento-card for visual consistency (border/shadow/radius).
-     - Applied 'hover:transform-none' to keep the header static (stable UI).
-     - Overridden background to 'bg-ctp-mantle' for Status Bar look.
-*/}}
 <div class="bento-card w-full font-mono text-[10px] select-none bg-ctp-mantle hover:transform-none hover:shadow-[4px_4px_0px_0px_rgba(0,0,0,0.3)]">
   
-  {{/* Grid Dividers: Updated to ctp-surface1 for solid definition */}}
   <div class="grid grid-cols-2 md:grid-cols-4 lg:grid-cols-8 divide-x divide-y md:divide-y-0 lg:divide-y-0 divide-ctp-surface1">
 
     {{/* --- CELL 1: TEMPS DE VOL --- */}}
     <div class="group relative px-3 py-3 flex flex-row items-center justify-between hover:bg-ctp-surface0/30 transition-colors cursor-help">
       <div class="flex items-center gap-2 text-ctp-overlay1">
         <span class="text-ctp-green text-[8px] animate-pulse">●</span>
-        <span class="uppercase tracking-wider">VOL</span>
+        <span class="uppercase tracking-wider">BUILD</span>
       </div>
       <span class="font-bold text-ctp-text">{{ $hoursAlive | lang.FormatNumber 0 }}H</span>
       
-      <div class="pointer-events-none opacity-0 group-hover:opacity-100 absolute top-full left-0 mt-2 w-56 bg-ctp-base border border-ctp-surface1 p-3 z-50 shadow-[4px_4px_0px_0px_rgba(0,0,0,0.5)] transition-opacity duration-200">
-        <p class="text-xs text-ctp-yellow font-bold mb-1">DURÉE DE LA MISSION</p>
-        <p class="text-xs text-ctp-subtext0 leading-tight">Heures écoulées depuis l'initialisation du noyau système.</p>
+      <div class="pointer-events-none opacity-0 group-hover:opacity-100 absolute top-full left-0 mt-2 w-48 bg-ctp-base border border-ctp-surface1 p-3 z-50 shadow-[4px_4px_0px_0px_rgba(0,0,0,0.5)] transition-opacity duration-200">
+        <p class="text-xs text-ctp-yellow font-bold mb-1">ORIGINE</p>
+        <p class="text-xs text-ctp-subtext0 leading-tight">Heures depuis la mise en ligne.</p>
       </div>
     </div>
 
@@ -93,113 +91,99 @@
     <div class="group relative px-3 py-3 flex flex-row items-center justify-between hover:bg-ctp-surface0/30 transition-colors cursor-help">
       <div class="flex items-center gap-2 text-ctp-overlay1">
         <span class="text-ctp-mauve text-[8px]">AZ</span>
-        <span class="uppercase tracking-wider">GAMME</span>
+        <span class="uppercase tracking-wider">PALETTE</span>
       </div>
       <span class="font-bold text-ctp-text">{{ $vocabCount | lang.FormatNumber 0 }}</span>
 
-      <div class="pointer-events-none opacity-0 group-hover:opacity-100 absolute top-full left-0 mt-2 w-56 bg-ctp-base border border-ctp-surface1 p-3 z-50 shadow-[4px_4px_0px_0px_rgba(0,0,0,0.5)] transition-opacity duration-200">
-        <p class="text-xs text-ctp-yellow font-bold mb-1">RICHESSE LEXICALE</p>
-        <p class="text-xs text-ctp-subtext0 leading-tight">Nombre de mots uniques (lemmes distincts) identifiés dans la base de données.</p>
+      <div class="pointer-events-none opacity-0 group-hover:opacity-100 absolute top-full left-0 mt-2 w-48 bg-ctp-base border border-ctp-surface1 p-3 z-50 shadow-[4px_4px_0px_0px_rgba(0,0,0,0.5)] transition-opacity duration-200">
+        <p class="text-xs text-ctp-yellow font-bold mb-1">PALETTE</p>
+        <p class="text-xs text-ctp-subtext0 leading-tight">Mots uniques utilisés sur le site.</p>
       </div>
     </div>
 
-    {{/* --- CELL 3: LAST SIGNAL --- */}}
+    {{/* --- CELL 3: PARENTHÈSES --- */}}
     <div class="group relative px-3 py-3 flex flex-row items-center justify-between hover:bg-ctp-surface0/30 transition-colors cursor-help">
       <div class="flex items-center gap-2 text-ctp-overlay1">
-        <span class="text-ctp-blue text-[8px] animate-pulse">((o))</span>
-        <span class="uppercase tracking-wider">LAST.SIG</span>
+        <span class="text-ctp-blue text-[8px]">( )</span>
+        <span class="uppercase tracking-wider">PAREN.</span>
       </div>
-      <span class="font-bold text-ctp-text">T-{{ $daysSilence }}J</span>
+      <span class="font-bold text-ctp-text">{{ $scratch.Get "totalParentheses" }}</span>
 
-      <div class="pointer-events-none opacity-0 group-hover:opacity-100 absolute top-full left-0 mt-2 w-56 bg-ctp-base border border-ctp-surface1 p-3 z-50 shadow-[4px_4px_0px_0px_rgba(0,0,0,0.5)] transition-opacity duration-200">
-        <p class="text-xs text-ctp-yellow font-bold mb-1">SILENCE RADIO</p>
-        <p class="text-xs text-ctp-subtext0 leading-tight">Temps écoulé (T-Minus) depuis la dernière transmission de données (Post/Edit).</p>
+      <div class="pointer-events-none opacity-0 group-hover:opacity-100 absolute top-full left-0 mt-2 w-48 bg-ctp-base border border-ctp-surface1 p-3 z-50 shadow-[4px_4px_0px_0px_rgba(0,0,0,0.5)] transition-opacity duration-200">
+        <p class="text-xs text-ctp-yellow font-bold mb-1">PARENTHÈSES</p>
+        <p class="text-xs text-ctp-subtext0 leading-tight">Nombre de parenthèses utilisées dans les articles.</p>
       </div>
     </div>
 
     {{/* --- CELL 4: DENSITÉ --- */}}
     <div class="group relative px-3 py-3 flex flex-row items-center justify-between hover:bg-ctp-surface0/30 transition-colors cursor-help">
       <div class="flex items-center gap-2 text-ctp-overlay1">
-        <span class="text-ctp-peach text-[8px]">AVG</span>
+        <span class="text-ctp-peach text-[8px]">STYLE</span>
         <span class="uppercase tracking-wider">DENS.</span>
       </div>
       <span class="font-bold text-ctp-text">{{ $avgDensity | lang.FormatNumber 0 }}</span>
 
-      <div class="pointer-events-none opacity-0 group-hover:opacity-100 absolute top-full left-0 mt-2 w-56 bg-ctp-base border border-ctp-surface1 p-3 z-50 shadow-[4px_4px_0px_0px_rgba(0,0,0,0.5)] transition-opacity duration-200">
-        <p class="text-xs text-ctp-yellow font-bold mb-1">DENSITÉ LINGUISTIQUE</p>
-        <p class="text-xs text-ctp-subtext0 leading-tight">Moyenne de mots par phrase. Indice de complexité sémantique.</p>
+      <div class="pointer-events-none opacity-0 group-hover:opacity-100 absolute top-full left-0 mt-2 w-48 bg-ctp-base border border-ctp-surface1 p-3 z-50 shadow-[4px_4px_0px_0px_rgba(0,0,0,0.5)] transition-opacity duration-200">
+        <p class="text-xs text-ctp-yellow font-bold mb-1">DENSITÉ</p>
+        <p class="text-xs text-ctp-subtext0 leading-tight">Moyenne de mots par phrase.</p>
       </div>
     </div>
 
-    {{/* --- CELL 5: INTERROGATIONS --- */}}
+    {{/* --- CELL 5: EMPHASES (ASTÉRISQUES) --- */}}
     <div class="group relative px-3 py-3 flex flex-row items-center justify-between hover:bg-ctp-surface0/30 transition-colors cursor-help">
       <div class="flex items-center gap-2 text-ctp-overlay1">
-        <span class="text-ctp-yellow text-[8px]">?</span>
-        <span class="uppercase tracking-wider">QUEST.</span>
+        <span class="text-ctp-yellow text-[8px]">*</span>
+        <span class="uppercase tracking-wider">FORM.</span>
       </div>
-      <span class="font-bold text-ctp-text">{{ $scratch.Get "totalQMarks" }}</span>
+      <span class="font-bold text-ctp-text">{{ $scratch.Get "totalAsterisks" }}</span>
 
-      <div class="pointer-events-none opacity-0 group-hover:opacity-100 absolute top-full md:left-1/2 md:-translate-x-1/2 mt-2 w-56 bg-ctp-base border border-ctp-surface1 p-3 z-50 shadow-[4px_4px_0px_0px_rgba(0,0,0,0.5)] transition-opacity duration-200">
-        <p class="text-xs text-ctp-yellow font-bold mb-1">INDICE D'INCERTITUDE</p>
-        <p class="text-xs text-ctp-subtext0 leading-tight">Nombre total de questions posées dans le corpus.</p>
+      <div class="pointer-events-none opacity-0 group-hover:opacity-100 absolute top-full md:left-1/2 md:-translate-x-1/2 mt-2 w-48 bg-ctp-base border border-ctp-surface1 p-3 z-50 shadow-[4px_4px_0px_0px_rgba(0,0,0,0.5)] transition-opacity duration-200">
+        <p class="text-xs text-ctp-yellow font-bold mb-1">FORMATTAGE</p>
+        <p class="text-xs text-ctp-subtext0 leading-tight">Nombre d'astérisques utilisés pour mettre en forme le texte.</p>
       </div>
     </div>
 
-    {{/* --- CELL 6: CONNECTIVITÉ --- */}}
+    {{/* --- CELL 6: LIENS --- */}}
     <div class="group relative px-3 py-3 flex flex-row items-center justify-between hover:bg-ctp-surface0/30 transition-colors cursor-help">
       <div class="flex items-center gap-2 text-ctp-overlay1">
-        <span class="text-ctp-teal text-[8px]">LNK</span>
-        <span class="uppercase tracking-wider">LIENS</span>
+        <span class="text-ctp-teal text-[8px]">→</span>
+        <span class="uppercase tracking-wider">WIKI</span>
       </div>
       <span class="font-bold text-ctp-text">{{ $scratch.Get "totalLinks" }}</span>
 
-      <div class="pointer-events-none opacity-0 group-hover:opacity-100 absolute top-full md:left-1/2 md:-translate-x-1/2 mt-2 w-56 bg-ctp-base border border-ctp-surface1 p-3 z-50 shadow-[4px_4px_0px_0px_rgba(0,0,0,0.5)] transition-opacity duration-200">
-        <p class="text-xs text-ctp-yellow font-bold mb-1">SYSTÈME NERVEUX</p>
-        <p class="text-xs text-ctp-subtext0 leading-tight">Maillage hypertexte (Total des liens internes et externes).</p>
+      <div class="pointer-events-none opacity-0 group-hover:opacity-100 absolute top-full md:left-1/2 md:-translate-x-1/2 mt-2 w-48 bg-ctp-base border border-ctp-surface1 p-3 z-50 shadow-[4px_4px_0px_0px_rgba(0,0,0,0.5)] transition-opacity duration-200">
+        <p class="text-xs text-ctp-yellow font-bold mb-1">WIKILINKS</p>
+        <p class="text-xs text-ctp-subtext0 leading-tight">Nombre de liens internes entre les articles.</p>
       </div>
     </div>
 
-    {{/* --- CELL 7: PIXELS (LIVE) --- */}}
+    {{/* --- CELL 7: SIDENOTES (MARGE) --- */}}
     <div class="group relative px-3 py-3 flex flex-row items-center justify-between hover:bg-ctp-surface0/30 transition-colors cursor-help">
       <div class="flex items-center gap-2 text-ctp-overlay1">
-        <span class="text-ctp-maroon text-[8px]">PX</span>
-        <span class="uppercase tracking-wider">RES</span>
+        <span class="text-ctp-maroon text-[8px]">¶</span>
+        <span class="uppercase tracking-wider">MARGE</span>
       </div>
-      <span id="sys-pixel-count" class="font-bold text-ctp-text">---</span>
+      <span class="font-bold text-ctp-text">{{ $scratch.Get "totalSidenotes" }}</span>
 
-      <div class="pointer-events-none opacity-0 group-hover:opacity-100 absolute top-full right-0 mt-2 w-56 bg-ctp-base border border-ctp-surface1 p-3 z-50 shadow-[4px_4px_0px_0px_rgba(0,0,0,0.5)] transition-opacity duration-200">
-        <p class="text-xs text-ctp-yellow font-bold mb-1">MATRICE D'AFFICHAGE</p>
-        <p class="text-xs text-ctp-subtext0 leading-tight">Pixels rendus actuellement (Viewport Width x Height).</p>
+      <div class="pointer-events-none opacity-0 group-hover:opacity-100 absolute top-full right-0 mt-2 w-48 bg-ctp-base border border-ctp-surface1 p-3 z-50 shadow-[4px_4px_0px_0px_rgba(0,0,0,0.5)] transition-opacity duration-200">
+        <p class="text-xs text-ctp-yellow font-bold mb-1">MARGINOTES</p>
+        <p class="text-xs text-ctp-subtext0 leading-tight">Nombre de notes dans les marges.</p>
       </div>
     </div>
 
     {{/* --- CELL 8: ALMANACH --- */}}
     <div class="group relative px-3 py-3 flex flex-row items-center justify-between hover:bg-ctp-surface0/30 transition-colors cursor-help">
       <div class="flex items-center gap-2 text-ctp-overlay1">
-        <span class="text-ctp-lavender text-[8px]">LOG</span>
+        <span class="text-ctp-lavender text-[8px]">📅</span>
         <span class="uppercase tracking-wider">ALM</span>
       </div>
       <span class="font-bold text-ctp-text">{{ $almanacCount }}</span>
 
-      <div class="pointer-events-none opacity-0 group-hover:opacity-100 absolute top-full right-0 mt-2 w-56 bg-ctp-base border border-ctp-surface1 p-3 z-50 shadow-[4px_4px_0px_0px_rgba(0,0,0,0.5)] transition-opacity duration-200">
-        <p class="text-xs text-ctp-yellow font-bold mb-1">JOURNAL DE BORD</p>
-        <p class="text-xs text-ctp-subtext0 leading-tight">Entrées consignées dans l'Almanach personnel.</p>
+      <div class="pointer-events-none opacity-0 group-hover:opacity-100 absolute top-full right-0 mt-2 w-48 bg-ctp-base border border-ctp-surface1 p-3 z-50 shadow-[4px_4px_0px_0px_rgba(0,0,0,0.5)] transition-opacity duration-200">
+        <p class="text-xs text-ctp-yellow font-bold mb-1">ALMANACH</p>
+        <p class="text-xs text-ctp-subtext0 leading-tight">Nombre d'entrées dans le journal.</p>
       </div>
     </div>
 
   </div>
 </div>
-
-<script>
-  (function() {
-    const p = document.getElementById('sys-pixel-count');
-    if(p) {
-      const calc = () => {
-        const val = window.innerWidth * window.innerHeight;
-        p.innerText = val > 1000000 ? (val / 1000000).toFixed(1) + 'M' : val.toLocaleString();
-      };
-      calc();
-      window.addEventListener('resize', calc);
-    }
-  })();
-</script>

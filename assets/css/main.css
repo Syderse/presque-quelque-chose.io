@@ -1,8 +1,5 @@
-/* --- 1. FONTS --- */
-@import url('https://fonts.googleapis.com/css2?family=Ubuntu:wght@300;400;500;700&family=JetBrains+Mono:wght@400;500&display=swap');
-@import url('https://fonts.googleapis.com/css2?family=Crimson+Text:ital,wght@0,400;0,600;0,700;1,400&display=swap');
-@import url('https://fonts.googleapis.com/css2?family=Caveat:wght@400;700&display=swap');
-@import url('https://fonts.googleapis.com/css2?family=Bebas+Neue&display=swap');
+/* --- 1. FONTS (OPTIMIZED: Single request, display=swap) --- */
+@import url("https://fonts.googleapis.com/css2?family=Ubuntu:wght@300;400;500;700&family=JetBrains+Mono:wght@400;500&family=Crimson+Text:ital,wght@0,400;0,600;0,700;1,400&family=Caveat:wght@400;700&family=Bebas+Neue&display=swap");
 
 @import "tailwindcss";
 
@@ -84,7 +81,8 @@
 
 @theme {
   --font-sans: "Ubuntu", ui-sans-serif, system-ui, sans-serif;
-  --font-serif: "Crimson Text", "Georgia", Cambria, "Times New Roman", Times, serif;
+  --font-serif: "Crimson Text", "Georgia", Cambria, "Times New Roman", Times,
+    serif;
   --font-mono: "JetBrains Mono", ui-monospace, SFMono-Regular, monospace;
   --font-hand: "Caveat", cursive;
   --font-display: "Bebas Neue", "Impact", "Arial Narrow", sans-serif;
@@ -125,7 +123,6 @@
 
 /* --- 4. COMPONENTS LAYER (SOLID ARCHITECTURE) --- */
 @layer components {
-
   /* A. PROSE RESET (Polished & Textured) */
   .prose-catppuccin {
     --tw-prose-body: var(--ctp-text);
@@ -233,7 +230,8 @@
     /* The specific System Header shadow: 4px 4px 0 0 rgba(...) */
     box-shadow: 4px 4px 0 0 rgba(0, 0, 0, 0.3);
 
-    transition: transform 0.2s cubic-bezier(0.25, 0.46, 0.45, 0.94), box-shadow 0.2s ease;
+    transition: transform 0.2s cubic-bezier(0.25, 0.46, 0.45, 0.94),
+      box-shadow 0.2s ease;
     will-change: transform;
 
     &:hover {
@@ -284,7 +282,11 @@
   /* D. BREADCRUMB (Path Ribbon — Smooth & Spacious) */
   .breadcrumb {
     /* Color Palette: Muted violet tones for consistency with site accent */
-    --breadcrumb-link: color-mix(in srgb, var(--ctp-lavender) 80%, var(--ctp-overlay1) 20%);
+    --breadcrumb-link: color-mix(
+      in srgb,
+      var(--ctp-lavender) 80%,
+      var(--ctp-overlay1) 20%
+    );
     --breadcrumb-current: var(--ctp-mauve);
     --breadcrumb-separator: var(--ctp-overlay0);
 
@@ -444,7 +446,11 @@
         left: 0;
         width: 0;
         height: 1px;
-        background: linear-gradient(to right, var(--ctp-mauve), var(--ctp-lavender));
+        background: linear-gradient(
+          to right,
+          var(--ctp-mauve),
+          var(--ctp-lavender)
+        );
         transition: width 0.25s cubic-bezier(0.25, 0.46, 0.45, 0.94);
       }
 
@@ -461,14 +467,24 @@
     & ul ul {
       margin-left: 0.5rem;
       padding-left: 1rem;
-      border-left: 1px dashed color-mix(in srgb, var(--ctp-surface1) 60%, transparent);
+      border-left: 1px dashed
+        color-mix(in srgb, var(--ctp-surface1) 60%, transparent);
     }
 
     /* Level-specific colors (soft violet cascade) */
-    & > ul > li > a { color: var(--ctp-violet-1); font-weight: 500; }
-    & > ul > li > ul > li > a { color: color-mix(in srgb, var(--ctp-violet-2) 80%, var(--ctp-subtext0)); }
-    & > ul > li > ul > li > ul > li > a { color: color-mix(in srgb, var(--ctp-violet-3) 70%, var(--ctp-subtext0)); }
-    & > ul > li > ul > li > ul > li > ul > li > a { color: color-mix(in srgb, var(--ctp-violet-4) 60%, var(--ctp-subtext0)); }
+    & > ul > li > a {
+      color: var(--ctp-violet-1);
+      font-weight: 500;
+    }
+    & > ul > li > ul > li > a {
+      color: color-mix(in srgb, var(--ctp-violet-2) 80%, var(--ctp-subtext0));
+    }
+    & > ul > li > ul > li > ul > li > a {
+      color: color-mix(in srgb, var(--ctp-violet-3) 70%, var(--ctp-subtext0));
+    }
+    & > ul > li > ul > li > ul > li > ul > li > a {
+      color: color-mix(in srgb, var(--ctp-violet-4) 60%, var(--ctp-subtext0));
+    }
   }
 
   /* ==========================================================================
@@ -481,21 +497,21 @@
   /* Light Palette: Warm Autumn Garden */
   :root {
     /* Core Backgrounds (Light, Creamy, Golden) — More buttery */
-    --si-cream: #faf5eb;           /* Beurre frais — warmer */
-    --si-parchment: #f3e8da;       /* Parchemin doré */
-    --si-honey: #faecd3;           /* Golden honey glow */
-    --si-latte: #efe6d9;           /* Café au lait */
+    --si-cream: #faf5eb; /* Beurre frais — warmer */
+    --si-parchment: #f3e8da; /* Parchemin doré */
+    --si-honey: #faecd3; /* Golden honey glow */
+    --si-latte: #efe6d9; /* Café au lait */
 
     /* Accent Colors (Forest & Terra) */
-    --si-forest: #4a6c4b;          /* Deep moss green */
-    --si-terracotta: #c96d4e;      /* Warm clay orange */
-    --si-bark: #5d4037;            /* Rich tree bark brown */
-    --si-wine: #8b4049;            /* Deep berry wine */
-    --si-gold: #c9a227;            /* Sunlit gold */
+    --si-forest: #4a6c4b; /* Deep moss green */
+    --si-terracotta: #c96d4e; /* Warm clay orange */
+    --si-bark: #5d4037; /* Rich tree bark brown */
+    --si-wine: #8b4049; /* Deep berry wine */
+    --si-gold: #c9a227; /* Sunlit gold */
 
     /* Text (Readable on light) */
-    --si-text: #3d3229;            /* Warm charcoal */
-    --si-text-soft: #5a4d42;       /* Muted earth */
+    --si-text: #3d3229; /* Warm charcoal */
+    --si-text-soft: #5a4d42; /* Muted earth */
   }
 
   /* Main Container Styling */
@@ -503,36 +519,100 @@
     /* VITALITÉ MAXIMALE — Verts saturés + touches dorées solaires */
     background-color: var(--si-cream);
     background-image: 
-      /* === HAUT DE PAGE — Emeraude vif === */
-      radial-gradient(circle 320px at 0% 0%, rgba(34, 139, 34, 0.55), transparent 55%),
-      radial-gradient(circle 180px at 18% 3%, rgba(201, 162, 39, 0.25), transparent 45%),
-      radial-gradient(circle 240px at 25% 8%, rgba(50, 205, 50, 0.45), transparent 50%),
-      radial-gradient(circle 350px at 100% 0%, rgba(46, 139, 87, 0.52), transparent 55%),
-      radial-gradient(circle 140px at 85% 6%, rgba(218, 165, 32, 0.22), transparent 45%),
-      
+      /* === HAUT DE PAGE — Emeraude vif === */ radial-gradient(
+        circle 320px at 0% 0%,
+        rgba(34, 139, 34, 0.55),
+        transparent 55%
+      ),
+      radial-gradient(
+        circle 180px at 18% 3%,
+        rgba(201, 162, 39, 0.25),
+        transparent 45%
+      ),
+      radial-gradient(
+        circle 240px at 25% 8%,
+        rgba(50, 205, 50, 0.45),
+        transparent 50%
+      ),
+      radial-gradient(
+        circle 350px at 100% 0%,
+        rgba(46, 139, 87, 0.52),
+        transparent 55%
+      ),
+      radial-gradient(
+        circle 140px at 85% 6%,
+        rgba(218, 165, 32, 0.22),
+        transparent 45%
+      ),
       /* === CÔTÉ GAUCHE — Forêt luxuriante === */
-      radial-gradient(circle 280px at 0% 28%, rgba(60, 179, 113, 0.50), transparent 55%),
-      radial-gradient(circle 160px at 5% 42%, rgba(201, 162, 39, 0.18), transparent 45%),
-      radial-gradient(circle 220px at 0% 55%, rgba(34, 139, 34, 0.48), transparent 50%),
-      radial-gradient(circle 300px at 0% 78%, rgba(50, 205, 50, 0.52), transparent 55%),
-      
+        radial-gradient(
+          circle 280px at 0% 28%,
+          rgba(60, 179, 113, 0.5),
+          transparent 55%
+        ),
+      radial-gradient(
+        circle 160px at 5% 42%,
+        rgba(201, 162, 39, 0.18),
+        transparent 45%
+      ),
+      radial-gradient(
+        circle 220px at 0% 55%,
+        rgba(34, 139, 34, 0.48),
+        transparent 50%
+      ),
+      radial-gradient(
+        circle 300px at 0% 78%,
+        rgba(50, 205, 50, 0.52),
+        transparent 55%
+      ),
       /* === CÔTÉ DROIT — Canopée dorée === */
-      radial-gradient(circle 260px at 100% 32%, rgba(46, 139, 87, 0.48), transparent 55%),
-      radial-gradient(circle 150px at 92% 45%, rgba(218, 165, 32, 0.20), transparent 45%),
-      radial-gradient(circle 240px at 100% 58%, rgba(60, 179, 113, 0.45), transparent 50%),
-      radial-gradient(circle 320px at 100% 82%, rgba(34, 139, 34, 0.50), transparent 55%),
-      
+        radial-gradient(
+          circle 260px at 100% 32%,
+          rgba(46, 139, 87, 0.48),
+          transparent 55%
+        ),
+      radial-gradient(
+        circle 150px at 92% 45%,
+        rgba(218, 165, 32, 0.2),
+        transparent 45%
+      ),
+      radial-gradient(
+        circle 240px at 100% 58%,
+        rgba(60, 179, 113, 0.45),
+        transparent 50%
+      ),
+      radial-gradient(
+        circle 320px at 100% 82%,
+        rgba(34, 139, 34, 0.5),
+        transparent 55%
+      ),
       /* === BAS DE PAGE — Sol forestier === */
-      radial-gradient(circle 340px at 0% 100%, rgba(50, 205, 50, 0.55), transparent 55%),
-      radial-gradient(circle 200px at 35% 95%, rgba(201, 162, 39, 0.22), transparent 45%),
-      radial-gradient(circle 280px at 55% 92%, rgba(46, 139, 87, 0.42), transparent 50%),
-      radial-gradient(circle 320px at 100% 100%, rgba(60, 179, 113, 0.52), transparent 55%);
+        radial-gradient(
+          circle 340px at 0% 100%,
+          rgba(50, 205, 50, 0.55),
+          transparent 55%
+        ),
+      radial-gradient(
+        circle 200px at 35% 95%,
+        rgba(201, 162, 39, 0.22),
+        transparent 45%
+      ),
+      radial-gradient(
+        circle 280px at 55% 92%,
+        rgba(46, 139, 87, 0.42),
+        transparent 50%
+      ),
+      radial-gradient(
+        circle 320px at 100% 100%,
+        rgba(60, 179, 113, 0.52),
+        transparent 55%
+      );
     min-height: 100vh;
 
     /* Aggressively cover the dark body/main behind */
     margin: -5rem -1rem 0 -1rem;
     padding: 5rem 1rem 0 1rem;
-    
+
     position: relative;
     isolation: isolate;
   }
@@ -541,7 +621,7 @@
   body:has(.solutions-imaginaires-page) {
     background-color: var(--si-cream) !important;
   }
-  
+
   body:has(.solutions-imaginaires-page) main {
     background-color: var(--si-cream) !important;
   }
@@ -550,7 +630,7 @@
   .solutions-imaginaires-page .leaf-title {
     color: var(--si-bark);
     filter: drop-shadow(1px 1px 0px rgba(255, 255, 255, 0.8))
-            drop-shadow(2px 2px 0px rgba(93, 64, 55, 0.3));
+      drop-shadow(2px 2px 0px rgba(93, 64, 55, 0.3));
     font-weight: 700;
   }
 
@@ -563,8 +643,7 @@
   /* Card Title Styling (on Leaves) */
   .solutions-imaginaires-page .leaf-card-title {
     color: var(--si-bark);
-    text-shadow:
-      0px 1px 0px rgba(255, 255, 255, 0.9),
+    text-shadow: 0px 1px 0px rgba(255, 255, 255, 0.9),
       1px 2px 2px rgba(93, 64, 55, 0.4);
     font-weight: 700;
     letter-spacing: 0.02em;
@@ -573,7 +652,7 @@
   /* ==========================================================================
      LA VIE CACHÉE — 42 Fourmis statiques
      ========================================================================== */
-  
+
   .static-ants-container {
     position: absolute;
     inset: 0;
@@ -588,35 +667,60 @@
     user-select: none;
   }
 
-  /* Terracotta — brun-rouge chaud */
+  /* Terracotta — brun-rouge chaud (OPTIMIZED: 2 ops vs 4) */
   .si-ant-terra {
-    filter: sepia(0.5) saturate(1.8) hue-rotate(-15deg) brightness(0.8);
+    filter: sepia(0.4) brightness(0.85);
   }
 
-  /* Forêt — vert mousse profond */
+  /* Forêt — vert mousse profond (OPTIMIZED: 2 ops vs 4) */
   .si-ant-forest {
-    filter: sepia(0.4) saturate(1.4) hue-rotate(75deg) brightness(0.75);
+    filter: hue-rotate(85deg) brightness(0.8);
   }
 
-  /* Bourgogne — rouge vin automnal */
+  /* Bourgogne — rouge vin automnal (OPTIMIZED: 2 ops vs 4) */
   .si-ant-wine {
-    filter: sepia(0.5) saturate(2) hue-rotate(-40deg) brightness(0.7);
+    filter: sepia(0.4) hue-rotate(-30deg);
   }
 
   /* 9 Poses naturelles — Attitudes variées via scaleX + rotate */
-  .si-ant-pose-0 { transform: rotate(-10deg); }                     /* Marche droite */
-  .si-ant-pose-1 { transform: scaleX(-1) rotate(10deg); }           /* Marche gauche */
-  .si-ant-pose-2 { transform: rotate(-80deg); }                     /* Grimpe */
-  .si-ant-pose-3 { transform: rotate(80deg); }                      /* Descend */
-  .si-ant-pose-4 { transform: rotate(-45deg); }                     /* Diag haut-droite */
-  .si-ant-pose-5 { transform: scaleX(-1) rotate(-45deg); }          /* Diag haut-gauche */
-  .si-ant-pose-6 { transform: rotate(45deg); }                      /* Diag bas-droite */
-  .si-ant-pose-7 { transform: scaleX(-1) rotate(45deg); }           /* Diag bas-gauche */
-  .si-ant-pose-8 { transform: rotate(5deg) skewX(-5deg); }          /* Repos nonchalant */
+  .si-ant-pose-0 {
+    transform: rotate(-10deg);
+  } /* Marche droite */
+  .si-ant-pose-1 {
+    transform: scaleX(-1) rotate(10deg);
+  } /* Marche gauche */
+  .si-ant-pose-2 {
+    transform: rotate(-80deg);
+  } /* Grimpe */
+  .si-ant-pose-3 {
+    transform: rotate(80deg);
+  } /* Descend */
+  .si-ant-pose-4 {
+    transform: rotate(-45deg);
+  } /* Diag haut-droite */
+  .si-ant-pose-5 {
+    transform: scaleX(-1) rotate(-45deg);
+  } /* Diag haut-gauche */
+  .si-ant-pose-6 {
+    transform: rotate(45deg);
+  } /* Diag bas-droite */
+  .si-ant-pose-7 {
+    transform: scaleX(-1) rotate(45deg);
+  } /* Diag bas-gauche */
+  .si-ant-pose-8 {
+    transform: rotate(5deg) skewX(-5deg);
+  } /* Repos nonchalant */
 
   /* Responsive: réduire le nombre sur mobile */
   @media (max-width: 640px) {
-    .static-ant:nth-child(n+22) {
+    .static-ant:nth-child(n + 22) {
+      display: none;
+    }
+  }
+
+  /* PERF: Encore plus agressif sur très petits écrans */
+  @media (max-width: 480px) {
+    .static-ant:nth-child(n + 15) {
       display: none;
     }
   }
@@ -633,12 +737,12 @@
     transform: translateZ(0);
     backface-visibility: hidden;
   }
-  
+
   /* Lightweight leaf shadow (replaces expensive drop-shadow-2xl) */
   .si-leaf-shadow {
     filter: drop-shadow(0 4px 6px rgba(0, 0, 0, 0.15));
   }
-  
+
   /* Hover-only subtle lift (no infinite animation) */
   .si-leaf-card:hover {
     transform: translateY(-4px) translateZ(0);
@@ -665,7 +769,11 @@
     width: 4px;
     height: 4px;
     border-radius: 50%;
-    background: radial-gradient(circle, rgba(218, 165, 32, 0.8), rgba(201, 162, 39, 0.4));
+    background: radial-gradient(
+      circle,
+      rgba(218, 165, 32, 0.8),
+      rgba(201, 162, 39, 0.4)
+    );
     box-shadow: 0 0 6px 2px rgba(218, 165, 32, 0.3);
     animation: pollenFloat 12s ease-in-out infinite;
     will-change: transform, opacity;
@@ -676,7 +784,11 @@
     height: 3px;
     animation-duration: 15s;
     animation-delay: -5s;
-    background: radial-gradient(circle, rgba(255, 223, 128, 0.7), rgba(218, 165, 32, 0.3));
+    background: radial-gradient(
+      circle,
+      rgba(255, 223, 128, 0.7),
+      rgba(218, 165, 32, 0.3)
+    );
   }
 
   .pollen:nth-child(3n) {
@@ -684,20 +796,25 @@
     height: 5px;
     animation-duration: 18s;
     animation-delay: -8s;
-    background: radial-gradient(circle, rgba(144, 238, 144, 0.6), rgba(60, 179, 113, 0.2));
+    background: radial-gradient(
+      circle,
+      rgba(144, 238, 144, 0.6),
+      rgba(60, 179, 113, 0.2)
+    );
     box-shadow: 0 0 8px 2px rgba(144, 238, 144, 0.25);
   }
 
   @keyframes pollenFloat {
-    0%, 100% {
-      transform: translate(0, 0) scale(1);
+    0%,
+    100% {
+      transform: translate(0, 0);
       opacity: 0;
     }
     10% {
       opacity: 0.8;
     }
     50% {
-      transform: translate(30px, -60px) scale(1.2);
+      transform: translate(30px, -60px);
       opacity: 0.6;
     }
     90% {
@@ -706,14 +823,46 @@
   }
 
   /* Positions des 8 pollens */
-  .pollen:nth-child(1) { left: 5%; top: 20%; animation-delay: 0s; }
-  .pollen:nth-child(2) { left: 12%; top: 45%; animation-delay: -3s; }
-  .pollen:nth-child(3) { left: 8%; top: 70%; animation-delay: -6s; }
-  .pollen:nth-child(4) { right: 6%; top: 25%; animation-delay: -2s; }
-  .pollen:nth-child(5) { right: 10%; top: 55%; animation-delay: -7s; }
-  .pollen:nth-child(6) { right: 8%; top: 80%; animation-delay: -4s; }
-  .pollen:nth-child(7) { left: 25%; top: 85%; animation-delay: -9s; }
-  .pollen:nth-child(8) { right: 22%; top: 15%; animation-delay: -11s; }
+  .pollen:nth-child(1) {
+    left: 5%;
+    top: 20%;
+    animation-delay: 0s;
+  }
+  .pollen:nth-child(2) {
+    left: 12%;
+    top: 45%;
+    animation-delay: -3s;
+  }
+  .pollen:nth-child(3) {
+    left: 8%;
+    top: 70%;
+    animation-delay: -6s;
+  }
+  .pollen:nth-child(4) {
+    right: 6%;
+    top: 25%;
+    animation-delay: -2s;
+  }
+  .pollen:nth-child(5) {
+    right: 10%;
+    top: 55%;
+    animation-delay: -7s;
+  }
+  .pollen:nth-child(6) {
+    right: 8%;
+    top: 80%;
+    animation-delay: -4s;
+  }
+  .pollen:nth-child(7) {
+    left: 25%;
+    top: 85%;
+    animation-delay: -9s;
+  }
+  .pollen:nth-child(8) {
+    right: 22%;
+    top: 15%;
+    animation-delay: -11s;
+  }
 
   /* --- G.2 TITRES VIVANTS — Lueur dorée au hover --- */
   .solutions-imaginaires-page .leaf-card-title {
@@ -721,17 +870,15 @@
   }
 
   .solutions-imaginaires-page .si-leaf-card:hover .leaf-card-title {
-    text-shadow:
-      0px 1px 0px rgba(255, 255, 255, 0.95),
-      1px 2px 2px rgba(93, 64, 55, 0.5),
-      0 0 20px rgba(218, 165, 32, 0.4),
+    text-shadow: 0px 1px 0px rgba(255, 255, 255, 0.95),
+      1px 2px 2px rgba(93, 64, 55, 0.5), 0 0 20px rgba(218, 165, 32, 0.4),
       0 0 35px rgba(201, 162, 39, 0.25);
     transform: scale(1.02);
   }
 
   /* --- G.3 BRILLANCE SOLAIRE SUR FEUILLES --- */
   .si-leaf-card::after {
-    content: '';
+    content: "";
     position: absolute;
     inset: 0;
     background: radial-gradient(
@@ -766,11 +913,18 @@
 
 /* --- 5. UTILITIES --- */
 @layer components {
-
   /* DEFINING THE GRADIENT ACCENT (Reusable) */
   :root {
-    --ctp-gradient-heading: linear-gradient(135deg, var(--ctp-mauve) 0%, var(--ctp-pink) 100%);
-    --ctp-gradient-link: linear-gradient(to right, var(--ctp-blue), var(--ctp-sapphire));
+    --ctp-gradient-heading: linear-gradient(
+      135deg,
+      var(--ctp-mauve) 0%,
+      var(--ctp-pink) 100%
+    );
+    --ctp-gradient-link: linear-gradient(
+      to right,
+      var(--ctp-blue),
+      var(--ctp-sapphire)
+    );
   }
 }
 
@@ -837,5 +991,367 @@
     color: color-mix(in srgb, var(--ctp-text), var(--ctp-peach) 15%);
     text-shadow: 0 0 1px rgba(250, 179, 135, 0.1);
     /* Slight bleed effect */
+  }
+
+  /* ==========================================================================
+     H. ONDES & PIXELS — "Fréquences Ambiantes"
+     ==========================================================================
+     An immersive dark space for audio/video content.
+     Features ambient light orbs, wave-offset cards, organic feel.
+     ALL animations are 60FPS safe (transform + opacity only).
+  */
+
+  /* --- H.1 PAGE CONTAINER --- */
+  .ondes-pixels-page {
+    background-color: var(--ctp-crust);
+    min-height: 100vh;
+    position: relative;
+  }
+
+  /* Frequency Waves Background — Vibrant, Prominent, Audio-Inspired
+     OPTIMIZED: Changed from fixed to scroll to avoid repaint on scroll */
+  .ondes-pixels-page::before {
+    content: "";
+    position: absolute; /* Changed from fixed — avoids constant compositor updates */
+    inset: 0;
+    z-index: 0;
+    pointer-events: none;
+    opacity: 0.85;
+    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 1440 900' preserveAspectRatio='xMidYMid slice'%3E%3Cdefs%3E%3ClinearGradient id='g1' x1='0%25' y1='0%25' x2='100%25' y2='0%25'%3E%3Cstop offset='0%25' stop-color='%23cba6f7' stop-opacity='0.6'/%3E%3Cstop offset='50%25' stop-color='%23f5c2e7' stop-opacity='0.5'/%3E%3Cstop offset='100%25' stop-color='%23fab387' stop-opacity='0.6'/%3E%3C/linearGradient%3E%3ClinearGradient id='g2' x1='0%25' y1='0%25' x2='100%25' y2='0%25'%3E%3Cstop offset='0%25' stop-color='%2389dceb' stop-opacity='0.5'/%3E%3Cstop offset='50%25' stop-color='%23b4befe' stop-opacity='0.45'/%3E%3Cstop offset='100%25' stop-color='%2394e2d5' stop-opacity='0.5'/%3E%3C/linearGradient%3E%3ClinearGradient id='g3' x1='0%25' y1='0%25' x2='100%25' y2='0%25'%3E%3Cstop offset='0%25' stop-color='%23fab387' stop-opacity='0.45'/%3E%3Cstop offset='100%25' stop-color='%23cba6f7' stop-opacity='0.5'/%3E%3C/linearGradient%3E%3ClinearGradient id='g4' x1='0%25' y1='0%25' x2='100%25' y2='0%25'%3E%3Cstop offset='0%25' stop-color='%2394e2d5' stop-opacity='0.4'/%3E%3Cstop offset='100%25' stop-color='%2389dceb' stop-opacity='0.45'/%3E%3C/linearGradient%3E%3C/defs%3E%3C!-- Primary Waves (Large, Bold) --%3E%3Cpath fill='none' stroke='url(%23g1)' stroke-width='4' stroke-linecap='round' d='M-100,200 C150,50 350,350 600,180 S900,50 1100,220 S1350,380 1600,200'/%3E%3Cpath fill='none' stroke='url(%23g2)' stroke-width='3.5' stroke-linecap='round' d='M-50,450 C200,600 400,300 700,480 S1000,650 1250,420 S1500,280 1750,500'/%3E%3Cpath fill='none' stroke='url(%23g1)' stroke-width='3' stroke-linecap='round' d='M-80,700 C180,550 380,800 650,650 S950,480 1200,700 S1450,850 1700,680'/%3E%3C!-- Secondary Waves (Medium, Flowing) --%3E%3Cpath fill='none' stroke='url(%23g3)' stroke-width='2.5' stroke-linecap='round' d='M-120,320 C100,180 320,450 580,280 S880,120 1150,340 S1400,500 1650,300'/%3E%3Cpath fill='none' stroke='url(%23g4)' stroke-width='2.5' stroke-linecap='round' d='M-30,580 C220,420 450,700 720,530 S1020,360 1300,560 S1550,720 1780,540'/%3E%3C!-- Tertiary Waves (Subtle, Depth) --%3E%3Cpath fill='none' stroke='%23b4befe' stroke-width='1.5' stroke-opacity='0.35' stroke-linecap='round' d='M-60,120 C180,250 400,80 680,200 S980,350 1280,180 S1580,50 1800,220'/%3E%3Cpath fill='none' stroke='%23f5c2e7' stroke-width='1.5' stroke-opacity='0.3' stroke-linecap='round' d='M-40,820 C200,700 420,880 700,760 S1000,620 1300,800 S1600,900 1850,750'/%3E%3Cpath fill='none' stroke='%2394e2d5' stroke-width='1' stroke-opacity='0.25' stroke-linecap='round' d='M-80,380 C140,500 360,280 620,420 S920,560 1200,380 S1480,220 1750,400'/%3E%3C/svg%3E");
+    background-size: cover;
+    background-position: center;
+  }
+
+  /* Override body background on this page */
+  body:has(.ondes-pixels-page) {
+    background-color: var(--ctp-crust) !important;
+  }
+
+  body:has(.ondes-pixels-page) main {
+    background-color: var(--ctp-crust) !important;
+  }
+
+  /* --- H.2 AMBIENT LIGHT SOURCES --- */
+  /* Floating gradient orbs that create depth and atmosphere */
+  .ambient-light {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    z-index: 0;
+    overflow: hidden;
+    pointer-events: none;
+  }
+
+  .light-source {
+    position: absolute;
+    border-radius: 50%;
+    /* PERF FIX: Removed filter: blur(60px) — extremely expensive on large elements.
+       The radial gradients already have soft edges, no filter needed. */
+    opacity: 0.5;
+    /* PERF FIX: Removed will-change and animation — blur + animation = mega lag.
+       Static ambient lights with soft gradients are plenty atmospheric. */
+    /* GPU acceleration for any hover transforms */
+    transform: translateZ(0);
+    backface-visibility: hidden;
+  }
+
+  .source-mauve {
+    top: -15%;
+    left: -10%;
+    width: 45vw;
+    height: 45vw;
+    max-width: 500px;
+    max-height: 500px;
+    /* OPTIMIZED: Softer gradient falloff simulates blur without GPU cost */
+    background: radial-gradient(circle, 
+      color-mix(in srgb, var(--ctp-mauve) 60%, transparent) 0%,
+      color-mix(in srgb, var(--ctp-mauve) 30%, transparent) 40%,
+      transparent 70%);
+  }
+
+  .source-peach {
+    bottom: -15%;
+    right: -15%;
+    width: 50vw;
+    height: 50vw;
+    max-width: 550px;
+    max-height: 550px;
+    /* OPTIMIZED: Multi-stop gradient for soft blur effect */
+    background: radial-gradient(circle,
+      color-mix(in srgb, var(--ctp-peach) 55%, transparent) 0%,
+      color-mix(in srgb, var(--ctp-peach) 25%, transparent) 45%,
+      transparent 70%);
+  }
+
+  .source-lavender {
+    top: 40%;
+    right: -5%;
+    width: 30vw;
+    height: 30vw;
+    max-width: 350px;
+    max-height: 350px;
+    /* OPTIMIZED: Soft gradient, no animation */
+    background: radial-gradient(circle,
+      color-mix(in srgb, var(--ctp-lavender) 50%, transparent) 0%,
+      color-mix(in srgb, var(--ctp-lavender) 20%, transparent) 45%,
+      transparent 70%);
+  }
+
+  .source-green-glow {
+    top: 50%;
+    left: 20%;
+    width: 40vw;
+    height: 40vw;
+    max-width: 450px;
+    max-height: 450px;
+    /* OPTIMIZED: Soft gradient, static positioning */
+    background: radial-gradient(circle,
+      color-mix(in srgb, var(--ctp-green) 40%, transparent) 0%,
+      color-mix(in srgb, var(--ctp-green) 15%, transparent) 45%,
+      transparent 70%);
+  }
+
+  /* REMOVED: @keyframes ambient-drift — animation on blurred elements is expensive */
+
+  /* Animation removed entirely for performance — no media query needed */
+
+  /* --- H.3 INTRO ACCENT (Left Border Detail) --- */
+  .intro-accent {
+    border-left: 2px solid var(--ctp-peach);
+    transition: border-color 0.3s ease;
+  }
+
+  .intro-accent:hover {
+    border-color: var(--ctp-mauve);
+  }
+
+  /* --- H.4 WAVE GRID LAYOUT --- */
+  .wave-grid {
+    display: grid;
+    /* User requested: ~3 cards per line. Fixed 3 columns on desktop. */
+    grid-template-columns: repeat(1, 1fr);
+    gap: 3rem 2rem;
+    align-items: start;
+  }
+
+  @media (min-width: 768px) {
+    .wave-grid {
+      grid-template-columns: repeat(2, 1fr);
+    }
+  }
+
+  @media (min-width: 1024px) {
+    .wave-grid {
+      grid-template-columns: repeat(3, 1fr);
+    }
+  }
+
+  /* --- H.5 WAVE CARD COMPONENT --- */
+  .wave-card {
+    --card-accent: var(--ctp-mauve);
+    --card-bg: rgba(30, 30, 46, 0.85); /* Slightly more transparent for cozy feel */
+
+    position: relative;
+    background-color: var(--card-bg);
+    border-radius: 20px; /* Softer corners */
+    padding: 24px;
+
+    /* Cozy borders & shadows */
+    border: 1px solid rgba(255, 255, 255, 0.08);
+    box-shadow: 0 10px 30px -10px rgba(0, 0, 0, 0.4);
+
+    /* OPTIMIZED: Only transform in transition — box-shadow causes repaints */
+    transition: transform 0.35s cubic-bezier(0.25, 0.46, 0.45, 0.94),
+      border-color 0.25s ease;
+    will-change: transform;
+    transform: translateZ(0);
+    backface-visibility: hidden;
+    cursor: pointer;
+    overflow: hidden;
+  }
+
+  /* Make the title link cover the whole card */
+  .wave-card-link::after {
+    content: "";
+    position: absolute;
+    inset: 0;
+    z-index: 10;
+  }
+
+  /* Hover Effects — OPTIMIZED: Removed box-shadow transition, static shadow only */
+  .wave-card:hover {
+    border-color: var(--card-accent);
+  }
+
+  /* Asymmetric wave offset on desktop - Disabled for symmetry preference */
+  /*
+  @media (min-width: 768px) {
+    .wave-card-even { transform: translateY(2rem); }
+    .wave-card-odd { transform: translateY(-2rem); }
+  }
+  */
+
+  @media (min-width: 768px) {
+    .wave-card:hover {
+      transform: translateY(-6px) scale(1.02) translateZ(0);
+    }
+  }
+
+  /* --- H.5.1 ONDES STYLE (Organic, Fluid, Cozy) --- */
+  .wave-card-ondes {
+    border-radius: 24px 8px 24px 8px; /* Organic leaf-like shape */
+    background: linear-gradient(
+      145deg,
+      rgba(30, 30, 46, 0.9),
+      rgba(24, 24, 37, 0.95)
+    );
+  }
+  
+  .wave-card-ondes .wave-card-accent {
+      position: absolute;
+      top: 0;
+      left: 0;
+      right: 0;
+      height: 4px;
+      background: linear-gradient(90deg, var(--ctp-mauve), var(--ctp-peach));
+      opacity: 0.8;
+  }
+
+  /* --- H.5.2 PIXELS STYLE (Digital, Sharp, Vivid) --- */
+  .wave-card-pixels {
+    border-radius: 4px; /* Sharp digital edges */
+    background: linear-gradient(
+      180deg,
+      rgba(30, 30, 46, 0.95),
+      rgba(17, 17, 27, 0.98)
+    );
+    border: 1px solid rgba(148, 226, 213, 0.15); /* Teal accent */
+  }
+
+  .wave-card-pixels .wave-card-accent {
+      position: absolute;
+      bottom: 0;
+      left: 0;
+      width: 100%;
+      height: 2px;
+      background: linear-gradient(90deg, var(--ctp-teal), var(--ctp-sky));
+      box-shadow: 0 0 10px var(--ctp-teal);
+  }
+
+  .wave-card-pixels:hover {
+      box-shadow: 0 0 15px rgba(148, 226, 213, 0.2);
+      border-color: var(--ctp-teal);
+  }
+
+
+  @media (max-width: 767px) {
+    .wave-card:hover {
+      transform: translateY(-4px) translateZ(0);
+      /* OPTIMIZED: Removed dynamic box-shadow */
+    }
+  }
+
+  /* --- H.6 GRADIENT TOP ACCENT --- */
+  .wave-card-accent {
+    position: absolute;
+    top: 0;
+    left: 20px;
+    right: 20px;
+    height: 3px;
+    background: linear-gradient(90deg, var(--ctp-peach), var(--card-accent));
+    opacity: 0.8;
+    border-radius: 0 0 2px 2px;
+    transition: opacity 0.3s ease;
+  }
+
+  .wave-card:hover .wave-card-accent {
+    opacity: 1;
+  }
+
+  /* --- H.7 META INFO (Icon + Date + Tag) --- */
+  .wave-card-meta {
+    display: flex;
+    align-items: center;
+    gap: 0.75rem;
+    margin-bottom: 1rem;
+    font-family: var(--font-mono);
+    font-size: 0.8rem;
+    color: var(--ctp-overlay1);
+  }
+
+  .wave-card-icon {
+    font-size: 1.2rem;
+    opacity: 0.9;
+  }
+
+  .wave-card-date {
+    color: var(--ctp-mauve);
+  }
+
+  .wave-card-tag {
+    padding: 2px 8px;
+    background-color: var(--ctp-surface0);
+    border-radius: 4px;
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+    font-size: 0.7rem;
+    color: var(--ctp-subtext0);
+  }
+
+  /* --- H.8 CARD TITLE --- */
+  .wave-card-title {
+    margin: 0 0 12px 0;
+    font-size: 1.4rem;
+    font-weight: 500;
+    line-height: 1.3;
+    color: var(--ctp-text);
+  }
+
+  .wave-card-link {
+    color: inherit !important;
+    transition: color 0.2s ease;
+  }
+
+  .wave-card-link:hover {
+    color: var(--card-accent) !important;
+  }
+
+  /* --- H.9 DESCRIPTION --- */
+  .wave-card-description {
+    margin: 0 0 1rem 0;
+    font-size: 0.95rem;
+    line-height: 1.6;
+    color: var(--ctp-subtext0);
+  }
+
+  /* --- H.10 MEDIA SLOT --- */
+  .wave-card-media {
+    background-color: var(--ctp-mantle);
+    border-radius: 8px;
+    height: 80px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border: 1px solid rgba(203, 166, 247, 0.1);
+    margin-bottom: 1rem;
+    transition: border-color 0.3s ease, background-color 0.3s ease;
+  }
+
+  .wave-card:hover .wave-card-media {
+    border-color: rgba(203, 166, 247, 0.25);
+    background-color: var(--ctp-surface0);
+  }
+
+  /* --- H.11 AUTHORS --- */
+  .wave-card-authors {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    font-family: var(--font-serif);
+    font-size: 0.85rem;
+    font-style: italic;
+    color: var(--ctp-overlay1);
   }
 }
