@@ -1,17 +1,18 @@
 [build]
+  # NOTE ARCHITECTE : J'ai retiré "-b $URL" de la commande ci-dessous.
+  # On fait confiance à hugo.yaml pour l'URL de prod.
   command = """
     set -e
     echo "=== Starting Blog build process ==="
     echo "Node version: $(node --version)"
     echo "pnpm version: $(pnpm --version)"
     echo "Hugo version: $(hugo version)"
-    echo "Go version: $(go version || echo 'Go not available')"
     
     echo "=== Installing dependencies ==="
     pnpm install --verbose
     
     echo "=== Running Hugo build ==="
-    hugo --gc --minify -b $URL --logLevel debug --printI18nWarnings --printPathWarnings
+    hugo --gc --minify --logLevel debug --printI18nWarnings --printPathWarnings
     
     echo "=== Running Pagefind indexing ==="
     pnpm dlx pagefind --source 'public' --verbose
@@ -21,7 +22,6 @@
   publish = "public"
 
 [build.environment]
-  # J'ai mis la version extended car ton thème en a besoin
   HUGO_VERSION = "0.152.2"
   HUGO_EXTENDED = "true"
   GO_VERSION = "1.21.5"
@@ -32,15 +32,25 @@
   FORCE_COLOR = "1"
   PNPM_LOG_LEVEL = "debug"
 
+# ═══════════════════════════════════════════════════════════════════════════
+# CONTEXTE DE PRODUCTION (Le Fix est ici)
+# ═══════════════════════════════════════════════════════════════════════════
 [context.production.environment]
   HUGO_ENV = "production"
+  # On force l'URL pour être certain que le Sitemap soit correct
+  HUGO_BASEURL = "https://www.presque-quelque-chose.com/"
+  URL = "https://www.presque-quelque-chose.com/"
 
+# ═══════════════════════════════════════════════════════════════════════════
+# PREVIEWS (On garde le comportement dynamique ici)
+# ═══════════════════════════════════════════════════════════════════════════
 [context.deploy-preview]
   command = """
     set -e
     echo "=== Deploy Preview Build ==="
     echo "Deploy URL: $DEPLOY_PRIME_URL"
     pnpm install --verbose
+    # Ici on garde -b car l'URL est dynamique
     hugo --gc --minify --buildFuture -b $DEPLOY_PRIME_URL --logLevel debug --printI18nWarnings --printPathWarnings
     pnpm dlx pagefind --source 'public' --verbose
   """
@@ -51,6 +61,7 @@
     echo "=== Branch Deploy Build ==="
     echo "Deploy URL: $DEPLOY_PRIME_URL"
     pnpm install --verbose
+    # Ici on garde -b car l'URL est dynamique
     hugo --gc --minify -b $DEPLOY_PRIME_URL --logLevel debug --printI18nWarnings --printPathWarnings
     pnpm dlx pagefind --source 'public' --verbose
   """
@@ -61,7 +72,7 @@
     debug = true
 
 # ═══════════════════════════════════════════════════════════════════════════
-# PERFORMANCE: Aggressive Cache Headers for Static Assets
+# PERFORMANCE HEADERS
 # ═══════════════════════════════════════════════════════════════════════════
 
 [[headers]]
