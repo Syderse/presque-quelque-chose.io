@@ -1,7 +1,7 @@
 # System Context: Architecture Hugo Blox
 
-**Version:** 6.0 (Consolidated)
-**Last Audit:** 2025-12-04
+**Version:** 6.1 (Performance Optimized)
+**Last Audit:** 2025-12-06
 **Stack:** Hugo Extended (Go) | Tailwind CSS v4 (JIT) | Supabase | ESBuild
 
 ---
@@ -44,10 +44,12 @@
 ### B. Source of Truth (`assets/css/main.css`)
 
 - **Order of Operations:**
-  1.  `@import` Fonts (Google Fonts).
+  1.  `@import` Fonts (Google Fonts — **single consolidated request** with `display=swap`).
   2.  `@import "tailwindcss";`
   3.  `@plugin "@tailwindcss/typography";`
   4.  `@source` directives (Files scanned by JIT).
+- **Font Optimization (`baseof.html`):**
+  - `<link rel="preconnect">` for `fonts.googleapis.com` and `fonts.gstatic.com`.
 - **Layering:**
   - **`@layer base`:** Catppuccin Variables (`--ctp-mauve`, etc.) & Typography Reset.
   - **`@layer components`:**
@@ -65,8 +67,10 @@
     - Avoid GPU-heavy CSS effects that cause frame drops:
     - ❌ **Forbidden:** `backdrop-filter: blur()`, `filter: blur()` — extremely expensive, especially on large elements.
     - ❌ **Avoid:** Multiple `box-shadow` with `color-mix()` calculations, `scale()` in animations, `transition: all`.
+    - ❌ **Limit:** `filter` chains to **max 2 operations** per element (e.g., `sepia() brightness()`).
     - ✅ **Correct:** Solid translucent backgrounds (`rgba()`), single simplified shadows, `transform: translateX/Y` + `opacity` only.
     - ✅ **Optimize:** Use `transform: translateZ(0)` + `backface-visibility: hidden` to force GPU compositing.
+    - ✅ **Images:** Use `fetchpriority="high"` on hero/LCP images, `loading="lazy"` + `decoding="async"` elsewhere.
     - _Rationale:_ Blur effects require per-pixel sampling of underlying content — catastrophic for performance.
 
 ---
@@ -124,6 +128,16 @@ A Z-Index based Layered Architecture:
   - **Root Post:** The first post of a topic (`parent_id: null`).
   - **Recursive Rendering:** Hierarchy built via `parent_id`.
 
+### C. Ondes & Pixels (`layouts/ondes-pixels/`)
+
+- **File:** `list.html` + `partials/cards/wave-card.html`.
+- **Design:** Immersive dark space with ambient gradient orbs, wave-offset cards.
+- **Components:**
+  - `.wave-card`: Base card with cozy borders and hover lift.
+  - `.wave-card-ondes`: Organic leaf-like rounded corners (audio content).
+  - `.wave-card-pixels`: Sharp digital edges (video/text content).
+- **Performance:** Static ambient lights (no animation), GPU-accelerated transforms only.
+
 ---
 
 ## 6. Development Protocols
@@ -139,6 +153,9 @@ A Z-Index based Layered Architecture:
 
 1.  **Build Command:** `hugo --gc --minify` (Note: CSS is excluded from minify internally).
 2.  **Environment:** Requires `HUGO_VERSION` set to matching local version (Extended).
+3.  **Cache Headers (`netlify.toml`):**
+    - CSS/JS/Fonts: `max-age=31536000, immutable` (1 year).
+    - Media: `max-age=2592000` (30 days).
 
 ### Troubleshooting
 

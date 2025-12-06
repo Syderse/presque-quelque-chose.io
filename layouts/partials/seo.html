@@ -1,0 +1,168 @@
+{{- $title := .Title -}}
+{{- if .IsHome -}}
+  {{- $title = .Site.Title -}}
+{{- else -}}
+  {{- $title = printf "%s | %s" .Title .Site.Title -}}
+{{- end -}}
+
+{{- $desc := "" -}}
+{{- if .Params.summary -}}
+  {{- $desc = .Params.summary -}}
+{{- else if .Params.description -}}
+  {{- $desc = .Params.description -}}
+{{- else if .Summary -}}
+  {{- $desc = .Summary -}}
+{{- else -}}
+  {{- $desc = .Site.Params.description -}}
+{{- end -}}
+
+{{- $author := "" -}}
+{{- if .Params.author -}}
+  {{- $author = .Params.author -}}
+{{- else if .Site.Params.author.name -}}
+  {{- $author = .Site.Params.author.name -}}
+{{- end -}}
+
+{{- $iso8601 := "2006-01-02T15:04:05-07:00" -}}
+
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>{{ $title }}</title>
+<meta name="description" content="{{ $desc }}">
+{{- with .Params.keywords }}
+<meta name="keywords" content="{{ range $i, $e := . }}{{ if $i }}, {{ end }}{{ $e }}{{ end }}">
+{{- end }}
+{{- with $author }}
+<meta name="author" content="{{ . }}">
+{{- end }}
+<link rel="canonical" href="{{ .Permalink }}">
+{{- if .Params.robots }}
+<meta name="robots" content="{{ .Params.robots }}">
+{{- else }}
+<meta name="robots" content="index, follow">
+{{- end }}
+
+<!-- Open Graph / Facebook -->
+<meta property="og:type" content="{{ if .IsPage }}article{{ else }}website{{ end }}">
+<meta property="og:url" content="{{ .Permalink }}">
+<meta property="og:title" content="{{ $title }}">
+<meta property="og:description" content="{{ $desc }}">
+<meta property="og:site_name" content="{{ .Site.Title }}">
+<meta property="og:locale" content="{{ .Site.LanguageCode | default "en" }}">
+
+{{- $images := .Params.images | default .Site.Params.images -}}
+{{- if $images }}
+  {{- range first 1 $images }}
+  <meta property="og:image" content="{{ . | absURL }}">
+  {{- end }}
+{{- end }}
+
+{{- if .IsPage }}
+  {{- if not .PublishDate.IsZero }}
+  <meta property="article:published_time" content="{{ .PublishDate.Format $iso8601 }}">
+  {{- end }}
+  {{- if not .Lastmod.IsZero }}
+  <meta property="article:modified_time" content="{{ .Lastmod.Format $iso8601 }}">
+  {{- end }}
+  {{- with $author }}
+  <meta property="article:author" content="{{ . }}">
+  {{- end }}
+  {{- range .Params.tags }}
+  <meta property="article:tag" content="{{ . }}">
+  {{- end }}
+  {{- range .Params.categories }}
+  <meta property="article:section" content="{{ . }}">
+  {{- end }}
+{{- end }}
+
+<!-- Twitter -->
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="{{ $title }}">
+<meta name="twitter:description" content="{{ $desc }}">
+{{- with .Site.Params.twitter }}
+<meta name="twitter:site" content="@{{ . }}">
+{{- end }}
+{{- if $images }}
+  {{- range first 1 $images }}
+  <meta name="twitter:image" content="{{ . | absURL }}">
+  {{- end }}
+{{- end }}
+
+<!-- JSON-LD -->
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@graph": [
+    {
+      "@type": "WebSite",
+      "@id": "{{ .Site.BaseURL }}#website",
+      "url": "{{ .Site.BaseURL }}",
+      "name": "{{ .Site.Title }}",
+      "description": "{{ .Site.Params.description }}",
+      "inLanguage": "{{ .Site.LanguageCode | default "en" }}"
+    },
+    {{- if .IsPage }}
+    {
+      "@type": "Article",
+      "@id": "{{ .Permalink }}#article",
+      "headline": "{{ .Title }}",
+      "url": "{{ .Permalink }}",
+      "description": "{{ $desc }}",
+      {{- if $images }}
+      "image": [
+        {{- range $i, $e := $images }}
+        {{- if $i }}, {{ end -}}
+        "{{ $e | absURL }}"
+        {{- end }}
+      ],
+      {{- end }}
+      "datePublished": "{{ .PublishDate.Format $iso8601 }}",
+      "dateModified": "{{ .Lastmod.Format $iso8601 }}",
+      "inLanguage": "{{ .Site.LanguageCode | default "en"  }}",
+      "author": {
+              "@type": "Person",
+              "name": "{{ $author | default .Site.Params.author.name }}"
+      },
+      "publisher": {
+        "@type": "Organization",
+        "name": "{{ .Site.Title }}"
+        {{- if $images -}},
+        "logo": {
+          "@type": "ImageObject",
+          "url": "{{ index $images 0 | absURL }}"
+        }
+        {{- end }}
+      },
+      "isPartOf": {
+        "@id": "{{ .Site.BaseURL }}#website"
+      }
+    },
+    {{- end }}
+    {
+      "@type": "BreadcrumbList",
+      "@id": "{{ .Permalink }}#breadcrumb",
+      "itemListElement": [
+        {{- $breadcrumb := slice -}}
+        {{- $breadcrumb = $breadcrumb | append (dict "name" "Home" "item" .Site.BaseURL) -}}
+        {{- if .Parent -}}
+          {{- range .Ancestors.Reverse -}}
+            {{- $breadcrumb = $breadcrumb | append (dict "name" .Title "item" .Permalink) -}}
+          {{- end -}}
+        {{- end -}}
+        {{- $breadcrumb = $breadcrumb | append (dict "name" .Title "item" .Permalink) -}}
+        {{- range $index, $element := $breadcrumb -}}
+        {{- if $index }},{{ end }}
+        {
+          "@type": "ListItem",
+          "position": {{ add $index 1 }},
+          "name": "{{ $element.name }}",
+          "item": "{{ $element.item }}"
+        }
+        {{- end }}
+      ]
+    }
+  ]
+}
+</script>
+
+{{ template "_internal/google_analytics.html" . }}

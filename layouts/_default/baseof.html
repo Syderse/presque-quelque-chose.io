@@ -2,18 +2,13 @@
 <html lang="{{ .Site.Language.Lang | default "fr" }}" class="h-full antialiased scroll-smooth dark">
 
 <head>
-  <meta charset="utf-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1" />
-  
+  {{- partial "seo.html" . -}}
+
   {{/* PERF: Preconnect to Google Fonts for faster font loading */}}
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 
-  <title>{{ if .IsHome }}{{ .Site.Title }}{{ else }}{{ .Title }} | {{ .Site.Title }}{{ end }}</title>
-
   {{- partial "css.html" . -}}
-
-  <meta name="description" content="{{ with .Description }}{{ . }}{{ else }}{{ .Site.Params.description }}{{ end }}" />
 </head>
 
 <body class="h-screen w-screen overflow-hidden bg-ctp-base text-ctp-text font-sans selection:bg-ctp-mauve selection:text-ctp-base">

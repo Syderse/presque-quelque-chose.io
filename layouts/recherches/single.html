@@ -8,20 +8,20 @@
   <div class="absolute top-0 left-8 bottom-0 w-px bg-ctp-surface0 hidden xl:block"></div>
   <div class="absolute top-0 right-8 bottom-0 w-px bg-ctp-surface0 hidden xl:block"></div>
 
-  <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12 md:py-20 relative z-10">
+  <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 pt-2 pb-6 pl-[72px] relative z-10">
 
     {{/* HEADER DU DOSSIER : Fil d'Ariane & Numéro de série */}}
     <div class="flex justify-between items-end mb-12 border-b border-ctp-surface2 pb-4">
       <nav class="font-mono text-xs text-ctp-overlay1 uppercase tracking-widest flex items-center gap-2">
         <span class="text-ctp-mauve font-bold">///</span>
-        <a href="/recherches" class="text-ctp-mauve transition-colors">Index</a>
+        <a href="/recherches" class="text-ctp-mauve transition-colors">Carnet</a>
         <span>/</span>
-        <span class="text-ctp-subtext0">Dossier : {{ .Date.Format "2006.01" }}</span>
+        <span class="text-ctp-subtext0">Entrée : {{ .Date.Format "2006.01" }}</span>
       </nav>
 
-      {{/* Fake Serial Number */}}
+      {{/* Numéro de série fictif */}}
       <div class="hidden md:block font-mono text-xs text-ctp-surface2">
-        REF-{{ substr (md5 .Title) 0 8 | upper }}-QC
+        RÉF-{{ substr (md5 .Title) 0 8 | upper }}-CC
       </div>
     </div>
 
@@ -47,7 +47,7 @@
             {{ with .Resources.GetMatch "featured.*" }}
             {{ $image := .Resize "800x webp" }}
             {{/* Suppression totale du grayscale. Image brute. */}}
-            <img src="{{ $image.RelPermalink }}" alt="Visual Evidence"
+            <img src="{{ $image.RelPermalink }}" alt="Pièce visuelle"
               class="w-full h-auto block opacity-100 transition-opacity">
             {{ else }}
             <div
@@ -62,7 +62,7 @@
         <div class="bg-ctp-mantle/50 border border-ctp-surface1 p-6 font-mono text-sm space-y-5">
           <div
             class="text-xs font-bold text-ctp-mauve uppercase tracking-widest mb-4 border-b border-ctp-surface1 pb-2">
-            index
+            fiche
           </div>
 
           {{/* Date */}}
@@ -73,7 +73,7 @@
 
           {{/* Auteur (Logique de remplacement) */}}
           <div class="grid grid-cols-3 gap-2">
-            <span class="text-ctp-overlay1 text-xs uppercase">Auteur</span>
+            <span class="text-ctp-overlay1 text-xs uppercase">Par</span>
             <span class="col-span-2 text-ctp-text border-b border-dotted border-ctp-surface1">
               {{ range .Params.authors }}
               {{ if eq . "admin" }}
@@ -108,11 +108,11 @@
             <div class="flex items-center gap-3">
               <span class="text-2xl">📎</span>
               <div class="flex flex-col">
-                <span class="font-bold text-ctp-text font-serif italic">Lire des mots</span>
-                <span class="font-mono text-[10px] text-ctp-overlay1 uppercase">Format PDF • Archive complète</span>
+                <span class="font-bold text-ctp-text font-serif italic">Lire le document</span>
+                <span class="font-mono text-[10px] text-ctp-overlay1 uppercase">Format PDF • Dossier complet</span>
               </div>
             </div>
-            <span class="text-ctp-mauve font-mono text-xs border border-ctp-mauve px-1">DL</span>
+            <span class="text-ctp-mauve font-mono text-xs border border-ctp-mauve px-1">↓</span>
           </a>
         </div>
         {{ end }}
@@ -146,7 +146,7 @@
 
         {{/* Citation Technique */}}
         <div class="mt-12 pt-6 border-t border-dashed border-ctp-surface2 font-mono text-xs text-ctp-overlay1">
-          <p class="uppercase mb-2">Reference String :</p>
+          <p class="uppercase mb-2">Pour citer :</p>
           <div class="bg-ctp-mantle p-3 select-all overflow-x-auto whitespace-nowrap text-ctp-subtext0">
             {{ range .Params.authors }}
             {{ if eq . "admin" }}presque-quelque-chose{{ else }}{{ . }}{{ end }}

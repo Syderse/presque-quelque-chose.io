@@ -1,5 +1,15 @@
+# File: config/_default/hugo.yaml
+
 title: "presque-quelque-chose"
-baseURL: "https://syderse.github.io/"
+baseURL: "https://www.presque-quelque-chose.com/"
+languageCode: "fr-fr"
+
+# ===========================================================================
+# SERVICES (ANALYTICS)
+# ===========================================================================
+services:
+  googleAnalytics:
+    ID: "G-ZKEH9KTM32" 
 
 # ===========================================================================
 # CORE BUILD SETTINGS
@@ -100,8 +110,6 @@ menus:
 cascade:
   - _target:
       path: /blog/**
-    # Suppression de la ligne "kind: page" qui provoquait l'erreur
-    # Hugo détecte automatiquement le type de page selon le fichier (index.md vs _index.md)
     pager: true
     editable: true
     show_date_updated: true
@@ -172,34 +180,24 @@ imaging:
 # ===========================================================================
 params:
   # ---------------------------------------------------------------------------
-  # IDENTITY / AUTHOR DATA (Single Source of Truth)
+  # GLOBAL METADATA (Utilisé par layouts/partials/seo.html)
+  # ---------------------------------------------------------------------------
+  description: "Explorations numériques, design dense et architecture web."
+  images: ["og-default.jpg"] # Doit exister dans assets/images/
+  twitter: "GetResearchDev"
+
+  # ---------------------------------------------------------------------------
+  # IDENTITY / AUTHOR DATA
   # ---------------------------------------------------------------------------
   author:
-    birthdate: "2002-01-15" # Format strict YYYY-MM-DD
+    name: "Mathieu" # Ajoutez votre nom ici
+    birthdate: "2002-01-15"
 
   # SITE SETUP
   # Appearance
   appearance:
     mode: dark
     color: custom # Dit à Hugo de chercher notre custom.css
-
-  # SEO / Marketing
-  marketing:
-    seo:
-      site_type: Person
-      local_business_type: ""
-      org_name: ""
-      description: "A highly-customizable Hugo blog theme powered by Hugo Blox Builder."
-      twitter: "GetResearchDev"
-    analytics:
-      google_analytics: ""
-      baidu_tongji: ""
-      plausible: ""
-      fathom: ""
-      pirsch: ""
-    verification:
-      google: ""
-      baidu: ""
 
   # Site header
   header:
