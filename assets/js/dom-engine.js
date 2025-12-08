@@ -77,6 +77,10 @@
         ui.counter.addEventListener('contextmenu', handleRightClick);
         ui.tombstone.addEventListener('contextmenu', handleRightClick);
 
+        // Mobile: Long-press (500ms) for admin access
+        setupLongPress(ui.counter, handleRightClick);
+        setupLongPress(ui.tombstone, handleRightClick);
+
         ui.adminInput.addEventListener('keydown', (e) => {
             if (e.key === 'Enter') checkPassword(ui.adminInput.value);
         });
@@ -95,6 +99,26 @@
             state.story = ["Erreur 404.", "Je suis vide."];
             state.isLoaded = true;
         }
+    }
+
+    // --- LONG-PRESS UTILITY (MOBILE ADMIN ACCESS) ---
+    function setupLongPress(element, callback) {
+        let pressTimer = null;
+        const LONG_PRESS_MS = 500;
+
+        element.addEventListener('touchstart', (e) => {
+            pressTimer = setTimeout(() => {
+                callback(e);
+            }, LONG_PRESS_MS);
+        }, { passive: true });
+
+        element.addEventListener('touchend', () => {
+            clearTimeout(pressTimer);
+        });
+
+        element.addEventListener('touchmove', () => {
+            clearTimeout(pressTimer);
+        });
     }
 
     // --- PORTAL MOUNTING (GLOBAL) ---
@@ -211,7 +235,10 @@ function spawnMessage(text) {
     const bubble = document.createElement('div');
 
     // We use a prominent border color and a solid background to achieve a "pop" without transparency.
-    let baseClass = "msg-bubble-solid fixed whitespace-nowrap px-3 py-1 rounded shadow-lg border-2 text-xs font-mono font-bold";
+    // On mobile: allow text wrapping with max-width. On desktop: keep single line.
+    const isMobileView = window.innerWidth < 768;
+    const wrapClass = isMobileView ? "max-w-[280px] text-center" : "whitespace-nowrap";
+    let baseClass = `msg-bubble-solid fixed ${wrapClass} px-3 py-1 rounded shadow-lg border-2 text-xs font-mono font-bold`;
     let colorClass = ""; // High-contrast style based on Act
 
     switch (state.act) {
@@ -247,28 +274,41 @@ function spawnMessage(text) {
     const btnRect = ui.btn.getBoundingClientRect();
     const btnCenterX = btnRect.left + btnRect.width / 2;
     const btnCenterY = btnRect.top + btnRect.height / 2;
+    const isMobile = window.innerWidth < 768;
 
-    const minRadius = 100;
-    const maxRadius = 400;
+    let finalX, finalY;
 
-    const minAngle = -Math.PI / 5;
-    const maxAngle = Math.PI / 2;
+    if (isMobile) {
+        // MOBILE: Spawn bubbles ABOVE the button, centered with slight random offset
+        // This keeps them visible and inside the viewport
+        finalX = btnCenterX + (Math.random() - 0.5) * 80;
+        finalY = Math.max(60, btnCenterY - 100 - Math.random() * 80);
+    } else {
+        // DESKTOP: Original scattering logic (unchanged)
+        const minRadius = 100;
+        const maxRadius = 400;
+        const minAngle = -Math.PI / 5;
+        const maxAngle = Math.PI / 2;
 
-    const angle = minAngle + Math.random() * (maxAngle - minAngle);
-    const distance = minRadius + Math.random() * (maxRadius - minRadius);
+        const angle = minAngle + Math.random() * (maxAngle - minAngle);
+        const distance = minRadius + Math.random() * (maxRadius - minRadius);
 
-    const offsetX = Math.cos(angle) * distance;
-    const offsetY = Math.sin(angle) * distance;
+        const offsetX = Math.cos(angle) * distance;
+        const offsetY = Math.sin(angle) * distance;
 
-    let finalX = btnCenterX + offsetX;
-    let finalY = btnCenterY + offsetY;
+        finalX = btnCenterX + offsetX;
+        finalY = btnCenterY + offsetY;
 
-    // Safety Clamps
-    const estimatedHalfWidth = 140;
-    const safeLeft = btnRect.right + estimatedHalfWidth;
-    const safeRight = window.innerWidth - estimatedHalfWidth - 20;
+        // Desktop safety clamps (push to the right of button)
+        const estimatedHalfWidth = 140;
+        const safeLeft = btnRect.right + estimatedHalfWidth;
+        const safeRight = window.innerWidth - estimatedHalfWidth - 20;
+        finalX = Math.max(safeLeft, Math.min(safeRight, finalX));
+    }
 
-    finalX = Math.max(safeLeft, Math.min(safeRight, finalX));
+    // Universal clamps: keep bubbles in viewport
+    const bubbleHalfWidth = 100;
+    finalX = Math.max(bubbleHalfWidth, Math.min(window.innerWidth - bubbleHalfWidth, finalX));
     const marginY = 40;
     finalY = Math.max(marginY, Math.min(window.innerHeight - marginY, finalY));
 

@@ -99,3 +99,19 @@
   for = "/*.woff"
   [headers.values]
     Cache-Control = "public, max-age=31536000, immutable"
+
+# ═══════════════════════════════════════════════════════════════════════════
+# REDIRECTIONS (SEO)
+# ═══════════════════════════════════════════════════════════════════════════
+
+[[redirects]]
+  from = "/categories/*"
+  to = "/tags/:splat"
+  status = 301
+  force = true
+
+[[redirects]]
+  from = "/categories"
+  to = "/tags/"
+  status = 301
+  force = true

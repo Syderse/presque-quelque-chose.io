@@ -156,7 +156,6 @@ timeout: 600000
 
 taxonomies:
   tag: tags
-  category: categories
   author: authors
 
 related:
@@ -166,8 +165,6 @@ related:
   indices:
     - name: tags
       weight: 100
-    - name: categories
-      weight: 70
 
 imaging:
   resampleFilter: lanczos

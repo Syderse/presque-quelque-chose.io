@@ -29,8 +29,8 @@
       {{- partial "sidebar.html" . -}}
     </aside>
 
-    {{/* LAYER 3: TOGGLE BUTTON (Always on top) */}}
-    <header class="absolute top-0 left-0 w-full z-50 p-4 flex items-start justify-between pointer-events-none">
+    {{/* LAYER 3: TOGGLE BUTTON (Desktop only — mobile uses mobile-nav) */}}
+    <header class="hidden md:flex absolute top-0 left-0 w-full z-50 p-4 items-start justify-between pointer-events-none">
       <button id="sidebar-toggle-btn" onclick="toggleSidebar()"
         class="pointer-events-auto p-2 rounded-lg bg-ctp-surface0 hover:bg-ctp-surface1 text-ctp-mauve border border-ctp-surface1 shadow-md transition-all duration-200 group"
         aria-label="Menu">
@@ -63,7 +63,7 @@
         </div>
         {{ end }}
 
-        <div class="md:hidden mt-12 pb-6 px-4">
+        <div class="md:hidden pb-20 px-4">
           {{- partial "mobile-nav.html" . -}}
         </div>
       </div>
@@ -114,6 +114,9 @@
   </script>
 
   {{ block "scripts" . }}{{ end }}
+
+  {{/* Mobile Tooltip System — Tap-to-Reveal */}}
+  {{ partial "functions/js-loader.html" (slice "mobile-tooltip") }}
 
 </body>
 </html>

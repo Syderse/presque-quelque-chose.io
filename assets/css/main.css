@@ -1,5 +1,5 @@
 /* --- 1. FONTS (OPTIMIZED: Single request, display=swap) --- */
-@import url("https://fonts.googleapis.com/css2?family=Ubuntu:wght@300;400;500;700&family=JetBrains+Mono:wght@400;500&family=Crimson+Text:ital,wght@0,400;0,600;0,700;1,400&family=Caveat:wght@400;700&family=Bebas+Neue&display=swap");
+@import url("https://fonts.googleapis.com/css2?family=Ubuntu:wght@300;400;500;700&family=JetBrains+Mono:wght@400;500&family=Crimson+Text:ital,wght@0,400;0,600;0,700;1,400&family=Caveat:wght@400;700&family=Bebas+Neue&family=Bad+Script&display=swap");
 
 @import "tailwindcss";
 
@@ -86,6 +86,7 @@
   --font-mono: "JetBrains Mono", ui-monospace, SFMono-Regular, monospace;
   --font-hand: "Caveat", cursive;
   --font-display: "Bebas Neue", "Impact", "Arial Narrow", sans-serif;
+  --font-script: "Bad Script", "Caveat", cursive;
 
   --color-ctp-rosewater: var(--ctp-rosewater);
   --color-ctp-flamingo: var(--ctp-flamingo);
@@ -262,6 +263,43 @@
     text-transform: uppercase;
     letter-spacing: 0.1em;
     color: var(--ctp-overlay1);
+  }
+
+  /* =====================================================================
+     SCRIPT TEXT — "Bad Script" Clean Edition
+     =====================================================================
+     Police cursive lisible nativement — styles simplifiés.
+  */
+  .script-text {
+    font-family: var(--font-script);
+    
+    /* Taille fluide */
+    font-size: clamp(1.1rem, 2.5vw, 1.5rem);
+    
+    /* Typographie aérée */
+    letter-spacing: 0.02em;
+    line-height: 1.6;
+    
+    /* Couleur lisible */
+    color: var(--ctp-text);
+    
+    /* Ombre légère pour profondeur */
+    text-shadow: 0 1px 2px rgba(0,0,0,0.2);
+    
+    /* Anti-aliasing */
+    -webkit-font-smoothing: antialiased;
+    text-rendering: optimizeLegibility;
+    
+    /* Containment */
+    max-width: 100%;
+    overflow-wrap: break-word;
+  }
+  
+  /* Mobile */
+  @media (max-width: 640px) {
+    .script-text {
+      font-size: 1rem;
+    }
   }
 
   /* C. LEAF UI SYSTEM */
@@ -1066,10 +1104,12 @@
     max-width: 500px;
     max-height: 500px;
     /* OPTIMIZED: Softer gradient falloff simulates blur without GPU cost */
-    background: radial-gradient(circle, 
+    background: radial-gradient(
+      circle,
       color-mix(in srgb, var(--ctp-mauve) 60%, transparent) 0%,
       color-mix(in srgb, var(--ctp-mauve) 30%, transparent) 40%,
-      transparent 70%);
+      transparent 70%
+    );
   }
 
   .source-peach {
@@ -1080,10 +1120,12 @@
     max-width: 550px;
     max-height: 550px;
     /* OPTIMIZED: Multi-stop gradient for soft blur effect */
-    background: radial-gradient(circle,
+    background: radial-gradient(
+      circle,
       color-mix(in srgb, var(--ctp-peach) 55%, transparent) 0%,
       color-mix(in srgb, var(--ctp-peach) 25%, transparent) 45%,
-      transparent 70%);
+      transparent 70%
+    );
   }
 
   .source-lavender {
@@ -1094,10 +1136,12 @@
     max-width: 350px;
     max-height: 350px;
     /* OPTIMIZED: Soft gradient, no animation */
-    background: radial-gradient(circle,
+    background: radial-gradient(
+      circle,
       color-mix(in srgb, var(--ctp-lavender) 50%, transparent) 0%,
       color-mix(in srgb, var(--ctp-lavender) 20%, transparent) 45%,
-      transparent 70%);
+      transparent 70%
+    );
   }
 
   .source-green-glow {
@@ -1108,10 +1152,12 @@
     max-width: 450px;
     max-height: 450px;
     /* OPTIMIZED: Soft gradient, static positioning */
-    background: radial-gradient(circle,
+    background: radial-gradient(
+      circle,
       color-mix(in srgb, var(--ctp-green) 40%, transparent) 0%,
       color-mix(in srgb, var(--ctp-green) 15%, transparent) 45%,
-      transparent 70%);
+      transparent 70%
+    );
   }
 
   /* REMOVED: @keyframes ambient-drift — animation on blurred elements is expensive */
@@ -1152,7 +1198,12 @@
   /* --- H.5 WAVE CARD COMPONENT --- */
   .wave-card {
     --card-accent: var(--ctp-mauve);
-    --card-bg: rgba(30, 30, 46, 0.85); /* Slightly more transparent for cozy feel */
+    --card-bg: rgba(
+      30,
+      30,
+      46,
+      0.85
+    ); /* Slightly more transparent for cozy feel */
 
     position: relative;
     background-color: var(--card-bg);
@@ -1209,15 +1260,15 @@
       rgba(24, 24, 37, 0.95)
     );
   }
-  
+
   .wave-card-ondes .wave-card-accent {
-      position: absolute;
-      top: 0;
-      left: 0;
-      right: 0;
-      height: 4px;
-      background: linear-gradient(90deg, var(--ctp-mauve), var(--ctp-peach));
-      opacity: 0.8;
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    height: 4px;
+    background: linear-gradient(90deg, var(--ctp-mauve), var(--ctp-peach));
+    opacity: 0.8;
   }
 
   /* --- H.5.2 PIXELS STYLE (Digital, Sharp, Vivid) --- */
@@ -1232,20 +1283,19 @@
   }
 
   .wave-card-pixels .wave-card-accent {
-      position: absolute;
-      bottom: 0;
-      left: 0;
-      width: 100%;
-      height: 2px;
-      background: linear-gradient(90deg, var(--ctp-teal), var(--ctp-sky));
-      box-shadow: 0 0 10px var(--ctp-teal);
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    width: 100%;
+    height: 2px;
+    background: linear-gradient(90deg, var(--ctp-teal), var(--ctp-sky));
+    box-shadow: 0 0 10px var(--ctp-teal);
   }
 
   .wave-card-pixels:hover {
-      box-shadow: 0 0 15px rgba(148, 226, 213, 0.2);
-      border-color: var(--ctp-teal);
+    box-shadow: 0 0 15px rgba(148, 226, 213, 0.2);
+    border-color: var(--ctp-teal);
   }
-
 
   @media (max-width: 767px) {
     .wave-card:hover {
@@ -1354,5 +1404,23 @@
     font-size: 0.85rem;
     font-style: italic;
     color: var(--ctp-overlay1);
+  }
+
+  /* ==========================================================================
+     I. MOBILE TOOLTIP SYSTEM — Tap-to-Reveal
+     ==========================================================================
+     Enables tooltip visibility on touch devices via tap interaction.
+     Desktop hover behavior remains unchanged.
+  */
+
+  /* When .show-tooltip is added (mobile tap), reveal the tooltip */
+  [data-tooltip-trigger].show-tooltip [data-tooltip] {
+    opacity: 1 !important;
+    pointer-events: auto;
+  }
+
+  /* Ensure touch-action allows taps */
+  [data-tooltip-trigger] {
+    touch-action: manipulation;
   }
 }

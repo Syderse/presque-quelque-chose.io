@@ -5,48 +5,41 @@
   - Horizontal spacing (pl-[72px]) handles the Sidebar Toggle clearance.
   - REFACTOR: Reduced gap-6 to gap-4 for tighter UI.
 */}}
-<div class="w-full h-full bg-[#050505] text-ctp-text selection:bg-ctp-mauve selection:text-ctp-base flex flex-col p-4 md:px-6 md:pb-6 md:pt-4 gap-4">
+{{/* MOBILE: Simple scrolling page. DESKTOP (md+): Full viewport dashboard. */}}
+<div class="w-full md:h-full bg-[#050505] text-ctp-text selection:bg-ctp-mauve selection:text-ctp-base flex flex-col p-4 pb-20 md:px-6 md:pb-6 md:pt-4 gap-4">
 
-    {{/* 1. HEADER SYSTÈME (Flex Item: Fixed Height) */}}
-    {{/* PL-[72px] ensures this sits to the right of the sidebar toggle button */}}
-    <div class="flex-none z-50 w-full pl-[72px] transition-[padding] duration-300">
+    {{/* 1. HEADER SYSTÈME - Compact 4-col on mobile, full 8-col on desktop */}}
+    <div class="flex-none z-50 w-full md:pl-[72px] transition-[padding] duration-300">
         {{ partial "widgets/system-header.html" . }}
     </div>
 
     {{/* 2. LA GRILLE BENTO */}}
-    <div class="flex-1 min-h-0 w-full max-w-[1920px] mx-auto">
-        <div class="grid grid-cols-1 md:grid-cols-4 md:grid-rows-[minmax(0,1.75fr)_minmax(0,1fr)] gap-4 md:gap-6 h-full">
+    {{/* MOBILE: No flex-1/min-h-0 = natural scrolling. DESKTOP: Viewport-fill dashboard. */}}
+    <div class="w-full max-w-[1920px] mx-auto md:flex-1 md:min-h-0">
+        <div class="flex flex-col gap-4 md:grid md:grid-cols-4 md:grid-rows-[minmax(0,1.75fr)_minmax(0,1fr)] md:gap-6 md:h-full">
 
             {{/* --- ROW 1 --- */}}
             
             {{/* CELL 1: DOM CARD */}}
-            <section class="md:col-span-1 md:row-span-1 h-[300px] md:h-full min-h-0 z-10 relative transition-all duration-300 hover:z-50">
-                <div class="h-full w-full">
-                    {{ partial "widgets/dom-card.html" . }}
-                </div>
+            <section class="min-h-[280px] md:min-h-0 md:col-span-1 md:row-span-1 md:h-full z-10 relative transition-all duration-300 hover:z-50">
+                {{ partial "widgets/dom-card.html" . }}
             </section>
 
             {{/* CELL 2: IDENTITY */}}
-            <section class="md:col-span-2 md:row-span-1 h-[300px] md:h-full min-h-0 z-10 relative transition-all duration-300 hover:z-50">
-                <div class="h-full w-full">
-                    {{ partial "widgets/identity-card.html" . }}
-                </div>
+            <section class="md:col-span-2 md:row-span-1 md:h-full z-10 relative transition-all duration-300 hover:z-50">
+                {{ partial "widgets/identity-card.html" . }}
             </section>
 
             {{/* CELL 3: LATEST POSTS */}}
-            <section class="md:col-span-1 md:row-span-1 h-[300px] md:h-full min-h-0 z-10 relative transition-all duration-300 hover:z-50">
-                <div class="h-full w-full">
-                    {{ partial "widgets/latest-posts.html" . }}
-                </div>
+            <section class="md:col-span-1 md:row-span-1 md:h-full z-10 relative transition-all duration-300 hover:z-50">
+                {{ partial "widgets/latest-posts.html" . }}
             </section>
 
             {{/* --- ROW 2 --- */}}
 
             {{/* CELL 4: ALMANACH */}}
-            <section class="md:col-span-4 md:row-span-1 h-[250px] md:h-full min-h-0 z-10 relative transition-all duration-300 hover:z-50">
-                <div class="h-full w-full">
-                    {{ partial "widgets/almanach-card.html" . }}
-                </div>
+            <section class="md:col-span-4 md:row-span-1 md:h-full z-10 relative transition-all duration-300 hover:z-50">
+                {{ partial "widgets/almanach-card.html" . }}
             </section>
 
         </div>

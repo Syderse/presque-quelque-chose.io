@@ -12,10 +12,10 @@ Refactor:
 - bg-ctp-mantle: Overrides default surface0 for "Console" look.
 - overflow-hidden: MANDATORY for Virus Layer & Admin Modal clipping.
 */}}
-<div class="bento-card group select-none overflow-hidden bg-ctp-mantle" id="dom-container">
+<div class="bento-card group select-none overflow-hidden bg-ctp-mantle min-h-[280px] md:min-h-0" id="dom-container">
 
     {{/* --- LAYER 1: CHASSIS (CONTENT) --- */}}
-    <div id="dom-chassis" class="flex flex-col relative h-full w-full z-10">
+    <div id="dom-chassis" class="flex flex-col relative h-full w-full min-h-[inherit] z-10">
 
         {{/* BACKGROUND GRID (Standardized) */}}
         <div class="absolute inset-0 z-0 opacity-10 pointer-events-none bg-grid-pattern"></div>
