@@ -9,7 +9,7 @@ languageCode: "fr-fr"
 # ===========================================================================
 services:
   googleAnalytics:
-    ID: "G-ZKEH9KTM32" 
+    ID: "G-ZKEH9KTM32"
 
 # ===========================================================================
 # CORE BUILD SETTINGS
@@ -182,15 +182,16 @@ params:
   # ---------------------------------------------------------------------------
   # GLOBAL METADATA (Utilisé par layouts/partials/seo.html)
   # ---------------------------------------------------------------------------
-  description: "Explorations numériques, design dense et architecture web."
-  images: ["og-default.jpg"] # Doit exister dans assets/images/
+  description: "Cartographie d'un esprit éclectique. Des ondes radio aux inoccupations impersonnelles, explorez une collection de textes et de podcasts dédiée à l'esthétique du particulier."
+  images: ["/media/logo.png"] # Logo principal pour Open Graph
+  logo: "/media/logo.png" # Logo du site
   twitter: "GetResearchDev"
 
   # ---------------------------------------------------------------------------
   # IDENTITY / AUTHOR DATA
   # ---------------------------------------------------------------------------
   author:
-    name: "Mathieu" # Ajoutez votre nom ici
+    name: "Mathieu Allag" # Ajoutez votre nom ici
     birthdate: "2002-01-15"
 
   # SITE SETUP
