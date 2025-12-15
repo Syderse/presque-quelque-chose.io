@@ -233,5 +233,8 @@ params:
   # ---------------------------------------------------------------------------
   # Supabase Configuration (Forum Patafoin)
   # ---------------------------------------------------------------------------
-  supabase_url: "https://esrqmmnghliwqvxldyzo.supabase.co"
-  supabase_key: "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImVzcnFtbW5naGxpd3F2eGxkeXpvIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NjM4NDE3NTksImV4cCI6MjA3OTQxNzc1OX0.sLsfkbFFQ0L81MUCTh5i6smtGtbeHzHocIv9xS9Iv7g"
+  # SÉCURITÉ : Les clés sont injectées via variables d'environnement
+  # - Local  : créer .env.local avec HUGO_PARAMS_SUPABASE_URL et HUGO_PARAMS_SUPABASE_KEY
+  # - Netlify: configurer dans Site Settings > Environment Variables
+  supabase_url: ""
+  supabase_key: ""

@@ -123,6 +123,10 @@ A Z-Index based Layered Architecture:
 
 - **File:** `patafoin.js` + `layouts/patafoin/list.html`.
 - **Tech:** Supabase JS Client (Vanilla).
+- **Credentials (Sécurisé):**
+  - **Local:** Variables dans `.env.local` (gitignored) : `HUGO_SUPABASE_URL`, `HUGO_SUPABASE_KEY`.
+  - **Production:** Variables Netlify (Site Settings > Environment Variables).
+  - **Injection:** `layouts/patafoin/list.html` utilise `getenv` avec fallback sur `Site.Params`.
 - **Logic:**
   - **Topics:** Parent container.
   - **Root Post:** The first post of a topic (`parent_id: null`).
@@ -153,7 +157,10 @@ A Z-Index based Layered Architecture:
 
 1.  **Build Command:** `hugo --gc --minify` (Note: CSS is excluded from minify internally).
 2.  **Environment:** Requires `HUGO_VERSION` set to matching local version (Extended).
-3.  **Cache Headers (`netlify.toml`):**
+3.  **Environment Variables (Secrets):**
+    - `HUGO_SUPABASE_URL` : URL du projet Supabase.
+    - `HUGO_SUPABASE_KEY` : Clé `anon` Supabase (publique mais hors Git).
+4.  **Cache Headers (`netlify.toml`):**
     - CSS/JS/Fonts: `max-age=31536000, immutable` (1 year).
     - Media: `max-age=2592000` (30 days).
 
@@ -161,4 +168,4 @@ A Z-Index based Layered Architecture:
 
 - **CSS broken in Prod?** Check `layouts/partials/css.html` to ensure `minify` is NOT applied to the Tailwind pipe.
 - **Sidebar not opening?** Check `baseof.html` JS script for class toggling (`-translate-x-full`).
-- **Supabase Error?** Check `hugo.yaml` params and Ensure JS loader is injecting `patafoin.js`.
+- **Supabase Error?** Vérifier que `.env.local` existe avec `HUGO_SUPABASE_URL` et `HUGO_SUPABASE_KEY`. Le script `pnpm dev` charge automatiquement ces variables.
