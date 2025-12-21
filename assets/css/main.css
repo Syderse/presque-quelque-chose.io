@@ -272,29 +272,29 @@
   */
   .script-text {
     font-family: var(--font-script);
-    
+
     /* Taille fluide */
     font-size: clamp(1.1rem, 2.5vw, 1.5rem);
-    
+
     /* Typographie aérée */
     letter-spacing: 0.02em;
     line-height: 1.6;
-    
+
     /* Couleur lisible */
     color: var(--ctp-text);
-    
+
     /* Ombre légère pour profondeur */
-    text-shadow: 0 1px 2px rgba(0,0,0,0.2);
-    
+    text-shadow: 0 1px 2px rgba(0, 0, 0, 0.2);
+
     /* Anti-aliasing */
     -webkit-font-smoothing: antialiased;
     text-rendering: optimizeLegibility;
-    
+
     /* Containment */
     max-width: 100%;
     overflow-wrap: break-word;
   }
-  
+
   /* Mobile */
   @media (max-width: 640px) {
     .script-text {
@@ -1404,6 +1404,139 @@
     font-size: 0.85rem;
     font-style: italic;
     color: var(--ctp-overlay1);
+  }
+
+  /* --- H.12 MEDIA SECTION — Vidéo & Podcast (côte à côte) --- */
+  .media-section {
+    margin-top: 2rem;
+  }
+
+  .media-grid {
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: 1.5rem;
+  }
+
+  @media (min-width: 768px) {
+    .media-grid {
+      grid-template-columns: repeat(2, 1fr);
+      align-items: stretch;
+    }
+  }
+
+  /* Carte média unifiée (vidéo et podcast) */
+  .media-card {
+    background: linear-gradient(145deg, rgba(30, 30, 46, 0.9), rgba(24, 24, 37, 0.95));
+    border: 1px solid rgba(180, 190, 254, 0.15);
+    border-radius: 16px;
+    padding: 1.25rem;
+    box-shadow: 0 8px 32px rgba(0, 0, 0, 0.3),
+                0 0 0 1px rgba(180, 190, 254, 0.05);
+    display: flex;
+    flex-direction: column;
+  }
+
+  .media-card--video {
+    border-color: rgba(243, 139, 168, 0.2);
+    box-shadow: 0 8px 32px rgba(0, 0, 0, 0.3),
+                0 0 0 1px rgba(243, 139, 168, 0.05);
+  }
+
+  .media-card--podcast {
+    border-color: rgba(203, 166, 247, 0.2);
+    box-shadow: 0 8px 32px rgba(0, 0, 0, 0.3),
+                0 0 0 1px rgba(203, 166, 247, 0.05);
+  }
+
+  .media-card__header {
+    display: flex;
+    align-items: center;
+    gap: 0.65rem;
+    margin-bottom: 0.85rem;
+    padding-bottom: 0.65rem;
+    border-bottom: 1px solid rgba(255, 255, 255, 0.06);
+  }
+
+  .media-card__icon {
+    width: 1.35rem;
+    height: 1.35rem;
+    color: var(--ctp-red);
+    flex-shrink: 0;
+  }
+
+  .media-card__icon--podcast {
+    color: var(--ctp-mauve);
+  }
+
+  .media-card__title {
+    margin: 0;
+    font-size: 1rem;
+    font-weight: 500;
+    color: var(--ctp-text);
+    text-transform: lowercase;
+    letter-spacing: 0.02em;
+  }
+
+  /* Responsive 16:9 iframe container */
+  .youtube-iframe-container {
+    position: relative;
+    width: 100%;
+    padding-bottom: 56.25%; /* 16:9 aspect ratio */
+    border-radius: 10px;
+    overflow: hidden;
+    background: var(--ctp-mantle);
+  }
+
+  .youtube-iframe-container iframe {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    border: none;
+    border-radius: 10px;
+  }
+
+  /* === SPOTIFY EMBED CONTAINER === */
+  .spotify-iframe-container {
+    width: 100%;
+    height: 232px; /* Taille normale Spotify — proche du ratio YouTube */
+    border-radius: 12px;
+    overflow: hidden;
+    background: var(--ctp-mantle);
+    margin: auto 0; /* Centre verticalement dans l'espace restant */
+  }
+
+  .spotify-iframe-container iframe {
+    width: 100%;
+    height: 100%;
+    border: none;
+    border-radius: 12px;
+  }
+
+  /* Compact version for mobile */
+  @media (max-width: 640px) {
+    .media-card {
+      padding: 1rem;
+    }
+    
+    .media-card__header {
+      margin-bottom: 0.65rem;
+      padding-bottom: 0.5rem;
+    }
+    
+    .media-card__title {
+      font-size: 0.9rem;
+    }
+
+    .podcast-cover {
+      width: 50px;
+      height: 50px;
+    }
+
+    .podcast-title {
+      font-size: 0.85rem;
+    }
   }
 
   /* ==========================================================================
