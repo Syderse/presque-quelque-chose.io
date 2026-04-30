@@ -1,5 +1,6 @@
 ---
 title: "rhizome curieux"
+description: "Rhizome de petites découvertes, de petites formes écrites variées et de critiques."
 full_width: true
 layout: "list"  # <--- FORCE LA RÉSOLUTION vers list.rhizome.json
 outputs: 

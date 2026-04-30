@@ -1,6 +1,7 @@
 ---
 title: "Dashboard"
 date: 2023-10-24
+description: "Explorations éclectiques, inoccupations impersonnelles et science du particulier."
 full_width: true
 layout: "index"
 ---

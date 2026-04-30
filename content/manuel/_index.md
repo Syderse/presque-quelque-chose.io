@@ -1,6 +1,7 @@
 ---
 title: "Manuel d'exploration du site"
 date: 2024-12-05
+description: "Guide de navigation dans presque-quelque-chose."
 layout: "single"
 hide_footer: true
 ---

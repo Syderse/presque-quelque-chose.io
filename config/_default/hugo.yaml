@@ -179,10 +179,13 @@ params:
   # ---------------------------------------------------------------------------
   # GLOBAL METADATA (Utilisé par layouts/partials/seo.html)
   # ---------------------------------------------------------------------------
-  description: "Cartographie d'un esprit éclectique. Des ondes radio aux inoccupations impersonnelles, explorez une collection de textes et de podcasts dédiée à l'esthétique du particulier."
+  description: "Explorations éclectiques, inoccupations impersonnelles et science du particulier."
   images: ["/media/logo.png"] # Logo principal pour Open Graph
   logo: "/media/logo.png" # Logo du site
   twitter: "GetResearchDev"
+  same_as:
+    - "https://www.youtube.com/@presque-quelque-chose"
+    - "https://www.instagram.com/presque_quelque_chose/"
 
   # ---------------------------------------------------------------------------
   # IDENTITY / AUTHOR DATA

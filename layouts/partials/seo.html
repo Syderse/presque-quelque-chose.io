@@ -1,173 +1,225 @@
-{{- $title := .Title -}} {{- if .IsHome -}} {{- $title = .Site.Title -}} {{-
-else -}} {{- $title = printf "%s | %s" .Title .Site.Title -}} {{- end -}} {{-
-$desc := "" -}} {{- if .Params.summary -}} {{- $desc = .Params.summary -}} {{-
-else if .Params.description -}} {{- $desc = .Params.description -}} {{- else if
-.Summary -}} {{- $desc = .Summary -}} {{- else -}} {{- $desc =
-.Site.Params.description -}} {{- end -}} {{- $author := "" -}} {{- if
-.Params.author -}} {{- $author = .Params.author -}} {{- else if
-.Site.Params.author.name -}} {{- $author = .Site.Params.author.name -}} {{- end
--}} {{- $iso8601 := "2006-01-02T15:04:05-07:00" -}}
+{{- $siteTitle := .Site.Title -}}
+{{- $pageName := .Title | plainify -}}
+{{- if .IsHome -}}
+  {{- $pageName = $siteTitle -}}
+{{- end -}}
+{{- $title := $siteTitle -}}
+{{- if not .IsHome -}}
+  {{- $title = printf "%s | %s" $pageName $siteTitle -}}
+{{- end -}}
 
-<meta charset="utf-8" />
-<meta name="viewport" content="width=device-width, initial-scale=1" />
+{{- $siteDescription := .Site.Params.description | default "" -}}
+{{- $rawDesc := $siteDescription -}}
+{{- if not .IsHome -}}
+  {{- if .Params.summary -}}
+    {{- $rawDesc = .Params.summary -}}
+  {{- else if .Params.description -}}
+    {{- $rawDesc = .Params.description -}}
+  {{- else if .Summary -}}
+    {{- $rawDesc = .Summary -}}
+  {{- end -}}
+{{- end -}}
+{{- $desc := replaceRE "\\s+" " " ($rawDesc | plainify | htmlUnescape) -}}
+{{- $desc = replaceRE "^\\s+|\\s+$" "" $desc -}}
+{{- if gt (len $desc) 165 -}}
+  {{- $desc = truncate 160 $desc -}}
+{{- end -}}
+
+{{- $siteAuthorName := .Site.Params.author.name | default $siteTitle -}}
+{{- $authorNames := slice -}}
+{{- with .Params.author -}}
+  {{- $authorNames = $authorNames | append . -}}
+{{- end -}}
+{{- with .Params.authors -}}
+  {{- range . -}}
+    {{- if or (eq . "admin") (eq . "mathieu-allag") -}}
+      {{- $authorNames = $authorNames | append $siteAuthorName -}}
+    {{- else -}}
+      {{- $authorNames = $authorNames | append . -}}
+    {{- end -}}
+  {{- end -}}
+{{- end -}}
+{{- if not $authorNames -}}
+  {{- $authorNames = $authorNames | append $siteAuthorName -}}
+{{- end -}}
+{{- $authorName := delimit $authorNames ", " -}}
+
+{{- $language := .Site.Language.Locale | default .Site.Language.Lang | default "fr-fr" -}}
+{{- $ogLocale := replace $language "-" "_" -}}
+{{- if eq $ogLocale "fr_fr" -}}
+  {{- $ogLocale = "fr_FR" -}}
+{{- end -}}
+{{- $iso8601 := "2006-01-02T15:04:05-07:00" -}}
+
+{{- $imageURLs := slice -}}
+{{- with .Params.images -}}
+  {{- range . -}}
+    {{- $imageURLs = $imageURLs | append (. | absURL) -}}
+  {{- end -}}
+{{- end -}}
+{{- if not $imageURLs -}}
+  {{- with .Resources.GetMatch "featured.*" -}}
+    {{- $imageURLs = $imageURLs | append .Permalink -}}
+  {{- else -}}
+    {{- with .Resources.GetMatch "cover.*" -}}
+      {{- $imageURLs = $imageURLs | append .Permalink -}}
+    {{- else -}}
+      {{- with .Resources.ByType "image" -}}
+        {{- with index . 0 -}}
+          {{- $imageURLs = $imageURLs | append .Permalink -}}
+        {{- end -}}
+      {{- end -}}
+    {{- end -}}
+  {{- end -}}
+{{- end -}}
+{{- if not $imageURLs -}}
+  {{- with .Site.Params.images -}}
+    {{- range . -}}
+      {{- $imageURLs = $imageURLs | append (. | absURL) -}}
+    {{- end -}}
+  {{- end -}}
+{{- end -}}
+{{- $primaryImage := "" -}}
+{{- if $imageURLs -}}
+  {{- $primaryImage = index $imageURLs 0 -}}
+{{- end -}}
+
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
 <title>{{ $title }}</title>
-<meta name="description" content="{{ $desc }}" />
+<meta name="description" content="{{ $desc }}">
+<meta name="application-name" content="{{ $siteTitle }}">
+<meta name="theme-color" content="#1e1e2e">
 {{- with .Params.keywords }}
-<meta
-  name="keywords"
-  content="{{ range $i, $e := . }}{{ if $i }}, {{ end }}{{ $e }}{{ end }}"
-/>
-{{- end }} {{- with $author }}
-<meta name="author" content="{{ . }}" />
+<meta name="keywords" content="{{ delimit . ", " }}">
 {{- end }}
-<link rel="canonical" href="{{ .Permalink }}" />
+{{- with $authorName }}
+<meta name="author" content="{{ . }}">
+{{- end }}
+<link rel="canonical" href="{{ .Permalink }}">
+<link rel="alternate" type="application/rss+xml" title="{{ $siteTitle }}" href="{{ "index.xml" | absURL }}">
 {{- if .Params.robots }}
-<meta name="robots" content="{{ .Params.robots }}" />
+<meta name="robots" content="{{ .Params.robots }}">
 {{- else }}
-<meta name="robots" content="index, follow" />
+<meta name="robots" content="index, follow">
 {{- end }}
 
-<!-- Favicon -->
 {{- with .Site.Params.logo }}
-<link rel="icon" type="image/png" href="{{ . | absURL }}" />
-<link rel="apple-touch-icon" href="{{ . | absURL }}" />
+<link rel="icon" type="image/png" href="{{ . | absURL }}">
+<link rel="apple-touch-icon" href="{{ . | absURL }}">
 {{- end }}
 
-<!-- Open Graph / Facebook -->
-<meta
-  property="og:type"
-  content="{{ if .IsPage }}article{{ else }}website{{ end }}"
-/>
-<meta property="og:url" content="{{ .Permalink }}" />
-<meta property="og:title" content="{{ $title }}" />
-<meta property="og:description" content="{{ $desc }}" />
-<meta property="og:site_name" content="{{ .Site.Title }}" />
-<meta property="og:locale" content="{{ .Site.Language.Locale | default "en" }}">
-{{- $images := .Params.images | default .Site.Params.images -}} {{- if $images
-}} {{- range first 1 $images }}
-<meta property="og:image" content="{{ . | absURL }}" />
-{{- end }} {{- end }} {{- if .IsPage }} {{- if not .PublishDate.IsZero }}
-<meta
-  property="article:published_time"
-  content="{{ .PublishDate.Format $iso8601 }}"
-/>
-{{- end }} {{- if not .Lastmod.IsZero }}
-<meta
-  property="article:modified_time"
-  content="{{ .Lastmod.Format $iso8601 }}"
-/>
-{{- end }} {{- with $author }}
-<meta property="article:author" content="{{ . }}" />
-{{- end }} {{- range .Params.tags }}
-<meta property="article:tag" content="{{ . }}" />
-{{- end }} {{- range .Params.categories }}
-<meta property="article:section" content="{{ . }}" />
-{{- end }} {{- end }}
+<meta property="og:type" content="{{ if .IsPage }}article{{ else }}website{{ end }}">
+<meta property="og:url" content="{{ .Permalink }}">
+<meta property="og:title" content="{{ $title }}">
+<meta property="og:description" content="{{ $desc }}">
+<meta property="og:site_name" content="{{ $siteTitle }}">
+<meta property="og:locale" content="{{ $ogLocale }}">
+{{- with $primaryImage }}
+<meta property="og:image" content="{{ . }}">
+<meta property="og:image:alt" content="{{ $pageName }}">
+{{- end }}
+{{- if .IsPage }}
+  {{- if not .PublishDate.IsZero }}
+<meta property="article:published_time" content="{{ .PublishDate.Format $iso8601 }}">
+  {{- end }}
+  {{- if not .Lastmod.IsZero }}
+<meta property="article:modified_time" content="{{ .Lastmod.Format $iso8601 }}">
+  {{- end }}
+<meta property="article:author" content="{{ $authorName }}">
+  {{- with .Section }}
+<meta property="article:section" content="{{ . }}">
+  {{- end }}
+  {{- range .Params.tags }}
+<meta property="article:tag" content="{{ . }}">
+  {{- end }}
+{{- end }}
 
-<!-- Twitter -->
-<meta name="twitter:card" content="summary_large_image" />
-<meta name="twitter:title" content="{{ $title }}" />
-<meta name="twitter:description" content="{{ $desc }}" />
+<meta name="twitter:card" content="{{ if $primaryImage }}summary_large_image{{ else }}summary{{ end }}">
+<meta name="twitter:title" content="{{ $title }}">
+<meta name="twitter:description" content="{{ $desc }}">
 {{- with .Site.Params.twitter }}
-<meta name="twitter:site" content="@{{ . }}" />
-{{- end }} {{- if $images }} {{- range first 1 $images }}
-<meta name="twitter:image" content="{{ . | absURL }}" />
-{{- end }} {{- end }}
+<meta name="twitter:site" content="@{{ . }}">
+<meta name="twitter:creator" content="@{{ . }}">
+{{- end }}
+{{- with $primaryImage }}
+<meta name="twitter:image" content="{{ . }}">
+<meta name="twitter:image:alt" content="{{ $pageName }}">
+{{- end }}
 
-<!-- JSON-LD -->
-<script type="application/ld+json">
-  {
-    "@context": "https://schema.org",
-    "@graph": [
-      {
-      "@type": "WebSite",
-      "@id": "{{ .Site.BaseURL }}#website",
-      "url": "{{ .Site.BaseURL }}",
-      "name": "{{ .Site.Title }}",
-      "description": "{{ .Site.Params.description }}",
-      "inLanguage": "{{ .Site.Language.Locale | default "en" }}",
-      {{- with .Site.Params.logo }}
-      "image": "{{ . | absURL }}",
-      {{- end }}
-      "publisher": {
-        "@type": "Organization",
-        "name": "{{ .Site.Title }}",
-        {{- with .Site.Params.logo }}
-        "logo": {
-          "@type": "ImageObject",
-          "url": "{{ . | absURL }}"
-        },
-        {{- end }}
-        "url": "{{ .Site.BaseURL }}"
-      },
-      "potentialAction": {
-        "@type": "SearchAction",
-        "target": "{{ .Site.BaseURL }}?q={search_term_string}",
-        "query-input": "required name=search_term_string"
-      }
-    },
-      {{- if .IsPage }}
-      {
-        "@type": "Article",
-        "@id": "{{ .Permalink }}#article",
-        "headline": "{{ .Title }}",
-        "url": "{{ .Permalink }}",
-        "description": "{{ $desc }}",
-        {{- if $images }}
-        "image": [
-          {{- range $i, $e := $images }}
-          {{- if $i }}, {{ end -}}
-          "{{ $e | absURL }}"
-          {{- end }}
-        ],
-        {{- end }}
-        "datePublished": "{{ .PublishDate.Format $iso8601 }}",
-        "dateModified": "{{ .Lastmod.Format $iso8601 }}",
-        "inLanguage": "{{ .Site.Language.Locale | default "en"  }}",
-        "author": {
-                "@type": "Person",
-                "name": "{{ $author | default .Site.Params.author.name }}"
-        },
-        "publisher": {
-          "@type": "Organization",
-          "name": "{{ .Site.Title }}"
-          {{- if $images -}},
-          "logo": {
-            "@type": "ImageObject",
-            "url": "{{ index $images 0 | absURL }}"
-          }
-          {{- end }}
-        },
-        "isPartOf": {
-          "@id": "{{ .Site.BaseURL }}#website"
-        }
-      },
-      {{- end }}
-      {
-        "@type": "BreadcrumbList",
-        "@id": "{{ .Permalink }}#breadcrumb",
-        "itemListElement": [
-          {{- $breadcrumb := slice -}}
-          {{- $breadcrumb = $breadcrumb | append (dict "name" "Home" "item" .Site.BaseURL) -}}
-          {{- if .Parent -}}
-            {{- range .Ancestors.Reverse -}}
-              {{- $breadcrumb = $breadcrumb | append (dict "name" .Title "item" .Permalink) -}}
-            {{- end -}}
-          {{- end -}}
-          {{- $breadcrumb = $breadcrumb | append (dict "name" .Title "item" .Permalink) -}}
-          {{- range $index, $element := $breadcrumb -}}
-          {{- if $index }},{{ end }}
-          {
-            "@type": "ListItem",
-            "position": {{ add $index 1 }},
-            "name": "{{ $element.name }}",
-            "item": "{{ $element.item }}"
-          }
-          {{- end }}
-        ]
-      }
-    ]
-  }
-</script>
+{{- $sitePerson := dict "@type" "Person" "name" $siteAuthorName "url" .Site.BaseURL -}}
+{{- with .Site.Params.same_as -}}
+  {{- $sitePerson = merge $sitePerson (dict "sameAs" .) -}}
+{{- end -}}
+{{- with .Site.Params.logo -}}
+  {{- $sitePerson = merge $sitePerson (dict "image" (. | absURL)) -}}
+{{- end -}}
+{{- $authorEntities := slice -}}
+{{- range $authorNames -}}
+  {{- if eq . $siteAuthorName -}}
+    {{- $authorEntities = $authorEntities | append $sitePerson -}}
+  {{- else -}}
+    {{- $authorEntities = $authorEntities | append (dict "@type" "Person" "name" .) -}}
+  {{- end -}}
+{{- end -}}
+{{- $articleAuthor := $authorEntities -}}
+{{- if eq (len $authorEntities) 1 -}}
+  {{- $articleAuthor = index $authorEntities 0 -}}
+{{- end -}}
+
+{{- $website := dict "@type" "WebSite" "@id" (printf "%s#website" .Site.BaseURL) "url" .Site.BaseURL "name" $siteTitle "description" $siteDescription "inLanguage" $language "publisher" $sitePerson -}}
+{{- with .Site.Params.search_url -}}
+  {{- $searchAction := dict "@type" "SearchAction" "target" (printf "%s?q={search_term_string}" (. | absURL)) "query-input" "required name=search_term_string" -}}
+  {{- $website = merge $website (dict "potentialAction" $searchAction) -}}
+{{- end -}}
+
+{{- $webPageType := "WebPage" -}}
+{{- if or (eq .Kind "section") (eq .Kind "taxonomy") (eq .Kind "term") -}}
+  {{- $webPageType = "CollectionPage" -}}
+{{- end -}}
+{{- $webPage := dict "@type" $webPageType "@id" (printf "%s#webpage" .Permalink) "url" .Permalink "name" $pageName "description" $desc "isPartOf" (dict "@id" (printf "%s#website" .Site.BaseURL)) "inLanguage" $language -}}
+{{- with $primaryImage -}}
+  {{- $webPage = merge $webPage (dict "primaryImageOfPage" (dict "@type" "ImageObject" "url" .)) -}}
+{{- end -}}
+{{- if not .Date.IsZero -}}
+  {{- $webPage = merge $webPage (dict "datePublished" (.Date.Format $iso8601)) -}}
+{{- end -}}
+{{- if not .Lastmod.IsZero -}}
+  {{- $webPage = merge $webPage (dict "dateModified" (.Lastmod.Format $iso8601)) -}}
+{{- end -}}
+
+{{- $graph := slice $website $webPage -}}
+{{- if .IsPage -}}
+  {{- $article := dict "@type" "Article" "@id" (printf "%s#article" .Permalink) "headline" $pageName "url" .Permalink "description" $desc "inLanguage" $language "author" $articleAuthor "publisher" $sitePerson "isPartOf" (dict "@id" (printf "%s#website" .Site.BaseURL)) "mainEntityOfPage" (dict "@id" (printf "%s#webpage" .Permalink)) -}}
+  {{- if $imageURLs -}}
+    {{- $article = merge $article (dict "image" $imageURLs) -}}
+  {{- end -}}
+  {{- if not .PublishDate.IsZero -}}
+    {{- $article = merge $article (dict "datePublished" (.PublishDate.Format $iso8601)) -}}
+  {{- end -}}
+  {{- if not .Lastmod.IsZero -}}
+    {{- $article = merge $article (dict "dateModified" (.Lastmod.Format $iso8601)) -}}
+  {{- end -}}
+  {{- $graph = $graph | append $article -}}
+{{- end -}}
+
+{{- $breadcrumbItems := slice -}}
+{{- if .IsHome -}}
+  {{- $breadcrumbItems = $breadcrumbItems | append (dict "@type" "ListItem" "position" 1 "name" $siteTitle "item" .Site.BaseURL) -}}
+{{- else -}}
+  {{- $breadcrumbItems = $breadcrumbItems | append (dict "@type" "ListItem" "position" 1 "name" "Accueil" "item" .Site.BaseURL) -}}
+  {{- $position := 2 -}}
+  {{- range .Ancestors.Reverse -}}
+    {{- if not .IsHome -}}
+      {{- $breadcrumbItems = $breadcrumbItems | append (dict "@type" "ListItem" "position" $position "name" (.Title | plainify) "item" .Permalink) -}}
+      {{- $position = add $position 1 -}}
+    {{- end -}}
+  {{- end -}}
+  {{- $breadcrumbItems = $breadcrumbItems | append (dict "@type" "ListItem" "position" $position "name" $pageName "item" .Permalink) -}}
+{{- end -}}
+{{- $breadcrumb := dict "@type" "BreadcrumbList" "@id" (printf "%s#breadcrumb" .Permalink) "itemListElement" $breadcrumbItems -}}
+{{- $graph = $graph | append $breadcrumb -}}
+{{- $schema := dict "@context" "https://schema.org" "@graph" $graph -}}
+<script type="application/ld+json">{{ $schema | jsonify | safeJS }}</script>
 
 {{ template "_internal/google_analytics.html" . }}
