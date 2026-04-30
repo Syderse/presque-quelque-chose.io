@@ -39,7 +39,8 @@ Le projet est une base Hugo Blox tres personnalisee. La structure Hugo Blox rest
 Points importants au 2026-04-28 :
 
 - Hugo local est recent : `hugo v0.160.1+extended+withdeploy`.
-- Netlify est maintenant epingle dans `netlify.toml` sur `HUGO_VERSION = "0.160.1"`, aligne avec le poste local et au-dessus du correctif Hugo `0.159.2` pour CVE-2026-35166.
+- Netlify utilise maintenant le binaire projet `hugo-extended` epingle dans `package.json` et `pnpm-lock.yaml` sur `0.160.1`, puis appelle `pnpm exec hugo`.
+- `HUGO_VERSION` et `HUGO_EXTENDED` sont volontairement absents de `netlify.toml` pour eviter l'installation Hugo interne de Netlify/mise, qui peut echouer avant le build sur l'API GitHub.
 - Les corrections de deprecations Hugo recentes ont ete faites dans le code local et dans plusieurs fichiers du module vendorie Hugo Blox sous `_vendor/`.
 - `content/almanach/_index.md` utilise maintenant `build`, pas `_build`.
 - `cascade._target` est devenu `cascade.target`.
@@ -740,8 +741,8 @@ git push origin HEAD
 
 1. affiche versions Node, pnpm, Hugo ;
 2. `pnpm install --verbose` ;
-3. `hugo --gc --minify --logLevel debug --printI18nWarnings --printPathWarnings` ;
-4. `pnpm dlx pagefind --source 'public' --verbose`.
+3. `pnpm exec hugo --gc --minify --logLevel debug --printI18nWarnings --printPathWarnings` ;
+4. `pnpm dlx pagefind --site 'public' --verbose`.
 
 Production :
 

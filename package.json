@@ -13,15 +13,18 @@
       "picomatch": "2.3.2"
     },
     "allowedBuildScripts": [
-      "@parcel/watcher"
+      "@parcel/watcher",
+      "hugo-extended"
     ],
     "onlyBuiltDependencies": [
-      "@parcel/watcher"
+      "@parcel/watcher",
+      "hugo-extended"
     ]
   },
   "dependencies": {
     "@tailwindcss/cli": "^4.1.12",
     "@tailwindcss/typography": "^0.5.19",
+    "hugo-extended": "0.160.1",
     "preact": "^10.27.3",
     "tailwindcss": "^4.1.17"
   }
