@@ -42,7 +42,7 @@ else if .Params.description -}} {{- $desc = .Params.description -}} {{- else if
 <meta property="og:title" content="{{ $title }}" />
 <meta property="og:description" content="{{ $desc }}" />
 <meta property="og:site_name" content="{{ .Site.Title }}" />
-<meta property="og:locale" content="{{ .Site.LanguageCode | default "en" }}">
+<meta property="og:locale" content="{{ .Site.Language.Locale | default "en" }}">
 {{- $images := .Params.images | default .Site.Params.images -}} {{- if $images
 }} {{- range first 1 $images }}
 <meta property="og:image" content="{{ . | absURL }}" />
@@ -85,7 +85,7 @@ else if .Params.description -}} {{- $desc = .Params.description -}} {{- else if
       "url": "{{ .Site.BaseURL }}",
       "name": "{{ .Site.Title }}",
       "description": "{{ .Site.Params.description }}",
-      "inLanguage": "{{ .Site.LanguageCode | default "en" }}",
+      "inLanguage": "{{ .Site.Language.Locale | default "en" }}",
       {{- with .Site.Params.logo }}
       "image": "{{ . | absURL }}",
       {{- end }}
@@ -123,7 +123,7 @@ else if .Params.description -}} {{- $desc = .Params.description -}} {{- else if
         {{- end }}
         "datePublished": "{{ .PublishDate.Format $iso8601 }}",
         "dateModified": "{{ .Lastmod.Format $iso8601 }}",
-        "inLanguage": "{{ .Site.LanguageCode | default "en"  }}",
+        "inLanguage": "{{ .Site.Language.Locale | default "en"  }}",
         "author": {
                 "@type": "Person",
                 "name": "{{ $author | default .Site.Params.author.name }}"

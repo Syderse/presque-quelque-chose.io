@@ -5,7 +5,6 @@
 {{ $hoursAlive := math.Floor (div (sub time.Now.Unix $creationDate.Unix) 3600) }}
 
 {{/* B. Corpus Analysis */}}
-{{ $corpus := site.AllPages }}
 {{ $scratch := newScratch }}
 {{ $scratch.Set "totalWords" 0 }}
 {{ $scratch.Set "totalSentences" 0 }}
@@ -15,31 +14,33 @@
 {{ $scratch.Set "totalLinks" 0 }}
 {{ $giantString := "" }}
 
-{{ range $corpus }}
-  {{ $text := .Plain }}
-  {{ $raw := .RawContent }}
+{{ range hugo.Sites }}
+  {{ range .Pages }}
+    {{ $text := .Plain }}
+    {{ $raw := .RawContent }}
 
-  {{/* 1. VOCAB DATA COLLECT */}}
-  {{ $giantString = print $giantString " " $text }}
+    {{/* 1. VOCAB DATA COLLECT */}}
+    {{ $giantString = print $giantString " " $text }}
 
-  {{/* 2. DENSITY DATA */}}
-  {{ $scratch.Add "totalWords" .WordCount }}
-  {{/* Heuristic: Count punctuation */}}
-  {{ $sCount := add (strings.Count "." $text) (strings.Count "!" $text) (strings.Count "?" $text) }}
-  {{ if eq $sCount 0 }}{{ $sCount = 1 }}{{ end }} 
-  {{ $scratch.Add "totalSentences" $sCount }}
+    {{/* 2. DENSITY DATA */}}
+    {{ $scratch.Add "totalWords" .WordCount }}
+    {{/* Heuristic: Count punctuation */}}
+    {{ $sCount := add (strings.Count "." $text) (strings.Count "!" $text) (strings.Count "?" $text) }}
+    {{ if eq $sCount 0 }}{{ $sCount = 1 }}{{ end }}
+    {{ $scratch.Add "totalSentences" $sCount }}
 
-  {{/* 3. PARENTHESES Metric */}}
-  {{ $scratch.Add "totalParentheses" (strings.Count "(" $text) }}
+    {{/* 3. PARENTHESES Metric */}}
+    {{ $scratch.Add "totalParentheses" (strings.Count "(" $text) }}
 
-  {{/* 4. ASTERISKS Metric (emphases) */}}
-  {{ $scratch.Add "totalAsterisks" (strings.Count "*" $raw) }}
+    {{/* 4. ASTERISKS Metric (emphases) */}}
+    {{ $scratch.Add "totalAsterisks" (strings.Count "*" $raw) }}
 
-  {{/* 5. SIDENOTES Metric */}}
-  {{ $scratch.Add "totalSidenotes" (strings.Count "{{< sidenote" $raw) }}
+    {{/* 5. SIDENOTES Metric */}}
+    {{ $scratch.Add "totalSidenotes" (strings.Count "{{< sidenote" $raw) }}
 
-  {{/* 6. LINKS Metric (markdown links) */}}
-  {{ $scratch.Add "totalLinks" (strings.Count "](" $raw) }}
+    {{/* 6. LINKS Metric (markdown links) */}}
+    {{ $scratch.Add "totalLinks" (strings.Count "](" $raw) }}
+  {{ end }}
 {{ end }}
 
 {{/* C. Heavy Processing - Vocabulary */}}
@@ -63,8 +64,8 @@
 
 {{/* Almanac Entries */}}
 {{ $almanacCount := 0 }}
-{{ if site.Data.almanach }}
-  {{ $almanacCount = len site.Data.almanach }}
+{{ if hugo.Data.almanach }}
+  {{ $almanacCount = len hugo.Data.almanach }}
 {{ end }}
 
 

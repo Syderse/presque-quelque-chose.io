@@ -43,7 +43,7 @@
   {{ range .Translations }}
     <link rel="alternate" hreflang="{{ .Lang }}" href="{{ .Permalink }}" />
   {{ end }}
-  <link rel="alternate" hreflang="{{ site.LanguageCode | default "en-us" }}" href="{{ .Permalink }}" />
+  <link rel="alternate" hreflang="{{ site.Language.Locale | default "en-us" }}" href="{{ .Permalink }}" />
 
   {{/* Hugo Blox Color Theme Initialization */}}
   {{ $theme_name := (lower site.Params.appearance.color) | default "blue" }}
@@ -143,7 +143,7 @@
     <meta property="og:image" content="{{ . }}" />
     <meta property="twitter:image" content="{{ . }}" />
   {{- end -}}
-  <meta property="og:locale" content="{{ site.LanguageCode | default "en-us" }}" />
+  <meta property="og:locale" content="{{ site.Language.Locale | default "en-us" }}" />
   {{ if .IsPage }}
     {{ if not .PublishDate.IsZero }}
       <meta

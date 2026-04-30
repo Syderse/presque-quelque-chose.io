@@ -22,7 +22,7 @@
   publish = "public"
 
 [build.environment]
-  HUGO_VERSION = "0.152.2"
+  HUGO_VERSION = "0.160.1"
   HUGO_EXTENDED = "true"
   GO_VERSION = "1.21.5"
   NODE_VERSION = "22"
@@ -70,6 +70,20 @@
   package = "netlify-plugin-hugo-cache-resources"
   [plugins.inputs]
     debug = true
+
+# ═══════════════════════════════════════════════════════════════════════════
+# SECURITY HEADERS
+# ═══════════════════════════════════════════════════════════════════════════
+
+[[headers]]
+  for = "/*"
+  [headers.values]
+    X-Frame-Options = "DENY"
+    X-Content-Type-Options = "nosniff"
+    Strict-Transport-Security = "max-age=31536000; includeSubDomains"
+    Referrer-Policy = "strict-origin-when-cross-origin"
+    Permissions-Policy = "accelerometer=(), camera=(), geolocation=(), gyroscope=(), magnetometer=(), microphone=(), payment=(), usb=()"
+    Content-Security-Policy = "default-src 'self'; base-uri 'self'; object-src 'none'; frame-ancestors 'none'; form-action 'self'; script-src 'self' 'unsafe-inline' https://cdn.jsdelivr.net https://www.googletagmanager.com https://api.podcache.net; script-src-elem 'self' 'unsafe-inline' https://cdn.jsdelivr.net https://www.googletagmanager.com https://api.podcache.net; style-src 'self' 'unsafe-inline' https://fonts.googleapis.com; style-src-elem 'self' 'unsafe-inline' https://fonts.googleapis.com; font-src 'self' https://fonts.gstatic.com data:; img-src 'self' data: https:; connect-src 'self' https:; frame-src https://www.youtube.com https://www.youtube-nocookie.com https://open.spotify.com https://embed.acast.com https://api.podcache.net https://redcircle.com; media-src 'self' https:; upgrade-insecure-requests"
 
 # ═══════════════════════════════════════════════════════════════════════════
 # PERFORMANCE HEADERS

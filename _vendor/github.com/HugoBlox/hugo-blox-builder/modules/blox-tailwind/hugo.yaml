@@ -117,13 +117,13 @@ module:
     # BLOX A) Server-rendered block templates (Go HTML)
     - source: blox
       target: layouts/partials/hbx/blocks
-      includeFiles:
+      files:
         - '**/block.html'
 
     # BLOX B) Client islands (compiled with js.Build/js.Batch)
     - source: blox
       target: assets/js/hbx/blocks
-      includeFiles:
+      files:
         - '**/*.js'
         - '**/*.ts'
         - '**/*.jsx'
@@ -132,7 +132,7 @@ module:
     # BLOX C) Block-specific CSS
     - source: blox
       target: assets/css/hbx/blocks
-      includeFiles:
+      files:
         - '**/*.css'
 
     # BLOX D) Shared assets (optional)
@@ -142,7 +142,7 @@ module:
       target: assets/css/hbx/shared
     - source: blox
       target: assets/img/hbx/blocks
-      includeFiles:
+      files:
         - '**/*.png'
         - '**/*.jpg'
         - '**/*.jpeg'

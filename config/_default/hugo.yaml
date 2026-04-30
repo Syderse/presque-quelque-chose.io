@@ -2,7 +2,7 @@
 
 title: "presque-quelque-chose"
 baseURL: "https://www.presque-quelque-chose.com/"
-languageCode: "fr-fr"
+locale: "fr-fr"
 
 # ===========================================================================
 # SERVICES (ANALYTICS)
@@ -44,13 +44,13 @@ module:
     # Imports Hugo Blox
     - source: hugo-blox/blox/community
       target: layouts/_partials/blox/community/
-      includeFiles: "**.html"
+      files: "**.html"
     - source: hugo-blox/blox/all-access
       target: layouts/_partials/blox/
-      includeFiles: "**.html"
+      files: "**.html"
     - source: hugo-blox/blox
       target: assets/dist/community/blox/
-      includeFiles: "**.css"
+      files: "**.css"
 
   imports:
     - path: github.com/HugoBlox/hugo-blox-builder/modules/blox-plugin-netlify
@@ -78,7 +78,7 @@ outputFormats:
 
 outputs:
   home: [HTML, RSS, RANDOMIZER]
-  section: [HTML, RSS, ALMANACH]
+  section: [HTML, RSS]
   page: ["HTML"]
   taxonomy: ["HTML"]
   term: ["HTML"]
@@ -108,7 +108,7 @@ menus:
 # PAGE & CONTENT OPTIONS
 # ===========================================================================
 cascade:
-  - _target:
+  - target:
       path: /blog/**
     pager: true
     editable: true
@@ -121,12 +121,12 @@ cascade:
     header:
       navbar:
         enable: true
-  - _target:
+  - target:
       path: /recherches/**
     params:
       full_width: true
 
-  - _target:
+  - target:
       path: /rhizome-curieux/**
     params:
       full_width: true
