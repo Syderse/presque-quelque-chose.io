@@ -220,6 +220,33 @@
     }
   }
 
+  .article-prose {
+    hyphens: auto;
+    overflow-wrap: break-word;
+    text-justify: inter-word;
+  }
+
+  .article-prose :where(p, li, blockquote) {
+    hyphens: auto;
+    hyphenate-limit-chars: 6 3 3;
+    overflow-wrap: break-word;
+    text-align: justify;
+    text-align-last: start;
+    text-wrap: pretty;
+    word-break: normal;
+  }
+
+  :where(.article-prose .side-note-content) {
+    text-align: start;
+  }
+
+  :where(.article-prose .side-note-content) :where(p, li, blockquote) {
+    hyphens: manual;
+    text-align: inherit;
+    text-align-last: auto;
+    text-wrap: wrap;
+  }
+
   /* A.2 SIDENOTES - commentaire variant */
   .side-note-trigger.side-note-trigger--comment {
     color: var(--ctp-green) !important;
