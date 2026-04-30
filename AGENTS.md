@@ -260,6 +260,19 @@ Le shortcode `sidenote` :
 - est place en marge sur desktop ;
 - depend de `sidenote-adjuster.js` pour eviter les collisions verticales.
 
+Variante commentaire du shortcode :
+
+- le bind/snippet `sn` peut rester une sidenote classique :
+  `{{< sidenote >}}Texte de la note.{{< /sidenote >}}`
+- le bind/snippet `sc` doit appeler la variante commentaire :
+  `{{< sidenote variant="comment" >}}Texte du commentaire.{{< /sidenote >}}`
+- la variante commentaire affiche un encadre vert distinct, mais reste geree par le meme compteur et le meme moteur de placement que les sidenotes ;
+- son libelle par defaut est `commentaire` ;
+- on peut changer ce libelle sur une page avec le front matter `sidenote_comment_label: "commentaire de A."` ;
+- on peut aussi le propager a tout un dossier avec `cascade`, comme dans `content/solutions-imaginaires/_index.md` pour `content/solutions-imaginaires/blog_corée/**`, ou `sc` affiche automatiquement `commentaire de A.` ;
+- pour un cas ponctuel, utiliser `label="..."`, `caption="..."` ou `author="B."`. Exemple :
+  `{{< sidenote author="B." >}}Texte du commentaire.{{< /sidenote >}}`
+
 Quand on ecrit des textes longs, les notes de bas de page Markdown classiques restent preferables pour les references documentaires longues. Le shortcode `sidenote` sert plutot aux marginalia lisibles dans la page.
 
 ---

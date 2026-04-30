@@ -220,6 +220,98 @@
     }
   }
 
+  /* A.2 SIDENOTES - commentaire variant */
+  .side-note-trigger.side-note-trigger--comment {
+    color: var(--ctp-green) !important;
+  }
+
+  .side-note-trigger.side-note-trigger--comment:hover {
+    color: var(--ctp-teal) !important;
+  }
+
+  .side-note-content.sn-comment {
+    --sn-comment-border: color-mix(
+      in srgb,
+      var(--ctp-green) 78%,
+      var(--ctp-surface1)
+    );
+    --sn-comment-bg: linear-gradient(
+      135deg,
+      color-mix(in srgb, var(--ctp-green) 16%, var(--ctp-mantle)),
+      color-mix(in srgb, var(--ctp-teal) 10%, var(--ctp-crust))
+    );
+
+    background: var(--sn-comment-bg) !important;
+    border-color: var(--sn-comment-border) !important;
+    border-left-width: 3px;
+    color: color-mix(in srgb, var(--ctp-text) 90%, var(--ctp-green)) !important;
+    box-shadow: 4px 4px 0 rgba(0, 0, 0, 0.32);
+  }
+
+  .side-note-content.sn-comment .side-note-label {
+    display: block;
+    margin-bottom: 0.45rem;
+    color: var(--ctp-green);
+    font-family: var(--font-mono);
+    font-size: 0.62rem;
+    font-weight: 700;
+    letter-spacing: 0.08em;
+    line-height: 1;
+    text-transform: uppercase;
+  }
+
+  .side-note-content.sn-comment .side-note-number {
+    color: var(--ctp-green) !important;
+  }
+
+  .side-note-content.sn-comment .side-note-body {
+    color: inherit;
+  }
+
+  .side-note-content.sn-comment :where(p) {
+    margin: 0;
+    color: inherit !important;
+    line-height: inherit;
+  }
+
+  .side-note-content.sn-comment :where(a) {
+    color: color-mix(in srgb, var(--ctp-teal) 80%, var(--ctp-text)) !important;
+    border-bottom: 1px solid color-mix(in srgb, var(--ctp-green) 45%, transparent);
+  }
+
+  @media (min-width: 1024px) {
+    .side-note-content.sn-comment {
+      border: 1px solid var(--sn-comment-border) !important;
+      border-left-width: 3px !important;
+      border-radius: 0.5rem !important;
+      opacity: 0.88;
+      padding: 0.75rem !important;
+      text-align: left !important;
+    }
+
+    .side-note-content.sn-comment.sn-left,
+    .side-note-content.sn-comment.sn-right {
+      border-left-color: var(--sn-comment-border) !important;
+      border-right-color: color-mix(
+        in srgb,
+        var(--ctp-green) 34%,
+        var(--ctp-surface1)
+      ) !important;
+    }
+
+    .side-note-content.sn-comment:hover,
+    .peer:checked ~ .side-note-content.sn-comment {
+      background: linear-gradient(
+        135deg,
+        color-mix(in srgb, var(--ctp-green) 22%, var(--ctp-mantle)),
+        color-mix(in srgb, var(--ctp-teal) 14%, var(--ctp-crust))
+      ) !important;
+      border-color: var(--ctp-green) !important;
+      box-shadow: 5px 5px 0 rgba(0, 0, 0, 0.42) !important;
+      opacity: 1;
+    }
+  }
+
   /* B. BENTO UI SYSTEM (SOLID STATE) */
   .bento-card {
     @apply relative h-full w-full flex flex-col;
