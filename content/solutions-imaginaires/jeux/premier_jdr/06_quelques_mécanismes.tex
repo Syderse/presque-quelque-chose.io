@@ -1,0 +1,85 @@
+\documentclass[12pt,a4paper]{article}
+\usepackage[utf8]{inputenc}
+\usepackage[french]{babel}
+\usepackage[margin=2.5cm]{geometry}
+\usepackage{enumitem}
+\usepackage{amsmath}
+
+\title{Mécanismes de jeu}
+\author{}
+\date{}
+
+\begin{document}
+
+\maketitle
+
+\section{Loot}
+Tirer 1d6 :
+\begin{itemize}[label=--]
+    \item \textbf{1--2} : choisir 1 item
+    \item \textbf{3--4} : choisir 2 items
+    \item \textbf{5--6} : tout loot
+\end{itemize}
+
+\section{États et afflictions}
+
+\subsection{État enflammé}
+$-1$ au début du tour de jeu de la personne/créature dans cet état.
+
+\subsection{État empoisonné}
+$-1$ au début du tour de jeu de la personne/créature dans cet état.
+
+\subsection{État étourdi}
+Malus de $-2$ aux dés.
+
+\subsection{État assommé}
+Passe 1 tour.
+
+\section{Combat}
+
+\subsection{Attaquer}
+Lancer 2d10 puis calculer :
+\begin{align*}
+\text{Total} &= 2\text{d}10 + \text{FOR (mêlée) ou AGI (distance)} + \text{bonus} - \text{RES cible} - \text{malus}
+\end{align*}
+
+La cible subit : $\text{Total} - 10$ points de dégâts.
+
+\textbf{Note :} Si le résultat est négatif, c'est l'attaquant qui subit les dégâts (sa RES s'applique également) car on considère qu'il y a riposte.
+
+\subsection{Coup critique}
+Après avoir tout calculé, on double les dégâts qui devraient être subis (donc après décompte de la RES, etc.).
+
+\section{Soins et repos}
+
+\subsection{Kit de soin}
+Soigne 1d6 points de vie.
+
+\subsection{Repos nocturne}
+Tirer 1d6 :
+\begin{itemize}[label=--]
+    \item \textbf{1--2} : regain de 1 PV
+    \item \textbf{3--4} : regain de 2 PV
+    \item \textbf{5--6} : regain de 3 PV
+\end{itemize}
+
+\section{Événements}
+
+\subsection{Événement nocturne}
+Tirer 1d6 :
+\begin{itemize}[label=--]
+    \item \textbf{1--2} : mauvaise rencontre avec une créature ou, à défaut, un événement négatif
+    \item \textbf{3--4} : rien à signaler
+    \item \textbf{5--6} : événement positif qui apporte un loot au choix parmi quelques items du biome (éventuellement ceux manqués sur des créatures passées)
+\end{itemize}
+
+\section{Situations spéciales}
+
+\subsection{Duel psychique contre Hollow}
+Pour échapper au contrôle mental de Hollow, lancer 2d10 de VOL (volonté) :
+\begin{itemize}[label=--]
+    \item Si Hollow fait plus : contrôle
+    \item Sinon : il passe son tour et retourne dans l'ombre
+\end{itemize}
+
+\end{document}

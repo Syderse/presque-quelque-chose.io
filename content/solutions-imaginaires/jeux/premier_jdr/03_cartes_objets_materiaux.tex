@@ -1,0 +1,374 @@
+\documentclass[9pt,a4paper]{article}
+
+% ===== PACKAGES =====
+\usepackage[utf8]{inputenc}
+\usepackage[T1]{fontenc}
+\usepackage[french]{babel}
+\usepackage[margin=1.2cm, top=1cm, bottom=1cm]{geometry}
+\renewcommand{\familydefault}{\sfdefault}
+\usepackage{xcolor}
+\usepackage{titlesec}
+\usepackage{enumitem}
+\usepackage{tabularx}
+\usepackage{amssymb}
+\usepackage{multicol}
+\usepackage{microtype}
+\usepackage{colortbl}
+\usepackage{array}
+\usepackage{parskip}
+\setlength{\parskip}{2pt}
+\setlength{\parindent}{0pt}
+
+% ===== COULEURS =====
+\definecolor{biovert}{HTML}{1E5A3A}
+\definecolor{danger}{HTML}{A32828}
+\definecolor{loot}{HTML}{B48C28}
+\definecolor{mjbleu}{HTML}{285078}
+\definecolor{statviolet}{HTML}{5A3264}
+\definecolor{ambiance}{HTML}{1E6458}
+\definecolor{mecagris}{HTML}{3C3C3C}
+\definecolor{arme}{HTML}{A32828}
+\definecolor{armure}{HTML}{285078}
+\definecolor{capsule}{HTML}{8B6914}
+\definecolor{organe}{RGB}{120, 60, 90}
+\definecolor{consommable}{RGB}{60, 130, 80}
+\definecolor{special}{RGB}{140, 100, 40}
+\definecolor{nourriture}{RGB}{180, 80, 50}
+\definecolor{materiau}{RGB}{90, 90, 100}
+
+% ===== TITRES =====
+\titleformat{\section}{\Large\bfseries\color{biovert}}{}{0em}{\MakeUppercase}[\color{biovert}\hrule]
+\titleformat{\subsection}{\large\bfseries\color{biovert}}{}{0em}{}
+\titleformat{\subsubsection}{\normalsize\bfseries\color{ambiance}}{}{0em}{}
+
+% ===== LISTES =====
+\setlist[itemize]{label=\textcolor{biovert}{\textbullet}, leftmargin=*, noitemsep, topsep=1pt}
+\setlist[enumerate]{leftmargin=*, noitemsep, topsep=1pt}
+
+% ===== COMMANDES =====
+\newcommand{\sep}{\vspace{2pt}\noindent\textcolor{biovert!30}{\hrulefill}\vspace{2pt}}
+
+% Encadré arme
+\newcommand{\armebox}[5]{%
+% #1=nom #2=bonus #3=passif #4=sources #5=description
+\noindent\fcolorbox{arme}{arme!5}{%
+\begin{minipage}[t]{\dimexpr\linewidth-2\fboxsep-2\fboxrule}
+{\color{arme}\bfseries\small $\blacktriangleright$ ARME : #1} \hfill {\scriptsize\color{arme}\bfseries #2}\\[2pt]
+{\scriptsize\itshape #5}\\[2pt]
+{\scriptsize\textbf{Passif :} #3}\\[1pt]
+{\scriptsize\textbf{Source :} #4}
+\end{minipage}}\vspace{4pt}}
+
+% Encadré armure
+\newcommand{\armurebox}[5]{%
+\noindent\fcolorbox{armure}{armure!5}{%
+\begin{minipage}[t]{\dimexpr\linewidth-2\fboxsep-2\fboxrule}
+{\color{armure}\bfseries\small $\bigstar$ ARMURE : #1} \hfill {\scriptsize\color{armure}\bfseries #2}\\[2pt]
+{\scriptsize\itshape #5}\\[2pt]
+{\scriptsize\textbf{Passif :} #3}\\[1pt]
+{\scriptsize\textbf{Source :} #4}
+\end{minipage}}\vspace{4pt}}
+
+% Ligne d'item compact
+\newcolumntype{L}{>{\raggedright\arraybackslash}X}
+\newcolumntype{R}{>{\raggedleft\arraybackslash}X}
+\newcolumntype{C}{>{\centering\arraybackslash}X}
+
+\pagestyle{empty}
+
+\begin{document}
+
+% ==========================================
+\section*{Jour 1 -- Le Marais}
+% ==========================================
+
+% --- LA CAPSULE ---
+\subsection*{La Capsule d'\'Ejection}
+
+\noindent\fcolorbox{capsule}{capsule!8}{%
+\begin{minipage}[t]{\dimexpr\linewidth-2\fboxsep-2\fboxrule}
+{\color{capsule}\bfseries R\`egle :} Les joueurs ont \textbf{2 minutes} pour explorer la capsule et choisir \textbf{2 items chacun}. Le Patriarche-Composteur arrive et emporte la capsule. Tout ce qui n'est pas pris est perdu.
+\end{minipage}}\vspace{6pt}
+
+\noindent{\small\bfseries\color{capsule} Items disponibles dans la capsule (12 items) :}
+\vspace{2pt}
+
+\noindent\scriptsize
+\begin{tabularx}{\linewidth}{|>{\bfseries\centering\arraybackslash}p{3.2cm}|>{\centering\arraybackslash}p{1.2cm}|L|}
+\hline
+\rowcolor{capsule!12} \normalfont\textbf{Nom} & \textbf{Type} & \textbf{Effet} \\
+\hline
+\rowcolor{arme!8} Pistolet \`a Plasma R\'esiduel & Arme & +2 AGI (distance). \\
+\hline
+\rowcolor{armure!8} Combinaison Capsulaire & Armure & +1 RES.\\
+\hline
+GPS Orbital & \'Equip. & Indique la direction du vaisseau. Ne d\'etecte ni obstacles ni cr\'eatures. Autonomie~: 6 jours max. \\
+\hline
+Drone de Reconnaissance & \'Equip. & Exploration a\'erienne, cartographie. +3 PER 1$\times$/biome. \\
+\hline
+D\^ome de Repos Portatif & \'Equip. & Abri nocturne. Protection intemp\'eries et petites cr\'eatures. \\
+\hline
+Caisse \`a Outils & \'Equip. & +4 jets r\'eparation et craft. \\
+\hline
+Kit de Soin & Consom. & Restaure 1d6 PV. 3 recharges. \\
+\hline
+Corde d'Escalade & \'Equip. & +2 AGI dans les situations où l'objet peut être utile. \\
+\hline
+Masque Filtrant & \'Equip. & Prot\`ege contre gaz toxiques. Usage unique. \\
+\hline
+Rations Lyophilis\'ees $\times$3 & Nourrit. & Satisfait la faim 1 jour par ration. N\'ecessite de l'eau. \\
+\hline
+Balise Lumineuse & \'Equip. & \'Eclairage puissant. +3 PER dans zones où usage pertinent. Usage unique. \\
+\hline
+Jumelles Thermiques & \'Equip. & D\'etecte signatures chaleur. +3 PER dans zones où usage pertinent. \\
+\hline
+\end{tabularx}
+
+\vspace{6pt}
+
+\sep
+
+% --- ARME & ARMURE DU MARAIS ---
+\subsection*{Arme \& Armure du Marais}
+
+\armebox{Griffe-Foudre}{+2 FOR (m\^el\'ee)}%
+{D\'echarge Galvanique~: applique -1PV de dégâts purs à une cible proche de l'ennemi ciblé. Si pas d'ennemi proche, s'applique sur la cible.}%
+{Bison-Creuset (sabots \'electrifi\'es), Crapaud-Hallucinog\`ene (tendons mandibulaires)}%
+{Gantelet improvis\'e \`a partir des sabots \'electrifi\'es du Bison-Creuset. Trois griffes d'os conduisent un arc volta\"ique qui cr\'epite \`a chaque mouvement.}
+
+\armurebox{\'Ecorce-Vivante}{+2 RES}%
+{R\'eg\'en\'eration V\'eg\'etale~: regagne 1 PV au début de chaque combat.}%
+{Crapaud-Hallucinog\`ene (peau visqueuse), Patriarche-Composteur (mousse symbiotique), Bison-Creuset (chitine-roche)}%
+{Plastron d'\'ecorce moussue pr\'elev\'ee sur les flancs du Patriarche, couverte de peau de crapaud imperm\'eable. Chaude au toucher, elle pulse comme si elle respirait.}
+
+\sep
+
+% --- LOOT DU MARAIS ---
+\subsection*{Loot du Marais}
+
+\noindent\scriptsize
+\begin{tabularx}{\linewidth}{|>{\bfseries\centering\arraybackslash}p{2.8cm}|>{\centering\arraybackslash}p{1.6cm}|L|}
+\hline
+\rowcolor{biovert!12} \normalfont\textbf{Nom} & \textbf{Type} & \textbf{Effet} \\
+\hline
+Outre-Pulmonaire & Organe & Respirateur~: immunit\'e gaz toxiques. \\
+\hline
+Sph\`ere Galvanique & Organe & Batterie~: source d'\'energie haute densit\'e. \\
+\hline
+Anguille-C\^able & Organe & Pont \'electrique~: relie source d'\'energie \`a appareil. \\
+\hline
+L\'ezard-Amphibie & Organe & Double tuba~: respirer sous l'eau. \\
+\hline
+Plaque Chitine-B\'eton & Mat\'eriau & Bouclier g\'eant ou renfort de base. Protection maximale. Extr\^emement lourd. \\
+\hline
+Chair de Pagure & Nourrit. & +2 PV. \\
+\hline
+Massue du Platane & Mat\'eriau & Maillet incassable~: tester duret\'e, enfoncer piquets. Ne peut pas servir en combat. \\
+\hline
+\end{tabularx}
+
+\newpage
+
+% ==========================================
+\section*{Jour 2 -- La For\^et Fongique}
+% ==========================================
+
+\subsection*{Arme \& Armure de la For\^et}
+
+\armebox{Arc-Suture}{+3 AGI (distance)}%
+{Trait Perforant~: Tir allié autorisé. Jeter 2d10. Si réussite : tirer 1d6 de soin, si échec, tirer 1d6 de DMG.}%
+{Tisseur Chirurgical (aiguilles articul\'ees + glande \`a soie), Gardien-L\'emurien (veines symbiotiques)}%
+{Arbal\`ete organique tiss\'ee \`a partir des glandes \`a soie du Tisseur. Les carreaux sont des aiguilles qui percent la chitine la plus \'epaisse. L'arme se retend seule, lentement.}
+
+\armurebox{Voile-Fongique}{+2 PV MAX (à remplir)}%
+{Camouflage Myc\'elien~: Le porteur est cibl\'e en dernier en combat (sauf provocation ou proximit\'e).}%
+{Tisseur Chirurgical (bio-fil + soie), Gardien-L\'emurien (fourrure bioluminescente), Oren (filaments fongiques)}%
+{Cape tiss\'ee de filaments myc\'eliens luminescents. Dans la p\'enombre, le porteur se confond avec le sous-bois. Au soleil, la cape frissonne et r\'etr\'ecit.}
+
+\sep
+
+\subsection*{Loot de la For\^et Fongique}
+
+\noindent\scriptsize
+\begin{tabularx}{\linewidth}{|>{\bfseries\centering\arraybackslash}p{2.8cm}|>{\centering\arraybackslash}p{1.6cm}|L|}
+\hline
+\rowcolor{biovert!12} \normalfont\textbf{Nom} & \textbf{Type} & \textbf{Effet} \\
+\hline
+\'Ecureuil-Coffre & Organe & Inventaire~: +3 slots. Ou Ascenseur~: gravit\'e $-$50\%, sauts longue port\'ee. \\
+\hline
+Bio-Fil & Organe & Suture~: recoud blessures (r\'eussite auto). Ou Corde~: rappel ultra-fine. \\
+\hline
+Aiguilles Articul\'ees & Mat\'eriau & Crochetage~: +2 aux jets. Ou Pointes~: fl\`eches perforantes. \\
+\hline
+\'Ecaille Bison-Cuirass\'e & Consom. & Cl\'e V\'eg\'etale~: ouvre muraille v\'eg\'etale noire. 3 utilisations. \\
+\hline
+Filament Fongique & Mat\'eriau & Cordage fin~: tissage v\^etements, filets, sutures d'urgence. \\
+\hline
+R\'esine Phosphorescente & Consom. & Marqueur~: balise visuelle, \'eclairage faible 8h. Marque chemin. \\
+\hline
+Lianes \'Epineuses & Mat\'eriau & Fouet~: +2 d\'eg\^ats bruts, port\'ee moyenne. Ou Cordage r\'esistant. \\
+\hline
+Graines Corrompues & Sp\'ecial & Contamination~: poss\`ede l'\'Ecureuil-Coffre, corrompt inventaire organique. Dangereuses. \\
+\hline
+\end{tabularx}
+
+\newpage
+
+% ==========================================
+\section*{Jour 3 -- Le Rivage de Mer}
+% ==========================================
+
+\subsection*{Arme \& Armure du Rivage}
+
+\armebox{Trident-Corail}{+2 FOR (m\^el\'ee) ou +2 AGI (distance).}%
+{Versatilit\'e Amphibie~: le porteur choisit chaque tour s'il utilise l'arme en m\^el\'ee (+2 FOR) ou la lance (+2 AGI).}%
+{Crabe-Foreur (dard foreur + mandibules), Baleine-M\'eduse (cartilage structurel)}%
+{Trois pointes taill\'ees dans le dard du Crabe-Foreur, mont\'ees sur un manche de cartilage de Baleine-M\'eduse. \`A la fois lance d'estoc et javelot, il sent l'iode et le sang s\'ech\'e.}
+
+\armurebox{Cuirasse Kaskasssée}{+2 PV MAX (à remplir)}%
+{Blindage Épineux~: lorsque ciblé par une attaque, le porteur tire 1d6 et si résultat $\geq$ 4, il inflige -1PV à l'attaquant.}%
+{Crabe-Foreur (carapace dorsale), Baleine-M\'eduse (cartilage durci)}%
+{Plastron massif taill\'e dans la carapace du Crabe-Foreur, renforc\'e par du cartilage de Baleine-M\'eduse. Couleur nacr\'ee, surface rugueuse, \'etonnamment bien \'equilibr\'ee.}
+
+\sep
+
+\subsection*{Loot du Rivage}
+
+\noindent\scriptsize
+\begin{tabularx}{\linewidth}{|>{\bfseries\centering\arraybackslash}p{2.8cm}|>{\centering\arraybackslash}p{1.6cm}|L|}
+\hline
+\rowcolor{biovert!12} \normalfont\textbf{Nom} & \textbf{Type} & \textbf{Effet} \\
+\hline
+Carapace Crabe-Foreur & Mat\'eriau & Bouclier lourd. Peut renforcer la coque du Robot. \\
+\hline
+Dard de Crabe-Foreur & Mat\'eriau & D\'eg\^ats perforants + paralysie 1 tour. Ou forage mat\'eriaux mous. \\
+\hline
+Mandibules Crabe-Foreur & Mat\'eriau & Cisailles~: coupe m\'etal fin, c\^ables, chitine. Perfore serrures. \\
+\hline
+Glandes Acides & Mat\'eriau & Grenade~: jet d'acide (d\'eg\^ats zone), dissout mati\`ere organique. \\
+\hline
+Chair de Crabe-Foreur & Nourrit. & Repas~: restaure 2 PV, satisfait la faim. \\
+\hline
+\OE uf G\'elatineux & Consom. & Leurre~: apaise Crabes-Foreurs (fin combat). Nourriture cr\'eatures. \\
+\hline
+\end{tabularx}
+
+\newpage
+
+% ==========================================
+\section*{Jour 4 -- La Montagne Aride}
+% ==========================================
+
+\subsection*{Arme \& Armure de la Montagne}
+
+\armebox{Faux-Solaire}{+2 FOR (m\^el\'ee)}%
+{Chaaaaaud~: les attaques appliquent l'état enflammé.}%
+{Coccisabre (dent ventrale), V\'elocirapteur Solaire (plumes-miroirs + d\'efenses d'ivoire)}%
+{Grande faux taill\'ee dans la dent de la Coccisabre, incrust\'ee d'\'eclats de plumes-miroirs. Quand le soleil frappe la lame, elle brille d'un \'eclat insoutenable.}
+
+\armurebox{Harnais tout Brillant}{+2 PER}%
+{D\'eflexion~: Les attaques à distance ne peuvent pas infliger plus de 2 pt. de dégâts au porteur.}%
+{V\'elocirapteur Solaire (plumes-miroirs), Coccisabre (carapace polie), Pie-llard (\'eclats m\'etalliques)}%
+{Harnais de cuir alien serti d'\'eclats de plumes-miroirs. La lumi\`ere rebondit dans toutes les directions, cr\'eant un halo \'eblouissant. On le voit venir de loin.}
+
+\sep
+
+\subsection*{Loot de la Montagne}
+
+\noindent\scriptsize
+\begin{tabularx}{\linewidth}{|>{\bfseries\centering\arraybackslash}p{2.8cm}|>{\centering\arraybackslash}p{1.6cm}|L|}
+\hline
+\rowcolor{biovert!12} \normalfont\textbf{Nom} & \textbf{Type} & \textbf{Effet} \\
+\hline
+Dent-Sabre & Mat\'eriau & \'Ep\'ee~: one-shot les cibles paralys\'ees. Tranche os et tendons. \\
+\hline
+Glande \`a Toxine & Organe & Poison~: enduit armes. Paralysie progressive (3 tours). 10 doses max. \\
+\hline
+Carapace Coccisabre & Mat\'eriau & Armure lourde~: r\'esistance \'elev\'ee, protection totale attaques l\'eg\`eres. \\
+\hline
+Plumes-Miroirs & Mat\'eriau & Bouclier r\'efl\'echissant~: renvoie lasers. Flash aveuglant. \\
+\hline
+D\'efenses d'Ivoire & Sp\'ecial & Tuteur acc\'el\'er\'e~: graines poussent tr\`es vite. Booste croissance. \\
+\hline
+Fruit Maudit & Sp\'ecial & Marqueur~: explose en liquide pestilentiel. Attire TOUS les V\'elociraptors (1 km). \\
+\hline
+Mucus de Vers-Colle & Consom. & Adh\'esif~: +4 escalade. Tout se colle aux mains 1h. \\
+\hline
+Glande de Flux & Organe & Aimant~: attire objets m\'etalliques $<$5m. Ou D\'esarmement (test DEX). \\
+\hline
+Fruit de l'Oasis-Tuyau & Nourrit. & +3 PV, d\'esalt\`ere, boost moral (+1 jets 2h). \\
+\hline
+Eau Pure de l'Oasis & Consom. & Annule d\'eshydratation, soigne 1 PV. \\
+\hline
+Poudre Styptique & Consom. & H\'emotstatique~: stoppe saignement imm\'ediatement. 5 doses. \\
+\hline
+\end{tabularx}
+
+\newpage
+
+% ==========================================
+\section*{Jour 5 -- La Prairie \& le Vaisseau}
+% ==========================================
+
+\subsection*{Arme \& Armure de la Prairie}
+
+\armebox{Carillon des Spectres}{+2 PER ; attaque à distance.}%
+{Utilise PER au lieu de FOR ou AGI lors d'une attaque.}%
+{\'Echo-\'Echo (syrinx mim\'etique), Dormeur (fragments c\'eramiques r\'esonants), Hollow (fragment psychique)}%
+{Tube organique h\'elico\"idal termin\'e par une parabole concave. Le porteur n'attaque pas~--- il \'ecoute, et retourne le son contre sa source.}
+
+\armurebox{Membrane de Stase}{+2 RES}%
+{Stase R\'eflexe~: quand le porteur tombe \`a 3 PV ou moins, la membrane active automatiquement un champ de stase. Invuln\'erable 1 tour complet (ne peut pas \^etre cibl\'e ni subir de d\'eg\^ats), mais ne peut pas agir non plus. 1$\times$/biome. Inflige -2PV à tous les ennemis.}%
+{Dormeur (plaques c\'eramiques + glande de stase), \'Echo-\'Echo (membrane tympanique), Hollow (peau c\'eramique)}%
+{Membrane translucide pr\'elev\'ee sur le Dormeur, doubl\'ee de c\'eramique du Hollow. En danger, elle se rigidifie, enveloppant le porteur dans une coquille nacr\'ee imp\'en\'etrable.}
+
+\sep
+
+\subsection*{Loot de la Prairie \& du Vaisseau}
+
+\noindent\scriptsize
+\begin{tabularx}{\linewidth}{|>{\bfseries\centering\arraybackslash}p{2.8cm}|>{\centering\arraybackslash}p{1.6cm}|L|}
+\hline
+\rowcolor{biovert!12} \normalfont\textbf{Nom} & \textbf{Type} & \textbf{Effet} \\
+\hline
+Syrinx Mim\'etique & Organe & Ventriloquie~: projette voix/sons \`a 30m. Diversions parfaites. \\
+\hline
+P\'etales Fleurs-H\'elices & Consom. & Parachute~: ralentit chute, permet plan\'e court. Usage unique. \\
+\hline
+Bulbe Communicant & Consom. & Signal~: vibrations attirant/calmant les Z\`ebres-Crapauds. \\
+\hline
+\end{tabularx}
+
+\vspace{8pt}
+
+% --- ITEMS TRANSVERSAUX ---
+\subsection*{Items Transversaux (non li\'es \`a un biome sp\'ecifique)}
+
+\noindent\scriptsize
+\begin{tabularx}{\linewidth}{|>{\bfseries\centering\arraybackslash}p{2.8cm}|>{\centering\arraybackslash}p{1.6cm}|L|}
+\hline
+\rowcolor{special!12} \normalfont\textbf{Nom} & \textbf{Type} & \textbf{Effet} \\
+\hline
+Robot Sentinelle & \'Equip. & Compagnon multifonction~: guide, combat, analyse. \'Evolue J1$\to$J5. \\
+\hline
+Guide du Randonneur & Donn\'ees & Analyse~: le Robot fournit infos sur cr\'eatures et environnement. \\
+\hline
+Balise de D\'etresse & Sp\'ecial & Signal~: peut appeler secours depuis orbite. Usage unique. Autonomie 72h. \\
+\hline
+Sifflet \`a Vent & Sp\'ecial & Communication~: apaise cr\'eatures sensibles au son. \\
+\hline
+Kit de R\'eparation & Consom. & R\'epare \'equipement (3 charges). +3 jets r\'eparation. 3 utilisations max. \\
+\hline
+Combinaison Thermique & \'Equip. & R\'esiste temp\'eratures extr\^emes. +1 RES \'el\'ements. \\
+\hline
+Fiole de Catalyseur & Sp\'ecial & Multiplie effet d'une substance par 2. Ou EXPLOSION. Test INT pour usage s\^ur. \\
+\hline
+Cristal de Navigation & Sp\'ecial & Boussole~: indique toujours le nord. Am\'eliore pr\'ecision GPS. \\
+\hline
+Parachute d'Urgence & \'Equip. & Annule d\'eg\^ats de chute $<$50m. D\'eploiement automatique. Usage unique. \\
+\hline
+Gant de Pr\'ehension & \'Equip. & +3 jets grip/serrage. \'Ecrase mat\'eriaux fragiles. Aliment\'e par Sph\`ere Galvanique. \\
+\hline
+\end{tabularx}
+
+\end{document}

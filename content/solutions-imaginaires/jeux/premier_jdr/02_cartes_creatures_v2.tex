@@ -1,0 +1,395 @@
+\documentclass[12pt,a4paper]{article}
+
+% ===== PACKAGES =====
+\usepackage[utf8]{inputenc}
+\usepackage[T1]{fontenc}
+\usepackage[french]{babel}
+\usepackage[margin=1.5cm, top=1.2cm, bottom=1.2cm]{geometry}
+\usepackage{microtype}
+\usepackage[hidelinks]{hyperref}
+
+\setlength{\parindent}{0pt}
+\setlength{\parskip}{0pt}
+\pagestyle{plain}
+
+% ===== MACROS =====
+
+% Carte demi-page
+\newenvironment{card}{%
+  \noindent\begin{minipage}[t][0.47\textheight][t]{\linewidth}%
+}{%
+  \end{minipage}%
+}
+
+% En-tête créature
+\newcommand{\creature}[2]{%
+  \phantomsection\addcontentsline{toc}{section}{#1}%
+  \noindent\rule{\linewidth}{1.5pt}\\[0.2em]%
+  {\large\bfseries #1}\hfill{\small\itshape #2}\\[0.15em]%
+  \rule{\linewidth}{0.4pt}\par\vspace{0.3em}%
+}
+
+% Section dans une carte
+\newcommand{\sect}[1]{%
+  \vspace{0.3em}{\footnotesize\bfseries #1}~\hrulefill\par\vspace{0.15em}%
+}
+
+% Stat en ligne
+\newcommand{\stat}[2]{\textbf{#1}~#2}
+
+% Séparateur bullet
+\newcommand{\bull}{\;\textbullet\;}
+
+% ===== DOCUMENT =====
+\begin{document}
+
+\begin{center}
+{\LARGE\bfseries BESTIAIRE}\\[0.3em]
+{\large\itshape Scavengers Reign --- Cartes Cr\'eatures v2}
+\end{center}
+\vspace{1em}
+\tableofcontents
+\newpage
+
+% =====================================================
+% PAGE 1
+% =====================================================
+\begin{card}
+\creature{BISON-CREUSET}{}
+
+{\footnotesize Herbivore gr\'egaire aux allures de bison, dont la peau \'evoque une cro\^ute de s\'ediments cuits. De longues fissures parcourent ses flancs~; par endroits, une lueur sourde pulse sous la carapace. De petites cr\'eatures glabres, morphologiquement proches de l'adulte, circulent entre ses replis et d\'eposent au sol des sph\`eres aux reflets changeants.}\par
+\vspace{0.2em}
+{\footnotesize \stat{PV}{22}\bull\stat{FOR}{4}\bull\stat{RES}{4}}\par
+
+\sect{Combat}
+{\footnotesize
+\textbf{Comportement :} Passif par d\'efaut. Charge si bless\'e. Ou si cri d'alterte d'un petit.\\
+\textbf{Attaques :} Charge \'electrique (arc statique, zone)\bull Piétinement massif (personne touchée malus jet -2 prochain tour.)\\
+\textbf{D\'efenses :} Cuirasse chitine+roche (immunit\'e armes l\'eg\`eres)\bull Chaleur corporelle intense (immunisé au feu)}
+
+\sect{Loot}
+{\footnotesize
+\textbf{Ovo\"ide galvanique} : batterie bio. lampe concussion (flash + 100 lumens 4h) ou explosion EMP.\\
+\textbf{Plaques chitine-roche} : armures lourdes/boucliers.\\
+\textbf{Sabots \'electrifi\'es} : armes m\^el\'ee avec d\'eg\^ats \'electriques (malus au jet -2 à la cible touchée).}
+\end{card}
+
+\vfill
+
+\begin{card}
+\creature{PAGURE G\'EANT}{}
+
+{\footnotesize Formation calcaire ambulante de la taille d'un v\'ehicule, port\'ee par une douzaine de pattes trapues qui disparaissent sous la masse. L'ensemble progresse avec une lenteur imperturbable, broyant sans distinction tout ce qui se trouve sur sa trajectoire. Aucun stimulus ext\'erieur observ\'e n'a jamais provoqu\'e le moindre \'ecart de route.}\par
+\vspace{0.2em}
+{\footnotesize \stat{PV}{9999}\bull\stat{FOR}{10}\bull\stat{RES}{10}\bull\stat{AGI}{0}\bull\stat{R\'eg\'en}{Récupération complète si on ne lui retire pas 80\% de PV en un coup}}\par
+
+\sect{Combat}
+{\footnotesize
+\textbf{Comportement :} Pacifique mais implacable.\\
+\textbf{Attaques :} Gifle Molle (1~PV, repousse 2m)\bull Pi\'etinement inexorable\bull Mode furieux ($\times$2 vitesse apr\`es fus\'ee)\\
+\textbf{D\'efenses :} Carapace indestructible\bull R\'eg\'en instantan\'ee\bull Imperturbabilit\'e totale}
+
+\sect{Loot}
+{\footnotesize
+\textbf{Plaque chitine-b\'eton} : bouclier lourd (tr\`es encombrant).\\
+\textbf{Chair} : comestible, texture pneu, 15 min/bouch\'ee.\\
+\textbf{Algues s\'ech\'ees} : combustible lent ou isolant.}
+\end{card}
+
+\newpage
+
+% =====================================================
+% PAGE 2
+% =====================================================
+\begin{card}
+\creature{TISSEUR CHIRURGICAL}{}
+
+{\footnotesize Arthropode d\'echarn\'e \'evoquant une araign\'ee de mer, locomotion assur\'ee par huit pattes-aiguilles d'os articul\'e. L'abdomen translucide contient un liquide soyeux en perp\'etuel mouvement. Le sp\'ecimen manifeste une obsession remarquable pour la sym\'etrie~: d\'eplacements, toiles et gestes r\'ep\`etent des motifs parfaitement g\'eom\'etriques, ponctu\'es d'un cliquetis rapide et m\'ecanique.}\par
+\vspace{0.2em}
+{\footnotesize \stat{PV}{9}\bull\stat{FOR}{3}\bull\stat{RES}{1}}\par
+
+\sect{Combat}
+{\footnotesize
+\textbf{Comportement :} Neutre sauf si quelqu'un saigne ou si ouverture détectée $\rightarrow$ fr\'en\'esie de r\'eparation.\\
+\textbf{Attaques :} Suture d'urgence (+1d4 PV mais 1d6 d\'eg\^ats douleur + -DEX)\bull B\^aillon (coud l\`evres)\bull Cocon de stase (immobilise, FOR~15)\\
+\textbf{D\'efenses :} Extr\^emement agile\bull Esquive instinctive}
+
+\sect{Loot}
+{\footnotesize
+\textbf{Bobine bio-fil} : +kevlar, st\'erile. M\'edecine auto-r\'eussie ou cordes ultra-fines.\\
+\textbf{Aiguilles articul\'ees} : pointes perforantes (ignore 2 de RES si composant d'une arme).\\
+\textbf{Glande \`a soie} : 50m de fil très résistant si press\'ee.}
+\end{card}
+
+\vfill
+
+\begin{card}
+\creature{CRABE-FOREUR-CAFARD}{}
+
+{\footnotesize Pr\'edateur blind\'e et surbaiss\'e, hybridant des traits de crustac\'e et de blattopt\`ere. Les mandibules ant\'erieures tournent sur elles-m\^emes comme des m\`eches de foreuse~; une queue segment\'ee se dresse \`a l'arri\`ere, termin\'ee par un dard courbe. L'animal s\'ecr\`ete une bave \'epaisse qui ronge la mati\`ere organique au contact.}\par
+\vspace{0.2em}
+{\footnotesize \stat{PV}{16}\bull\stat{FOR}{3}\bull\stat{RES}{5}}\par
+
+\sect{Combat}
+{\footnotesize
+\textbf{Comportement :} Fonce et perce, tente coincer dans angles.\\
+\textbf{Attaques :} Aspiration sang (regagne 2 PV)\bull Dard foreur (ab\^ime armure)\bull Jet bile acide (flaques : jet d'AGI à réussir lors de l'attaque pour éviter de mettre pieds dedans)\bull Queue scorpion (paralyse 2~tours mais une seule fois par combat)\\
+\textbf{D\'efenses :} Carapace sup\'erieure invuln\'erable\bull Attaquer face+dos simultan\'ement}
+
+\sect{Loot}
+{\footnotesize
+\textbf{Carapace} : bouclier ou renfort robot. \textbf{Dard} : arme empoisonnée. \textbf{Mandibules} : cisailles.\\
+\textbf{Glandes acides} : 3 munitions corrosives. \textbf{Chair ventrale} : d\'elicieuse, donne soif.}
+\end{card}
+
+\newpage
+
+% =====================================================
+% PAGE 3
+% =====================================================
+\begin{card}
+\creature{V\'ELOCIRAPTOR SOLAIRE}{}
+
+{\footnotesize Bip\`ede nerveux de gabarit moyen dont le thorax arbore deux d\'efenses d'ivoire courbes. La queue se d\'eploie en \'eventail d'\'ecailles chrom\'ees que l'animal oriente avec pr\'ecision, captant et redirigeant la lumi\`ere ambiante. Observ\'e exclusivement en groupe~; aucun sp\'ecimen isol\'e n'a jamais \'et\'e recens\'e.}\par
+\vspace{0.2em}
+{\footnotesize \stat{PV}{8}\bull\stat{FOR}{2}\bull\stat{RES}{2}\bull\stat{Nombre}{4 (mini-meute)}}\par
+
+\sect{Combat}
+{\footnotesize
+\textbf{Comportement :} N'attaquent JAMAIS seuls. Encerclent pour isoler.\\
+\textbf{Attaques :} Serres acérées (Ignore 2 RES)\bull Convergence solaire (ULTI : déclenche si 3+ raptors vivants et cible encerclée) : tous orientent simultanément leurs queues-miroirs vers une cible unique, formant un point de focalisation solaire. La cible fait un jet de RES vs 14. Échec : 1d10 dégâts + aveuglée 1 tour (ferme les yeux). Réussite : 1d6 dégâts + éblouie 1 tour seulement)\\
+\textbf{D\'efenses :} \'Eblouissement (queue flash, -3 jet dés attaque)}
+
+\sect{Loot}
+{\footnotesize
+\textbf{D\'efenses ivoire} : si réduit en poudre, permet de fabriquer/regagner des charges kit de soin.\\
+\textbf{Plumes-miroirs} : boucliers r\'efl\'echissants (projectiles).\\
+\textbf{Fruit maudit} : leurre explosif qui attire toute une meute si lancé/explose. Mais contre qui ? (jet de dés)}
+\end{card}
+
+\vfill
+
+\begin{card}
+\creature{COCCISABRE}{}
+
+{\footnotesize Coupole chitineuse rouge-orang\'e, si immobile qu'on la prendrait pour une concr\'etion min\'erale. Au-dessus d'elle flottent des boules de duvet blanc, en l\'evitation dans un champ de charges statiques, pareilles \`a des graines de pissenlit fig\'ees dans l'air.}\par
+\vspace{0.2em}
+{\footnotesize \stat{PV}{18}\bull\stat{FOR}{5}\bull\stat{RES}{4}}\par
+
+\sect{Combat}
+{\footnotesize
+\textbf{Comportement :} Pi\`ege immobile. Attaque si champ de mines d\'eclench\'e. RP mouvements très lents ?\\
+\textbf{Attaques :} Champ mines duveteuses (contact = colle + neurotoxine : T1~-50\% d\'epl, T2~rigidit\'e, T3~paralysie)\bull Ex\'ecution (one-shot paralys\'es ou survie à 2PV)\\
+\textbf{D\'efenses :} Carapace couverture totale (sauf ventre/ailes si ouverte)}
+
+\sect{Loot}
+{\footnotesize
+\textbf{Dent-sabre} : m\^el\'ee d\'evactatrice, tranche armures (ignore 5 RES).\\
+\textbf{Glande toxine} : paralysant contact.\\
+\textbf{Carapace} : d\'efensif (trop lourd pour tout prendre).}
+\end{card}
+
+\newpage
+
+% =====================================================
+% PAGE 4
+% =====================================================
+\begin{card}
+\creature{PATRIARCHE-COMPOSTEUR}{}
+
+{\footnotesize Montagne ambulante de bois humide, de mousse et de champignons stratifi\'es, si vaste qu'on la confond d'abord avec le relief. L'organisme se d\'eplace avec une lenteur g\'eologique, indiff\'erent \`a tout, brisant les formations rocheuses sur son passage comme des brindilles. Autour de lui, la v\'eg\'etation prosp\`ere de mani\`ere anormale, comme nourrie par sa seule pr\'esence.}\par
+\vspace{0.2em}
+{\footnotesize \stat{PV}{99999}\bull\stat{FOR}{Peut one shot un Pagure géant contrairement à vous}\bull\stat{RES}{9999}\bull\stat{AGI}{0}}\par
+
+\sect{Combat}
+{\footnotesize
+\textbf{Comportement :} Pacifisme d\'edaigneux total. Ignore tout. Continue sa route.\\
+\textbf{Attaques :} Soupir des âges (perte tour + envie de rentrer)\bull Pichenette (500 d\'eg\^ats, cadavre exp\'edi\'e au biome voisin)\\
+\textbf{D\'efenses :} Frapper = arme dig\'er\'ee par 3m de mousse\bull Immunit\'e totale}
+
+\sect{Loot}
+{\footnotesize
+\textbf{Champignons qui ont l'air précieux ?} Who knows ?\\
+\textbf{Mousse symbiotique} : très bonne absorption}.\\
+\end{card}
+
+\vfill
+
+\begin{card}
+\creature{PIE-LLARD}{}
+
+{\footnotesize Oiseau-insecte de taille moyenne dont le plumage est enti\`erement constitu\'e de d\'ebris m\'etalliques r\'ecup\'er\'es~: vis, boulons, fragments de coque. Une glande sous-jugulaire bleut\'ee pulse \`a intervalles r\'eguliers, g\'en\'erant de petits arcs \'electriques visibles entre les plumes. L'esp\`ece manifeste une attirance compulsive pour tout objet manufactur\'e, qu'elle int\`egre m\'ethodiquement \`a son plumage.}\par
+\vspace{0.2em}
+{\footnotesize \stat{PV}{19}\bull\stat{FOR}{4}\bull\stat{RES}{2}}\par
+
+\sect{Combat}
+{\footnotesize
+\textbf{Comportement :} Ne cible pas PV mais le m\'etal des joueurs.\\
+\textbf{Attaques :} Vol \`a l'arrach\'e (FOR joueur vs~16, \'echec = objet vol\'e+ajout\'e armure)\bull impulsion finale (arrache TOUT m\'etal 10m)\\
+\textbf{D\'efenses :} Champ r\'epulsif (attaques m\'etal d\'evi\'ees)\bull Blindage adaptatif (+RES par objet vol\'e)}
+
+\sect{Loot}
+{\footnotesize
+\textbf{Glande de flux} : bio-magn\'etique, attire m\'etal 5m ou d\'esarme. EFFACE disques/cartes.\\
+Tout m\'etal vol\'e tombe \`a sa mort.}
+\end{card}
+
+\newpage
+
+% =====================================================
+% PAGE 5
+% =====================================================
+\begin{card}
+\creature{\'ECHO-\'ECHO}{}
+
+{\footnotesize Silhouette humano\"ide aux contours perp\'etuellement flous, comme agit\'ee par une vibration interne. Le sp\'ecimen ne poss\`ede aucun trait facial~; une parabole organique concave occupe l'emplacement du visage, encadr\'ee d'une peau fine et tendue comme une membrane de tambour. L'animal est manifestement aveugle, mais r\'eagit au moindre son avec une pr\'ecision d\'econcertante.}\par
+\vspace{0.2em}
+{\footnotesize \stat{PV}{14}\bull\stat{FOR}{5}\bull\stat{RES}{2}}\par
+
+\sect{Combat}
+{\footnotesize
+\textbf{Comportement :} Attaque source bruit la plus forte. \textbf{RP :} Joueurs doivent CHUCHOTER IRL.\\
+\textbf{Attaques :} Saut de phase (instantan\'e vers cible bruyante : étourdissement 1 tour + sonnée : ne peut plus chuchoter jusqu'à fin combat)\bull Lame sonique (cri qui liqu\'efie organes, ignore armure)\\
+\textbf{D\'efenses :} Flou cin\'etique (seuil réussite attaque dés plus haut tant que pas \'etourdie)}
+
+\sect{Loot}
+{\footnotesize
+\textbf{Syrinx mim\'etique} : projecteur vocal 30m = ventriloquie/leurre.\\
+\textbf{Membrane tympanique} : capteurs sonores ultra-sensibles.}
+\end{card}
+
+\vfill
+
+\begin{card}
+\creature{OREN}{}
+
+{\footnotesize C'est bien vide par ici. Hmm.}\par
+
+\vspace{0.2em}
+{\footnotesize \stat{PV}{17}\bull\stat{FOR}{3}\bull\stat{RES}{1}}\par
+
+\sect{Combat}
+{\footnotesize
+\textbf{Attaques :} Lianes immobilisantes (1 tour entravé)\bull Fouet-liane (\'epines +2 PERFO, longue portée)\\
+\textbf{D\'efenses :} Armure de plantes (RES + 3)\bull R\'eg\'en\'eration fongique (contact sol : regagne 1d6 PV + les personnes qui attaquent pendant la canalisation sont empoisonnées)}
+\end{card}
+
+\newpage
+
+% =====================================================
+% PAGE 6
+% =====================================================
+\begin{card}
+\creature{CRAPAUD-HALLUCINOG\`ENE}{}
+
+{\footnotesize Masse bulbeuse et luisante, tapie dans les recoins humides o\`u la lumi\`ere p\'en\`etre \`a peine. Sa peau s\'ecr\`ete un film iris\'e qui s'\'evapore lentement, formant un halo tremblant autour de l'animal. Les sp\'ecimens observ\'es restent parfaitement immobiles pendant des heures, avec la patience d'un pi\`ege \`a m\^achoires v\'eg\'etal.}\par
+\vspace{0.2em}
+{\footnotesize \stat{PV}{11}\bull\stat{FOR}{3}\bull\stat{RES}{2}}\par
+
+\sect{Combat}
+{\footnotesize
+\textbf{Comportement :} Patient. Attaque si proie hallucin\'ee ou accul\'e.\\
+\textbf{Attaques :} Brume psychotrope (passif)\bull Bile acide (à distance + état empoisonné)\bull Bond gluant (atteint cible même si repliée + entrave 1 tour)\bull Langue harponn\'ee (attire la cible à lui ; celle-ci doit tirer les dés pour déterminer ce qu'elle heurte en chemin)\\
+\textbf{D\'efenses :} Peau spongieuse (+ 3 RES contre attaque feu)\bull Camouflage parfait (difficile à repérer : malus T1 pour l'atteindre)\bull Immunit\'e toxines}
+
+\sect{Loot}
+{\footnotesize
+\textbf{Glandes hallucinog\`enes} : grenade fumig\`ene.\\
+\textbf{Peau visqueuse} : imperm\'eable/isolant.\\
+\textbf{Chair} : toxique crue.}
+\end{card}
+
+\vfill
+
+\begin{card}
+\creature{BISON-CUIRASS\'E}{}
+
+{\footnotesize Herbivore massif dont le corps est couvert d'\'ecailles osseuses imbriqu\'ees, \'evoquant une armure m\'edi\'evale taill\'ee pour un animal de trait. Chaque pas fait trembler le sol~; devant lui, la v\'eg\'etation la plus dense s'\'ecarte d'elle-m\^eme, comme r\'epondant \`a un signal chimique. L'animal broute avec une placidit\'e souveraine, indiff\'erent \`a la plupart des pr\'edateurs du biome.}\par
+\vspace{0.2em}
+{\footnotesize \stat{PV}{25}\bull\stat{FOR}{5}\bull\stat{RES}{5}}\par
+
+\sect{Combat}
+{\footnotesize
+\textbf{Comportement :} Pacifique. Si bless\'e/harcel\'e : charge d\'efensive massive.\\
+\textbf{Attaques :} Charge terrestre (pi\'etinement)\bull Coup de corne (projette)\bull Pi\'etinement panique (si encercl\'e : dégâts de zone)\\
+\textbf{D\'efenses :} Cuirasse (immunit\'e armes l\'eg\`eres)\bull Masse (impossible \`a d\'eplacer)}
+
+\sect{Loot}
+{\footnotesize
+\textbf{\'Ecaille-cl\'e} : ramassable sans tuer. Ouvre muraille v\'eg\'etale (3 utilisations).\\
+\textbf{Plaques cuirass\'ees} : armures/barricades.\\ \textbf{Cornes} : leviers/armes.\\ \textbf{Cuir} : sangles/harnais.}
+\end{card}
+
+\newpage
+
+% =====================================================
+% PAGE 7
+% =====================================================
+\begin{card}
+\creature{GARDIEN-L\'EMURIEN}{}
+
+{\footnotesize Minuscule humano\"ide d'une cinquantaine de centim\`etres, aux yeux d\'emesur\'es de l\'emurien, dont les veines d'un vert luminescent courent sous la fourrure jusqu'\`a dispara\^itre dans la paroi v\'eg\'etale. Le sp\'ecimen observe les intrus avec une curiosit\'e non dissimul\'ee, inclinant la t\^ete de gauche \`a droite. Plusieurs t\'emoignages concordent~: apr\`es son passage, les chemins ne m\`enent plus tout \`a fait o\`u ils menaient.}\par
+\vspace{0.2em}
+{\footnotesize \stat{PV}{1}\bull\stat{FOR}{1}\bull\stat{RES}{-1}}\par
+
+\sect{Combat}
+{\footnotesize
+\textbf{Comportement :} \'Evite combat. Manipule environnement : fermer passage, ouvrir fissures, fuir. Petit jeu de mime.\\
+\textbf{Attaques :} Manipulation muraille (se referme jet de sprint pour sortir à temps)\bull Cri d'alarme (je pense que vous allez vous attirer des ennuis...)\\
+\textbf{D\'efenses :} on comprend bien en lisant les stats que cette pauvre petite créature n'a pas de défense. veuillez continuer à lire la suite.}
+
+\sect{Loot}
+{\footnotesize
+\textbf{Veines symbiotiques} : interface contr\^ole v\'eg\'etale (usage unique).\\
+\textbf{Glandes r\'esine} : colle ultra-forte (2 doses).\\
+\textbf{Fourrure bioluminescente} : v\^etements lumineux.}
+\end{card}
+
+\vfill
+
+\begin{card}
+\creature{DORMEUR}{}
+
+{\footnotesize Au fond de la cavit\'e g\^it une masse blanche titanesque, recroquevill\'ee sur elle-m\^eme, parcourue d'un r\'eseau de veines bioluminescentes \'eteintes. Le sp\'ecimen mesure pr\`es de quinze m\`etres. L'air autour de lui est parfaitement immobile, comme si l'atmosph\`ere elle-m\^eme retenait son souffle.}\par
+\vspace{0.2em}
+{\footnotesize \stat{PV}{25}\bull\stat{FOR}{4}\bull\stat{RES}{4}}\par
+
+\sect{Combat}
+{\footnotesize
+\textbf{Comportement :} Sommeil profond. \'Eveil si perturbation majeure (vibrations, sang, contact). R\'eveil : 30s $\rightarrow$ veines s'allument $\rightarrow$ FUYEZ.\\
+\textbf{Attaques :} Jaillissement titanesque\bull Tentacules rasoir (3 PERFO et longue portée)\bull Cri ultrasonique (\'etourdit 3~tours, brise verre)\\
+\textbf{D\'efenses :} Carapace c\'eramique multicouche\bull Taille (immunit\'e armes l\'eg\`eres)}
+
+\sect{Loot}
+{\footnotesize
+\textbf{Plaques c\'eramiques} : armures lourdes exceptionnelles.\\
+\textbf{Tentacule} : fouets/c\^ables 15m.\\ \textbf{Dents} : lames, harpons.\\
+\textbf{Glande de stase} : s\'edatif massif (K.O.\ instantan\'e).}
+\end{card}
+
+\newpage
+
+% =====================================================
+% PAGE 8
+% =====================================================
+\begin{card}
+\creature{HOLLOW}{}
+
+{\footnotesize Humano\"ide de deux m\`etres \`a la peau lisse, orn\'ee de motifs organiques noirs et blancs \'evoquant un test de Rorschach. Aucun trait facial~: la surface du visage est r\'efl\'echissante et bomb\'ee comme de la porcelaine polie. L'entit\'e se d\'eplace sans produire le moindre son, t\^ete l\'eg\`erement inclin\'ee, et ne semble jamais pr\'eoccup\'ee par sa propre s\'ecurit\'e.}\par
+\vspace{0.2em}
+{\footnotesize \stat{PV}{18}\bull\stat{FOR}{2}\bull\stat{RES}{2}\bull\stat{VOL}{5 (volonté)}}\par
+
+\sect{Combat}
+{\footnotesize
+\textbf{Comportement :} Contr\^ole \`a distance. Ne se bat jamais directement. Utilise ses esclaves mentaux.\\
+\textbf{Attaques :} Emprise mentale (qui fait le meilleur lancer)\bull Marionnettes Humaines (esclaves attaquent \`a sa place)\\
+\textbf{D\'efenses :} \bull T\'el\'ekin\'esie d\'efensive (d\'evie projectiles)}
+
+\sect{Loot}
+{\footnotesize
+\textbf{Fragment psychique} : peut soigner les parasités.\\
+\textbf{Peau c\'eramique} : armure l\'eg\`ere r\'efl\'echissante + 2 RES sans malus AGI.\\
+\textbf{Noyau neural} : si étudié, permet clarifier état robot.}
+\end{card}
+
+\end{document}
