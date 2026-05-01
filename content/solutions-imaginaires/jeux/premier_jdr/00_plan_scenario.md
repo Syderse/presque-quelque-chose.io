@@ -1,3 +1,11 @@
+---
+title: "Esquisse de scénario pour MJ"
+weight: 10
+tags:
+  - jeu de rôle
+  - scénario
+---
+
 # Jour 1 -- Le Marais
 
 ## Situation initiale

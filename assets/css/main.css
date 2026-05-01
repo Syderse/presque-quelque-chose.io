@@ -806,6 +806,16 @@
     letter-spacing: 0.02em;
   }
 
+  .solutions-imaginaires-page .leaf-card-kicker {
+    display: inline-block;
+    margin-bottom: 0.35rem;
+    color: var(--si-forest);
+    font-size: 0.58rem;
+    font-weight: 800;
+    letter-spacing: 0.12em;
+    text-shadow: 0 1px 0 rgba(255, 255, 255, 0.85);
+  }
+
   /* ==========================================================================
      LA VIE CACHÉE — 42 Fourmis statiques
      ========================================================================== */
@@ -1061,6 +1071,9 @@
       opacity: 0.5;
     }
     .solutions-imaginaires-page .leaf-card-title {
+      transition: none;
+    }
+    .solutions-imaginaires-page .leaf-card-kicker {
       transition: none;
     }
   }

@@ -57,10 +57,20 @@
 
       {{/* 3. THE ECLECTIC GRID */}}
       <section class="relative z-10 w-full max-w-full mx-auto mt-20 md:mt-32 overflow-visible px-4 pb-48">
+
+          {{ $items := slice }}
+          {{ range .Sections.ByWeight }}
+            {{ $items = $items | append (dict "page" . "isFolder" true) }}
+          {{ end }}
+          {{ range .RegularPages.ByWeight }}
+            {{ $items = $items | append (dict "page" . "isFolder" false) }}
+          {{ end }}
           
           <div class="grid grid-cols-1 md:grid-cols-[1fr_10rem_1fr] lg:grid-cols-[1fr_14rem_1fr] gap-y-0">
 
-              {{ range $index, $page := .Pages }}
+              {{ range $index, $item := $items }}
+              {{ $page := $item.page }}
+              {{ $isFolder := $item.isFolder }}
               {{ $isEven := eq (mod $index 2) 0 }}
               {{ $leafImage := index $leaves (mod $index 7) }}
 
@@ -84,7 +94,7 @@
                         si-leaf-card"
                    style="content-visibility: auto; contain-intrinsic-size: 400px 250px;">
 
-                  <a href="{{ .RelPermalink }}"
+                  <a href="{{ $page.RelPermalink }}"
                      class="group relative block w-full aspect-[16/10] hover:scale-[1.05] transition-transform duration-500 ease-out">
 
                       {{/* A. THE LEAF IMAGE — OPTIMIZED: lightweight shadow, explicit dimensions */}}
@@ -104,13 +114,19 @@
                           <div class="max-w-[65%] text-center transform 
                                       {{ if $isEven }} -rotate-[6deg] {{ else }} rotate-[6deg] {{ end }}">
 
+                              {{ if $isFolder }}
+                                <span class="leaf-card-kicker font-mono uppercase">
+                                  dossier
+                                </span>
+                              {{ end }}
+
                               <h3 class="leaf-card-title font-hand leading-[0.85]
-                                          {{ if gt (len .Title) 25 }}
+                                          {{ if gt (len $page.Title) 25 }}
                                               text-2xl md:text-3xl
                                           {{ else }}
                                               text-3xl md:text-5xl
                                           {{ end }}">
-                                  {{ .Title | lower }}
+                                  {{ $page.Title | lower }}
                               </h3>
                           </div>
                       </div>

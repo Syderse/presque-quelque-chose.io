@@ -1,3 +1,11 @@
+---
+title: "Descriptions diverses"
+weight: 20
+tags:
+  - jeu de rôle
+  - scénario
+---
+
 # jour 1 -- le marais
 
 ## arrivée -- le réveil dans la capsule
