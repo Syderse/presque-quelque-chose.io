@@ -1,5 +1,5 @@
 ---
-title: "Jour 1 Séoul : Ansan, Inwangsan, palais Joseon et ambiance nocturne dans un quartier étudiant"
+title: "Jour 1 Séoul : Ansan, Inwangsan, Gyeongbokgung et ambiance nocturne dans Sinchon"
 date: 2026-04-28
 draft: false
 weight: 20
