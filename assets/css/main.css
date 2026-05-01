@@ -277,6 +277,35 @@
     text-wrap: wrap;
   }
 
+  .side-note-marker {
+    display: inline;
+    line-height: 0;
+  }
+
+  .side-note-trigger {
+    color: var(--ctp-peach);
+    cursor: pointer;
+    font-family: var(--font-sans);
+    font-size: 0.62em;
+    font-weight: 700;
+    letter-spacing: 0;
+    line-height: 0;
+    margin: 0;
+    padding: 0 0.08em 0 0.02em;
+    text-decoration: none;
+    transition: color 160ms ease;
+    user-select: none;
+    vertical-align: super;
+  }
+
+  .side-note-trigger:hover {
+    color: var(--ctp-mauve);
+  }
+
+  .side-note-marker > .peer:checked + .side-note-trigger {
+    color: var(--ctp-red);
+  }
+
   /* A.2 SIDENOTES - commentaire variant */
   .side-note-trigger.side-note-trigger--comment {
     color: var(--ctp-green) !important;

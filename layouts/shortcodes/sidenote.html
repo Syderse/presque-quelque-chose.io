@@ -1,72 +1,55 @@
-{{/* SHORTCODE: SIDENOTE (Solid State V3.1 - Fix Position)
-- FIX: Removed 'relative' from the wrapper span.
-Now the absolute positioning anchors to the <article> container, not the number.
-    */}}
-
-    {{ $num := add .Ordinal 1 }}
-    {{ $isEven := eq (mod $num 2) 0 }}
-    {{ $sideClass := cond $isEven "sn-right" "sn-left" }}
-    {{ $variant := "note" }}
-    {{ if .IsNamedParams }}
-        {{ with .Get "variant" }}{{ $variant = . }}{{ end }}
-        {{ with .Get "type" }}{{ $variant = . }}{{ end }}
-        {{ with .Get "kind" }}{{ $variant = . }}{{ end }}
-        {{ with .Get "comment" }}
-            {{ if ne (printf "%v" .) "false" }}{{ $variant = "comment" }}{{ end }}
-        {{ end }}
-    {{ else if gt (len .Params) 0 }}
-        {{ $variant = .Get 0 }}
-    {{ end }}
-    {{ $commentLabel := "commentaire" }}
-    {{ with .Page.Param "sidenote_comment_label" }}{{ $commentLabel = . }}{{ end }}
-    {{ if .IsNamedParams }}
-        {{ with .Get "label" }}{{ $commentLabel = . }}{{ $variant = "comment" }}{{ end }}
-        {{ with .Get "caption" }}{{ $commentLabel = . }}{{ $variant = "comment" }}{{ end }}
-        {{ with .Get "author" }}{{ $commentLabel = printf "commentaire de %s" . }}{{ $variant = "comment" }}{{ end }}
-    {{ end }}
-    {{ $variant = lower $variant }}
-    {{ $isComment := in (slice "comment" "commentaire" "comments" "commentaires") $variant }}
-    {{ $variantClass := cond $isComment "sn-comment" "sn-note" }}
-    {{ $triggerVariantClass := cond $isComment "side-note-trigger--comment" "side-note-trigger--note" }}
-    {{ $titlePrefix := cond $isComment (printf "Voir %s" $commentLabel) "Voir la note" }}
-
-    {{/* CRITICAL FIX: No 'relative' class here. */}}
-    <span class="inline group/note">
-
-        {{/* 1. THE TRIGGER */}}
-        <label for="sn-{{ $num }}" class="side-note-trigger {{ $triggerVariantClass }} cursor-pointer font-mono text-[0.7em] text-ctp-peach align-super select-none
-                  hover:text-ctp-mauve
-                  peer-checked:text-ctp-red peer-checked:font-bold
-                  transition-colors duration-200" title="{{ $titlePrefix }} {{ $num }}">
-            [{{ $num }}]
-        </label>
-
-        {{/* 2. STATE MANAGEMENT */}}
-        <input type="checkbox" id="sn-{{ $num }}" class="peer hidden" />
-
-        {{/* 3. THE NOTE CONTENT */}}
-        <span class="side-note-content {{ $sideClass }} {{ $variantClass }}
+{{- /* SHORTCODE: SIDENOTE (Solid State V3.2 - Compact Reference Call)
+- Keeps the wrapper non-relative so absolute notes anchor to the article.
+- Trims shortcode whitespace so inline calls can sit against words/punctuation.
+*/ -}}
+{{- $num := add .Ordinal 1 -}}
+{{- $isEven := eq (mod $num 2) 0 -}}
+{{- $sideClass := cond $isEven "sn-right" "sn-left" -}}
+{{- $variant := "note" -}}
+{{- if .IsNamedParams -}}
+  {{- with .Get "variant" -}}{{- $variant = . -}}{{- end -}}
+  {{- with .Get "type" -}}{{- $variant = . -}}{{- end -}}
+  {{- with .Get "kind" -}}{{- $variant = . -}}{{- end -}}
+  {{- with .Get "comment" -}}
+    {{- if ne (printf "%v" .) "false" -}}{{- $variant = "comment" -}}{{- end -}}
+  {{- end -}}
+{{- else if gt (len .Params) 0 -}}
+  {{- $variant = .Get 0 -}}
+{{- end -}}
+{{- $commentLabel := "commentaire" -}}
+{{- with .Page.Param "sidenote_comment_label" -}}{{- $commentLabel = . -}}{{- end -}}
+{{- if .IsNamedParams -}}
+  {{- with .Get "label" -}}{{- $commentLabel = . -}}{{- $variant = "comment" -}}{{- end -}}
+  {{- with .Get "caption" -}}{{- $commentLabel = . -}}{{- $variant = "comment" -}}{{- end -}}
+  {{- with .Get "author" -}}{{- $commentLabel = printf "commentaire de %s" . -}}{{- $variant = "comment" -}}{{- end -}}
+{{- end -}}
+{{- $variant = lower $variant -}}
+{{- $isComment := in (slice "comment" "commentaire" "comments" "commentaires") $variant -}}
+{{- $variantClass := cond $isComment "sn-comment" "sn-note" -}}
+{{- $triggerVariantClass := cond $isComment "side-note-trigger--comment" "side-note-trigger--note" -}}
+{{- $titlePrefix := cond $isComment (printf "Voir %s" $commentLabel) "Voir la note" -}}
+<span class="side-note-marker group/note"><input type="checkbox" id="sn-{{ $num }}" class="peer hidden" /><label for="sn-{{ $num }}" class="side-note-trigger {{ $triggerVariantClass }} peer-checked:font-bold" title="{{ $titlePrefix }} {{ $num }}" aria-label="{{ $titlePrefix }} {{ $num }}">{{ $num }}</label><span class="side-note-content {{ $sideClass }} {{ $variantClass }}
         /* --- BASE MOBILE STYLES (Default) --- */
-        hidden peer-checked:block 
-        w-full my-4 p-4 
-        bg-ctp-surface0 border-l-2 border-ctp-peach 
+        hidden peer-checked:block
+        w-full my-4 p-4
+        bg-ctp-surface0 border-l-2 border-ctp-peach
         text-sm text-ctp-subtext0 font-serif leading-relaxed
         rounded-r shadow-md
         relative /* Mobile needs relative flow */
-        
+
         /* --- DESKTOP STYLES (Physics Layer) --- */
         lg:block lg:absolute lg:top-0
         lg:w-56 lg:p-3 lg:m-0 lg:rounded-md
         lg:text-xs lg:font-mono lg:leading-tight
-        
+
         /* VISUAL STATE: PASSIVE */
-        lg:bg-transparent lg:border-0 
-        lg:opacity-60 lg:hover:opacity-100 
+        lg:bg-transparent lg:border-0
+        lg:opacity-60 lg:hover:opacity-100
         lg:transition-all lg:duration-300 lg:ease-out
-        
+
         /* VISUAL STATE: ACTIVE */
-        lg:peer-checked:opacity-100 
-        lg:peer-checked:bg-ctp-mantle 
+        lg:peer-checked:opacity-100
+        lg:peer-checked:bg-ctp-mantle
         lg:peer-checked:border lg:peer-checked:border-ctp-peach
         lg:peer-checked:shadow-[4px_4px_0px_0px_rgba(0,0,0,0.4)]
         lg:peer-checked:z-50 lg:peer-checked:scale-105
@@ -75,7 +58,7 @@ Now the absolute positioning anchors to the <article> container, not the number.
         {{ if $isEven }}
             /* RIGHT STACK */
             lg:left-full lg:ml-8 lg:text-left
-            lg:border-l lg:border-ctp-surface1 
+            lg:border-l lg:border-ctp-surface1
             lg:peer-checked:border-l-ctp-peach
         {{ else }}
             /* LEFT STACK */
@@ -91,6 +74,4 @@ Now the absolute positioning anchors to the <article> container, not the number.
                 <span class="side-note-number text-ctp-peach font-bold mr-1">{{ $num }}.</span>
                 <span class="side-note-body">{{ .Inner | markdownify }}</span>
             </span>
-        </span>
-
-    </span>
+        </span></span>
