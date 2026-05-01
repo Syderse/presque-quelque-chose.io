@@ -2,8 +2,8 @@
 title: "jeux"
 description: "Scénarios de jeux divers."
 weight: 20
-draft: true
+draft: false
 cascade:
-  draft: true
+  draft: false
 full_width: true
 ---
