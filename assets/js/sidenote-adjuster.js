@@ -12,6 +12,7 @@
 const SidenoteManager = {
     settings: {
         noteSelector: '.side-note-content',
+        markerSelector: '.side-note-marker',
         triggerSelector: '.group\\/note', // The inline wrapper span
         containerSelector: 'article',
         gap: 24,
@@ -19,6 +20,8 @@ const SidenoteManager = {
     },
 
     init() {
+        this.normalizeInlineSpacing();
+
         // Initial adjustment after DOM is ready
         this.adjust();
 
@@ -32,9 +35,78 @@ const SidenoteManager = {
         });
 
         // Additional safety checks for late-loading content
-        window.addEventListener('load', () => this.adjust());
+        window.addEventListener('load', () => {
+            this.normalizeInlineSpacing();
+            this.adjust();
+        });
         setTimeout(() => this.adjust(), 500);
         setTimeout(() => this.adjust(), 1500); // Catch late webfonts
+    },
+
+    normalizeInlineSpacing() {
+        const markers = document.querySelectorAll(this.settings.markerSelector);
+        const compactFollowers = '.,;:!?)]}»”’…';
+
+        markers.forEach((marker) => {
+            if (marker.dataset.spacingNormalized === 'true') return;
+
+            const previous = this.getPreviousVisibleSibling(marker);
+            if (previous?.nodeType === Node.TEXT_NODE) {
+                previous.nodeValue = previous.nodeValue.replace(/\s+$/, '');
+            }
+
+            const next = this.getNextVisibleSibling(marker);
+            const nextCharacter = this.getFirstVisibleCharacter(next);
+
+            if (
+                nextCharacter &&
+                !/\s/.test(nextCharacter) &&
+                !compactFollowers.includes(nextCharacter)
+            ) {
+                marker.after(document.createTextNode(' '));
+            }
+
+            marker.dataset.spacingNormalized = 'true';
+        });
+    },
+
+    getPreviousVisibleSibling(node) {
+        let current = node.previousSibling;
+
+        while (current && current.nodeType === Node.COMMENT_NODE) {
+            current = current.previousSibling;
+        }
+
+        return current;
+    },
+
+    getNextVisibleSibling(node) {
+        let current = node.nextSibling;
+
+        while (current) {
+            if (current.nodeType === Node.COMMENT_NODE) {
+                current = current.nextSibling;
+                continue;
+            }
+
+            if (current.nodeType === Node.TEXT_NODE || current.textContent.trim() !== '') {
+                return current;
+            }
+
+            current = current.nextSibling;
+        }
+
+        return null;
+    },
+
+    getFirstVisibleCharacter(node) {
+        if (!node) return '';
+
+        if (node.nodeType === Node.TEXT_NODE) {
+            return node.nodeValue.charAt(0);
+        }
+
+        return node.textContent.charAt(0);
     },
 
     /**
