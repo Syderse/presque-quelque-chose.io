@@ -1,7 +1,6 @@
 ---
-title: "Prologue, voyage et premier soir"
+title: "Jour 0 : arriver à Séoul depuis Incheon : AREX, Sinchon et premier repas"
 date: 2026-04-28
-description: "Départ, vol vers Incheon et premier soir à Sinchon."
 draft: false
 weight: 10
 tags:

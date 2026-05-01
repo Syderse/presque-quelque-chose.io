@@ -1,7 +1,6 @@
 ---
-title: "Jour 1"
+title: "Jour 1 Séoul : Ansan, Inwangsan, palais Joseon et ambiance nocturne dans un quartier étudiant"
 date: 2026-04-28
-description: "Ansan, Inwangsan, Gyeongbokgung, Changgyeonggung et première soirée de makgeolli à Sinchon."
 draft: false
 weight: 20
 tags:

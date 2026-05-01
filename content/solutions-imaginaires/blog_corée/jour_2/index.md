@@ -1,7 +1,6 @@
 ---
-title: "Jour 2"
+title: "Jour 2 Séoul : vélos Ttareungi, Seoul Forest, Gangnam et musée national"
 date: 2026-04-28
-description: "Vélos manqués, Seoul Forest, Gangnam, musée national et tonkatsu de consolation."
 draft: true
 weight: 30
 tags:
