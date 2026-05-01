@@ -206,6 +206,10 @@
       font-weight: 500;
     }
 
+    & :where(a):not(.not-prose) :where(em, i) {
+      color: inherit !important;
+    }
+
     /* 4. POLISH: Inline Code "Chip" Style */
     & :where(:not(pre) > code) {
       color: var(--ctp-pink) !important;
