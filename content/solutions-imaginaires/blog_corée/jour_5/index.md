@@ -11,18 +11,14 @@ tags:
 
 ## JOUR 5
 
-### Suivre Jeonjucheon vers les pavillons
+### Les pavillons le long de Jeonjucheon
 
-### Chercher les tortues des stèles coréennes
+### La forteresse Namgosanseong
 
-### Randonner jusqu'à la forteresse Namgosanseong
+### National Intangible Heritage Center
 
-### Visiter le National Intangible Heritage Center
+### Jeonjucheon à vélo
 
-### Manger au GS et louer un vélo à Jeonju
+### La bibliothèque Yeonhwajeong
 
-### Rejoindre la bibliothèque Yeonhwajeong au parc Deokjin
-
-### Regarder les cueilleurs de namul au bord de la rivière
-
-### Comprendre le makgeolli de Jeonju chez Yetchon
+### Le makgeolli chez Yetchon
