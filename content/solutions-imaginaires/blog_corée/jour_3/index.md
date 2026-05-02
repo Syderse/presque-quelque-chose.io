@@ -1,7 +1,7 @@
 ---
 title: "Jour 3 Séoul: visiter Changdeokgung Jongmyo et un PC Bang"
 date: 2026-04-28
-draft: true
+draft: false
 weight: 40
 tags:
   - corée du sud
@@ -47,8 +47,8 @@ Dans les espaces résidentiels, elle a aussi montré que les bâtiments ne parla
 
 ### Tester un PC bang T1 à Séoul
 
-En fin d'après-midi, on a voulu visiter le PC bang de T1, pas trop loin de notre quartier{{< sidenote >}}Un PC bang, PC방, est un café gaming coréen, équipé d'ordinateurs puissants où l'on paie généralement au temps passé. T1 est l'une des équipes les plus célèbres de l'esport coréen, notamment sur League of Legends.{{< /sidenote >}}. On regarde encore quelques matchs de l'équipe, mais on voulait surtout découvrir l'ambiance des cafés gaming coréens. On a eu toutes les galères attendues par deux étrangers qui veulent jouer simplement dans un lieu dont la simplicité repose, en fait, sur une foule de petites évidences locales. Comptes sur les mauvais serveurs, interfaces en coréen,... À un moment, comme jouer s'avérait compromis, on a choisi d'utiliser les super 'nordis pour préparer notre expédition du lendemain à Jeonju. 
+En fin d'après-midi, on a voulu aller au PC bang de T1. C'était pas très loin du quartier{{< sidenote >}}Un PC bang, PC방, est un café gaming coréen, équipé d'ordinateurs puissants où l'on paie généralement au temps passé. T1 est l'une des équipes les plus célèbres de l'esport coréen, notamment sur League of Legends.{{< /sidenote >}}. On regarde encore parfois leurs matchs. Mais là, on voulait surtout voir à quoi ressemblait un vrai café gaming coréen. Dans ma tête, c'était simple : tu entres, tu t'assois, tu joues. Ben non. C'était simple pour les gens qui savaient déjà comment faire, qui parlaient la langue, et surtout qui avaient un numéro de téléphone coréen. Nous, on avait les comptes pas sur les bons serveurs. Au bout d'un moment, comme jouer devenait trop galère et qu'on en avait eu assez de tester LOL avec autant de ping que des escargots anémiques, on a utilisé les gros ordis pour préparer Jeonju. On dira que c'était de la productivité haut de gamme.
 
 ### Manger un dak-galbi avant de partir vers Jeonju
 
-Le soir, on a mangé un délicieux cheolpan dak-galbi. Puis on est rentrés faire nos bagages afin d'être prêts à visiter le reste du pays.
+Le soir, on a mangé un cheolpan dak-galbi. C'était très bon. Après ça, on est rentrés. On a fait les sacs. Le lendemain, on quittait Séoul pour voir le reste du pays, donc on était content, comme souvent. 
