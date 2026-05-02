@@ -1,27 +1,62 @@
 ---
-title: "Cartes créatures v2"
+title: "Cartes créatures"
 weight: 70
 tags:
   - jeu de rôle
   - scénario
 hide_footer: true
-full_width: true
+full_width: false
 ---
 
 <style>
+body:has(.rpg-print-sheets) main {
+  background:
+    radial-gradient(circle at top left, rgba(219, 154, 93, 0.14), transparent 32rem),
+    linear-gradient(180deg, #241914 0%, #17120f 36rem, #15110f 100%) !important;
+}
+body:has(.rpg-print-sheets) .animate-fade-in-up > header {
+  border-bottom-color: rgba(214, 178, 124, 0.34) !important;
+}
+body:has(.rpg-print-sheets) .animate-fade-in-up > header h1 {
+  color: #f0c987 !important;
+}
+body:has(.rpg-print-sheets) .breadcrumb a,
+body:has(.rpg-print-sheets) .breadcrumb-separator,
+body:has(.rpg-print-sheets) .breadcrumb-current {
+  color: #d7b98a !important;
+}
 .article-prose:has(.rpg-print-sheets) {
-  max-width: min(1120px, calc(100vw - 2rem));
+  max-width: min(210mm, calc(100vw - 2rem));
   width: 100%;
 }
 .rpg-print-sheets {
-  --sheet-bg: #fffdf7;
-  --sheet-ink: #201812;
-  --sheet-muted: #5b5148;
-  --sheet-line: #2a211a;
-  --sheet-soft: #efe7d6;
-  color: var(--sheet-ink);
+  --sheet-bg: #fffaf0;
+  --sheet-ink: #1b120d;
+  --sheet-muted: #5a4738;
+  --sheet-line: #2b1c12;
+  --sheet-soft: #eadcc2;
+  color: var(--sheet-ink) !important;
   max-width: 210mm;
   margin: 0 auto 4rem;
+}
+.rpg-print-sheets :where(h1, h2, h3, h4, h5, h6, p, li, table, th, td) {
+  color: var(--sheet-ink) !important;
+}
+.rpg-print-sheets :where(strong, b) {
+  color: #120b07 !important;
+}
+.rpg-print-sheets :where(em, i) {
+  color: #5a3821 !important;
+}
+.rpg-print-sheets :where(p, li, blockquote) {
+  text-align: start;
+  text-align-last: auto;
+}
+.rpg-print-sheets :where(th, td) {
+  border-color: var(--sheet-line) !important;
+}
+.rpg-print-sheets :where(thead th) {
+  background-color: rgba(234, 220, 194, 0.72) !important;
 }
 .rpg-print-intro {
   text-align: center;
@@ -39,9 +74,9 @@ full_width: true
   padding: 12mm;
   break-after: auto;
   page-break-after: auto;
-  border: 1px solid #c9b99b;
+  border: 1px solid #bda986;
   background: var(--sheet-bg);
-  box-shadow: 8px 8px 0 rgba(0, 0, 0, 0.18);
+  box-shadow: 8px 8px 0 rgba(0, 0, 0, 0.28);
 }
 .rpg-sheet-page:last-child {
   break-after: auto;
@@ -132,6 +167,9 @@ full_width: true
     overflow: visible !important;
     background: #fff !important;
     color: #111 !important;
+  }
+  body:has(.rpg-print-sheets) main {
+    background: #fff !important;
   }
   body:has(.rpg-print-sheets) .breadcrumb,
   body:has(.rpg-print-sheets) #app-shell > header,
