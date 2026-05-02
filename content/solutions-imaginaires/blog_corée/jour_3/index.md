@@ -11,13 +11,13 @@ tags:
 
 ## JOUR 3
 
-### Tenter le jardin secret de Changdeokgung sans réservation
+### Le jardin secret de Changdeokgung
 
 On avait suffisamment parcouru la page Wikipédia qualité or de l'[histoire de la Corée](https://fr.wikipedia.org/wiki/Histoire_de_la_Corée) pour que la déception de nos visite de Gyeongbokgung n'éteigne pas notre désir d'en découvrir davantage. Ces petites lectures étaient comme la braise sous la cendre, et les visites suivantes n'ont pas manqué d'attiser les flammes de notre curiosité. 
 
 Sur le flyer commun des monuments de Séoul, on avait été appâtés par le ["jardin secret"](https://commons.wikimedia.org/wiki/Category:Biwon) dont l'accès, d'après quelques blogs lus en diagonale, était limité par un quota assez restreint{{< sidenote >}}Le "jardin secret" de [Changdeokgung](https://en.wikipedia.org/wiki/Changdeokgung), parfois appelé *Huwon*, 후원, le jardin arrière, ou parfois jardin interdit, lorsqu'il était réservé à la famille royale. L'appellation de "jardin secret" s'est imposée plus tard, notamment pendant la période coloniale japonaise.{{< /sidenote >}}. On pourrait croire que les échecs à répétition de la veille nous auraient amenés à opter pour un programme sûr qui ne fasse aucune place au hasard ; mais non, car à la première heure, nous étions devant le guichet encore fermé de Changdeokgung pour tenter d'obtenir une entrée dans ce jardin au nom mystérieux.
 
-### Patienter à Jongmyo et suivre la voie des esprits
+### La Sindo de Jongmyo
 
 Finalement, il y avait beaucoup de places disponibles. Nous avions nos billets pour la visite guidée de 10h30. Comme il y avait un creux d'une heure et demie d'ici là, on a pris le chemin du sanctuaire le plus proche, [Jongmyo](https://en.wikipedia.org/wiki/Jongmyo), et ça tombait bien, puisqu'il était inclus dans l'ensemble d'entrées qu'on avait prises à Gyeongbokgung.
 
@@ -25,7 +25,7 @@ Depuis l’entrée de Jongmyo partaient [trois lignes de pierres](https://common
 
 Au bout du sentier, il y avait le [Jeongjeon](https://commons.wikimedia.org/wiki/Category:Jeongjeon_%28Jongmyo%29). C'est un très, très long bâtiment en bois. Dedans, il y a les chambres mortuaires des souverains défunts. Par rapport aux autres pavillons, il ne faisait pas le malin. Pas de couleurs qui sautent aux yeux. Pas de petit toit coquet qui fait dire "oh, charmant". Juste une longue ligne de bois, des colonnes, et cette impression que le bâtiment fait pas d'effort, mais qu'il a pas besoin d'en faire pour en jeter plus que les autres. J'ai surtout pensé : ah oui, ils ont prévu large. Sauf qu'en fait, non. 1395, Taejo avait prévu sept chambres, pas sept siècles de dynastie et une file d'attente de rois morts qui veulent eux aussi leur petite place au chaud. Alors ils ont rallongé. Puis encore. Puis encore. Puis encore une fois parce que moi je aussi je veux être avec grand-père svp. Résultat : le bâtiment n'en finit pas{{< sidenote >}}Le Jeongjeon, hall principal de Jongmyo, mesure environ 101 mètres. En 1395, Taejo avait d'abord prévu sept chambres mortuaires, les *sil*. Avec les siècles, le bâtiment a été allongé par le côté pour ajouter des salles. Sa sobriété et la répétition de ses colonnes en font l'un des grands gestes architecturaux du néo-confucianisme Joseon.{{< /sidenote >}}.
 
-### Suivre une guide dans le Huwon de Changdeokgung
+### La guide du Huwon
 
 Plopplopplop, rebroussaille cheminière et on s'est retrouvés devant l'entrée du jardin secret. J'étais déjà beaucoup trop content. Il y avait secret dans le nom. Je savais pas que ça marcherait si bien sur moi. On attendait devant un petit portique qui ressemblait à une haie dans le 100 m haie, et on voyait au fond les premiers gros arbres. J'avais le sourire-tranche-papaye et les pieds-claquettes. 
 
@@ -35,7 +35,7 @@ On ne savait pas encore qu'on allait tomber sur une des stars du voyage. La guid
 
 L'heure et demie est passée beaucoup trop vite. J'étais presque vexé que ce soit fini. Cette visite nous a donné une boîte à outils pour la suite : mieux regarder les monuments, comparer les formes et des architectures, comprendre un peu les pigments argileux et verts qu'on voyait sur les façades.
 
-### Comprendre les pavillons, les étangs et les examens royaux
+### Pavillons, étangs, études
 
 Devant l'étang de [Buyongji](https://commons.wikimedia.org/wiki/Category:Buyongji), je me suis arrêté longtemps. L'eau était bien rangée dans son rectangle. Au milieu, il y avait une petite île ronde. Et sur le bord, le pavillon [Buyongjeong](https://commons.wikimedia.org/wiki/Category:Buyongjeong) avançait au-dessus de l'eau, tranquille{{< sidenote >}}L'étang de Buyongji, 부용지, "étang du lotus", suit le principe Cheon-won-ji-bang, 천원지방 : "Le Ciel est rond, la Terre est carrée." L'étang rectangulaire figure la Terre, tandis que l'île ronde en son centre figure le Ciel.{{< /sidenote >}}. Là, la guide a dit : le rectangle, c'est la Terre. Le rond, c'est le Ciel.
 
@@ -45,10 +45,8 @@ Il y avait aussi la [Porte du Poisson et de l'Eau](https://commons.wikimedia.org
 
 Dans les espaces résidentiels, elle a aussi montré que les bâtiments ne parlaient pas pareil selon les genres. Pas les mêmes circulations, pas les mêmes ouvertures, pas la même façon d'être visible ou protégé. J'ai pas tout retenu, mais ça a assemblé plein de choses.
 
-### Tester un PC bang T1 à Séoul
+### PC Bang
 
 En fin d'après-midi, on a voulu aller au PC bang de [T1](https://en.wikipedia.org/wiki/T1_%28esports%29). C'était pas très loin du quartier{{< sidenote >}}Un [PC bang](https://en.wikipedia.org/wiki/PC_bang), PC방, est un café gaming coréen, équipé d'ordinateurs puissants où l'on paie généralement au temps passé. T1 est l'une des équipes les plus célèbres de l'esport coréen, notamment sur [League of Legends](https://en.wikipedia.org/wiki/League_of_Legends).{{< /sidenote >}}. On regarde encore parfois leurs matchs. Mais là, on voulait surtout voir à quoi ressemblait un vrai café gaming coréen. Dans ma tête, c'était simple : tu entres, tu t'assois, tu joues. Ben non. C'était simple pour les gens qui savaient déjà comment faire, qui parlaient la langue, et surtout qui avaient un numéro de téléphone coréen. Nous, on avait les comptes pas sur les bons serveurs. Au bout d'un moment, comme jouer devenait trop galère et qu'on en avait eu assez de tester LOL avec autant de ping que des escargots anémiques, on a utilisé les gros ordis pour préparer Jeonju. On dira que c'était de la productivité haut de gamme.
-
-### Manger un dak-galbi avant de partir vers Jeonju
 
 Le soir, on a mangé un cheolpan [dak-galbi](https://en.wikipedia.org/wiki/Dak-galbi). C'était très bon. Après ça, on est rentrés. On a fait les sacs. Le lendemain, on quittait Séoul pour voir le reste du pays, donc on était content, comme souvent.
