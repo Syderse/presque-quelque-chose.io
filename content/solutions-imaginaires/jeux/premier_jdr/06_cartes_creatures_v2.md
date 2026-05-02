@@ -10,31 +10,31 @@ full_width: false
 
 <style>
 body:has(.rpg-print-sheets) main {
-  background:
-    radial-gradient(circle at top left, rgba(219, 154, 93, 0.14), transparent 32rem),
-    linear-gradient(180deg, #241914 0%, #17120f 36rem, #15110f 100%) !important;
+  background: var(--ctp-base) !important;
 }
 body:has(.rpg-print-sheets) .animate-fade-in-up > header {
-  border-bottom-color: rgba(214, 178, 124, 0.34) !important;
+  border-bottom-color: var(--ctp-surface0) !important;
 }
 body:has(.rpg-print-sheets) .animate-fade-in-up > header h1 {
-  color: #f0c987 !important;
+  color: var(--ctp-peach) !important;
 }
 body:has(.rpg-print-sheets) .breadcrumb a,
 body:has(.rpg-print-sheets) .breadcrumb-separator,
 body:has(.rpg-print-sheets) .breadcrumb-current {
-  color: #d7b98a !important;
+  color: var(--ctp-subtext0) !important;
 }
 .article-prose:has(.rpg-print-sheets) {
   max-width: min(210mm, calc(100vw - 2rem));
   width: 100%;
 }
 .rpg-print-sheets {
-  --sheet-bg: #fffaf0;
-  --sheet-ink: #1b120d;
-  --sheet-muted: #5a4738;
-  --sheet-line: #2b1c12;
-  --sheet-soft: #eadcc2;
+  --sheet-bg: var(--ctp-mantle);
+  --sheet-ink: var(--ctp-text);
+  --sheet-muted: var(--ctp-subtext0);
+  --sheet-line: var(--ctp-surface2);
+  --sheet-soft: var(--ctp-surface0);
+  --sheet-accent: var(--ctp-mauve);
+  --sheet-accent-2: var(--ctp-blue);
   color: var(--sheet-ink) !important;
   max-width: 210mm;
   margin: 0 auto 4rem;
@@ -43,10 +43,10 @@ body:has(.rpg-print-sheets) .breadcrumb-current {
   color: var(--sheet-ink) !important;
 }
 .rpg-print-sheets :where(strong, b) {
-  color: #120b07 !important;
+  color: var(--sheet-accent-2) !important;
 }
 .rpg-print-sheets :where(em, i) {
-  color: #5a3821 !important;
+  color: var(--ctp-green) !important;
 }
 .rpg-print-sheets :where(p, li, blockquote) {
   text-align: start;
@@ -56,7 +56,7 @@ body:has(.rpg-print-sheets) .breadcrumb-current {
   border-color: var(--sheet-line) !important;
 }
 .rpg-print-sheets :where(thead th) {
-  background-color: rgba(234, 220, 194, 0.72) !important;
+  background-color: color-mix(in srgb, var(--sheet-soft) 72%, transparent) !important;
 }
 .rpg-print-intro {
   text-align: center;
@@ -74,9 +74,9 @@ body:has(.rpg-print-sheets) .breadcrumb-current {
   padding: 12mm;
   break-after: auto;
   page-break-after: auto;
-  border: 1px solid #bda986;
+  border: 1px solid var(--sheet-line);
   background: var(--sheet-bg);
-  box-shadow: 8px 8px 0 rgba(0, 0, 0, 0.28);
+  box-shadow: 8px 8px 0 var(--ctp-crust);
 }
 .rpg-sheet-page:last-child {
   break-after: auto;
@@ -101,12 +101,13 @@ body:has(.rpg-print-sheets) .breadcrumb-current {
   margin-bottom: 0.75rem;
 }
 .rpg-sheet-title h2 {
+  color: var(--sheet-accent) !important;
   margin: 0;
   font-size: 1.55rem;
   line-height: 1;
 }
 .rpg-sheet-title span {
-  color: var(--sheet-muted);
+  color: var(--sheet-muted) !important;
   font-size: 0.8rem;
   text-transform: uppercase;
   letter-spacing: 0.04em;
@@ -139,10 +140,11 @@ body:has(.rpg-print-sheets) .breadcrumb-current {
 }
 .rpg-box {
   border: 1px solid var(--sheet-line);
-  background: rgba(239, 231, 214, 0.45);
+  background: color-mix(in srgb, var(--sheet-soft) 84%, transparent);
   padding: 0.55rem 0.65rem;
 }
 .rpg-box h3 {
+  color: var(--sheet-accent) !important;
   margin: 0 0 0.35rem;
   padding-bottom: 0.18rem;
   border-bottom: 1px solid var(--sheet-line);
@@ -188,24 +190,38 @@ body:has(.rpg-print-sheets) .breadcrumb-current {
   body:has(.rpg-print-sheets) .flex-grow {
     padding-top: 0 !important;
   }
-  body:has(.rpg-print-sheets) .article-prose {
+  body:has(.rpg-print-sheets) main > div > div {
     max-width: none !important;
-    width: auto !important;
+    width: 100% !important;
     margin: 0 !important;
     padding: 0 !important;
   }
+  body:has(.rpg-print-sheets) .article-prose {
+    max-width: 190mm !important;
+    width: 190mm !important;
+    margin: 0 auto !important;
+    padding: 0 !important;
+  }
   .rpg-print-sheets {
-    max-width: none !important;
-    margin: 0 !important;
+    --sheet-bg: #fff !important;
+    --sheet-ink: #111 !important;
+    --sheet-muted: #444 !important;
+    --sheet-line: #222 !important;
+    --sheet-soft: #fff !important;
+    --sheet-accent: #111 !important;
+    --sheet-accent-2: #111 !important;
+    max-width: 190mm !important;
+    width: 190mm !important;
+    margin: 0 auto !important;
   }
   .rpg-print-intro {
     display: none !important;
   }
   .rpg-sheet-page {
-    width: auto;
+    width: 190mm;
     min-height: 0;
     height: 270mm;
-    margin: 0 !important;
+    margin: 0 auto !important;
     padding: 0 !important;
     border: 0 !important;
     box-shadow: none !important;
@@ -215,6 +231,12 @@ body:has(.rpg-print-sheets) .breadcrumb-current {
   .rpg-box {
     break-inside: avoid;
     page-break-inside: avoid;
+  }
+  .rpg-print-sheets :where(h1, h2, h3, h4, h5, h6, p, li, table, th, td, strong, b, em, i) {
+    color: #111 !important;
+  }
+  .rpg-print-sheets :where(thead th) {
+    background: #fff !important;
   }
   .rpg-sheet-page + .rpg-sheet-page {
     break-before: page;
@@ -226,8 +248,6 @@ body:has(.rpg-print-sheets) .breadcrumb-current {
 <div class="rpg-print-intro">
 
 # BESTIAIRE
-
-*Scavengers Reign — Cartes Créatures v2*
 
 </div>
 
