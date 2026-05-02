@@ -156,23 +156,45 @@ body:has(.rpg-print-sheets) .breadcrumb-current {
 }
 @media print {
   @page { size: A4 portrait; margin: 10mm; }
+
   html,
-  body,
-  #app-shell,
-  main,
-  main > div,
-  main > div > div,
-  .animate-fade-in-up,
-  .article-prose {
+  body {
+    width: 190mm !important;
+    max-width: 190mm !important;
     height: auto !important;
     min-height: 0 !important;
+    margin: 0 !important;
+    padding: 0 !important;
     overflow: visible !important;
     background: #fff !important;
     color: #111 !important;
   }
-  body:has(.rpg-print-sheets) main {
+
+  body:has(.rpg-print-sheets),
+  body:has(.rpg-print-sheets) #app-shell,
+  body:has(.rpg-print-sheets) main,
+  body:has(.rpg-print-sheets) main > div,
+  body:has(.rpg-print-sheets) main > div > div,
+  body:has(.rpg-print-sheets) .animate-fade-in-up,
+  body:has(.rpg-print-sheets) .article-prose {
+    position: static !important;
+    display: block !important;
+    box-sizing: border-box !important;
+    width: 190mm !important;
+    max-width: 190mm !important;
+    min-width: 0 !important;
+    height: auto !important;
+    min-height: 0 !important;
+    margin: 0 !important;
+    padding: 0 !important;
+    overflow: visible !important;
+    transform: none !important;
+    animation: none !important;
+    opacity: 1 !important;
     background: #fff !important;
+    color: #111 !important;
   }
+
   body:has(.rpg-print-sheets) .breadcrumb,
   body:has(.rpg-print-sheets) #app-shell > header,
   body:has(.rpg-print-sheets) .fixed.bottom-0,
@@ -184,24 +206,7 @@ body:has(.rpg-print-sheets) .breadcrumb-current {
   body:has(.rpg-print-sheets) .md\:hidden {
     display: none !important;
   }
-  body:has(.rpg-print-sheets) {
-    margin: 0 !important;
-  }
-  body:has(.rpg-print-sheets) .flex-grow {
-    padding-top: 0 !important;
-  }
-  body:has(.rpg-print-sheets) main > div > div {
-    max-width: none !important;
-    width: 100% !important;
-    margin: 0 !important;
-    padding: 0 !important;
-  }
-  body:has(.rpg-print-sheets) .article-prose {
-    max-width: 190mm !important;
-    width: 190mm !important;
-    margin: 0 auto !important;
-    padding: 0 !important;
-  }
+
   .rpg-print-sheets {
     --sheet-bg: #fff !important;
     --sheet-ink: #111 !important;
@@ -210,18 +215,19 @@ body:has(.rpg-print-sheets) .breadcrumb-current {
     --sheet-soft: #fff !important;
     --sheet-accent: #111 !important;
     --sheet-accent-2: #111 !important;
-    max-width: 190mm !important;
     width: 190mm !important;
-    margin: 0 auto !important;
+    max-width: 190mm !important;
+    margin: 0 !important;
   }
   .rpg-print-intro {
     display: none !important;
   }
   .rpg-sheet-page {
+    box-sizing: border-box;
     width: 190mm;
     min-height: 0;
     height: 270mm;
-    margin: 0 auto !important;
+    margin: 0 !important;
     padding: 0 !important;
     border: 0 !important;
     box-shadow: none !important;
