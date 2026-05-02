@@ -93,7 +93,7 @@ Fichiers a lire en priorite avant une intervention :
 Dans `config/_default/hugo.yaml` :
 
 - `title`: `presque-quelque-chose`
-- `baseURL`: `https://www.presque-quelque-chose.com/`
+- `baseURL`: `https://presque-quelque-chose.com/`
 - `locale`: `fr-fr`
 - `defaultContentLanguage`: `fr`
 - `removePathAccents: true`, donc `blog_corée` devient `blog_coree` dans les URLs.
@@ -747,8 +747,8 @@ git push origin HEAD
 Production :
 
 - `HUGO_ENV = "production"`
-- `HUGO_BASEURL = "https://www.presque-quelque-chose.com/"`
-- `URL = "https://www.presque-quelque-chose.com/"`
+- `HUGO_BASEURL = "https://presque-quelque-chose.com/"`
+- `URL = "https://presque-quelque-chose.com/"`
 
 Deploy previews :
 

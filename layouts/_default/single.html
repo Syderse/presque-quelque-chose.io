@@ -33,19 +33,13 @@
 
   {{/* --- BREADCRUMB --- */}}
   <nav class="breadcrumb" aria-label="Fil d'Ariane">
-    <a href="{{ " /" | relURL }}">accueil</a>
+    <a href="{{ "/" | relURL }}">accueil</a>
     <span class="breadcrumb-separator">›</span>
-    {{- $ancestors := slice -}}
-    {{- $current := .Parent -}}
-    {{- range seq 10 -}}{{/* Safety limit for nesting depth */}}
-    {{- if $current -}}
-    {{- $ancestors = $ancestors | append $current -}}
-    {{- $current = $current.Parent -}}
-    {{- end -}}
-    {{- end -}}
-    {{- range $ancestors | collections.Reverse -}}
+    {{- range .Ancestors.Reverse -}}
+    {{- if not .IsHome -}}
     <a href="{{ .Permalink }}">{{ .Title | plainify | lower | safeHTML }}</a>
     <span class="breadcrumb-separator">›</span>
+    {{- end -}}
     {{- end -}}
     <span class="breadcrumb-current">{{ .Title | plainify | truncate 40 "…" | lower | safeHTML }}</span>
   </nav>

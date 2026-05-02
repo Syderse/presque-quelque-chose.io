@@ -1,7 +1,7 @@
 # File: config/_default/hugo.yaml
 
 title: "presque-quelque-chose"
-baseURL: "https://www.presque-quelque-chose.com/"
+baseURL: "https://presque-quelque-chose.com/"
 locale: "fr-fr"
 
 # ===========================================================================

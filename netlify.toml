@@ -1,5 +1,5 @@
 [build]
-  # NOTE ARCHITECTE : la prod force l'URL canonique via $URL.
+  # NOTE ARCHITECTE : la prod force l'URL canonique via $HUGO_BASEURL.
   # Les previews gardent DEPLOY_PRIME_URL pour les liens dynamiques.
   command = """
     set -e
@@ -13,7 +13,7 @@
     echo "Hugo version: $(pnpm exec hugo version)"
     
     echo "=== Running Hugo build ==="
-    pnpm exec hugo --gc --minify --cleanDestinationDir -b $URL --logLevel debug --printI18nWarnings --printPathWarnings
+    pnpm exec hugo --gc --minify --cleanDestinationDir -b $HUGO_BASEURL --logLevel debug --printI18nWarnings --printPathWarnings
     
     echo "=== Running Pagefind indexing ==="
     pnpm dlx pagefind --site 'public' --verbose
@@ -37,8 +37,8 @@
 [context.production.environment]
   HUGO_ENV = "production"
   # On force l'URL pour être certain que le Sitemap soit correct
-  HUGO_BASEURL = "https://www.presque-quelque-chose.com/"
-  URL = "https://www.presque-quelque-chose.com/"
+  HUGO_BASEURL = "https://presque-quelque-chose.com/"
+  URL = "https://presque-quelque-chose.com/"
 
 # ═══════════════════════════════════════════════════════════════════════════
 # PREVIEWS (On garde le comportement dynamique ici)
@@ -118,6 +118,12 @@
 # ═══════════════════════════════════════════════════════════════════════════
 # REDIRECTIONS (SEO)
 # ═══════════════════════════════════════════════════════════════════════════
+
+[[redirects]]
+  from = "https://www.presque-quelque-chose.com/*"
+  to = "https://presque-quelque-chose.com/:splat"
+  status = 301
+  force = true
 
 [[redirects]]
   from = "/categories/*"
