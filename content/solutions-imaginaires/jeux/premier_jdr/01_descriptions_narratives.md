@@ -10,50 +10,30 @@ tags:
 
 ## arrivée -- le réveil dans la capsule
 
-*« Vous sentez quelque chose entre le soufre, le métal chauffé, et le végétal qui pourrit. L'odeur vous frappe avant la lumière. À travers le hublot fissuré, des formes bougent dans la brume. Certaines luisent. D'autres semblent respirer. La capsule craque. Votre casque est lourd et vous avez l'impression d'étouffer. Est-que que c'est respirable ici ? »*
 
 ## ambiance -- le marais
 
-*« Sol qui cède sous les pas avec un bruit de succion. Air épais, saturé de spores. Bulles qui remontent des flaques. Cris au loin, impossibles à identifier. »*
 
 ## première apparition -- le patriarche-composteur
 
-*« Ce que vous preniez pour une colline se lève. Quatre étages de bois humide, de mousse et de champignons grouillants. Ses doigts -- des troncs entiers -- se referment sur la capsule et la soulèvent comme on cueillerait une fleur. Puis il s'éloigne, et la capsule avec. Il la dépose devant l'entrée d'une grotte qui commence à la décortiquer en morceaux. »*
 
 ## découverte -- la grotte aux cadavres
 
-*« Vous vous approchez de la grotte. L'air qui en sort est âcre. Vos yeux s'habituent à la pénombre et vous les voyez : des corps humains. Des excroissances fongiques ont poussé sur eux, délicates comme des fleurs, luminescentes comme des bijoux. De petits écosystèmes prospèrent sur chacun d'eux. »*
 
 ## puzzle -- la traversée de la grotte
 
-*« Des vessies translucides pulsent aux parois, gonflant et dégonflant lentement, expulsant à chaque expiration un gaz bleuté. L'air a un goût sucré. De l'autre côté du gouffre, la sortie -- une pente qui remonte vers la lumière. Entre vous et elle : vingt mètres de brume et quelque chose de massif, immobile dans l'ombre. »*
-
-*(on le dit si jet de perception correct)* *« Les vessies semblent filtrer quelque chose. Leur membrane est d'un violet profond, et rien ne pousse directement autour d'elles. »*
-
 ## découverte -- l'outre-pulmonaire
-
-*« Tiède dans vos mains. La membrane vibre, émet une faible lumière violette. L'air qui en sort, au contact de votre peau, semble frais. La vessie pulse contre vous, comme s'y elle cherchait à s'attacher. »*
 
 ## découverte -- l'anguille-câble
 
-*« Dans l'eau sombre, un ver tubulaire translucide d'environ un mètre. Son système nerveux dessine des arabesques dorées sous la peau. Il est emmêlé dans des racines, frémit faiblement. Quand votre main s'approche, un picotement, et vous la retirez aussitôt, par réflexe, nerveusement. »*
 
 ## première apparition -- le crapaud-hallucinogène
 
-*« Vous ne l'avez pas vu bouger. Il était là depuis le début. Une masse bulbeuse tapie dans un recoin, sa peau secrète un film irisé qui s'évapore en volutes paresseuses. »*
-
 ## effet -- les hallucinations commencent
 
-*(choisir selon le personnage)*
-- *« Tu baisses les yeux sur tes mains. Sous ta peau, quelque chose bouge. Des vers, peut-être. »*
-- *« Le cadavre à ta gauche vient de cligner des yeux. Non. Il te sourit. Tu connais ce sourire. »*
-- *« Le sol devient mou. Tu t'enfonces. Personne ne semble remarquer. »*
-- *« Ta propre voix crie ton nom. Ta bouche est fermée. »*
-- *« Un de tes compagnons a le visage de ta petite sœur. Tu n'as pas de petite sœur. »*
 
 ## découverte -- l'étendue aux méduses
 
-*« La surface de l'eau est parsemée de dômes translucides -- des méduses, par centaines. La brume acide qu'elles sécrètent fait onduler l'air. De l'autre côté, un sol plus ferme. »*
 
 ## puzzle -- les bisons-creusets
 

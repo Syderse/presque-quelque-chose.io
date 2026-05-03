@@ -1,96 +1,111 @@
 ---
-title: "Esquisse de scénario pour MJ"
+title: "Script"
 weight: 10
 tags:
   - jeu de rôle
   - scénario
 ---
 
-# Jour 1 -- Le Marais
+# Propos général. L'esprit du scénario
+
+# Jour 1 
 
 ## Situation initiale
 
-Les PJ se réveillent dans la capsule d'éjection écrasée au milieu d'un marais brumeux. L'air est lourd, saturé de spores et de vapeurs. Des formes de vie bioluminescentes clignotent dans la pénombre. La capsule tient encore debout, mais des craquements sinistres indiquent que ce n'est pas un abri durable.
+- Les PJ se réveillent dans une capsule d'éjection échouée au milieu d'un marais brumeux. L'air est saturé de spores et de vapeurs. Des formes de vie bioluminescentes clignotent dans la pénombre. La capsule tient encore debout, mais on entend des craquements sinistres.
 
-## Phase 1 : le réveil (10-15 min)
+*« Vous sentez quelque chose entre le soufre, le métal chauffé, et le végétal qui pourrit. L'odeur vous frappe avant la lumière. À travers le hublot fissuré, des formes planent en douceur dans la brume. Certaines luisent. D'autres semblent animées par une respiration ample et tranquille. La capsule émet des craquets sinistres. Votre casque est lourd et vous avez l'impression d'étouffer. Est-que que c'est respirable ici ? »*
 
-- Descriptions sensorielles, et après observation de la situation on dévoile aux joueurs tous les items présents dans la capsule. chaque joueur peut prendre au maximum 2 items.
-- **Événement passif :** le patriarche-composteur (silhouette colossale mi-arbre mi-champignon) passe au loin et saisit délicatement la capsule pour l'emporter vers une grotte. Des ronces tentaculaires sortent de la grotte et commencent à décortiquer la capsule. Si les joueurs sont encore dedans ou tentent de s'opposer, danger mortel.
+## Phase 1
 
-**★ Patriarche-composteur**
+- Si observation, dévoiler les *items* présents dans la capsule. Ajuster le nombre d'objets parmi lesquels choisir en fonction de la réussite du jet de dés. Chaque joueur peut prendre 2 items.
 
-**▷ Le réveil**
+- Au bout de 2 minutes, le patriarche-composteur passe au loin et saisit délicatement la capsule pour l'emporter vers une grotte. Des ronces tentaculaires sortent de la grotte et commencent à décortiquer la capsule. Si les joueurs sont encore dedans ou tentent de s'opposer, jet de survie pour déterminer la manière dont ils s'en extraient. 
 
-- Laissez les joueurs explorer librement la capsule avant l'arrivée du patriarche
-- Si un joueur veut « combattre » le patriarche, décrivez l'absurdité de l'échelle (comme frapper une montagne)
-- Utiliser cette scène pour établir le ton : cette planète ne vous veut pas de mal, elle semble plutôt vous ignorer
+*« Ce que vous preniez pour une colline se lève. Quatre étages de bois humide, de mousse et de champignons grouillants. Ses doigts font la taille d'un tronc, et ils se referment sur la capsule pour la soulever comme on cueillerait une fleur. Puis il s'éloigne, et la capsule avec. Il la dépose devant l'entrée d'une grotte qui commence à la décortiquer en morceaux à l'aide de ronces animées qui décomposent la carlingue précision. »*
+
 
 ---
 
-## Phase 2 : la grotte humide (25-30 min)
+## Phase 2
 
-Le GPS indique que le matériel de secours (dont le robot) se trouve dans la grotte devant laquelle le patriarche a déposé la capsule.
+*« Le sol n'est ni rigide ni visqueux, il qui cède sous les pas avec un bruit de succion. C'est fou le nombre de spores qui flottent dans l'air. Les flaques semblent bouillonner. On entend des cris d'animaux venir de toutes les directions à travers une couche d'air si épaisse qu'ils sont à moitié étouffés. »*
+
+- La montre d'un des personnages sonne. Elle indique que du matériel de secours, un robot humanoïde polyvalent, un GPS et d'autres instruments de la capsule ont déjà été happés au fond de la grotte devant laquelle la capsule a été déposée, mais émettent encore un signal.
+
+- Description depuis l'entrée de la grotte
+
+*« La grotte s'enfonce en pente douce. Vingt mètres plus bas, le sol semble plat et lumineux. »*
+
+*« Vous vous approchez de la grotte. L'air a un goût sucré. Vos yeux, qui commencent à s'habituer à la pénombre distinguent progressivement les contours de ce qui jonche le sol. Des restes de corps humains recouverts d'excroissances fongiques délicates comme des fleurs. De petits écosystèmes prospèrent sur chacun d'eux. »*
+
+- Si observation > 10 : description des outres-pulmonaires qui épousent les parois.
+
+*« Des vessies translucides pulsent aux parois. Elles gonflent largement avant de se dégonfler en expirant un gaz bleuté.  
 
 **/!\ Chronométrage des gaz hallucinogènes**
 
-- **0-5min :** aucun effet visible, air « un peu lourd »
-- **5min30 :** début des hallucinations (sauf immunisés) -- voir effets ci-dessous
-- **10min :** hallucinations sévères, difficulté à distinguer réel/irréel
+- **0-5min :** aucun effet visible, odeur lourde dans l'air, 
+- **5min30 :** début des hallucinations (sauf immunisés) 
+- **10min :** hallucinations sévères, difficulté à distinguer réel/irréel, décisions plus difficiles à appliquer
 - **15min :** paralysie partielle, le crapaud peut approcher
-- **20min :** **MORT** -- le corps est consommé
+- **20min :** **MORT** : le corps est consommé par le crapaud hallucinoège. 
 
 S'ils demandent une observation : « Parmi les cadavres et les excroissances fongiques, vous apercevez quelque chose qui bouge faiblement dans l'eau sombre. Une créature serpentiforme bioluminescente, d'environ un mètre de long, dont le corps semi-translucide laisse voir des filaments conducteurs. C'est une anguille-câble, emmêlée dans des racines aquatiques. »
 
-**Danger : le crapaud-hallucinogène**
-- Créature tapie dans l'ombre qui sécrète des gaz hallucinogènes par sa peau
-- Effets : la victime voit sa propre chair envahie par des parasites, entend les cadavres respirer, perd le sens de la réalité
-- Le crapaud attend que sa cible soit totalement happée pour l'approcher et la consommer
-- Solution : l'outre-pulmonaire peut servir de masque à gaz improvisé (symbiose), ou bien traverser en apnée/rapidement
-- Jet de perception (2 jets de d10 → percu à <12)
+**Le crapaud-hallucinogène**
 
-**★ Crapaud-hallucinogène**
+- Description du crapaud quand remarqué, si observation > 13.
 
-**▷ Descriptions d'hallucinations (à piocher)**
+*« Vous ne l'aviez par remarqué alors qu'il était là depuis le début, tapi son sombre recoin. Une masse bulbeuse tapie dans un recoin, sa peau secrète un film irisé qui s'évapore en volutes paresseuses. »*
 
-- « Tu vois des vers noirs ramper sous ta peau, tu sens leur mouvement »
-- « Le cadavre à ta gauche vient de cligner des yeux. Il te sourit. »
-- « Tes mains sont couvertes de moisissure verte qui remonte vers ton visage »
-- « Tu entends ta propre voix crier ton nom, mais ta bouche est fermée »
-- « Le sol devient mou, tu t'enfonces lentement, personne ne semble remarquer »
-- « Un de tes compagnons a le visage de ta petite sœur. Attends. Tu n'as pas de petite sœur ? »
-*Si tous les PJ sont hallucinés, le robot peut intervenir et les tirer vers la sortie.*
+- Descriptions de quelques hallucinations possibles
 
-**Récupération du matériel :**
-- Le robot (endommagé, fonctionnement minimal, à réparer s'ils veulent plus)
-- Le GPS (partiellement défaillant)
-- Le drone de reconnaissance (ailes abîmées)
+- *« Tu baisses les yeux sur tes mains. Sous ta peau qui se soulève par endroits, quelque chose rampe. »*
+- *« Le cadavre à ta gauche vient de cligner des yeux. Non. Il te sourit. Tu connais ce sourire ? »*
+- *« Le sol devient mou. Tu t'enfonces. Personne ne semble remarquer. Ils ne t'entendent pas. »*
+- *« Ta propre voix crie ton nom. Pourtant, ta bouche est fermée. »*
+- *« Un de tes compagnons a le visage de ta petite sœur. Attends. Tu n'as pas de petite sœur. »*
+
+- L'outre-pulmonaire peut servir de masque à gaz, le choix d'un passage en apnée fonctionne.
+
+- *Si tous les PJ sont hallucinés, le robot peut intervenir et les tirer vers la sortie.*
+  - Condition : MJ tire dés. Il faut faire plus de 14 pour cet événement de sauvetage. 
+
+**Récupération du matériel au fond de la grotte :**
+
+- Fonctionnement partiel : si les PJ trouvent de quoi les réparer, ils peuvent rétablir le fonctionnement intégral d'un des trois objets suivants. Vous pouvez librement choisir les effets de cette réparation-amélioration.
+  - Le robot (endommagé légèrement, fonctionnement minimal, à réparer s'ils veulent plus)
+    - réparation possible : caisse à outils.
+  - Le GPS (un des câbles est déchiré, fonctionnement minimal, à réparer s'ils veulent plus)
+    - réparation possible : remplacer le câble déchiré avec l'[anguille-câble]
+  - Le drone de reconnaissance (le système d'alimentation est détruit, fonctionnement minimal, à réparer s'ils veulent plus)
+    - réparation possible : reconstituer le système d'alimentation avec [anguille-câble] + [sphère galvanique]. 
 - Le dôme de repos portatif
-- Caisse à outils basique
+- Caisse à outils
+- Anguille-câble
+  - *« Dans l'eau sombre, vous apercevez un ver tubulaire translucide d'environ un mètre. Son système nerveux dessine des arabesques dorées à fleur de peau. Il est emmêlé dans des racines, et frémit faiblement. »*
+  - Si les joueurs tentent de la saisir à mains nues, ils se prennent une petite châtaigne électrique. 
+  - Son corps est composé d'un matériau conducteur très performant. 
 
-Le robot donne l'information cruciale : après analyse du sol et des observations, les protections du vaisseau ne tiendront pas plus de 6 jours.
+Le robot émet un premier rapport : 
 
-**Alerte du robot :**
-« Analyse terminée. Le GPS orbital présente des défaillances dans ses circuits de navigation. Réparation possible avec un conducteur organique biocompatible. Le guide du randonneur mentionne "anguille-câble" parmi les espèces bio-électriques de cet écosystème. Recherchez une anguille-câble dans les zones humides. »
+*« Après analyse du sol et de l'intensité de la vie biologique, les protections du vaisseau ne tiendront pas plus de 5 jours. »*
 
-**♢ Équipements récupérés dans la grotte**
-
-| **Objet** | **État / effet** | **Réparation** |
-| --- | --- | --- |
-| Robot sentinelle | fonctionnement minimal (guide, analyse basique) | caisse à outils + 1h |
-| GPS orbital | signal faible, indique direction sans obstacles | anguille-câble |
-| Drone de reconnaissance | ailes abîmées, vol limité | caisse à outils + 30min |
-| Dôme de repos | fonctionnel | -- |
-| Caisse à outils | complète | -- |
-
-*Le robot possède le guide du randonneur intergalactique (base de données sur les espèces).*
+- Une pente similaire à celle par laquelle les PJ sont descendus mène à une sortie lumineuse, de l'autre côté. 
 
 ---
 
-## Phase 3 : sortie du marais (15-20 min)
+## Phase 3
 
-**L'obstacle :** la sortie du marais est bloquée par une étendue d'eau stagnante infestée de méduses sécrétant du gaz acide. Impossible de traverser à pied.
+- Vous débouchez sur une petite portion de terre humide entourée d'eau. Au-delà, vous apercevez un ilôt de terre dont vous ne voyez pas les limites. Ça semble être la direction indiquée par le GPS. Description : 
 
-**Puzzle biologique -- les buffles-creusets**
+*« La surface de l'eau est impeccablement claire par rapport à l'eau trouble que vous avez vu jusqu'à maintenant. Des petites volutes de fumée blanche se dégagent de la masse d'eau. »*
+
+- L'eau n'est pas chaude. Elle est extrêmement acide. Si jet observation > 12, les PJ aperçoivent des méduses translucides qui semblent sécréter la solution acide.
+
+**Les buffles-creusets**
+
 - Un troupeau de ces créatures massives traverse lentement le marais sur un chemin de pierres émergées
 - Elles semblent s'en sortir sans aucun problème et ne pas avoir les pieds qui picotent
 - Les méduses s'écartent naturellement sur leur passage (chaleur thermique)
