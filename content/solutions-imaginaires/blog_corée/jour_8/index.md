@@ -1,6 +1,6 @@
 ---
 title: "Jour 8 Suncheon : visiter Seonamsa sans voiture, temple, sanchae bibimbap et bus depuis Suncheon"
-date: 2026-04-28
+date: 2026-05-08
 draft: true
 weight: 90
 tags:

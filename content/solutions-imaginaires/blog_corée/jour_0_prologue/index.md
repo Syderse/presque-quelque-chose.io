@@ -1,6 +1,6 @@
 ---
 title: "Jour 0 : arriver à Séoul depuis Incheon : AREX, Sinchon et premier repas"
-date: 2026-04-28
+date: 2026-04-30
 draft: false
 weight: 10
 tags:

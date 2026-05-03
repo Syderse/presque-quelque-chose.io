@@ -1,6 +1,6 @@
 ---
 title: "Jour 9 Busan : journée calme à Seomyeon, jajangmyeon, gimbap et arcade"
-date: 2026-04-28
+date: 2026-05-09
 draft: true
 weight: 100
 tags:

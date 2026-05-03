@@ -1,6 +1,6 @@
 ---
 title: "Jour 1 Séoul : Ansan, Inwangsan, Gyeongbokgung et ambiance nocturne dans Sinchon"
-date: 2026-04-28
+date: 2026-05-01
 draft: false
 weight: 20
 tags:

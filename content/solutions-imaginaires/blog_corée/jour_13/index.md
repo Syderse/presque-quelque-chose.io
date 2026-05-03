@@ -1,6 +1,6 @@
 ---
 title: "Jour 13 Busan : musée, cérémonie du thé, hanbok et dwaeji gukbap"
-date: 2026-04-28
+date: 2026-05-13
 draft: true
 weight: 140
 tags:

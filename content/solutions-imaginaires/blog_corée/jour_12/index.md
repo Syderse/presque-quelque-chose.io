@@ -1,6 +1,6 @@
 ---
 title: "Jour 12 Busan : Yeongdo, randonnée côtière, Huinnyeoul et musée de la marine"
-date: 2026-04-28
+date: 2026-05-12
 draft: true
 weight: 130
 tags:

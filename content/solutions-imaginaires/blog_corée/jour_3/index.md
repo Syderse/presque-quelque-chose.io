@@ -1,6 +1,6 @@
 ---
 title: "Jour 3 Séoul: visiter Changdeokgung Jongmyo et un PC Bang"
-date: 2026-04-28
+date: 2026-05-03
 draft: false
 weight: 40
 tags:

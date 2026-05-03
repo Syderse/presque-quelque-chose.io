@@ -1,6 +1,6 @@
 ---
 title: "Jour 14 Busan : Ferry Busan-Osaka, embarquer avec Panstar Cruise et quitter la Corée"
-date: 2026-04-28
+date: 2026-05-14
 draft: true
 weight: 150
 tags:

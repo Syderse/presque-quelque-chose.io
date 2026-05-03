@@ -1,6 +1,6 @@
 ---
 title: "Jour 2 Séoul : vélos Ttareungi, Seoul Forest, Gangnam et musée national"
-date: 2026-04-28
+date: 2026-05-02
 draft: false
 weight: 30
 tags:

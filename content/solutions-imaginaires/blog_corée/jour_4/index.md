@@ -1,6 +1,6 @@
 ---
 title: "Jour 4 Jeonju : aller de Séoul à Jeonju en bus, village hanok, kalguksu chez Veteran, thé traditionnel"
-date: 2026-04-28
+date: 2026-05-04
 draft: false
 weight: 50
 tags:
