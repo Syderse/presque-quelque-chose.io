@@ -320,6 +320,7 @@ Description de l'aspiration,
 *Un grattement monte de la trompe. Quelque chose descend à contre-courant, accroché aux parois. La carapace est basse, les pattes nombreuses, la queue dressée comme celle d’un scorpion. Ses mandibules tournent à vide, avec un bruit de foret.* 
 
 **Le crabe-foreur-cafard**
+
 Ces prédateurs opportunistes entrent par la trompe exposée à l'air pour se nourrir des œufs et de la chair des créatures vulnérables à l'intérieur.
 
 - Dard paralysant, mandibules foreuses, bile acide
@@ -337,13 +338,13 @@ Ces prédateurs opportunistes entrent par la trompe exposée à l'air pour se no
 | Chair ventrale | repas (+2 PV), délicieuse | augmente rapidement la soif |
 | Œuf gélatineux | leurre pour crabes, apaise | se dessèche en 2h hors de l'eau |
 
-La baleine-méduse dépose sa progéniture contenu (joueurs inclus) sur la plage opposée. La tempête fait rage derrière eux, mais ils sont passés. Ils sont au pied de la montagne à franchir pour suivre le signal GPS. 
+La baleine-méduse dépose sa progéniture (joueurs inclus) sur la plage opposée. La tempête fait rage derrière eux, mais ils sont passés. Ils sont au pied de la montagne à franchir pour suivre le signal GPS. 
 
 ---
 
 ## Nuit 3 
 
-Impossible de dormir correctement avec la tempête. Pas de jet nocturne classique, mais récupération réduite. 
+Impossible de dormir correctement avec la tempête. Pas de jet nocturne classique, et récupération réduite. 
 
 ---
 
@@ -351,11 +352,13 @@ Impossible de dormir correctement avec la tempête. Pas de jet nocturne classiqu
 
 ## Phase 1 
 
-**• Déshydratation**
+Au pied de la falaise aride,
 
-Chaque 5 minutes sans eau = -1 à tous les jets. Après 40 minutes, dégâts de déshydratation.
+*Le groupe arrive au pied de la montagne après une mauvaise nuit. La tempête de silice gronde encore derrière eux, plus loin, mais ici il n’y a presque plus de vent. Seulement la chaleur, la roche, et le signal du GPS qui pointe vers les hauteurs.*
 
 **/!\ Mécanique -- déshydratation**
+
+*L’air est sec comme un four. Le terrain monte, escarpé, ocre et gris. Chaque pas soulève une poussière fine qui colle à la gorge. Vos lèvres se fendent. La langue devient lourde*
 
 | **Temps sans eau** | **Effet** | **Cumulatif** |
 | --- | --- | --- |
@@ -366,44 +369,44 @@ Chaque 5 minutes sans eau = -1 à tous les jets. Après 40 minutes, dégâts de 
 | 20-40 min | -4 à tous les jets, fatigue | oui |
 | 40+ min | 1d4 dégâts / 5 min | oui |
 
-*L'oasis-tuyau est la seule source d'eau de cette zone. Les PJ doivent la trouver.*
+À lire selon le temps écoulé :
 
-**L'oasis-tuyau :**
-- Un arbre blanc en forme de tube, rappelant un tuyau de Mario
-- À l'intérieur : un micro-écosystème édénique, source d'eau pure, fruits
-- Toutes les créatures y vivent en harmonie
-- Piège potentiel : si les joueurs sont agressifs ou prennent trop, la coccisabre déclenche son pollen
-- Règle : prendre avec parcimonie = ok. Être gourmand = danger.
+* 5 min : « Bouche sèche. »
+* 10 min : « Votre langue colle au palais. Chaque respiration râpe. »
+* 15 min : « Vos pensées deviennent floues. Le vaisseau danse dans la chaleur. »
+* 20 min : « Vos muscles crient. Votre tête va se fissurer. »
 
-**★ Coccisabre (gardienne de l'oasis)**
-
-**▷ Règles de l'oasis-tuyau**
-
-- **Parcimonie (ok) :** 1 gorgée d'eau par personne, 1 fruit par personne
-- **Gourmandise (danger) :** prendre plus déclenche la coccisabre
-- **Violence :** toute agression = attaque immédiate de la coccisabre
-- **Indice :** les autres créatures de l'oasis prennent peu et lentement
-*Les PJ observateurs (perception 10) remarquent le comportement respectueux des animaux.*
-
-**Récoltable :** une super arme : le sabre de la coccisabre (+5 en dégâts bruts)
-
-**♢ Loot -- oasis-tuyau**
-
-| **Ressource** | **Effet** | **Condition** |
-| --- | --- | --- |
-| Eau pure de l'oasis | annule déshydratation, +1 PV | prendre avec parcimonie |
-| Fruit de l'oasis | +3 PV, désaltère, +1 jets 2h | prendre avec parcimonie |
-| Dent-sabre | +5 dégâts bruts, tranche os/tendons | tuer la coccisabre (FOR 7+ requis) |
-| Glande à toxine | 10 doses poison (paralysie progressive) | tuer la coccisabre |
-| Carapace coccisabre | armure lourde (-3 AGI) | tuer la coccisabre |
-
-*Être gourmand = enfermement dans l'oasis et digestion lente. La coccisabre ne laisse pas sortir.*
+L'oasis-tuyau est la seule source d'eau de cette zone. Elle se situe au sommet de la falaise. Dans tous les cas, il faut grimper ! Aucun autre chemin en vue. 
 
 ---
 
-## Phase 2 : la falaise (20-25 min)
+## Phase 2
 
-**L'obstacle :** une falaise abrupte aux roches coupantes comme des lames. Le radar ne détecte aucun autre chemin. Il faut grimper.
+**Danger :** une meute de vélociraptors solaires a établi son territoire sur le plateau. Ils chassent en encerclant leurs proies et en concentrant la lumière du soleil avec leurs queues-miroirs.
+
+**Options :**
+- Évitement : passer de nuit ou à l'ombre (mais perte de temps)
+- Distraction : utiliser le fruit maudit d'un arbre-cadavre pour attirer leur attention ailleurs
+- Combat : risqué, mais possible si on brise leurs queues-miroirs
+- Utilisation créative : se laisser capturer pour être transporté au sommet (très dangereux, mais raccourci)
+
+**★ Vélociraptor solaire**
+
+**▷ Options détaillées -- vélociraptors solaires**
+
+1. **Attendre la nuit :** 2-3h de perte, mais passage sûr (queues-miroirs inutiles)
+2. **Fruit maudit :** si ouvert, odeur attire tous les vélocis en frénésie (zone libre)
+3. **Combat :** viser les queues (-2 pour toucher), queue brisée = véloci en fuite
+4. **Se laisser capturer :** les serres emmènent au sommet (2d6 dégâts à l'arrivée)
+5. **Rester à l'ombre :** progression lente de rocher en rocher (discrétion 12 par segment)
+
+**♢ Loot -- vélociraptors solaires**
+
+| **Matériau** | **Effet** | **Danger** |
+| --- | --- | --- |
+| Défenses d'ivoire | tuteur croissance végétale accélérée | produit arbre-cadavre si plantées dans cadavre |
+| Plumes-miroirs | bouclier réfléchissant, flash défensif | se ternissent à l'humidité |
+| Fruit maudit | leurre : attire tous vélocis (rayon km) | créatures ciblent celui éclaboussé |
 
 **Puzzle biologique -- les vers-colle**
 - Un cortège de vers circule sur les parois rocheuses
@@ -457,33 +460,38 @@ Les structures osseuses sont des arbres-cadavres -- créés quand les défenses 
 
 ---
 
-## Phase 3 : le passage des vélociraptors solaires (15 min)
+## Phase 3 
 
-**Danger :** une meute de vélociraptors solaires a établi son territoire sur le plateau. Ils chassent en encerclant leurs proies et en concentrant la lumière du soleil avec leurs queues-miroirs.
+**L'oasis-tuyau :**
+- Un arbre blanc en forme de tube, rappelant un tuyau de Mario
+- À l'intérieur : un micro-écosystème édénique, source d'eau pure, fruits
+- Toutes les créatures y vivent en harmonie
+- Piège potentiel : si les joueurs sont agressifs ou prennent trop, la coccisabre déclenche son pollen
+- Règle : prendre avec parcimonie = ok. Être gourmand = danger.
 
-**Options :**
-- Évitement : passer de nuit ou à l'ombre (mais perte de temps)
-- Distraction : utiliser le fruit maudit d'un arbre-cadavre pour attirer leur attention ailleurs
-- Combat : risqué, mais possible si on brise leurs queues-miroirs
-- Utilisation créative : se laisser capturer pour être transporté au sommet (très dangereux, mais raccourci)
+**★ Coccisabre (gardienne de l'oasis)**
 
-**★ Vélociraptor solaire**
+**▷ Règles de l'oasis-tuyau**
 
-**▷ Options détaillées -- vélociraptors solaires**
+- **Parcimonie (ok) :** 1 gorgée d'eau par personne, 1 fruit par personne
+- **Gourmandise (danger) :** prendre plus déclenche la coccisabre
+- **Violence :** toute agression = attaque immédiate de la coccisabre
+- **Indice :** les autres créatures de l'oasis prennent peu et lentement
+*Les PJ observateurs (perception 10) remarquent le comportement respectueux des animaux.*
 
-1. **Attendre la nuit :** 2-3h de perte, mais passage sûr (queues-miroirs inutiles)
-2. **Fruit maudit :** si ouvert, odeur attire tous les vélocis en frénésie (zone libre)
-3. **Combat :** viser les queues (-2 pour toucher), queue brisée = véloci en fuite
-4. **Se laisser capturer :** les serres emmènent au sommet (2d6 dégâts à l'arrivée)
-5. **Rester à l'ombre :** progression lente de rocher en rocher (discrétion 12 par segment)
+**Récoltable :** une super arme : le sabre de la coccisabre (+5 en dégâts bruts)
 
-**♢ Loot -- vélociraptors solaires**
+**♢ Loot -- oasis-tuyau**
 
-| **Matériau** | **Effet** | **Danger** |
+| **Ressource** | **Effet** | **Condition** |
 | --- | --- | --- |
-| Défenses d'ivoire | tuteur croissance végétale accélérée | produit arbre-cadavre si plantées dans cadavre |
-| Plumes-miroirs | bouclier réfléchissant, flash défensif | se ternissent à l'humidité |
-| Fruit maudit | leurre : attire tous vélocis (rayon km) | créatures ciblent celui éclaboussé |
+| Eau pure de l'oasis | annule déshydratation, +1 PV | prendre avec parcimonie |
+| Fruit de l'oasis | +3 PV, désaltère, +1 jets 2h | prendre avec parcimonie |
+| Dent-sabre | +5 dégâts bruts, tranche os/tendons | tuer la coccisabre (FOR 7+ requis) |
+| Glande à toxine | 10 doses poison (paralysie progressive) | tuer la coccisabre |
+| Carapace coccisabre | armure lourde (-3 AGI) | tuer la coccisabre |
+
+*Être gourmand = enfermement dans l'oasis et digestion lente. La coccisabre ne laisse pas sortir.*
 
 ---
 
