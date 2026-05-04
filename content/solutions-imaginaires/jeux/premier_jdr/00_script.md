@@ -527,29 +527,28 @@ Appliquer le repos nocturne et la table centrale des événements nocturnes.
 
 ## Phase 1 
 
-*La montagne s'abaisse d'un coup. Devant vous, une prairie immense ondule sous le vent. L'herbe monte bien plus haut que vos épaules. Au loin, le vaisseau dépasse à peine : une masse sombre, plantée de travers dans le vert.*
+*La montagne descendait en pente douce vers une prairie immense, toute mouvante sous le vent. Les herbes, plus hautes que des épaules, se couchaient et se relevaient par nappes. Au loin, le vaisseau ne montrait presque rien de lui-même : une masse noire, oblique, perdue dans le vert.*
 
 Le signal GPS est net. Le chemin le plus direct traverse la prairie. L'herbe haute ralentit et cache les reliefs, mais elle ne blesse pas.
 
-*Le tremblement commence sous vos pieds. Puis il gagne la prairie entière. Une ligne rayée traverse l'horizon, trop large pour être un troupeau ordinaire. Des milliers de quadrupèdes avancent en marée, bulbes dorsaux gonflés, dégonflés, gonflés encore, tous au même rythme.*
+*Un tremblement naît sous vos pieds, d’abord léger, puis gagne toute la prairie. À l’horizon, une ligne rayée s’étire, trop large pour être un troupeau. Des milliers de quadrupèdes avancent comme une marée ; sur leurs dos, les bulbes se gonflent et s’affaissent ensemble, avec la régularité d’un seul souffle.*
 
 **Les zèbres-crapauds**
 
-- Ils migrent en suivant des vibrations de très basse fréquence.
+- Ils migrent en troupeaux gigantesques et se synchronisent grâce aux vibrations basse-fréquence émises par leurs poches thoraciques
 - Ils ne cherchent pas à écraser les PJ. Ils ne les évitent pas non plus.
-- Les bulbes dorsaux servent à communiquer : pression, rythme, direction.
+- Ces poches thoraciques servent à communiquer : pression, rythme, direction.
 - Se mettre en travers sans bouger = piétinement.
 
-*Si les PJ entrent dans la marée :*
+Si les PJ entrent dans la marée, il faut leur demander de détailler leur action,
+* s'ils entreprennent une action trop précise, trop volontaire, quitte menace de blesser un individu du troupeau : ils peinent à garder leur équilibre et finissent par chuter et se faire piétiner : -1/4 de leurs PV actuels
+* s'ils optent pour une action plus souple, où ils se laissent porter : ils ont rapidement l'impression de ne faire plus qu'un avec la masse en mouvement
 
-*Des flancs chauds vous serrent de tous les côtés. Les bulbes vibrent contre vos côtes. L'air sent l'herbe arrachée, la vase sèche et le muscle. À chaque pas, le troupeau décide un peu pour vous.*
+**▷ Autres possibilités**
 
-**▷ Possibilités -- la migration**
-
-1. **Suivre le flux :** marcher avec eux. C'est sûr, mais lent. Le groupe ressort plus loin que prévu.
-2. **Monter sur un dos (AGI 12) :** traversée rapide. En cas d'échec : chute, séparation courte, ou objet perdu dans la foule.
-3. **Imiter les bulbes :** percussion, voix grave, outre-pulmonaire, caisse métallique, robot ou bulbe prélevé. Un bon rythme peut ouvrir un couloir ou dévier la marée.
-4. **Le grand saut :** si la scène piétine, une vibration plus profonde traverse la prairie. Les zèbres-crapauds paniquent, bondissent tous dans la même direction, puis libèrent brutalement un passage vers la zone du dormeur.
+1. **Monter sur un dos (AGI 14) :** traversée rapide. En cas d'échec : chute, séparation courte, ou objet perdu dans la foule.
+2. **Imiter les bulbes :** percussion, voix grave, outre-pulmonaire, caisse métallique, robot ou bulbe prélevé. Un bon rythme peut ouvrir un couloir ou dévier la marée.
+3. **Le grand saut :** si la scène piétine, une vibration plus profonde traverse la prairie. Les zèbres-crapauds paniquent et bondissent dans tous les sens
 
 **♢ LOOT**
 
@@ -562,42 +561,45 @@ Le signal GPS est net. Le chemin le plus direct traverse la prairie. L'herbe hau
 
 ## Phase 2
 
-*Quand le dernier dos rayé disparaît, la prairie reste couchée derrière lui. Une route s'est ouverte dans les herbes. Elle file droit vers le vaisseau. Puis elle s'arrête contre quelque chose de pâle.*
+Description d'ouverture de la séquence,
 
-*Une masse recroquevillée bloque le passage. Quinze mètres de chair immobile. Des tentacules lovés comme des câbles. Des dents visibles même gueule fermée. À chaque respiration, les herbes autour penchent vers elle, puis se redressent avec retard.*
+*Quand le dernier dos rayé disparaît, la prairie reste couchée derrière lui. Leur passage a ouvert une route dans les herbes. Elle file droit vers le vaisseau. Mais il y a un obstacle sur cette ligne droite. Une forme pâle et immobile au loin. Est-ce un rocher ?*
+
+Observation plus proche,
+
+*Une masse recroquevillée barre le passage, quinze mètres de chair assoupie, de tentacules repliés, de dents serrées sous les lèvres. À chacun de ses souffles, les hautes herbes se couchent vers la créature, puis se relèvent lentement, comme retenues encore.*
 
 **Le dormeur**
 
 - Le dormeur est un obstacle, pas un combat équilibré.
-- Il s'éveille si on le touche, si du sang coule près de lui, si une vibration violente le traverse, ou si les PJ font beaucoup de bruit au-dessus de son corps.
-- Son réveil prend quelques secondes : veines qui s'allument, souffle qui change, tentacules qui se déplient. Laissez aux PJ une vraie fenêtre de fuite.
-- Si le groupe insiste pour l'affronter, utiliser la fiche **★ Dormeur**.
+- Il s'éveille si on le touche, si du sang coule près de lui, si une vibration violente le traverse, ou si les PJ font beaucoup de bruit.
+- Son réveil prend quelques secondes : veines qui s'allument, souffle qui change, tentacules qui se déplient. 
+- Les PJ ont une vraie fenêtre de fuite s'ils observent bien :
+
+Si PER > 12,
 
 *Autour de lui, des tiges hautes portent des fleurs larges. Leurs pétales tournent avec le vent. Une fleur se déracine, monte de quelques mètres, flotte, puis retombe doucement dans les herbes.*
-
-**Les fleurs-hélices**
 
 - Une fleur seule ralentit une chute. Deux ou trois peuvent porter un corps léger sur une courte distance.
 - Elles réagissent aux gestes calmes. Les tirer, les frapper ou les arracher trop vite les fait vriller.
 - Le survol doit rester silencieux : pas de cri, pas de métal qui cogne, pas d'atterrissage lourd.
 
-**▷ Possibilités -- passer le dormeur**
+Si survol,
 
-1. **Fleurs-hélices (ATH ou AGI 10) :** chaque PJ s'accroche à 2-3 fleurs. Échec : perte d'altitude, bruit, ou atterrissage trop proche du dormeur.
+*Les fleurs vous soulèvent sans secousse, et le sol descend lentement. Sous vous, le dormeur demeure clos. Dans les plis de sa peau, de petits parasites blancs cheminent comme des grains de riz. Votre ombre glisse sur ses paupières ; elles tremblent, puis s’apaisent.*
+
+**▷ Possibilités**
+
+1. **Fleurs-hélices (AGI 11) :** chaque PJ s'accroche à 2-3 fleurs. Échec : perte d'altitude, bruit, ou atterrissage trop proche du dormeur.
 2. **Écureuil-coffre gonflé :** permet de porter une personne ou un objet lourd. Il faut quand même contrôler la descente.
-3. **Pont improvisé :** lianes, pièces de coque, tentacules morts, mucus de vercolle. Possible, mais très lent et dangereux si cela vibre.
-4. **Détour :** 2-3h de marche dans l'herbe haute. Ajouter une complication : séparation, perte d'objet, retour partiel de la migration, ou approche du soir.
-5. **Réveiller volontairement :** diversion possible, mais la fuite devient la scène. Le dormeur ne négocie pas.
+3. **Pont improvisé :** lianes, pièces de coque, tentacules morts, mucus de vercolle. Possible, mais très lent et dangereux si cela vibre. 
+4. **Réveiller volontairement :** diversion possible, mais la fuite est à construire comme une scène pas si simple.
 
-*Pendant le survol :*
+Si le dormeur se réveille,
 
-*Les fleurs tirent sans brutalité. Le sol s'éloigne. Sous vous, le dormeur reste fermé. Dans les plis de sa peau, de petits parasites blancs se déplacent comme des grains de riz. Votre ombre passe sur ses paupières. Elles tremblent.*
+*La lumière paraît d'abord sous la peau, en veines bleues, fines et froides ; le souffle cesse, les herbes retombent, et la masse, avec une lenteur terrible, se déplie tout entière, soulève ses tentacules comme des branches tirées du sommeil, puis ouvre sa gueule, large, muette, obscure.*
 
-*Si le dormeur se réveille :*
-
-*La lumière apparaît d'abord sous la peau, en lignes bleues. Le souffle cesse. Puis la masse entière se déplie, trop grande, trop lente pour être réelle. Les tentacules se lèvent. La gueule s'ouvre.*
-
-**♢ Loot -- fleurs-hélices et dormeur**
+**♢ LOOT**
 
 | **Matériau** | **Effet** | **Danger** |
 | --- | --- | --- |
@@ -610,39 +612,37 @@ Le signal GPS est net. Le chemin le plus direct traverse la prairie. L'herbe hau
 
 ## Phase 3
 
-*Le vaisseau est là. Pas au loin : là. Sa coque a labouré la prairie avant de s'enfoncer dans le sol. Des racines passent par les brèches. La sirène ne hurle plus vraiment. Elle respire, faible, à intervalles irréguliers.*
+*Le vaisseau est là. Pas au loin : là. Sa coque a labouré la prairie avant de s'enfoncer dans le sol. Des racines s'infiltrent par les brèches. La sirène ne hurle plus vraiment, mais on la perçoit, elle est faible.*
 
-Avant l'entrée, rappeler discrètement les fiches parasites du Jour 5. Les parasités peuvent maintenant agir frontalement s'ils le souhaitent. Les non-parasités savent que quelque chose va céder.
+Rappel au MJ : les parasités peuvent maintenant agir frontalement s'ils le souhaitent. Les non-parasités savent que quelque chose va céder.
 
-Le robot peut donner le cadre :
+Le robot peut donne le cadre,
 
 *« Systèmes vitaux instables. Cryogénisation partielle maintenue. Moteur récupérable. Fenêtre de purge estimée : trente minutes. Après cela, le décollage devient improbable. »*
 
-*Le sas cède dans un souffle froid. À l'intérieur, l'éclairage d'urgence coupe les couloirs en rouge et noir. Des racines longent les parois, passent dans les grilles, entrent dans les consoles ouvertes. Par endroits, elles pulsent comme des veines.*
+*Le sas cède dans un souffle froid. À l'intérieur, l'éclairage d'urgence coupe les couloirs en rouge et noir. Des racines longent les parois, passent dans les grilles, entrent dans les consoles ouvertes. Par endroits, elles se gonflent et se retirent, avec la lenteur d'une chose qui respire.*
 
 **État du vaisseau**
 
 - **Coque :** trois brèches principales, racines et lianes dans les coursives.
 - **Systèmes :** assez d'énergie pour un décollage, pas pour deux essais.
-- **Cryogénisation :** la majorité des caissons tient encore. Certains givrent, d'autres clignotent orange.
-- **Moteur :** fonctionnel, mais les conduites de purge sont bloquées par le vivant.
-- **Présence anormale :** le robot détecte une activité mentale ou sonore dans la zone de cryogénisation.
+- **Cryogénisation :** la majorité des caissons tient encore. Certains givrent, d'autres clignotent orange. D'autres ont la vitre brisée, et on ne veut pas savoir ce qu'il reste du corps qui y reposait.
+- **Moteur :** fonctionnel, mais les conduites de purge sont bloquées par des organismes.
+- **Présence anormale :** le robot détecte des variations de fréquence anormales autour d'un point qui se déplace dans les couloirs.
 
 **Objectif pratique**
 
 La scène finale doit avancer sur trois fronts. Donner au groupe des tâches concrètes et les laisser se diviser ou non.
 
-1. **Salle de purge :** couper, brûler, geler ou détourner les racines qui bloquent les conduites.
-2. **Cryogénisation :** stabiliser les caissons compromis et empêcher une ouverture accidentelle.
-3. **Console moteur :** relancer la séquence de décollage et maintenir le compte à rebours.
+1. **Séquence de purge :** couper, brûler, geler ou détourner les racines qui bloquent les conduites.
+2. **Cryogénisation :** stabiliser les caissons compromis.
+3. **Console moteur :** relancer la séquence de décollage.
 
-Toutes les dix minutes, ajouter une complication :
+Toutes les dix minutes, ajouter une complication, exemples,
 
 - une porte se bloque ;
 - un caisson se fissure ;
 - la sirène attire quelque chose ;
-- le robot perd une fonction ;
-- un sabotage discret devient visible ;
 - les racines se referment sur une conduite déjà libérée.
 
 **Les parasités dans le vaisseau**
@@ -651,17 +651,13 @@ Toutes les dix minutes, ajouter une complication :
 - Ils peuvent se révéler : bloquer une porte, attaquer le robot, convaincre que le décollage tuera tout le monde.
 - Ils ne sont pas obligés d'être suicidaires. Ils veulent empêcher le départ, mais Hollow ou écho-écho peuvent aussi les menacer.
 
-**La troisième force**
+**Les troisièmes forces**
 
-Choisir selon ce qui a déjà eu lieu :
-
-- **Si l'écho-écho n'a jamais été rencontré :** il traque les bruits dans les coursives. Le vaisseau devient un piège sonore.
-- **Si l'écho-écho a déjà servi :** Hollow occupe la salle de cryogénisation.
-- **Si la table a besoin d'un final plus dense :** Hollow est au centre, écho-écho rôde en périphérie et attaque les scènes trop bruyantes.
+Dans tous les cas, Hollow occupe la salle de cryogénisation, tandis qu’écho-écho rôde dans les coursives et les zones périphériques. Le vaisseau devient à la fois un piège mental et un piège sonore : Hollow menace les consciences et les corps, écho-écho punit le bruit, les disputes, les alarmes et les outils trop bruyants.
 
 *Écho-écho, première apparition dans le vaisseau :*
 
-*Le couloir devient soudain très silencieux. Puis un claquement de dents. Rapide. Métallique. Au bout du passage, une silhouette humanoïde se tourne vers vous. À la place du visage, une parabole de chair écoute.*
+*Le couloir, d’un coup, perd tous ses bruits ; puis vient, du fond, un claquement de dents, sec, rapide, métallique, qui court le long des parois. Au bout du passage, une silhouette presque humaine se retourne lentement vers vous. Là où devrait être le visage, une parabole de chair s’ouvre.*
 
 **★ Écho-écho**
 
@@ -671,29 +667,28 @@ Choisir selon ce qui a déjà eu lieu :
 
 *Hollow, première apparition :*
 
-*Dans la salle de cryogénisation, la lumière bleue tombe sur les caissons alignés. Au centre, une silhouette immobile attend. Deux mètres. Lisse. Noire et blanche comme de la porcelaine vivante. Pas de visage, seulement une surface qui renvoie vos regards, déformés. Sa tête s'incline. Vos pensées deviennent lourdes.*
+*Dans la salle de cryogénisation, la lumière bleue descend sur les caissons alignés, pâle, froide, presque liquide. Au centre, une silhouette immobile vous attend : deux mètres de matière lisse, noire et blanche, avec l’éclat dur d’une porcelaine vivante. Rien qui ressemble à un visage ; seulement une surface close, où vos regards reviennent déformés. Sa tête s’incline à peine, et vos pensées, soudain, prennent du poids.*
 
 **★ Hollow**
 
-- Hollow veut garder les consciences : colons, PJ, robot.
+- Hollow veut contrôler les consciences 
 - Il ne cherche pas à tuer d'abord. Il isole, possède, retourne les corps contre le groupe.
 - Pour l'emprise mentale, utiliser le duel psychique contre Hollow dans les mécanismes.
-- Si Hollow prend 5 PV ou plus en un coup, sa concentration casse : ses esclaves mentaux sont libres pendant 1 tour.
-- À sa mort, les esclaves sont libérés, mais la purge n'a pas attendu.
+- Si Hollow perd 5 PV ou plus en un coup, sa concentration est brisée : ses esclaves mentaux sont libérés
+- À sa mort, les esclaves sont libérés
 
 *À lire au joueur possédé, en aparté :*
 
-*Le silence. La paix. Tes pensées s'alignent enfin. Hollow n'est pas ton ennemi. Les autres vont tout casser, tout perdre, tout brûler. Empêche-les de lui faire du mal.*
+*Le silence, enfin. Une paix froide te gagne ; tes pensées, une à une, trouvent leur place. Hollow n’est pas ton ennemi. Les autres vont rompre l’ordre, briser les caissons, brûler les esprits de notre communauté. Il faut les arrêter. Il faut qu’aucune main ne se lève contre Hollow.*
 
 **▷ Gérer la confrontation finale**
 
 - **Tempo :** alterner action technique, sabotage, menace de la troisième force.
-- **Pression :** le compte à rebours doit rester visible. Trente minutes, puis le vaisseau ne promet plus rien.
-- **Alliances :** les parasités peuvent aider contre Hollow. Les sains peuvent libérer des esclaves. Un possédé peut résister assez longtemps pour dire une phrase utile.
+- **Pression :** le compte à rebours doit rester visible. Trente minutes, après quoi, le décollage est impossible.
 - **Dilemme :** tuer Hollow ou échapper à écho-écho prend du temps, mais ignorer la menace rend la purge presque impossible.
-- **Sortie :** quand deux des trois tâches du vaisseau sont réussies, proposer un décollage risqué. Quand les trois sont réussies, proposer un décollage propre. Si les parasités sabotent une tâche au dernier moment, jouer le choix final à visage découvert.
+- **Sortie :** quand deux des trois tâches du vaisseau sont réussies, proposer un décollage risqué. Quand les trois sont réussies, proposer un décollage propre. 
 
-**♢ Loot -- vaisseau et troisième force**
+**♢ LOOT**
 
 | **Matériau** | **Effet** | **Condition** |
 | --- | --- | --- |
