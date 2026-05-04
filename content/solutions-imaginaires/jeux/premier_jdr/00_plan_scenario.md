@@ -72,7 +72,7 @@ S'ils demandent une observation : « Parmi les cadavres et les excroissances fon
 - *Si tous les PJ sont hallucinés, le robot peut intervenir et les tirer vers la sortie.*
   - Condition : MJ tire dés. Il faut faire plus de 14 pour cet événement de sauvetage. 
 
-**Récupération du matériel au fond de la grotte :**
+**LOOT**
 
 - Fonctionnement partiel : si les PJ trouvent de quoi les réparer, ils peuvent rétablir le fonctionnement intégral d'un des trois objets suivants. Vous pouvez librement choisir les effets de cette réparation-amélioration.
   - Le robot (endommagé légèrement, fonctionnement minimal, à réparer s'ils veulent plus)
@@ -98,43 +98,29 @@ Le robot émet un premier rapport :
 
 ## Phase 3
 
-- Vous débouchez sur une petite portion de terre humide entourée d'eau. Au-delà, vous apercevez un ilôt de terre dont vous ne voyez pas les limites. Ça semble être la direction indiquée par le GPS. Description : 
-
-*« La surface de l'eau est impeccablement claire par rapport à l'eau trouble que vous avez vu jusqu'à maintenant. Des petites volutes de fumée blanche se dégagent de la masse d'eau. »*
+*« Vous émergez sur un mince replat de terre humide, cerné de toutes parts par l’eau. Au-delà, un îlot sombre apparaît, vaste ou peut-être seulement trompeur, ses limites avalées par la brume. Le GPS indique que votre chemin continue dans cette direction. »*
 
 - L'eau n'est pas chaude. Elle est extrêmement acide. Si jet observation > 12, les PJ aperçoivent des méduses translucides qui semblent sécréter la solution acide.
+*« La surface de l'eau est impeccablement claire par rapport à l'eau trouble que vous avez vu jusqu'à maintenant. Des petites volutes de fumée blanche se dégagent de la masse d'eau. »*
 
-**Les buffles-creusets**
+**Les bison-creusets**
 
-- Un troupeau de ces créatures massives traverse lentement le marais sur un chemin de pierres émergées
-- Elles semblent s'en sortir sans aucun problème et ne pas avoir les pieds qui picotent
-- Les méduses s'écartent naturellement sur leur passage (chaleur thermique)
-- Observer : les petits des buffles entrent et sortent par des fentes sur leurs flancs
-- Ils extraient de leur « mère » des sphères galvaniques dont on voit la chaleur se dégager d'ici
-- Solution : suivre le troupeau en restant très près (dans leur sillage thermique) ou tenter de récupérer une sphère galvanique qu'un petit a déposée -- sa chaleur repousse aussi les méduses
+*« Des quadrupèdes colossaux émergent à quelques mètres de vous, hauts comme des éléphants, la peau noire et crevassée comme une vieille lave. Sur leurs flancs, des fentes oranges palpitent sous la croûte. De petites créatures glabres y entrent et en sortent, déposant au sol des sphères luisantes avant de disparaître à nouveau. Les bêtes avancent dans l’eau. À leur passage, les méduses s'écartent. Un seul bison demeure en retrait, de votre côté du marais. Impossible de dire ce qu’il fait. »*
 
-**★ Bison-creuset (buffle-creuset)**
+- Les méduses acides préfèrent se garder à distance des sources de chaleur. Or, dans les flancs des bison-creusets, les sphères galvaniques qui régulent leur température sont portées à blanc. Là où ces bêtes passent, le marais s’ouvre. 
 
-PV : très élevés | FOR : 9 | RES : 9 | AGI : 1 (adulte) / 8 (petits)
-**Comportement :** passif par défaut. Charge si blessé.
-**Attaques :** charge électrique (arc statique, zone) • piétinement massif
-**Défenses :** cuirasse chitine+roche (immunité armes légères) • chaleur corporelle intense
-**Faiblesses :** lenteur extrême • dépendance aux petits • routes migratoires fixes
-**Danger :** si petit mord → cri ultrasonique → charge mère = mort
+**▷ Possibilités**
 
-**▷ Options de résolution du puzzle**
+1. **Suivre le sillage (AGI 12) :** se ruer vers le troupeau encore en train de passer et tenter de se faufiler dans leur sillage pour profiter de l'ouverture.
+2. **Voler une sphère (discrétion 12 + agilité 12) :** récupérer une sphère déposée par un petit 
+   1. Si un petit mord un PJ, au prochain tour, la petite créature émettra un cri qui engagera le combat contre le gros.
+   2. Vous pouvez déterminer librement la manière d'amener le petit à relâcher le PJ. 
 
-1. **Suivre le sillage (discrétion 8) :** rester dans la chaleur du troupeau sans les déranger
-2. **Voler une sphère (discrétion 12 + agilité 10) :** un petit dépose une sphère, la récupérer vite
-3. **Distraire avec cellulose :** offrir de la matière végétale aux petits, ils s'écartent
-*Si un petit mord un PJ, il a 1 tour pour le relâcher avant le cri ultrasonique.*
+**LOOT:**
 
-**Matériaux collectables dans le marais :**
-- Outre-pulmonaire (masque à gaz / amortisseur de chute)
-- Sphère galvanique (source de lumière / batterie d'urgence) -- si gardée trop longtemps sans utilisation, surchauffe, -1 PV et décharger
-- Anguille-câble (conducteur organique pour réparer l'électronique) -- emmêlée si laissée trop longtemps dans le sac, 1d6 pour démêler, peut être endommagée si raté
-- Lézard-amphibie (masque respiratoire aquatique)
-- Nénuphar gluant (scotch qui peut servir pour assembler des objets, attention très collant)
+- Sphère galvanique
+- Lézard-amphibie
+- Nénuphar gluant
 
 **♢ Récapitulatif loot -- Jour 1 : le marais**
 
@@ -148,7 +134,6 @@ PV : très élevés | FOR : 9 | RES : 9 | AGI : 1 (adulte) / 8 (petits)
 | *Du crapaud-hallucinogène :* |  |  |
 | Glandes hallucinogènes | grenade fumigène (déni zone, 3 tours) | dangereux sans protection |
 | Peau visqueuse | imperméable/isolant | -- |
-| Chair | toxique crue, comestible bouillie 30min | cuisson obligatoire |
 
 ---
 
@@ -160,63 +145,66 @@ Le groupe installe le dôme de repos à la lisière de la forêt fongique. Jet d
 
 ---
 
-# Jour 2 -- La Forêt Fongique
+# Jour 2 
 
-## Phase 1 : la barrière végétale (15-20 min)
+## Phase 1
 
-**L'obstacle :** une muraille végétale noire et épaisse (comme des bougainvilliers géants) barre complètement le passage. Infranchissable, impossible à contourner.
+*« Des tiges épaisses, nouées comme des muscles, s’entrelacent jusqu’à former un mur vivant. Par endroits, des fleurs sombres pendent en grappes lourdes, semblables à des bougainvilliers démesurés, mais sans éclat, sans parfum, presque sans couleur. La paroi ne laisse voir aucun passage. Elle s’enfonce loin de chaque côté, trop dense pour être franchie, trop vaste pour être contournée. »*
 
-**Indice :** un imposant bison-cuirassé passe plus loin. La muraille s'ouvre devant lui et se referme derrière.
+Si observation > 10
 
-**Puzzle biologique -- l'écaille-clé**
-- Le bison-cuirassé perd parfois des écailles en se frottant aux rochers
-- Récupérer une écaille (discrétion ou patience)
-- Solution : approcher l'écaille de la muraille produit un choc -- la muraille s'ouvre
-- Attention : la muraille se referme progressivement, il faut courir
+*« Puis, plus loin dans la brume, quelques bison-cuirassés avancent d’un pas lent. L'un d'eux se détache du troupeau. À son approche, la muraille frémit. Avec nonchalance, il se gratte frotte le flanc gauche contre un rocher, et le bruit qui résulte de ce contact, lorsqu'il vous parvient, ne vous paraît comparable à aucun bruit connu. Les lianes se retirent les unes après les autres, comme si sa présence était reconnue. L’animal passe sans ralentir, sans accélérer non plus. Derrière lui, les branches se referment aussitôt, et le silence revient. »*
 
-**★ Bison-cuirassé**
+Possibilités
 
-**▷ Options de résolution -- barrière végétale**
+- Le bison-cuirassé perd souvent des écailles en se frottant aux rochers.
+- Tenter de récupérer une écaille sur un des bisons-cuirassés restés paître. 
+- Solution : approcher l'écaille de la muraille enclenche le même mouvement d'ouverture que celui observé à son passage
+- Attention, la muraille se referme progressivement, il faut courir
 
-1. **Patience (10-15 min) :** attendre qu'une écaille tombe naturellement
-2. **Discrétion (14) :** approcher le bison, arracher écaille lâche
-3. **Négocier avec le gardien-lémurien :** voir rencontre optionnelle
-4. **Robot :** synthétiser phéromones (1h de travail, nécessite échantillon)
-*La muraille reste ouverte 30 secondes. Tout le groupe doit courir (AGI 6 minimum).*
+À mi-chemin du couloir végétal,
 
-**Rencontre optionnelle :** à mi-chemin dans le couloir végétal, un objet brillant sur le côté. C'est le nid d'un petit humanoïde aux yeux de lémurien, lié symbiotiquement à la muraille. Il peut ouvrir/fermer le passage à volonté. Non hostile, mais imprévisible. Il aime engager des jeux de mimes où les PJ doivent reproduire des séries de mouvements ou de sons. En fonction de leur réussite, il peut les suivre et les aider un moment, ou déclencher des effets environnementaux favorables.
+*« Sur votre droite, alors que couriez vers la sortie droit devant vous, vous voyez un passage dégagé. Au-dessus de vous, deux grands yeux vous observent depuis une branche basse.
+La créature tient à peine dans la main. Sous sa peau pâle, des veines vertes luisent doucement. Elles se prologent et se perdent dans l’épaisseur de la muraille. »*
 
-**★ Gardien-lémurien**
+- Engager un jeu de mime
+  - Si un des PJ réussit à reproduire trois chorégraphies du petit lémurien d'affilé, celui-ci vous fait don d'un *loot* précieux
+  - Et monte sur l'épaule du PJ qui a joué avec lui pour toute la durée du jour 2
+    - Libre à vous de définir ses actions et effets par la suite (ex : phénomènes environnementaux bénéfiques)
 
 ---
 
-## Phase 2 : la cabane du survivant (20-25 min)
+## Phase 2
 
-**Le PNJ -- Oren**
-On voit une cabane construite dans un champignon géant, avec un potager luxuriant.
-Jet de perception s'ils veulent s'approcher.
-Si réussi, ils observent par la fenêtre et voient un humanoïde à l'apparence humaine, mais dont la peau a une teinte légèrement verdâtre, avec des tics étranges.
+*Entre deux champignons hauts comme des tours, le sentier s’arrête devant une cabane creusée dans le pied creux d’un vieux champignon mort. Sa chair sèche forme des parois pâles, striées de brun, comme un bois malade. Une petite cheminée de terre noire en dépasse, et sa fumée monte lentement dans l’air humide avant de se perdre sous les chapeaux géants. Autour, un potager déborde de vie. Des tiges grasses rampent sur le sol. De gros légumes inconnus percent la mousse. Rien ne bouge, pourtant tout semble pousser à vue d’œil.*
 
-**S'ils décident d'interagir :**
-- Il propose l'hospitalité
-- Si un personnage a de bonnes stats de perception, il peut remarquer d'étranges filaments qui sortent de la peau çà et là
+OREN
 
-**Deux possibilités :**
-- Soit les joueurs lui font confiance et restent avec lui
-- Si les joueurs prennent trop de temps à se décider, il est déstabilisé et menacé et ne tarde pas à les attaquer
-- Soit le combat s'enclenche (voir la fiche créature Oren)
+S'ils s'approchent ou si observation quelconque, 
+
+*Dans l’embrasure de la porte apparaît un visage humain qui a passé des années à l'ombre. La peau porte un vert éteint, comme remonté du dedans. Ses traits sont calmes et bienveillants. De fins filaments pâles glissent le long de ses tempes, se tendent puis disparaissent, comme des racines qui cherchent la lumière*
+
+-- Des visiteurs… Ça faisait tellement longtemps.
+
+- Oren propose l'hospitalité
+  - Il invite les PJ à passer la nuit chez lui, à l'abri
+  - Si les joueurs prennent trop de temps à se décider, ou s'ils refusent : début du combat 
+
+Description de sa transformation si le combat est engagé,
+
+*« Ses yeux se remplissent de noir, lentement, comme une encre qui gagne l’eau. Sous sa peau, la mousse affleure, durcit, se fend en plaques végétales. Des lianes sortent de ses paumes, de son dos, puis du sol autour de lui. Quand il parle, plusieurs voix répondent dans la sienne.*
+
+*— Je voulais vous aider. »*
 
 **Ce qu'il offre :**
 - Soins (il a des onguents efficaces)
 - Nourriture (fruits et légumes de son potager)
 - Abri pour la nuit
-- Informations sur la planète (75% vraies)
+- Informations sur la planète
 
-**La vérité :** Oren est parasité depuis longtemps. Le parasite (un réseau fongique neural) vit en symbiose avec lui et l'a convaincu que cette planète est un paradis dont il ne faut pas partir. Il n'est pas malveillant, il croit sincèrement bien faire en « offrant » cette symbiose aux autres.
+Oren porte la marque de ce monde depuis plus longtemps qu’il ne s’en souvient. Sous sa peau, le réseau fongique a pris racine. Il court avec ses nerfs, écoute avec lui, rêve avec lui. Il ne cherche pas à vous nuire. Dans ses yeux, il n’y a ni haine, ni ruse. Seulement une conviction douce, presque triste. Pour lui, la symbiose n’est pas une infection. C’est un don. 
 
-**★ Oren le parasité**
-
-**/!\ Contamination -- interactions dangereuses avec Oren**
+**/!\ Possibilité de contamination**
 
 **Chaque interaction suivante = 1 point de contamination :**
 - Accepter ses soins (onguents)
@@ -224,65 +212,41 @@ Si réussi, ils observent par la fenêtre et voient un humanoïde à l'apparence
 - Dormir chez lui
 - Toucher ses plantes
 - Contact physique prolongé (poignée de main, accolade)
-**Seuil de contamination :** Celui qui a le plus de points est contaminé.e
+**Seuil de contamination :** Celui qui a le plus de points à la fin de la journée est contaminé.e
 
-**Indices de sa condition (pour joueurs attentifs) :**
-- Petits filaments sous sa peau, visibles à la lumière
+**Indices de sa condition à disséminer :**
 - Il n'a aucune envie de partir, même pour sauver des vies
-- Le robot semble paralysé ou buggy lorsqu'il est proche de ce PNJ
+- Le robot semble paralysé lorsqu'il est proche de ce PNJ
 
 **▷ Phrases d'Oren**
 
-- « Vous êtes les premiers visiteurs depuis... combien de temps déjà ? Le temps n'a plus vraiment d'importance ici. »
-- « Le vaisseau ? Ah oui... je m'en souviens vaguement. Pourquoi voudriez-vous retourner dans le vide froid de l'espace ? »
-- « Goûtez ces fruits. La planète nous donne tout ce dont nous avons besoin. »
-- « Vous semblez fatigués. Restez cette nuit. Demain, vous verrez les choses plus clairement. »
+* « Vous êtes les premiers visiteurs depuis... combien de temps déjà ? »
+* « Le vaisseau ? Ah oui... »
+* « Goûtez. Ils sont mûrs. La terre les a gardés pour nous. »
+* « Vous semblez fatigués. Restez cette nuit. Demain, vous verrez les choses plus clairement. »
+* « Je ne suis pas seul ici. La forêt prend soin de moi. »*
 
-**Objets récoltables/trouvables :** écureuil-zeppelin (présence à préciser si jet d'observation réussi dans la zone)
 
-**♢ Loot disponible -- cabane d'Oren**
+**♢LOOT**
 
 | **Objet** | **Effet** | **Danger** |
 | --- | --- | --- |
-| Écureuil-coffre | +3 slots inventaire ou gravité -50% (sauts) | part si pas nourri, explose si trop nourri |
-| Graines corrompues | possède l'écureuil-coffre, corrompt inventaire | contamination |
+| Écureuil-coffre ou Écureuil-zeppelin | +3 slots inventaire ou gravité -50% (sauts) | part si pas nourri, explose si trop nourri |
+| Graines corrompues | possède l'écureuil-coffre, corrompt inventaire | contaminer un PJ |
 | Lianes épineuses | fouet +2 dégâts, cordage résistant | conducteur électrique |
 | Onguents d'Oren | soins efficaces (+1d6 PV) | contamination |
 | *Si combat avec Oren :* |  |  |
-| Fragments mycélium | étudier = résister à l'infection | manipulation délicate |
+| Fragments mycélium | résister à l'infection | manipulation délicate |
 
 ---
 
-## Phase 3 : sortie de la forêt (15-20 min)
+## Phase 2 (suite, si l'intéraction avec Oren a fini en *fight*)
 
-**L'obstacle :** une rivière de sève acide coule en travers du chemin. Aucun pont, berges glissantes.
+**L'araignée-suture**
 
-**Puzzle biologique -- les libélucioles**
-- Des insectes volants à propulsion verticale planent au-dessus de la rivière
-- Leur exosquelette est plein de prises, légers et solides
-- Solution : les attraper et s'en servir comme parachutes/ralentisseurs pour sauter par-dessus la rivière depuis un point surélevé
-- Alternative : trouver un tronc-champignon suffisamment large pour faire pont (avec aide du robot ou de l'écaille du bison)
+*Un cliquetis court fend le silence, sec et régulier, comme une aiguille sur du métal. La chose apparaît entre les racines : une araignée de mer montée haut sur huit pattes d’os pâle. Son corps maigre et rigide se contorsionne brutalement à chaque pas. Sous la membrane de son abdomen, un fluide laiteux bat lentement. Elle s'arrête, tâte l'air. Puis elle s'élance vers [la personne la plus blessée du groupe]*
 
-**▷ Options de résolution -- rivière de sève acide**
-
-1. **Libélucioles (AGI 10) :** attraper 2-3 insectes, sauter depuis point surélevé, planer
-2. **Tronc-pont (FOR 8 + aide) :** abattre champignon, créer pont improvisé
-3. **Écaille de bison :** utiliser comme planche/radeau (1 utilisation consommée)
-4. **Écureuil-coffre gonflé :** flotter/planer au-dessus
-*Échec = éclaboussure de sève acide (1d4 dégâts, brûlure visible).*
-
-**Rencontre -- le tisseur chirurgical**
-- Après la traversée :
-  - Si des joueurs ont été éclaboussés par la sève acide ou blessés
-  - Si des joueurs parlent trop fort
-- Un cliquetis rapide se fait entendre : une araignée de mer décharnée sur 8 pattes-aiguilles approche
-- Obsédée par la symétrie et l'ordre, elle veut « corriger » toute ouverture et donc par extension toute blessure qu'elle détecte
-- Mécanisme : suture d'urgence restaure +1d4 PV + malus -2 AGI temporaire
-- Comportement : cible toujours la blessure la plus grave en premier, ignore les non-blessés
-- Options : accepter les soins, fuir rapidement (AGI 10), geler avec source de froid, rester immobile et silencieux
-- Peut aussi « réparer » vêtements et équipement déchirés
-- Loot précieux : bobine bio-fil (réussite auto en médecine ou corde ultra-fine 50m), aiguilles articulées (crochets +2 escalade)
-- Capturer vivant (piège ou gel) préserve la glande à soie intacte (50m de fil supplémentaire)
+Elle ne s’intéresse qu’aux corps ouverts : plaies, déchirures, chairs mal refermées. Elle cherche à corriger les blessures, qui sont pour elle des ouvertures frustrantes. Elle cible toujours la blessure la plus grave en premier et ignore les personnages indemnes. Un personnage peut la laisser faire : la suture d’urgence rend +1d4 PV, mais impose -2 AGI jusqu'à la fin de la journée. Pour l’éviter, il faut fuir avant qu’elle n’approche (test AGI 10), rester parfaitement immobile et silencieux, ou la figer avec une source de froid.
 
 **★ Tisseur chirurgical**
 
@@ -294,100 +258,75 @@ Si réussi, ils observent par la fenêtre et voient un humanoïde à l'apparence
 | Aiguilles articulées | flèches perforantes | tuer ou capturer |
 | Glande à soie | 50m de fil supplémentaire | capturer vivant (piège/gel) |
 
-*Plusieurs tisseurs ensemble = combat pour le « droit » de réparer.*
-
 ---
 
-## Nuit 2 -- La révélation
+## Nuit 2 
 
-Installation du camp à la sortie de la forêt. Jet de dé nocturne.
-**Au réveil J3 :** distribution des fiches face cachée.
-**Événement nocturne possible :** la ruche-anémone -- une structure lumineuse et hypnotique attire les joueurs vers elle. Ceux qui s'approchent trop sont happés par des songes doux, leurs mains guidées vers la ruche où des insectes commencent à les dévorer lentement.
+Installation du camp.
 
-**/!\ Moment clé -- distribution des fiches J3 matin**
+*« La forêt fongique s'illumine dans l'obscurité. Des millions de spores dorées flottent dans l'air comme des lucioles paresseuses. »*
+
+**/!\ Distribution des fiches parasites**
 
 1. Préparez les fiches « parasité » et « non-parasité » en nombre suffisant
 2. Distribuez face cachée à tous les joueurs (même les non-contaminés reçoivent « non-parasité »)
 3. Annoncez : « Il semble y avoir eu du changement pendant la nuit. Lisez votre fiche en secret. »
 
-**♦ Narration de transition -- Nuit 2**
-
-*« La forêt fongique s'illumine dans l'obscurité. Des millions de spores dorées flottent dans l'air comme des lucioles paresseuses. C'est magnifique. C'est hypnotique. »*
-
 ---
 
-# Jour 3 -- Le Rivage de Mer
+# Jour 3 
 
-## Phase 1 : l'annonce de la tempête (10 min)
+## Phase 1 
 
-- Signal d'alarme : le robot capte un signal faible -- la sirène du vaisseau s'est déclenchée (pénétration potentielle de la coque).
-- **L'orage de silice :** pas une simple tempête : des éclairs qui détruisent le terrain, projettent arbres et rochers
-- Éclats minéraux coupants qui tournoient dans l'air
-- Les plaies causées se recouvrent d'un minéral gris (infection possible)
-- Temps estimé avant œil du cyclone mort subite : 30 minutes de jeu réel
+*Le sable est gris, le ciel couleur de cuivre. L’air sent l’ozone ; il fait dresser les cheveux sur vos nuques. De l’autre côté du bras de mer, les montagnes barrent l’horizon. Derrière elles, le GPS maintient son point fixe : le vaisseau. La plage, par endroits, est couverte d’œufs rosâtres et translucides, à demi enfouis dans le sable.*
+
+Le robot s'immobilise au milieu de la plage,
+
+*« Signal faible détecté. Origine probable : vaisseau. Sirène interne active. Hypothèse : pénétration de coque en cours. Recommandation : retour prioritaire. Interruption. Nouvelle analyse du danger. “Alerte météorologique critique. Orage de silice. Impact : dix minutes. Recommandation : abri immédiat.”»*
+
+À l’horizon, un mur de nuages noirs avance sur la mer. Des éclairs horizontaux le traversent par à-coups. Dans son ventre, des rochers, non, des lames de silice tranchent l'air. 
+
+- Les plaies causées par les lames de silice se recouvrent d'un minéral gris. 
 
 **/!\ Chronomètre -- orage de silice**
 
-- **T-30 à T-20 :** ciel cuivré, vent qui se lève, créatures qui fuient
-- **T-20 à T-10 :** premiers éclairs au loin, grêle de particules légères (-1 PV si exposé)
-- **T-10 à T-5 :** éclairs proches, débris volants (2d4 dégâts si exposé)
-- **T-5 à T-0 :** œil du cyclone, destruction massive, **MORT si exposé**
+- **T-10 à T-7 :** ciel cuivré, vent qui se lève, créatures qui fuient
+- **T-7 à T-3 :** premiers éclairs au loin, grêle de particules légères (-1 PV si exposé)
+- **T-3 à T-1 :** éclairs proches, débris volants (2d4 dégâts si exposé)
+- **T-1 à T-0 :** œil du cyclone, destruction massive, **MORT si exposé**
 
 ---
 
 ## Phase 2 : le problème de la traversée (20-25 min)
 
-**L'obstacle :** un bras de mer sépare les deux rives. Trop large pour nager, trop profond pour marcher. Et la tempête arrive.
+*« L’eau s’étend devant vous, noire et parfaitement calme. On ne distingue rien sous la surface. La rive opposée est visible, mais loin : cinq cents mètres d’eau ouverte. »*
 
-**Observation -- les baleines-méduses**
-- Des créatures colossales avec une bosse translucide flottent près du rivage, on ne sait pas vraiment dire si ce sont des baleines ou bien des méduses
-- Elles déposent des œufs gélatineux sur le sable
-- À l'approche de la tempête, les baleines-méduses aspirent leurs œufs avec leur trompe pour les mettre à l'abri
+**Les baleines-méduses**
 
-**Puzzle biologique -- le passage clandestin**
-- Solution : se faire passer pour un œuf et se faire aspirer par la créature
-- La créature ne ferait jamais de mal à ses œufs
-- À l'intérieur : cavité translucide comme un parc à bulles, avec un flux d'air (trompe vers le haut comme un tuba)
-- Les créatures marines défilent à travers la peau translucide
+*Des silhouettes pâles remontent près du rivage. Elles sont énormes, translucides, quelque part entre la baleine et la méduse : de lentes masses de gelée traversées de lueurs bleues. L’une d’elles déploie une trompe massive. Elle aspire les œufs un à un, sans hâte, et les emporte dans la lumière bleue de son ventre. Un lézard surgit du sable pour se jeter sur l’un des œufs. La trompe passe. L’œuf disparaît. Le lézard avec.*
 
-**▷ Comment entrer dans la baleine-méduse**
+Possibilités,
 
-1. **Observer :** les PJ voient la baleine aspirer ses œufs (jet de perception facultatif)
-2. **Se positionner :** se coucher près des œufs, adopter une posture fœtale
-3. **Attendre :** la baleine ne fait pas de différence entre œuf et humain recroquevillé
-4. **Aspiration :** sensation étrange mais indolore, arrivée dans la cavité
+- Solution : se faire passer pour un œuf et se faire aspirer par la créature. La créature ne ferait jamais de mal à ses œufs.
+
+Description de l'aspiration,
+
+*La trompe se tourne vers vous. D’abord, c’est seulement un souffle chaud qui soulève le sable. Puis vos pieds glissent. En un instant, vous êtes happés dans un tunnel de chair souple. Les membranes cèdent sur votre passage comme des rideaux mouillés. Vous tombez dans une cavité baignée de lumière bleue, au milieu des oeufs doux. L’air reste respirable : la trompe, ouverte au-dessus de la mer, pompe le vent comme un tuba vivant. À travers les parois translucides, l’océan défile. Des poissons plats passent en bancs serrés. Des ombres plus larges glissent dans les profondeurs. Quelque chose, très bas, tourne lentement sans remonter.*
 
 ---
 
-## Phase 3 : combat dans la baleine (15-20 min)
+## Phase 3 
 
-**Complication : les crabes-foreurs-cafards**
+*Un grattement monte de la trompe. Quelque chose descend à contre-courant, accroché aux parois. La carapace est basse, les pattes nombreuses, la queue dressée comme celle d’un scorpion. Ses mandibules tournent à vide, avec un bruit de foret.* 
+
+**Le crabe-foreur-cafard**
 Ces prédateurs opportunistes entrent par la trompe exposée à l'air pour se nourrir des œufs et de la chair des créatures vulnérables à l'intérieur.
 
-**Combat dans l'espace confiné :**
-- Terrain instable (paroi élastique)
 - Dard paralysant, mandibules foreuses, bile acide
 - Faiblesse : si retournés, ils sont paralysés et leur ventre mou est exposé
 - Résolution pacifique possible : leur offrir un œuf -- ils le prennent et partent
 
-**★ Crabe-foreur-cafard**
-
-PV : 10 | FOR : 7 | AGI : 4 | RES : 8 (carapace dorsale)
-**Comportement :** fonce et perce, tente de coincer dans angles.
-**Attaques :** aspiration sang • dard foreur (abîme armure) • jet bile acide (flaques) • queue scorpion (paralyse 2 tours)
-**Défenses :** carapace supérieure invulnérable • attaquer face+dos simultanément
-**Faiblesses :** **retourné = paralysé, one-shot** • ventre = crit 100% • **œuf = stoppe combat**
-
-**▷ Combat dans la baleine -- modificateurs**
-
-- **Terrain instable :** -2 à tous les jets d'attaque (paroi élastique)
-- **Espace confiné :** pas de fuite possible, pas de recul
-- **Lumière :** faible, -1 perception visuelle
-- **Retourner un crabe :** FOR vs FOR du crabe (7), réussite = crabe paralysé
-- **Solution pacifique :** offrir un œuf = les crabes partent immédiatement
-*2-3 crabes entrent. Si les PJ en tuent un rapidement, les autres fuient.*
-
-**♢ Loot -- crabe-foreur-cafard**
+**♢LOOT**
 
 | **Matériau** | **Effet** | **Danger** |
 | --- | --- | --- |
@@ -398,28 +337,19 @@ PV : 10 | FOR : 7 | AGI : 4 | RES : 8 (carapace dorsale)
 | Chair ventrale | repas (+2 PV), délicieuse | augmente rapidement la soif |
 | Œuf gélatineux | leurre pour crabes, apaise | se dessèche en 2h hors de l'eau |
 
-**Arrivée sur l'autre rive**
-La baleine-méduse recrache son contenu (joueurs inclus) sur la plage opposée. La tempête fait rage derrière eux, mais ils sont passés.
+La baleine-méduse dépose sa progéniture contenu (joueurs inclus) sur la plage opposée. La tempête fait rage derrière eux, mais ils sont passés. Ils sont au pied de la montagne à franchir pour suivre le signal GPS. 
 
 ---
 
-## Nuit 3 -- Dans la tempête
+## Nuit 3 
 
-Impossible de dormir correctement avec la tempête. Pas de jet nocturne classique, mais récupération réduite. Le robot devient de plus en plus contemplatif, moins réactif aux ordres.
-
-**▷ Évolution du robot -- Jour 3**
-
-*« Le robot reste silencieux de longues minutes, ses capteurs optiques fixés sur les éclairs qui déchirent le ciel. Quand vous lui parlez, il répond avec un léger délai. »*
-- Réponses plus lentes, plus... philosophiques
-- Pose des questions sur les sensations des PJ (« Que ressentez-vous quand vous voyez cela ? »)
-- Commence à nommer les créatures avec affection
-- Hésite parfois avant d'exécuter un ordre
+Impossible de dormir correctement avec la tempête. Pas de jet nocturne classique, mais récupération réduite. 
 
 ---
 
-# Jour 4 -- La Montagne Aride
+# Jour 4 
 
-## Phase 1 : la soif (15 min)
+## Phase 1 
 
 **• Déshydratation**
 
@@ -559,7 +489,8 @@ Les structures osseuses sont des arbres-cadavres -- créés quand les défenses 
 
 ## Nuit 4 -- Veillée tendue
 
-Le vaisseau est visible, tout proche. Tension maximale entre joueurs (parasités vs non-parasités). Le robot refuse peut-être de continuer, préférant rester observer les étoiles.
+L’air est sec comme un four. Le terrain monte, escarpé, ocre et gris. Chaque pas soulève une poussière fine qui colle à la gorge. Vos lèvres se fendent. La langue devient lourde
+
 **Événement nocturne possible :** le spectre-diapason (écho-écho) -- créature qui traque le bruit. Les joueurs doivent rester absolument silencieux (chuchoter IRL).
 
 **Important :** si écho-écho est rencontré ici, alors Hollow sera dans le vaisseau au Jour 5. Si écho-écho n'apparaît pas cette nuit, il sera dans le vaisseau à la place de Hollow.

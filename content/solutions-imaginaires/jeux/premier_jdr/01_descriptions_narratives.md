@@ -37,7 +37,6 @@ tags:
 
 ## puzzle -- les bisons-creusets
 
-*« Un grondement sourd. Des silhouettes massives émergent de la brume -- quadrupèdes de la taille d'éléphants, peau pareille à de la croûte volcanique craquelée. Des fentes sur leurs flancs luisent d'orange, comme des braises sous la cendre. De petites créatures glabres entrent et sortent de ces ouvertures, déposent des sphères luisantes au sol, y retournent. Les bêtes avancent dans l'eau. Les méduses s'écartent sur leur passage. Un seul bison est resté en retrait de votre côté du marais. On ne saurait pas bien dire ce qu'il est en train de faire. »*
 
 ## première apparition -- le bison-creuset
 
@@ -116,7 +115,6 @@ tags:
 - *« Le vaisseau ? Ah oui... Pourquoi voudriez-vous retourner dans le vide froid de l'espace ? »*
 - *« Goûtez ces fruits. La planète nous donne tout ce dont nous avons besoin. »*
 - *« Vous semblez fatigués. Restez cette nuit. »*
-- *« Je ne suis pas seul ici. La forêt prend soin de moi. »*
 
 ## combat -- oren se transforme
 
@@ -167,7 +165,7 @@ tags:
 
 ## annonce -- l'orage de silice
 
-*« Le robot s'immobilise. "Alerte météorologique critique. Orage de silice. Impact : trente minutes. Recommandation : abri immédiat." Sur l'horizon, une muraille de nuages noirs striés d'éclairs horizontaux. À l'intérieur, des rochers, des arbres et des éclats de cristal tournoient. »*
+*« Le robot s'immobilise. "Alerte météorologique critique. Orage de silice. Impact : dix minutes. Recommandation : abri immédiat." Sur l'horizon, une muraille de nuages noirs striés d'éclairs horizontaux. À l'intérieur, des rochers, des arbres et des éclats de cristal tournoient. »*
 
 ## découverte -- le bras de mer
 
