@@ -139,9 +139,7 @@ Le robot émet un premier rapport :
 
 ## Nuit 1 -- Transition
 
-Le groupe installe le dôme de repos à la lisière de la forêt fongique. Jet de dé nocturne. Événement possible : passage des pagures géants (si mauvais jet, ils piétinent le campement).
-
-**★ Pagure géant (si événement nocturne)**
+Le groupe installe le dôme de repos à la lisière de la forêt fongique. Appliquer le repos nocturne et la table centrale des événements nocturnes.
 
 ---
 
@@ -265,6 +263,8 @@ Elle ne s’intéresse qu’aux corps ouverts : plaies, déchirures, chairs mal 
 Installation du camp.
 
 *« La forêt fongique s'illumine dans l'obscurité. Des millions de spores dorées flottent dans l'air comme des lucioles paresseuses. »*
+
+Appliquer le repos nocturne et la table centrale des événements nocturnes.
 
 **/!\ Distribution des fiches parasites**
 
@@ -491,20 +491,7 @@ Les structures osseuses sont des arbres-cadavres -- créés quand les défenses 
 
 L’air est sec comme un four. Le terrain monte, escarpé, ocre et gris. Chaque pas soulève une poussière fine qui colle à la gorge. Vos lèvres se fendent. La langue devient lourde
 
-**Événement nocturne possible :** le spectre-diapason (écho-écho) -- créature qui traque le bruit. Les joueurs doivent rester absolument silencieux (chuchoter IRL).
-
-**Important :** si écho-écho est rencontré ici, alors Hollow sera dans le vaisseau au Jour 5. Si écho-écho n'apparaît pas cette nuit, il sera dans le vaisseau à la place de Hollow.
-
-**★ Écho-écho (spectre-diapason)**
-
-**/!\ Jeu du silence -- règles IRL**
-
-- Annoncez : « Une créature vous traque. Elle chasse au son. À partir de maintenant, vous devez chuchoter. »
-- Tout joueur qui parle à voix normale = son personnage a fait du bruit = attaque
-- Communication par gestes/écriture encouragée
-- Durée : jusqu'à ce que la créature parte (10-15 min) ou soit tuée
-- **Synergie :** outre-pulmonaire en leurre sonore = arme ultime contre l'écho-écho
-*Cette scène est souvent mémorable. Laissez la tension s'installer.*
+Appliquer le repos nocturne et la table centrale des événements nocturnes.
 
 **▷ Évolution du robot -- Jour 4**
 
@@ -586,7 +573,7 @@ Le vaisseau est là, à moitié enfoncé dans le sol. Sa coque est percée par e
 
 **La troisième force : Hollow ou écho-écho**
 Une créature s'est installée dans le vaisseau abandonné. **Choix du MJ :**
-- **Si écho-écho n'a pas été rencontré en Nuit 4 :** il traque les bruits dans les coursives du vaisseau (voir fiche créature écho-écho)
+- **Si écho-écho n'a pas été rencontré comme événement nocturne :** il traque les bruits dans les coursives du vaisseau (voir fiche créature écho-écho)
 - **Sinon :** Hollow, prédateur psychique qui a fait du vaisseau son territoire
 
 **★ Hollow**
