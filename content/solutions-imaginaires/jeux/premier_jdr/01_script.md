@@ -20,6 +20,32 @@ tags:
 
 - Si observation, dévoiler les *items* présents dans la capsule. Ajuster le nombre d'objets parmi lesquels choisir en fonction de la réussite du jet de dés. Chaque joueur peut prendre 2 items.
 
+**Armes et protections de capsule**
+
+- **Pistolet à plasma résiduel** : Arme à distance, +2 AGI au tir.
+- **Combinaison thermique** : Armure légère, +1 RES. Protège des chocs légers, des spores et des éclaboussures mineures.
+
+**Objets de capsule**
+
+| **Objet** | **Effet** |
+| --- | --- |
+| GPS orbital | indique la direction du vaisseau, sans détecter obstacles ni créatures |
+| Drone de reconnaissance | cartographie courte, observation aérienne, +3 PER pour tous les PJ quand l'angle aide vraiment |
+| Dôme de repos portatif | abri compact et facile à déployer contre intempéries et petites créatures, mais attire l'attention si pas camouflé |
+| Caisse à outils | +4 aux réparations et bricolages techniques |
+| Kit de soin | rend 1d6 PV, trois recharges |
+| Corde d'escalade | +2 AGI quand usage approprié |
+| Masque filtrant | protège d'un gaz toxique, usage unique |
+| Balise lumineuse | éclairage puissant, +3 PER dans une zone obscure, usage unique|
+| Parachute d'urgence | annule une chute majeure, usage unique |
+| Gants de préhension | +3 FOR pour saisir, porter ou manipuler des objets lourds ; attention, ils peuvent écraser ce qui est fragile |
+
+**Règle générale de craft nocturne**
+
+- Le craft est possible dès que les deux ingrédients indiqués sont réunis.
+- Lors d'un repos nocturne, si les dés de la table centrale font 5 ou 6, les PJ trouvent un matériau de craft qui leur manquait pour fabriquer une arme ou une armure du biome traversé.
+
+
 - Au bout de 2 minutes, le patriarche-composteur passe au loin et saisit délicatement la capsule pour l'emporter vers une grotte. Des ronces tentaculaires sortent de la grotte et commencent à décortiquer la capsule. Si les joueurs sont encore dedans ou tentent de s'opposer, jet de survie pour déterminer la manière dont ils s'en extraient. 
 
 *« Ce que vous preniez pour une colline se lève. Quatre étages de bois humide, de mousse et de champignons grouillants. Ses doigts font la taille d'un tronc, et ils se referment sur la capsule pour la soulever comme on cueillerait une fleur. Puis il s'éloigne, et la capsule avec. Il la dépose devant l'entrée d'une grotte qui commence à la décortiquer en morceaux à l'aide de ronces animées qui décomposent la carlingue précision. »*
@@ -75,18 +101,17 @@ S'ils demandent une observation : « Parmi les cadavres et les excroissances fon
 **LOOT**
 
 - Fonctionnement partiel : si les PJ trouvent de quoi les réparer, ils peuvent rétablir le fonctionnement intégral d'un des trois objets suivants. Vous pouvez librement choisir les effets de cette réparation-amélioration.
-  - Le robot (endommagé légèrement, fonctionnement minimal, à réparer s'ils veulent plus)
-    - réparation possible : caisse à outils.
-  - Le GPS (un des câbles est déchiré, fonctionnement minimal, à réparer s'ils veulent plus)
-    - réparation possible : remplacer le câble déchiré avec l'[anguille-câble]
-  - Le drone de reconnaissance (le système d'alimentation est détruit, fonctionnement minimal, à réparer s'ils veulent plus)
-    - réparation possible : reconstituer le système d'alimentation avec [anguille-câble] + [sphère galvanique]. 
-- Le dôme de repos portatif
-- Caisse à outils
-- Anguille-câble
-  - *« Dans l'eau sombre, vous apercevez un ver tubulaire translucide d'environ un mètre. Son système nerveux dessine des arabesques dorées à fleur de peau. Il est emmêlé dans des racines, et frémit faiblement. »*
-  - Si les joueurs tentent de la saisir à mains nues, ils se prennent une petite châtaigne électrique. 
-  - Son corps est composé d'un matériau conducteur très performant. 
+  - **Robot sentinelle** : compagnon d'analyse, de portage et d'assistance. Réparation possible avec la caisse à outils.
+  - **GPS orbital** : indique le vaisseau plus précisément si son câble est remplacé par l'anguille-câble.
+  - **Drone de reconnaissance** : reprend son vol si son alimentation est reliée à une anguille-câble et une sphère galvanique.
+
+| **Objet** | **Effet** | **Risque** |
+| --- | --- | --- |
+| Outre-pulmonaire | masque vivant contre les gaz, amortisseur organique | fragile hors de son milieu d'origine|
+| Anguille-câble | conducteur souple, réparation électronique | décharge légère si saisie à mains nues |
+| Caisse à outils | bonus fort aux réparations | bruyante, lourde, très visible |
+
+*« Dans l'eau sombre, vous apercevez un ver tubulaire translucide d'environ un mètre. Son système nerveux dessine des arabesques dorées à fleur de peau. Il est emmêlé dans des racines, et frémit faiblement. »*
 
 Le robot émet un premier rapport : 
 
@@ -126,18 +151,23 @@ Le robot émet un premier rapport :
 
 | **Matériau** | **Effets** | **Danger** |
 | --- | --- | --- |
-| Outre-pulmonaire | respirateur (immunité gaz) ou amortisseur (chute <10m) | viabilité 2j, coûte 1 PV/j |
-| Sphère galvanique | lampe 100 lumens 4h ou batterie bio | surchauffe si non utilisée |
-| Anguille-câble | pont électrique, répare électronique | s'emmêle, 1d6 pour démêler |
+| Sphère galvanique | batterie bio, connexion possible à l'anguille-câble, lampe brute, surcharge magnétique | chauffe si mal isolée |
 | Lézard-amphibie | respiration sous l'eau | lâche prise si panique/combat |
 | Nénuphar gluant | adhésif puissant, assemblage | très collant, difficile à retirer |
+| Plaque chitine-béton | plaque rigide, renfort de base ou support de montage | extrêmement lourd |
+| Massue du platane | maillet incassable, test de dureté, piquets | inutilisable en combat |
 | *Du crapaud-hallucinogène :* |  |  |
 | Glandes hallucinogènes | grenade fumigène (déni zone, 3 tours) | dangereux sans protection |
 | Peau visqueuse | imperméable/isolant | -- |
 
+## **Crafts possibles avec le loot du biome**
+
+- **Griffe-Foudre** : nécessite Sphère galvanique + Anguille-câble. Effet : Arme de mêlée, +2 FOR. Un arc électrique inflige -1 PV brut à une cible proche de l'ennemi touché.
+- **Écorce-Vivante** : nécessite Massue du platane + Peau visqueuse. Effet : Armure, +2 RES. Le porteur regagne 1 PV au début de chaque combat.
+
 ---
 
-## Nuit 1 -- Transition
+## Nuit 1 
 
 Le groupe installe le dôme de repos à la lisière de la forêt fongique. Appliquer le repos nocturne et la table centrale des événements nocturnes.
 
@@ -170,13 +200,19 @@ La créature tient à peine dans la main. Sous sa peau pâle, des veines vertes 
   - Et monte sur l'épaule du PJ qui a joué avec lui pour toute la durée du jour 2
     - Libre à vous de définir ses actions et effets par la suite (ex : phénomènes environnementaux bénéfiques)
 
+**♢ Loot -- muraille vivante**
+
+| **Objet** | **Effet** | **Risque** |
+| --- | --- | --- |
+| Écaille de bison-cuirassé | clé végétale qui ouvre la muraille noire | passage bref, fermeture progressive |
+
 ---
 
 ## Phase 2
 
-*Entre deux champignons hauts comme des tours, le sentier s’arrête devant une cabane creusée dans le pied creux d’un vieux champignon mort. Sa chair sèche forme des parois pâles, striées de brun, comme un bois malade. Une petite cheminée de terre noire en dépasse, et sa fumée monte lentement dans l’air humide avant de se perdre sous les chapeaux géants. Autour, un potager déborde de vie. Des tiges grasses rampent sur le sol. De gros légumes inconnus percent la mousse. Rien ne bouge, pourtant tout semble pousser à vue d’œil.*
+*Entre deux champignons hauts comme des tours, le sentier s’arrête devant une cabane creusée dans le pied creux d’un vieux champignon mort. Sa chair sèche forme des parois pâles, striées de brun, comme un bois malade. Une petite cheminée de terre noire en dépasse, et sa fumée monte lentement dans l’air humide avant de se perdre sous les chapeaux géants. Autour, un atelier vivant déborde de pousses. Des tiges grasses rampent sur le sol. De grosses excroissances inconnues percent la mousse. Rien ne bouge, pourtant tout semble pousser à vue d’œil.*
 
-OREN
+**OREN**
 
 S'ils s'approchent ou si observation quelconque, 
 
@@ -196,7 +232,6 @@ Description de sa transformation si le combat est engagé,
 
 **Ce qu'il offre :**
 - Soins (il a des onguents efficaces)
-- Nourriture (fruits et légumes de son potager)
 - Abri pour la nuit
 - Informations sur la planète
 
@@ -206,7 +241,6 @@ Oren porte la marque de ce monde depuis plus longtemps qu’il ne s’en souvien
 
 **Chaque interaction suivante = 1 point de contamination :**
 - Accepter ses soins (onguents)
-- Manger sa nourriture (fruits/légumes du potager)
 - Dormir chez lui
 - Toucher ses plantes
 - Contact physique prolongé (poignée de main, accolade)
@@ -220,7 +254,7 @@ Oren porte la marque de ce monde depuis plus longtemps qu’il ne s’en souvien
 
 * « Vous êtes les premiers visiteurs depuis... combien de temps déjà ? »
 * « Le vaisseau ? Ah oui... »
-* « Goûtez. Ils sont mûrs. La terre les a gardés pour nous. »
+* « Regardez. Même ici, quelque chose continue de pousser. »
 * « Vous semblez fatigués. Restez cette nuit. Demain, vous verrez les choses plus clairement. »
 * « Je ne suis pas seul ici. La forêt prend soin de moi. »*
 
@@ -229,16 +263,19 @@ Oren porte la marque de ce monde depuis plus longtemps qu’il ne s’en souvien
 
 | **Objet** | **Effet** | **Danger** |
 | --- | --- | --- |
-| Écureuil-coffre ou Écureuil-zeppelin | +3 slots inventaire ou gravité -50% (sauts) | part si pas nourri, explose si trop nourri |
-| Graines corrompues | possède l'écureuil-coffre, corrompt inventaire | contaminer un PJ |
-| Lianes épineuses | fouet +2 dégâts, cordage résistant | conducteur électrique |
+| Graines corrompues | possède l'écureuil-coffre, corrompt l'inventaire organique | contaminer un PJ |
+| Lianes épineuses | cordage résistant, entrave à distance | conducteur électrique |
+| Filaments fongiques | fil fin pour tissage, filet ou suture d'urgence | infection si peau ouverte |
+| Résine phosphorescente | balise visuelle, marquage de chemin, lumière faible | attire ce qui suit la lumière |
+| Écureuil-coffre-zeppelin | +3 slots d'inventaire organique, allège une charge ou permet un grand saut | caractère imprévisible |
+| Fiole de catalyseur | double l'effet d'une substance | réaction violente si test INT raté |
 | Onguents d'Oren | soins efficaces (+1d6 PV) | contamination |
 | *Si combat avec Oren :* |  |  |
-| Fragments mycélium | résister à l'infection | manipulation délicate |
+| Fragments mycélium | développer résistance à l'infection, soigner un parasité | manipulation délicate |
 
 ---
 
-## Phase 2 (suite, si l'intéraction avec Oren a fini en *fight*)
+## Phase 2 (suite, si l'intéraction avec Oren a fini en *combat*)
 
 **L'araignée-suture**
 
@@ -252,9 +289,17 @@ Elle ne s’intéresse qu’aux corps ouverts : plaies, déchirures, chairs mal 
 
 | **Matériau** | **Effet** | **Obtention** |
 | --- | --- | --- |
-| Bobine bio-fil | suture auto-réussie ou corde ultra-fine 50m | tuer ou capturer |
-| Aiguilles articulées | flèches perforantes | tuer ou capturer |
-| Glande à soie | 50m de fil supplémentaire | capturer vivant (piège/gel) |
+| Bobine bio-fil | suture auto-réussie ou corde ultra-fine | tuer ou capturer |
+| Aiguilles articulées | pointes perforantes, crochetage fin | tuer ou capturer |
+| Glande à soie | réserve de fil organique | capturer vivant (piège/gel) |
+
+**Loot spécial de l'araignée-suture**
+
+- **Arc-Suture** : récupéré directement sur l'araignée-suture. Effet : Arme à distance, +3 AGI. Peut tirer sur les alliés pour les soigner de 1d3 ; sur échec, le tir blesse de 1 DMG brut.
+
+## **Craft possible avec le loot du biome**
+
+- **Voile-Fongique** : nécessite Filaments fongiques + Résine phosphorescente. Effet : Armure souple, +2 PV max. Le porteur est ciblé en dernier tant qu'il ne provoque pas l'ennemi.
 
 ---
 
@@ -297,7 +342,7 @@ Le robot s'immobilise au milieu de la plage,
 
 ---
 
-## Phase 2 : le problème de la traversée (20-25 min)
+## Phase 2
 
 *« L’eau s’étend devant vous, noire et parfaitement calme. On ne distingue rien sous la surface. La rive opposée est visible, mais loin : cinq cents mètres d’eau ouverte. »*
 
@@ -331,12 +376,17 @@ Ces prédateurs opportunistes entrent par la trompe exposée à l'air pour se no
 
 | **Matériau** | **Effet** | **Danger** |
 | --- | --- | --- |
-| Carapace dorsale | bouclier ou renfort robot | très lourd (-2 AGI) |
-| Dard foreur | arme forage, perce armures | perd effet paralysant après 24h |
+| Carapace dorsale | plaque lourde, base de cuirasse ou renfort robot | très lourd |
+| Dard foreur | outil de forage, perce carapace et matériaux mous | toxine instable |
 | Mandibules | cisailles, coupe métal/câbles | bruyantes |
 | Glandes acides | 3 grenades corrosives | fuite si mal stockée |
-| Chair ventrale | repas (+2 PV), délicieuse | augmente rapidement la soif |
-| Œuf gélatineux | leurre pour crabes, apaise | se dessèche en 2h hors de l'eau |
+| Œuf gélatineux | leurre pour crabes, apaise leur agressivité | fragile hors de l'eau |
+| Cartilage baleine-méduse | manche souple, renfort, flotteur organique | se déforme à sec |
+
+## **Crafts possibles avec le loot du biome**
+
+- **Trident-Corail** : nécessite Dard foreur + Cartilage baleine-méduse. Effet : Arme polyvalente, +2 FOR en mêlée ou +2 AGI au lancer, au choix. Le porteur choisit la stat utilisée à chaque tour.
+- **Cuirasse Kaskasssée** : nécessite Carapace dorsale + Mandibules. Effet : Armure, +2 PV max. Quand le porteur subit une attaque au corps à corps, lancez 1d6 : sur 4 ou plus, l’attaquant perd 1 PV.
 
 La baleine-méduse dépose sa progéniture (joueurs inclus) sur la plage opposée. La tempête fait rage derrière eux, mais ils sont passés. Ils sont au pied de la montagne à franchir pour suivre le signal GPS. 
 
@@ -382,15 +432,20 @@ L'oasis-tuyau est la seule source d'eau de cette zone. Elle se situe au sommet d
 
 ## Phase 2
 
-*La falaise ne propose pas vraiment de route. À gauche, une cassure verticale monte dans l'ombre. Des traces brillantes et sinueuses scintillent par endroits. À droite, la pente s'élargit en plein soleil, traversée de grandes structures d'os qui sortent du sable comme des cages ouvertes. Au sommet de ces arches pendent des fruits oranges, lourds de jus.*
+*La falaise ne propose pas vraiment de route. À gauche, une cassure verticale monte dans l'ombre. Des traces brillantes et sinueuses scintillent par endroits. À droite, la pente s'élargit en plein soleil, traversée de grandes structures d'os qui sortent du sable comme des cages ouvertes. Au sommet de ces arches pendent des capsules oranges, lourdes de jus.*
 
 **/!\ Mécanique -- déclencher la voie**
 
 Ne pas demander de choisir. La première piste qui reçoit deux gestes concrets devient la voie de l'ascension.
 
 - **Voie des vercolles :** examiner la paroi, suivre l'ombre, chercher des prises, toucher les traces brillantes, utiliser une corde ou une créature adhésive.
-- **Voie des vélociraptors solaires :** approcher les arches d'os, cueillir ou éventrer un fruit, traverser à découvert, suivre les traces autour des arbres-cadavres.
+- **Voie des vélociraptors solaires :** approcher les arches d'os, détacher ou éventrer une capsule, traverser à découvert, suivre les traces autour des arbres-cadavres.
 - **Si les PJ hésitent trop :** la déshydratation avance. 
+
+**Équipement utile ici**
+
+- **Combinaison thermique** : réduit l'impact de la chaleur et des écarts de température.
+- **Gants de préhension** : +3 FOR pour saisir, porter ou manipuler des objets lourds ; attention, ils peuvent écraser ce qui est fragile.
 
 ### Voie 1 
 
@@ -414,6 +469,12 @@ Ne pas demander de choisir. La première piste qui reçoit deux gestes concrets 
 - Un sac se transforme en boule de poussière, de cailloux et de petits insectes paniqués.
 - Quelqu'un se gratte la joue et doit finir l'ascension la main collée au visage.
 
+**♢ LOOT**
+
+| **Matériau** | **Effet** | **Danger** |
+| --- | --- | --- |
+| Mucus de vercolle | adhésif pour escalade, assemblage et immobilisation | colle tout ce qui touche |
+
 À mi-hauteur,
 
 *Un cri sec descend du ciel. Une forme blanche et noire décroche d'une corniche. Elle plane sans battre des ailes. Sous son ventre, des clous, des boucles, des dents de scie, des fragments de coque et de vieilles cartouches forment une armure de choses volées. Son bec s'ouvre sur un petit claquement satisfait.*
@@ -430,21 +491,21 @@ Ne pas demander de choisir. La première piste qui reçoit deux gestes concrets 
 
 | **Matériau** | **Effet** | **Danger** |
 | --- | --- | --- |
-| Glande de flux | attire métal 5m ou désarme (test DEX) | efface disques/cartes magnétiques |
+| Glande de flux | attire le métal ou désarme (test DEX) | perturbe supports magnétiques |
 | Tout métal volé | récupération des objets perdus | tri à faire |
 
 ### Voie 2 
 
-*Les arches d'os ne sont pas mortes. Elles vibrent par moments, très légèrement, comme si quelque chose respirait sous la pierre. Les fruits oranges pendent à hauteur d'homme. Leur peau est fine. On croirait voir le jus se déplacer dedans.*
+*Les arches d'os ne sont pas mortes. Elles vibrent par moments, très légèrement, comme si quelque chose respirait sous la pierre. Les capsules oranges pendent à hauteur d'homme. Leur peau est fine. On croirait voir le jus se déplacer dedans.*
 
 Si les PJ observent avant de toucher,
 
-*Un fourmilier à deux trompes sort d'une fente de roche. Il avance avec prudence jusqu'au premier fruit, puis l'aspire d'un coup. Son ventre gargouille de plaisir. Plus haut, la lumière change. Trois silhouettes dévalent la pente, rapides, basses, presque sans bruit. Leurs queues s'ouvrent comme des miroirs. Elles arrivent au niveau du fourmilier, et sans s'arrêter, l'encagent dans leurs défenses d'ivoire dorsales. En quelques secondes, le fourmilier est emporté vers le sommet.*
+*Un fourmilier à deux trompes sort d'une fente de roche. Il avance avec prudence jusqu'à la première capsule, puis l'aspire d'un coup. Son ventre gargouille de plaisir. Plus haut, la lumière change. Trois silhouettes dévalent la pente, rapides, basses, presque sans bruit. Leurs queues s'ouvrent comme des miroirs. Elles arrivent au niveau du fourmilier, et sans s'arrêter, l'encagent dans leurs défenses d'ivoire dorsales. En quelques secondes, le fourmilier est emporté vers le sommet.*
 
 **Les arbres-cadavres**
 
-- Les structures osseuses poussent à partir des restes de proies anciennes, et finissent par produire des fruits appétissants.
-- Les fruits mortuaires attirent les proies. Leur odeur signale la meute.
+- Les structures osseuses poussent à partir des restes de proies anciennes, et finissent par produire des capsules odorantes.
+- Les capsules mortuaires attirent les proies. Leur odeur signale la meute.
 - C'est le jus qui attire les vélociraptors.
 
 **Les vélociraptors solaires**
@@ -467,7 +528,7 @@ Si les PJ observent avant de toucher,
 | --- | --- | --- |
 | Défenses d'ivoire | tuteur croissance végétale accélérée | produit arbre-cadavre si plantées dans cadavre |
 | Plumes-miroirs | bouclier réfléchissant, flash défensif | se ternissent à l'humidité |
-| Fruit mortuaire | leurre : attire la meute | créatures ciblent celui éclaboussé |
+| Capsule mortuaire / capsule maudite | leurre : attire la meute, éclate en jus pestilentiel | créatures ciblent celui éclaboussé |
 
 ---
 
@@ -475,11 +536,11 @@ Si les PJ observent avant de toucher,
 
 *Le sommet coupe net la montée. La roche devient plate, blanche, brûlante. Puis, au centre du plateau, quelque chose sort du sol : un arbre lisse, cylindrique d'un blanc immaculé. Il ressemble à un vieux tuyau planté dans la pierre. De l'intérieur monte un bruit d'eau.*
 
-*Dans le tube, l'air change. Il fait frais. Des mousses épaisses se reposent sur les parois. Des insectes minuscules boivent une goutte, puis s'écartent. Un lézard mord dans un fruit, en laisse la moitié, repart sans courir. Au fond, une eau claire tombe dans une vasque de pierre.*
+*Dans le cylindre osseux, l'air est frais. Des mousses épaisses se reposent sur les parois. Des insectes minuscules boivent une goutte, puis s'écartent. Un lézard mord dans une excroissance spongieuse, en laisse la moitié, repart sans courir. Au fond, une eau claire tombe dans une vasque de pierre.*
 
 **L'oasis-tuyau**
 
-- Source d'eau pure et de fruits réparateurs.
+- Source d'eau pure et de mousses médicinales.
 - Micro-écosystème fermé : les créatures y prennent peu, lentement, sans se battre.
 - Prendre avec parcimonie ne déclenche rien.
 - Prendre trop, salir l'eau, blesser une créature ou arracher des plantes réveille la gardienne.
@@ -497,8 +558,8 @@ Si elle attaque,
 
 **▷ Règles de l'oasis-tuyau**
 
-- **Parcimonie :** 1 vraie gorgée d'eau par personne, 1 fruit par personne. La déshydratation s'arrête.
-- **Gourmandise :** prendre plus déclenche la coccisabre.
+- **Parcimonie :** 1 vraie gorgée d'eau par personne, sans prélèvement violent. La déshydratation s'arrête.
+- **Excès :** prendre plus déclenche la coccisabre.
 - **Violence :** toute agression déclenche une attaque immédiate.
 - **Pollen :** paralysie progressive. Au premier tour d'exposition, -2 AGI. Au troisième, chute ou immobilisation si aucun test de résistance n'est réussi.
 - **Enfermement :** si les PJ insistent après l'avertissement, les parois du tube se contractent. La sortie reste visible, mais plus personne ne passe facilement.
@@ -508,12 +569,17 @@ Si elle attaque,
 | **Ressource** | **Effet** | **Condition** |
 | --- | --- | --- |
 | Eau pure de l'oasis | annule déshydratation, +1 PV | prendre avec parcimonie |
-| Fruit de l'oasis | +3 PV, désaltère, +1 jets 2h | prendre avec parcimonie |
-| Dent-sabre | +5 dégâts bruts, tranche os/tendons | tuer la coccisabre (FOR 7+ requis) |
 | Glande à toxine | 10 doses poison (paralysie progressive) | tuer la coccisabre |
-| Carapace coccisabre | armure lourde (-3 AGI) | tuer la coccisabre |
+| Poudre styptique | stoppe un saignement immédiatement | cinq doses |
+| Plaques de carapace coccisabre | matériau ultra-léger, base de protection | tuer ou apaiser la coccisabre |
+| Dent-sabre brute | Arme lourde. Ignore 3 RES. + 1 FOR - 2 AGI. | récupérée directement sur la coccisabre |
 
-*Être gourmand = enfermement dans l'oasis et digestion lente. La coccisabre ne poursuit pas dehors. Elle empêche seulement de sortir.*
+## **Crafts possibles avec le loot du biome**
+
+- **Faux-Solaire** : nécessite Défenses d'ivoire + Plumes-miroirs. Effet : Arme de mêlée, +2 FOR. Les attaques appliquent l'état enflammé si le combat a lieu en terrain dégagé sous le soleil.
+- **Carapace coccisabre** : nécessite Plaques de carapace coccisabre + Poudre styptique. Effet : Armure efficace et ultra-légère, +2 RES + 1 AGI
+
+*Prendre trop = enfermement dans l'oasis et digestion lente. La coccisabre ne poursuit pas dehors. Elle empêche seulement de sortir.*
 
 ---
 
@@ -554,8 +620,9 @@ Si les PJ entrent dans la marée, il faut leur demander de détailler leur actio
 
 | **Matériau** | **Effet** | **Danger** |
 | --- | --- | --- |
-| Bulbe communicant | attire, calme ou détourne les zèbres-crapauds par vibrations | trop fort = attire toute la marée |
+| Bulbe communicant | envoie des ondes basse-fréquence | 
 | Peau rayée épaisse | protection souple, camouflage dans les herbes | odeur persistante, prédateurs curieux |
+| Sifflet à vent | apaise ou signale aux créatures sensibles au son | dangereux près d'écho-écho |
 
 ---
 
@@ -605,7 +672,6 @@ Si le dormeur se réveille,
 | --- | --- | --- |
 | Pétales de fleurs-hélices | parachute, plané court, frein de chute | usage unique, fragile |
 | Tige vrillée | ressort organique, lanceur léger | se détend d'un coup si mal nouée |
-| Plaque céramique du dormeur | armure lourde exceptionnelle | presque impossible à prélever sans l'éveiller |
 | Glande de stase | sédatif massif, K.O. instantané | manipulation très dangereuse |
 
 ---
@@ -695,5 +761,10 @@ Dans tous les cas, Hollow occupe la salle de cryogénisation, tandis qu’écho-
 | Syrinx mimétique | projette voix ou sons à 30m, leurres parfaits | écho-écho tué ou piégé |
 | Membrane tympanique | capteurs sonores ultra-sensibles | prélèvement délicat |
 | Fragment psychique | peut apaiser ou soigner un parasité | Hollow vaincu |
-| Peau céramique | armure légère réfléchissante | Hollow vaincu |
 | Cellule d'énergie du vaisseau | recharge majeure, dernier secours technique | la prendre fragilise le décollage |
+| Balise de détresse | signal orbital unique, dernier appel possible | usage irréversible |
+
+## **Crafts possibles avec le loot du biome**
+
+- **Carillon des Spectres** : nécessite Syrinx mimétique + Membrane tympanique. Effet : Arme à distance, +2 PER. Le porteur attaque avec PER.
+- **Membrane de Stase** : nécessite Glande de stase + Fragment psychique. Effet : Armure, +2 RES. À 3 PV ou moins, le porteur devient invulnérable pendant un tour, ne peut pas agir, puis inflige -2 PV aux ennemis proches. Une fois par biome.
