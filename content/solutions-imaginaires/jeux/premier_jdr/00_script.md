@@ -517,123 +517,188 @@ Si elle attaque,
 
 ---
 
-## Nuit 4 -- Veillée tendue
+## Nuit 4 
 
 Appliquer le repos nocturne et la table centrale des événements nocturnes.
 
 ---
 
-# Jour 5 -- La Prairie et le Vaisseau
+# Jour 5 
 
-## Phase 1 : la migration (15 min)
+## Phase 1 
 
-**Événement passif : la migration des zèbres-crapauds**
-- Des milliers de créatures traversent la prairie dans une direction
-- Leurs bulbes gonflables communiquent par vibrations
-- Danger : se mettre en travers = piétinement
-- Solution : suivre le flux, se laisser porter, ou attendre que ça passe (mais perte de temps)
+*La montagne s'abaisse d'un coup. Devant vous, une prairie immense ondule sous le vent. L'herbe monte bien plus haut que vos épaules. Au loin, le vaisseau dépasse à peine : une masse sombre, plantée de travers dans le vert.*
 
-**★ Zèbres-chèvres**
+Le signal GPS est net. Le chemin le plus direct traverse la prairie. L'herbe haute ralentit et cache les reliefs, mais elle ne blesse pas.
 
-**▷ Options -- migration des zèbres-chèvres**
+*Le tremblement commence sous vos pieds. Puis il gagne la prairie entière. Une ligne rayée traverse l'horizon, trop large pour être un troupeau ordinaire. Des milliers de quadrupèdes avancent en marée, bulbes dorsaux gonflés, dégonflés, gonflés encore, tous au même rythme.*
 
-1. **Suivre le flux :** marcher avec eux, se laisser porter (sûr mais lent)
-2. **Grimper sur un dos (AGI 12) :** voyage confortable mais risque de chute
-3. **Attendre :** 2-3h pour que la migration passe (perte de temps)
-4. **Détourner :** utiliser bulbe communicant pour dévier le flux (créatif)
-5. **Le grand saut :** au bout d'un moment les zèbres-chèvres paniquent et dévient brutalement leur trajectoire et se mettent à bondir en dehors du trajet. ils ont eu peur de...
+**Les zèbres-crapauds**
 
----
+- Ils migrent en suivant des vibrations de très basse fréquence.
+- Ils ne cherchent pas à écraser les PJ. Ils ne les évitent pas non plus.
+- Les bulbes dorsaux servent à communiquer : pression, rythme, direction.
+- Se mettre en travers sans bouger = piétinement.
 
-## Phase 2 : une créature endormie bloque le passage
+*Si les PJ entrent dans la marée :*
 
-**L'obstacle :** le dormeur qui bloque le seul chemin possible
+*Des flancs chauds vous serrent de tous les côtés. Les bulbes vibrent contre vos côtes. L'air sent l'herbe arrachée, la vase sèche et le muscle. À chaque pas, le troupeau décide un peu pour vous.*
 
-**Puzzle biologique -- les fleurs-hélices**
-- Des plantes dont les pétales tournent rapidement et qui s'envolent
-- Légères mais avec une portance suffisante
-- Solution : s'accrocher à plusieurs fleurs-hélices pour survoler le dormeur sans le toucher
-- Alternative : utiliser l'écureuil-coffre gonflé pour flotter/planer
+**▷ Possibilités -- la migration**
 
-**★ Dormeur**
+1. **Suivre le flux :** marcher avec eux. C'est sûr, mais lent. Le groupe ressort plus loin que prévu.
+2. **Monter sur un dos (AGI 12) :** traversée rapide. En cas d'échec : chute, séparation courte, ou objet perdu dans la foule.
+3. **Imiter les bulbes :** percussion, voix grave, outre-pulmonaire, caisse métallique, robot ou bulbe prélevé. Un bon rythme peut ouvrir un couloir ou dévier la marée.
+4. **Le grand saut :** si la scène piétine, une vibration plus profonde traverse la prairie. Les zèbres-crapauds paniquent, bondissent tous dans la même direction, puis libèrent brutalement un passage vers la zone du dormeur.
 
-**/!\ Danger critique -- le dormeur**
+**♢ LOOT**
 
-**★ Fleurs-hélices**
-
-**▷ Options -- traversée du dormeur**
-
-1. **Fleurs-hélices (ATH 10) :** s'accrocher à 2-3 fleurs, survoler 5-10 min
-2. **Écureuil-coffre gonflé :** flotter/planer au-dessus (1 personne)
-3. **Pont improvisé :** troncs flottants sans toucher l'eau (très difficile)
-4. **Contourner :** possible mais ajoute 2-3h de marche
-*La traversée-survol doit être silencieuse.*
+| **Matériau** | **Effet** | **Danger** |
+| --- | --- | --- |
+| Bulbe communicant | attire, calme ou détourne les zèbres-crapauds par vibrations | trop fort = attire toute la marée |
+| Peau rayée épaisse | protection souple, camouflage dans les herbes | odeur persistante, prédateurs curieux |
 
 ---
 
-## Phase 3 : l'entrée du vaisseau (20-25 min)
+## Phase 2
 
-Le vaisseau est là, à moitié enfoncé dans le sol. Sa coque est percée par endroits, des excroissances végétales ont commencé à l'envahir. La sirène résonne faiblement.
+*Quand le dernier dos rayé disparaît, la prairie reste couchée derrière lui. Une route s'est ouverte dans les herbes. Elle file droit vers le vaisseau. Puis elle s'arrête contre quelque chose de pâle.*
 
-**Ce qu'ils découvrent :**
-- Les systèmes vitaux fonctionnent encore, mais plus pour longtemps
-- Les colons en cryogénisation sont vivants, mais certains caissons sont compromis
-- Le moteur peut encore démarrer, mais il faut purger les systèmes infiltrés
-- **Quelque chose d'autre est à bord...**
+*Une masse recroquevillée bloque le passage. Quinze mètres de chair immobile. Des tentacules lovés comme des câbles. Des dents visibles même gueule fermée. À chaque respiration, les herbes autour penchent vers elle, puis se redressent avec retard.*
 
-**▷ État du vaisseau (détails pour narration)**
+**Le dormeur**
 
-- **Coque :** percée en 3 endroits, lianes et racines à l'intérieur
-- **Systèmes :** 60% fonctionnels, 40% envahis par végétation
-- **Colons :** 1847 sur 2000 encore viables, 153 caissons compromis
-- **Moteur :** fonctionnel mais systèmes de purge bloqués par racines
-- **Carburant :** suffisant pour un seul décollage
-- **Présence anormale :** capteurs du robot détectent activité psychique intense dans la salle de cryogénisation
-*Purger les systèmes = 30 min de travail. C'est le moment où les parasités peuvent saboter.*
+- Le dormeur est un obstacle, pas un combat équilibré.
+- Il s'éveille si on le touche, si du sang coule près de lui, si une vibration violente le traverse, ou si les PJ font beaucoup de bruit au-dessus de son corps.
+- Son réveil prend quelques secondes : veines qui s'allument, souffle qui change, tentacules qui se déplient. Laissez aux PJ une vraie fenêtre de fuite.
+- Si le groupe insiste pour l'affronter, utiliser la fiche **★ Dormeur**.
 
-**La troisième force : Hollow ou écho-écho**
-Une créature s'est installée dans le vaisseau abandonné. **Choix du MJ :**
-- **Si écho-écho n'a pas été rencontré comme événement nocturne :** il traque les bruits dans les coursives du vaisseau (voir fiche créature écho-écho)
-- **Sinon :** Hollow, prédateur psychique qui a fait du vaisseau son territoire
+*Autour de lui, des tiges hautes portent des fleurs larges. Leurs pétales tournent avec le vent. Une fleur se déracine, monte de quelques mètres, flotte, puis retombe doucement dans les herbes.*
+
+**Les fleurs-hélices**
+
+- Une fleur seule ralentit une chute. Deux ou trois peuvent porter un corps léger sur une courte distance.
+- Elles réagissent aux gestes calmes. Les tirer, les frapper ou les arracher trop vite les fait vriller.
+- Le survol doit rester silencieux : pas de cri, pas de métal qui cogne, pas d'atterrissage lourd.
+
+**▷ Possibilités -- passer le dormeur**
+
+1. **Fleurs-hélices (ATH ou AGI 10) :** chaque PJ s'accroche à 2-3 fleurs. Échec : perte d'altitude, bruit, ou atterrissage trop proche du dormeur.
+2. **Écureuil-coffre gonflé :** permet de porter une personne ou un objet lourd. Il faut quand même contrôler la descente.
+3. **Pont improvisé :** lianes, pièces de coque, tentacules morts, mucus de vercolle. Possible, mais très lent et dangereux si cela vibre.
+4. **Détour :** 2-3h de marche dans l'herbe haute. Ajouter une complication : séparation, perte d'objet, retour partiel de la migration, ou approche du soir.
+5. **Réveiller volontairement :** diversion possible, mais la fuite devient la scène. Le dormeur ne négocie pas.
+
+*Pendant le survol :*
+
+*Les fleurs tirent sans brutalité. Le sol s'éloigne. Sous vous, le dormeur reste fermé. Dans les plis de sa peau, de petits parasites blancs se déplacent comme des grains de riz. Votre ombre passe sur ses paupières. Elles tremblent.*
+
+*Si le dormeur se réveille :*
+
+*La lumière apparaît d'abord sous la peau, en lignes bleues. Le souffle cesse. Puis la masse entière se déplie, trop grande, trop lente pour être réelle. Les tentacules se lèvent. La gueule s'ouvre.*
+
+**♢ Loot -- fleurs-hélices et dormeur**
+
+| **Matériau** | **Effet** | **Danger** |
+| --- | --- | --- |
+| Pétales de fleurs-hélices | parachute, plané court, frein de chute | usage unique, fragile |
+| Tige vrillée | ressort organique, lanceur léger | se détend d'un coup si mal nouée |
+| Plaque céramique du dormeur | armure lourde exceptionnelle | presque impossible à prélever sans l'éveiller |
+| Glande de stase | sédatif massif, K.O. instantané | manipulation très dangereuse |
+
+---
+
+## Phase 3
+
+*Le vaisseau est là. Pas au loin : là. Sa coque a labouré la prairie avant de s'enfoncer dans le sol. Des racines passent par les brèches. La sirène ne hurle plus vraiment. Elle respire, faible, à intervalles irréguliers.*
+
+Avant l'entrée, rappeler discrètement les fiches parasites du Jour 5. Les parasités peuvent maintenant agir frontalement s'ils le souhaitent. Les non-parasités savent que quelque chose va céder.
+
+Le robot peut donner le cadre :
+
+*« Systèmes vitaux instables. Cryogénisation partielle maintenue. Moteur récupérable. Fenêtre de purge estimée : trente minutes. Après cela, le décollage devient improbable. »*
+
+*Le sas cède dans un souffle froid. À l'intérieur, l'éclairage d'urgence coupe les couloirs en rouge et noir. Des racines longent les parois, passent dans les grilles, entrent dans les consoles ouvertes. Par endroits, elles pulsent comme des veines.*
+
+**État du vaisseau**
+
+- **Coque :** trois brèches principales, racines et lianes dans les coursives.
+- **Systèmes :** assez d'énergie pour un décollage, pas pour deux essais.
+- **Cryogénisation :** la majorité des caissons tient encore. Certains givrent, d'autres clignotent orange.
+- **Moteur :** fonctionnel, mais les conduites de purge sont bloquées par le vivant.
+- **Présence anormale :** le robot détecte une activité mentale ou sonore dans la zone de cryogénisation.
+
+**Objectif pratique**
+
+La scène finale doit avancer sur trois fronts. Donner au groupe des tâches concrètes et les laisser se diviser ou non.
+
+1. **Salle de purge :** couper, brûler, geler ou détourner les racines qui bloquent les conduites.
+2. **Cryogénisation :** stabiliser les caissons compromis et empêcher une ouverture accidentelle.
+3. **Console moteur :** relancer la séquence de décollage et maintenir le compte à rebours.
+
+Toutes les dix minutes, ajouter une complication :
+
+- une porte se bloque ;
+- un caisson se fissure ;
+- la sirène attire quelque chose ;
+- le robot perd une fonction ;
+- un sabotage discret devient visible ;
+- les racines se referment sur une conduite déjà libérée.
+
+**Les parasités dans le vaisseau**
+
+- Ils peuvent encore jouer subtil : débrancher un câble, ralentir la purge, perdre un outil, mentir sur une lecture de console.
+- Ils peuvent se révéler : bloquer une porte, attaquer le robot, convaincre que le décollage tuera tout le monde.
+- Ils ne sont pas obligés d'être suicidaires. Ils veulent empêcher le départ, mais Hollow ou écho-écho peuvent aussi les menacer.
+
+**La troisième force**
+
+Choisir selon ce qui a déjà eu lieu :
+
+- **Si l'écho-écho n'a jamais été rencontré :** il traque les bruits dans les coursives. Le vaisseau devient un piège sonore.
+- **Si l'écho-écho a déjà servi :** Hollow occupe la salle de cryogénisation.
+- **Si la table a besoin d'un final plus dense :** Hollow est au centre, écho-écho rôde en périphérie et attaque les scènes trop bruyantes.
+
+*Écho-écho, première apparition dans le vaisseau :*
+
+*Le couloir devient soudain très silencieux. Puis un claquement de dents. Rapide. Métallique. Au bout du passage, une silhouette humanoïde se tourne vers vous. À la place du visage, une parabole de chair écoute.*
+
+**★ Écho-écho**
+
+- Reprendre les règles IRL du silence : parler à voix normale = bruit dans la fiction.
+- Il attaque la source sonore la plus claire.
+- Les alarmes, outils, portes pneumatiques et disputes deviennent des leurres possibles.
+
+*Hollow, première apparition :*
+
+*Dans la salle de cryogénisation, la lumière bleue tombe sur les caissons alignés. Au centre, une silhouette immobile attend. Deux mètres. Lisse. Noire et blanche comme de la porcelaine vivante. Pas de visage, seulement une surface qui renvoie vos regards, déformés. Sa tête s'incline. Vos pensées deviennent lourdes.*
 
 **★ Hollow**
 
-**♦ Description -- première rencontre avec Hollow**
+- Hollow veut garder les consciences : colons, PJ, robot.
+- Il ne cherche pas à tuer d'abord. Il isole, possède, retourne les corps contre le groupe.
+- Pour l'emprise mentale, utiliser le duel psychique contre Hollow dans les mécanismes.
+- Si Hollow prend 5 PV ou plus en un coup, sa concentration casse : ses esclaves mentaux sont libres pendant 1 tour.
+- À sa mort, les esclaves sont libérés, mais la purge n'a pas attendu.
 
-*« Dans la salle de cryogénisation baignée d'une lumière bleutée, une silhouette se tient immobile au centre. Grande, lisse, noir et blanc comme de la porcelaine vivante. Pas de visage. Juste une surface réfléchissante qui renvoie vos propres regards déformés. Elle incline légèrement la tête. Une pression mentale écrase vos pensées. »*
+*À lire au joueur possédé, en aparté :*
 
-**Confrontation finale -- la dynamique à trois forces**
-La situation devient complexe avec trois factions en conflit :
-- **Les joueurs sains :** veulent partir, purger les systèmes, sauver les colons
-- **Les joueurs parasités :** veulent empêcher le départ, sabotent, argumentent pour rester
-- **Hollow et ses esclaves :** veut garder tout le monde comme collection d'esprits, possède les PJ un par un
+*Le silence. La paix. Tes pensées s'alignent enfin. Hollow n'est pas ton ennemi. Les autres vont tout casser, tout perdre, tout brûler. Empêche-les de lui faire du mal.*
 
-**/!\ Gestion de la confrontation finale**
+**▷ Gérer la confrontation finale**
 
-**Complications possibles :**
-- Un parasité est possédé par Hollow = doublement dangereux
-- Les sains sont en minorité face aux esclaves + parasités
-- Le robot peut être la cible prioritaire de Hollow (conscience = précieuse)
-- Timer : 30 min pour purger avant surcharge du moteur
+- **Tempo :** alterner action technique, sabotage, menace de la troisième force.
+- **Pression :** le compte à rebours doit rester visible. Trente minutes, puis le vaisseau ne promet plus rien.
+- **Alliances :** les parasités peuvent aider contre Hollow. Les sains peuvent libérer des esclaves. Un possédé peut résister assez longtemps pour dire une phrase utile.
+- **Dilemme :** tuer Hollow ou échapper à écho-écho prend du temps, mais ignorer la menace rend la purge presque impossible.
+- **Sortie :** quand deux des trois tâches du vaisseau sont réussies, proposer un décollage risqué. Quand les trois sont réussies, proposer un décollage propre. Si les parasités sabotent une tâche au dernier moment, jouer le choix final à visage découvert.
 
-**Alliances temporaires :**
-- Parasités + sains vs Hollow (ennemi commun)
-- Sains + esclaves libérés vs parasités (après mort de Hollow)
-- Parasités pourraient sacrifier un des leurs pour sauver le groupe de Hollow
+**♢ Loot -- vaisseau et troisième force**
 
-**▷ Gérer la scène finale**
-
-- **Tempo :** alterner entre tension psychologique (Hollow), sabotage (parasités), et action (purge systèmes)
-- **Possession :** quand un PJ est possédé, donnez-lui une fiche avec son nouvel objectif (servir Hollow)
-- **Libération :** si Hollow perd 5+ PV en un coup, concentration brisée = esclaves libérés 1 tour
-- **Mort de Hollow :** tous les esclaves sont libérés immédiatement, mais traumatisés
-- **Dilemme :** tuer Hollow = libérer esclaves mais perdre temps précieux pour purger systèmes
-*Cette scène peut devenir chaotique. C'est normal. Laissez les joueurs improviser des alliances.*
-
-**/!\ Options des parasités face à Hollow**
-
-Les joueurs parasités peuvent :
-- **Révélation :** se dévoiler et tenter de convaincre ouvertement (« restons, mais libres »)
-- **Alliance temporaire :** s'allier aux sains contre Hollow (« on préfère la planète à l'esclavage »)
-- **Sabotage subtil :** profiter du chaos pour saboter discrètement
-- **Sacrifice :** se laisser posséder pour sauver les autres (rédemption)
+| **Matériau** | **Effet** | **Condition** |
+| --- | --- | --- |
+| Syrinx mimétique | projette voix ou sons à 30m, leurres parfaits | écho-écho tué ou piégé |
+| Membrane tympanique | capteurs sonores ultra-sensibles | prélèvement délicat |
+| Fragment psychique | peut apaiser ou soigner un parasité | Hollow vaincu |
+| Peau céramique | armure légère réfléchissante | Hollow vaincu |
+| Cellule d'énergie du vaisseau | recharge majeure, dernier secours technique | la prendre fragilise le décollage |
