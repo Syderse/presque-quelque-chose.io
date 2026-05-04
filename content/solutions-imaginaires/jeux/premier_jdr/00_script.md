@@ -382,23 +382,84 @@ L'oasis-tuyau est la seule source d'eau de cette zone. Elle se situe au sommet d
 
 ## Phase 2
 
-**Danger :** une meute de vélociraptors solaires a établi son territoire sur le plateau. Ils chassent en encerclant leurs proies et en concentrant la lumière du soleil avec leurs queues-miroirs.
+*La falaise ne propose pas vraiment de route. À gauche, une cassure verticale monte dans l'ombre. Des traces brillantes et sinueuses scintillent par endroits. À droite, la pente s'élargit en plein soleil, traversée de grandes structures d'os qui sortent du sable comme des cages ouvertes. Au sommet de ces arches pendent des fruits oranges, lourds de jus.*
 
-**Options :**
-- Évitement : passer de nuit ou à l'ombre (mais perte de temps)
-- Distraction : utiliser le fruit maudit d'un arbre-cadavre pour attirer leur attention ailleurs
-- Combat : risqué, mais possible si on brise leurs queues-miroirs
-- Utilisation créative : se laisser capturer pour être transporté au sommet (très dangereux, mais raccourci)
+**/!\ Mécanique -- déclencher la voie**
 
-**★ Vélociraptor solaire**
+Ne pas demander de choisir. La première piste qui reçoit deux gestes concrets devient la voie de l'ascension.
+
+- **Voie des vercolles :** examiner la paroi, suivre l'ombre, chercher des prises, toucher les traces brillantes, utiliser une corde ou une créature adhésive.
+- **Voie des vélociraptors solaires :** approcher les arches d'os, cueillir ou éventrer un fruit, traverser à découvert, suivre les traces autour des arbres-cadavres.
+- **Si les PJ hésitent trop :** la déshydratation avance. 
+
+### Voie 1 
+
+*Les traces brillantes semblent bouger, s'allonger surtout. Un cortège de vers pâles remonte la roche en silence, chacun dans le sillage du précédent. Ils laissent derrière eux un mucus épais, transparent, qui accroche la lumière.*
+
+**Les vercolles**
+
+- Les vercolles circulent sur les parois rocheuses en bandes lentes.
+- Leur mucus colle assez fort pour permettre l'ascension.
+- Solution : s'enduire les mains, les semelles ?
+- Sans mucus : AGI 14 par segment d'ascension. Échec = glissade, perte d'objet ou dégâts légers.
+- Avec mucus : ascension facilitée, mais tout contact irréfléchi entre PJ devient un problème. 
+
+**★ Vercolle**
+
+**▷ Scènes avec le mucus**
+
+- Deux PJ restent attachés par les poignets en essayant de s'aider.
+- Une gourde vide colle au visage de quelqu'un au moment où il parle.
+- Une arme devient impossible à lâcher.
+- Un sac se transforme en boule de poussière, de cailloux et de petits insectes paniqués.
+- Quelqu'un se gratte la joue et doit finir l'ascension la main collée au visage.
+
+À mi-hauteur,
+
+*Un cri sec descend du ciel. Une forme blanche et noire décroche d'une corniche. Elle plane sans battre des ailes. Sous son ventre, des clous, des boucles, des dents de scie, des fragments de coque et de vieilles cartouches forment une armure de choses volées. Son bec s'ouvre sur un petit claquement satisfait.*
+
+**La piellarde**
+
+- Créature volante kleptomane attirée par le métal.
+- Tente d'arracher les équipements métalliques : GPS, outils, armes, pièces du robot.
+- Champ magnétique : les projectiles métalliques dévient ou se collent à son blindage.
+- Si elle vole un objet, elle l'intègre à son armure et gagne +1 RES.
+- Solutions : cacher ou jeter le métal, utiliser des armes organiques (bois, pierre, chitine), la coller avec du mucus, ou surcharger sa glande magnétique avec une sphère galvanique.
+
+**♢ LOOT**
+
+| **Matériau** | **Effet** | **Danger** |
+| --- | --- | --- |
+| Glande de flux | attire métal 5m ou désarme (test DEX) | efface disques/cartes magnétiques |
+| Tout métal volé | récupération des objets perdus | tri à faire |
+
+### Voie 2 
+
+*Les arches d'os ne sont pas mortes. Elles vibrent par moments, très légèrement, comme si quelque chose respirait sous la pierre. Les fruits oranges pendent à hauteur d'homme. Leur peau est fine. On croirait voir le jus se déplacer dedans.*
+
+Si les PJ observent avant de toucher,
+
+*Un fourmilier à deux trompes sort d'une fente de roche. Il avance avec prudence jusqu'au premier fruit, puis l'aspire d'un coup. Son ventre gargouille de plaisir. Plus haut, la lumière change. Trois silhouettes dévalent la pente, rapides, basses, presque sans bruit. Leurs queues s'ouvrent comme des miroirs. Elles arrivent au niveau du fourmilier, et sans s'arrêter, l'encagent dans leurs défenses d'ivoire dorsales. En quelques secondes, le fourmilier est emporté vers le sommet.*
+
+**Les arbres-cadavres**
+
+- Les structures osseuses poussent à partir des restes de proies anciennes, et finissent par produire des fruits appétissants.
+- Les fruits mortuaires attirent les proies. Leur odeur signale la meute.
+- C'est le jus qui attire les vélociraptors.
+
+**Les vélociraptors solaires**
+
+- Ils chassent en encerclant les proies.
+- Leurs queues-miroirs concentrent la lumière et aveuglent, brûlent ou rabattent vers les arbres-cadavres.
+- Ils attaquent surtout ce qui bouge en plein soleil.
+- Ils hésitent dans l'ombre, la nuit, ou quand leurs queues-miroirs sont brisées.
 
 **▷ Options détaillées -- vélociraptors solaires**
 
-1. **Attendre la nuit :** 2-3h de perte, mais passage sûr (queues-miroirs inutiles)
-2. **Fruit maudit :** si ouvert, odeur attire tous les vélocis en frénésie (zone libre)
-3. **Combat :** viser les queues (-2 pour toucher), queue brisée = véloci en fuite
-4. **Se laisser capturer :** les serres emmènent au sommet (2d6 dégâts à l'arrivée)
-5. **Rester à l'ombre :** progression lente de rocher en rocher (discrétion 12 par segment)
+1. **Rester à l'ombre :** progression lente de rocher en rocher. Discrétion 12 par segment. Échec = un vélociraptor coupe la prochaine ombre avec sa queue-miroir. Le troupeau arrive et ils embarquent le groupe en haut. Une fois en haut, début du combat. 
+2. **Combat :** viser les queues-miroirs (-2 pour toucher. AGI > 12 pour valider une touche). Une queue brisée force le vélociraptor à reculer. Deux queues brisées suffisent à mettre fin au combat.
+3. **Se laisser capturer :** raccourci brutal. Les défenses encagent la cible et la transportent au sommet. Le combat se déclenche une fois en haut. 
+4. **Attendre la nuit :** passage plus sûr, mais 2-3h perdues. Appliquer la déshydratation tout du long, sauf si les PJ trouvent un moyen crédible de préserver l'eau ou le corps.
 
 **♢ Loot -- vélociraptors solaires**
 
@@ -406,80 +467,41 @@ L'oasis-tuyau est la seule source d'eau de cette zone. Elle se situe au sommet d
 | --- | --- | --- |
 | Défenses d'ivoire | tuteur croissance végétale accélérée | produit arbre-cadavre si plantées dans cadavre |
 | Plumes-miroirs | bouclier réfléchissant, flash défensif | se ternissent à l'humidité |
-| Fruit maudit | leurre : attire tous vélocis (rayon km) | créatures ciblent celui éclaboussé |
-
-**Puzzle biologique -- les vers-colle**
-- Un cortège de vers circule sur les parois rocheuses
-- Leur mucus est extrêmement collant et épais
-- Solution : s'enduire les mains de mucus pour grimper sans se blesser
-- Malus : le mucus ne part pas facilement. Tout se colle aux mains. Interactions physiques avec d'autres PJ = risque de rester collés ensemble.
-
-**★ Vers-colle**
-
-**▷ Scènes comiques avec le mucus (à encourager)**
-
-- PJ collés ensemble par les mains
-- Nourriture collée au visage
-- Arme impossible à lâcher
-- Sac devenu boule collante
-- PJ qui se gratte et colle sa main à son visage
-*C'est un moment de légèreté bienvenu avant la tension finale. Jouez-le !*
-
-**Danger pendant l'ascension -- la pie-llard**
-- Créature volante kleptomane attirée par le métal
-- Tente d'arracher les équipements métalliques des joueurs (armes, outils, GPS)
-- Champ magnétique = immunité aux projectiles métalliques
-- Solution : armes primitives (bois, pierre, chitine) ou surcharge magnétique (sphère galvanique)
-
-**★ Pie-llard**
-
-**▷ Gestion de la pie-llard**
-
-- **Cibles prioritaires :** GPS, outils métalliques, armes, robot (!)
-- **Vol réussi :** l'objet est intégré à son blindage (+1 RES)
-- **Stratégie :** se débarrasser du métal ou utiliser armes organiques (chitine, bois)
-- **Sphère galvanique :** si lancée, surcharge et grille la glande magnétique
-- **Mort :** tout métal volé tombe
-
-**♢ Loot -- pie-llard**
-
-| **Matériau** | **Effet** | **Danger** |
-| --- | --- | --- |
-| Glande de flux | attire métal 5m ou désarme (test DEX) | efface disques/cartes magnétiques |
-| Tout métal volé | récupération des objets perdus | tri à faire |
-
-**Les fruits mortuaires des vélopaons**
-Au pied de la falaise, vous voyez des structures osseuses complexes et arquées. Au sommet, il y a des fruits oranges juteux et dégoulinants.
-À un moment, ils voient un fourmilier à deux trompes absorber le fruit en mode gros gourmand.
-Quelques secondes plus tard, plusieurs vélopaons l'encagent dans leur exosquelette et l'emportent à toute vitesse au sommet de la montagne.
-
-**▷ Les arbres-cadavres (contexte)**
-
-Les structures osseuses sont des arbres-cadavres -- créés quand les défenses d'ivoire d'un vélociraptor solaire s'enracinent dans un cadavre. Les fruits attirent les proies, qui sont ensuite capturées par la meute.
-*C'est un indice visuel de ce qui attend les PJ au sommet.*
+| Fruit mortuaire | leurre : attire la meute | créatures ciblent celui éclaboussé |
 
 ---
 
 ## Phase 3 
 
-**L'oasis-tuyau :**
-- Un arbre blanc en forme de tube, rappelant un tuyau de Mario
-- À l'intérieur : un micro-écosystème édénique, source d'eau pure, fruits
-- Toutes les créatures y vivent en harmonie
-- Piège potentiel : si les joueurs sont agressifs ou prennent trop, la coccisabre déclenche son pollen
-- Règle : prendre avec parcimonie = ok. Être gourmand = danger.
+*Le sommet coupe net la montée. La roche devient plate, blanche, brûlante. Puis, au centre du plateau, quelque chose sort du sol : un arbre lisse, cylindrique d'un blanc immaculé. Il ressemble à un vieux tuyau planté dans la pierre. De l'intérieur monte un bruit d'eau.*
+
+*Dans le tube, l'air change. Il fait frais. Des mousses épaisses se reposent sur les parois. Des insectes minuscules boivent une goutte, puis s'écartent. Un lézard mord dans un fruit, en laisse la moitié, repart sans courir. Au fond, une eau claire tombe dans une vasque de pierre.*
+
+**L'oasis-tuyau**
+
+- Source d'eau pure et de fruits réparateurs.
+- Micro-écosystème fermé : les créatures y prennent peu, lentement, sans se battre.
+- Prendre avec parcimonie ne déclenche rien.
+- Prendre trop, salir l'eau, blesser une créature ou arracher des plantes réveille la gardienne.
+- Les PJ observateurs (perception > 13) remarquent que tous les animaux boivent à tour de rôle.
+
+**La coccisabre**
+
+*Au début, elle ressemble à une grosse coccinelle posée sous une feuille, rouge sombre, immobile. Très difficile à voir (PER > 16) Puis la carapace s'ouvre. Deux mandibules longues et courbes se déplient avec un frottement de lame. Ses pattes touchent le sol une par une. Toute l'oasis se tait.*
+
+Si elle attaque,
+
+*Un pollen jaune tombe des parois. Pas un nuage. Une poussière fine et régulière. Là où elle se pose, la peau picote. Les muscles ralentissent et sont progressivement paralysés.*
 
 **★ Coccisabre (gardienne de l'oasis)**
 
 **▷ Règles de l'oasis-tuyau**
 
-- **Parcimonie (ok) :** 1 gorgée d'eau par personne, 1 fruit par personne
-- **Gourmandise (danger) :** prendre plus déclenche la coccisabre
-- **Violence :** toute agression = attaque immédiate de la coccisabre
-- **Indice :** les autres créatures de l'oasis prennent peu et lentement
-*Les PJ observateurs (perception 10) remarquent le comportement respectueux des animaux.*
-
-**Récoltable :** une super arme : le sabre de la coccisabre (+5 en dégâts bruts)
+- **Parcimonie :** 1 vraie gorgée d'eau par personne, 1 fruit par personne. La déshydratation s'arrête.
+- **Gourmandise :** prendre plus déclenche la coccisabre.
+- **Violence :** toute agression déclenche une attaque immédiate.
+- **Pollen :** paralysie progressive. Au premier tour d'exposition, -2 AGI. Au troisième, chute ou immobilisation si aucun test de résistance n'est réussi.
+- **Enfermement :** si les PJ insistent après l'avertissement, les parois du tube se contractent. La sortie reste visible, mais plus personne ne passe facilement.
 
 **♢ Loot -- oasis-tuyau**
 
@@ -491,23 +513,13 @@ Les structures osseuses sont des arbres-cadavres -- créés quand les défenses 
 | Glande à toxine | 10 doses poison (paralysie progressive) | tuer la coccisabre |
 | Carapace coccisabre | armure lourde (-3 AGI) | tuer la coccisabre |
 
-*Être gourmand = enfermement dans l'oasis et digestion lente. La coccisabre ne laisse pas sortir.*
+*Être gourmand = enfermement dans l'oasis et digestion lente. La coccisabre ne poursuit pas dehors. Elle empêche seulement de sortir.*
 
 ---
 
 ## Nuit 4 -- Veillée tendue
 
-L’air est sec comme un four. Le terrain monte, escarpé, ocre et gris. Chaque pas soulève une poussière fine qui colle à la gorge. Vos lèvres se fendent. La langue devient lourde
-
 Appliquer le repos nocturne et la table centrale des événements nocturnes.
-
-**▷ Évolution du robot -- Jour 4**
-
-*« Le robot s'est arrêté au milieu du chemin. Ses capteurs sont tournés vers le ciel étoilé. Quand vous l'interpellez, il répond après un long silence : "Je comprends maintenant pourquoi les humains regardent les étoiles. C'est... beau." »*
-- Peut refuser d'avancer vers le vaisseau
-- Pose des questions existentielles (« Qu'est-ce qui définit la conscience ? »)
-- Nomme les créatures avec des noms affectueux
-- Suggère peut-être de « rester encore un peu »
 
 ---
 
