@@ -291,11 +291,7 @@ body:has(.rpg-print-sheets) .breadcrumb-current {
 
 ### Loot
 
-**Ovoïde galvanique** : batterie bio. lampe concussion (flash + 100 lumens 4h) ou explosion EMP.
-
-**Plaques chitine-roche** : armures lourdes/boucliers.
-
-**Sabots électrifiés** : armes mêlée avec dégâts électriques (malus au jet -2 à la cible touchée).
+**Sphère galvanique** : batterie bio, connexion possible à l'Anguille-câble, lampe brute, surcharge magnétique. Chauffe si mal isolée. À récupérer sur une sphère déposée par un petit associé au bison-creuset.
 
 </div>
 
@@ -336,11 +332,7 @@ body:has(.rpg-print-sheets) .breadcrumb-current {
 
 ### Loot
 
-**Plaque chitine-béton** : bouclier lourd (très encombrant).
-
-**Chair** : comestible, texture pneu, 15 min/bouchée.
-
-**Algues séchées** : combustible lent ou isolant.
+**Plaque chitine-béton** : plaque rigide, renfort de base ou support de montage. Extrêmement lourd.
 
 </div>
 
@@ -381,11 +373,13 @@ body:has(.rpg-print-sheets) .breadcrumb-current {
 
 ### Loot
 
-**Bobine bio-fil** : +kevlar, stérile. Médecine auto-réussie ou cordes ultra-fines.
+**Bobine bio-fil** : suture auto-réussie ou corde ultra-fine. Condition : tuer ou capturer.
 
-**Aiguilles articulées** : pointes perforantes (ignore 2 de RES si composant d'une arme).
+**Aiguilles articulées** : pointes perforantes, crochetage fin. Condition : tuer ou capturer.
 
-**Glande à soie** : 50m de fil très résistant si pressée.
+**Glande à soie** : réserve de fil organique. Condition : capturer vivant, piège ou gel.
+
+**Arc-Suture** : récupéré directement sur l'araignée-suture. Arme à distance, +3 AGI. Peut tirer sur les alliés pour les soigner de 1d3 ; sur échec, le tir blesse de 1 DMG brut.
 
 </div>
 
@@ -426,9 +420,13 @@ body:has(.rpg-print-sheets) .breadcrumb-current {
 
 ### Loot
 
-**Carapace** : bouclier ou renfort robot. **Dard** : arme empoisonnée. **Mandibules** : cisailles.
+**Carapace dorsale** : plaque lourde, base de cuirasse ou renfort robot. Très lourd.
 
-**Glandes acides** : 3 munitions corrosives. **Chair ventrale** : délicieuse, donne soif.
+**Dard foreur** : outil de forage, perce carapace et matériaux mous. Toxine instable.
+
+**Mandibules** : cisailles, coupe métal/câbles. Bruyantes.
+
+**Glandes acides** : 3 grenades corrosives. Fuite si mal stockée.
 
 </div>
 
@@ -469,11 +467,11 @@ body:has(.rpg-print-sheets) .breadcrumb-current {
 
 ### Loot
 
-**Défenses ivoire** : si réduit en poudre, permet de fabriquer/regagner des charges kit de soin.
+**Défenses d'ivoire** : tuteur croissance végétale accélérée. Produit arbre-cadavre si plantées dans cadavre.
 
-**Plumes-miroirs** : boucliers réfléchissants (projectiles).
+**Plumes-miroirs** : bouclier réfléchissant, flash défensif. Se ternissent à l'humidité.
 
-**Fruit maudit** : leurre explosif qui attire toute une meute si lancé/explose. Mais contre qui ? (jet de dés)
+**Capsule mortuaire / capsule maudite** : leurre, attire la meute, éclate en jus pestilentiel. Les créatures ciblent celui éclaboussé.
 
 </div>
 
@@ -514,11 +512,13 @@ body:has(.rpg-print-sheets) .breadcrumb-current {
 
 ### Loot
 
-**Dent-sabre** : mêlée dévactatrice, tranche armures (ignore 5 RES).
+**Glande à toxine** : 10 doses poison, paralysie progressive. Condition : tuer la coccisabre.
 
-**Glande toxine** : paralysant contact.
+**Poudre styptique** : stoppe un saignement immédiatement. Cinq doses.
 
-**Carapace** : défensif (trop lourd pour tout prendre).
+**Plaques de carapace coccisabre** : matériau ultra-léger, base de protection. Condition : tuer ou apaiser la coccisabre.
+
+**Dent-sabre brute** : récupérée directement sur la coccisabre. Arme lourde. Ignore 3 RES. +1 FOR -2 AGI.
 
 </div>
 
@@ -553,18 +553,6 @@ body:has(.rpg-print-sheets) .breadcrumb-current {
 **Défenses :** Frapper = arme digérée par 3m de mousse • Immunité totale
 
 </div>
-
-
-<div class="rpg-box">
-
-### Loot
-
-**Champignons qui ont l'air précieux ?** Who knows ?
-
-**Mousse symbiotique** : très bonne absorption.
-
-</div>
-
 
 </section>
 
@@ -602,9 +590,9 @@ body:has(.rpg-print-sheets) .breadcrumb-current {
 
 ### Loot
 
-**Glande de flux** : bio-magnétique, attire métal 5m ou désarme. EFFACE disques/cartes.
+**Glande de flux** : attire le métal ou désarme, test DEX. Perturbe supports magnétiques.
 
-Tout métal volé tombe à sa mort.
+**Tout métal volé** : récupération des objets perdus. Tri à faire.
 
 </div>
 
@@ -645,9 +633,9 @@ Tout métal volé tombe à sa mort.
 
 ### Loot
 
-**Syrinx mimétique** : projecteur vocal 30m = ventriloquie/leurre.
+**Syrinx mimétique** : projette voix ou sons à 30m, leurres parfaits. Condition : écho-écho tué ou piégé.
 
-**Membrane tympanique** : capteurs sonores ultra-sensibles.
+**Membrane tympanique** : capteurs sonores ultra-sensibles. Condition : prélèvement délicat.
 
 </div>
 
@@ -678,6 +666,29 @@ Tout métal volé tombe à sa mort.
 **Attaques :** Lianes immobilisantes (1 tour entravé) • Fouet-liane (épines +2 PERFO, longue portée)
 
 **Défenses :** Armure de plantes (RES + 3) • Régénération fongique (contact sol : regagne 1d6 PV + les personnes qui attaquent pendant la canalisation sont empoisonnées)
+
+</div>
+
+
+<div class="rpg-box">
+
+### Loot
+
+**Graines corrompues** : possède l'écureuil-coffre, corrompt l'inventaire organique. Peut contaminer un PJ.
+
+**Lianes épineuses** : cordage résistant, entrave à distance. Conducteur électrique.
+
+**Filaments fongiques** : fil fin pour tissage, filet ou suture d'urgence. Infection si peau ouverte.
+
+**Résine phosphorescente** : balise visuelle, marquage de chemin, lumière faible. Attire ce qui suit la lumière.
+
+**Écureuil-coffre-zeppelin** : +3 slots d'inventaire organique, allège une charge ou permet un grand saut. Caractère imprévisible.
+
+**Fiole de catalyseur** : double l'effet d'une substance. Réaction violente si test INT raté.
+
+**Onguents d'Oren** : soins efficaces, +1d6 PV. Contamination.
+
+**Fragments mycélium** : développer résistance à l'infection, soigner un parasité. Manipulation délicate. Condition : seulement si combat avec Oren.
 
 </div>
 
@@ -718,11 +729,9 @@ Tout métal volé tombe à sa mort.
 
 ### Loot
 
-**Glandes hallucinogènes** : grenade fumigène.
+**Glandes hallucinogènes** : grenade fumigène, déni de zone pendant 3 tours. Dangereux sans protection.
 
 **Peau visqueuse** : imperméable/isolant.
-
-**Chair** : toxique crue.
 
 </div>
 
@@ -763,13 +772,7 @@ Tout métal volé tombe à sa mort.
 
 ### Loot
 
-**Écaille-clé** : ramassable sans tuer. Ouvre muraille végétale (3 utilisations).
-
-**Plaques cuirassées** : armures/barricades.
-
-**Cornes** : leviers/armes.
-
-**Cuir** : sangles/harnais.
+**Écaille de bison-cuirassé** : clé végétale qui ouvre la muraille noire. Passage bref, fermeture progressive.
 
 </div>
 
@@ -804,20 +807,6 @@ Tout métal volé tombe à sa mort.
 **Défenses :** on comprend bien en lisant les stats que cette pauvre petite créature n'a pas de défense. veuillez continuer à lire la suite.
 
 </div>
-
-
-<div class="rpg-box">
-
-### Loot
-
-**Veines symbiotiques** : interface contrôle végétale (usage unique).
-
-**Glandes résine** : colle ultra-forte (2 doses).
-
-**Fourrure bioluminescente** : vêtements lumineux.
-
-</div>
-
 
 </section>
 
@@ -855,13 +844,11 @@ Tout métal volé tombe à sa mort.
 
 ### Loot
 
-**Plaques céramiques** : armures lourdes exceptionnelles.
+**Pétales de fleurs-hélices** : parachute, plané court, frein de chute. Usage unique, fragile.
 
-**Tentacule** : fouets/câbles 15m.
+**Tige vrillée** : ressort organique, lanceur léger. Se détend d'un coup si mal nouée.
 
-**Dents** : lames, harpons.
-
-**Glande de stase** : sédatif massif (K.O. instantané).
+**Glande de stase** : sédatif massif, K.O. instantané. Manipulation très dangereuse.
 
 </div>
 
@@ -902,11 +889,7 @@ Tout métal volé tombe à sa mort.
 
 ### Loot
 
-**Fragment psychique** : peut soigner les parasités.
-
-**Peau céramique** : armure légère réfléchissante + 2 RES sans malus AGI.
-
-**Noyau neural** : si étudié, permet clarifier état robot.
+**Fragment psychique** : peut apaiser ou soigner un parasité. Condition : Hollow vaincu.
 
 </div>
 
