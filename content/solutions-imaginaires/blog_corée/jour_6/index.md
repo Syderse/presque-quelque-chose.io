@@ -11,7 +11,8 @@ tags:
 
 ## JOUR 6
 
-- notre hôte nous avait gentiment dit de rentrer nos chaussures pendant la nuit comme il allait beaucoup pleuvoir. j'ai eu un demi-éveil étrange dans la nuit où j'ai entendu des bruits de pas se rapprocher sous la pluie battante, mais avec une lourde précaution. au réveil j'étais pas bien sûr de ce qui s'était passé. est-ce que j'avais mis moi-même mes chaussures avant de m'endormir la veille au soir ou est-ce que l'hôte était passée à un moment en fin de soirée pour le faire ? mystère ?
+
+
 - départ pour la baie de suncheon, sort de chez moran avec notre attirail sous un reste de pluie. on a repris un bus qui nous a fait retraverser dans l'autre sens la partie nord de la ville beaucoup plus animée et que le sud tranquille. arrivée devant une mangifique gare partiellement en bois.
 - direction suncheon ! au sud de jeonju, plus ou moins côtier au niveau de l'étonnante zone humide à l'unesco.
 - arrivée à l'hôtel IAM à côté de la gare. on a beaucoup rigolé avec le réceptionniste auquel on a posé beaucoup de questions. comme il ne parlait pas anglais et que nous ne parlions toujours pas coréen, il a adopté exactement la même attitude que nous et c'est je pense ce qui a rendu les scènes comiques : on acquiesait beaucoup bêtement en sortant d'assez profond des bruits gutturaux.
