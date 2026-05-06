@@ -1,7 +1,7 @@
 ---
 title: "Jour 6 Suncheon : jardin national et baie-zone-humide"
 date: 2026-05-06
-draft: false
+draft: true
 weight: 70
 tags:
   - corée du sud

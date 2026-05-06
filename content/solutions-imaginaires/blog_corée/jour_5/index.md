@@ -1,7 +1,7 @@
 ---
 title: "Jour 5 Jeonju : Namgosanseong, patrimoine immatériel et makgeolli"
 date: 2026-05-05
-draft: false
+draft: true
 weight: 60
 tags:
   - corée du sud
