@@ -9,11 +9,11 @@
 </div>
 
 <aside id="toc-panel" 
-       class="toc-panel toc-closed fixed top-4 right-4 bottom-4 z-40 w-[280px] transition-[transform,opacity] duration-250 ease-out will-change-[transform,opacity] overflow-y-auto scrollbar-hide">
+       class="toc-panel toc-closed fixed top-4 right-4 bottom-4 z-40 w-[280px] transition-[transform,opacity] duration-250 ease-out overflow-y-auto scrollbar-hide">
   <div class="p-5">
     <div class="flex items-center justify-between mb-5 pb-3 border-b border-ctp-surface0/50">
       <h2 class="text-sm font-mono uppercase tracking-widest text-ctp-lavender/80">Plan</h2>
-      <button onclick="closeToc()" class="p-1 rounded-full text-ctp-overlay0 hover:text-ctp-mauve hover:bg-ctp-mauve/10 transition-all duration-200" aria-label="Fermer">
+      <button onclick="closeToc()" class="p-1 rounded-full text-ctp-overlay0 hover:text-ctp-mauve hover:bg-ctp-mauve/10 transition-colors duration-200" aria-label="Fermer">
         <svg xmlns="http://www.w3.org/2000/svg" class="w-4 h-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
           <line x1="18" y1="6" x2="6" y2="18"></line>
           <line x1="6" y1="6" x2="18" y2="18"></line>
@@ -61,7 +61,7 @@
       {{/* TOC Button */}}
       {{ if .TableOfContents }}
       <button onclick="openToc()" 
-              class="flex items-center gap-2 px-3 py-1.5 rounded-lg bg-ctp-surface0 hover:bg-ctp-surface1 text-ctp-overlay1 hover:text-ctp-mauve border border-ctp-surface1 transition-all duration-200"
+              class="flex items-center gap-2 px-3 py-1.5 rounded-lg bg-ctp-surface0 hover:bg-ctp-surface1 text-ctp-overlay1 hover:text-ctp-mauve border border-ctp-surface1 transition-[background-color,border-color,color] duration-200"
               aria-label="Afficher le plan de l'article">
         <svg xmlns="http://www.w3.org/2000/svg" class="w-4 h-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
           <line x1="8" y1="6" x2="21" y2="6"></line>

@@ -411,7 +411,6 @@
 
     transition: transform 0.2s cubic-bezier(0.25, 0.46, 0.45, 0.94),
       box-shadow 0.2s ease;
-    will-change: transform;
 
     &:hover {
       @apply border-ctp-mauve;
@@ -680,21 +679,6 @@
     }
   }
 
-  /* C. LEAF UI SYSTEM */
-  .leaf-content-zone {
-    /* Ensures content is perfectly centered relative to the parent container */
-    background-position: center;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    justify-content: center;
-
-    /* Safety margins to ensure text doesn't hit the leaf edges */
-    width: 100%;
-    height: 100%;
-    padding: 2rem;
-  }
-
   /* D. BREADCRUMB (Path Ribbon — Smooth & Spacious) */
   .breadcrumb {
     /* Color Palette: Muted violet tones for consistency with site accent */
@@ -768,7 +752,7 @@
     }
   }
 
-  /* E. TABLE OF CONTENTS — "Brume de Plan" (Optimized 60fps) */
+  /* E. TABLE OF CONTENTS — "Brume de Plan" */
   .toc-panel {
     /* Solid translucent background (no blur = fast) */
     background: linear-gradient(
@@ -784,19 +768,16 @@
     /* Rounded left edge */
     border-radius: 1rem 0 0 1rem;
 
-    /* GPU acceleration */
-    transform: translateZ(0);
-    backface-visibility: hidden;
+    transform: translateX(16px);
   }
 
-  /* Animation: opacity + translateX only (no scale = smoother) */
   .toc-panel.toc-open {
-    transform: translateX(0) translateZ(0);
+    transform: translateX(0);
     opacity: 1;
   }
 
   .toc-panel.toc-closed {
-    transform: translateX(16px) translateZ(0);
+    transform: translateX(16px);
     opacity: 0;
     pointer-events: none;
   }
@@ -914,14 +895,12 @@
     --si-cream: #faf5eb;
     --si-parchment: #f3e8da;
     --si-honey: #faecd3;
-    --si-latte: #efe6d9;
     --si-forest: #4a6c4b;
     --si-terracotta: #c96d4e;
     --si-bark: #5d4037;
     --si-wine: #8b4049;
     --si-gold: #c9a227;
     --si-text: #3d3229;
-    --si-text-soft: #5a4d42;
   }
 
   .solutions-imaginaires-page {
@@ -964,16 +943,6 @@
     position: relative;
     text-align: center;
     z-index: 2;
-  }
-
-  .si-hero-kicker {
-    color: var(--si-forest);
-    font-family: var(--font-mono);
-    font-size: 0.68rem;
-    font-weight: 700;
-    letter-spacing: 0.16em;
-    margin-bottom: 0.15rem;
-    text-transform: uppercase;
   }
 
   .si-title {
@@ -1385,23 +1354,6 @@
     animation: fadeInUp 0.4s cubic-bezier(0.25, 0.46, 0.45, 0.94) forwards;
   }
 
-  /* NEW: Text Shadow for Leaf Legibility */
-  .text-shadow-paper {
-    text-shadow: 0px 1px 0px rgba(255, 255, 255, 0.5);
-  }
-
-  /* NEW: High Contrast Shadow for Leaf Text */
-  /* Creates a dark outline effect suitable for "Lavender" text on complex backgrounds */
-  .drop-shadow-hard {
-    filter: drop-shadow(2px 2px 0px rgba(24, 24, 37, 0.8));
-    /* ctp-mantle with opacity */
-  }
-
-  /* REFINED: Leaf specific hover */
-  .hover-syrup {
-    transition: transform 0.4s cubic-bezier(0.34, 1.56, 0.64, 1);
-  }
-
   @keyframes fadeInUp {
     from {
       opacity: 0;
@@ -1434,11 +1386,6 @@
     display: none;
   }
 
-  .hardware-accelerated {
-    transform: translateZ(0);
-    backface-visibility: hidden;
-  }
-
   .text-ink {
     color: color-mix(in srgb, var(--ctp-text), var(--ctp-peach) 15%);
     text-shadow: 0 0 1px rgba(250, 179, 135, 0.1);
@@ -1449,8 +1396,6 @@
      H. ONDES & PIXELS — "Fréquences Ambiantes"
      ==========================================================================
      An immersive dark space for audio/video content.
-     Features ambient light orbs, wave-offset cards, organic feel.
-     ALL animations are 60FPS safe (transform + opacity only).
   */
 
   /* --- H.1 PAGE CONTAINER --- */
@@ -1460,11 +1405,10 @@
     position: relative;
   }
 
-  /* Frequency Waves Background — Vibrant, Prominent, Audio-Inspired
-     OPTIMIZED: Changed from fixed to scroll to avoid repaint on scroll */
+  /* Frequency Waves Background — Vibrant, Prominent, Audio-Inspired */
   .ondes-pixels-page::before {
     content: "";
-    position: absolute; /* Changed from fixed — avoids constant compositor updates */
+    position: absolute;
     inset: 0;
     z-index: 0;
     pointer-events: none;
@@ -1485,13 +1429,9 @@
   }
 
   /* --- H.2 AMBIENT LIGHT SOURCES --- */
-  /* Floating gradient orbs that create depth and atmosphere */
   .ambient-light {
-    position: fixed;
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 100%;
+    position: absolute;
+    inset: 0;
     z-index: 0;
     overflow: hidden;
     pointer-events: none;
@@ -1500,14 +1440,7 @@
   .light-source {
     position: absolute;
     border-radius: 50%;
-    /* PERF FIX: Removed filter: blur(60px) — extremely expensive on large elements.
-       The radial gradients already have soft edges, no filter needed. */
     opacity: 0.5;
-    /* PERF FIX: Removed will-change and animation — blur + animation = mega lag.
-       Static ambient lights with soft gradients are plenty atmospheric. */
-    /* GPU acceleration for any hover transforms */
-    transform: translateZ(0);
-    backface-visibility: hidden;
   }
 
   .source-mauve {
@@ -1517,7 +1450,6 @@
     height: 45vw;
     max-width: 500px;
     max-height: 500px;
-    /* OPTIMIZED: Softer gradient falloff simulates blur without GPU cost */
     background: radial-gradient(
       circle,
       color-mix(in srgb, var(--ctp-mauve) 60%, transparent) 0%,
@@ -1533,7 +1465,6 @@
     height: 50vw;
     max-width: 550px;
     max-height: 550px;
-    /* OPTIMIZED: Multi-stop gradient for soft blur effect */
     background: radial-gradient(
       circle,
       color-mix(in srgb, var(--ctp-peach) 55%, transparent) 0%,
@@ -1549,7 +1480,6 @@
     height: 30vw;
     max-width: 350px;
     max-height: 350px;
-    /* OPTIMIZED: Soft gradient, no animation */
     background: radial-gradient(
       circle,
       color-mix(in srgb, var(--ctp-lavender) 50%, transparent) 0%,
@@ -1557,26 +1487,6 @@
       transparent 70%
     );
   }
-
-  .source-green-glow {
-    top: 50%;
-    left: 20%;
-    width: 40vw;
-    height: 40vw;
-    max-width: 450px;
-    max-height: 450px;
-    /* OPTIMIZED: Soft gradient, static positioning */
-    background: radial-gradient(
-      circle,
-      color-mix(in srgb, var(--ctp-green) 40%, transparent) 0%,
-      color-mix(in srgb, var(--ctp-green) 15%, transparent) 45%,
-      transparent 70%
-    );
-  }
-
-  /* REMOVED: @keyframes ambient-drift — animation on blurred elements is expensive */
-
-  /* Animation removed entirely for performance — no media query needed */
 
   /* --- H.3 INTRO ACCENT (Left Border Detail) --- */
   .intro-accent {
@@ -1628,12 +1538,8 @@
     border: 1px solid rgba(255, 255, 255, 0.08);
     box-shadow: 0 10px 30px -10px rgba(0, 0, 0, 0.4);
 
-    /* OPTIMIZED: Only transform in transition — box-shadow causes repaints */
     transition: transform 0.35s cubic-bezier(0.25, 0.46, 0.45, 0.94),
       border-color 0.25s ease;
-    will-change: transform;
-    transform: translateZ(0);
-    backface-visibility: hidden;
     cursor: pointer;
     overflow: hidden;
   }
@@ -1646,22 +1552,13 @@
     z-index: 10;
   }
 
-  /* Hover Effects — OPTIMIZED: Removed box-shadow transition, static shadow only */
   .wave-card:hover {
     border-color: var(--card-accent);
   }
 
-  /* Asymmetric wave offset on desktop - Disabled for symmetry preference */
-  /*
-  @media (min-width: 768px) {
-    .wave-card-even { transform: translateY(2rem); }
-    .wave-card-odd { transform: translateY(-2rem); }
-  }
-  */
-
   @media (min-width: 768px) {
     .wave-card:hover {
-      transform: translateY(-6px) scale(1.02) translateZ(0);
+      transform: translateY(-6px) scale(1.02);
     }
   }
 
@@ -1713,8 +1610,7 @@
 
   @media (max-width: 767px) {
     .wave-card:hover {
-      transform: translateY(-4px) translateZ(0);
-      /* OPTIMIZED: Removed dynamic box-shadow */
+      transform: translateY(-4px);
     }
   }
 
@@ -1943,14 +1839,6 @@
       font-size: 0.9rem;
     }
 
-    .podcast-cover {
-      width: 50px;
-      height: 50px;
-    }
-
-    .podcast-title {
-      font-size: 0.85rem;
-    }
   }
 
   /* ==========================================================================

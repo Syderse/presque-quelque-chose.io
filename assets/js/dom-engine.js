@@ -259,8 +259,8 @@ function spawnMessage(text) {
             colorClass = "bg-ctp-crust text-ctp-red border-ctp-red border-dashed";
             break;
         case 5:
-            // ENDGAME: Deep red and pulsing.
-            colorClass = "bg-ctp-crust text-ctp-red border-ctp-red animate-pulse";
+            // ENDGAME: Deep red.
+            colorClass = "bg-ctp-crust text-ctp-red border-ctp-red";
             break;
         default:
             colorClass = "bg-ctp-surface0 text-ctp-text border-ctp-surface1";
@@ -366,7 +366,7 @@ function spawnMessage(text) {
 
             const span = document.createElement('span');
             span.innerText = phrases[Math.floor(Math.random() * phrases.length)];
-            span.className = "absolute text-ctp-red font-bold font-mono animate-ping";
+            span.className = "absolute text-ctp-red font-bold font-mono opacity-90";
             span.style.left = `${Math.random() * 90}%`;
             span.style.top = `${Math.random() * 90}%`;
             span.style.fontSize = `${10 + Math.random() * 40}px`;
@@ -426,7 +426,7 @@ function spawnMessage(text) {
             if (i < activeCount) {
                 if (ratio > 0.6) dash.className = "w-1 h-2 bg-ctp-green rounded-[1px]";
                 else if (ratio > 0.3) dash.className = "w-1 h-2 bg-ctp-yellow rounded-[1px]";
-                else dash.className = "w-1 h-2 bg-ctp-red rounded-[1px] animate-pulse";
+                else dash.className = "w-1 h-2 bg-ctp-red rounded-[1px]";
             } else {
                 dash.className = "w-1 h-2 bg-ctp-surface0 rounded-[1px]";
             }

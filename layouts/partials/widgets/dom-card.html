@@ -43,7 +43,7 @@ Refactor:
 
         {{/* COUCHE PRINCIPALE : LE BOUTON */}}
         <div class="absolute inset-0 flex items-center justify-center z-20">
-            <div id="dom-wrapper" class="relative transition-transform duration-100 ease-out will-change-transform">
+            <div id="dom-wrapper" class="relative transition-transform duration-100 ease-out">
 
                 {{/* Ripple Effect */}}
                 <div id="click-ripple"
@@ -56,7 +56,7 @@ Refactor:
 
                     {{/* L'Icône */}}
                     <span id="dom-icon"
-                        class="text-6xl filter drop-shadow-md transition-transform duration-200 relative z-10">
+                        class="text-6xl transition-transform duration-200 relative z-10">
                         👾
                     </span>
 
@@ -86,7 +86,7 @@ Refactor:
             </div>
             <div id="console-output"
                 class="text-[10px] font-mono text-ctp-subtext1 leading-tight overflow-hidden opacity-90 h-full w-full whitespace-nowrap">
-                <span class="animate-pulse">_</span>
+                <span class="opacity-80">_</span>
             </div>
         </div>
 
@@ -111,7 +111,7 @@ Refactor:
 
             {{/* LOGIN STATE */}}
             <div id="admin-login-view" class="w-full max-w-[200px] flex flex-col gap-3">
-                <div class="text-4xl animate-bounce">🙈</div>
+                <div class="text-4xl">🙈</div>
                 <input type="password" id="admin-pwd-input"
                     class="w-full bg-ctp-surface0 border border-ctp-surface2 text-center text-ctp-text font-mono text-sm p-2 rounded focus:outline-none focus:border-ctp-green placeholder-ctp-overlay1"
                     placeholder="Password..." autocomplete="off">
@@ -184,26 +184,14 @@ Refactor:
     }
 
     .glitch-active {
-        animation: text-glitch 0.3s cubic-bezier(.25, .46, .45, .94) both infinite;
+        animation: text-glitch 0.35s cubic-bezier(.25, .46, .45, .94) both;
         color: var(--ctp-red) !important;
         font-weight: bold;
     }
 
     .blinking-cursor::after {
         content: "█";
-        animation: blink 1s step-end infinite;
-    }
-
-    @keyframes blink {
-
-        0%,
-        100% {
-            opacity: 1;
-        }
-
-        50% {
-            opacity: 0;
-        }
+        opacity: 0.65;
     }
 
     @keyframes floatMessageSolid {
@@ -230,9 +218,7 @@ Refactor:
 
     .msg-bubble-solid {
         position: absolute;
-        will-change: transform, opacity;
         animation: floatMessageSolid 4s ease-out forwards;
         z-index: 100;
-        transform: translateZ(0);
     }
 </style>
