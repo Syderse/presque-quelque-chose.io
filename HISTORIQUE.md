@@ -25,6 +25,7 @@ Journal minimal des changements structurels du site. Noter seulement ce qui aide
 - `latest-posts` abandonne les assets d'inventaire et devient une liste dense avec pastilles CSS.
 - Suppressions d'assets decoratifs visibles dans le worktree, notamment `static/media/inventory/`.
 - `static/` devient beaucoup plus leger ; dernier gros fichier suivi note : `static/media/logo.png`.
+- Bouton `Plan` rendu persistant : desktop aligne colonne de lecture, mobile integre a la nav basse.
 
 ## 2026-05-15 - AGENTS allege
 

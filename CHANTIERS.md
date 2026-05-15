@@ -6,7 +6,7 @@ Backlog de maintenance. Ne pas tout faire en meme temps : prendre un chantier, m
 
 ## Lecture Et Articles
 
-- [ ] Rendre le bouton `Plan` accessible pendant toute la lecture d'un article. Chercher une solution integree au shell de lecture, compatible desktop/mobile, et verifier explicitement qu'elle ne se superpose pas aux sidenotes.
+- [x] Rendre le bouton `Plan` accessible pendant toute la lecture d'un article. Chercher une solution integree au shell de lecture, compatible desktop/mobile, et verifier explicitement qu'elle ne se superpose pas aux sidenotes.
 - [ ] Ajouter la reciprocite des sidenotes : quand on clique sur le cadre d'une sidenote, mettre aussi en valeur le numero d'appel correspondant. Le chemin inverse existe deja ; garder le meme esprit visuel et prevoir les cas mobile/clavier.
 - [ ] Verifier les longs articles avec beaucoup de sidenotes apres toute modification du layout `single.html`, surtout les pages du carnet de Coree.
 
