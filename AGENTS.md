@@ -643,9 +643,9 @@ git diff --stat
 git diff -- path/to/file
 rg --files
 rg -n "motif" content layouts assets config
-hugo version
+pnpm exec hugo version
 pnpm --version
-hugo list all
+pnpm exec hugo list all
 ```
 
 ### Retrouver Les Raccourcis
@@ -669,32 +669,34 @@ Observation actuelle :
 ```sh
 make dev
 pnpm dev
-hugo server --disableFastRender
+pnpm exec hugo server --disableFastRender
 ```
 
-`make dev` et `pnpm dev` font la meme chose :
+`make dev` et `pnpm dev` font la meme chose et utilisent le Hugo epingle du projet :
 
 ```sh
-bash -c 'if [ -f .env.local ]; then set -a; source .env.local; set +a; fi; hugo server --disableFastRender'
+bash -c 'if [ -f .env.local ]; then set -a; source .env.local; set +a; fi; pnpm exec hugo server --disableFastRender'
 ```
 
 Ils chargent donc `.env.local`, utile pour Patafoin/Supabase.
+
+Ne pas remplacer ces commandes par `hugo server` brut : cela peut appeler le Hugo Homebrew global au lieu du binaire `hugo-extended` epingle dans `package.json`.
 
 ### Build
 
 ```sh
 make build
 pnpm run build
-hugo --gc --minify --cleanDestinationDir
-hugo --logLevel info --printPathWarnings
+pnpm exec hugo --gc --minify --cleanDestinationDir
+pnpm exec hugo --logLevel info --printPathWarnings
 ```
 
 Differences :
 
-- `make build` lance `hugo --gc --minify`.
-- `pnpm run build` lance seulement `hugo --minify`.
-- pour verifier une sortie propre, preferer `hugo --gc --minify --cleanDestinationDir`.
-- pour chasser les avertissements de chemins/deprecations, utiliser `hugo --logLevel info --printPathWarnings`.
+- `make build` lance `pnpm exec hugo --gc --minify`.
+- `pnpm run build` lance seulement `pnpm exec hugo --minify`.
+- pour verifier une sortie propre, preferer `pnpm exec hugo --gc --minify --cleanDestinationDir`.
+- pour chasser les avertissements de chemins/deprecations, utiliser `pnpm exec hugo --logLevel info --printPathWarnings`.
 
 ### Nettoyage
 
@@ -702,7 +704,7 @@ Differences :
 make clean
 ```
 
-Cette cible supprime `public` et `resources`, puis lance `hugo mod clean`. A utiliser seulement quand on veut vraiment forcer Hugo/Tailwind a repartir de frais.
+Cette cible supprime `public` et `resources`, puis lance `pnpm exec hugo mod clean`. A utiliser seulement quand on veut vraiment forcer Hugo/Tailwind a repartir de frais.
 
 ### Git
 

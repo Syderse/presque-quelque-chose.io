@@ -704,435 +704,458 @@
   }
 
   /* ==========================================================================
-     F. SOLUTIONS IMAGINAIRES — "Jardin d'Automne Ensoleillé"
+     F. SOLUTIONS IMAGINAIRES — Jardin d'automne léger
      ==========================================================================
-     An intentional LIGHT exception in the Catppuccin Mocha site.
-     Celebrates the vibrancy of autumn leaves with warmth & enthusiasm.
+     Light exception in the Catppuccin site, now drawn with CSS instead of
+     decorative image layers.
   */
 
-  /* Light Palette: Warm Autumn Garden */
   :root {
-    /* Core Backgrounds (Light, Creamy, Golden) — More buttery */
-    --si-cream: #faf5eb; /* Beurre frais — warmer */
-    --si-parchment: #f3e8da; /* Parchemin doré */
-    --si-honey: #faecd3; /* Golden honey glow */
-    --si-latte: #efe6d9; /* Café au lait */
-
-    /* Accent Colors (Forest & Terra) */
-    --si-forest: #4a6c4b; /* Deep moss green */
-    --si-terracotta: #c96d4e; /* Warm clay orange */
-    --si-bark: #5d4037; /* Rich tree bark brown */
-    --si-wine: #8b4049; /* Deep berry wine */
-    --si-gold: #c9a227; /* Sunlit gold */
-
-    /* Text (Readable on light) */
-    --si-text: #3d3229; /* Warm charcoal */
-    --si-text-soft: #5a4d42; /* Muted earth */
+    --si-cream: #faf5eb;
+    --si-parchment: #f3e8da;
+    --si-honey: #faecd3;
+    --si-latte: #efe6d9;
+    --si-forest: #4a6c4b;
+    --si-terracotta: #c96d4e;
+    --si-bark: #5d4037;
+    --si-wine: #8b4049;
+    --si-gold: #c9a227;
+    --si-text: #3d3229;
+    --si-text-soft: #5a4d42;
   }
 
-  /* Main Container Styling */
   .solutions-imaginaires-page {
-    /* VITALITÉ MAXIMALE — Verts saturés + touches dorées solaires */
     background-color: var(--si-cream);
-    background-image: 
-      /* === HAUT DE PAGE — Emeraude vif === */ radial-gradient(
-        circle 320px at 0% 0%,
-        rgba(34, 139, 34, 0.55),
-        transparent 55%
-      ),
-      radial-gradient(
-        circle 180px at 18% 3%,
-        rgba(201, 162, 39, 0.25),
-        transparent 45%
-      ),
-      radial-gradient(
-        circle 240px at 25% 8%,
-        rgba(50, 205, 50, 0.45),
-        transparent 50%
-      ),
-      radial-gradient(
-        circle 350px at 100% 0%,
-        rgba(46, 139, 87, 0.52),
-        transparent 55%
-      ),
-      radial-gradient(
-        circle 140px at 85% 6%,
-        rgba(218, 165, 32, 0.22),
-        transparent 45%
-      ),
-      /* === CÔTÉ GAUCHE — Forêt luxuriante === */
-        radial-gradient(
-          circle 280px at 0% 28%,
-          rgba(60, 179, 113, 0.5),
-          transparent 55%
-        ),
-      radial-gradient(
-        circle 160px at 5% 42%,
-        rgba(201, 162, 39, 0.18),
-        transparent 45%
-      ),
-      radial-gradient(
-        circle 220px at 0% 55%,
-        rgba(34, 139, 34, 0.48),
-        transparent 50%
-      ),
-      radial-gradient(
-        circle 300px at 0% 78%,
-        rgba(50, 205, 50, 0.52),
-        transparent 55%
-      ),
-      /* === CÔTÉ DROIT — Canopée dorée === */
-        radial-gradient(
-          circle 260px at 100% 32%,
-          rgba(46, 139, 87, 0.48),
-          transparent 55%
-        ),
-      radial-gradient(
-        circle 150px at 92% 45%,
-        rgba(218, 165, 32, 0.2),
-        transparent 45%
-      ),
-      radial-gradient(
-        circle 240px at 100% 58%,
-        rgba(60, 179, 113, 0.45),
-        transparent 50%
-      ),
-      radial-gradient(
-        circle 320px at 100% 82%,
-        rgba(34, 139, 34, 0.5),
-        transparent 55%
-      ),
-      /* === BAS DE PAGE — Sol forestier === */
-        radial-gradient(
-          circle 340px at 0% 100%,
-          rgba(50, 205, 50, 0.55),
-          transparent 55%
-        ),
-      radial-gradient(
-        circle 200px at 35% 95%,
-        rgba(201, 162, 39, 0.22),
-        transparent 45%
-      ),
-      radial-gradient(
-        circle 280px at 55% 92%,
-        rgba(46, 139, 87, 0.42),
-        transparent 50%
-      ),
-      radial-gradient(
-        circle 320px at 100% 100%,
-        rgba(60, 179, 113, 0.52),
-        transparent 55%
-      );
-    min-height: 100vh;
-
-    /* Aggressively cover the dark body/main behind */
-    margin: -5rem -1rem 0 -1rem;
-    padding: 5rem 1rem 0 1rem;
-
-    position: relative;
+    background-image:
+      radial-gradient(ellipse 42rem 18rem at 0% 0%, rgba(74, 108, 75, 0.18), transparent 62%),
+      radial-gradient(ellipse 32rem 16rem at 100% 6%, rgba(201, 162, 39, 0.15), transparent 64%),
+      radial-gradient(ellipse 34rem 18rem at 0% 72%, rgba(201, 109, 78, 0.12), transparent 68%),
+      linear-gradient(115deg, rgba(255, 255, 255, 0.38), transparent 42%),
+      repeating-linear-gradient(102deg, rgba(93, 64, 55, 0.035) 0 1px, transparent 1px 28px);
+    color: var(--si-text);
     isolation: isolate;
+    margin: -5rem -1rem 0 -1rem;
+    min-height: 100vh;
+    padding: 5rem 1rem 0 1rem;
+    position: relative;
   }
 
-  /* Override body background when on this page */
-  body:has(.solutions-imaginaires-page) {
-    background-color: var(--si-cream) !important;
+  .solutions-imaginaires-page::before {
+    background-image:
+      radial-gradient(ellipse 9rem 3rem at 12% 16%, rgba(74, 108, 75, 0.08), transparent 70%),
+      radial-gradient(ellipse 7rem 2.5rem at 86% 32%, rgba(139, 64, 73, 0.07), transparent 70%),
+      radial-gradient(ellipse 8rem 3rem at 18% 86%, rgba(201, 162, 39, 0.08), transparent 70%);
+    content: "";
+    inset: 0;
+    pointer-events: none;
+    position: absolute;
+    z-index: -1;
   }
 
+  body:has(.solutions-imaginaires-page),
   body:has(.solutions-imaginaires-page) main {
     background-color: var(--si-cream) !important;
   }
 
-  /* Title Enhancement for Light Background */
-  .solutions-imaginaires-page .leaf-title {
-    color: var(--si-bark);
-    filter: drop-shadow(1px 1px 0px rgba(255, 255, 255, 0.8))
-      drop-shadow(2px 2px 0px rgba(93, 64, 55, 0.3));
-    font-weight: 700;
+  .si-hero {
+    margin: 0 auto;
+    max-width: 48rem;
+    padding: 1.25rem 1rem 0;
+    position: relative;
+    text-align: center;
+    z-index: 2;
   }
 
-  /* Ant Spine — Warmer tones on light (OPTIMIZED: removed filter) */
-  .solutions-imaginaires-page .ant-spine {
-    opacity: 0.8;
-    /* Removed filter: brightness/saturate — causes expensive repaints */
-  }
-
-  /* Card Title Styling (on Leaves) */
-  .solutions-imaginaires-page .leaf-card-title {
-    color: var(--si-bark);
-    text-shadow: 0px 1px 0px rgba(255, 255, 255, 0.9),
-      1px 2px 2px rgba(93, 64, 55, 0.4);
-    font-weight: 700;
-    letter-spacing: 0.02em;
-  }
-
-  .solutions-imaginaires-page .leaf-card-kicker {
-    display: inline-block;
-    margin-bottom: 0.35rem;
+  .si-hero-kicker {
     color: var(--si-forest);
+    font-family: var(--font-mono);
+    font-size: 0.68rem;
+    font-weight: 700;
+    letter-spacing: 0.16em;
+    margin-bottom: 0.15rem;
+    text-transform: uppercase;
+  }
+
+  .si-title {
+    color: var(--si-bark);
+    font-family: var(--font-script);
+    font-size: clamp(3.7rem, 12vw, 7rem);
+    font-weight: 400;
+    letter-spacing: 0;
+    line-height: 0.95;
+    margin: 0;
+    text-shadow: 0 2px 0 rgba(255, 255, 255, 0.8), 2px 3px 0 rgba(201, 162, 39, 0.2);
+    transform: rotate(-1.4deg);
+  }
+
+  .si-garden {
+    min-height: 100vh;
+    padding: 2.5rem 0 8rem;
+    position: relative;
+  }
+
+  .organic-spine {
+    bottom: 4rem;
+    left: 50%;
+    pointer-events: none;
+    position: absolute;
+    top: 0;
+    transform: translateX(-50%);
+    width: 1rem;
+    z-index: 0;
+  }
+
+  .organic-spine::before {
+    background: linear-gradient(to bottom, transparent, rgba(201, 162, 39, 0.42) 12%, rgba(74, 108, 75, 0.32) 52%, rgba(201, 109, 78, 0.28) 88%, transparent);
+    border-radius: 999px;
+    content: "";
+    inset: 0 auto 0 50%;
+    position: absolute;
+    transform: translateX(-50%);
+    width: 2px;
+  }
+
+  .si-spine-seed {
+    background: var(--si-gold);
+    border: 1px solid rgba(93, 64, 55, 0.15);
+    border-radius: 999px 999px 999px 0;
+    height: 0.55rem;
+    left: 50%;
+    opacity: 0.75;
+    position: absolute;
+    transform: translateX(-50%) rotate(32deg);
+    width: 0.55rem;
+  }
+
+  .si-spine-seed-1 {
+    background: var(--si-terracotta);
+    transform: translateX(-110%) rotate(-18deg);
+  }
+
+  .si-spine-seed-2 {
+    background: var(--si-forest);
+    height: 0.44rem;
+    transform: translateX(12%) rotate(48deg);
+    width: 0.44rem;
+  }
+
+  .si-spine-seed-3 {
+    background: var(--si-wine);
+    height: 0.42rem;
+    opacity: 0.62;
+    transform: translateX(-70%) rotate(8deg);
+    width: 0.42rem;
+  }
+
+  .si-grid {
+    margin: 0 auto;
+    max-width: 80rem;
+    padding: 1rem 1rem 0;
+    position: relative;
+    z-index: 1;
+  }
+
+  .si-leaf-grid {
+    display: grid;
+    gap: 1.25rem;
+    grid-template-columns: minmax(0, 1fr);
+  }
+
+  .si-leaf-card {
+    margin: 0 auto;
+    max-width: 31rem;
+    position: relative;
+    width: min(100%, 31rem);
+    z-index: 1;
+  }
+
+  .si-leaf-link {
+    --si-card-bg: var(--si-honey);
+    --si-card-edge: rgba(93, 64, 55, 0.16);
+    --si-card-accent: var(--si-gold);
+    align-items: center;
+    aspect-ratio: 16 / 10;
+    background:
+      radial-gradient(ellipse at 32% 22%, rgba(255, 255, 255, 0.55), transparent 46%),
+      linear-gradient(135deg, color-mix(in srgb, var(--si-card-bg) 92%, white), color-mix(in srgb, var(--si-card-bg) 82%, var(--si-card-accent)));
+    border: 1px solid var(--si-card-edge);
+    border-radius: 64% 36% 58% 42% / 42% 58% 42% 58%;
+    box-shadow: 7px 8px 0 rgba(93, 64, 55, 0.13);
+    color: var(--si-text);
+    display: flex;
+    justify-content: center;
+    min-height: 11.75rem;
+    overflow: hidden;
+    position: relative;
+    transition: box-shadow 180ms ease, transform 180ms ease, border-color 180ms ease;
+  }
+
+  .si-leaf-link::after {
+    background:
+      radial-gradient(ellipse at 76% 72%, rgba(93, 64, 55, 0.08), transparent 48%),
+      linear-gradient(100deg, transparent 0 44%, rgba(255, 255, 255, 0.32) 45% 48%, transparent 49% 100%);
+    content: "";
+    inset: 0;
+    pointer-events: none;
+    position: absolute;
+  }
+
+  .si-leaf-link:focus-visible {
+    outline: 3px solid color-mix(in srgb, var(--si-card-accent) 70%, white);
+    outline-offset: 0.35rem;
+  }
+
+  .si-leaf-link:hover {
+    border-color: color-mix(in srgb, var(--si-card-accent) 48%, var(--si-card-edge));
+    box-shadow: 9px 10px 0 rgba(93, 64, 55, 0.16);
+    transform: translateY(-3px);
+  }
+
+  .si-leaf-vein {
+    background: linear-gradient(to right, transparent, rgba(93, 64, 55, 0.24), transparent);
+    height: 1px;
+    left: 13%;
+    position: absolute;
+    top: 52%;
+    transform: rotate(-13deg);
+    width: 74%;
+  }
+
+  .si-leaf-vein::before,
+  .si-leaf-vein::after {
+    background: rgba(93, 64, 55, 0.12);
+    content: "";
+    height: 1px;
+    position: absolute;
+    right: 20%;
+    top: 0;
+    transform-origin: right center;
+    width: 28%;
+  }
+
+  .si-leaf-vein::before {
+    transform: rotate(26deg);
+  }
+
+  .si-leaf-vein::after {
+    transform: rotate(-24deg);
+  }
+
+  .si-leaf-stem {
+    background: color-mix(in srgb, var(--si-bark) 62%, transparent);
+    bottom: 15%;
+    height: 2px;
+    left: 4%;
+    position: absolute;
+    transform: rotate(-18deg);
+    width: 24%;
+  }
+
+  .si-leaf-content {
+    align-items: center;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    max-width: 82%;
+    padding: 1.25rem;
+    position: relative;
+    text-align: center;
+    z-index: 1;
+  }
+
+  .leaf-card-title {
+    color: var(--si-bark);
+    font-family: var(--font-hand);
+    font-size: clamp(2.35rem, 4.5vw, 3.8rem);
+    font-weight: 700;
+    letter-spacing: 0;
+    line-height: 0.88;
+    margin: 0;
+    text-shadow: 0 1px 0 rgba(255, 255, 255, 0.82), 1px 2px 0 rgba(93, 64, 55, 0.12);
+    transition: color 180ms ease, transform 180ms ease;
+    text-wrap: balance;
+  }
+
+  .leaf-card-title-medium {
+    font-size: clamp(2.05rem, 3.6vw, 3.05rem);
+    line-height: 0.9;
+  }
+
+  .leaf-card-title-compact {
+    font-size: clamp(1.65rem, 2.9vw, 2.45rem);
+    line-height: 0.94;
+  }
+
+  .leaf-card-title-dense {
+    font-size: clamp(1.42rem, 2.35vw, 2rem);
+    line-height: 0.98;
+  }
+
+  .leaf-card-title-tiny {
+    font-size: clamp(1.2rem, 1.9vw, 1.62rem);
+    line-height: 1.04;
+  }
+
+  .si-leaf-density-dense .si-leaf-content,
+  .si-leaf-density-tiny .si-leaf-content {
+    max-width: 86%;
+  }
+
+  .si-leaf-density-tiny .si-leaf-link {
+    aspect-ratio: 15 / 10;
+  }
+
+  .leaf-card-kicker {
+    color: var(--si-forest);
+    display: inline-block;
+    font-family: var(--font-mono);
     font-size: 0.58rem;
     font-weight: 800;
     letter-spacing: 0.12em;
-    text-shadow: 0 1px 0 rgba(255, 255, 255, 0.85);
+    margin-bottom: 0.35rem;
+    max-width: 88%;
+    overflow-wrap: anywhere;
+    text-transform: uppercase;
   }
 
-  /* ==========================================================================
-     LA VIE CACHÉE — 42 Fourmis statiques
-     ========================================================================== */
-
-  .static-ants-container {
-    position: absolute;
-    inset: 0;
-    pointer-events: none;
-    z-index: 2;
-    overflow: hidden;
+  .si-leaf-card:hover .leaf-card-title {
+    color: color-mix(in srgb, var(--si-bark) 82%, var(--si-card-accent));
+    transform: scale(1.015);
   }
 
-  .static-ant {
-    position: absolute;
-    line-height: 1;
-    user-select: none;
+  .si-leaf-card-0 .si-leaf-link {
+    --si-card-bg: var(--si-honey);
+    --si-card-accent: var(--si-gold);
   }
 
-  /* Terracotta — brun-rouge chaud (OPTIMIZED: 2 ops vs 4) */
-  .si-ant-terra {
-    filter: sepia(0.4) brightness(0.85);
+  .si-leaf-card-1 .si-leaf-link {
+    --si-card-bg: #f2d6c8;
+    --si-card-accent: var(--si-terracotta);
+    border-radius: 58% 42% 63% 37% / 50% 41% 59% 50%;
   }
 
-  /* Forêt — vert mousse profond (OPTIMIZED: 2 ops vs 4) */
-  .si-ant-forest {
-    filter: hue-rotate(85deg) brightness(0.8);
+  .si-leaf-card-2 .si-leaf-link {
+    --si-card-bg: #dfe8d2;
+    --si-card-accent: var(--si-forest);
+    border-radius: 44% 56% 48% 52% / 62% 38% 62% 38%;
   }
 
-  /* Bourgogne — rouge vin automnal (OPTIMIZED: 2 ops vs 4) */
-  .si-ant-wine {
-    filter: sepia(0.4) hue-rotate(-30deg);
+  .si-leaf-card-3 .si-leaf-link {
+    --si-card-bg: #f1e0b8;
+    --si-card-accent: var(--si-gold);
+    border-radius: 72% 28% 68% 32% / 36% 62% 38% 64%;
   }
 
-  /* 9 Poses naturelles — Attitudes variées via scaleX + rotate */
-  .si-ant-pose-0 {
-    transform: rotate(-10deg);
-  } /* Marche droite */
-  .si-ant-pose-1 {
-    transform: scaleX(-1) rotate(10deg);
-  } /* Marche gauche */
-  .si-ant-pose-2 {
-    transform: rotate(-80deg);
-  } /* Grimpe */
-  .si-ant-pose-3 {
-    transform: rotate(80deg);
-  } /* Descend */
-  .si-ant-pose-4 {
-    transform: rotate(-45deg);
-  } /* Diag haut-droite */
-  .si-ant-pose-5 {
-    transform: scaleX(-1) rotate(-45deg);
-  } /* Diag haut-gauche */
-  .si-ant-pose-6 {
-    transform: rotate(45deg);
-  } /* Diag bas-droite */
-  .si-ant-pose-7 {
-    transform: scaleX(-1) rotate(45deg);
-  } /* Diag bas-gauche */
-  .si-ant-pose-8 {
-    transform: rotate(5deg) skewX(-5deg);
-  } /* Repos nonchalant */
+  .si-leaf-card-4 .si-leaf-link {
+    --si-card-bg: #ead0d2;
+    --si-card-accent: var(--si-wine);
+    border-radius: 52% 48% 42% 58% / 44% 62% 38% 56%;
+  }
 
-  /* Responsive: réduire le nombre sur mobile */
+  .si-leaf-card-5 .si-leaf-link {
+    --si-card-bg: var(--si-parchment);
+    --si-card-accent: var(--si-bark);
+    border-radius: 66% 34% 44% 56% / 52% 36% 64% 48%;
+  }
+
+  .si-leaf-card-6 .si-leaf-link {
+    --si-card-bg: #e8dfbd;
+    --si-card-accent: #8f7f2e;
+    border-radius: 40% 60% 62% 38% / 54% 46% 54% 46%;
+  }
+
+  .si-leaf-right .si-leaf-vein {
+    transform: rotate(13deg);
+  }
+
+  .si-leaf-right .si-leaf-stem {
+    left: auto;
+    right: 4%;
+    transform: rotate(18deg);
+  }
+
+  @media (min-width: 768px) {
+    .si-garden {
+      padding-top: 4rem;
+    }
+
+    .si-leaf-grid {
+      column-gap: 7rem;
+      grid-template-columns: minmax(0, 1fr) 7rem minmax(0, 1fr);
+      row-gap: 0.75rem;
+    }
+
+    .si-leaf-left {
+      grid-column: 1;
+      justify-self: end;
+      margin-right: -1rem;
+      transform: rotate(3.5deg);
+      transform-origin: right center;
+    }
+
+    .si-leaf-right {
+      grid-column: 3;
+      justify-self: start;
+      margin-left: -1rem;
+      margin-top: 4.75rem;
+      transform: rotate(-3.5deg);
+      transform-origin: left center;
+    }
+
+    .si-leaf-left .si-leaf-content {
+      transform: rotate(-2.5deg);
+    }
+
+    .si-leaf-right .si-leaf-content {
+      transform: rotate(2.5deg);
+    }
+  }
+
+  @media (min-width: 1024px) {
+    .si-leaf-grid {
+      column-gap: 8rem;
+      grid-template-columns: minmax(0, 1fr) 8rem minmax(0, 1fr);
+    }
+  }
+
   @media (max-width: 640px) {
-    .static-ant:nth-child(n + 22) {
-      display: none;
+    .solutions-imaginaires-page {
+      margin-left: -0.5rem;
+      margin-right: -0.5rem;
+      padding-left: 0.5rem;
+      padding-right: 0.5rem;
     }
-  }
 
-  /* PERF: Encore plus agressif sur très petits écrans */
-  @media (max-width: 480px) {
-    .static-ant:nth-child(n + 15) {
-      display: none;
+    .si-hero {
+      padding-top: 0.75rem;
     }
-  }
 
-  /* ==========================================================================
-     PERFORMANCE OPTIMIZED LEAF CARDS
-     - Removed infinite float animation (major FPS drain)
-     - Using will-change for smooth hover only
-     - GPU-accelerated transforms
-  ========================================================================== */
-
-  .si-leaf-card {
-    will-change: transform;
-    transform: translateZ(0);
-    backface-visibility: hidden;
-  }
-
-  /* Lightweight leaf shadow (replaces expensive drop-shadow-2xl) */
-  .si-leaf-shadow {
-    filter: drop-shadow(0 4px 6px rgba(0, 0, 0, 0.15));
-  }
-
-  /* Hover-only subtle lift (no infinite animation) */
-  .si-leaf-card:hover {
-    transform: translateY(-4px) translateZ(0);
-  }
-
-  /* ==========================================================================
-     G. VITALITÉ — Effets vivifiants
-     ==========================================================================
-     Touches de vie subtiles : pollen flottant, lueurs, micro-brillances.
-     Toutes les animations respectent 60fps (transform/opacity only).
-  */
-
-  /* --- G.1 PARTICULES DE POLLEN FLOTTANTES --- */
-  .pollen-container {
-    position: absolute;
-    inset: 0;
-    pointer-events: none;
-    z-index: 1;
-    overflow: hidden;
-  }
-
-  .pollen {
-    position: absolute;
-    width: 4px;
-    height: 4px;
-    border-radius: 50%;
-    background: radial-gradient(
-      circle,
-      rgba(218, 165, 32, 0.8),
-      rgba(201, 162, 39, 0.4)
-    );
-    box-shadow: 0 0 6px 2px rgba(218, 165, 32, 0.3);
-    animation: pollenFloat 12s ease-in-out infinite;
-    will-change: transform, opacity;
-  }
-
-  .pollen:nth-child(2n) {
-    width: 3px;
-    height: 3px;
-    animation-duration: 15s;
-    animation-delay: -5s;
-    background: radial-gradient(
-      circle,
-      rgba(255, 223, 128, 0.7),
-      rgba(218, 165, 32, 0.3)
-    );
-  }
-
-  .pollen:nth-child(3n) {
-    width: 5px;
-    height: 5px;
-    animation-duration: 18s;
-    animation-delay: -8s;
-    background: radial-gradient(
-      circle,
-      rgba(144, 238, 144, 0.6),
-      rgba(60, 179, 113, 0.2)
-    );
-    box-shadow: 0 0 8px 2px rgba(144, 238, 144, 0.25);
-  }
-
-  @keyframes pollenFloat {
-    0%,
-    100% {
-      transform: translate(0, 0);
-      opacity: 0;
+    .si-title {
+      font-size: clamp(3.1rem, 18vw, 4.8rem);
     }
-    10% {
-      opacity: 0.8;
-    }
-    50% {
-      transform: translate(30px, -60px);
-      opacity: 0.6;
-    }
-    90% {
-      opacity: 0.4;
-    }
-  }
 
-  /* Positions des 8 pollens */
-  .pollen:nth-child(1) {
-    left: 5%;
-    top: 20%;
-    animation-delay: 0s;
-  }
-  .pollen:nth-child(2) {
-    left: 12%;
-    top: 45%;
-    animation-delay: -3s;
-  }
-  .pollen:nth-child(3) {
-    left: 8%;
-    top: 70%;
-    animation-delay: -6s;
-  }
-  .pollen:nth-child(4) {
-    right: 6%;
-    top: 25%;
-    animation-delay: -2s;
-  }
-  .pollen:nth-child(5) {
-    right: 10%;
-    top: 55%;
-    animation-delay: -7s;
-  }
-  .pollen:nth-child(6) {
-    right: 8%;
-    top: 80%;
-    animation-delay: -4s;
-  }
-  .pollen:nth-child(7) {
-    left: 25%;
-    top: 85%;
-    animation-delay: -9s;
-  }
-  .pollen:nth-child(8) {
-    right: 22%;
-    top: 15%;
-    animation-delay: -11s;
-  }
-
-  /* --- G.2 TITRES VIVANTS — Lueur dorée au hover --- */
-  .solutions-imaginaires-page .leaf-card-title {
-    transition: text-shadow 0.4s ease, transform 0.3s ease;
-  }
-
-  .solutions-imaginaires-page .si-leaf-card:hover .leaf-card-title {
-    text-shadow: 0px 1px 0px rgba(255, 255, 255, 0.95),
-      1px 2px 2px rgba(93, 64, 55, 0.5), 0 0 20px rgba(218, 165, 32, 0.4),
-      0 0 35px rgba(201, 162, 39, 0.25);
-    transform: scale(1.02);
-  }
-
-  /* --- G.3 BRILLANCE SOLAIRE SUR FEUILLES --- */
-  .si-leaf-card::after {
-    content: "";
-    position: absolute;
-    inset: 0;
-    background: radial-gradient(
-      circle at 30% 30%,
-      rgba(255, 255, 255, 0.15),
-      transparent 50%
-    );
-    opacity: 0;
-    transition: opacity 0.4s ease;
-    pointer-events: none;
-    z-index: 5;
-    border-radius: inherit;
-  }
-
-  .si-leaf-card:hover::after {
-    opacity: 1;
-  }
-
-  /* Reduce motion for accessibility */
-  @media (prefers-reduced-motion: reduce) {
-    .pollen {
-      animation: none;
+    .organic-spine {
+      left: 1.4rem;
       opacity: 0.5;
     }
-    .solutions-imaginaires-page .leaf-card-title {
-      transition: none;
+
+    .si-grid {
+      padding-left: 1.6rem;
+      padding-right: 0.65rem;
     }
-    .solutions-imaginaires-page .leaf-card-kicker {
+
+    .si-leaf-card:nth-child(2n) {
+      transform: rotate(-1.5deg);
+    }
+
+    .si-leaf-card:nth-child(2n + 1) {
+      transform: rotate(1.5deg);
+    }
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    .si-leaf-link,
+    .leaf-card-title {
       transition: none;
     }
   }

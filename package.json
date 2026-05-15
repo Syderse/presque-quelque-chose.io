@@ -5,8 +5,8 @@
   "packageManager": "pnpm@10.14.0",
   "description": "Blog starter template for Hugo Blox with Tailwind CSS v4",
   "scripts": {
-    "dev": "bash -c 'if [ -f .env.local ]; then set -a; source .env.local; set +a; fi; hugo server --disableFastRender'",
-    "build": "hugo --minify"
+    "dev": "bash -c 'if [ -f .env.local ]; then set -a; source .env.local; set +a; fi; pnpm exec hugo server --disableFastRender'",
+    "build": "pnpm exec hugo --minify"
   },
   "pnpm": {
     "overrides": {
