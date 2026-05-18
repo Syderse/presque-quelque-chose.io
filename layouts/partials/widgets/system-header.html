@@ -82,7 +82,11 @@
 
 {{ $almanacCount := 0 }}
 {{ if hugo.Data.almanach }}
-  {{ $almanacCount = len hugo.Data.almanach }}
+  {{ with hugo.Data.almanach.entries }}
+    {{ $almanacCount = len . }}
+  {{ else }}
+    {{ $almanacCount = len hugo.Data.almanach }}
+  {{ end }}
 {{ end }}
 
 

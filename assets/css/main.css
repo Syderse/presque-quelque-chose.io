@@ -765,14 +765,181 @@
   }
 
   /* Mobile */
-  @media (max-width: 640px) {
-    .script-text {
-      font-size: 1rem;
-    }
-  }
+	  @media (max-width: 640px) {
+	    .script-text {
+	      font-size: 1rem;
+	    }
+	  }
 
-  /* D. BREADCRUMB (Path Ribbon — Smooth & Spacious) */
-  .breadcrumb {
+	  .almanach-read-more {
+	    display: inline-flex;
+	    align-items: center;
+	    justify-content: center;
+	    width: fit-content;
+	    margin-top: 0.95rem;
+	    padding: 0.42rem 0.62rem;
+	    border: 1px solid color-mix(in srgb, var(--ctp-peach) 70%, var(--ctp-surface1));
+	    border-radius: 0.35rem;
+	    background: color-mix(in srgb, var(--ctp-crust) 68%, transparent);
+	    color: var(--ctp-peach);
+	    font-family: var(--font-mono);
+	    font-size: 0.68rem;
+	    font-weight: 700;
+	    letter-spacing: 0;
+	    line-height: 1;
+	    text-transform: uppercase;
+	    box-shadow: 3px 3px 0 rgba(0, 0, 0, 0.26);
+	    transition:
+	      background-color 0.16s ease,
+	      border-color 0.16s ease,
+	      color 0.16s ease,
+	      transform 0.16s ease;
+	  }
+
+	  .almanach-read-more[hidden] {
+	    display: none;
+	  }
+
+	  .almanach-read-more:hover,
+	  .almanach-read-more:focus-visible {
+	    border-color: var(--ctp-peach);
+	    background: color-mix(in srgb, var(--ctp-peach) 14%, var(--ctp-crust));
+	    color: var(--ctp-text);
+	    outline: none;
+	    transform: translate(-1px, -1px);
+	  }
+
+	  .almanach-dialog {
+	    width: min(44rem, calc(100vw - 2rem));
+	    max-height: min(48rem, calc(100vh - 3rem));
+	    margin: auto;
+	    padding: 0;
+	    border: 1px solid var(--ctp-surface1);
+	    border-radius: 0.5rem;
+	    background: var(--ctp-mantle);
+	    color: var(--ctp-text);
+	    box-shadow: 8px 8px 0 rgba(0, 0, 0, 0.42);
+	  }
+
+	  .almanach-dialog::backdrop {
+	    background: rgba(5, 5, 5, 0.68);
+	  }
+
+	  .almanach-dialog-panel {
+	    display: flex;
+	    flex-direction: column;
+	    max-height: min(48rem, calc(100vh - 3rem));
+	    overflow: hidden;
+	  }
+
+	  .almanach-dialog-header {
+	    display: flex;
+	    align-items: flex-start;
+	    justify-content: space-between;
+	    gap: 1rem;
+	    padding: 1rem 1rem 0.85rem;
+	    border-bottom: 1px solid var(--ctp-surface1);
+	    background: color-mix(in srgb, var(--ctp-crust) 72%, var(--ctp-mantle));
+	  }
+
+	  .almanach-dialog-kicker {
+	    display: block;
+	    margin-bottom: 0.22rem;
+	    color: var(--ctp-green);
+	    font-family: var(--font-mono);
+	    font-size: 0.64rem;
+	    font-weight: 700;
+	    letter-spacing: 0;
+	    line-height: 1;
+	    text-transform: uppercase;
+	  }
+
+	  .almanach-dialog-title {
+	    margin: 0;
+	    color: var(--ctp-rosewater);
+	    font-family: var(--font-serif);
+	    font-size: 1.35rem;
+	    font-weight: 700;
+	    line-height: 1.16;
+	  }
+
+	  .almanach-dialog-close {
+	    display: grid;
+	    place-items: center;
+	    flex: 0 0 auto;
+	    width: 2rem;
+	    height: 2rem;
+	    border: 1px solid var(--ctp-surface2);
+	    border-radius: 0.35rem;
+	    background: var(--ctp-base);
+	    color: var(--ctp-text);
+	    font-family: var(--font-mono);
+	    font-size: 1.2rem;
+	    line-height: 1;
+	    box-shadow: 3px 3px 0 rgba(0, 0, 0, 0.25);
+	    transition:
+	      background-color 0.16s ease,
+	      border-color 0.16s ease,
+	      color 0.16s ease;
+	  }
+
+	  .almanach-dialog-close:hover,
+	  .almanach-dialog-close:focus-visible {
+	    border-color: var(--ctp-peach);
+	    background: color-mix(in srgb, var(--ctp-peach) 14%, var(--ctp-base));
+	    color: var(--ctp-peach);
+	    outline: none;
+	  }
+
+	  .almanach-dialog-body {
+	    display: grid;
+	    gap: 1rem;
+	    overflow-y: auto;
+	    overscroll-behavior: contain;
+	    padding: 1.3rem clamp(1rem, 4vw, 2rem) 1.6rem;
+	    color: var(--ctp-text);
+	    font-family: var(--font-serif);
+	    font-size: 1.08rem;
+	    line-height: 1.75;
+	    scrollbar-gutter: stable;
+	  }
+
+	  .almanach-dialog-body p {
+	    margin: 0;
+	  }
+
+	  @media (max-width: 640px) {
+	    .almanach-read-more {
+	      margin-top: 0.78rem;
+	      font-size: 0.62rem;
+	    }
+
+	    .almanach-dialog {
+	      width: calc(100vw - 1rem);
+	      max-height: calc(100dvh - 1rem);
+	    }
+
+	    .almanach-dialog-panel {
+	      max-height: calc(100dvh - 1rem);
+	    }
+
+	    .almanach-dialog-header {
+	      padding: 0.9rem 0.85rem 0.75rem;
+	    }
+
+	    .almanach-dialog-title {
+	      font-size: 1.15rem;
+	    }
+
+	    .almanach-dialog-body {
+	      padding: 1rem 0.95rem 1.25rem;
+	      font-size: 1rem;
+	      line-height: 1.68;
+	    }
+	  }
+
+	  /* D. BREADCRUMB (Path Ribbon — Smooth & Spacious) */
+	  .breadcrumb {
     /* Color Palette: Muted violet tones for consistency with site accent */
     --breadcrumb-link: color-mix(
       in srgb,
