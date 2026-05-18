@@ -7,7 +7,8 @@ Backlog de maintenance. Ne pas tout faire en meme temps : prendre un chantier, m
 ## Lecture Et Articles
 
 - [x] Rendre le bouton `Plan` accessible pendant toute la lecture d'un article. Chercher une solution integree au shell de lecture, compatible desktop/mobile, et verifier explicitement qu'elle ne se superpose pas aux sidenotes.
-- [ ] Ajouter la reciprocite des sidenotes : quand on clique sur le cadre d'une sidenote, mettre aussi en valeur le numero d'appel correspondant. Le chemin inverse existe deja ; garder le meme esprit visuel et prevoir les cas mobile/clavier.
+- [x] Ajouter la reciprocite des sidenotes : quand on clique sur le cadre d'une sidenote, mettre aussi en valeur le numero d'appel correspondant. Le chemin inverse existe deja ; garder le meme esprit visuel et prevoir les cas mobile/clavier.
+- [ ] La réciprocité fonctionne mais... j'aimerais que cliquer sur le cadre de la sidenote fonctionne comme quand je clique sur le numéro d'appel, c'est-à-dire : quand je clique une fois, ça le met en valeur et le colore (c'est déjà bon), et quand je reclique : ça le remet dans son état initial (ce n'est pas encore le cas pour les clics dans le cadre ; alors que ça l'est pour les clics sur le numéro d'appel). Comme tes moyens de vérification ont pris beaucoup de temps la dernière fois, tu peux me laisser vérifier moi même si ça fonctionne ^^je te ferai un retour précis. 
 - [ ] Verifier les longs articles avec beaucoup de sidenotes apres toute modification du layout `single.html`, surtout les pages du carnet de Coree.
 
 ## Accueil Et Widgets
@@ -15,6 +16,7 @@ Backlog de maintenance. Ne pas tout faire en meme temps : prendre un chantier, m
 - [ ] Dans `identity-card`, afficher au hover des petites icones de liens un libelle tres court indiquant la destination : YouTube, Instagram, forum, guide, site. Prevoir aussi un comportement accessible au clavier et coherent avec `mobile-tooltip.js`.
 - [ ] Reparer et clarifier les stats du `system-header`. Priorite : afficher la derniere date/heure/minute de publication du site, puis la duree depuis la publication precedente pour donner une idee de l'activite recente.
 - [ ] Auditer le cout build du calcul de vocabulaire dans `system-header.html` quand le corpus grossira. Le calcul est cote build, pas runtime, mais il peut devenir cher.
+- [x] on a bien géré le changement lightweight de layouts/partials/widgets/latest-posts.html mais il reste un souci. comme tu peux le voir sur la photo, ce n'est pas toujours très propre en fonction du zoom et de la taille de l'écran. les lignes se chevauchent, des mots semblent apparaître en filigrane, tout n'est pas bien centré dans les cadre parfois c'est trop proche du bord. j'aimerais que tu améliores drastiquement la propreté/netteté de ce petit cadre de l'accueil stp, en toutes circonstances de zoom stp
 
 ## Pages Et Parcours
 

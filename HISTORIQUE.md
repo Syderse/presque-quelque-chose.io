@@ -26,6 +26,7 @@ Journal minimal des changements structurels du site. Noter seulement ce qui aide
 - Suppressions d'assets decoratifs visibles dans le worktree, notamment `static/media/inventory/`.
 - `static/` devient beaucoup plus leger ; dernier gros fichier suivi note : `static/media/logo.png`.
 - Bouton `Plan` rendu persistant : desktop aligne colonne de lecture, mobile integre a la nav basse.
+- Sidenotes reciproques : clic/focus sur le cadre active aussi le numero d'appel, avec clavier et mobile.
 
 ## 2026-05-15 - AGENTS allege
 

@@ -32,12 +32,12 @@
                         <span class="latest-post-title">{{ $post.Title }}</span>
                         <span class="latest-post-meta">
                             {{ if $post.Date.IsZero }}
-                                <span>sans date</span>
+                                <span class="latest-post-date">sans date</span>
                             {{ else }}
-                                <time datetime="{{ $post.Date.Format "2006-01-02" }}">{{ $post.Date.Format "02 Jan 2006" }}</time>
+                                <time class="latest-post-date" datetime="{{ $post.Date.Format "2006-01-02" }}">{{ $post.Date.Format "02 Jan 2006" }}</time>
                             {{ end }}
-                            <span aria-hidden="true">/</span>
-                            <span>{{ $sectionLabel }}</span>
+                            <span class="latest-post-separator" aria-hidden="true">/</span>
+                            <span class="latest-post-section">{{ $sectionLabel }}</span>
                         </span>
                     </span>
 
