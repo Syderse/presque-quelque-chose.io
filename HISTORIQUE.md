@@ -37,3 +37,7 @@ Journal minimal des changements structurels du site. Noter seulement ce qui aide
 ## 2026-05-18 - 404 locale
 
 - `layouts/404.html` remplace la 404 vendor par une page locale lightweight, sans asset lourd ni moteur JS dedie.
+
+## 2026-05-18 - System-header
+
+- `system-header` affiche derniere publication + ecart recent ; vocabulaire passe en collecte build-time bornee aux pages de contenu publiees.

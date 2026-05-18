@@ -13,13 +13,14 @@ Backlog de maintenance. Ne pas tout faire en meme temps : prendre un chantier, m
 ## Accueil Et Widgets
 
 - [ ] Dans `identity-card`, afficher au hover des petites icones de liens un libelle tres court indiquant la destination : YouTube, Instagram, forum, guide, site. Prevoir aussi un comportement accessible au clavier et coherent avec `mobile-tooltip.js`.
-- [ ] Reparer et clarifier les stats du `system-header`. Priorite : afficher la derniere date/heure/minute de publication du site, puis la duree depuis la publication precedente pour donner une idee de l'activite recente.
-- [ ] Auditer le cout build du calcul de vocabulaire dans `system-header.html` quand le corpus grossira. Le calcul est cote build, pas runtime, mais il peut devenir cher.
+- [x] Reparer et clarifier les stats du `system-header`. Priorite : afficher la derniere date/heure/minute de publication du site, puis la duree depuis la publication precedente pour donner une idee de l'activite recente.
+- [x] Auditer le cout build du calcul de vocabulaire dans `system-header.html` quand le corpus grossira. Le calcul est cote build, pas runtime, mais il peut devenir cher.
 - [x] on a bien géré le changement lightweight de layouts/partials/widgets/latest-posts.html mais il reste un souci. comme tu peux le voir sur la photo, ce n'est pas toujours très propre en fonction du zoom et de la taille de l'écran. les lignes se chevauchent, des mots semblent apparaître en filigrane, tout n'est pas bien centré dans les cadre parfois c'est trop proche du bord. j'aimerais que tu améliores drastiquement la propreté/netteté de ce petit cadre de l'accueil stp, en toutes circonstances de zoom stp
+- [ ] j'aimerais changer le fonctionnement d'almanach. plutôt que d'écrire au préalable une mini-entrée de journal pour chaque jour de l'année de manière prévue et fixe, j'aimerais que le widget de l'accueil pioche dans une réserve d'entrées de journal. il faudrait définir un aléatoire qui évite la répétition pour que toutes sortent avant que la première ne ressorte, mais dans un ordre aléatoire.. par ailleurs, ce faisant, je me permettrai sans doute d'écrire des entrées à longueur encore plus variable, donc il faudrait trouver une solution pour que les lecteurs puissent agrandir le cadre et qu'il occupe presque un plein écran, une large fenêtre centrée, si les premières lignes les intéressent et qu'ils veulent lire ce qui suit les ...
 
 ## Pages Et Parcours
 
-- [ ] Concevoir une vraie page `404` locale, legere et dans le ton du site. Eviter la page par defaut ; proposer un retour accueil, quelques chemins utiles, et eventuellement un lien aleatoire sans charger d'asset lourd.
+- [x] Concevoir une vraie page `404` locale, legere et dans le ton du site. Eviter la page par defaut ; proposer un retour accueil, quelques chemins utiles, et eventuellement un lien aleatoire sans charger d'asset lourd.
 - [ ] Clarifier le statut du droit d'auteur des contenus publies. Decider ce qui vaut pour les textes, romans-feuilletons, scripts audio, images, PDF et contenus academiques ; puis mettre a jour footer, page dediee ou metadata si besoin.
 - [ ] Verifier les pages de sections apres les suppressions d'assets : accueil, `/solutions-imaginaires/`, `/ondes-pixels/`, `/recherches/`, `/rhizome-curieux/`, `/patafoin/`.
 
