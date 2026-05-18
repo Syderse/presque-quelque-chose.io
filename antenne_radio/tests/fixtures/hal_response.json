@@ -1,0 +1,53 @@
+{
+  "responseHeader": {
+    "status": 0,
+    "QTime": 12,
+    "params": {
+      "q": "(radio OR \"radio libre\" OR podcast)",
+      "wt": "json",
+      "rows": "2"
+    }
+  },
+  "response": {
+    "numFound": 2,
+    "start": 0,
+    "docs": [
+      {
+        "docid": 123456,
+        "title_s": [
+          "Radio libre et archives sonores"
+        ],
+        "abstract_s": [
+          "Un article de fixture sur les archives radiophoniques."
+        ],
+        "keyword_s": [
+          "radio libre",
+          "archives"
+        ],
+        "authorFullName_s": [
+          "Fixture Author"
+        ],
+        "producedDateY_i": 2026,
+        "uri_s": "https://hal.science/hal-0123456"
+      },
+      {
+        "docid": 789012,
+        "title_s": [
+          "Podcasting and community radio"
+        ],
+        "abstract_s": [
+          "A second fixture document."
+        ],
+        "keyword_s": [
+          "podcast",
+          "community radio"
+        ],
+        "authorFullName_s": [
+          "Second Fixture Author"
+        ],
+        "producedDateY_i": 2025,
+        "uri_s": "https://hal.science/hal-0789012"
+      }
+    ]
+  }
+}

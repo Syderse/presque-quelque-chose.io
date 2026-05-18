@@ -98,6 +98,17 @@ Netlify :
 
 ## Sections
 
+`/antenne_radio/`
+
+- Projet : antenne locale de veille en études radiophoniques.
+- Périmètre v0.1 strict : RSS/Atom + HAL + Pydantic + scoring lexical + export Markdown Obsidian.
+- Ne pas ajouter en v0.1 : Crossref, OpenAlex, CiNii, NDL, J-STAGE, Zotero automatique, Hugo, scraping, cron, auto-commit, LLM summaries.
+- Toujours lancer `git status --short` au début et à la fin.
+- Toujours lancer les tests pertinents après modification.
+- Préférer des changements petits, testés, réversibles.
+- Ne jamais masquer un test échoué.
+- À la fin des blocs, mettre à jour antenne_radio/codex_memoire_materielle.md pour transmettre la mémoire des sessions.
+
 `/solutions-imaginaires/`
 
 - Fond clair, jardin automnal, cartes-feuilles CSS.

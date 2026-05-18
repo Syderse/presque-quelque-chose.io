@@ -1,0 +1,6 @@
+pydantic
+httpx
+feedparser
+pyyaml
+pytest
+python-dateutil

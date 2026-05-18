@@ -1,0 +1,621 @@
+{
+  "config": "/Users/mathieu/Documents/presque-quelque-chose.io/antenne_radio/config/sources.yaml",
+  "connector": "hal",
+  "docs": [
+    {
+      "abstract_s": [
+        "The rapid growth of the Internet of Things (IoT) has led to a significant increase in demand for radio spectrum, a scarce and valuable resource. Cognitive Radio (CR) technology offers a promising solution by dynamically detecting available frequency bands and enabling opportunistic spectrum access, thus improving spectral efficiency. In this work, we investigate spectrum sensing in Cognitive Radio-based IoT (CR-IoT) networks using real IoT signals transmitted by LoRa modules and captured with an RTL2832U software-defined radio receiver. Energy detection is employed as the sensing method due to its low computational complexity and suitability for unknown signals. The performance of the proposed approach is evaluated through Receiver Operating Characteristic analysis, demonstrating its effectiveness in accurately identifying occupied and vacant frequency bands. The results confirm the feasibility of deploying energy detection-based CR-IoT systems in real-world scenarios, providing a practical foundation for future dynamic spectrum access in IoT networks."
+      ],
+      "docid": "5610498",
+      "keyword_s": [
+        "Spectrum sensing",
+        "CR-IoT Networks",
+        "Real IoT signal",
+        "Internet of Things",
+        "Cognitive radio"
+      ],
+      "producedDateY_i": 2026,
+      "title_s": [
+        "Investigating Spectrum Sensing in CR-IoT Networks using Real IoT Signals"
+      ],
+      "uri_s": "https://hal.science/hal-05610498v1"
+    },
+    {
+      "abstract_s": [
+        "Dedicated vehicular communication technologies such as DSRC and C-V2X were designed for low-latency broadcast dissemination of safety messages, but their deployment remains limited due to additional hardware and infrastructure costs. As a result, cellular networks are increasingly considered as the primary communication substrate for large-scale V2X services, especially with the latency reductions enabled by 5G standalone (SA) architectures and edge computing.A key challenge stems from the mismatch between broadcast-oriented vehicular messaging and the unicast nature of the 5G Uu interface. Naïve forwarding of CAM and DENM messages to N vehicles results in a quadratic growth of downlink transmissions, exceeding 1~Gbps for fewer than 150 vehicles. In this paper, we analytically quantify the radio-resource footprint of standardized V2X messages in 5G NR and evaluate server-side, context-aware forwarding strategies that bound downlink load without modifying user equipment. Real-world experiments on a private 5G SA network with mobile vehicles demonstrate that selective forwarding restores scalability, while meeting stringent latency requirements."
+      ],
+      "docid": "5588850",
+      "keyword_s": [
+        "Field trial",
+        "Radio Resources",
+        "Vehicle-To-Everything",
+        "5G SA"
+      ],
+      "producedDateY_i": 2026,
+      "title_s": [
+        "Unlocking Vehicular Communications: Scaling V2X Traffic on 5G SA"
+      ],
+      "uri_s": "https://hal.science/hal-05588850v1"
+    },
+    {
+      "abstract_s": [
+        "Unmanned Aerial Vehicles (UAVs) are popular robotic platforms nowadays and they are gradually entering our everyday lives. For normal operation, a two-way communication link between a UAV and a ground station, has to be established. While radio-frequency communication is a simple and common option, it suffers from major drawbacks, such as interference and multi-path errors. Moreover, it is prone to spoofing/jamming attacks which might have catastrophic consequences in densely-populated or sensitive areas. To overcome these limitations, in this paper, we propose a compact LED-event camera system for fast optical communication via a new optimized dynamic N-pulse protocol. A learning-based method guarantees the robust detection and tracking of the active markers and it makes the application of standard 3D pose estimation algorithms possible. The effectiveness of the proposed system is demonstrated via hardware experiments with a DJI Matrice 600 Pro hexarotor and a Prophesee Gen. 4.1 HD camera."
+      ],
+      "docid": "5607236",
+      "keyword_s": [
+        "Event cameras Unmanned Aerial Vehicles Optical Communication"
+      ],
+      "producedDateY_i": 2026,
+      "title_s": [
+        "Fast and Robust Event-based Optical Communication for Aerial Robots via Active LED Markers"
+      ],
+      "uri_s": "https://hal.science/hal-05607236v1"
+    },
+    {
+      "abstract_s": [
+        "Ultra-Wideband (UWB) radio has recently gainedattention as a low-power and centimeter-accurate technology forindoor localization and device-free sensing. This paper investi-gates whether standard time-of-flight (ToF) ranging measure-ments can be repurposed for reliable human-presence detectionwithout any hardware modification. A unified signal-processingpipeline was implemented on the LocURa4IoT testbed usingDecawave DWM1001 modules, combining Savitzky–Golay filter-ing for analytical precision with a lightweight moving-averagescheme for real-time multi-anchor operation. The frameworkcomputes temporal derivatives and adaptive range deviationsto detect human-induced perturbations in UWB links. Exper-iments conducted in mixed line-of-sight (LOS) and non-LOSindoor conditions demonstrate that human motion producesreproducible fluctuations exceeding the intrinsic ranging noise(3–7 cm) by more than a factor of two. The results confirmthat standard UWB ranging infrastructures can be effectivelyleveraged for robust device-free human detection and motivatefuture extensions toward CIR-based fine-grained sensing."
+      ],
+      "docid": "5544101",
+      "producedDateY_i": 2026,
+      "title_s": [
+        "From Ranging to Sensing: Toward Robust Human Detection with UWB Measurements"
+      ],
+      "uri_s": "https://hal.science/hal-05544101v1"
+    },
+    {
+      "abstract_s": [
+        "<div><p>Cell-free massive MIMO (CF-mMIMO) promises uniform coverage for beyond-5G networks but faces critical energy efficiency (EE) challenges in dense and uncoordinated Internet-of-Things deployments. This paper addresses uncoordinated uplink transmission where devices transmit autonomously without coordination, potentially causing severe multi-user interference and leading to inefficient resource utilization. We propose a reconfigurable intelligent surface (RIS)-aided CF-mMIMO system with non-orthogonal multiple access that jointly optimizes subband allocation, RIS phase configuration, access point (AP) selection, and decoding order of successive interference cancellation to maximize EE while satisfying heterogeneous quality-of-service requirements. The mixed-integer nonconvex optimization problem is decomposed into three interconnected stages: lightweight device-driven subband selection via upper confidence bound bandits requiring minimal feedback, RIS phase optimization using sequential programming, and centralized deep reinforcement learning for dynamic AP selection that intelligently deactivates redundant links and enables AP sleep mode. A parallel training framework ensures generalization across diverse channel conditions and traffic types. Numerical results demonstrate substantial improvements over baseline schemes, achieving significantly higher EE and successful transmission rates, while reducing the number of active AP-device associations and enabling intelligent sleep-mode operation.</p></div>"
+      ],
+      "docid": "5589406",
+      "keyword_s": [
+        "AP sleep",
+        "AP selection",
+        "Deep reinforcement learning",
+        "Energy efficiency",
+        "Resource allocation",
+        "Uncoordinated access",
+        "Non-orthogonal multiple access",
+        "Reconfigurable intelligent surfaces",
+        "Cell-free massive MIMO"
+      ],
+      "producedDateY_i": 2026,
+      "title_s": [
+        "Energy-Efficient RIS-aided Uplink Cell-Free Massive MIMO-NOMA"
+      ],
+      "uri_s": "https://cnrs.hal.science/hal-05589406v1"
+    },
+    {
+      "abstract_s": [
+        "This paper presents an innovative and practical method for robotic needle steering in radio-frequency ablation (RFA) to treat cancer. One of the main challenges in this process is that tissue shifts and deforms during needle insertion, making it difficult to predict the needle's path in real-time accurately. Inverse finite element (iFE) simulations have been used to address this problem. While these methods are accurate, they often require further refinement for effective time performance in real-world robotic systems. This is because when incorporating the method with a real robot, there can be a delay in command execution. To address this challenge, we propose a machine learning based solution that learn from offline simulations, moving the intensive calculations required by iFE methods to an offline training stage and predicting tissue deformation online with less computation time. Our network was trained on data from numerous simulated needle insertions to capture the interactions between insertion forces, tissue properties, and the resulting motion. Once trained, the model produces predictions almost instantaneously, making it suitable for real-time applications. We validated the approach by steering the needle in simulated deformable and moving gel to compare it with numeric-based methods, and then performing needle steering within a reconstructed human body, which involves multiple structures and also integrates the robot's dynamics. The results demonstrated that the developed networks achieved slightly better accuracy in the first scenario, while also executing faster, resulting in improved performance with the robot's dynamics. These findings show that our method is a promising advancement toward real-time guidance systems for needle-based medical procedures."
+      ],
+      "docid": "5540389",
+      "keyword_s": [
+        "Medical Robotics Finite Element Simulation Flexible Needle Steering Neural Networks",
+        "Neural Networks",
+        "Flexible Needle Steering",
+        "Finite Element Simulation",
+        "Medical Robotics"
+      ],
+      "producedDateY_i": 2026,
+      "title_s": [
+        "Real-time Robotic Needle Insertion In Deformable and Moving Structure Using Learning-by-Example Method"
+      ],
+      "uri_s": "https://inria.hal.science/hal-05498156v2"
+    },
+    {
+      "abstract_s": [
+        "Les jumeaux numériques ont récemment émergé comme un paradigme transformateur dans les réseaux sans fil, offrant des perspectives prometteuses pour améliorer l'efficacité et l'adaptabilité des réseaux. En répliquant numériquement le réseau physique, ils permettent d'analyser la copie numérique pour optimiser le réseau physique. Malgré les efforts consacrés à la modélisation et à la simulation des réseaux sans fil, leur précision reste souvent insuffisante dans des environnements réels. Les conditions du monde réel, telles que les obstacles physiques et les phénomènes complexes de propagation radio, sont particulièrement difficiles à reproduire sans campagnes de mesures locales coûteuses en ressources. Pour relever ce défi, nous proposons une approche légère et basée sur les données pour la modélisation des réseaux sans fil. Plus précisément, nous utilisons le Packet Delivery Ratio (PDR) afin d'entraîner des modèles de prédiction de qualité spécifiques à chaque lien. En entraînant les modèles individuellement pour chaque lien, nous capturons efficacement l'hétérogénéité du réseau et obtenons une précision de prédiction élevée. De plus, nous introduisons une approche dynamique et adaptative permettant de sélectionner en continu le modèle le plus pertinent pour la prédiction."
+      ],
+      "docid": "5603156",
+      "keyword_s": [
+        "Apprentissage Automatique",
+        "Évaluation de Performance",
+        "Jumeaux Numériques",
+        "Expérimentation",
+        "Internet des Objets"
+      ],
+      "producedDateY_i": 2026,
+      "title_s": [
+        "Réplication de Réseaux par Lien pour des Jumeaux Numériques Adaptatifs"
+      ],
+      "uri_s": "https://hal.science/hal-05597828v2"
+    },
+    {
+      "abstract_s": [
+        "LoRa technology offers several different modulation schemes characterized by the spreading factor (SF). These schemes allow for control over the bit rate, power consumption, and transmission robustness. However, in a real-world radio channel, the presence of multiple radio paths significantly impacts the probability of frame reception. A simple solution to counter multipath is to repeat each frame to increase its probability of reception. Based on the work of Ferré and Giremus, we propose a comparison, at equal energy cost, between multiple repetitions and the use of a higher SF. Frames with repetitions use a less robust modulation while maintaining an equal or lower total transmission cost. We can thus show that in most cases, it is preferable to repeat with a less robust modulation to increase coverage without impacting either reliability or energy consumption.",
+        "La technologie LoRa offre plusieurs modulations différentes caractérisées par le facteur d'étalement (SF). Elles permettent de contrôler le débit binaire, la consommation énergétique et la robustesse de la transmission. Cependant, dans un cas réel de canal radio, la présence de multiples trajets radio impacte fortement la probabilité de réception des trames. Une solution simple pour contrer le multitrajet est de répéter chaque trame pour augmenter sa probabilité de réception. À partir des travaux de Ferré et Giremus, nous proposons une comparaison à budget énergétique égal entre plusieurs répétitions ou l'utilisation d'un SF plus grand. Les trames avec répétitions ont une modulation moins robuste pour un coût de transmission total égal ou inférieur. On peut alors montrer que dans la majorité des cas, il est préférable de répéter avec une modulation moins robuste pour accroître la couverture sans impacter ni la fiabilité ni le budget énergétique."
+      ],
+      "docid": "5601568",
+      "keyword_s": [
+        "Internet-of-Things",
+        "Communication Diversity",
+        "LPWAN",
+        "LoRaWAN",
+        "LoRa",
+        "Internet des Objets",
+        "Répétition",
+        "LPWAN",
+        "LoRaWAN",
+        "LoRa"
+      ],
+      "producedDateY_i": 2026,
+      "title_s": [
+        "Number of repetitions or modulation change, what strategy for a given energy budget in LoRaWAN?",
+        "Nombre de répétitions ou changement de modulation, quelle stratégie à budget énergétique donné en LoRaWAN ?"
+      ],
+      "uri_s": "https://hal.science/hal-05601568v1"
+    },
+    {
+      "abstract_s": [
+        "Connected devices can be updated remotely via radio by sending full images of the embedded firmware, allowing for the correction of vulnerabilities or the adaptation of protocol stack parameters to optimize performance. In Low-power Lossy Wireless networks (LLWNs), these traditional updates result in long delays and the loss of all network states due to low bandwidth, high loss rates, and device reboots. In this paper, we propose a modular network stack architecture based on virtual functions, enabling the reconfiguration of the communication stack at a very fine granularity while maintaining continuous network operation. Our approach has been validated through experiments on the IoT-LAB platform, demonstrating that virtual function-level updates significantly reduce the time required to update devices compared to full-image updates, while a hybrid control plane deployment improves the trade-off between convergence and robustness by restoring network states after updates.",
+        "Les objets communicants peuvent être mis à jour à distance via radio grâce à l'envoi d'images complètes du micrologiciel embarqué, permettant de corriger des vulnérabilités ou d'adapter les paramètres de la pile protocolaire afin d'optimiser les performances. Dans les réseaux sans fil contraints et à pertes (LLWNs), ces mises à jour traditionnelles entraînent de longs délais et la perte de tous les états réseaux à cause du faible débit, du fort taux de pertes et du redémarrage des objets. Dans cet article, nous proposons une architecture modulaire de la pile réseau basée sur des fonctions virtuelles, permettant de reconfigurer la pile de communication à une granularité très fine, tout en maintenant le fonctionnement continu du réseau. Notre approche a été validée par des expérimentations sur la plateforme IoT-LAB, démontrant que les mises à jour au niveau des fonctions virtuelles réduisent fortement le temps nécessaire pour effectuer la mise à jour des objets par rapport aux mises à jour par images complètes, tandis qu'un déploiement hybride du plan de contrôle améliore le compromis entre convergence et robustesse en restaurant les états réseau après mise à jour."
+      ],
+      "docid": "5597925",
+      "keyword_s": [
+        "Lightweight Virtualization",
+        "Programmable Networks",
+        "Low-power Lossy Wireless Networks"
+      ],
+      "producedDateY_i": 2026,
+      "title_s": [
+        "Divide and conquer: a semantic and modular reconfiguration of the network stack for constrained wireless networks",
+        "Diviser pour mieux régner: une reconfiguration sémantique et modulaire de la pile réseau pour les réseaux sans fil contraints"
+      ],
+      "uri_s": "https://hal.science/hal-05597925v1"
+    },
+    {
+      "abstract_s": [
+        "Channel charting is an integrated sensing and communication technique where passively collected channel state information (CSI) at the base-station is used for obtaining a low-dimensional representation of the distribution of all observed CSI samples, referred to as a channel chart. The usage of the channel chart for various applications depends highly on the charting accuracy, which is typically defined by its similarity to the users' geometric positions; an accurate channel chart can be used for a variety of applications like beam selection, beam tracking, radio maps, pilot assignment, signal strength prediction etc. Thus, improving the charting performance is of utmost importance. In this paper, we propose to exploit the delay-Doppler based multipath CSI which occurs naturally in modern techniques such as orthogonal time frequency space modulation as a form of supervision to produce channel charts that more closely match the geometric ground truth of user positions. We use a combination of classical triplet based loss function along with a novel Doppler based loss function to train a deep neural network which provides an efficient charting function. The charting performance for a variety of user trajectories demonstrates the effectiveness of our proposed approach."
+      ],
+      "docid": "5481833",
+      "producedDateY_i": 2026,
+      "title_s": [
+        "Doppler-Supervised Channel Charting"
+      ],
+      "uri_s": "https://hal.science/hal-05395262v2"
+    },
+    {
+      "abstract_s": [
+        "Reinforcement Learning (RL) demonstrates significant potential for mobile network optimization, but training or deploying RL algorithms on live networks risks degrading Quality of Service. Alternatively, Digital twins (DTs) offer safe, high-fidelity environments for RL development and validation. This paper presents a framework for training and validating RL-based network management algorithms using a DT. We demonstrate the framework through a network slicing case study, where a Proximal Policy Optimization agent dynamically allocates radio resource blocks among eMBB, URLLC, and Vehicle-to-X slices. Our results show that the pretrained RL agent outperforms baseline algorithms and highlight the critical advantage of DT-based pretraining over online training. Additionally, we demonstrate how DTs enable testing what-if scenarios under varying network conditions. This work showcases the essential role of DTs in enabling reliable RL deployment in future 6G networks."
+      ],
+      "docid": "5609358",
+      "producedDateY_i": 2026,
+      "title_s": [
+        "On Leveraging Digital Twins for Training and Validation of Reinforcement Learning in 6G"
+      ],
+      "uri_s": "https://hal.science/hal-05609358v1"
+    },
+    {
+      "abstract_s": [
+        "<div><p>Counter Unmanned Aerial Systems (C-UAS) is an emerging area of active research and development especially since the Ukraine war. A parallel stream of research and development is also taking place addressing the defensive survivability of friendly unmanned platforms against hostile C-UAS threats. While extensive literature addresses offensive C-UAS capabilities, the complementary challenge of defending autonomous platforms remains profoundly underdeveloped. We call this research and innovation direction Counter-Counter Unmanned Aerial Systems (C²-UAS). In this paper we present aspects and directions in radio C²-UAS domains. For RF systems, we address radar crosssection reduction through phase centre manipulation, geometric shaping and advanced materials. We also discuss communications link resilience against jamming through anti-jamming techniques and low probability of intercept/detection (LPI/LPD) waveform design, and navigation resilience through Global Positioning Systems (GPS) anti-spoofing mechanisms and multi-constellation Global Navigation Satellite System (GNSS) redundancy. We identify critical research gaps, emerging technologies, and future research directions especially by a brain-inspired architecture to foster C²-UAS. This work establishes the theoretical and practical foundations for C²-UAS as a distinct research discipline with profound strategic importance.</p></div>",
+        "La lutte contre les systèmes aériens sans pilote (C-UAS) est un domaine de recherche et développement émergent et actif, particulièrement depuis la guerre en Ukraine. Un courant de recherche et développement parallèle est également mené, visant à améliorer la capacité de défense des plateformes sans pilote amies face aux menaces de C-UAS hostiles. Si une littérature abondante traite des capacités offensives des C-UAS, le défi complémentaire que représente la défense des plateformes autonomes demeure largement sous-développé. Nous appelons cette orientation de recherche et d'innovation « contre-contre-systèmes aériens sans pilote » (C²-UAS). Dans cet article, nous présentons des aspects et des orientations dans le domaine des radiocommunications C²-UAS. Pour les systèmes RF, nous abordons la réduction de la signature radar par la manipulation du centre de phase, la mise en forme géométrique et les matériaux avancés. Nous discutons également de la résilience des liaisons de communication face au brouillage grâce à des techniques anti-brouillage et à la conception de formes d'onde à faible probabilité d'interception/détection (LPI/LPD), ainsi que de la résilience de la navigation grâce aux mécanismes anti-usurpation des systèmes de positionnement global (GPS) et à la redondance multi-constellation des systèmes mondiaux de navigation par satellite (GNSS). Nous identifions les lacunes critiques de la recherche, les technologies émergentes et les orientations futures de la recherche, notamment par une architecture inspirée du cerveau pour favoriser le C²-UAS. Ce travail établit les fondements théoriques et pratiques du C²-UAS en tant que discipline de recherche distincte d'une importance stratégique majeure."
+      ],
+      "docid": "5554913",
+      "keyword_s": [
+        "GPS anti-spoofing",
+        "LPI/LPD",
+        "Radar cross-section",
+        "RF stealth",
+        "Defensive survivability",
+        "Electronic Counter-Counter Measures ECCM",
+        "Counter-counter UAS"
+      ],
+      "producedDateY_i": 2026,
+      "title_s": [
+        "Review of Radio Counter-Counter Unmanned Aerial Systems (C²-UAS) and A Cortex-Inspired Architecture for It",
+        "Revue des systèmes aériens sans pilote contre-contre radio (C²-UAS) et d'une architecture inspirée du cortex pour celui-ci"
+      ],
+      "uri_s": "https://hal.science/hal-05554913v1"
+    },
+    {
+      "abstract_s": [
+        "<div><p>Cavity magnonics explores the hybridization of photons and magnons within microwave resonators. One of the hallmarks of these systems is their ability to exhibit non-reciprocity, which is a key feature for radio frequency (RF) applications. One way to control non-reciprocal behaviors in cavity magnonics is the design of chiral cavities that allow selective coupling between photons and magnons depending on their polarization. However, a built-in chiral platform to harness and control non-reciprocity remains to be achieved. Here, we experimentally demonstrate controllable non-reciprocity (with an absolute isolation ratio reaching 46 dB) in a chiral resonator loaded with multiple yttrium iron garnet spheres. We develop a theoretical model of the S-parameters based on input-output formalism which highlights the links between the phases occurring in the system and its non-reciprocal behavior. Controllable non-reciprocity in cavity magnonics could enable the development of programmable isolators, circulators, and RF switches with improved performance. Such developments could pave the way toward more versatile and scalable information processing systems.</p><p>I.</p></div>"
+      ],
+      "docid": "5620240",
+      "keyword_s": [
+        "Materials Science cond-matmtrl-sci",
+        "Quantum Physics quant-ph",
+        "FOS Physical sciences"
+      ],
+      "producedDateY_i": 2026,
+      "title_s": [
+        "Controllable non-reciprocity in multi-sphere loaded chiral resonator"
+      ],
+      "uri_s": "https://hal.science/hal-05620240v1"
+    },
+    {
+      "abstract_s": [
+        "Background: Exaggerated placental site (EPS) is a benign, physiologic infiltration of intermediate trophoblasts that can radiologically mimic malignant gestational trophoblastic neoplasia (GTN) (Wijesinghe, 2025, Yordanov et al., 2020). Case Presentation: A 38-year-old female presented with suspected abnormal uterine bleeding (AUB) and a working diagnosis of GTN. Multimodality imaging, including ultrasound, magnetic resonance imaging (MRI), and computed tomography (CT), revealed a highly vascular, infiltrative uterine mass. Serum Beta-HCG was elevated. The patient underwent a hysterectomy. Histopathological examination ruled out malignancy, diagnosing products of conception with an exaggerated placental site. Discussion and Conclusion: Exaggerated Placental Site (EPS)—a benign, self-limiting physiological reaction—can perfectly mimic malignant Gestational Trophoblastic Neoplasia (GTN) both clinically and on advanced radiological imaging (Menczer et al., 1999, Yordanov et al., 2020). By detailing a case where MRI and CT scans falsely flagged a uterine mass as an aggressive malignancy due to its deep myometrial infiltration and robust vascularity, the authors underscore the limitations of relying solely on radiological evaluations. Ultimately, this report reinforces that histopathological examination is strictly required to definitively differentiate EPS from true neoplasms, which is a critical step to prevent misdiagnosis and protect patients from receiving unnecessary oncological treatments like systemic chemotherapy."
+      ],
+      "docid": "5619560",
+      "producedDateY_i": 2026,
+      "title_s": [
+        "Exaggerated Placental Site Mimicking Gestational Trophoblastic Neoplasia: A Multimodality Imaging and Histopathological Case Report"
+      ],
+      "uri_s": "https://hal.science/hal-05619560v1"
+    },
+    {
+      "abstract_s": [
+        "Background: Food drying stands as one of the oldest preservation techniques known to humanity, yet it remains a subject of active innovation in modern food engineering. Heat pump drying (HPD) has emerged as a particularly compelling solution that combines energy efficiency with a gentle, controlled drying environment well-suited to heat-sensitive food products. HPD systems close the loop: they recover latent heat from the moist exhaust air, recycle it back into the drying chamber, and maintain precise control over temperature, humidity, and airflow throughout the process. Aim: This review provides a comprehensive analysis of recent advancements and applications of heat pump dryers and their hybrid configurations with vacuum, infrared, ultrasound, microwave, radio frequency, and solar-assisted systems. Empirical Review: Comparative studies consistently show that hybrid HPDs can reduce drying time by up to 60%, achieve energy savings of up to 38%, and significantly enhance the retention of bioactive compounds, color, and texture. Modeling techniques, including artificial neural networks (ANN), response surface methodology (RSM), and thin-layer drying models, have proven effective for predicting drying behaviour and optimizing process conditions. Furthermore, integration with renewable energy sources enhances the sustainability profile of these systems, reducing carbon emissions and making HPDs particularly suitable for off-grid and climate-resilient applications. Conclusion: This review evaluates how key drying parameters such as temperature, humidity, and air velocity shape product quality and identifies the most promising directions for future research in HPD technology. Hybridized HPD technology aligns with global sustainability goals, offering a sophisticated pathway toward improved food security and energy-efficient agri-food processing in both industrial and decentralized settings."
+      ],
+      "docid": "5618040",
+      "producedDateY_i": 2026,
+      "title_s": [
+        "Advances and Applications of Heat Pump Dryers in Food Processing: A Comprehensive Review"
+      ],
+      "uri_s": "https://hal.science/hal-05618040v1"
+    },
+    {
+      "abstract_s": [
+        "The Remote-Controlled Electric Stubble Mower is an innovative agricultural device designed to efficiently cut and manage crop residues left after harvesting, offering a sustainable alternative to stubble burning. The system operates on electric power and can be remotely controlled, eliminating the need for manual labor in hazardous post-harvest conditions. The mower is equipped with a robust DC motor for driving the cutting blades, a wireless control unit for navigation, and rechargeable batteries for eco-friendly operation. The remote-control mechanism allows the operator to control the mower movement and blade operation from a safe distance using radio frequency (RF) or Bluetooth communication. The design emphasizes cost-effectiveness, simplicity, and environmental safety by reducing air pollution caused by traditional stubble burning. This project demonstrates a step toward automation in small-scale farming and sustainable residue management through clean, efficient, and user-friendly technology. The machine’s lightweight structure, efficient cutting mechanism, and user-friendly control design make it suitable for small and medium-scale farmers. The mower completely avoids stubble burning, helping reduce air pollution, greenhouse gas emissions, and soil degradation. The system operates on battery power with solar assistance, making it environmentally sustainable. Remote control operation eliminates direct human contact with sharp tools and rough terrains. It is ideal for elderly farmers, women, or individuals with physical limitations. Dual 6V 4.5Ah batteries provide sufficient runtime for small agricultural tasks. The system is versatile and can be employed for various operations such as post-harvest stubble management, lawn mowing, garden cleaning, and weed removal. Overall, the remote-controlled electric stubble mower promotes sustainable agriculture by reducing labor, eliminating stubble burning, improving field safety, and supporting eco-friendly residue management."
+      ],
+      "docid": "5618039",
+      "producedDateY_i": 2026,
+      "title_s": [
+        "Design and Development of a Remote-Controlled Electric Stubble Mower"
+      ],
+      "uri_s": "https://hal.science/hal-05618039v1"
+    },
+    {
+      "abstract_s": [
+        "The Lunar Surface Electromagnetics Experiment (LuSEE-Night) is a joint NASA-DOE-ESA low-frequency radio telescope that will reach the lunar far side in 2027. The unknown dielectric properties of the subsurface at the LuSEE-Night landing site impose the most significant limitation for precision instrument calibration, as reflections from the lunar subsurface can change the primary beam at the 10-20% level. Simulations of these effects have provided insight and concern, showing that the lunar subsurface modeled as a lossy dielectric can absorb a large amount of the power of the sky signal. While this absorption may not strongly impact the signal-to-noise ratio in a sky-noise-dominated regime, it could complicate the beam pattern and make the signal more difficult to model and interpret. We have simulated the far-field properties of the LuSEE-Night beam for varying dielectric profiles of the lunar subsurface. We find that varying the properties of the lunar subsurface has the most significant impact around the antenna resonance, impacting its amplitude, position and width. Conversely, changing the properties of the foreground impacts the data across the band. We use a Bayesian inference pipeline to jointly estimate parameters of a galactic foreground model and dielectric properties of the lunar subsurface around the LuSEE-Night landing site and find that parameters of both the galaxy and subsurface properties can be estimated jointly. While the modeling is somewhat idealized, we believe that the results are largely robust owing to the fact that spectral variations for plausible subsurface and galaxy models have very different spectral signatures."
+      ],
+      "docid": "5615310",
+      "producedDateY_i": 2026,
+      "title_s": [
+        "Joint Estimation of Properties of the Lunar Subsurface and Galactic Foregrounds with LuSEE-Night"
+      ],
+      "uri_s": "https://hal.science/hal-05615310v1"
+    },
+    {
+      "abstract_s": [
+        "Most Active Galactic Nuclei (AGN) are Radio Quiet, with radio emission that may arise from star-formation activity, AGN-driven winds, weak jets, and coronal activity. Disentangling these mechanisms is challenging and requires detailed multi-wavelength investigation, but it is crucial for quantifying AGN feedback in galaxy evolution. We present a detailed radio investigation of 21 X-ray selected AGN in the Supermassive Black Hole Winds in X-Rays (SUBWAYS) sample (log Lbol = 44.9-46.3 erg/s, z=0.1-0.5), selected to systematically search for Ultra-Fast Outflows (UFOs). UFOs are detected in 30% of the targets, making the sample particularly well-suited for investigating the role and signatures of multi-scale outflows at different frequencies. We build the radio SED of the sources complementing our proprietary data, collected with the JVLA at 1.5 and 6 GHz, with images from LoTSS and other publicly available radio surveys between 150 and 1400 MHz. We investigate the role and occurrence of the aforementioned mechanisms, with particular interest in outflows and their possible relation with UFOs. We combined information on spectral indices, luminosities, and morphologies of the radio emission with properties derived in other wavebands, such as Star Formation Rate, X-ray luminosity, Eddington ratio or the UFO kinetic luminosity. All the sources are detected and are mostly consistent with RQ AGN. For 80% of the sources the data suggest the presence of an outflow (wind or weak jet). Interestingly, our results indicate that AGN with UFOs tend to have larger radio extension and a steep radio spectrum consistent with outflows. Moreover, the radio emission of the 6 UFO hosts is consistent with predictions from wind-driven shock models, possibly indicating a direct connection between the two phases. Alternatively, this may reflect physical conditions favouring the rise of both phenomena."
+      ],
+      "docid": "5616100",
+      "producedDateY_i": 2026,
+      "title_s": [
+        "Supermassive Black Hole Winds in X-rays: SUBWAYS IV. Tracing Radio Emission and Unveiling the Role of Winds"
+      ],
+      "uri_s": "https://hal.science/hal-05616100v1"
+    },
+    {
+      "abstract_s": [
+        "X-ray flashes (XRFs) are a type of gamma-ray bursts (GRBs) with prompt emission predominantly below 30 keV poorly detected by previous missions. The advent of the SVOM mission, with its wide-field instrument ECLAIRs, provides a new way to detect soft X-ray transients such as XRFs. We present photometric and spectroscopic observations of XRF 241001A detected by SVOM, a soft, sub-luminous, and low-energetic burst located in a poorly populated region of the Amati relation. We investigate the origin of its faint, soft high-energy emission to assess its connection to the long GRB population. We analyze the SVOM/ECLAIRs prompt emission and model its afterglow emission from X-ray to-radio. We present JWST/NIRSpec and SVOM/VT observations of the associated supernova (SN 2024aiiq), which we model with an Arnett radioactive decay component and compare its properties with previously detected GRB/SNe. XRF 241001A is located at z = 0.573 and has a prompt emission dominated by photons below 20 keV with a duration of T90 = 3.14 seconds. Its spectrum can be modeled by non-thermal or thermal models, all pointing towards a low Epeak < 10 keV and Eiso ~ 8x10^49 erg. The X-ray-to-radio afterglow modeling favors an origin from a relativistic jet viewed on-axis. In the optical, XRF 241001A exhibits an early blue emission, similar to that detected in some fast X-ray transients and inconsistent with synchrotron emission. The JWST/NIRSpec observations firmly established its collapsar origin by revealing a SN Type Ic with broad lines, comparable to SN 1998bw and SN 2025kg-like events. XRF 241001A is a soft, low-luminosity collapsar event produced by a weak relativistic jet observed on-axis, supporting the view that part of the XRF population forms the low-energy tail of the long GRB population. It demonstrates the potential of SVOM/ECLAIRs to probe the soft regime of the high-energy transient population."
+      ],
+      "docid": "5614088",
+      "producedDateY_i": 2026,
+      "title_s": [
+        "XRF 241001A/SN 2024aiiq: A Faint Soft X-ray Transient Detected by SVOM with a Broad-Line Type Ic Supernova Revealed by JWST"
+      ],
+      "uri_s": "https://hal.science/hal-05614088v1"
+    },
+    {
+      "abstract_s": [
+        "The nonlinear decay of Langmuir/ Z -mode waves into electromagnetic Z -mode wave radiation near the plasma frequency is observed for the first time in the solar wind, during the encounter of the Solar Orbiter satellite with an electron beam associated with a type III radio burst. This result was achieved through the high-resolution electric and magnetic field measurements provided by the Radio Plasma Waves instrument on board the spacecraft. The decay process is identified through multiple lines of evidence: satisfaction of Doppler-shifted frequency resonance conditions, strong phase coherence and temporal coincidence between the interacting waves, dominance over competing mechanisms, and full agreement with theoretical predictions. Two-dimensional particle-in-cell simulations, conducted under close beam-plasma conditions, successfully reproduce the key features of the observations. Notably, they suggest that the wave packet observed by Solar Orbiter may be trapped within an extended, nearly flat-bottomed density well, where the decay process is not overcome by wave scattering on random density fluctuations and subsequent mode conversion effects."
+      ],
+      "docid": "5615478",
+      "producedDateY_i": 2026,
+      "title_s": [
+        "Evidence of Langmuir/ Z -mode Wave Decay into Z -mode Electromagnetic Radiation in the Solar Wind"
+      ],
+      "uri_s": "https://hal.science/hal-05615478v1"
+    }
+  ],
+  "errors": [],
+  "generated_at": "2026-05-18T07:47:05Z",
+  "keywords": "/Users/mathieu/Documents/presque-quelque-chose.io/antenne_radio/config/keywords.yaml",
+  "limit": 20,
+  "num_found": 27210,
+  "query": "(radio OR \"radio libre\" OR podcast OR radiophonie OR \"radios libres\" OR podcasting)",
+  "raw": {
+    "response": {
+      "docs": [
+        {
+          "abstract_s": [
+            "The rapid growth of the Internet of Things (IoT) has led to a significant increase in demand for radio spectrum, a scarce and valuable resource. Cognitive Radio (CR) technology offers a promising solution by dynamically detecting available frequency bands and enabling opportunistic spectrum access, thus improving spectral efficiency. In this work, we investigate spectrum sensing in Cognitive Radio-based IoT (CR-IoT) networks using real IoT signals transmitted by LoRa modules and captured with an RTL2832U software-defined radio receiver. Energy detection is employed as the sensing method due to its low computational complexity and suitability for unknown signals. The performance of the proposed approach is evaluated through Receiver Operating Characteristic analysis, demonstrating its effectiveness in accurately identifying occupied and vacant frequency bands. The results confirm the feasibility of deploying energy detection-based CR-IoT systems in real-world scenarios, providing a practical foundation for future dynamic spectrum access in IoT networks."
+          ],
+          "docid": "5610498",
+          "keyword_s": [
+            "Spectrum sensing",
+            "CR-IoT Networks",
+            "Real IoT signal",
+            "Internet of Things",
+            "Cognitive radio"
+          ],
+          "producedDateY_i": 2026,
+          "title_s": [
+            "Investigating Spectrum Sensing in CR-IoT Networks using Real IoT Signals"
+          ],
+          "uri_s": "https://hal.science/hal-05610498v1"
+        },
+        {
+          "abstract_s": [
+            "Dedicated vehicular communication technologies such as DSRC and C-V2X were designed for low-latency broadcast dissemination of safety messages, but their deployment remains limited due to additional hardware and infrastructure costs. As a result, cellular networks are increasingly considered as the primary communication substrate for large-scale V2X services, especially with the latency reductions enabled by 5G standalone (SA) architectures and edge computing.A key challenge stems from the mismatch between broadcast-oriented vehicular messaging and the unicast nature of the 5G Uu interface. Naïve forwarding of CAM and DENM messages to N vehicles results in a quadratic growth of downlink transmissions, exceeding 1~Gbps for fewer than 150 vehicles. In this paper, we analytically quantify the radio-resource footprint of standardized V2X messages in 5G NR and evaluate server-side, context-aware forwarding strategies that bound downlink load without modifying user equipment. Real-world experiments on a private 5G SA network with mobile vehicles demonstrate that selective forwarding restores scalability, while meeting stringent latency requirements."
+          ],
+          "docid": "5588850",
+          "keyword_s": [
+            "Field trial",
+            "Radio Resources",
+            "Vehicle-To-Everything",
+            "5G SA"
+          ],
+          "producedDateY_i": 2026,
+          "title_s": [
+            "Unlocking Vehicular Communications: Scaling V2X Traffic on 5G SA"
+          ],
+          "uri_s": "https://hal.science/hal-05588850v1"
+        },
+        {
+          "abstract_s": [
+            "Unmanned Aerial Vehicles (UAVs) are popular robotic platforms nowadays and they are gradually entering our everyday lives. For normal operation, a two-way communication link between a UAV and a ground station, has to be established. While radio-frequency communication is a simple and common option, it suffers from major drawbacks, such as interference and multi-path errors. Moreover, it is prone to spoofing/jamming attacks which might have catastrophic consequences in densely-populated or sensitive areas. To overcome these limitations, in this paper, we propose a compact LED-event camera system for fast optical communication via a new optimized dynamic N-pulse protocol. A learning-based method guarantees the robust detection and tracking of the active markers and it makes the application of standard 3D pose estimation algorithms possible. The effectiveness of the proposed system is demonstrated via hardware experiments with a DJI Matrice 600 Pro hexarotor and a Prophesee Gen. 4.1 HD camera."
+          ],
+          "docid": "5607236",
+          "keyword_s": [
+            "Event cameras Unmanned Aerial Vehicles Optical Communication"
+          ],
+          "producedDateY_i": 2026,
+          "title_s": [
+            "Fast and Robust Event-based Optical Communication for Aerial Robots via Active LED Markers"
+          ],
+          "uri_s": "https://hal.science/hal-05607236v1"
+        },
+        {
+          "abstract_s": [
+            "Ultra-Wideband (UWB) radio has recently gainedattention as a low-power and centimeter-accurate technology forindoor localization and device-free sensing. This paper investi-gates whether standard time-of-flight (ToF) ranging measure-ments can be repurposed for reliable human-presence detectionwithout any hardware modification. A unified signal-processingpipeline was implemented on the LocURa4IoT testbed usingDecawave DWM1001 modules, combining Savitzky–Golay filter-ing for analytical precision with a lightweight moving-averagescheme for real-time multi-anchor operation. The frameworkcomputes temporal derivatives and adaptive range deviationsto detect human-induced perturbations in UWB links. Exper-iments conducted in mixed line-of-sight (LOS) and non-LOSindoor conditions demonstrate that human motion producesreproducible fluctuations exceeding the intrinsic ranging noise(3–7 cm) by more than a factor of two. The results confirmthat standard UWB ranging infrastructures can be effectivelyleveraged for robust device-free human detection and motivatefuture extensions toward CIR-based fine-grained sensing."
+          ],
+          "docid": "5544101",
+          "producedDateY_i": 2026,
+          "title_s": [
+            "From Ranging to Sensing: Toward Robust Human Detection with UWB Measurements"
+          ],
+          "uri_s": "https://hal.science/hal-05544101v1"
+        },
+        {
+          "abstract_s": [
+            "<div><p>Cell-free massive MIMO (CF-mMIMO) promises uniform coverage for beyond-5G networks but faces critical energy efficiency (EE) challenges in dense and uncoordinated Internet-of-Things deployments. This paper addresses uncoordinated uplink transmission where devices transmit autonomously without coordination, potentially causing severe multi-user interference and leading to inefficient resource utilization. We propose a reconfigurable intelligent surface (RIS)-aided CF-mMIMO system with non-orthogonal multiple access that jointly optimizes subband allocation, RIS phase configuration, access point (AP) selection, and decoding order of successive interference cancellation to maximize EE while satisfying heterogeneous quality-of-service requirements. The mixed-integer nonconvex optimization problem is decomposed into three interconnected stages: lightweight device-driven subband selection via upper confidence bound bandits requiring minimal feedback, RIS phase optimization using sequential programming, and centralized deep reinforcement learning for dynamic AP selection that intelligently deactivates redundant links and enables AP sleep mode. A parallel training framework ensures generalization across diverse channel conditions and traffic types. Numerical results demonstrate substantial improvements over baseline schemes, achieving significantly higher EE and successful transmission rates, while reducing the number of active AP-device associations and enabling intelligent sleep-mode operation.</p></div>"
+          ],
+          "docid": "5589406",
+          "keyword_s": [
+            "AP sleep",
+            "AP selection",
+            "Deep reinforcement learning",
+            "Energy efficiency",
+            "Resource allocation",
+            "Uncoordinated access",
+            "Non-orthogonal multiple access",
+            "Reconfigurable intelligent surfaces",
+            "Cell-free massive MIMO"
+          ],
+          "producedDateY_i": 2026,
+          "title_s": [
+            "Energy-Efficient RIS-aided Uplink Cell-Free Massive MIMO-NOMA"
+          ],
+          "uri_s": "https://cnrs.hal.science/hal-05589406v1"
+        },
+        {
+          "abstract_s": [
+            "This paper presents an innovative and practical method for robotic needle steering in radio-frequency ablation (RFA) to treat cancer. One of the main challenges in this process is that tissue shifts and deforms during needle insertion, making it difficult to predict the needle's path in real-time accurately. Inverse finite element (iFE) simulations have been used to address this problem. While these methods are accurate, they often require further refinement for effective time performance in real-world robotic systems. This is because when incorporating the method with a real robot, there can be a delay in command execution. To address this challenge, we propose a machine learning based solution that learn from offline simulations, moving the intensive calculations required by iFE methods to an offline training stage and predicting tissue deformation online with less computation time. Our network was trained on data from numerous simulated needle insertions to capture the interactions between insertion forces, tissue properties, and the resulting motion. Once trained, the model produces predictions almost instantaneously, making it suitable for real-time applications. We validated the approach by steering the needle in simulated deformable and moving gel to compare it with numeric-based methods, and then performing needle steering within a reconstructed human body, which involves multiple structures and also integrates the robot's dynamics. The results demonstrated that the developed networks achieved slightly better accuracy in the first scenario, while also executing faster, resulting in improved performance with the robot's dynamics. These findings show that our method is a promising advancement toward real-time guidance systems for needle-based medical procedures."
+          ],
+          "docid": "5540389",
+          "keyword_s": [
+            "Medical Robotics Finite Element Simulation Flexible Needle Steering Neural Networks",
+            "Neural Networks",
+            "Flexible Needle Steering",
+            "Finite Element Simulation",
+            "Medical Robotics"
+          ],
+          "producedDateY_i": 2026,
+          "title_s": [
+            "Real-time Robotic Needle Insertion In Deformable and Moving Structure Using Learning-by-Example Method"
+          ],
+          "uri_s": "https://inria.hal.science/hal-05498156v2"
+        },
+        {
+          "abstract_s": [
+            "Les jumeaux numériques ont récemment émergé comme un paradigme transformateur dans les réseaux sans fil, offrant des perspectives prometteuses pour améliorer l'efficacité et l'adaptabilité des réseaux. En répliquant numériquement le réseau physique, ils permettent d'analyser la copie numérique pour optimiser le réseau physique. Malgré les efforts consacrés à la modélisation et à la simulation des réseaux sans fil, leur précision reste souvent insuffisante dans des environnements réels. Les conditions du monde réel, telles que les obstacles physiques et les phénomènes complexes de propagation radio, sont particulièrement difficiles à reproduire sans campagnes de mesures locales coûteuses en ressources. Pour relever ce défi, nous proposons une approche légère et basée sur les données pour la modélisation des réseaux sans fil. Plus précisément, nous utilisons le Packet Delivery Ratio (PDR) afin d'entraîner des modèles de prédiction de qualité spécifiques à chaque lien. En entraînant les modèles individuellement pour chaque lien, nous capturons efficacement l'hétérogénéité du réseau et obtenons une précision de prédiction élevée. De plus, nous introduisons une approche dynamique et adaptative permettant de sélectionner en continu le modèle le plus pertinent pour la prédiction."
+          ],
+          "docid": "5603156",
+          "keyword_s": [
+            "Apprentissage Automatique",
+            "Évaluation de Performance",
+            "Jumeaux Numériques",
+            "Expérimentation",
+            "Internet des Objets"
+          ],
+          "producedDateY_i": 2026,
+          "title_s": [
+            "Réplication de Réseaux par Lien pour des Jumeaux Numériques Adaptatifs"
+          ],
+          "uri_s": "https://hal.science/hal-05597828v2"
+        },
+        {
+          "abstract_s": [
+            "LoRa technology offers several different modulation schemes characterized by the spreading factor (SF). These schemes allow for control over the bit rate, power consumption, and transmission robustness. However, in a real-world radio channel, the presence of multiple radio paths significantly impacts the probability of frame reception. A simple solution to counter multipath is to repeat each frame to increase its probability of reception. Based on the work of Ferré and Giremus, we propose a comparison, at equal energy cost, between multiple repetitions and the use of a higher SF. Frames with repetitions use a less robust modulation while maintaining an equal or lower total transmission cost. We can thus show that in most cases, it is preferable to repeat with a less robust modulation to increase coverage without impacting either reliability or energy consumption.",
+            "La technologie LoRa offre plusieurs modulations différentes caractérisées par le facteur d'étalement (SF). Elles permettent de contrôler le débit binaire, la consommation énergétique et la robustesse de la transmission. Cependant, dans un cas réel de canal radio, la présence de multiples trajets radio impacte fortement la probabilité de réception des trames. Une solution simple pour contrer le multitrajet est de répéter chaque trame pour augmenter sa probabilité de réception. À partir des travaux de Ferré et Giremus, nous proposons une comparaison à budget énergétique égal entre plusieurs répétitions ou l'utilisation d'un SF plus grand. Les trames avec répétitions ont une modulation moins robuste pour un coût de transmission total égal ou inférieur. On peut alors montrer que dans la majorité des cas, il est préférable de répéter avec une modulation moins robuste pour accroître la couverture sans impacter ni la fiabilité ni le budget énergétique."
+          ],
+          "docid": "5601568",
+          "keyword_s": [
+            "Internet-of-Things",
+            "Communication Diversity",
+            "LPWAN",
+            "LoRaWAN",
+            "LoRa",
+            "Internet des Objets",
+            "Répétition",
+            "LPWAN",
+            "LoRaWAN",
+            "LoRa"
+          ],
+          "producedDateY_i": 2026,
+          "title_s": [
+            "Number of repetitions or modulation change, what strategy for a given energy budget in LoRaWAN?",
+            "Nombre de répétitions ou changement de modulation, quelle stratégie à budget énergétique donné en LoRaWAN ?"
+          ],
+          "uri_s": "https://hal.science/hal-05601568v1"
+        },
+        {
+          "abstract_s": [
+            "Connected devices can be updated remotely via radio by sending full images of the embedded firmware, allowing for the correction of vulnerabilities or the adaptation of protocol stack parameters to optimize performance. In Low-power Lossy Wireless networks (LLWNs), these traditional updates result in long delays and the loss of all network states due to low bandwidth, high loss rates, and device reboots. In this paper, we propose a modular network stack architecture based on virtual functions, enabling the reconfiguration of the communication stack at a very fine granularity while maintaining continuous network operation. Our approach has been validated through experiments on the IoT-LAB platform, demonstrating that virtual function-level updates significantly reduce the time required to update devices compared to full-image updates, while a hybrid control plane deployment improves the trade-off between convergence and robustness by restoring network states after updates.",
+            "Les objets communicants peuvent être mis à jour à distance via radio grâce à l'envoi d'images complètes du micrologiciel embarqué, permettant de corriger des vulnérabilités ou d'adapter les paramètres de la pile protocolaire afin d'optimiser les performances. Dans les réseaux sans fil contraints et à pertes (LLWNs), ces mises à jour traditionnelles entraînent de longs délais et la perte de tous les états réseaux à cause du faible débit, du fort taux de pertes et du redémarrage des objets. Dans cet article, nous proposons une architecture modulaire de la pile réseau basée sur des fonctions virtuelles, permettant de reconfigurer la pile de communication à une granularité très fine, tout en maintenant le fonctionnement continu du réseau. Notre approche a été validée par des expérimentations sur la plateforme IoT-LAB, démontrant que les mises à jour au niveau des fonctions virtuelles réduisent fortement le temps nécessaire pour effectuer la mise à jour des objets par rapport aux mises à jour par images complètes, tandis qu'un déploiement hybride du plan de contrôle améliore le compromis entre convergence et robustesse en restaurant les états réseau après mise à jour."
+          ],
+          "docid": "5597925",
+          "keyword_s": [
+            "Lightweight Virtualization",
+            "Programmable Networks",
+            "Low-power Lossy Wireless Networks"
+          ],
+          "producedDateY_i": 2026,
+          "title_s": [
+            "Divide and conquer: a semantic and modular reconfiguration of the network stack for constrained wireless networks",
+            "Diviser pour mieux régner: une reconfiguration sémantique et modulaire de la pile réseau pour les réseaux sans fil contraints"
+          ],
+          "uri_s": "https://hal.science/hal-05597925v1"
+        },
+        {
+          "abstract_s": [
+            "Channel charting is an integrated sensing and communication technique where passively collected channel state information (CSI) at the base-station is used for obtaining a low-dimensional representation of the distribution of all observed CSI samples, referred to as a channel chart. The usage of the channel chart for various applications depends highly on the charting accuracy, which is typically defined by its similarity to the users' geometric positions; an accurate channel chart can be used for a variety of applications like beam selection, beam tracking, radio maps, pilot assignment, signal strength prediction etc. Thus, improving the charting performance is of utmost importance. In this paper, we propose to exploit the delay-Doppler based multipath CSI which occurs naturally in modern techniques such as orthogonal time frequency space modulation as a form of supervision to produce channel charts that more closely match the geometric ground truth of user positions. We use a combination of classical triplet based loss function along with a novel Doppler based loss function to train a deep neural network which provides an efficient charting function. The charting performance for a variety of user trajectories demonstrates the effectiveness of our proposed approach."
+          ],
+          "docid": "5481833",
+          "producedDateY_i": 2026,
+          "title_s": [
+            "Doppler-Supervised Channel Charting"
+          ],
+          "uri_s": "https://hal.science/hal-05395262v2"
+        },
+        {
+          "abstract_s": [
+            "Reinforcement Learning (RL) demonstrates significant potential for mobile network optimization, but training or deploying RL algorithms on live networks risks degrading Quality of Service. Alternatively, Digital twins (DTs) offer safe, high-fidelity environments for RL development and validation. This paper presents a framework for training and validating RL-based network management algorithms using a DT. We demonstrate the framework through a network slicing case study, where a Proximal Policy Optimization agent dynamically allocates radio resource blocks among eMBB, URLLC, and Vehicle-to-X slices. Our results show that the pretrained RL agent outperforms baseline algorithms and highlight the critical advantage of DT-based pretraining over online training. Additionally, we demonstrate how DTs enable testing what-if scenarios under varying network conditions. This work showcases the essential role of DTs in enabling reliable RL deployment in future 6G networks."
+          ],
+          "docid": "5609358",
+          "producedDateY_i": 2026,
+          "title_s": [
+            "On Leveraging Digital Twins for Training and Validation of Reinforcement Learning in 6G"
+          ],
+          "uri_s": "https://hal.science/hal-05609358v1"
+        },
+        {
+          "abstract_s": [
+            "<div><p>Counter Unmanned Aerial Systems (C-UAS) is an emerging area of active research and development especially since the Ukraine war. A parallel stream of research and development is also taking place addressing the defensive survivability of friendly unmanned platforms against hostile C-UAS threats. While extensive literature addresses offensive C-UAS capabilities, the complementary challenge of defending autonomous platforms remains profoundly underdeveloped. We call this research and innovation direction Counter-Counter Unmanned Aerial Systems (C²-UAS). In this paper we present aspects and directions in radio C²-UAS domains. For RF systems, we address radar crosssection reduction through phase centre manipulation, geometric shaping and advanced materials. We also discuss communications link resilience against jamming through anti-jamming techniques and low probability of intercept/detection (LPI/LPD) waveform design, and navigation resilience through Global Positioning Systems (GPS) anti-spoofing mechanisms and multi-constellation Global Navigation Satellite System (GNSS) redundancy. We identify critical research gaps, emerging technologies, and future research directions especially by a brain-inspired architecture to foster C²-UAS. This work establishes the theoretical and practical foundations for C²-UAS as a distinct research discipline with profound strategic importance.</p></div>",
+            "La lutte contre les systèmes aériens sans pilote (C-UAS) est un domaine de recherche et développement émergent et actif, particulièrement depuis la guerre en Ukraine. Un courant de recherche et développement parallèle est également mené, visant à améliorer la capacité de défense des plateformes sans pilote amies face aux menaces de C-UAS hostiles. Si une littérature abondante traite des capacités offensives des C-UAS, le défi complémentaire que représente la défense des plateformes autonomes demeure largement sous-développé. Nous appelons cette orientation de recherche et d'innovation « contre-contre-systèmes aériens sans pilote » (C²-UAS). Dans cet article, nous présentons des aspects et des orientations dans le domaine des radiocommunications C²-UAS. Pour les systèmes RF, nous abordons la réduction de la signature radar par la manipulation du centre de phase, la mise en forme géométrique et les matériaux avancés. Nous discutons également de la résilience des liaisons de communication face au brouillage grâce à des techniques anti-brouillage et à la conception de formes d'onde à faible probabilité d'interception/détection (LPI/LPD), ainsi que de la résilience de la navigation grâce aux mécanismes anti-usurpation des systèmes de positionnement global (GPS) et à la redondance multi-constellation des systèmes mondiaux de navigation par satellite (GNSS). Nous identifions les lacunes critiques de la recherche, les technologies émergentes et les orientations futures de la recherche, notamment par une architecture inspirée du cerveau pour favoriser le C²-UAS. Ce travail établit les fondements théoriques et pratiques du C²-UAS en tant que discipline de recherche distincte d'une importance stratégique majeure."
+          ],
+          "docid": "5554913",
+          "keyword_s": [
+            "GPS anti-spoofing",
+            "LPI/LPD",
+            "Radar cross-section",
+            "RF stealth",
+            "Defensive survivability",
+            "Electronic Counter-Counter Measures ECCM",
+            "Counter-counter UAS"
+          ],
+          "producedDateY_i": 2026,
+          "title_s": [
+            "Review of Radio Counter-Counter Unmanned Aerial Systems (C²-UAS) and A Cortex-Inspired Architecture for It",
+            "Revue des systèmes aériens sans pilote contre-contre radio (C²-UAS) et d'une architecture inspirée du cortex pour celui-ci"
+          ],
+          "uri_s": "https://hal.science/hal-05554913v1"
+        },
+        {
+          "abstract_s": [
+            "<div><p>Cavity magnonics explores the hybridization of photons and magnons within microwave resonators. One of the hallmarks of these systems is their ability to exhibit non-reciprocity, which is a key feature for radio frequency (RF) applications. One way to control non-reciprocal behaviors in cavity magnonics is the design of chiral cavities that allow selective coupling between photons and magnons depending on their polarization. However, a built-in chiral platform to harness and control non-reciprocity remains to be achieved. Here, we experimentally demonstrate controllable non-reciprocity (with an absolute isolation ratio reaching 46 dB) in a chiral resonator loaded with multiple yttrium iron garnet spheres. We develop a theoretical model of the S-parameters based on input-output formalism which highlights the links between the phases occurring in the system and its non-reciprocal behavior. Controllable non-reciprocity in cavity magnonics could enable the development of programmable isolators, circulators, and RF switches with improved performance. Such developments could pave the way toward more versatile and scalable information processing systems.</p><p>I.</p></div>"
+          ],
+          "docid": "5620240",
+          "keyword_s": [
+            "Materials Science cond-matmtrl-sci",
+            "Quantum Physics quant-ph",
+            "FOS Physical sciences"
+          ],
+          "producedDateY_i": 2026,
+          "title_s": [
+            "Controllable non-reciprocity in multi-sphere loaded chiral resonator"
+          ],
+          "uri_s": "https://hal.science/hal-05620240v1"
+        },
+        {
+          "abstract_s": [
+            "Background: Exaggerated placental site (EPS) is a benign, physiologic infiltration of intermediate trophoblasts that can radiologically mimic malignant gestational trophoblastic neoplasia (GTN) (Wijesinghe, 2025, Yordanov et al., 2020). Case Presentation: A 38-year-old female presented with suspected abnormal uterine bleeding (AUB) and a working diagnosis of GTN. Multimodality imaging, including ultrasound, magnetic resonance imaging (MRI), and computed tomography (CT), revealed a highly vascular, infiltrative uterine mass. Serum Beta-HCG was elevated. The patient underwent a hysterectomy. Histopathological examination ruled out malignancy, diagnosing products of conception with an exaggerated placental site. Discussion and Conclusion: Exaggerated Placental Site (EPS)—a benign, self-limiting physiological reaction—can perfectly mimic malignant Gestational Trophoblastic Neoplasia (GTN) both clinically and on advanced radiological imaging (Menczer et al., 1999, Yordanov et al., 2020). By detailing a case where MRI and CT scans falsely flagged a uterine mass as an aggressive malignancy due to its deep myometrial infiltration and robust vascularity, the authors underscore the limitations of relying solely on radiological evaluations. Ultimately, this report reinforces that histopathological examination is strictly required to definitively differentiate EPS from true neoplasms, which is a critical step to prevent misdiagnosis and protect patients from receiving unnecessary oncological treatments like systemic chemotherapy."
+          ],
+          "docid": "5619560",
+          "producedDateY_i": 2026,
+          "title_s": [
+            "Exaggerated Placental Site Mimicking Gestational Trophoblastic Neoplasia: A Multimodality Imaging and Histopathological Case Report"
+          ],
+          "uri_s": "https://hal.science/hal-05619560v1"
+        },
+        {
+          "abstract_s": [
+            "Background: Food drying stands as one of the oldest preservation techniques known to humanity, yet it remains a subject of active innovation in modern food engineering. Heat pump drying (HPD) has emerged as a particularly compelling solution that combines energy efficiency with a gentle, controlled drying environment well-suited to heat-sensitive food products. HPD systems close the loop: they recover latent heat from the moist exhaust air, recycle it back into the drying chamber, and maintain precise control over temperature, humidity, and airflow throughout the process. Aim: This review provides a comprehensive analysis of recent advancements and applications of heat pump dryers and their hybrid configurations with vacuum, infrared, ultrasound, microwave, radio frequency, and solar-assisted systems. Empirical Review: Comparative studies consistently show that hybrid HPDs can reduce drying time by up to 60%, achieve energy savings of up to 38%, and significantly enhance the retention of bioactive compounds, color, and texture. Modeling techniques, including artificial neural networks (ANN), response surface methodology (RSM), and thin-layer drying models, have proven effective for predicting drying behaviour and optimizing process conditions. Furthermore, integration with renewable energy sources enhances the sustainability profile of these systems, reducing carbon emissions and making HPDs particularly suitable for off-grid and climate-resilient applications. Conclusion: This review evaluates how key drying parameters such as temperature, humidity, and air velocity shape product quality and identifies the most promising directions for future research in HPD technology. Hybridized HPD technology aligns with global sustainability goals, offering a sophisticated pathway toward improved food security and energy-efficient agri-food processing in both industrial and decentralized settings."
+          ],
+          "docid": "5618040",
+          "producedDateY_i": 2026,
+          "title_s": [
+            "Advances and Applications of Heat Pump Dryers in Food Processing: A Comprehensive Review"
+          ],
+          "uri_s": "https://hal.science/hal-05618040v1"
+        },
+        {
+          "abstract_s": [
+            "The Remote-Controlled Electric Stubble Mower is an innovative agricultural device designed to efficiently cut and manage crop residues left after harvesting, offering a sustainable alternative to stubble burning. The system operates on electric power and can be remotely controlled, eliminating the need for manual labor in hazardous post-harvest conditions. The mower is equipped with a robust DC motor for driving the cutting blades, a wireless control unit for navigation, and rechargeable batteries for eco-friendly operation. The remote-control mechanism allows the operator to control the mower movement and blade operation from a safe distance using radio frequency (RF) or Bluetooth communication. The design emphasizes cost-effectiveness, simplicity, and environmental safety by reducing air pollution caused by traditional stubble burning. This project demonstrates a step toward automation in small-scale farming and sustainable residue management through clean, efficient, and user-friendly technology. The machine’s lightweight structure, efficient cutting mechanism, and user-friendly control design make it suitable for small and medium-scale farmers. The mower completely avoids stubble burning, helping reduce air pollution, greenhouse gas emissions, and soil degradation. The system operates on battery power with solar assistance, making it environmentally sustainable. Remote control operation eliminates direct human contact with sharp tools and rough terrains. It is ideal for elderly farmers, women, or individuals with physical limitations. Dual 6V 4.5Ah batteries provide sufficient runtime for small agricultural tasks. The system is versatile and can be employed for various operations such as post-harvest stubble management, lawn mowing, garden cleaning, and weed removal. Overall, the remote-controlled electric stubble mower promotes sustainable agriculture by reducing labor, eliminating stubble burning, improving field safety, and supporting eco-friendly residue management."
+          ],
+          "docid": "5618039",
+          "producedDateY_i": 2026,
+          "title_s": [
+            "Design and Development of a Remote-Controlled Electric Stubble Mower"
+          ],
+          "uri_s": "https://hal.science/hal-05618039v1"
+        },
+        {
+          "abstract_s": [
+            "The Lunar Surface Electromagnetics Experiment (LuSEE-Night) is a joint NASA-DOE-ESA low-frequency radio telescope that will reach the lunar far side in 2027. The unknown dielectric properties of the subsurface at the LuSEE-Night landing site impose the most significant limitation for precision instrument calibration, as reflections from the lunar subsurface can change the primary beam at the 10-20% level. Simulations of these effects have provided insight and concern, showing that the lunar subsurface modeled as a lossy dielectric can absorb a large amount of the power of the sky signal. While this absorption may not strongly impact the signal-to-noise ratio in a sky-noise-dominated regime, it could complicate the beam pattern and make the signal more difficult to model and interpret. We have simulated the far-field properties of the LuSEE-Night beam for varying dielectric profiles of the lunar subsurface. We find that varying the properties of the lunar subsurface has the most significant impact around the antenna resonance, impacting its amplitude, position and width. Conversely, changing the properties of the foreground impacts the data across the band. We use a Bayesian inference pipeline to jointly estimate parameters of a galactic foreground model and dielectric properties of the lunar subsurface around the LuSEE-Night landing site and find that parameters of both the galaxy and subsurface properties can be estimated jointly. While the modeling is somewhat idealized, we believe that the results are largely robust owing to the fact that spectral variations for plausible subsurface and galaxy models have very different spectral signatures."
+          ],
+          "docid": "5615310",
+          "producedDateY_i": 2026,
+          "title_s": [
+            "Joint Estimation of Properties of the Lunar Subsurface and Galactic Foregrounds with LuSEE-Night"
+          ],
+          "uri_s": "https://hal.science/hal-05615310v1"
+        },
+        {
+          "abstract_s": [
+            "Most Active Galactic Nuclei (AGN) are Radio Quiet, with radio emission that may arise from star-formation activity, AGN-driven winds, weak jets, and coronal activity. Disentangling these mechanisms is challenging and requires detailed multi-wavelength investigation, but it is crucial for quantifying AGN feedback in galaxy evolution. We present a detailed radio investigation of 21 X-ray selected AGN in the Supermassive Black Hole Winds in X-Rays (SUBWAYS) sample (log Lbol = 44.9-46.3 erg/s, z=0.1-0.5), selected to systematically search for Ultra-Fast Outflows (UFOs). UFOs are detected in 30% of the targets, making the sample particularly well-suited for investigating the role and signatures of multi-scale outflows at different frequencies. We build the radio SED of the sources complementing our proprietary data, collected with the JVLA at 1.5 and 6 GHz, with images from LoTSS and other publicly available radio surveys between 150 and 1400 MHz. We investigate the role and occurrence of the aforementioned mechanisms, with particular interest in outflows and their possible relation with UFOs. We combined information on spectral indices, luminosities, and morphologies of the radio emission with properties derived in other wavebands, such as Star Formation Rate, X-ray luminosity, Eddington ratio or the UFO kinetic luminosity. All the sources are detected and are mostly consistent with RQ AGN. For 80% of the sources the data suggest the presence of an outflow (wind or weak jet). Interestingly, our results indicate that AGN with UFOs tend to have larger radio extension and a steep radio spectrum consistent with outflows. Moreover, the radio emission of the 6 UFO hosts is consistent with predictions from wind-driven shock models, possibly indicating a direct connection between the two phases. Alternatively, this may reflect physical conditions favouring the rise of both phenomena."
+          ],
+          "docid": "5616100",
+          "producedDateY_i": 2026,
+          "title_s": [
+            "Supermassive Black Hole Winds in X-rays: SUBWAYS IV. Tracing Radio Emission and Unveiling the Role of Winds"
+          ],
+          "uri_s": "https://hal.science/hal-05616100v1"
+        },
+        {
+          "abstract_s": [
+            "X-ray flashes (XRFs) are a type of gamma-ray bursts (GRBs) with prompt emission predominantly below 30 keV poorly detected by previous missions. The advent of the SVOM mission, with its wide-field instrument ECLAIRs, provides a new way to detect soft X-ray transients such as XRFs. We present photometric and spectroscopic observations of XRF 241001A detected by SVOM, a soft, sub-luminous, and low-energetic burst located in a poorly populated region of the Amati relation. We investigate the origin of its faint, soft high-energy emission to assess its connection to the long GRB population. We analyze the SVOM/ECLAIRs prompt emission and model its afterglow emission from X-ray to-radio. We present JWST/NIRSpec and SVOM/VT observations of the associated supernova (SN 2024aiiq), which we model with an Arnett radioactive decay component and compare its properties with previously detected GRB/SNe. XRF 241001A is located at z = 0.573 and has a prompt emission dominated by photons below 20 keV with a duration of T90 = 3.14 seconds. Its spectrum can be modeled by non-thermal or thermal models, all pointing towards a low Epeak < 10 keV and Eiso ~ 8x10^49 erg. The X-ray-to-radio afterglow modeling favors an origin from a relativistic jet viewed on-axis. In the optical, XRF 241001A exhibits an early blue emission, similar to that detected in some fast X-ray transients and inconsistent with synchrotron emission. The JWST/NIRSpec observations firmly established its collapsar origin by revealing a SN Type Ic with broad lines, comparable to SN 1998bw and SN 2025kg-like events. XRF 241001A is a soft, low-luminosity collapsar event produced by a weak relativistic jet observed on-axis, supporting the view that part of the XRF population forms the low-energy tail of the long GRB population. It demonstrates the potential of SVOM/ECLAIRs to probe the soft regime of the high-energy transient population."
+          ],
+          "docid": "5614088",
+          "producedDateY_i": 2026,
+          "title_s": [
+            "XRF 241001A/SN 2024aiiq: A Faint Soft X-ray Transient Detected by SVOM with a Broad-Line Type Ic Supernova Revealed by JWST"
+          ],
+          "uri_s": "https://hal.science/hal-05614088v1"
+        },
+        {
+          "abstract_s": [
+            "The nonlinear decay of Langmuir/ Z -mode waves into electromagnetic Z -mode wave radiation near the plasma frequency is observed for the first time in the solar wind, during the encounter of the Solar Orbiter satellite with an electron beam associated with a type III radio burst. This result was achieved through the high-resolution electric and magnetic field measurements provided by the Radio Plasma Waves instrument on board the spacecraft. The decay process is identified through multiple lines of evidence: satisfaction of Doppler-shifted frequency resonance conditions, strong phase coherence and temporal coincidence between the interacting waves, dominance over competing mechanisms, and full agreement with theoretical predictions. Two-dimensional particle-in-cell simulations, conducted under close beam-plasma conditions, successfully reproduce the key features of the observations. Notably, they suggest that the wave packet observed by Solar Orbiter may be trapped within an extended, nearly flat-bottomed density well, where the decay process is not overcome by wave scattering on random density fluctuations and subsequent mode conversion effects."
+          ],
+          "docid": "5615478",
+          "producedDateY_i": 2026,
+          "title_s": [
+            "Evidence of Langmuir/ Z -mode Wave Decay into Z -mode Electromagnetic Radiation in the Solar Wind"
+          ],
+          "uri_s": "https://hal.science/hal-05615478v1"
+        }
+      ],
+      "numFound": 27210,
+      "numFoundExact": true,
+      "start": 0
+    }
+  },
+  "result_count": 20,
+  "source_api": "https://api.archives-ouvertes.fr/search/",
+  "source_name": "HAL radio studies search",
+  "start": 0
+}

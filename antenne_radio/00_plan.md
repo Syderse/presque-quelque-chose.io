@@ -298,7 +298,7 @@ Je te conseille de les lancer **un par un**, dans cet ordre. Chaque prompt force
 Objectif : initialiser une v0.1 minimale et locale du projet radio-watch.
 
 Contexte :
-Je construis une antenne de veille en études radiophoniques. Cette v0.1 doit être volontairement simple : RSS/Atom + HAL + normalisation Pydantic + scoring + export Markdown Obsidian. Ne pas ajouter Crossref, OpenAlex, CiNii, NDL, J-STAGE, Zotero CSL, Hugo, changedetection.io, cron automatique ou LLM.
+Je construis une antenne de veille en études radiophoniques. Garder la règle simple : l’antenne est une donnée statique publiée, pas un service vivant exécuté par Netlify à chaque visite : ça se passe au niveau du build, je veux pas que ça ait d'impact sur ma consommation de crédits Netlify pour rester dans le plan gratuit ! Cette v0.1 doit être volontairement simple : RSS/Atom + HAL + normalisation Pydantic + scoring + export Markdown Obsidian. Ne pas ajouter Crossref, OpenAlex, CiNii, NDL, J-STAGE, Zotero CSL, Hugo, changedetection.io, cron automatique ou LLM. 
 
 Tâches :
 1. Inspecte l’état courant du dépôt avec `git status --short`.
@@ -639,7 +639,15 @@ Tests :
 Objectif : générer un rapport Markdown hebdomadaire lisible dans Obsidian.
 
 Contexte :
-La sortie utile de v0.1 est un fichier Markdown dans data/exports/. Il doit lister les items to_read et candidate, avec les raisons du score.
+La sortie utile de v0.1 est un fichier Markdown dans data/exports/. Il doit lister les items to_read et candidate, avec les raisons du score. Important : L’export Obsidian est un export Markdown local, pas une intégration avec mon vrai vault Obsidian. Le script doit écrire uniquement dans : data/exports/ . Il ne doit pas :
+- écrire dans un dossier Obsidian externe ;
+- utiliser Dataview ;
+- créer de liens wikilinks complexes ;
+- modifier mes vraies notes ;
+- générer du CSL-JSON ou du BibTeX ;
+- marquer automatiquement les items comme exported sauf si `--mark-exported` est explicitement passé.
+
+Le Markdown doit rester simple, lisible et portable.
 
 Tâches :
 1. Crée scripts/export/export_obsidian.py.

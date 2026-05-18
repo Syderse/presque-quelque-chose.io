@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<rss version="2.0">
+  <channel>
+    <title>Fixture Radio Feed</title>
+    <link>https://example.org/radio</link>
+    <description>Local fixture for RSS ingestion tests.</description>
+    <item>
+      <title>Community radio archives open again</title>
+      <link>https://example.org/radio/archive-open</link>
+      <pubDate>Mon, 18 May 2026 08:00:00 GMT</pubDate>
+      <author>editor@example.org (Fixture Editor)</author>
+      <description>A short note about local radio archives.</description>
+    </item>
+  </channel>
+</rss>

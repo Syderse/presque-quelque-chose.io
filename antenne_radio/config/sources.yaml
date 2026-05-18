@@ -1,0 +1,49 @@
+# Sources déclaratives de la v0.1. Désactiver une source avec enabled: false.
+version: 0.1
+
+rss_atom:
+  - id: transom
+    name: Transom
+    enabled: true
+    kind: rss
+    url: "https://transom.org/feed/"
+    tags:
+      - radio_documentary
+      - audio_storytelling
+
+  - id: radio_survivor
+    name: Radio Survivor
+    enabled: true
+    kind: rss
+    url: "https://www.radiosurvivor.com/feed/"
+    tags:
+      - radio_culture
+      - community_radio
+
+  - id: example_disabled_journal
+    name: Example journal feed to replace
+    enabled: false
+    kind: atom
+    url: "https://example.org/radio-studies.atom"
+    tags:
+      - academic_watch
+
+hal:
+  enabled: true
+  name: HAL radio studies search
+  base_url: "https://api.archives-ouvertes.fr/search/"
+  limit: 20
+  query: '(radio OR radiophonie OR "radio libre" OR podcast)'
+  fields:
+    - docid
+    - title_s
+    - abstract_s
+    - keyword_s
+    - authorFullName_s
+    - producedDateY_i
+    - uri_s
+  filters:
+    language:
+      - fr
+      - en
+  sort: "producedDate_tdate desc"
