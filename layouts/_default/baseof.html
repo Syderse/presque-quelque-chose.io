@@ -100,16 +100,18 @@
       }
     });
 
-    async function randomArticle() {
+    async function randomArticle(fallback = '/solutions-imaginaires/') {
       try {
         const r = await fetch('/articles-aleatoires.json');
         if (r.ok) {
           const data = await r.json();
           if (data.length > 0) {
             window.location.href = data[Math.floor(Math.random() * data.length)].permalink;
+            return;
           }
         }
       } catch (e) { console.error("Randomizer Error:", e); }
+      if (fallback) window.location.href = fallback;
     }
   </script>
 

@@ -1,7 +1,10 @@
 {{- $siteTitle := .Site.Title -}}
 {{- $pageName := .Title | plainify -}}
+{{- $isNotFound := or (eq .Kind "404") (eq $pageName "404 Page not found") -}}
 {{- if .IsHome -}}
   {{- $pageName = $siteTitle -}}
+{{- else if $isNotFound -}}
+  {{- $pageName = "Page introuvable" -}}
 {{- end -}}
 {{- $title := $siteTitle -}}
 {{- if not .IsHome -}}
@@ -10,7 +13,9 @@
 
 {{- $siteDescription := .Site.Params.description | default "" -}}
 {{- $rawDesc := $siteDescription -}}
-{{- if not .IsHome -}}
+{{- if $isNotFound -}}
+  {{- $rawDesc = "Page introuvable : quelques chemins de secours pour reprendre l'exploration." -}}
+{{- else if not .IsHome -}}
   {{- if .Params.summary -}}
     {{- $rawDesc = .Params.summary -}}
   {{- else if .Params.description -}}
@@ -100,6 +105,8 @@
 <link rel="alternate" type="application/rss+xml" title="{{ $siteTitle }}" href="{{ "index.xml" | absURL }}">
 {{- if .Params.robots }}
 <meta name="robots" content="{{ .Params.robots }}">
+{{- else if $isNotFound }}
+<meta name="robots" content="noindex, follow">
 {{- else }}
 <meta name="robots" content="index, follow">
 {{- end }}

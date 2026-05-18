@@ -33,3 +33,7 @@ Journal minimal des changements structurels du site. Noter seulement ce qui aide
 - `AGENTS.md` passe d'une reprise longue a une fiche d'action courte pour Codex.
 - L'archeologie sort de `AGENTS.md` et vit ici, dans `HISTORIQUE.md`.
 - La liste de taches lightweight sort dans `CHANTIERS.md`; `AGENTS.md` garde seulement le lien.
+
+## 2026-05-18 - 404 locale
+
+- `layouts/404.html` remplace la 404 vendor par une page locale lightweight, sans asset lourd ni moteur JS dedie.
