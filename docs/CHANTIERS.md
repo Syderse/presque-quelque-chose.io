@@ -1,28 +1,32 @@
 # CHANTIERS.md - presque-quelque-chose.io
 
-## Lecture Et Articles
-
-
-
-## Accueil Et Widgets
-
 - [ ] Dans `identity-card`, afficher au hover des petites icones de liens un libelle tres court indiquant la destination : YouTube, Instagram, forum, guide, site. Prevoir aussi un comportement accessible au clavier et coherent avec `mobile-tooltip.js`.
-- [ ] j'aimerais changer le fonctionnement d'almanach. plutôt que d'écrire au préalable une mini-entrée de journal pour chaque jour de l'année de manière prévue et fixe, j'aimerais que le widget de l'accueil pioche dans une réserve d'entrées de journal. il faudrait définir un aléatoire qui évite la répétition pour que toutes sortent avant que la première ne ressorte, mais dans un ordre aléatoire.. par ailleurs, ce faisant, je me permettrai sans doute d'écrire des entrées à longueur encore plus variable, donc il faudrait trouver une solution pour que les lecteurs puissent agrandir le cadre et qu'il occupe presque un plein écran, une large fenêtre centrée, si les premières lignes les intéressent et qu'ils veulent lire ce qui suit les ...
-
-## Pages Et Parcours
+- [ ] migration de paquet
+  - [ ] Améliore la logique de migration du paquet almanach quand la réserve change. ne plus réinitialiser entièrement la queue locale dès que le fingerprint change. Si des entrées sont ajoutées, conserver autant que possible la progression locale du lecteur. 
+Comportement souhaité :
+1. Charger l’état local existant : queue, lastShownId, fingerprint, version.
+2. Charger la nouvelle liste d’entrées depuis /almanach/index.json.
+3. Comparer les ids connus localement avec les ids actuels.
+4. Supprimer de queue les ids qui n’existent plus.
+5. Identifier les nouveaux ids absents de l’ancien état.
+6. Ajouter ces nouveaux ids à la queue existante, idéalement en les insérant à des positions aléatoires plutôt qu’en bloc au début ou à la fin.
+7. Ne recréer un paquet complet que si l’état local est vraiment invalide/corrompu, ou si la queue devient vide.
+8. Conserver la sécurité anti-répétition immédiate avec lastShownId.
+9. Prévoir des tests de simulation :
+   - ajout de nouvelles entrées en cours de cycle ;
+   - suppression d’entrées en cours de cycle ;
+   - ajout + suppression simultanés ;
+   - état local corrompu ;
+   - localStorage indisponible.
+10. Documenter clairement la différence entre :
+   - changement compatible de réserve, migré doucement ;
+   - changement cassant, qui force une recréation complète.
 
 - [ ] Clarifier le statut du droit d'auteur des contenus publies. Decider ce qui vaut pour les textes, romans-feuilletons, scripts audio, images, PDF et contenus academiques ; puis mettre a jour footer, page dediee ou metadata si besoin.
-- [ ] Verifier les pages de sections apres les suppressions d'assets : accueil, `/solutions-imaginaires/`, `/ondes-pixels/`, `/recherches/`, `/rhizome-curieux/`, `/patafoin/`.
-
-## Performance Et Assets
 
 - [ ] Optimiser `static/media/logo.png` sans changer son rendu utile, ou confirmer qu'il doit rester tel quel.
-- [ ] Confirmer que les anciens assets decoratifs remplaces restent non references avant toute suppression finale : inventaire, feuilles, titre image, et tout asset de decor similaire.
 - [ ] Auditer les embeds audio/video d'`ondes-pixels` : lazy loading, taille des iframes, domaines CSP, et experience mobile.
 - [ ] Etudier une variante self-hosted ou mieux isolee pour les dependances externes critiques : D3, Supabase UMD, texture almanach.
-- [ ] Continuer a limiter `transition-all`, `backdrop-blur`, `filter`, `drop-shadow`, `will-change` et animations permanentes dans les templates restants.
-
-## Build Et Maintenance
 
 - [ ] Auditer `_vendor/` sans suppression brutale avec `pnpm exec hugo mod graph --ignoreVendorPaths "**"` et un build `--ignoreVendorPaths "**"`. Identifier les correctifs locaux avant toute decision.
 - [ ] Documenter plus explicitement la difference entre `pnpm exec hugo` et un Hugo global Homebrew si une doc utilisateur est ajoutee hors `AGENTS.md`.
