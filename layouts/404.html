@@ -1,0 +1,89 @@
+{{- define "main" -}}
+{{- $routes := slice
+  (dict "href" "/" "label" "Accueil" "note" "Tableau de bord, almanach, Dom sous surveillance.")
+  (dict "href" "/solutions-imaginaires/" "label" "Solutions imaginaires" "note" "Textes, carnets et petites hypothèses qui marchent de travers.")
+  (dict "href" "/rhizome-curieux/" "label" "Rhizome curieux" "note" "Cartographie de curiosités, de liens et de chemins de côté.")
+  (dict "href" "/ondes-pixels/" "label" "Ondes & pixels" "note" "Sons, vidéos et objets lumineux à basse consommation.")
+  (dict "href" "/recherches/" "label" "Recherches" "note" "La zone plus sérieuse, avec marges et notes de bas de page.")
+  (dict "href" "/patafoin/" "label" "Patafoin" "note" "Un comptoir pour déposer un mot, même un peu décoiffé.")
+  (dict "href" "/manuel/" "label" "Manuel" "note" "La notice pliée en quatre dans la poche intérieure.")
+  (dict "href" "/tags/" "label" "Thésaurus" "note" "Les étiquettes, les tiroirs, les rapprochements imprévus.")
+-}}
+
+<section data-pagefind-ignore class="mx-auto flex min-h-[calc(100vh-9rem)] max-w-5xl flex-col justify-center py-8 md:py-14">
+  <div class="mb-6 flex flex-wrap items-center gap-3 font-mono text-[11px] uppercase tracking-[0.18em] text-ctp-overlay1">
+    <span class="h-2 w-2 rounded-full bg-ctp-red"></span>
+    <span>Erreur 404</span>
+    <span class="hidden h-px w-10 bg-ctp-surface2 sm:block"></span>
+    <span>Adresse non homologuée</span>
+  </div>
+
+  <div class="grid gap-6 lg:grid-cols-[minmax(0,1fr)_18rem] lg:items-start">
+    <div class="space-y-5">
+      <div class="relative overflow-hidden rounded-xl border border-ctp-surface1 bg-ctp-mantle p-6 shadow-[4px_4px_0_0_rgba(0,0,0,0.30)] md:p-8">
+        <div class="absolute inset-0 bg-grid-pattern opacity-10"></div>
+        <div class="relative z-10">
+          <p class="font-mono text-xs font-semibold uppercase tracking-[0.2em] text-ctp-peach">
+            Bureau des pages égarées
+          </p>
+          <h1 class="mt-4 max-w-2xl font-serif text-4xl font-bold leading-tight text-ctp-text sm:text-5xl md:text-6xl">
+            Cette adresse a posé son sac ailleurs.
+          </h1>
+          <p class="mt-5 max-w-2xl text-base leading-8 text-ctp-subtext0 md:text-lg">
+            Le plan plante. On aurait juré qu'il y avait une page ici nan ?
+          </p>
+
+          <div class="mt-7 flex flex-col gap-3 sm:flex-row">
+            <a href="/"
+              class="inline-flex items-center justify-center rounded-lg border border-ctp-mauve bg-ctp-mauve px-4 py-3 font-mono text-xs font-bold uppercase tracking-[0.14em] text-ctp-base shadow-[3px_3px_0_0_rgba(0,0,0,0.35)] transition-[background-color,border-color,transform,box-shadow] duration-200 hover:-translate-y-0.5 hover:bg-ctp-lavender hover:shadow-[5px_5px_0_0_rgba(0,0,0,0.42)] focus:outline-none focus:ring-2 focus:ring-ctp-mauve focus:ring-offset-2 focus:ring-offset-ctp-mantle">
+              Retour accueil
+            </a>
+            <a href="/solutions-imaginaires/"
+              onclick="event.preventDefault(); randomArticle(this.href);"
+              class="inline-flex items-center justify-center rounded-lg border border-ctp-surface2 bg-ctp-surface0 px-4 py-3 font-mono text-xs font-bold uppercase tracking-[0.14em] text-ctp-teal shadow-[3px_3px_0_0_rgba(0,0,0,0.24)] transition-[background-color,border-color,transform,box-shadow] duration-200 hover:-translate-y-0.5 hover:border-ctp-teal hover:bg-ctp-crust hover:shadow-[5px_5px_0_0_rgba(0,0,0,0.34)] focus:outline-none focus:ring-2 focus:ring-ctp-teal focus:ring-offset-2 focus:ring-offset-ctp-mantle">
+              Article au hasard
+            </a>
+          </div>
+        </div>
+      </div>
+
+      <nav aria-label="Chemins de secours" class="grid gap-3 sm:grid-cols-2">
+        {{- range $routes }}
+        <a href="{{ .href }}"
+          class="group rounded-lg border border-ctp-surface1 bg-ctp-surface0 p-4 shadow-[2px_2px_0_0_rgba(0,0,0,0.25)] transition-[background-color,border-color,transform,box-shadow] duration-200 hover:-translate-y-0.5 hover:border-ctp-peach hover:bg-ctp-mantle hover:shadow-[4px_4px_0_0_rgba(0,0,0,0.34)] focus:outline-none focus:ring-2 focus:ring-ctp-peach focus:ring-offset-2 focus:ring-offset-ctp-base">
+          <span class="block font-serif text-lg font-bold text-ctp-text transition-colors duration-200 group-hover:text-ctp-peach">
+            {{ .label }}
+          </span>
+          <span class="mt-1 block text-sm leading-6 text-ctp-subtext0">
+            {{ .note }}
+          </span>
+        </a>
+        {{- end }}
+      </nav>
+    </div>
+
+    <aside class="rounded-xl border border-ctp-surface1 bg-ctp-crust p-5 shadow-[4px_4px_0_0_rgba(0,0,0,0.30)]">
+      <p class="font-mono text-[10px] font-bold uppercase tracking-[0.18em] text-ctp-green">
+        Constat no 404
+      </p>
+      <p class="mt-4 font-serif text-2xl font-bold leading-tight text-ctp-rosewater">
+        On dirait que nous sommes perdus. Mais c'est sans doute juste la période de congé de la page. 
+      </p>
+      <dl class="mt-6 space-y-4 border-t border-ctp-surface1 pt-5 font-mono text-xs">
+        <div>
+          <dt class="text-ctp-overlay1">objet demandé</dt>
+          <dd class="mt-1 text-ctp-text">quelque part sous le pixoleil</dd>
+        </div>
+        <div>
+          <dt class="text-ctp-overlay1">itinéraire conseillé :</dt>
+          <dd class="mt-1 text-ctp-text">prenez un détour</dd>
+        </div>
+        <div>
+          <dt class="text-ctp-overlay1">mrunch mrunch</dt>
+          <dd class="mt-1 text-ctp-text">le petit fil était délicieux</dd>
+        </div>
+      </dl>
+    </aside>
+  </div>
+</section>
+{{- end -}}

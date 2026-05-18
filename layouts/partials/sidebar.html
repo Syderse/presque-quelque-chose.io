@@ -49,7 +49,7 @@ Parent : layouts/_default/baseof.html
     {{ $theme := index $colors (mod $index (len $colors)) }}
 
     <a href="{{ .URL }}"
-      class="group flex items-center gap-4 px-4 py-3 rounded-xl transition-all duration-200 border border-transparent
+      class="group flex items-center gap-4 px-4 py-3 rounded-xl transition-[background-color,border-color] duration-200 border border-transparent
                {{ if $active }}bg-ctp-surface0 shadow-inner border-ctp-surface1{{ else }}hover:bg-ctp-surface0/50{{ end }}">
 
       <span class="font-bold text-lg transition-colors duration-300 {{ $theme.base }}">
@@ -58,7 +58,7 @@ Parent : layouts/_default/baseof.html
 
       {{/* Point Actif */}}
       {{ if $active }}
-      <div class="ml-auto w-1.5 h-1.5 rounded-full bg-ctp-text animate-pulse"></div>
+      <div class="ml-auto w-1.5 h-1.5 rounded-full bg-ctp-text"></div>
       {{ end }}
     </a>
     {{ end }}
@@ -66,16 +66,16 @@ Parent : layouts/_default/baseof.html
 
   {{/* 4. FOOTER ACTIONS
   */}}
-  <div class="p-4 bg-ctp-crust/50 border-t border-ctp-surface0/50 backdrop-blur-sm shrink-0">
+  <div class="p-4 bg-ctp-crust/50 border-t border-ctp-surface0/50 shrink-0">
     <a href="/manuel/"
       class="flex items-center gap-3 px-4 py-3 rounded-lg text-ctp-maroon hover:bg-ctp-surface0 transition-colors group no-underline">
-      <span class="grayscale group-hover:grayscale-0 transition-all">🧭</span>
+      <span class="opacity-80 group-hover:opacity-100 transition-opacity">🧭</span>
       <span class="font-medium text-sm">Le Manuel</span>
     </a>
 
     <a href="/tags/"
       class="flex items-center gap-3 px-4 py-3 rounded-lg text-ctp-lavender hover:bg-ctp-surface0 transition-colors group no-underline">
-      <span class="grayscale group-hover:grayscale-0 transition-all">🏷️</span>
+      <span class="opacity-80 group-hover:opacity-100 transition-opacity">🏷️</span>
       <span class="font-medium text-sm">Thésaurus</span>
     </a>
 

@@ -11,7 +11,7 @@ Context: Un dictionnaire normalisé (voir get-rhizome-items.html)
 {{ $color := .Color }}
 
 {{/* Base commune : break-inside-avoid est CRUCIAL pour le CSS Columns */}}
-{{ $baseClass := "break-inside-avoid mb-6 w-full rounded-xl transition-all duration-300 hover:scale-[1.02] hover:z-10 group" }}
+{{ $baseClass := "break-inside-avoid mb-6 w-full rounded-xl transition-[border-color,box-shadow,transform] duration-200 hover:scale-[1.02] hover:z-10 group" }}
 
 {{/* Style Spécifique */}}
 {{ $styleClass := "" }}
@@ -20,7 +20,7 @@ Context: Un dictionnaire normalisé (voir get-rhizome-items.html)
   {{ $styleClass = "bg-ctp-surface0 border border-ctp-surface2 shadow-md hover:shadow-xl p-6 font-serif text-ctp-text" }}
 {{ else }}
   {{/* Style SPORE : Aérien, Technique, Éphémère */}}
-  {{ $styleClass = printf "bg-ctp-base/40 backdrop-blur-sm border-2 border-dashed border-ctp-%s/30 hover:border-ctp-%s/80 p-4 font-sans text-ctp-subtext0" $color $color }}
+  {{ $styleClass = printf "bg-ctp-base/70 border-2 border-dashed border-ctp-%s/30 hover:border-ctp-%s/80 p-4 font-sans text-ctp-subtext0" $color $color }}
 {{ end }}
 
 {{/* --- 3. Rendu HTML --- */}}
@@ -29,7 +29,7 @@ Context: Un dictionnaire normalisé (voir get-rhizome-items.html)
 
   {{/* En-tête : Icône + Titre */}}
   <div class="flex items-baseline gap-3 mb-2">
-    <span class="text-2xl filter grayscale-[0.5] group-hover:grayscale-0 transition-all">
+    <span class="text-2xl opacity-80 group-hover:opacity-100 transition-opacity">
       {{ .Icon }}
     </span>
     <h3 class="{{ if $isInternal }}text-xl font-bold italic{{ else }}text-lg font-medium lowercase{{ end }} leading-tight text-ctp-{{ $color }} transition-colors">

@@ -20,10 +20,10 @@ Refactored for System Design (Bento V4).
             <div class="absolute inset-0 bg-ctp-mauve/5 pointer-events-none z-10"></div>
 
             <div
-                class="absolute top-3 left-3 z-20 flex items-center gap-2 px-2 py-1 bg-ctp-crust/95 backdrop-blur-none rounded border border-ctp-surface1 shadow-lg">
+                class="absolute top-3 left-3 z-20 flex items-center gap-2 px-2 py-1 bg-ctp-crust/95 rounded border border-ctp-surface1 shadow-lg">
                 <span class="relative flex h-2 w-2">
                     <span
-                        class="animate-ping absolute inline-flex h-full w-full rounded-full bg-ctp-green opacity-75"></span>
+                        class="absolute inline-flex h-full w-full rounded-full bg-ctp-green/30"></span>
                     <span class="relative inline-flex rounded-full h-2 w-2 bg-ctp-green"></span>
                 </span>
                 <span class="text-[10px] font-mono text-ctp-green uppercase tracking-widest font-bold">En ligne</span>
@@ -80,11 +80,11 @@ Refactored for System Design (Bento V4).
                 {{/* Progress Bar */}}
                 <div class="w-full h-2 bg-ctp-surface1 rounded-full overflow-hidden relative">
                     <div id="daily-exp-bar" style="width: 0%"
-                        class="absolute inset-y-0 left-0 bg-gradient-to-r from-ctp-peach to-ctp-red shadow-[0_0_10px_rgba(203,166,247,0.5)] transition-all duration-1000 ease-out">
+                        class="absolute inset-y-0 left-0 bg-gradient-to-r from-ctp-peach to-ctp-red transition-[width] duration-700 ease-out">
                     </div>
 
                     <div
-                        class="absolute inset-0 bg-white/10 opacity-30 w-full animate-[shimmer_2s_infinite] pointer-events-none">
+                        class="absolute inset-0 bg-gradient-to-r from-white/0 via-white/10 to-white/0 opacity-20 w-full pointer-events-none">
                     </div>
                 </div>
             </div>
@@ -99,7 +99,7 @@ Refactored for System Design (Bento V4).
                 <div class="flex items-center gap-2">
                     {{/* YouTube */}}
                     <a href="https://www.youtube.com/@presque-quelque-chose" target="_blank" rel="noopener"
-                        class="w-9 h-9 flex items-center justify-center bg-ctp-surface0 rounded border border-ctp-red/50 hover:border-ctp-red hover:shadow-[0_0_10px_rgba(243,139,168,0.3)] hover:-translate-y-0.5 transition-all duration-300"
+                        class="w-9 h-9 flex items-center justify-center bg-ctp-surface0 rounded border border-ctp-red/50 hover:border-ctp-red hover:bg-ctp-red/10 hover:-translate-y-0.5 transition-[background-color,border-color,transform] duration-200"
                         title="Journal Vidéo">
                         <svg class="w-4 h-4 text-ctp-red" viewBox="0 0 24 24" fill="none" stroke="currentColor"
                             stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
@@ -111,7 +111,7 @@ Refactored for System Design (Bento V4).
                     </a>
                     {{/* Instagram */}}
                     <a href="https://www.instagram.com/presque_quelque_chose/" target="_blank" rel="noopener"
-                        class="w-9 h-9 flex items-center justify-center bg-ctp-surface0 rounded border border-ctp-maroon/50 hover:border-ctp-maroon hover:shadow-[0_0_10px_rgba(235,160,172,0.3)] hover:-translate-y-0.5 transition-all duration-300"
+                        class="w-9 h-9 flex items-center justify-center bg-ctp-surface0 rounded border border-ctp-maroon/50 hover:border-ctp-maroon hover:bg-ctp-maroon/10 hover:-translate-y-0.5 transition-[background-color,border-color,transform] duration-200"
                         title="Galerie Visuelle">
                         <svg class="w-4 h-4 text-ctp-maroon" viewBox="0 0 24 24" fill="none" stroke="currentColor"
                             stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
@@ -122,7 +122,7 @@ Refactored for System Design (Bento V4).
                     </a>
                     {{/* Patafoin */}}
                     <a href="/patafoin"
-                        class="w-9 h-9 flex items-center justify-center bg-ctp-surface0 rounded border border-ctp-green/50 hover:border-ctp-green hover:shadow-[0_0_10px_rgba(166,227,161,0.3)] hover:-translate-y-0.5 transition-all duration-300"
+                        class="w-9 h-9 flex items-center justify-center bg-ctp-surface0 rounded border border-ctp-green/50 hover:border-ctp-green hover:bg-ctp-green/10 hover:-translate-y-0.5 transition-[background-color,border-color,transform] duration-200"
                         title="Terminal Patafoin (/dev/chat)">
                         <svg class="w-4 h-4 text-ctp-green" viewBox="0 0 24 24" fill="none" stroke="currentColor"
                             stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
@@ -132,7 +132,7 @@ Refactored for System Design (Bento V4).
                     </a>
                     {{/* Manuel */}}
                     <a href="/manuel/"
-                        class="w-9 h-9 flex items-center justify-center bg-ctp-surface0 rounded border border-ctp-peach/50 hover:border-ctp-peach hover:shadow-[0_0_10px_rgba(250,179,135,0.3)] hover:-translate-y-0.5 transition-all duration-300"
+                        class="w-9 h-9 flex items-center justify-center bg-ctp-surface0 rounded border border-ctp-peach/50 hover:border-ctp-peach hover:bg-ctp-peach/10 hover:-translate-y-0.5 transition-[background-color,border-color,transform] duration-200"
                         title="Le Manuel de Vol">
                         <svg class="w-4 h-4 text-ctp-peach" viewBox="0 0 24 24" fill="none" stroke="currentColor"
                             stroke-width="2" stroke-linecap="round" stroke-linejoin="round">

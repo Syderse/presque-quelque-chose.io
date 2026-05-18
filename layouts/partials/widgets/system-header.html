@@ -1,186 +1,187 @@
 {{/* --- 1. TELEMETRY EXTRACTION LAYER --- */}}
 
-{{/* A. Time Calculation (VOL) */}}
-{{ $creationDate := time.AsTime "2025-11-13T16:16:00" }}
-{{ $hoursAlive := math.Floor (div (sub time.Now.Unix $creationDate.Unix) 3600) }}
+{{/* Build-cost audit:
+  This partial runs only at build time, but it is visible in Hugo template metrics.
+  Keep the corpus bounded to regular visible content pages, and keep vocabulary
+  as a Scratch map instead of building one giant site string + uniq slice.
+*/}}
+{{ $contentPages := slice }}
+{{ range hugo.Sites }}
+  {{ range .RegularPages }}
+    {{ if not .Draft }}
+      {{ $contentPages = $contentPages | append . }}
+    {{ end }}
+  {{ end }}
+{{ end }}
 
-{{/* B. Corpus Analysis */}}
 {{ $scratch := newScratch }}
 {{ $scratch.Set "totalWords" 0 }}
 {{ $scratch.Set "totalSentences" 0 }}
-{{ $scratch.Set "totalParentheses" 0 }}
-{{ $scratch.Set "totalAsterisks" 0 }}
 {{ $scratch.Set "totalSidenotes" 0 }}
 {{ $scratch.Set "totalLinks" 0 }}
-{{ $giantString := "" }}
+{{ $publishedEntries := slice }}
 
-{{ range hugo.Sites }}
-  {{ range .Pages }}
-    {{ $text := .Plain }}
-    {{ $raw := .RawContent }}
+{{ range $contentPages }}
+  {{ $text := .Plain }}
+  {{ $raw := .RawContent }}
 
-    {{/* 1. VOCAB DATA COLLECT */}}
-    {{ $giantString = print $giantString " " $text }}
-
-    {{/* 2. DENSITY DATA */}}
-    {{ $scratch.Add "totalWords" .WordCount }}
-    {{/* Heuristic: Count punctuation */}}
-    {{ $sCount := add (strings.Count "." $text) (strings.Count "!" $text) (strings.Count "?" $text) }}
-    {{ if eq $sCount 0 }}{{ $sCount = 1 }}{{ end }}
-    {{ $scratch.Add "totalSentences" $sCount }}
-
-    {{/* 3. PARENTHESES Metric */}}
-    {{ $scratch.Add "totalParentheses" (strings.Count "(" $text) }}
-
-    {{/* 4. ASTERISKS Metric (emphases) */}}
-    {{ $scratch.Add "totalAsterisks" (strings.Count "*" $raw) }}
-
-    {{/* 5. SIDENOTES Metric */}}
-    {{ $scratch.Add "totalSidenotes" (strings.Count "{{< sidenote" $raw) }}
-
-    {{/* 6. LINKS Metric (markdown links) */}}
-    {{ $scratch.Add "totalLinks" (strings.Count "](" $raw) }}
+  {{/* 1. PUBLICATION TIMELINE */}}
+  {{ $publishedAt := .PublishDate }}
+  {{ if $publishedAt.IsZero }}{{ $publishedAt = .Date }}{{ end }}
+  {{ if not $publishedAt.IsZero }}
+    {{ $publishedEntries = $publishedEntries | append (dict "publishedAt" $publishedAt) }}
   {{ end }}
+
+  {{/* 2. VOCAB DATA COLLECT */}}
+  {{ $cleanText := replaceRE "[^\\p{L}]+" " " $text }}
+  {{ range split (lower $cleanText) " " }}
+    {{ $word := strings.TrimSpace . }}
+    {{ if gt (len $word) 1 }}
+      {{ $scratch.SetInMap "uniqueWords" $word true }}
+    {{ end }}
+  {{ end }}
+
+  {{/* 3. DENSITY DATA */}}
+  {{ $scratch.Add "totalWords" .WordCount }}
+  {{ $sCount := add (strings.Count "." $text) (strings.Count "!" $text) (strings.Count "?" $text) }}
+  {{ if eq $sCount 0 }}{{ $sCount = 1 }}{{ end }}
+  {{ $scratch.Add "totalSentences" $sCount }}
+
+  {{/* 4. SIDENOTES Metric */}}
+  {{ $scratch.Add "totalSidenotes" (strings.Count "{{< sidenote" $raw) }}
+
+  {{/* 5. LINKS Metric (markdown links) */}}
+  {{ $scratch.Add "totalLinks" (strings.Count "](" $raw) }}
 {{ end }}
 
-{{/* C. Heavy Processing - Vocabulary */}}
-{{ $cleanText := replaceRE "[^a-zA-ZÀ-ÿ ]" " " $giantString }}
-{{ $wordList := split (lower $cleanText) " " }}
-{{ $filteredWords := slice }}
-{{ range $wordList }}
-  {{ if gt (len .) 1 }}
-    {{ $filteredWords = $filteredWords | append . }}
-  {{ end }}
-{{ end }}
-{{ $uniqueWords := $filteredWords | uniq }}
-{{ $vocabCount := len $uniqueWords }}
+{{ $publishedEntries = sort $publishedEntries "publishedAt" "desc" }}
+{{ $freshnessCompact := "--" }}
+{{ $freshnessFull := "Aucune publication datée." }}
 
-{{/* D. Derived Calcs */}}
+{{ if ge (len $publishedEntries) 1 }}
+  {{ $latest := index $publishedEntries 0 }}
+  {{ $latestPublishedAt := $latest.publishedAt }}
+  {{ $freshnessSeconds := sub time.Now.Unix $latestPublishedAt.Unix }}
+  {{ if lt $freshnessSeconds 0 }}{{ $freshnessSeconds = 0 }}{{ end }}
+  {{ $freshnessDays := div $freshnessSeconds 86400 }}
+  {{ $dayUnit := "jours" }}
+  {{ if le $freshnessDays 1 }}{{ $dayUnit = "jour" }}{{ end }}
+  {{ $freshnessCompact = printf "%dJ" $freshnessDays }}
+  {{ $freshnessFull = printf "Dernière actualisation il y a %d %s." $freshnessDays $dayUnit }}
+{{ end }}
+
+{{ $uniqueWords := $scratch.Get "uniqueWords" }}
+{{ $vocabCount := 0 }}
+{{ with $uniqueWords }}{{ $vocabCount = len . }}{{ end }}
+
 {{ $avgDensity := 0 }}
 {{ $totalSentences := $scratch.Get "totalSentences" }}
 {{ if gt $totalSentences 0 }}
   {{ $avgDensity = div ($scratch.Get "totalWords") $totalSentences }}
 {{ end }}
 
-{{/* Almanac Entries */}}
 {{ $almanacCount := 0 }}
 {{ if hugo.Data.almanach }}
-  {{ $almanacCount = len hugo.Data.almanach }}
+  {{ with hugo.Data.almanach.entries }}
+    {{ $almanacCount = len . }}
+  {{ else }}
+    {{ $almanacCount = len hugo.Data.almanach }}
+  {{ end }}
 {{ end }}
 
 
 {{/* --- 2. UI PRESENTATION LAYER --- */}}
+{{ $cellClass := "group relative min-w-0 px-2.5 sm:px-3 py-3 flex flex-row items-center justify-between gap-2 hover:bg-ctp-surface0/30 transition-colors cursor-help" }}
+{{ $labelClass := "min-w-0 flex items-center gap-1.5 text-ctp-overlay1" }}
+{{ $labelTextClass := "min-w-0 truncate uppercase tracking-wider" }}
+{{ $valueClass := "shrink-0 font-bold text-ctp-text text-right whitespace-nowrap tabular-nums leading-none" }}
+{{ $tooltipClass := "pointer-events-none opacity-0 group-hover:opacity-100 absolute top-full left-0 mt-2 w-[calc(50vw-2rem)] sm:w-48 bg-ctp-base border border-ctp-surface1 p-3 z-50 shadow-[4px_4px_0px_0px_rgba(0,0,0,0.5)] transition-opacity duration-200" }}
+{{ $tooltipMiddleClass := "pointer-events-none opacity-0 group-hover:opacity-100 absolute top-full left-0 md:left-1/2 md:-translate-x-1/2 mt-2 w-[calc(50vw-2rem)] sm:w-48 bg-ctp-base border border-ctp-surface1 p-3 z-50 shadow-[4px_4px_0px_0px_rgba(0,0,0,0.5)] transition-opacity duration-200" }}
+{{ $tooltipRightClass := "pointer-events-none opacity-0 group-hover:opacity-100 absolute top-full right-0 mt-2 w-[calc(50vw-2rem)] sm:w-48 bg-ctp-base border border-ctp-surface1 p-3 z-50 shadow-[4px_4px_0px_0px_rgba(0,0,0,0.5)] transition-opacity duration-200" }}
+
 <div class="bento-card w-full font-mono text-[10px] select-none bg-ctp-mantle hover:transform-none hover:shadow-[4px_4px_0px_0px_rgba(0,0,0,0.3)]">
   
-  <div class="grid grid-cols-2 md:grid-cols-4 lg:grid-cols-8 divide-x divide-y md:divide-y-0 lg:divide-y-0 divide-ctp-surface1">
+  <div class="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-6 divide-x divide-y lg:divide-y-0 divide-ctp-surface1">
 
-    {{/* --- CELL 1: TEMPS DE VOL --- */}}
-    <div class="group relative px-3 py-3 flex flex-row items-center justify-between hover:bg-ctp-surface0/30 transition-colors cursor-help" data-tooltip-trigger>
-      <div class="flex items-center gap-2 text-ctp-overlay1">
-        <span class="text-ctp-green text-[8px] animate-pulse">●</span>
-        <span class="uppercase tracking-wider">BUILD</span>
+    {{/* --- CELL 1: FRAICHEUR --- */}}
+    <div class="{{ $cellClass }}" data-tooltip-trigger aria-label="{{ $freshnessFull }}">
+      <div class="{{ $labelClass }}">
+        <span class="shrink-0 text-ctp-green text-[8px]">●</span>
+        <span class="{{ $labelTextClass }}">FRAIS</span>
       </div>
-      <span class="font-bold text-ctp-text">{{ $hoursAlive | lang.FormatNumber 0 }}H</span>
+      <span class="{{ $valueClass }}">{{ $freshnessCompact }}</span>
       
-      <div class="pointer-events-none opacity-0 group-hover:opacity-100 absolute top-full left-0 mt-2 w-48 bg-ctp-base border border-ctp-surface1 p-3 z-50 shadow-[4px_4px_0px_0px_rgba(0,0,0,0.5)] transition-opacity duration-200" data-tooltip>
-        <p class="text-xs text-ctp-yellow font-bold mb-1">ORIGINE</p>
-        <p class="text-xs text-ctp-subtext0 leading-tight">Heures depuis la mise en ligne.</p>
+      <div class="{{ $tooltipClass }}" data-tooltip>
+        <p class="text-xs text-ctp-yellow font-bold mb-1">RAFAÎCHISSEMENT</p>
+        <p class="text-xs text-ctp-subtext0 leading-tight">{{ $freshnessFull }}</p>
       </div>
     </div>
 
     {{/* --- CELL 2: GAMME (VOCABULAIRE) --- */}}
-    <div class="group relative px-3 py-3 flex flex-row items-center justify-between hover:bg-ctp-surface0/30 transition-colors cursor-help" data-tooltip-trigger>
-      <div class="flex items-center gap-2 text-ctp-overlay1">
-        <span class="text-ctp-mauve text-[8px]">AZ</span>
-        <span class="uppercase tracking-wider">PALETTE</span>
+    <div class="{{ $cellClass }}" data-tooltip-trigger>
+      <div class="{{ $labelClass }}">
+        <span class="shrink-0 text-ctp-blue text-[8px]">AZ</span>
+        <span class="{{ $labelTextClass }}">LEX.</span>
       </div>
-      <span class="font-bold text-ctp-text">{{ $vocabCount | lang.FormatNumber 0 }}</span>
+      <span class="{{ $valueClass }}">{{ $vocabCount | lang.FormatNumber 0 }}</span>
 
-      <div class="pointer-events-none opacity-0 group-hover:opacity-100 absolute top-full left-0 mt-2 w-48 bg-ctp-base border border-ctp-surface1 p-3 z-50 shadow-[4px_4px_0px_0px_rgba(0,0,0,0.5)] transition-opacity duration-200" data-tooltip>
+      <div class="{{ $tooltipClass }}" data-tooltip>
         <p class="text-xs text-ctp-yellow font-bold mb-1">PALETTE</p>
-        <p class="text-xs text-ctp-subtext0 leading-tight">Mots uniques utilisés sur le site.</p>
+        <p class="text-xs text-ctp-subtext0 leading-tight">Mots uniques relevés dans {{ len $contentPages }} pages de contenu publiées.</p>
       </div>
     </div>
 
-    {{/* --- CELL 3: PARENTHÈSES --- */}}
-    <div class="group relative px-3 py-3 flex flex-row items-center justify-between hover:bg-ctp-surface0/30 transition-colors cursor-help" data-tooltip-trigger>
-      <div class="flex items-center gap-2 text-ctp-overlay1">
-        <span class="text-ctp-blue text-[8px]">( )</span>
-        <span class="uppercase tracking-wider">PAREN.</span>
+    {{/* --- CELL 3: DENSITÉ --- */}}
+    <div class="{{ $cellClass }}" data-tooltip-trigger>
+      <div class="{{ $labelClass }}">
+        <span class="shrink-0 text-ctp-yellow text-[8px]">µ</span>
+        <span class="{{ $labelTextClass }}">RYTHME</span>
       </div>
-      <span class="font-bold text-ctp-text">{{ $scratch.Get "totalParentheses" }}</span>
+      <span class="{{ $valueClass }}">{{ $avgDensity | lang.FormatNumber 0 }}</span>
 
-      <div class="pointer-events-none opacity-0 group-hover:opacity-100 absolute top-full left-0 mt-2 w-48 bg-ctp-base border border-ctp-surface1 p-3 z-50 shadow-[4px_4px_0px_0px_rgba(0,0,0,0.5)] transition-opacity duration-200" data-tooltip>
-        <p class="text-xs text-ctp-yellow font-bold mb-1">PARENTHÈSES</p>
-        <p class="text-xs text-ctp-subtext0 leading-tight">Nombre de parenthèses utilisées dans les articles.</p>
-      </div>
-    </div>
-
-    {{/* --- CELL 4: DENSITÉ --- */}}
-    <div class="group relative px-3 py-3 flex flex-row items-center justify-between hover:bg-ctp-surface0/30 transition-colors cursor-help" data-tooltip-trigger>
-      <div class="flex items-center gap-2 text-ctp-overlay1">
-        <span class="text-ctp-peach text-[8px]">STYLE</span>
-        <span class="uppercase tracking-wider">DENS.</span>
-      </div>
-      <span class="font-bold text-ctp-text">{{ $avgDensity | lang.FormatNumber 0 }}</span>
-
-      <div class="pointer-events-none opacity-0 group-hover:opacity-100 absolute top-full left-0 mt-2 w-48 bg-ctp-base border border-ctp-surface1 p-3 z-50 shadow-[4px_4px_0px_0px_rgba(0,0,0,0.5)] transition-opacity duration-200" data-tooltip>
-        <p class="text-xs text-ctp-yellow font-bold mb-1">DENSITÉ</p>
-        <p class="text-xs text-ctp-subtext0 leading-tight">Moyenne de mots par phrase.</p>
+      <div class="{{ $tooltipMiddleClass }}" data-tooltip>
+        <p class="text-xs text-ctp-yellow font-bold mb-1">RYTHME</p>
+        <p class="text-xs text-ctp-subtext0 leading-tight">Moyenne de mots par phrase sur le corpus visible.</p>
       </div>
     </div>
 
-    {{/* --- CELL 5: EMPHASES (ASTÉRISQUES) --- */}}
-    <div class="group relative px-3 py-3 flex flex-row items-center justify-between hover:bg-ctp-surface0/30 transition-colors cursor-help" data-tooltip-trigger>
-      <div class="flex items-center gap-2 text-ctp-overlay1">
-        <span class="text-ctp-yellow text-[8px]">*</span>
-        <span class="uppercase tracking-wider">FORM.</span>
+    {{/* --- CELL 4: WIKI --- */}}
+    <div class="{{ $cellClass }}" data-tooltip-trigger>
+      <div class="{{ $labelClass }}">
+        <span class="shrink-0 text-ctp-teal text-[8px]">→</span>
+        <span class="{{ $labelTextClass }}">WIKI</span>
       </div>
-      <span class="font-bold text-ctp-text">{{ $scratch.Get "totalAsterisks" }}</span>
+      <span class="{{ $valueClass }}">{{ $scratch.Get "totalLinks" }}</span>
 
-      <div class="pointer-events-none opacity-0 group-hover:opacity-100 absolute top-full md:left-1/2 md:-translate-x-1/2 mt-2 w-48 bg-ctp-base border border-ctp-surface1 p-3 z-50 shadow-[4px_4px_0px_0px_rgba(0,0,0,0.5)] transition-opacity duration-200" data-tooltip>
-        <p class="text-xs text-ctp-yellow font-bold mb-1">FORMATTAGE</p>
-        <p class="text-xs text-ctp-subtext0 leading-tight">Nombre d'astérisques utilisés pour mettre en forme le texte.</p>
-      </div>
-    </div>
-
-    {{/* --- CELL 6: LIENS --- */}}
-    <div class="group relative px-3 py-3 flex flex-row items-center justify-between hover:bg-ctp-surface0/30 transition-colors cursor-help" data-tooltip-trigger>
-      <div class="flex items-center gap-2 text-ctp-overlay1">
-        <span class="text-ctp-teal text-[8px]">→</span>
-        <span class="uppercase tracking-wider">WIKI</span>
-      </div>
-      <span class="font-bold text-ctp-text">{{ $scratch.Get "totalLinks" }}</span>
-
-      <div class="pointer-events-none opacity-0 group-hover:opacity-100 absolute top-full md:left-1/2 md:-translate-x-1/2 mt-2 w-48 bg-ctp-base border border-ctp-surface1 p-3 z-50 shadow-[4px_4px_0px_0px_rgba(0,0,0,0.5)] transition-opacity duration-200" data-tooltip>
-        <p class="text-xs text-ctp-yellow font-bold mb-1">WIKILINKS</p>
-        <p class="text-xs text-ctp-subtext0 leading-tight">Nombre de liens internes entre les articles.</p>
+      <div class="{{ $tooltipMiddleClass }}" data-tooltip>
+        <p class="text-xs text-ctp-yellow font-bold mb-1">INTERLIENS</p>
+        <p class="text-xs text-ctp-subtext0 leading-tight">Nombre de liens Markdown relevés dans le corpus visible.</p>
       </div>
     </div>
 
-    {{/* --- CELL 7: SIDENOTES (MARGE) --- */}}
-    <div class="group relative px-3 py-3 flex flex-row items-center justify-between hover:bg-ctp-surface0/30 transition-colors cursor-help" data-tooltip-trigger>
-      <div class="flex items-center gap-2 text-ctp-overlay1">
-        <span class="text-ctp-maroon text-[8px]">¶</span>
-        <span class="uppercase tracking-wider">MARGE</span>
+    {{/* --- CELL 5: SIDENOTES (MARGE) --- */}}
+    <div class="{{ $cellClass }}" data-tooltip-trigger>
+      <div class="{{ $labelClass }}">
+        <span class="shrink-0 text-ctp-maroon text-[8px]">¶</span>
+        <span class="{{ $labelTextClass }}">MARGE</span>
       </div>
-      <span class="font-bold text-ctp-text">{{ $scratch.Get "totalSidenotes" }}</span>
+      <span class="{{ $valueClass }}">{{ $scratch.Get "totalSidenotes" }}</span>
 
-      <div class="pointer-events-none opacity-0 group-hover:opacity-100 absolute top-full right-0 mt-2 w-48 bg-ctp-base border border-ctp-surface1 p-3 z-50 shadow-[4px_4px_0px_0px_rgba(0,0,0,0.5)] transition-opacity duration-200" data-tooltip>
+      <div class="{{ $tooltipRightClass }}" data-tooltip>
         <p class="text-xs text-ctp-yellow font-bold mb-1">MARGINOTES</p>
         <p class="text-xs text-ctp-subtext0 leading-tight">Nombre de notes dans les marges.</p>
       </div>
     </div>
 
-    {{/* --- CELL 8: ALMANACH --- */}}
-    <div class="group relative px-3 py-3 flex flex-row items-center justify-between hover:bg-ctp-surface0/30 transition-colors cursor-help" data-tooltip-trigger>
-      <div class="flex items-center gap-2 text-ctp-overlay1">
-        <span class="text-ctp-lavender text-[8px]">📅</span>
-        <span class="uppercase tracking-wider">ALM</span>
+    {{/* --- CELL 6: ALMANACH --- */}}
+    <div class="{{ $cellClass }}" data-tooltip-trigger>
+      <div class="{{ $labelClass }}">
+        <span class="shrink-0 text-ctp-lavender text-[8px]">◆</span>
+        <span class="{{ $labelTextClass }}">ALM</span>
       </div>
-      <span class="font-bold text-ctp-text">{{ $almanacCount }}</span>
+      <span class="{{ $valueClass }}">{{ $almanacCount }}</span>
 
-      <div class="pointer-events-none opacity-0 group-hover:opacity-100 absolute top-full right-0 mt-2 w-48 bg-ctp-base border border-ctp-surface1 p-3 z-50 shadow-[4px_4px_0px_0px_rgba(0,0,0,0.5)] transition-opacity duration-200" data-tooltip>
+      <div class="{{ $tooltipRightClass }}" data-tooltip>
         <p class="text-xs text-ctp-yellow font-bold mb-1">ALMANACH</p>
         <p class="text-xs text-ctp-subtext0 leading-tight">Nombre d'entrées dans le journal.</p>
       </div>

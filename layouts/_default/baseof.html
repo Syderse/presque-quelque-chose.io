@@ -25,14 +25,14 @@
 
     {{/* LAYER 2: SIDEBAR (Overlay) */}}
     <aside id="sidebar-panel" 
-           class="absolute top-0 left-0 z-40 h-full w-[280px] -translate-x-full transition-transform duration-300 ease-[cubic-bezier(0.25,0.1,0.25,1)] will-change-transform shadow-2xl">
+           class="absolute top-0 left-0 z-40 h-full w-[280px] -translate-x-full transition-transform duration-300 ease-[cubic-bezier(0.25,0.1,0.25,1)] shadow-2xl">
       {{- partial "sidebar.html" . -}}
     </aside>
 
     {{/* LAYER 3: TOGGLE BUTTON (Desktop only — mobile uses mobile-nav) */}}
     <header class="hidden md:flex absolute top-0 left-0 w-full z-50 p-4 items-start justify-between pointer-events-none">
       <button id="sidebar-toggle-btn" onclick="toggleSidebar()"
-        class="pointer-events-auto p-2 rounded-lg bg-ctp-surface0 hover:bg-ctp-surface1 text-ctp-mauve border border-ctp-surface1 shadow-md transition-all duration-200 group"
+        class="pointer-events-auto p-2 rounded-lg bg-ctp-surface0 hover:bg-ctp-surface1 text-ctp-mauve border border-ctp-surface1 shadow-md transition-[background-color,border-color,color,box-shadow] duration-200 group"
         aria-label="Menu">
         
         <svg xmlns="http://www.w3.org/2000/svg"
@@ -100,16 +100,18 @@
       }
     });
 
-    async function randomArticle() {
+    async function randomArticle(fallback = '/solutions-imaginaires/') {
       try {
         const r = await fetch('/articles-aleatoires.json');
         if (r.ok) {
           const data = await r.json();
           if (data.length > 0) {
             window.location.href = data[Math.floor(Math.random() * data.length)].permalink;
+            return;
           }
         }
       } catch (e) { console.error("Randomizer Error:", e); }
+      if (fallback) window.location.href = fallback;
     }
   </script>
 

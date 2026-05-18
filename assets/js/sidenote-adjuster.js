@@ -14,6 +14,7 @@ const SidenoteManager = {
         noteSelector: '.side-note-content',
         markerSelector: '.side-note-marker',
         triggerSelector: '.group\\/note', // The inline wrapper span
+        labelSelector: '.side-note-trigger',
         containerSelector: 'article',
         gap: 24,
         minWidth: 1024 // Tailwind 'lg' breakpoint
@@ -21,6 +22,7 @@ const SidenoteManager = {
 
     init() {
         this.normalizeInlineSpacing();
+        this.bindInteractions();
 
         // Initial adjustment after DOM is ready
         this.adjust();
@@ -67,6 +69,56 @@ const SidenoteManager = {
             }
 
             marker.dataset.spacingNormalized = 'true';
+        });
+    },
+
+    bindInteractions() {
+        const markers = document.querySelectorAll(this.settings.markerSelector);
+
+        markers.forEach((marker) => {
+            if (marker.dataset.sidenoteBound === 'true') return;
+
+            const checkbox = marker.querySelector('input[type="checkbox"]');
+            const label = marker.querySelector(this.settings.labelSelector);
+            const note = marker.querySelector(this.settings.noteSelector);
+
+            if (!checkbox || !label || !note) return;
+
+            const setExpanded = () => {
+                const isActive = checkbox.checked;
+                const activeColor = label.classList.contains('side-note-trigger--comment')
+                    ? 'var(--ctp-teal)'
+                    : 'var(--ctp-red)';
+
+                label.setAttribute('aria-expanded', String(isActive));
+                label.classList.toggle('side-note-trigger--active', isActive);
+                marker.classList.toggle('is-sidenote-active', isActive);
+
+                if (isActive) {
+                    label.style.setProperty('color', activeColor, 'important');
+                } else {
+                    label.style.removeProperty('color');
+                }
+            };
+
+            const toggleNote = () => {
+                checkbox.checked = !checkbox.checked;
+                checkbox.dispatchEvent(new Event('change', { bubbles: true }));
+            };
+
+            label.addEventListener('keydown', (event) => {
+                if (event.key !== 'Enter' && event.key !== ' ') return;
+
+                event.preventDefault();
+                checkbox.checked = !checkbox.checked;
+                checkbox.dispatchEvent(new Event('change', { bubbles: true }));
+            });
+
+            checkbox.addEventListener('change', setExpanded);
+            note.addEventListener('click', toggleNote);
+
+            setExpanded();
+            marker.dataset.sidenoteBound = 'true';
         });
     },
 

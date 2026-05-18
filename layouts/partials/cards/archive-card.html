@@ -21,7 +21,7 @@ Context: A Regular Page Object
   <figure class="relative w-full aspect-video border-b border-ctp-surface1 overflow-hidden bg-ctp-surface0">
     {{ $img := .Resize "600x webp" }}
     <img src="{{ $img.RelPermalink }}" width="{{ $img.Width }}" height="{{ $img.Height }}" alt="" loading="lazy"
-      class="w-full h-full object-cover grayscale transition-all duration-300 group-hover:grayscale-0">
+      class="w-full h-full object-cover opacity-90 transition-opacity duration-200 group-hover:opacity-100">
 
     {{/* Overlay "FIGURE" label */}}
     <div
@@ -36,7 +36,7 @@ Context: A Regular Page Object
 
     {{/* Title */}}
     <h3
-      class="font-serif text-xl font-bold text-ctp-mauve transition-transform mb-3 leading-tight uppercase tracking-tight group-hover:-translate-y-0.5">
+      class="font-serif text-xl font-bold text-ctp-mauve transition-transform duration-200 mb-3 leading-tight uppercase tracking-tight group-hover:-translate-y-0.5">
       {{/* The Card Link: Z-Index 0. Covers everything except Z-10 elements. */}}
       <a href="{{ .RelPermalink }}" class="focus:outline-none">
         <span class="absolute inset-0 z-0" aria-hidden="true"></span>

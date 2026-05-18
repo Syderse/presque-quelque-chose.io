@@ -101,10 +101,10 @@
         {{ if $pdf }}
         <div class="relative group">
           <div
-            class="absolute -inset-0.5 bg-gradient-to-r from-ctp-mauve to-ctp-blue opacity-30 blur group-hover:opacity-60 transition duration-500">
+            class="absolute -inset-0.5 bg-gradient-to-r from-ctp-mauve/30 to-ctp-blue/30 opacity-40 group-hover:opacity-70 transition-opacity duration-200">
           </div>
           <a href="{{ $pdf.RelPermalink }}" target="_blank"
-            class="relative flex items-center justify-between bg-ctp-base border border-ctp-surface2 p-4 hover:border-ctp-mauve transition-all">
+            class="relative flex items-center justify-between bg-ctp-base border border-ctp-surface2 p-4 hover:border-ctp-mauve transition-colors duration-200">
             <div class="flex items-center gap-3">
               <span class="text-2xl">📎</span>
               <div class="flex flex-col">

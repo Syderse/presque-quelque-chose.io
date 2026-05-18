@@ -7,6 +7,16 @@ Refactor:
 - Removed redundant 'bg-ctp-surface0' from canvas (Inherited).
 - Kept 'overflow-hidden' to clip spine/canvas corners.
 */}}
+{{ $fallbackEntry := dict "text" "La réserve d'almanach attend son prochain tirage." }}
+{{ with hugo.Data.almanach.entries }}
+    {{ with index . 0 }}
+        {{ $fallbackEntry = . }}
+    {{ end }}
+{{ end }}
+{{ $fallbackText := $fallbackEntry.text }}
+{{ $fallbackTitle := $fallbackEntry.title }}
+{{ $fallbackPreview := $fallbackText | truncate 220 }}
+{{ $fallbackHasMore := gt (len $fallbackText) 220 }}
 <div class="bento-card group select-none overflow-hidden">
 
     <div class="bento-content flex flex-col md:flex-row h-full">
@@ -67,9 +77,22 @@ Refactor:
             {{/* Main Content Area */}}
             <div class="relative z-10 w-full">
                 <p id="almanach-content"
-                    class="script-text text-pretty break-words selection:bg-ctp-maroon selection:text-ctp-base">
-                    L'initialisation du calendrier est en cours...
+                    class="script-text text-pretty break-words selection:bg-ctp-maroon selection:text-ctp-base"
+                    data-entry-id="{{ $fallbackEntry.id | default "fallback" }}"
+                    data-entry-title="{{ $fallbackTitle | default "" }}"
+                    data-entry-text="{{ $fallbackText }}"
+                    data-entry-full-text="{{ if $fallbackTitle }}{{ $fallbackTitle }} — {{ end }}{{ $fallbackText }}"
+                    data-has-more="{{ $fallbackHasMore }}">
+                    {{ if $fallbackTitle }}{{ $fallbackTitle }} — {{ end }}{{ $fallbackPreview }}
                 </p>
+                <button type="button"
+                    id="almanach-read-more"
+                    class="almanach-read-more"
+                    aria-haspopup="dialog"
+                    aria-controls="almanach-dialog"
+                    {{ if not $fallbackHasMore }}hidden{{ end }}>
+                    Lire la suite
+                </button>
 
                 {{/* Mobile Only Saint Display (Footer) */}}
                 <div class="md:hidden mt-4 pt-3 border-t border-ctp-surface1/30 flex items-center gap-2">
@@ -83,3 +106,20 @@ Refactor:
 
     </div>
 </div>
+
+<dialog id="almanach-dialog" class="almanach-dialog" aria-labelledby="almanach-dialog-title">
+    <div class="almanach-dialog-panel">
+        <header class="almanach-dialog-header">
+            <div class="min-w-0">
+                <span class="almanach-dialog-kicker">Almanach</span>
+                <h2 id="almanach-dialog-title" class="almanach-dialog-title">Entrée du jour</h2>
+            </div>
+            <form method="dialog">
+                <button type="submit" class="almanach-dialog-close" aria-label="Fermer la lecture agrandie">
+                    ×
+                </button>
+            </form>
+        </header>
+        <div id="almanach-dialog-body" class="almanach-dialog-body"></div>
+    </div>
+</dialog>

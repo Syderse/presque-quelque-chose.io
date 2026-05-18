@@ -8,7 +8,7 @@
 
 /* 1. Base Nodes */
 .node-body {
-    transition: all 0.3s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+    transition: fill 0.18s ease, stroke 0.18s ease, stroke-width 0.18s ease;
     rx: 15px; 
     cursor: pointer;
 }
@@ -33,7 +33,6 @@
     stroke-width: 4px;
     fill: var(--ctp-surface2);
     stroke-dasharray: 0; /* Solidifie le contour au survol */
-    filter: drop-shadow(0px 0px 12px var(--ctp-mauve));
 }
 
 /* Tooltip */
@@ -58,20 +57,14 @@
     text-transform: uppercase;
 }
 
-/* Animation Noyau */
-@keyframes breathe {
-    0%, 100% { stroke-opacity: 1; }
-    50% { stroke-opacity: 0.5; }
-}
-.node-root { animation: breathe 5s infinite; }
+.node-root { stroke-opacity: 0.95; }
 
 </style>
 
 <div class="relative h-[calc(100vh-6rem)] w-full overflow-hidden bg-ctp-base font-mono group">
   
   {{/* Grid Background - Radar Style */}}
-  <div class="absolute inset-0 z-0 opacity-10 pointer-events-none" 
-       style="background-image: radial-gradient(var(--ctp-surface2) 1px, transparent 1px); background-size: 30px 30px;">
+  <div class="absolute inset-0 z-0 opacity-10 pointer-events-none bg-grid-pattern">
   </div>
 
   {{/* CANVAS D3 */}}
@@ -89,7 +82,7 @@
     <div class="bg-ctp-base border-2 border-ctp-surface2 p-4 shadow-[6px_6px_0px_#111] pointer-events-auto w-full text-right">
        <h2 class="text-xl font-bold text-ctp-text uppercase tracking-widest leading-none">{{ .Title }}</h2>
        <div class="text-[10px] text-ctp-surface2 mt-2 font-bold flex justify-end gap-2 items-center">
-         <span class="w-2 h-2 rounded-full bg-ctp-green animate-pulse"></span>
+         <span class="w-2 h-2 rounded-full bg-ctp-green"></span>
          <span id="stat-nodes">--</span> NODES ONLINE
        </div>
     </div>

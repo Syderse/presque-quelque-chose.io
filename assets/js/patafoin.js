@@ -133,7 +133,7 @@ document.addEventListener('DOMContentLoaded', async () => {
 
     // Fonction Principale de Chargement
     async function loadSystem() {
-        dom.tree.innerHTML = '<div class="text-ctp-blue animate-pulse font-mono pl-2">chargement...</div>';
+        dom.tree.innerHTML = '<div class="text-ctp-blue font-mono pl-2">chargement...</div>';
 
         // 1. Fetch Topics
         const { data: topics, error: errT } = await sb.from('topics').select('*').order('created_at', { ascending: false });

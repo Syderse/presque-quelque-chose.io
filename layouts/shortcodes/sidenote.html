@@ -28,7 +28,7 @@
 {{- $variantClass := cond $isComment "sn-comment" "sn-note" -}}
 {{- $triggerVariantClass := cond $isComment "side-note-trigger--comment" "side-note-trigger--note" -}}
 {{- $titlePrefix := cond $isComment (printf "Voir %s" $commentLabel) "Voir la note" -}}
-<span class="side-note-marker group/note"><input type="checkbox" id="sn-{{ $num }}" class="peer hidden" /><label for="sn-{{ $num }}" class="side-note-trigger {{ $triggerVariantClass }} peer-checked:font-bold" title="{{ $titlePrefix }} {{ $num }}" aria-label="{{ $titlePrefix }} {{ $num }}">{{ $num }}</label><span class="side-note-content {{ $sideClass }} {{ $variantClass }}
+<span class="side-note-marker group/note" data-sidenote-marker><input type="checkbox" id="sn-{{ $num }}" class="peer hidden" /><label for="sn-{{ $num }}" class="side-note-trigger {{ $triggerVariantClass }} peer-checked:font-bold" title="{{ $titlePrefix }} {{ $num }}" aria-label="{{ $titlePrefix }} {{ $num }}" aria-controls="sn-{{ $num }}-content" aria-expanded="false" role="button" tabindex="0">{{ $num }}</label><span id="sn-{{ $num }}-content" class="side-note-content {{ $sideClass }} {{ $variantClass }}
         /* --- BASE MOBILE STYLES (Default) --- */
         hidden peer-checked:block
         w-full my-4 p-4
@@ -45,7 +45,7 @@
         /* VISUAL STATE: PASSIVE */
         lg:bg-transparent lg:border-0
         lg:opacity-60 lg:hover:opacity-100
-        lg:transition-all lg:duration-300 lg:ease-out
+        lg:transition-[opacity,transform,background-color,border-color,box-shadow] lg:duration-200 lg:ease-out
 
         /* VISUAL STATE: ACTIVE */
         lg:peer-checked:opacity-100
@@ -66,7 +66,7 @@
             lg:border-r lg:border-ctp-surface1
             lg:peer-checked:border-r-ctp-peach
         {{ end }}
-    ">
+    " role="note" tabindex="0" data-sidenote-content>
             {{ if $isComment }}
                 <span class="side-note-label">{{ $commentLabel }}</span>
             {{ end }}

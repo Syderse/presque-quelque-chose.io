@@ -2,10 +2,36 @@
     Format : ALMANACH (déclaré dans hugo.yaml)
     Fichier : layouts/almanach/list.almanach.json
 */ -}}
+{{- $source := hugo.Data.almanach -}}
+{{- $entries := slice -}}
+{{- with $source.entries -}}
+  {{- range . -}}
+    {{- $entry := dict "id" .id "text" .text -}}
+    {{- with .title -}}
+      {{- $entry = merge $entry (dict "title" .) -}}
+    {{- end -}}
+    {{- with .date -}}
+      {{- $entry = merge $entry (dict "date" .) -}}
+    {{- end -}}
+    {{- $entries = $entries | append $entry -}}
+  {{- end -}}
+{{- else -}}
+  {{- range $date, $text := $source -}}
+    {{- $entries = $entries | append (dict "id" $date "date" $date "text" $text) -}}
+  {{- end -}}
+{{- end -}}
+{{- $database := dict -}}
+{{- range $entry := $entries -}}
+  {{- with $entry.date -}}
+    {{- $database = merge $database (dict . $entry.text) -}}
+  {{- end -}}
+{{- end -}}
 {
   "meta": {
     "generated_at": "{{ now.Format "2006-01-02T15:04:05Z07:00" }}",
-    "version": "2.0-clean-arch"
+    "version": "3.0-reserve",
+    "entry_count": {{ len $entries }}
   },
-  "database": {{ hugo.Data.almanach | jsonify }}
+  "entries": {{ $entries | jsonify }},
+  "database": {{ $database | jsonify }}
 }

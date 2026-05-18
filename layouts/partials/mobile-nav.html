@@ -1,10 +1,10 @@
 {{/* Mobile Bottom Bar - Fixed & Uniformized */}}
 <nav class="fixed bottom-0 left-0 right-0 z-50 h-16 bg-ctp-mantle border-t border-ctp-surface0/40 shadow-2xl md:hidden">
-  <div class="flex h-full items-center justify-around px-2">
+  <div class="flex h-full items-center justify-around px-1">
 
     {{/* --- 1. BOUTON ACCUEIL (Essentiel car Sidebar masquée) --- */}}
     <a href="{{ .Site.Home.RelPermalink }}" 
-       class="flex flex-col items-center justify-center h-full min-w-[64px] group"
+       class="flex min-w-0 flex-1 flex-col items-center justify-center h-full px-0.5 group"
        aria-label="Retour à l'accueil">
       <div class="p-1.5 rounded-full bg-ctp-surface0/50 group-hover:bg-ctp-surface1 transition-colors">
         {{/* Icône Home Simple */}}
@@ -12,7 +12,7 @@
           <path stroke-linecap="round" stroke-linejoin="round" d="M3 12l2-2m0 0l7-7 7 7M5 10v10a1 1 0 001 1h3m10-11l2 2m-2-2v10a1 1 0 01-1 1h-3m-6 0a1 1 0 001-1v-4a1 1 0 011-1h2a1 1 0 011 1v4a1 1 0 001 1m-6 0h6" />
         </svg>
       </div>
-      <span class="text-[10px] font-medium text-ctp-subtext0 mt-0.5">Presque.</span>
+      <span class="max-w-[52px] truncate text-[10px] font-medium text-ctp-subtext0 mt-0.5">Presque.</span>
     </a>
 
     {{/* --- 2. MAPPING DES ICÔNES PAR NOM DE MENU --- */}}
@@ -31,19 +31,35 @@
       {{ $iconPath := index $icons (lower .Name) | default "M11.049 2.927c.3-.921 1.603-.921 1.902 0l1.519 4.674a1 1 0 00.95.69h4.915c.969 0 1.371 1.24.588 1.81l-3.976 2.888a1 1 0 00-.363 1.118l1.518 4.674c.3.922-.755 1.688-1.538 1.118l-3.976-2.888a1 1 0 00-1.176 0l-3.976 2.888c-.783.57-1.838-.197-1.538-1.118l1.518-4.674a1 1 0 00-.363-1.118l-3.976-2.888c-.784-.57-.38-1.81.588-1.81h4.914a1 1 0 00.951-.69l1.519-4.674z" }}
       
       <a href="{{ .URL }}" 
-         class="flex flex-col items-center justify-center h-full w-full text-xs font-medium transition-all duration-200 border-t-2 
+         class="flex min-w-0 flex-1 flex-col items-center justify-center h-full px-0.5 text-xs font-medium transition-[background-color,border-color,color] duration-200 border-t-2
                 {{ if $.IsMenuCurrent "main" . }}
                   border-ctp-mauve text-ctp-mauve bg-gradient-to-b from-ctp-mauve/5 to-transparent
                 {{ else }}
                   border-transparent text-ctp-subtext0 hover:text-ctp-text hover:bg-ctp-surface0/30
                 {{ end }}">
         
-        <svg class="h-5 w-5 mb-1 {{ if $.IsMenuCurrent "main" . }}animate-pulse{{ end }}" fill="none" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor">
+        <svg class="h-5 w-5 mb-1" fill="none" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor">
           <path stroke-linecap="round" stroke-linejoin="round" d="{{ $iconPath }}" />
         </svg>
         
-        <span class="max-w-[60px] truncate">{{ .Name | title }}</span>
+        <span class="max-w-[52px] truncate">{{ .Name | title }}</span>
       </a>
+    {{ end }}
+
+    {{ if .Scratch.Get "hasReadingToc" }}
+      <button type="button"
+              onclick="openToc()"
+              data-toc-open
+              class="mobile-plan-toggle flex min-w-0 flex-1 flex-col items-center justify-center h-full px-0.5 text-xs font-medium transition-[background-color,border-color,color] duration-200 border-t-2 border-transparent text-ctp-subtext0 hover:text-ctp-text hover:bg-ctp-surface0/30"
+              aria-label="Afficher le plan de l'article"
+              aria-controls="toc-panel"
+              aria-expanded="false"
+              aria-haspopup="dialog">
+        <svg class="h-5 w-5 mb-1" fill="none" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" aria-hidden="true">
+          <path stroke-linecap="round" stroke-linejoin="round" d="M8 6h13M8 12h13M8 18h13M3 6h.01M3 12h.01M3 18h.01" />
+        </svg>
+        <span class="max-w-[52px] truncate">Plan</span>
+      </button>
     {{ end }}
 
   </div>
