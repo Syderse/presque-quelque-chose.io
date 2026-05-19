@@ -1,0 +1,17 @@
+{
+  "config": "/Users/mathieu/Documents/presque-quelque-chose.io/antenne_radio/config/sources.yaml",
+  "connector": "crossref",
+  "errors": [
+    {
+      "message": "Crossref source is disabled",
+      "type": "disabled"
+    }
+  ],
+  "generated_at": "2026-05-19T06:43:21Z",
+  "items": [],
+  "journals": [],
+  "raw_responses": [],
+  "result_count": 0,
+  "source_api": "https://api.crossref.org",
+  "source_name": "Crossref radio journals"
+}

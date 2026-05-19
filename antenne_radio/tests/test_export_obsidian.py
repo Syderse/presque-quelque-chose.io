@@ -130,6 +130,61 @@ def test_japanese_characters_remain_readable(tmp_path):
     assert "音と聴取についてのメモ。" in content
 
 
+def test_export_cleans_html_abstracts(tmp_path):
+    db_path = tmp_path / "db.json"
+    export_dir = tmp_path / "exports"
+    write_db(
+        db_path,
+        [
+            item_payload(
+                abstract="<p>Radio &amp; écoute.</p><p>Suite&nbsp;utile.</p>",
+            )
+        ],
+    )
+
+    result = export_obsidian.export_weekly_report(
+        db_path=db_path,
+        export_dir=export_dir,
+        generated_at=GENERATED_AT,
+    )
+    content = Path(result["export_path"]).read_text(encoding="utf-8")
+
+    assert "<p>" not in content
+    assert "&amp;" not in content
+    assert "Radio & écoute. Suite utile." in content
+
+
+def test_export_skips_empty_html_abstracts(tmp_path):
+    db_path = tmp_path / "db.json"
+    export_dir = tmp_path / "exports"
+    write_db(db_path, [item_payload(abstract=". <br />")])
+
+    result = export_obsidian.export_weekly_report(
+        db_path=db_path,
+        export_dir=export_dir,
+        generated_at=GENERATED_AT,
+    )
+    content = Path(result["export_path"]).read_text(encoding="utf-8")
+
+    assert "**Abstract**" not in content
+    assert "<br" not in content
+
+
+def test_export_adds_doi_when_available(tmp_path):
+    db_path = tmp_path / "db.json"
+    export_dir = tmp_path / "exports"
+    write_db(db_path, [item_payload(doi="10.1234/Radio.2026")])
+
+    result = export_obsidian.export_weekly_report(
+        db_path=db_path,
+        export_dir=export_dir,
+        generated_at=GENERATED_AT,
+    )
+    content = Path(result["export_path"]).read_text(encoding="utf-8")
+
+    assert "- DOI : 10.1234/radio.2026" in content
+
+
 def test_default_export_does_not_change_statuses(tmp_path):
     db_path = tmp_path / "db.json"
     export_dir = tmp_path / "exports"

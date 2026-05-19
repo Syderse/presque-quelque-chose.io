@@ -15,6 +15,7 @@ def tmp_paths(tmp_path):
         scoring_path=tmp_path / "config" / "scoring.yaml",
         rss_raw_path=tmp_path / "data" / "raw" / "rss_latest.json",
         hal_raw_path=tmp_path / "data" / "raw" / "hal_latest.json",
+        crossref_raw_path=tmp_path / "data" / "raw" / "crossref_latest.json",
         db_path=tmp_path / "data" / "normalized" / "db.json",
         export_dir=tmp_path / "data" / "exports",
         api_log_path=tmp_path / "data" / "logs" / "api.log",
@@ -33,6 +34,7 @@ def fake_functions(events):
     return pipeline.PipelineFunctions(
         ingest_rss=step("ingest_rss"),
         ingest_hal=step("ingest_hal"),
+        ingest_crossref=step("ingest_crossref"),
         normalize=step("normalize"),
         scoring=step("scoring"),
         export_obsidian=step("export_obsidian"),
@@ -47,6 +49,7 @@ def test_pipeline_runs_steps_in_order_and_logs(tmp_path):
     assert [name for name, _ in events] == [
         "ingest_rss",
         "ingest_hal",
+        "ingest_crossref",
         "normalize",
         "scoring",
         "export_obsidian",
@@ -68,6 +71,7 @@ def test_pipeline_continues_after_failed_step(tmp_path):
     functions = pipeline.PipelineFunctions(
         ingest_rss=broken_rss,
         ingest_hal=functions.ingest_hal,
+        ingest_crossref=functions.ingest_crossref,
         normalize=functions.normalize,
         scoring=functions.scoring,
         export_obsidian=functions.export_obsidian,
@@ -80,6 +84,7 @@ def test_pipeline_continues_after_failed_step(tmp_path):
     assert [name for name, _ in events] == [
         "ingest_rss",
         "ingest_hal",
+        "ingest_crossref",
         "normalize",
         "scoring",
         "export_obsidian",
@@ -96,12 +101,14 @@ def test_pipeline_skip_flags_skip_ingestions_and_export(tmp_path):
         functions=fake_functions(events),
         skip_rss=True,
         skip_hal=True,
+        skip_crossref=True,
         skip_export=True,
     )
 
     assert result["status"] == "ok"
     assert [name for name, _ in events] == ["normalize", "scoring"]
     assert [step["status"] for step in result["steps"]] == [
+        "skipped",
         "skipped",
         "skipped",
         "ok",
@@ -111,6 +118,7 @@ def test_pipeline_skip_flags_skip_ingestions_and_export(tmp_path):
     log = (tmp_path / "data" / "logs" / "pipeline.log").read_text(encoding="utf-8")
     assert "SKIP ingest_rss" in log
     assert "SKIP ingest_hal" in log
+    assert "SKIP ingest_crossref" in log
     assert "SKIP export_obsidian" in log
 
 

@@ -89,3 +89,26 @@ hal:
       - fr
       - en
   sort: "producedDate_tdate desc"
+
+crossref:
+  enabled: false
+  name: Crossref radio journals
+  base_url: "https://api.crossref.org"
+  mailto_env: "CROSSREF_MAILTO"
+  user_agent: "radio-watch/0.1 (mailto via CROSSREF_MAILTO)"
+  rows: 20
+  sort: "published"
+  order: "desc"
+  timeout_seconds: 20
+  polite_delay_seconds: 1
+  journals:
+    - id: journal_radio_audio_media
+      name: Journal of Radio & Audio Media
+      enabled: true
+      issn:
+        - "1937-6529"
+        - "1937-6537"
+      tags:
+        - academic_watch
+        - radio_studies
+        - podcast_studies

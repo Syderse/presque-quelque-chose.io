@@ -26,6 +26,7 @@ from scripts.core.models import (  # noqa: E402
 
 DEFAULT_RSS_RAW = ROOT / "data" / "raw" / "rss_latest.json"
 DEFAULT_HAL_RAW = ROOT / "data" / "raw" / "hal_latest.json"
+DEFAULT_CROSSREF_RAW = ROOT / "data" / "raw" / "crossref_latest.json"
 DEFAULT_DB = ROOT / "data" / "normalized" / "db.json"
 DEFAULT_LOG = ROOT / "data" / "logs" / "api.log"
 
@@ -99,6 +100,31 @@ def _year_datetime(value: Any) -> datetime | None:
         return None
 
     return datetime(year, 1, 1, tzinfo=timezone.utc)
+
+
+def _date_parts_datetime(value: Any) -> datetime | None:
+    if not isinstance(value, dict):
+        return None
+
+    date_parts = value.get("date-parts")
+    if not isinstance(date_parts, list) or not date_parts:
+        return None
+
+    first_parts = date_parts[0]
+    if not isinstance(first_parts, list) or not first_parts:
+        return None
+
+    try:
+        year = int(first_parts[0])
+        month = int(first_parts[1]) if len(first_parts) > 1 else 1
+        day = int(first_parts[2]) if len(first_parts) > 2 else 1
+    except (TypeError, ValueError):
+        return None
+
+    try:
+        return datetime(year, month, day, tzinfo=timezone.utc)
+    except ValueError:
+        return None
 
 
 def _item_to_dict(item: RadioWatchItem) -> dict[str, Any]:
@@ -184,6 +210,83 @@ def normalize_hal_entry(
     )
 
 
+def _crossref_date(entry: dict[str, Any]) -> datetime | None:
+    for key in ("published-print", "published-online", "published", "issued", "created"):
+        parsed = _date_parts_datetime(entry.get(key))
+        if parsed is not None:
+            return parsed
+
+    created = entry.get("created")
+    if isinstance(created, dict):
+        parsed = _parse_datetime(created.get("date-time")) or _parse_datetime(created.get("timestamp"))
+        if parsed is not None:
+            return parsed
+
+    return None
+
+
+def _crossref_authors(value: Any) -> list[str]:
+    if not isinstance(value, list):
+        return []
+
+    authors: list[str] = []
+    seen: set[str] = set()
+    for author in value:
+        if not isinstance(author, dict):
+            continue
+
+        given = _compact_text(author.get("given"))
+        family = _compact_text(author.get("family"))
+        literal = _compact_text(author.get("name")) or _compact_text(author.get("literal"))
+        name = " ".join(part for part in (given, family) if part) or literal
+        key = name.casefold() if name else None
+        if name and key not in seen:
+            authors.append(name)
+            seen.add(key)
+
+    return authors
+
+
+def normalize_crossref_entry(
+    entry: dict[str, Any],
+    *,
+    discovered_at: datetime | None = None,
+) -> RadioWatchItem:
+    source = entry.get("_crossref_source") if isinstance(entry.get("_crossref_source"), dict) else {}
+    title = _first_text(entry.get("title"))
+    doi = normalize_doi(_first_text(entry.get("DOI")))
+    url = _first_text(entry.get("URL"))
+    published_at = _crossref_date(entry)
+    source_name = _first_text(entry.get("container-title")) or _first_text(source.get("journal_name")) or "Crossref"
+    item_id = generate_stable_id(
+        doi=doi,
+        url=url,
+        title=title,
+        published_at=published_at,
+        source_name=source_name,
+    )
+
+    return RadioWatchItem(
+        id=item_id,
+        title=title or "",
+        source_name=source_name,
+        source_type=SourceType.journal_article,
+        language=_first_text(entry.get("language")) or "und",
+        status=WatchStatus.new,
+        discovered_at=discovered_at or _now(),
+        title_original=title,
+        authors=_crossref_authors(entry.get("author")),
+        published_at=published_at,
+        url=url,
+        doi=doi,
+        abstract=_first_text(entry.get("abstract")),
+        tags=_text_list(entry.get("subject")),
+        source_feed=_first_text(source.get("endpoint")),
+        source_api="crossref",
+        raw=entry,
+    )
+
+
 def load_existing_db(path: str | Path = DEFAULT_DB, *, log_path: str | Path = DEFAULT_LOG) -> list[RadioWatchItem]:
     payload = read_json(path, default=[])
     if payload is None:
@@ -247,6 +350,7 @@ def normalize_latest_dumps(
     *,
     rss_raw_path: str | Path = DEFAULT_RSS_RAW,
     hal_raw_path: str | Path = DEFAULT_HAL_RAW,
+    crossref_raw_path: str | Path = DEFAULT_CROSSREF_RAW,
     db_path: str | Path = DEFAULT_DB,
     log_path: str | Path = DEFAULT_LOG,
 ) -> dict[str, Any]:
@@ -287,6 +391,21 @@ def normalize_latest_dumps(
     else:
         append_log(log_path, f"Invalid HAL dump at {hal_raw_path}; docs is not a list", level="ERROR")
 
+    crossref_payload = read_json(crossref_raw_path, default={}) or {}
+    crossref_entries = crossref_payload.get("items", []) if isinstance(crossref_payload, dict) else []
+    if isinstance(crossref_entries, list):
+        new_items.extend(
+            _normalize_entries(
+                crossref_entries,
+                normalize_crossref_entry,
+                log_path=log_path,
+                label="Crossref",
+                discovered_at=discovered_at,
+            )
+        )
+    else:
+        append_log(log_path, f"Invalid Crossref dump at {crossref_raw_path}; items is not a list", level="ERROR")
+
     merged_items = merge_items_without_duplicates(existing_items, new_items)
     save_db(db_path, merged_items)
 
@@ -301,16 +420,22 @@ def normalize_latest_dumps(
 
 
 def parse_args() -> argparse.Namespace:
-    parser = argparse.ArgumentParser(description="Normalize latest raw RSS/HAL dumps into db.json.")
+    parser = argparse.ArgumentParser(description="Normalize latest raw RSS/HAL/Crossref dumps into db.json.")
     parser.add_argument("--rss", default=str(DEFAULT_RSS_RAW), help="Path to data/raw/rss_latest.json.")
     parser.add_argument("--hal", default=str(DEFAULT_HAL_RAW), help="Path to data/raw/hal_latest.json.")
+    parser.add_argument("--crossref", default=str(DEFAULT_CROSSREF_RAW), help="Path to data/raw/crossref_latest.json.")
     parser.add_argument("--db", default=str(DEFAULT_DB), help="Path to data/normalized/db.json.")
     return parser.parse_args()
 
 
 def main() -> None:
     args = parse_args()
-    result = normalize_latest_dumps(rss_raw_path=args.rss, hal_raw_path=args.hal, db_path=args.db)
+    result = normalize_latest_dumps(
+        rss_raw_path=args.rss,
+        hal_raw_path=args.hal,
+        crossref_raw_path=args.crossref,
+        db_path=args.db,
+    )
     print(f"Saved {result['saved_count']} items to {args.db} ({result['added_count']} added)")
 
 

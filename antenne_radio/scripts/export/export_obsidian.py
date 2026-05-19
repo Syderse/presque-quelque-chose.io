@@ -1,6 +1,7 @@
 from __future__ import annotations
 
 import argparse
+import html
 import re
 import sys
 from datetime import datetime, timezone
@@ -21,6 +22,8 @@ from scripts.core.models import RadioWatchItem, WatchStatus  # noqa: E402
 DEFAULT_DB = ROOT / "data" / "normalized" / "db.json"
 DEFAULT_EXPORT_DIR = ROOT / "data" / "exports"
 WHITESPACE_RE = re.compile(r"\s+")
+HTML_TAG_RE = re.compile(r"<[^>]+>")
+EMPTY_ABSTRACT_RE = re.compile(r"^[\s\W_]+$", re.UNICODE)
 
 
 def _now() -> datetime:
@@ -99,6 +102,19 @@ def _compact_text(value: str | None) -> str:
     return WHITESPACE_RE.sub(" ", value.strip())
 
 
+def _plain_text(value: str | None) -> str:
+    if value is None:
+        return ""
+
+    unescaped = html.unescape(value)
+    without_tags = HTML_TAG_RE.sub(" ", unescaped)
+    compacted = _compact_text(without_tags)
+    if not compacted or EMPTY_ABSTRACT_RE.match(compacted):
+        return ""
+
+    return compacted
+
+
 def _format_date(item: RadioWatchItem) -> str:
     value = item.published_at or item.discovered_at
     return value.date().isoformat()
@@ -109,7 +125,7 @@ def _format_authors(authors: list[str]) -> str:
 
 
 def _quote_block(text: str) -> str:
-    compacted = _compact_text(text)
+    compacted = _plain_text(text)
     if not compacted:
         return ""
 
@@ -118,19 +134,24 @@ def _quote_block(text: str) -> str:
 
 
 def _render_item(item: RadioWatchItem) -> str:
+    link = item.url or (f"https://doi.org/{item.doi}" if item.doi else "Non renseigné")
     lines = [
         f"### {item.title}",
         "",
         f"- Auteurs : {_format_authors(item.authors)}",
         f"- Source : {item.source_name}",
         f"- Date : {_format_date(item)}",
-        f"- Lien : {item.url or item.doi or 'Non renseigné'}",
+        f"- Lien : {link}",
         f"- Score : {_format_number(item.relevance_score)}",
         f"- Explication : {item.score_explanation or 'Non renseignée'}",
     ]
 
-    if item.abstract:
-        lines.extend(["", "**Abstract**", "", _quote_block(item.abstract)])
+    if item.doi:
+        lines.insert(6, f"- DOI : {item.doi}")
+
+    abstract = _quote_block(item.abstract or "")
+    if abstract:
+        lines.extend(["", "**Abstract**", "", abstract])
 
     return "\n".join(lines).rstrip()
 

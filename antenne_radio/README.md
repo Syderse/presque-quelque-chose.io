@@ -96,6 +96,7 @@ Après un run réussi, les fichiers importants sont :
 - `data/raw/hal_latest.json` : dernier dump HAL.
 - `data/normalized/db.json` : base normalisée unique.
 - `data/exports/veille-YYYY-WW.md` : rapport Markdown hebdomadaire.
+- `data/exports/zotero-veille-YYYY-WW.csl.json` : export CSL JSON manuel pour Zotero, si tu le génères.
 - `data/logs/pipeline.log` : journal des étapes du pipeline.
 - `data/logs/api.log` : erreurs ou avertissements des sources.
 
@@ -119,6 +120,18 @@ Par défaut, l'export ne marque pas les items comme `exported`. L'option avancé
 ```sh
 .venv/bin/python scripts/pipeline.py --mark-exported
 ```
+
+### Export Zotero manuel
+
+Un export CSL JSON manuel peut être généré sans API Zotero et sans synchronisation :
+
+```sh
+.venv/bin/python scripts/export/export_csl.py
+```
+
+Le fichier est écrit dans `data/exports/`, par exemple `data/exports/zotero-veille-2026-21.csl.json`. Il contient par défaut les items `to_read` et `candidate`, avec titre, auteurs, source, date, URL, DOI si disponible, type bibliographique approximatif et abstract privé si disponible.
+
+Tu peux ensuite importer ce fichier manuellement dans Zotero avec l'import de fichier standard. Le script ne modifie pas `db.json` et n'écrit pas dans ta bibliothèque Zotero.
 
 ### Dépannage
 
@@ -147,7 +160,7 @@ Si le rapport est vide alors que `db.json` contient des items, vérifie les stat
 
 - Le scoring est lexical et explicable, pas intelligent.
 - Le dédoublonnage est volontairement strict : même ID seulement.
-- Les abstracts RSS peuvent contenir du HTML brut venu des flux.
+- Les abstracts bruts peuvent contenir du HTML venu des flux ; les exports privés les nettoient au mieux sans modifier la source.
 - Le pipeline est local et manuel.
 - Le pipeline continue après certaines erreurs de source : il faut lire les logs.
 - Les fichiers `data/` sont des fichiers plats locaux, pas une base de données serveur.

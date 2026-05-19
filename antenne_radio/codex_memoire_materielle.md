@@ -235,3 +235,55 @@ Avant toute action, lance `git status --short`. Relis `docs/AGENTS.md`, `antenne
 
 État confirmé le 2026-05-19 : `make test` passe avec 45 tests ; `make run` réel passe avec `failed_steps=none`, RSS `entry_count=144`, HAL `result_count=20`, normalisation `added_count=0`, scoring `scored_count=0`, `skipped_count=187`. `db.json` contient 187 items persistés (`to_read=97`, `candidate=55`, `ignored=35`, `rss=144`, `hal=43`). La nouvelle configuration ajoute `technical_radio_noise: -2` pour pénaliser le bruit HAL radio/télécom/physique. Un rescore simulé sans écriture donnerait `to_read=92`, `candidate=49`, `ignored=46`, avec les bons items radio/SHS conservés. Attention : le pipeline ne rescoring pas les items déjà classés ; ne pas modifier leurs statuts sans commande explicite de rescore/dry-run. Ne commence pas Crossref/OpenAlex, CiNii/NDL/J-STAGE, scraping, Hugo public, cron, auto-commit ou LLM sans demande explicite.
 ```
+
+## 2026-05-19 - Clôture Conversation 4 exports privés
+
+- Objectif du chantier : rendre les exports privés plus lisibles et ajouter un export Zotero manuel, sans automatisation intrusive et sans commencer la Conversation 5.
+- Format Zotero choisi : CSL JSON, parce qu'il mappe directement les champs de `RadioWatchItem`, supporte mieux UTF-8/URL/abstracts que BibTeX pour ce besoin, et reste importable manuellement dans Zotero.
+- Commandes d'export : `.venv/bin/python scripts/export/export_obsidian.py` pour `data/exports/veille-YYYY-WW.md`; `.venv/bin/python scripts/export/export_csl.py` pour `data/exports/zotero-veille-YYYY-WW.csl.json`.
+- Fichiers modifiés ou créés pendant les Prompts 10 et 11 : `scripts/export/export_obsidian.py`, `scripts/export/export_csl.py`, `tests/test_export_obsidian.py`, `tests/test_export_csl.py`, `README.md`, `data/exports/veille-2026-21.md`, `data/exports/zotero-veille-2026-21.csl.json`, et ce fichier de mémoire.
+- Amélioration Obsidian : les abstracts HTML sont nettoyés à l'export, les entités HTML décodées, les abstracts vides type `. <br />` masqués, et une ligne DOI apparaît si `item.doi` existe.
+- Export CSL JSON : par défaut, seuls les items `to_read` et `candidate` sont exportés; `--include-ignored` existe mais reste explicite; `db.json` n'est pas modifié.
+- Mapping CSL minimal : `id`, `type` approximatif depuis `source_type`, `title`, `container-title`, `issued`, `accessed`, `author` en `literal`, `URL`, `DOI` si présent, `language` sauf `und`, `abstract` nettoyé, `keyword` depuis tags + mots-clés matchés.
+- Tests : `.venv/bin/pytest tests/test_export_obsidian.py tests/test_export_csl.py` passe avec 16 tests; `make test` passe avec 55 tests sous Python 3.14.5 / pytest 9.0.3.
+- QA réelle du 2026-05-19 : export Obsidian généré avec 97 `to_read` et 55 `candidate`; export CSL généré avec 152 items, 152 URL, 115 avec auteurs, 152 dates `issued`, 126 abstracts, types `webpage=115` et `article-journal=37`.
+- Vérifications UTF-8 : `data/exports/veille-2026-21.md` est `text/plain; charset=utf-8`; `data/exports/zotero-veille-2026-21.csl.json` est `application/json; charset=utf-8`; les tests gardent aussi un cas japonais.
+- Vérification DOI : la base réelle contient actuellement 0 DOI (`db_with_doi=0`), donc l'export réel contient 0 champ `DOI`; les tests couvrent néanmoins le mapping DOI pour les futurs items.
+- Vérification non-destructive : hash SHA-256 de `data/normalized/db.json` identique avant/après exports (`f03ed39089436207cfb0fb2e338cf5d38e48c965299d5bc3c9b2d6d74d25e25a`).
+- Limites de mapping : `authors` peut contenir des biographies ou blocs longs venus des flux, donc exporté en CSL `literal`; `source_type` reste provisoire (`blog` -> `webpage`, HAL -> `article-journal`); les abstracts nettoyés peuvent garder du boilerplate de source; aucun enrichissement DOI n'est tenté.
+- Prochain chantier recommandé : Conversation 5 du master plan, audit d'une API occidentale unique Crossref ou OpenAlex, sans intégrer les deux et sans toucher à la publication publique avant l'audit légal dédié.
+
+Handoff prêt à copier :
+
+```text
+Objectif : démarrer la Conversation 5 du master plan v1 : décider entre Crossref, OpenAlex ou un report documenté.
+
+Avant toute action, lance `git status --short`. Relis `docs/AGENTS.md`, `antenne_radio/codex_memoire_materielle.md`, `antenne_radio/README.md`, `antenne_radio/RESSOURCES_SUIVIES.md`, les scripts d'export privés, puis seulement la Conversation 5 de `antenne_radio/04_master_plan.md`.
+
+État confirmé le 2026-05-19 : `make test` passe avec 55 tests. Les exports privés existent : `data/exports/veille-2026-21.md` et `data/exports/zotero-veille-2026-21.csl.json`. Le format Zotero manuel retenu est CSL JSON. L'export CSL contient 152 items (`to_read` + `candidate`), 152 URL, 115 auteurs, 152 dates, 126 abstracts, mais 0 DOI car `db.json` ne contient actuellement aucun DOI. Le hash de `data/normalized/db.json` reste inchangé après exports. Ne commence pas CiNii/NDL/J-STAGE, scraping, Hugo public, cron, auto-commit, LLM ou publication publique.
+```
+
+## 2026-05-19 - QA Conversation 5 API occidentale
+
+- Objectif du chantier : vérifier que l'ajout Crossref issu des Prompts 12 et 13 est propre, sans commencer la Conversation 6.
+- Décision Crossref/OpenAlex : Crossref est retenu comme unique connecteur occidental préparé, pour le suivi de revues par ISSN et la récupération future de DOI; OpenAlex est reporté pour éviter une découverte large plus bruyante et une deuxième complexité API dans le même lot.
+- Conditions d'usage retenues : source désactivée par défaut (`crossref.enabled: false`), activation seulement avec `CROSSREF_MAILTO`, aucun secret dans le dépôt, `User-Agent` explicite, `mailto` transmis aux requêtes, `rows: 20`, requêtes séquentielles, `polite_delay_seconds: 1`, timeouts, et erreurs 403/429/500 classées dans le dump brut.
+- Fichiers modifiés ou créés pour le chantier Crossref/QA : `config/sources.yaml`, `RESSOURCES_SUIVIES.md`, `scripts/ingest/ingest_crossref.py`, `scripts/pipeline.py`, `scripts/core/normalize.py`, `tests/test_config.py`, `tests/test_ingest_crossref.py`, `tests/test_normalize.py`, `tests/test_pipeline.py`, `data/raw/crossref_latest.json`, `data/raw/rss_latest.json`, `data/raw/hal_latest.json`, `data/exports/veille-2026-21.md`, et ce fichier.
+- Tests : `make test` passe avec 65 tests sous Python 3.14.5 / pytest 9.0.3.
+- Run QA du 2026-05-19 15:43 JST : `make run` passe avec `Pipeline ok`, `failed_steps=none`; Crossref est exécuté en chemin désactivé contrôlé (`result_count=0`, erreur `disabled`) car `CROSSREF_MAILTO` est absent localement.
+- Compteurs RSS/HAL observés au même run : RSS `entry_count=144` (`Radio Survivor=52`, `Journal of Radio & Audio Media=42`, `Sounding Out!=50`), HAL `result_count=20`, `num_found=931`, sans erreur HAL dans le dump.
+- Compteurs normalisés observés : `db.json` contient 187 items, `rss=144`, `hal=43`, `crossref=0`, statuts `to_read=97`, `candidate=55`, `ignored=35`, champ `raw` présent sur 187/187 items, DOI présents sur 0 item.
+- Idempotence et doublons : le dernier pipeline indique `normalize added_count=0`; un second passage direct de `scripts/core/normalize.py` sauvegarde 187 items avec `0 added`; le hash SHA-256 de `db.json` reste `f03ed39089436207cfb0fb2e338cf5d38e48c965299d5bc3c9b2d6d74d25e25a`; doublons exacts observés : `id=0`, `doi=0`, `url=0`.
+- Logs : `pipeline.log` confirme le run QA OK; `api.log` ne reçoit pas de nouvelle erreur pendant le run Crossref désactivé, mais conserve d'anciens essais Crossref en erreur avec `radio@example.org` (`403`, `429`, `500`, puis réponse vide). Ne pas les interpréter comme le résultat du run QA final.
+- Limites : aucun appel live Crossref n'a été lancé dans cette QA faute de `CROSSREF_MAILTO`; le connecteur reste donc validé par tests mockés et par chemin désactivé réel. Avant activation, fournir une vraie adresse de contact locale, puis lancer un run limité et relire `api.log`, `pipeline.log`, `data/raw/crossref_latest.json` et les doublons DOI/URL.
+- Prochain chantier recommandé : Conversation 6, audit légal et contrat public, seulement dans une nouvelle demande explicite; ne pas automatiser, publier, scraper ou ajouter OpenAlex avant ce gate.
+
+Handoff prêt à copier :
+
+```text
+Objectif : reprendre après la Conversation 5 du master plan v1, sans relancer les prompts déjà faits et sans commencer une publication publique par accident.
+
+Avant toute action, lance `git status --short`. Relis `docs/AGENTS.md`, `antenne_radio/codex_memoire_materielle.md`, `antenne_radio/RESSOURCES_SUIVIES.md`, `antenne_radio/config/sources.yaml`, puis seulement la prochaine section utile de `antenne_radio/04_master_plan.md`.
+
+État confirmé le 2026-05-19 15:43 JST : `make test` passe avec 65 tests; `make run` passe avec `failed_steps=none`; RSS produit 144 entrées, HAL 20 résultats (`num_found=931`), `db.json` contient 187 items (`rss=144`, `hal=43`, `crossref=0`; `to_read=97`, `candidate=55`, `ignored=35`), aucun doublon exact ID/DOI/URL. Crossref a été ajouté mais reste désactivé par défaut; il nécessite une vraie variable locale `CROSSREF_MAILTO` avant tout appel live. OpenAlex est reporté. Le prochain chantier recommandé est la Conversation 6 (contrat public et audit légal), uniquement si l'utilisateur le demande explicitement. Ne pas ajouter OpenAlex, CiNii/NDL/J-STAGE, scraping, Hugo public, cron, auto-commit ou LLM.
+```

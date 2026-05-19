@@ -31,10 +31,18 @@ Source technique : `config/sources.yaml`. Ce fichier est la liste humaine à ten
 | `transom` | Transom | RSS | `https://transom.org/feed/` | Désactivé le 2026-05-19 : 0 entrée, statut 301 et warning feedparser répété sur plusieurs variantes de flux. |
 | `sounding_out_podcast` | Sounding Out! podcast | RSS | `https://feeds.feedburner.com/SoundingOutPodcast` | Flux valide, mais gardé désactivé pour éviter un doublon thématique avant décision sur les podcasts. |
 | `example_disabled_journal` | Example journal feed to replace | Atom | `https://example.org/radio-studies.atom` | Exemple désactivé, à remplacer par une vraie source si utile. |
+| `crossref` | Crossref radio journals | API Crossref | `https://api.crossref.org` | Ajouté désactivé après audit Prompt 12 : activation seulement avec identification polie via `CROSSREF_MAILTO`, limite basse et dumps bruts. |
+
+## Paramètres Crossref préparés
+
+- État : désactivé par défaut (`crossref.enabled: false`).
+- Identification polie : variable locale `CROSSREF_MAILTO`; aucune adresse personnelle n'est inscrite dans le dépôt.
+- Limite basse : `rows: 20`, requêtes séquentielles, `polite_delay_seconds: 1`.
+- Revue configurée pour démarrage contrôlé : `Journal of Radio & Audio Media`, ISSN `1937-6529` et `1937-6537`.
+- Sortie brute prévue : `data/raw/crossref_latest.json`.
 
 ## Ressources explicitement non suivies en v0.1
 
-- Crossref.
 - OpenAlex.
 - CiNii.
 - NDL.

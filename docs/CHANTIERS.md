@@ -1,5 +1,26 @@
 # CHANTIERS.md - presque-quelque-chose.io
 
+## Antenne radio
+
+### Liste de ressources à récolter
+
+- Radiomorphoses
+- Radio Fañch, le blog de Fañch Langoët
+- Le Transistor, d’Hervé Marchais
+- Les Radios Libres et La Radio du Futur — associés à Sébastien Poulain
+- La Lettre Pro de la Radio & du Podcast et RadioActu
+- Transom
+- RadioDoc Review — revue spécialisée dans le documentaire audio, les podcasts narratifs et les formes factuelles travaillées
+- Sounding Out! — grand blog de sound studies, pas seulement radio, mais avec de nombreuses entrées sur radio, podcasting, radio art, voix, écoute, médias sonores
+- MeCCSA Radio and Audio Studies Network
+- James Cridland / Radioland / Podnews
+- WorldRadioHistory
+- AIR, Third Coast, Nieman Storyboard / Audio Danger
+- SchooP
+- Syntone
+
+## Autres
+
 - [ ] Dans `identity-card`, afficher au hover des petites icones de liens un libelle tres court indiquant la destination : YouTube, Instagram, forum, guide, site. Prevoir aussi un comportement accessible au clavier et coherent avec `mobile-tooltip.js`.
 - [ ] migration de paquet
   - [ ] Améliore la logique de migration du paquet almanach quand la réserve change. ne plus réinitialiser entièrement la queue locale dès que le fingerprint change. Si des entrées sont ajoutées, conserver autant que possible la progression locale du lecteur. 

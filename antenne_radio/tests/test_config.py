@@ -24,6 +24,9 @@ def test_sources_keep_enabled_flags():
     assert all("enabled" in source for source in sources["rss_atom"])
     assert sources["hal"]["enabled"] is True
     assert sources["hal"]["limit"] == 20
+    assert sources["crossref"]["enabled"] is False
+    assert sources["crossref"]["mailto_env"] == "CROSSREF_MAILTO"
+    assert sources["crossref"]["journals"][0]["issn"] == ["1937-6529", "1937-6537"]
 
 
 def test_scoring_references_keyword_categories():

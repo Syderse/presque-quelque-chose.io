@@ -14,7 +14,7 @@ if str(ROOT) not in sys.path:
 from scripts.core import normalize, scoring  # noqa: E402
 from scripts.core.io import append_log, utc_now_iso  # noqa: E402
 from scripts.export import export_obsidian  # noqa: E402
-from scripts.ingest import ingest_hal, ingest_rss  # noqa: E402
+from scripts.ingest import ingest_crossref, ingest_hal, ingest_rss  # noqa: E402
 
 
 DEFAULT_SOURCES = ROOT / "config" / "sources.yaml"
@@ -22,6 +22,7 @@ DEFAULT_KEYWORDS = ROOT / "config" / "keywords.yaml"
 DEFAULT_SCORING = ROOT / "config" / "scoring.yaml"
 DEFAULT_RSS_RAW = ROOT / "data" / "raw" / "rss_latest.json"
 DEFAULT_HAL_RAW = ROOT / "data" / "raw" / "hal_latest.json"
+DEFAULT_CROSSREF_RAW = ROOT / "data" / "raw" / "crossref_latest.json"
 DEFAULT_DB = ROOT / "data" / "normalized" / "db.json"
 DEFAULT_EXPORT_DIR = ROOT / "data" / "exports"
 DEFAULT_API_LOG = ROOT / "data" / "logs" / "api.log"
@@ -37,6 +38,7 @@ class PipelinePaths:
     scoring_path: Path = DEFAULT_SCORING
     rss_raw_path: Path = DEFAULT_RSS_RAW
     hal_raw_path: Path = DEFAULT_HAL_RAW
+    crossref_raw_path: Path = DEFAULT_CROSSREF_RAW
     db_path: Path = DEFAULT_DB
     export_dir: Path = DEFAULT_EXPORT_DIR
     api_log_path: Path = DEFAULT_API_LOG
@@ -47,6 +49,7 @@ class PipelinePaths:
 class PipelineFunctions:
     ingest_rss: StepCallable = ingest_rss.ingest_rss
     ingest_hal: StepCallable = ingest_hal.ingest_hal
+    ingest_crossref: StepCallable = ingest_crossref.ingest_crossref
     normalize: StepCallable = normalize.normalize_latest_dumps
     scoring: StepCallable = scoring.score_db
     export_obsidian: StepCallable = export_obsidian.export_weekly_report
@@ -62,6 +65,7 @@ def _coerce_paths(paths: PipelinePaths | None = None) -> PipelinePaths:
         scoring_path=Path(paths.scoring_path),
         rss_raw_path=Path(paths.rss_raw_path),
         hal_raw_path=Path(paths.hal_raw_path),
+        crossref_raw_path=Path(paths.crossref_raw_path),
         db_path=Path(paths.db_path),
         export_dir=Path(paths.export_dir),
         api_log_path=Path(paths.api_log_path),
@@ -112,6 +116,7 @@ def run_pipeline(
     *,
     skip_rss: bool = False,
     skip_hal: bool = False,
+    skip_crossref: bool = False,
     skip_export: bool = False,
     mark_exported: bool = False,
     paths: PipelinePaths | None = None,
@@ -154,12 +159,28 @@ def run_pipeline(
             )
         )
 
+    if skip_crossref:
+        steps.append(_skip_step("ingest_crossref", log_path=paths.pipeline_log_path))
+    else:
+        steps.append(
+            _run_step(
+                "ingest_crossref",
+                lambda: functions.ingest_crossref(
+                    config_path=paths.sources_path,
+                    output_path=paths.crossref_raw_path,
+                    log_path=paths.api_log_path,
+                ),
+                log_path=paths.pipeline_log_path,
+            )
+        )
+
     steps.append(
         _run_step(
             "normalize",
             lambda: functions.normalize(
                 rss_raw_path=paths.rss_raw_path,
                 hal_raw_path=paths.hal_raw_path,
+                crossref_raw_path=paths.crossref_raw_path,
                 db_path=paths.db_path,
                 log_path=paths.api_log_path,
             ),
@@ -210,6 +231,7 @@ def parse_args() -> argparse.Namespace:
     parser = argparse.ArgumentParser(description="Run the local radio-watch v0.1 pipeline.")
     parser.add_argument("--skip-rss", action="store_true", help="Skip RSS/Atom ingestion and reuse existing raw dump.")
     parser.add_argument("--skip-hal", action="store_true", help="Skip HAL ingestion and reuse existing raw dump.")
+    parser.add_argument("--skip-crossref", action="store_true", help="Skip Crossref ingestion and reuse existing raw dump.")
     parser.add_argument("--skip-export", action="store_true", help="Skip Markdown export.")
     parser.add_argument("--mark-exported", action="store_true", help="Mark exported to_read items as exported.")
     return parser.parse_args()
@@ -220,6 +242,7 @@ def main() -> None:
     result = run_pipeline(
         skip_rss=args.skip_rss,
         skip_hal=args.skip_hal,
+        skip_crossref=args.skip_crossref,
         skip_export=args.skip_export,
         mark_exported=args.mark_exported,
     )
