@@ -767,7 +767,7 @@ Contraintes :
 - Pas d’intégration décorative lourde.
 ```
 
-## Prompt 19 — Export public expurgé et/ou intégration Hugo minimale
+## Prompt 19A — Export public expurgé et/ou intégration Hugo minimale
 
 ```text
 Objectif : implémenter seulement ce que l’audit autorise.
@@ -794,6 +794,57 @@ Contraintes :
 - Ne pas publier les abstracts par défaut.
 - Ne pas faire de flux RSS sortant public dans cette conversation.
 - Ne pas ajouter de JS lourd.
+```
+
+## Prompt 19B — Section Hugo publique minimale
+
+```text
+Objectif : créer la section publique minimale du site pour afficher les résultats de l’antenne radio.
+
+Avant toute action, lance `git status --short`.
+
+Lis :
+- docs/AGENTS.md ;
+- antenne_radio/codex_memoire_materielle.md ;
+- antenne_radio/LEGAL_AUDIT.md ;
+- antenne_radio/README.md ;
+- l’export public généré ;
+- la structure Hugo existante du site.
+
+Tâches :
+1. Vérifie que l’export public existe et ne contient aucun champ privé.
+2. Crée une section Hugo sobre, par exemple `/antenne-radio/`, destinée à afficher les résultats publics.
+3. Ajoute une page d’introduction courte expliquant :
+   - ce qu’est l’antenne radio ;
+   - la fréquence de mise à jour ;
+   - les limites ;
+   - les sources suivies ;
+   - les critères de sélection/scoring si publiables.
+4. Affiche une liste lisible des items publics :
+   - titre ;
+   - source ;
+   - date ;
+   - lien d’origine ;
+   - score ou explication courte si autorisée ;
+   - tags publics si disponibles.
+5. N’affiche aucun abstract sauf autorisation explicitement validée.
+6. N’affiche jamais `raw`, logs, notes privées, chemins locaux ou métadonnées internes.
+7. Ajoute un lien discret depuis la navigation ou une page existante, sans bouleverser le site.
+8. Prévois un état vide ou un message si l’export public n’existe pas.
+9. Lance les tests anti-fuite.
+10. Lance le build Hugo recommandé dans `docs/AGENTS.md`.
+11. Mets à jour la mémoire matérielle avec :
+   - URL/chemin de la section ;
+   - fichiers Hugo créés ou modifiés ;
+   - champs affichés ;
+   - tests lancés ;
+   - limites restantes.
+
+Contraintes :
+- Section sobre, sans JS lourd.
+- Pas de RSS public sortant.
+- Pas de publication d’abstracts par défaut.
+- Ne pas casser les endpoints JSON existants.
 ```
 
 ## Prompt 20 — QA publication/Hugo + mémoire matérielle

@@ -287,3 +287,30 @@ Avant toute action, lance `git status --short`. Relis `docs/AGENTS.md`, `antenne
 
 État confirmé le 2026-05-19 15:43 JST : `make test` passe avec 65 tests; `make run` passe avec `failed_steps=none`; RSS produit 144 entrées, HAL 20 résultats (`num_found=931`), `db.json` contient 187 items (`rss=144`, `hal=43`, `crossref=0`; `to_read=97`, `candidate=55`, `ignored=35`), aucun doublon exact ID/DOI/URL. Crossref a été ajouté mais reste désactivé par défaut; il nécessite une vraie variable locale `CROSSREF_MAILTO` avant tout appel live. OpenAlex est reporté. Le prochain chantier recommandé est la Conversation 6 (contrat public et audit légal), uniquement si l'utilisateur le demande explicitement. Ne pas ajouter OpenAlex, CiNii/NDL/J-STAGE, scraping, Hugo public, cron, auto-commit ou LLM.
 ```
+
+## 2026-05-19 - Clôture Conversation 6 contrat public et audit légal
+
+- Objectif du chantier : clore le contrat public avant tout export public, sans publier, sans intégrer Hugo et sans commencer la Conversation 7.
+- Fichiers créés ou modifiés : `antenne_radio/LEGAL_AUDIT.md` créé pendant le Prompt 16 ; `antenne_radio/codex_memoire_materielle.md` mis à jour pendant le Prompt 17.
+- Commandes et lectures : `git status --short` au début ; relecture de `docs/AGENTS.md`, de cette mémoire, de `antenne_radio/04_master_plan.md` Conversations 6 Prompts 15-17, de `antenne_radio/LEGAL_AUDIT.md`, et vérifications ciblées de la whitelist et des champs interdits.
+- Verdict légal global : publiable partiellement seulement. Il n'y a pas de feu vert pour republier la base actuelle, les dumps bruts, les exports privés ou les abstracts. Un futur JSON public ne peut être qu'un index minimal de liens et de métadonnées strictement whitelisted, avec attribution.
+- Contrat public provisoire : aucun export public n'existe encore ; les exports actuels restent privés ; toute publication doit passer par une transformation de minimisation, des tests anti-fuite et une nouvelle QA.
+- Whitelist publique stricte envisagée : `id`, `title`, `url`, `doi`, `published_at`, `source_name`, `source_type`, `language`, `source_family`, `attribution_id`. Les champs `schema_version`, `generated_at` et `sources` peuvent exister au niveau export, sans données privées.
+- Champs interdits en public : `raw`, `abstract`, logs, notes privées, chemins locaux, secrets, champs de debug, `status`, `relevance_score`, `score_explanation`, `keywords_matched`, `negative_keywords_matched`, `discovered_at`, `source_feed`, `source_api` brut, `title_original`, `errors`, `raw_responses`, `ignored`, tout champ douteux. `authors` et `tags` restent exclus de la v0 publique stricte sauf audit et whitelist ultérieurs.
+- Sources RSS actives : Radio Survivor, Journal of Radio & Audio Media / Taylor & Francis, et Sounding Out! sont publiables partiellement seulement, comme index de liens avec titre, URL, date, nom de source et attribution. Ne pas republier summaries RSS, excerpts, contenu HTML, images, commentaires, bios auteurs, médias, abstracts ou dumps raw.
+- HAL : publiable avec attribution pour des métadonnées strictes et prudentes, en tenant compte de la contrainte de réutilisation non commerciale ; ne pas publier abstracts, fichiers, textes intégraux, raw ou lots enrichis non audités.
+- Crossref : métadonnées publiables avec attribution en principe, mais connecteur à reporter côté public tant que `CROSSREF_MAILTO` réel n'a pas été configuré et qu'un run live limité n'a pas été audité. Ne pas publier abstracts Crossref, raw, erreurs, mailto ou champs de debug.
+- Sources prévues ou inactives à reporter : Transom, Sounding Out! podcast, OpenAlex, CiNii, NDL, J-STAGE et RadioDoc Review restent hors publication publique tant qu'un audit officiel source par source n'est pas fait.
+- Limites restantes : `LEGAL_AUDIT.md` est un audit minimal de prudence, pas un avis juridique ; aucun export public ni test anti-fuite n'a encore été implémenté ; aucun appel live Crossref valide n'a été vérifié ; aucun audit item par item ne permet de publier les abstracts ; les auteurs et tags peuvent contenir du bruit ou des données ambiguës.
+- Prochain chantier recommandé : export public désactivé ou privé seulement. Avant toute Conversation 7, vérifier explicitement que la publication reste inactive ou privée tant qu'une whitelist codée et testée n'existe pas.
+- Tests Prompt 17 : `make test` n'est pas nécessaire si seuls `LEGAL_AUDIT.md` et cette mémoire sont modifiés, car aucun fichier de code, config ou données générées n'est touché.
+
+Handoff prêt à copier :
+
+```text
+Objectif : reprendre après la Conversation 6 du master plan v1 par un chantier "export public désactivé ou privé seulement", sans commencer l'intégration Hugo publique.
+
+Avant toute action, lance `git status --short`. Relis `docs/AGENTS.md`, `antenne_radio/codex_memoire_materielle.md`, `antenne_radio/LEGAL_AUDIT.md`, puis seulement la prochaine section utile de `antenne_radio/04_master_plan.md`.
+
+État confirmé le 2026-05-19 JST : `LEGAL_AUDIT.md` existe. Verdict légal global : publiable partiellement seulement. Whitelist publique stricte : `id`, `title`, `url`, `doi`, `published_at`, `source_name`, `source_type`, `language`, `source_family`, `attribution_id`. Interdits : `raw`, logs, notes privées, chemins locaux, secrets, champs de debug, `abstract`, `status`, scores/explications, mots-clés de scoring, erreurs, `raw_responses`, champs douteux. RSS publics seulement comme index de liens ; HAL métadonnées strictes avec attribution/non-commercial ; Crossref reporté jusqu'à `CROSSREF_MAILTO` réel + run live limité ; sources inactives reportées. Ne crée pas d'intégration Hugo publique, ne publie aucun abstract, ne publie pas `raw`, ne lance pas cron/auto-commit/scraping/LLM/OpenAlex/CiNii/NDL/J-STAGE.
+```
