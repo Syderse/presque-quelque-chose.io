@@ -1,6 +1,6 @@
 # Ressources suivies par l'antenne radio
 
-Dernière vérification : 2026-05-18 16:47 JST avec `make run`.
+Dernière vérification : 2026-05-19 11:08 JST avec `make run`.
 
 Source technique : `config/sources.yaml`. Ce fichier est la liste humaine à tenir à jour quand une source est ajoutée, désactivée ou modifiée.
 
@@ -8,22 +8,28 @@ Source technique : `config/sources.yaml`. Ce fichier est la liste humaine à ten
 
 | ID | Nom | Famille | URL ou API | Sortie | Dernier état observé |
 |---|---|---|---|---|---|
-| `transom` | Transom | RSS | `https://transom.org/feed/` | `data/raw/rss_latest.json` | Activée, mais 0 entrée au dernier run ; statut 301 et warning de parsing. |
 | `radio_survivor` | Radio Survivor | RSS | `https://www.radiosurvivor.com/feed/` | `data/raw/rss_latest.json` | Activée ; 52 entrées au dernier run ; statut 200. |
-| `hal` | HAL radio studies search | API HAL | `https://api.archives-ouvertes.fr/search/` | `data/raw/hal_latest.json` | Activée ; 20 documents au dernier run ; `num_found` annoncé : 27210. |
+| `journal_radio_audio_media` | Journal of Radio & Audio Media | RSS | `https://www.tandfonline.com/action/showFeed?type=etoc&feed=rss&jc=hjrs20` | `data/raw/rss_latest.json` | Activée ; 42 entrées au dernier run ; statut 200. |
+| `sounding_out_blog` | Sounding Out! | RSS | `https://soundstudiesblog.com/feed/` | `data/raw/rss_latest.json` | Activée ; 50 entrées au dernier run ; statut 200. |
+| `hal` | HAL radio studies search | API HAL | `https://api.archives-ouvertes.fr/search/` | `data/raw/hal_latest.json` | Activée ; 20 documents au dernier run ; `num_found` annoncé : 931. |
 
 ## Paramètres HAL actuels
 
-- Requête générée au dernier run : `(radio OR "radio libre" OR podcast OR radiophonie OR "radios libres" OR podcasting)`.
+- Requête générée au dernier run : `("radio libre" OR podcast OR "radios libres" OR podcasting OR "free radio" OR baladodiffusion OR "pirate radio" OR "audio storytelling" OR "community radio" OR "serialized audio")`.
+- Le champ `hal.query` dans `config/sources.yaml` sert de référence humaine ; la requête effective est générée par `scripts/ingest/ingest_hal.py` depuis `keyword_categories` et `keyword_limit`.
+- Catégories HAL : `radio_free`, `podcast`.
+- Limite de mots-clés HAL : 10.
 - Limite : 20 résultats.
 - Langues filtrées : `fr`, `en`.
 - Tri : `producedDate_tdate desc`.
-- Champs demandés : `docid`, `title_s`, `abstract_s`, `keyword_s`, `authorFullName_s`, `producedDateY_i`, `uri_s`.
+- Champs demandés : `docid`, `title_s`, `abstract_s`, `keyword_s`, `authorFullName_s`, `doiId_s`, `doi_s`, `producedDate_tdate`, `producedDateY_i`, `language_s`, `docType_s`, `uri_s`.
 
 ## Sources déclarées mais inactives
 
 | ID | Nom | Famille | URL | Raison |
 |---|---|---|---|---|
+| `transom` | Transom | RSS | `https://transom.org/feed/` | Désactivé le 2026-05-19 : 0 entrée, statut 301 et warning feedparser répété sur plusieurs variantes de flux. |
+| `sounding_out_podcast` | Sounding Out! podcast | RSS | `https://feeds.feedburner.com/SoundingOutPodcast` | Flux valide, mais gardé désactivé pour éviter un doublon thématique avant décision sur les podcasts. |
 | `example_disabled_journal` | Example journal feed to replace | Atom | `https://example.org/radio-studies.atom` | Exemple désactivé, à remplacer par une vraie source si utile. |
 
 ## Ressources explicitement non suivies en v0.1
@@ -36,6 +42,7 @@ Source technique : `config/sources.yaml`. Ce fichier est la liste humaine à ten
 - Zotero automatique.
 - Pages HTML à scraper.
 - Publication Hugo publique.
+- RadioDoc Review : ressource pertinente, mais aucun flux RSS/Atom clair vérifié pendant l'audit ; ne pas ajouter sans URL de flux stable.
 
 ## Procédure de mise à jour
 

@@ -12,7 +12,7 @@
 
 ## État actuel du pipeline antenne
 
-- `config/sources.yaml` contient deux RSS activés (`Transom`, `Radio Survivor`), un exemple Atom désactivé, et une source `hal` activée avec `limit: 20`, champs HAL, filtres langue `fr/en` et tri `producedDate_tdate desc`.
+- `config/sources.yaml` contient trois RSS activés (`Radio Survivor`, `Journal of Radio & Audio Media`, `Sounding Out!` blog), trois sources RSS/Atom désactivées (`Transom`, `Sounding Out! podcast`, exemple Atom), et une source `hal` activée avec `limit: 20`, catégories `radio_free`/`podcast`, `keyword_limit: 10`, champs HAL enrichis, filtres langue `fr/en` et tri `producedDate_tdate desc`.
 - `config/keywords.yaml` contient les catégories utiles au scoring : `radio_core`, `radio_free`, `sound_studies`, `podcast`, `guattari_institutional_psychotherapy`, `japan_later`, `negative_noise`.
 - `config/scoring.yaml` existe déjà : poids `radio_core: 3`, `radio_free: 3`, `sound_studies: 2`, `podcast: 2`, `guattari_institutional_psychotherapy: 2`, `japan_later: 1`, `negative_noise: -6`; seuils `to_read >= 6`, `candidate >= 2`, `ignored < 2`; multiplicateurs de champs `title: 2`, `abstract: 1`, `tags: 2`.
 - `scripts/core/models.py` définit `RadioWatchItem`, `SourceType`, `WatchStatus`, `normalize_doi()`, `normalize_url()`, `generate_stable_id()`.
@@ -140,8 +140,8 @@
 
 ## Fragilités et décisions à garder en tête
 
-- Le RSS Transom actuel produit un warning de parsing avec statut 301 ; ne pas faire échouer tout le pipeline pour cela.
-- HAL capte du bruit technique parce que la requête volontairement large contient `radio`; le scoring négatif est précisément là pour abaisser ce bruit, pas pour changer le connecteur.
+- Le RSS Transom a produit des warnings de parsing avec statut 301 et reste déclaré mais désactivé ; ne pas le supprimer sans décision explicite.
+- HAL reste bruité malgré le resserrement de Conversation 2 ; le scoring négatif et les prochains réglages de bruit restent les bons leviers avant tout nouveau connecteur.
 - Les tests existants évitent les appels réseau avec fixtures et `httpx.MockTransport`; conserver cette discipline.
 - Les fichiers de données réels `data/raw/*.json`, `data/normalized/db.json` et futurs exports peuvent devenir volumineux mais restent acceptés en v0.1 pour audit local.
 - `.venv`, `.pytest_cache` et `__pycache__` peuvent exister localement après tests ; ne pas les intégrer volontairement.
@@ -157,3 +157,53 @@
 - Artefacts vérifiés : `data/raw/rss_latest.json`, `data/raw/hal_latest.json`, `data/normalized/db.json`, `data/exports/veille-2026-21.md`, `data/logs/pipeline.log`.
 - Documentation débutant ajoutée en fin de `README.md` : installation, configuration, lancement, lecture Obsidian, dépannage, limites v0.1, ne-pas-faire v0.1, roadmap v0.2.
 - Registre humain des sources créé : `RESSOURCES_SUIVIES.md`.
+
+## 2026-05-19 - Gel du périmètre v1 après audit réel
+
+- Objectif du chantier : clore la reprise, fixer un périmètre v1 court à partir de l'état réel, et ne pas commencer la conversation 2.
+- Fichiers modifiés : `antenne_radio/V1_SCOPE.md` créé ; `antenne_radio/codex_memoire_materielle.md` mis à jour.
+- Commandes lancées : `git status --short` au début ; lectures ciblées de `docs/AGENTS.md`, de cette mémoire et de `antenne_radio/04_master_plan.md` ; comptage de `data/normalized/db.json` ; `git diff --check -- antenne_radio/V1_SCOPE.md` ; `make test`.
+- Tests : `make test` passe avec 41 tests sous Python 3.14.5 / pytest 9.0.3. Le contrôle `git diff --check -- antenne_radio/V1_SCOPE.md` passe.
+- Compteurs observés dans `data/normalized/db.json` : fichier présent, 72 items, statuts `to_read=56`, `candidate=11`, `ignored=5`, `source_api` `rss=52`, `hal=20`, champ `raw` présent sur 72/72 items.
+- Décisions prises : la v1 est une v1 minimale forte, pas encyclopédique ; elle inclut la consolidation RSS/HAL, scoring, dédoublonnage non destructeur, export Obsidian, export Zotero manuel, au plus un connecteur occidental après audit, contrat public + audit légal, Hugo sobre seulement si légalement acceptable, GitHub Action manuelle sans cron ni auto-commit.
+- Reports confirmés : CiNii, NDL, J-STAGE, `changedetection.io`, scraping, flux RSS sortant public, cron, auto-commit, écriture automatique Zotero/Obsidian, LLM, service permanent et interface d'administration.
+- Limites restantes : Transom reste fragile ; HAL reste large et bruité ; un pipeline peut finir OK malgré un épisode réseau vide, donc les futurs audits doivent toujours lire les compteurs et logs ; aucune décision légale/publication n'est encore prise.
+- Prochain chantier recommandé : Conversation 2, Prompt 3, audit des sources actuelles RSS/HAL et de leur documentation, sans nouvelle API complexe.
+
+Handoff prêt à copier :
+
+```text
+Objectif : démarrer la Conversation 2 du master plan v1 par l'audit des sources RSS/HAL existantes.
+
+Avant toute action, lance `git status --short`.
+Lis `docs/AGENTS.md`, `antenne_radio/codex_memoire_materielle.md`, `antenne_radio/V1_SCOPE.md`, `antenne_radio/README.md`, `antenne_radio/RESSOURCES_SUIVIES.md` et la Conversation 2 de `antenne_radio/04_master_plan.md`.
+
+État de départ confirmé le 2026-05-19 : v0.1 complète, `make test` passe avec 41 tests, `data/normalized/db.json` contient 72 items (`to_read=56`, `candidate=11`, `ignored=5`), `source_api` `rss=52` et `hal=20`, `raw` présent partout. Ne relance pas les anciens prompts v0.1. Ne commence pas Crossref/OpenAlex, Hugo, cron, auto-commit, scraping ou LLM.
+```
+
+## 2026-05-19 - Clôture du chantier sources RSS/HAL
+
+- Objectif du chantier : clore la Conversation 2 en appliquant les ajustements simples issus de l'audit, puis vérifier et documenter l'état RSS/HAL sans commencer la Conversation 3.
+- Fichiers modifiés pendant les Prompts 4 et 5 : `antenne_radio/config/sources.yaml`, `antenne_radio/RESSOURCES_SUIVIES.md`, `antenne_radio/codex_memoire_materielle.md`, et les artefacts régénérés `data/raw/rss_latest.json`, `data/raw/hal_latest.json`, `data/normalized/db.json`, `data/exports/veille-2026-21.md`.
+- Commandes lancées : `git status --short` ; lectures de `docs/AGENTS.md`, de cette mémoire, de `config/sources.yaml` et de `RESSOURCES_SUIVIES.md` ; `make test` ; `make run` ; contrôles `jq` sur les dumps et `db.json` ; inspection des 80 dernières lignes de `data/logs/api.log` et `data/logs/pipeline.log` ; contrôle de correspondance entre `sources.yaml` et `RESSOURCES_SUIVIES.md`.
+- Tests : `make test` passe avec 41 tests sous Python 3.14.5 / pytest 9.0.3.
+- Run final du 2026-05-19 11:08 JST : pipeline OK, `failed_steps=none`, RSS `entry_count=144`, HAL `result_count=20`, normalisation `added_count=0`, `saved_count=187`, scoring `scored_count=0`, `skipped_count=187`, export `97 to_read` et `55 candidate`.
+- Compteurs observés dans `data/normalized/db.json` : 187 items, `source_api` `rss=144` et `hal=43`, statuts `to_read=97`, `candidate=55`, `ignored=35`, champ `raw` présent sur 187/187 items.
+- Sources gardées actives : `radio_survivor` (52 entrées), `journal_radio_audio_media` (42 entrées), `sounding_out_blog` (50 entrées), `hal` (20 documents au dernier run, `num_found=931`).
+- Sources ajoutées : `journal_radio_audio_media` via flux RSS Taylor & Francis `hjrs20`, et `sounding_out_blog` via flux WordPress `https://soundstudiesblog.com/feed/`.
+- Sources désactivées ou laissées inactives : `transom` désactivé après 0 entrée, statut 301 et warnings feedparser répétés ; `sounding_out_podcast` ajouté désactivé pour éviter le doublon thématique avant décision sur les podcasts ; `example_disabled_journal` reste désactivé.
+- HAL corrigé par configuration seulement : requête effective générée depuis `keyword_categories: [radio_free, podcast]` et `keyword_limit: 10`, sans mot isolé `radio`; champs demandés enrichis avec DOI, date complète, langue et type de document.
+- Logs : `api.log` ne montre pas de nouvelle erreur après désactivation de Transom ; `pipeline.log` confirme deux runs post-ajustement OK, le second idempotent.
+- Source rejetée pour ce chantier : RadioDoc Review reste pertinente, mais aucun flux RSS/Atom stable n'a été vérifié ; ne pas l'ajouter sans URL de flux claire.
+- Limites restantes : HAL est nettement moins large (`num_found` ramené d'environ 27219 à 931), mais reste bruité par des podcasts et documents généraux ; les nouveaux flux RSS augmentent fortement le volume à relire ; le scoring n'a pas encore été rééquilibré pour cette nouvelle couverture.
+- Prochain chantier recommandé : Conversation 3 du master plan, scoring/bruit/faux positifs/doublons non destructeurs, sans modifier les sources sauf nécessité constatée.
+
+Handoff prêt à copier :
+
+```text
+Objectif : démarrer la Conversation 3 du master plan v1 : scoring, bruit, faux positifs et doublons non destructeurs.
+
+Avant toute action, lance `git status --short`. Relis `docs/AGENTS.md`, `antenne_radio/codex_memoire_materielle.md`, `antenne_radio/V1_SCOPE.md`, `antenne_radio/README.md`, `antenne_radio/RESSOURCES_SUIVIES.md`, `antenne_radio/config/sources.yaml`, `antenne_radio/config/keywords.yaml`, `antenne_radio/config/scoring.yaml`, et la Conversation 3 de `antenne_radio/04_master_plan.md`.
+
+État confirmé le 2026-05-19 11:08 JST : `make test` passe avec 41 tests ; dernier `make run` OK avec RSS 144 entrées, HAL 20 résultats, `db.json` 187 items (`to_read=97`, `candidate=55`, `ignored=35`), `source_api` `rss=144` et `hal=43`, `raw` présent partout. Sources actives : Radio Survivor, Journal of Radio & Audio Media, Sounding Out! blog, HAL resserré. Transom est désactivé ; Sounding Out! podcast est déclaré mais désactivé ; RadioDoc Review n'est pas ajouté faute de flux stable. Ne pas commencer Crossref/OpenAlex, CiNii/NDL/J-STAGE, scraping, Hugo, cron, auto-commit ou LLM.
+```

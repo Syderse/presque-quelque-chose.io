@@ -4,9 +4,10 @@ version: 0.1
 rss_atom:
   - id: transom
     name: Transom
-    enabled: true
+    enabled: false
     kind: rss
     url: "https://transom.org/feed/"
+    note: "Désactivé le 2026-05-19 : statut 301, warning feedparser, 0 entrée sur plusieurs variantes de flux."
     tags:
       - radio_documentary
       - audio_storytelling
@@ -19,6 +20,37 @@ rss_atom:
     tags:
       - radio_culture
       - community_radio
+
+  - id: journal_radio_audio_media
+    name: Journal of Radio & Audio Media
+    enabled: true
+    kind: rss
+    url: "https://www.tandfonline.com/action/showFeed?type=etoc&feed=rss&jc=hjrs20"
+    tags:
+      - academic_watch
+      - radio_studies
+      - podcast_studies
+
+  - id: sounding_out_blog
+    name: Sounding Out!
+    enabled: true
+    kind: rss
+    url: "https://soundstudiesblog.com/feed/"
+    tags:
+      - sound_studies
+      - audio_culture
+      - radio_culture
+
+  - id: sounding_out_podcast
+    name: Sounding Out! podcast
+    enabled: false
+    kind: rss
+    url: "https://feeds.feedburner.com/SoundingOutPodcast"
+    note: "Flux valide, gardé désactivé pour éviter un doublon thématique avant décision sur les podcasts."
+    tags:
+      - sound_studies
+      - podcast
+      - audio_storytelling
 
   - id: example_disabled_journal
     name: Example journal feed to replace
@@ -33,14 +65,24 @@ hal:
   name: HAL radio studies search
   base_url: "https://api.archives-ouvertes.fr/search/"
   limit: 20
-  query: '(radio OR radiophonie OR "radio libre" OR podcast)'
+  # La requête effective est générée depuis keyword_categories et keyword_limit.
+  query: '("radio libre" OR podcast OR "radios libres" OR podcasting OR "free radio" OR baladodiffusion OR "pirate radio" OR "audio storytelling" OR "community radio" OR "serialized audio")'
+  keyword_categories:
+    - radio_free
+    - podcast
+  keyword_limit: 10
   fields:
     - docid
     - title_s
     - abstract_s
     - keyword_s
     - authorFullName_s
+    - doiId_s
+    - doi_s
+    - producedDate_tdate
     - producedDateY_i
+    - language_s
+    - docType_s
     - uri_s
   filters:
     language:
