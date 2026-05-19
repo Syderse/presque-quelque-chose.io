@@ -13,8 +13,8 @@
 ## État actuel du pipeline antenne
 
 - `config/sources.yaml` contient trois RSS activés (`Radio Survivor`, `Journal of Radio & Audio Media`, `Sounding Out!` blog), trois sources RSS/Atom désactivées (`Transom`, `Sounding Out! podcast`, exemple Atom), et une source `hal` activée avec `limit: 20`, catégories `radio_free`/`podcast`, `keyword_limit: 10`, champs HAL enrichis, filtres langue `fr/en` et tri `producedDate_tdate desc`.
-- `config/keywords.yaml` contient les catégories utiles au scoring : `radio_core`, `radio_free`, `sound_studies`, `podcast`, `guattari_institutional_psychotherapy`, `japan_later`, `negative_noise`.
-- `config/scoring.yaml` existe déjà : poids `radio_core: 3`, `radio_free: 3`, `sound_studies: 2`, `podcast: 2`, `guattari_institutional_psychotherapy: 2`, `japan_later: 1`, `negative_noise: -6`; seuils `to_read >= 6`, `candidate >= 2`, `ignored < 2`; multiplicateurs de champs `title: 2`, `abstract: 1`, `tags: 2`.
+- `config/keywords.yaml` contient les catégories utiles au scoring : `radio_core`, `radio_free`, `sound_studies`, `podcast`, `guattari_institutional_psychotherapy`, `japan_later`, `negative_noise`, `technical_radio_noise`.
+- `config/scoring.yaml` existe déjà : poids `radio_core: 3`, `radio_free: 3`, `sound_studies: 2`, `podcast: 2`, `guattari_institutional_psychotherapy: 2`, `japan_later: 1`, `negative_noise: -6`, `technical_radio_noise: -2`; seuils `to_read >= 6`, `candidate >= 2`, `ignored < 2`; multiplicateurs de champs `title: 2`, `abstract: 1`, `tags: 2`.
 - `scripts/core/models.py` définit `RadioWatchItem`, `SourceType`, `WatchStatus`, `normalize_doi()`, `normalize_url()`, `generate_stable_id()`.
 - `scripts/core/io.py` fournit `read_json()`, `write_json()`, `append_log()`, `utc_now_iso()`, `ensure_parent_dir()`.
 - `scripts/ingest/ingest_rss.py` écrit `data/raw/rss_latest.json` et logue dans `data/logs/api.log`.
@@ -206,4 +206,32 @@ Objectif : démarrer la Conversation 3 du master plan v1 : scoring, bruit, faux 
 Avant toute action, lance `git status --short`. Relis `docs/AGENTS.md`, `antenne_radio/codex_memoire_materielle.md`, `antenne_radio/V1_SCOPE.md`, `antenne_radio/README.md`, `antenne_radio/RESSOURCES_SUIVIES.md`, `antenne_radio/config/sources.yaml`, `antenne_radio/config/keywords.yaml`, `antenne_radio/config/scoring.yaml`, et la Conversation 3 de `antenne_radio/04_master_plan.md`.
 
 État confirmé le 2026-05-19 11:08 JST : `make test` passe avec 41 tests ; dernier `make run` OK avec RSS 144 entrées, HAL 20 résultats, `db.json` 187 items (`to_read=97`, `candidate=55`, `ignored=35`), `source_api` `rss=144` et `hal=43`, `raw` présent partout. Sources actives : Radio Survivor, Journal of Radio & Audio Media, Sounding Out! blog, HAL resserré. Transom est désactivé ; Sounding Out! podcast est déclaré mais désactivé ; RadioDoc Review n'est pas ajouté faute de flux stable. Ne pas commencer Crossref/OpenAlex, CiNii/NDL/J-STAGE, scraping, Hugo, cron, auto-commit ou LLM.
+```
+
+## 2026-05-19 - Clôture Conversation 3 scoring/bruit
+
+- Objectif du chantier : améliorer le signal sans perdre des items intéressants, sans nouvelle source, sans export public, sans suppression et sans fuzzy matching destructeur.
+- Fichiers modifiés : `antenne_radio/config/keywords.yaml`, `antenne_radio/config/scoring.yaml`, `antenne_radio/tests/test_scoring.py`, `antenne_radio/codex_memoire_materielle.md`.
+- Règle ajoutée : nouvelle catégorie `technical_radio_noise` pour le bruit HAL où `radio` désigne réseaux, spectre ou physique (`cognitive radio`, `spectrum sensing`, `dynamic spectrum access`, `5G`, `6G`, `LoRa`, `LoRaWAN`, `UWB`, `V2X`, `channel charting`, `radio telescope`, `radio emission`, `electromagnetic radiation`, `solar wind`, `X-rays`, etc.).
+- Pondération ajoutée : `technical_radio_noise: -2`, plus douce que `negative_noise: -6`; seuils inchangés (`to_read >= 6`, `candidate >= 2`) et poids `podcast` inchangé.
+- Code scoring : `scripts/core/scoring.py` n'a pas été modifié ; la configuration suffit.
+- Doublons : aucun champ `possible_duplicate` n'a été ajouté dans cette passe, car l'audit Prompt 6 n'a trouvé aucun doublon exact DOI/URL/titre ; garder l'idée pour un futur marquage déterministe non destructeur.
+- Tests ajoutés : item SHS/radio conservé en `to_read`, item podcast + radio libre favorisé, bruit radiologie/radiofréquence conservé, bruit télécom/radio technique pénalisé, item technique ambigu maintenu en `candidate`.
+- Vérifications : `make test` passe avec 45 tests sous Python 3.14.5 / pytest 9.0.3 ; `make run` réel du 2026-05-19 11:23 JST passe avec `failed_steps=none`.
+- Compteurs persistés après `make run` : `db.json` reste à 187 items, `to_read=97`, `candidate=55`, `ignored=35`, `rss=144`, `hal=43`; le run a fait RSS `entry_count=144`, HAL `result_count=20`, normalisation `added_count=0`, scoring `scored_count=0`, `skipped_count=187`, export `97 to_read` et `55 candidate`.
+- Simulation de rescore complet sans écriture avec la nouvelle configuration : `to_read=92`, `candidate=49`, `ignored=46`; côté HAL seulement, `to_read` passerait de 11 à 6, `candidate` de 26 à 20, `ignored` de 6 à 17 ; RSS resterait stable (`to_read=86`, `candidate=29`, `ignored=29`).
+- Bons items vérifiés comme non ignorés en simulation : `Voices from the Margins: How Community Radio Constructs Identity and Enables Participation in Rural Ghana`, `Mapping Three Decades of Radio and Audio Scholarship`, `En réseau, Histoire, Anarchie et Droit" dans "Au Tours du Droit" sur Radio Béton`, `Récits des eaux et des rives`, `Manuel d'analyse du podcast natif.`.
+- Bruit traité en simulation : `Safe Queue and Energy-Aware Scheduling in Cognitive Radio Networks`, `Investigating Spectrum Sensing in CR-IoT Networks`, `Unlocking Vehicular Communications: Scaling V2X Traffic on 5G SA`, `Supermassive Black Hole Winds in X-rays`, `Joint Estimation... LuSEE-Night` passent en `ignored`; `Review of Radio Counter-Counter Unmanned Aerial Systems` descend seulement en `candidate`.
+- Limite importante : le pipeline ne rescoring pas les items déjà `to_read`, `candidate` ou `ignored`; les nouveaux réglages s'appliquent aux futurs items `new`, ou à un rescore explicite à concevoir plus tard.
+- Autre limite : le bruit podcast généraliste HAL reste présent ; ne pas baisser le poids `podcast` sans nouvelle QA, car cela ferait perdre des candidates intéressantes.
+- Prochain chantier recommandé : avant ou au démarrage de la Conversation 4, décider s'il faut un mode de rescore/dry-run explicite et un marquage de doublons déterministe non destructeur ; ne pas ajouter cron, Hugo public, LLM ou nouvelles APIs sans gate dédiée.
+
+Handoff prêt à copier :
+
+```text
+Objectif : reprendre après la Conversation 3 du master plan v1, sans relancer les prompts déjà faits.
+
+Avant toute action, lance `git status --short`. Relis `docs/AGENTS.md`, `antenne_radio/codex_memoire_materielle.md`, puis seulement la prochaine section utile de `antenne_radio/04_master_plan.md`.
+
+État confirmé le 2026-05-19 : `make test` passe avec 45 tests ; `make run` réel passe avec `failed_steps=none`, RSS `entry_count=144`, HAL `result_count=20`, normalisation `added_count=0`, scoring `scored_count=0`, `skipped_count=187`. `db.json` contient 187 items persistés (`to_read=97`, `candidate=55`, `ignored=35`, `rss=144`, `hal=43`). La nouvelle configuration ajoute `technical_radio_noise: -2` pour pénaliser le bruit HAL radio/télécom/physique. Un rescore simulé sans écriture donnerait `to_read=92`, `candidate=49`, `ignored=46`, avec les bons items radio/SHS conservés. Attention : le pipeline ne rescoring pas les items déjà classés ; ne pas modifier leurs statuts sans commande explicite de rescore/dry-run. Ne commence pas Crossref/OpenAlex, CiNii/NDL/J-STAGE, scraping, Hugo public, cron, auto-commit ou LLM sans demande explicite.
 ```

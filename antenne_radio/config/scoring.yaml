@@ -9,6 +9,7 @@ weights:
   guattari_institutional_psychotherapy: 2
   japan_later: 1
   negative_noise: -6
+  technical_radio_noise: -2
 
 thresholds:
   to_read:

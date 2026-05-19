@@ -53,6 +53,35 @@ def test_very_relevant_item_becomes_to_read():
     assert scored.negative_keywords_matched == []
 
 
+def test_social_science_radio_item_stays_to_read():
+    scored = score_payload(
+        item_payload(
+            title="Community radio and rural participation",
+            abstract="A social science article about broadcasting, identity, and local media participation.",
+        )
+    )
+
+    assert scored.status is WatchStatus.to_read
+    assert scored.relevance_score >= 6
+    assert "community radio" in scored.keywords_matched
+    assert scored.negative_keywords_matched == []
+
+
+def test_podcast_and_radio_libre_item_is_favored():
+    scored = score_payload(
+        item_payload(
+            title="Radio libre podcast archives",
+            abstract="A podcasting project about pirate radio and community radio memory.",
+        )
+    )
+
+    assert scored.status is WatchStatus.to_read
+    assert scored.relevance_score >= 6
+    assert "radio libre" in scored.keywords_matched
+    assert "podcast" in scored.keywords_matched
+    assert scored.negative_keywords_matched == []
+
+
 def test_radiology_noise_is_ignored():
     scored = score_payload(
         item_payload(
@@ -67,6 +96,36 @@ def test_radiology_noise_is_ignored():
     assert "radiology" in scored.negative_keywords_matched
     assert "radiofrequency" in scored.negative_keywords_matched
     assert "radio" not in scored.keywords_matched
+
+
+def test_telecom_radio_noise_is_ignored():
+    scored = score_payload(
+        item_payload(
+            title="Cognitive radio networks for 6G spectrum sensing",
+            abstract="Dynamic spectrum access in wireless networks for LoRaWAN and V2X systems.",
+            tags=["cognitive radio", "telecommunications"],
+        )
+    )
+
+    assert scored.status is WatchStatus.ignored
+    assert scored.relevance_score < 2
+    assert "radio" in scored.keywords_matched
+    assert "cognitive radio" in scored.negative_keywords_matched
+    assert "spectrum sensing" in scored.negative_keywords_matched
+
+
+def test_ambiguous_radio_technical_item_stays_candidate():
+    scored = score_payload(
+        item_payload(
+            title="Review of Radio Counter-Counter Unmanned Aerial Systems",
+            abstract="A report on radio practices in contemporary conflict.",
+        )
+    )
+
+    assert scored.status is WatchStatus.candidate
+    assert 2 <= scored.relevance_score < 6
+    assert "radio" in scored.keywords_matched
+    assert "unmanned aerial systems" in scored.negative_keywords_matched
 
 
 def test_light_positive_match_becomes_candidate():
