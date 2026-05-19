@@ -41,3 +41,7 @@ Journal minimal des changements structurels du site. Noter seulement ce qui aide
 ## 2026-05-18 - System-header
 
 - `system-header` affiche derniere publication + ecart recent ; vocabulaire passe en collecte build-time bornee aux pages de contenu publiees.
+
+## 2026-05-19 - Antenne radio publique
+
+- `/antenne-radio/` ajoute un index Hugo sobre depuis `static/antenne-radio/index.json`, whitelisted et sans RSS de section.

@@ -314,3 +314,45 @@ Avant toute action, lance `git status --short`. Relis `docs/AGENTS.md`, `antenne
 
 État confirmé le 2026-05-19 JST : `LEGAL_AUDIT.md` existe. Verdict légal global : publiable partiellement seulement. Whitelist publique stricte : `id`, `title`, `url`, `doi`, `published_at`, `source_name`, `source_type`, `language`, `source_family`, `attribution_id`. Interdits : `raw`, logs, notes privées, chemins locaux, secrets, champs de debug, `abstract`, `status`, scores/explications, mots-clés de scoring, erreurs, `raw_responses`, champs douteux. RSS publics seulement comme index de liens ; HAL métadonnées strictes avec attribution/non-commercial ; Crossref reporté jusqu'à `CROSSREF_MAILTO` réel + run live limité ; sources inactives reportées. Ne crée pas d'intégration Hugo publique, ne publie aucun abstract, ne publie pas `raw`, ne lance pas cron/auto-commit/scraping/LLM/OpenAlex/CiNii/NDL/J-STAGE.
 ```
+
+## 2026-05-19 - Conversation 7 export public et Hugo sobre
+
+- Objectif du chantier : implémenter seulement ce que l'audit autorise, puis créer une section Hugo minimale sans exposer les exports privés.
+- Verdict d'intégration : intégration Hugo sobre acceptable uniquement via le JSON public whitelisted ; les exports privés `data/exports/veille-2026-21.md` et `data/exports/zotero-veille-2026-21.csl.json` restent privés.
+- Fichiers créés ou modifiés : `scripts/export/export_public.py`, `tests/test_export_public.py`, `Makefile`, `README.md`, `../static/antenne-radio/index.json`, `../content/antenne-radio/_index.md`, `../layouts/antenne-radio/list.html`, `../content/manuel/_index.md`, et ce fichier.
+- URL/chemins publics : section Hugo `/antenne-radio/` ; JSON public servi en `/antenne-radio/index.json` depuis `static/antenne-radio/index.json`.
+- Champs publiés par item : `id`, `title`, `url`, `doi`, `published_at`, `source_name`, `source_type`, `language`, `source_family`, `attribution_id`.
+- Champs explicitement non publiés : `raw`, `abstract`, logs, notes privées, chemins locaux, secrets, `status`, scores, explications, mots-clés internes, `discovered_at`, `source_feed`, `source_api`, `title_original`, erreurs, auteurs et tags.
+- Export réel généré le 2026-05-19 : 152 items publics, sources `hal`, `journal_radio_audio_media`, `radio_survivor`, `sounding_out` ; répartition source affichée : HAL open archive 37, Journal of Radio & Audio Media / Taylor & Francis Online 33, Radio Survivor 52, Sounding Out! 30.
+- Section Hugo : lit le JSON statique avec `readFile`/`transform.Unmarshal`, affiche titre, source, date, lien d'origine, langue, type et DOI si présent ; aucun résumé, aucun score, aucun tag et aucun JS dédié.
+- Lien discret : ajout depuis `content/manuel/_index.md` ; pas d'entrée ajoutée au menu principal pour éviter de charger la navigation mobile.
+- Garde-fous Hugo : `outputs: [HTML]` sur `content/antenne-radio/_index.md` ; vérification locale confirme `public/antenne-radio/index.html` et `public/antenne-radio/index.json` présents, `public/antenne-radio/index.xml` absent.
+- Tests et QA lancés : `.venv/bin/pytest tests/test_export_public.py` passe avec 7 tests ; `make test` passe avec 72 tests ; `make export-public` passe ; scan `rg` anti-fuite sur `static/antenne-radio/index.json`, `public/antenne-radio/index.html` et `public/antenne-radio/index.json` ne trouve pas de champ interdit ; build complet `pnpm exec hugo --gc --minify --cleanDestinationDir --logLevel info --printPathWarnings` passe ; vérification navigateur locale sur `http://localhost:1313/antenne-radio/` confirme 152 lignes et 0 motif interdit détecté.
+- Limites restantes : l'audit reste prudent, pas un avis juridique ; Crossref public reste reporté jusqu'à `CROSSREF_MAILTO` réel et run live limité ; pas de résumés publics sans audit item/source explicite ; auteurs et tags restent hors whitelist ; vérifier avec `make test` et le build Hugo complet avant clôture finale.
+
+## 2026-05-19 - Clôture QA publication/Hugo
+
+- Objectif du chantier : vérifier l'absence de fuite et clore la Conversation 7 sans commencer la Conversation 8.
+- Verdict d'intégration : GO prudent pour l'intégration Hugo sobre `/antenne-radio/`, limitée au JSON public whitelisted ; les exports privés et `db.json` ne sont pas publiables tels quels.
+- Fichiers publics générés : `../static/antenne-radio/index.json`, servi en `/antenne-radio/index.json` ; build Hugo confirme `../public/antenne-radio/index.html` et `../public/antenne-radio/index.json`.
+- Fichiers Hugo/documentation concernés : `../content/antenne-radio/_index.md`, `../layouts/antenne-radio/list.html`, `../content/manuel/_index.md`, `README.md`, `../docs/HISTORIQUE.md`.
+- Champs publiés par item : `id`, `title`, `url`, `doi`, `published_at`, `source_name`, `source_type`, `language`, `source_family`, `attribution_id`.
+- Inspection JSON finale : `schema_version=antenne-radio-public-v0`, `item_count=152`, `generated_at=2026-05-19T07:26:29Z`, sources affichées `HAL open archive`, `Journal of Radio & Audio Media / Taylor & Francis Online`, `Radio Survivor`, `Sounding Out!`.
+- Attributions vérifiées : `Source: HAL open archive - lien vers la notice HAL.` ; `Source: Journal of Radio & Audio Media / Taylor & Francis Online - lien vers la notice originale.` ; `Source: Radio Survivor - lien vers l'article original.` ; `Source: Sounding Out! - lien vers l'article original.`
+- Absence de fuite vérifiée explicitement : scan sur `static/antenne-radio/index.json`, `public/antenne-radio/index.html` et `public/antenne-radio/index.json` sans match pour `raw`, `abstract`, logs, notes privées, chemins locaux `/Users/` ou `/private/`, secrets, `CROSSREF_MAILTO`, statuts, scores, explications, mots-clés internes, `source_api`, `source_feed`, auteurs ou tags.
+- Cohérence publique vérifiée : tous les items ont seulement les 10 clés whitelistées ; 0 item sans titre, URL ou attribution ; 0 item avec source reportée ou inactive ; 0 item orphelin sans entrée dans `sources`.
+- Garde-fous Hugo vérifiés : `public/antenne-radio/index.xml` absent, donc pas de RSS public sortant pour cette section ; endpoints existants non modifiés.
+- Tests lancés : `make test` passe avec 72 tests ; `.venv/bin/pytest tests/test_export_public.py` passe avec 7 tests ; `make export-public` passe avec 152 items exportés ; `git diff --check` passe.
+- Build Hugo lancé : `pnpm exec hugo --gc --minify --cleanDestinationDir --logLevel info --printPathWarnings` passe avec le warning connu Node/Tailwind `module.register()`.
+- Limites restantes : audit légal prudent et non juridique ; aucun abstract public par défaut ; auteurs/tags/scores restent exclus ; Crossref public reste reporté jusqu'à `CROSSREF_MAILTO` réel et run live limité ; sources reportées/inactives toujours hors publication ; pas de cron, auto-commit, RSS public sortant, scraping, LLM ou automatisation de publication.
+- Prochain chantier recommandé : ne pas commencer automatiquement la Conversation 8 ; si demandé explicitement, passer à l'audit d'une GitHub Action manuelle, sans cron ni publication automatique.
+
+Handoff prêt à copier :
+
+```text
+Objectif : reprendre après la clôture de la Conversation 7 export public/Hugo sobre, sans relancer les prompts déjà faits et sans commencer d'automatisation publique.
+
+Avant toute action, lance `git status --short`. Relis `docs/AGENTS.md`, `antenne_radio/codex_memoire_materielle.md`, `antenne_radio/LEGAL_AUDIT.md`, puis seulement la prochaine section utile de `antenne_radio/04_master_plan.md`.
+
+État confirmé le 2026-05-19 JST : l'intégration Hugo sobre `/antenne-radio/` est validée prudemment. Le JSON public `static/antenne-radio/index.json` contient 152 items et seulement les champs `id`, `title`, `url`, `doi`, `published_at`, `source_name`, `source_type`, `language`, `source_family`, `attribution_id`. Les attributions HAL, Journal of Radio & Audio Media / Taylor & Francis Online, Radio Survivor et Sounding Out! sont présentes. Les scans anti-fuite sur JSON et HTML publics ne trouvent pas `raw`, abstracts, logs, notes privées, chemins locaux, secrets, statuts, scores, explications, mots-clés internes, auteurs ou tags. `make test` passe avec 72 tests, les 7 tests anti-fuite passent, et `pnpm exec hugo --gc --minify --cleanDestinationDir --logLevel info --printPathWarnings` passe. `public/antenne-radio/index.xml` est absent : pas de RSS public sortant. Ne pas publier les exports privés, ne pas ajouter d'abstracts, ne pas activer Crossref public sans `CROSSREF_MAILTO` réel + run live limité, ne pas commencer cron/auto-commit/scraping/LLM ou Conversation 8 sans demande explicite.
+```

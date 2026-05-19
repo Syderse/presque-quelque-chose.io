@@ -1,0 +1,99 @@
+{{ define "main" }}
+{{ $publicPath := "static/antenne-radio/index.json" }}
+{{ $items := slice }}
+{{ $sources := slice }}
+{{ $generatedAt := "" }}
+{{ if fileExists $publicPath }}
+  {{ $data := readFile $publicPath | transform.Unmarshal }}
+  {{ with $data.items }}{{ $items = . }}{{ end }}
+  {{ with $data.sources }}{{ $sources = . }}{{ end }}
+  {{ with $data.generated_at }}{{ $generatedAt = . }}{{ end }}
+{{ end }}
+
+{{ $sourceByID := dict }}
+{{ range $sources }}
+  {{ $sourceByID = merge $sourceByID (dict .attribution_id .) }}
+{{ end }}
+
+<div class="min-h-screen bg-ctp-base text-ctp-text selection:bg-ctp-mauve selection:text-ctp-base">
+  <header class="w-full px-6 md:px-12 pt-2 pb-6 pl-[72px]">
+    <div class="border-b-4 border-ctp-surface2 pb-6">
+      <p class="font-mono text-xs uppercase text-ctp-overlay1 mb-3">veille publique / index expurgé</p>
+      <h1 class="font-serif text-4xl md:text-6xl font-black text-ctp-mauve leading-snug mb-6 uppercase max-w-4xl">
+        {{ .Title }}
+      </h1>
+      <div class="max-w-4xl text-ctp-subtext0 leading-relaxed">
+        {{ .Content }}
+      </div>
+      <div class="mt-6 flex flex-wrap gap-3 font-mono text-xs text-ctp-overlay1">
+        <span class="border border-ctp-surface2 px-3 py-2">items: {{ len $items }}</span>
+        <span class="border border-ctp-surface2 px-3 py-2">sources: {{ len $sources }}</span>
+        {{ with $generatedAt }}
+          <span class="border border-ctp-surface2 px-3 py-2">généré: {{ . }}</span>
+        {{ end }}
+      </div>
+    </div>
+  </header>
+
+  <main class="w-full px-6 md:px-12 pb-24">
+    {{ if $items }}
+      <section class="border border-ctp-surface2 bg-ctp-mantle/40">
+        <div class="hidden md:grid grid-cols-[minmax(0,1fr)_180px_130px_120px] border-b border-ctp-surface2 bg-ctp-surface0 font-mono text-[10px] uppercase text-ctp-overlay1">
+          <div class="p-4 border-r border-ctp-surface2">titre</div>
+          <div class="p-4 border-r border-ctp-surface2">source</div>
+          <div class="p-4 border-r border-ctp-surface2">date</div>
+          <div class="p-4">lien</div>
+        </div>
+
+        <div class="divide-y divide-ctp-surface1">
+          {{ range $items }}
+            {{ $dateLabel := "date inconnue" }}
+            {{ with .published_at }}{{ $dateLabel = (time .).Format "2006-01-02" }}{{ end }}
+            <article class="md:grid md:grid-cols-[minmax(0,1fr)_180px_130px_120px] hover:bg-ctp-surface0/60 transition-colors">
+              <div class="p-4 md:p-5 md:border-r border-ctp-surface1/70">
+                <h2 class="font-serif text-xl md:text-2xl leading-snug text-ctp-text">
+                  <a class="hover:text-ctp-mauve focus:text-ctp-mauve focus:outline-none" href="{{ .url }}" target="_blank" rel="noopener noreferrer">
+                    {{ .title }}
+                  </a>
+                </h2>
+                <div class="mt-2 flex flex-wrap gap-2 font-mono text-[11px] text-ctp-overlay1">
+                  <span>{{ .language }}</span>
+                  <span>{{ .source_type }}</span>
+                  {{ with .doi }}<span>doi: {{ . }}</span>{{ end }}
+                </div>
+              </div>
+              <div class="px-4 pb-2 md:p-5 md:border-r border-ctp-surface1/70 font-mono text-xs text-ctp-subtext0">
+                <span class="md:hidden text-ctp-overlay1">source: </span>{{ .source_name }}
+              </div>
+              <div class="px-4 pb-2 md:p-5 md:border-r border-ctp-surface1/70 font-mono text-xs text-ctp-subtext1">
+                <span class="md:hidden text-ctp-overlay1">date: </span>{{ $dateLabel }}
+              </div>
+              <div class="px-4 pb-5 md:p-5 flex md:items-center">
+                <a class="font-mono text-xs uppercase text-ctp-mauve hover:text-ctp-lavender focus:text-ctp-lavender focus:outline-none" href="{{ .url }}" target="_blank" rel="noopener noreferrer">
+                  origine
+                </a>
+              </div>
+            </article>
+          {{ end }}
+        </div>
+      </section>
+
+      <section class="mt-8 border-t border-ctp-surface2 pt-6">
+        <h2 class="font-mono text-sm uppercase text-ctp-overlay1 mb-4">attributions</h2>
+        <ul class="space-y-2 text-sm text-ctp-subtext0">
+          {{ range $sources }}
+            <li>
+              <a class="text-ctp-mauve hover:text-ctp-lavender focus:text-ctp-lavender focus:outline-none" href="{{ .url }}" target="_blank" rel="noopener noreferrer">{{ .name }}</a>
+              <span class="text-ctp-overlay1"> — {{ .attribution_text }}</span>
+            </li>
+          {{ end }}
+        </ul>
+      </section>
+    {{ else }}
+      <section class="border border-dashed border-ctp-surface2 p-8 text-ctp-subtext0">
+        Aucun index public validé n'est disponible pour le moment.
+      </section>
+    {{ end }}
+  </main>
+</div>
+{{ end }}

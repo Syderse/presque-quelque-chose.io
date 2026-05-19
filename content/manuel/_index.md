@@ -42,6 +42,10 @@ Un globiboulga de textes en tous genres : mini-essais sans prétention, petites 
 
 La zone sérieuse (plus ou moins). Je prépare actuellement une thèse en études radiophoniques, mais j'arrive de l'histoire de l'art et du cinéma. Vous y trouverez mes travaux académiques. La jeune pousse que je suis n'a pas encore publié grand chose alors c'est un peu vide, et un peu à part dans le site, mais bon, pourquoi pas ? Actuellement, il n'y a que mon mémoire sur Miyazaki.
 
+### Antenne radio
+
+Une [veille publique minimale](/antenne-radio/) autour des études radiophoniques. Elle ne montre que des liens et métadonnées sobres ; le travail de tri local reste hors ligne.
+
 ### Ondes & pixels
 
 Mes créations sonores et visuelles : vidéos YouTube, créations radiophoniques, expérimentations en tous genres.

@@ -133,6 +133,31 @@ Le fichier est écrit dans `data/exports/`, par exemple `data/exports/zotero-vei
 
 Tu peux ensuite importer ce fichier manuellement dans Zotero avec l'import de fichier standard. Le script ne modifie pas `db.json` et n'écrit pas dans ta bibliothèque Zotero.
 
+### Export public minimal pour Hugo
+
+Après audit légal, un export public expurgé peut être généré :
+
+```sh
+make export-public
+```
+
+Cette commande écrit `../static/antenne-radio/index.json`, utilisé par la page Hugo `/antenne-radio/`. Le JSON public est limité à une whitelist stricte par item :
+
+- `id`
+- `title`
+- `url`
+- `doi`
+- `published_at`
+- `source_name`
+- `source_type`
+- `language`
+- `source_family`
+- `attribution_id`
+
+Il exclut les données brutes, résumés, journaux d'exécution, notes privées, chemins locaux, secrets, statuts, scores, explications, mots-clés internes, auteurs et tags. Les items `ignored` et les sources non auditées ne sont pas exportés.
+
+La page Hugo reste sobre et sans JavaScript dédié. Elle affiche seulement les métadonnées publiques et les liens d'origine. La section désactive ses sorties RSS pour éviter un flux public sortant.
+
 ### Dépannage
 
 Si `make test` dit que `.venv/bin/pytest` est introuvable, relance :
