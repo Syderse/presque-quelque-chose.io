@@ -462,3 +462,27 @@ Avant toute action, lance `git status --short`. Relis `docs/AGENTS.md`, `antenne
 - QA anti-fuite : scans sans match pour les clés/champs interdits, chemins locaux, secret `CROSSREF_MAILTO`, `transition: all`, `transition-all`, `backdrop-filter`, `blur()`, `drop-shadow`, `will-change`, `IntersectionObserver` ou infinite scroll.
 - Limites restantes : le navigateur intégré a eu une limitation de saisie via presse-papiers virtuel avec `locator.fill`, contournée par une saisie clavier après viewport haut ; pas de capture visuelle archivée ; aucun `make test` Python antenne lancé car le chantier ne touche pas le pipeline.
 - Prochaine étape recommandée : poursuivre le Prompt 8 v2 seulement si demandé, idéalement deep-linking/URL state des filtres ou microcopie de `content/antenne-radio/_index.md`, sans élargir les champs publics.
+
+## 2026-05-20 - Prompt 8 v2 Partage de filtres (Deep-linking) et polish UX
+
+- **Objectif du chantier** : Finaliser l'expérience utilisateur par l'intégration de la synchronisation d'URL (deep-linking), d'une barre de jetons actifs et d'un état vide léger et accessible.
+- **Fichiers modifiés** :
+  - `layouts/antenne-radio/list.html`
+  - `assets/js/antenne-radio.js`
+  - `antenne_radio/codex_memoire_materielle.md` (ce fichier)
+- **Commandes lancées** :
+  - `git status --short` au début et à la fin.
+  - `make test` depuis `antenne_radio/` (81 tests validés avec succès).
+  - `pnpm exec hugo --gc --minify --cleanDestinationDir` (build Hugo réussi, 83 pages générées sans erreurs).
+  - `grep_search` pour vérifier l'absence totale de fuites de données privées (raw, abstract, logs, scores) ou de chemins absolus locaux.
+- **Résultats réels** :
+  - Synchronisation bidirectionnelle de l'URL avec les paramètres autorisés (`q`, `cat`, `src`, `lang`) en utilisant `history.replaceState` pour ne pas polluer l'historique. Les paramètres inconnus sont ignorés sans erreur et les filtres inactifs sont nettoyés de la chaîne de requête.
+  - Barre de filtres actifs `#active-filters-bar` dynamique et accessible, avec des `<button type="button">` pour chaque badge supprimable muni d'un `aria-label` descriptif et d'une icône SVG décorative (`aria-hidden="true"`, `focusable="false"`).
+  - Restauration intelligente et ergonomique du focus clavier sur le contrôle associé lors de la suppression volontaire d'un badge individuel.
+  - Réinitialisation complète et ergonomique des filtres (bouton "Tout effacer" et bouton de l'état vide) qui vide l'URL de ses filtres et repositionne le focus sur la barre de recherche.
+  - État vide ultra-léger et respectueux des normes d'éco-conception (pas de skeleton UI, pas de CDNs externes, et animation pulse SVG conditionnée par `@media (prefers-reduced-motion: no-preference)`).
+- **Limites restantes** :
+  - Les exports privés Obsidian et CSL JSON restent strictement locaux et séparés.
+  - Pas d'automatisation par cron ou d'auto-commit sur le dépôt Git.
+- **Prochaine étape recommandée** :
+  - Passer au Prompt 9 de la v2 (Revue finale de conformité accessibilité RGAA/WCAG et optimisation mobile) ou valider la publication de la branche.

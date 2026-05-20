@@ -428,6 +428,166 @@
       flex-direction: column;
     }
   }
+
+  /* Active Filters Bar Styles */
+  .active-filters-bar {
+    display: none;
+    flex-wrap: wrap;
+    align-items: center;
+    gap: 0.75rem;
+    margin-top: 1.5rem;
+    border: 3px solid var(--ctp-text);
+    background: var(--ctp-surface0);
+    padding: 0.75rem 1rem;
+    box-shadow: 4px 4px 0 var(--ctp-crust);
+  }
+
+  .active-filters-label {
+    font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono", monospace;
+    font-size: 0.7rem;
+    font-weight: 800;
+    color: var(--ctp-overlay1);
+    text-transform: uppercase;
+  }
+
+  .active-filters-badges {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.5rem;
+  }
+
+  .active-filter-badge {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.5rem;
+    border: 2px solid var(--ctp-text);
+    background: var(--ctp-base);
+    color: var(--ctp-text);
+    padding: 0.3rem 0.6rem;
+    font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono", monospace;
+    font-size: 0.72rem;
+    font-weight: 800;
+    cursor: pointer;
+    border-radius: 0;
+    transition: transform 0.1s ease, box-shadow 0.1s ease;
+  }
+
+  .active-filter-badge:hover,
+  .active-filter-badge:focus-visible {
+    background: var(--ctp-red);
+    color: var(--ctp-base);
+    transform: translate(-1px, -1px);
+    box-shadow: 2px 2px 0 var(--ctp-text);
+  }
+
+  .active-filter-badge:focus-visible {
+    outline: 3px solid var(--ctp-yellow);
+    outline-offset: 2px;
+  }
+
+  .active-filter-badge svg {
+    flex-shrink: 0;
+  }
+
+  .clear-filters-btn {
+    margin-left: auto;
+    border: 2px solid var(--ctp-text);
+    background: var(--ctp-crust);
+    color: var(--ctp-red);
+    padding: 0.3rem 0.65rem;
+    font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono", monospace;
+    font-size: 0.7rem;
+    font-weight: 900;
+    text-transform: uppercase;
+    cursor: pointer;
+    border-radius: 0;
+    transition: transform 0.1s ease, box-shadow 0.1s ease;
+  }
+
+  .clear-filters-btn:hover,
+  .clear-filters-btn:focus-visible {
+    background: var(--ctp-red);
+    color: var(--ctp-base);
+    transform: translate(-1px, -1px);
+    box-shadow: 2px 2px 0 var(--ctp-text);
+  }
+
+  .clear-filters-btn:focus-visible {
+    outline: 3px solid var(--ctp-yellow);
+    outline-offset: 2px;
+  }
+
+  /* Empty State Styles */
+  .antenne-radio-empty-state {
+    grid-column: 1 / -1;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+    padding: 4rem 2rem;
+    border: 3px dashed var(--ctp-surface2);
+    background: var(--ctp-mantle);
+    margin-top: 1.5rem;
+    box-shadow: 4px 4px 0 var(--ctp-crust);
+  }
+
+  .antenne-radio-empty-icon {
+    color: var(--ctp-red);
+    margin-bottom: 1.25rem;
+  }
+
+  @media (prefers-reduced-motion: no-preference) {
+    .antenne-radio-empty-icon svg {
+      animation: empty-pulse 3s infinite ease-in-out;
+    }
+  }
+
+  @keyframes empty-pulse {
+    0%, 100% {
+      transform: scale(1);
+      opacity: 0.8;
+    }
+    50% {
+      transform: scale(1.05);
+      opacity: 1;
+    }
+  }
+
+  .antenne-radio-empty-text {
+    font-family: Georgia, "Times New Roman", serif;
+    font-size: 1.2rem;
+    color: var(--ctp-subtext0);
+    margin: 0 0 1.5rem;
+    max-width: 480px;
+    line-height: 1.4;
+  }
+
+  .antenne-radio-empty-reset {
+    border: 3px solid var(--ctp-text);
+    background: var(--ctp-yellow);
+    color: var(--ctp-base);
+    padding: 0.65rem 1.25rem;
+    font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono", monospace;
+    font-size: 0.78rem;
+    font-weight: 900;
+    text-transform: uppercase;
+    cursor: pointer;
+    border-radius: 0;
+    transition: transform 0.1s ease, box-shadow 0.1s ease;
+    box-shadow: 4px 4px 0 var(--ctp-crust);
+  }
+
+  .antenne-radio-empty-reset:hover,
+  .antenne-radio-empty-reset:focus-visible {
+    transform: translate(-2px, -2px);
+    box-shadow: 6px 6px 0 var(--ctp-crust);
+  }
+
+  .antenne-radio-empty-reset:focus-visible {
+    outline: 3px solid var(--ctp-mauve);
+    outline-offset: 2px;
+  }
 </style>
 
 <div class="antenne-radio-page" data-antenne-radio-root data-index-url="/antenne-radio/index.json">
@@ -490,6 +650,13 @@
 
       <section class="antenne-radio-enhanced" aria-labelledby="antenne-radio-results-title">
         <h2 id="antenne-radio-results-title" class="sr-only">Résultats de l'antenne radio</h2>
+        
+        <div id="active-filters-bar" class="active-filters-bar" hidden>
+          <span class="active-filters-label">Filtres actifs :</span>
+          <div class="active-filters-badges" role="list"></div>
+          <button id="clear-filters" class="clear-filters-btn" type="button">Tout effacer</button>
+        </div>
+
         <p id="antenne-radio-filter-status" class="antenne-radio-status" role="status" aria-live="polite">
           Chargement des signaux publics.
         </p>
