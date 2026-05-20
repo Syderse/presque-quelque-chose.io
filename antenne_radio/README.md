@@ -32,6 +32,25 @@ Par défaut, l'antenne ne fait pas ceci :
 - pas d'appel Crossref live sans activation explicite et adresse de contact locale ;
 - pas d'OpenAlex, CiNii, NDL ou J-STAGE dans l'état actuel.
 
+## Philosophie de maintenance et doctrine de données
+
+L’antenne radio est un outil léger de veille académique, non une archive exhaustive. Elle est guidée par une doctrine de sobriété, de robustesse technique et de respect du temps d'attention humaine :
+
+> **Boussole du projet :** L’antenne doit être incrémentale pour rester utile au quotidien, mais non cumulative au sens archivistique ; elle doit conserver assez d’état pour accompagner la veille, sans devenir une base de données patrimoniale.
+
+*   **Horizon de pertinence (Rétention à 18 mois)** : Le dispositif est centré sur l’actualité récente des études radiophoniques, sonores et médiatiques. Les notices de travail et la base locale `db.json` ne doivent pas s'accumuler indéfiniment. Un horizon de **18 mois** est fixé. À terme, une étape de pruning supprimera les notices obsolètes de la base locale, tout en alertant l'utilisateur sur les notices importantes encore marquées `to_read` ou `candidate`.
+*   **Données locales jetables** : Les caches, les fichiers bruts (`data/raw/*.json`), les journaux (`data/logs/*.log`) et les rapports intermédiaires privés (`data/exports/*`) sont transitoires. Ils ne doivent jamais alourdir le dépôt Git ni le site public.
+*   **Conservation qualitative** : Zotero reste l’espace d’archivage savant pérenne. Les "pépites" repérées par l’antenne sont extraites manuellement par l'utilisateur pour être conservées durablement dans ses outils personnels (Zotero, notes privées Obsidian).
+*   **Geste artisanal & Curation humaine** : Le projet refuse l'automatisation à outrance (pas de tâches automatiques cachées, pas de cron, pas de commit automatique, pas de résumés par IA). L'antenne est un dispositif *tactile* nécessitant un geste hebdomadaire conscient (`make run`).
+
+### Curation humaine vs Scoring dynamique
+
+Le système sépare strictement les calculs de la machine et l'arbitrage humain pour garantir la clarté et la pérennité de l'outil si celui-ci est partagé au sein d'un laboratoire ou d'une communauté :
+
+*   **Le score machine est dynamique et réversible** : Le scoring lexical (basé sur `config/keywords.yaml`) est appliqué de manière globale à toute la base `db.json` à chaque run. Si vous ajustez vos mots-clés ou vos seuils, toute la base est recalculée pour mettre à jour les suggestions automatiques (ex. `suggested_status`).
+*   **Le statut humain est stable et intouchable** : Les décisions de curation humaine (les statuts `to_read`, `ignored`, `exported`) sont protégées. Le pipeline ne viendra **jamais** écraser silencieusement un statut déjà posé ou validé par l'humain.
+*   **Interaction future sans modification de JSON** : Pour l'instant, la curation s'effectue directement dans le fichier JSON locale `db.json`. À terme, pour éviter les manipulations de gros fichiers, l'interaction passera par un système d'overrides externes simples (comme un fichier `data/curation/status_overrides.yaml`) ou des raccourcis CLI (ex. `make ignore ID=...`).
+
 ## Où sont les fichiers
 
 Depuis la racine du dépôt, le module vit dans `antenne_radio/`.
@@ -191,6 +210,14 @@ Cette commande écrit `../static/antenne-radio/index.json` en respectant la vers
 
 Tout le reste est interdit en public, notamment `raw`, `abstract`, logs, notes privées, chemins locaux, secrets, statuts, scores, explications, mots-clés internes, auteurs et tags.
 
+### Doctrine d'évolution de la Whitelist
+
+> **Principe de prudence absolue :** La whitelist publique n’est pas une limitation conceptuelle définitive ; c’est un garde-fou technique. Elle est **conservatrice par défaut** pour protéger la conformité légale et éviter d'infliger le bruit de veille brute au lecteur (sobriété informationnelle).
+
+Elle peut évoluer dans le futur (par exemple, pour inclure un jour les auteurs scientifiques sous forme de métadonnées bibliographiques classiques), mais sous des règles très strictes :
+*   **Aucun glissement silencieux** : Aucun champ nouveau ne doit entrer dans l'export public par accident ou omission.
+*   **Processus d'ajout obligatoire** : Chaque extension de la whitelist doit être explicitement justifiée sous l'angle légal (audit), documentaire et d'expérience utilisateur (UX), puis documentée dans `LEGAL_AUDIT.md` et couverte par la suite de tests automatisés.
+
 Avant toute publication, relis `LEGAL_AUDIT.md` et relance les tests. En cas de doute, ne publie pas.
 
 ## CI manuelle GitHub Actions
@@ -229,14 +256,18 @@ Règles simples :
 - Après modification, lance `make test`.
 - Pour une vraie récolte, lance ensuite `make run` manuellement.
 
-Pour Crossref, ne mets jamais une adresse personnelle ou un secret directement dans le dépôt. Utilise une variable d'environnement locale si tu décides de l'activer :
+### Activation polie et sobre de Crossref
 
-```sh
-export CROSSREF_MAILTO="adresse-de-contact@example.org"
-make run
-```
+Le connecteur pour l'API Crossref est implémenté mais **désactivé par défaut** (`crossref.enabled: false`). L'objectif de Crossref n'est pas de moissonner massivement, mais de servir de complément ciblé. Si vous décidez de l'activer, vous devez impérativement respecter les règles de politesse et de sobriété suivantes :
 
-Ne configure pas cette variable dans la CI de tests tant que le but est seulement de vérifier la suite locale.
+1.  **Identification polie obligatoire** : Ne mettez jamais d'adresse personnelle ou de secret en dur dans le dépôt. Utilisez la variable d'environnement locale :
+    ```sh
+    export CROSSREF_MAILTO="adresse-de-contact@example.org"
+    ```
+2.  **Sobriété & Limitation** : Assurez-vous que les limites de résultats (`rows: 20` ou moins) et de pagination restent basses par run pour éviter d'aspirer inutilement des volumes massifs.
+3.  **Rate limiting et délai poli** : Le connecteur doit obligatoirement respecter un délai poli d'au moins `1` seconde (`polite_delay_seconds`) entre chaque requête séquentielle pour ne pas surcharger l'API ni risquer de bloquer votre adresse IP locale.
+
+Ne configurez pas cette variable d'identification dans la CI de tests tant que le but est seulement de vérifier la suite locale.
 
 ## Nettoyage local
 
