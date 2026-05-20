@@ -376,3 +376,31 @@ Avant toute action, lance `git status --short`. Relis `docs/AGENTS.md`, `antenne
 
 État de départ confirmé le 2026-05-19 : Les plans v2 (`05_plan_amelioration.md` en 9 prompts) et v3 (`06_plan_v3_academique.md` en 6 prompts) ont été scindés et finalisés avec tous les retours d'architecture, d'UX et légaux. La v1 locale est stable. Prépare-toi à exécuter le Prompt 1 du plan v2 (Mise en place de la CI manuelle et audit d'état réel).
 ```
+
+## 2026-05-20 - Prompt 1 v2 audit réel et CI manuelle
+
+- Objectif du chantier : créer une première CI manuelle pour `antenne_radio/`, sans déclenchement invisible, et reprendre le `README.md` comme mode d'emploi débutant.
+- État initial : `git status --short` montrait déjà `M antenne_radio/05_plan_amelioration.md`, changement préexistant non touché pendant ce chantier.
+- Chemins vérifiés avant création : `.github/workflows/` existe déjà à la racine avec `.github/workflows/deploy.yml` ; le module réel est `antenne_radio/` avec `Makefile`, `requirements.txt`, `README.md`, `config/`, `scripts/`, `tests/` et `data/`.
+- Fichiers modifiés ou créés : `.github/workflows/tests.yml` créé ; `antenne_radio/README.md` réécrit ; `antenne_radio/codex_memoire_materielle.md` mis à jour.
+- Workflow ajouté : `Antenne Radio Tests`, déclenché uniquement par `workflow_dispatch`, permissions `contents: read`, Python `3.12`, cache pip sur `antenne_radio/requirements.txt`, `make install` puis `make test` dans `antenne_radio/`.
+- Documentation ajoutée : installation locale, routine hebdomadaire manuelle, CI via l'onglet GitHub Actions, sources, Crossref désactivé par défaut, exports privés Obsidian/Zotero, export public Hugo whitelisté, dépannage et garde-fous de non-publication.
+- Commandes lancées : `git status --short`; lectures de `docs/AGENTS.md`, de cette mémoire, de `README.md`, du `Makefile`, de `requirements.txt`, du workflow `deploy.yml` et des scripts utiles ; repérage `rg --files antenne_radio .github`; parse YAML du nouveau workflow via PyYAML `BaseLoader`; recherche de déclencheurs interdits dans `.github/workflows/tests.yml`; contrôle whitespace sur les fichiers modifiés; `git diff --check -- antenne_radio/README.md`; `make test`.
+- Résultats réels : YAML valide ; seul déclencheur détecté `workflow_dispatch`; aucun `push`, `pull_request`, `schedule`, `cron`, `workflow_run`, `repository_dispatch`, `make run`, `export-public` ou `auto-commit` dans `.github/workflows/tests.yml`; aucun whitespace de fin détecté ; `make test` passe avec 72 tests sous Python 3.14.5 / pytest 9.0.3.
+- Limites restantes : le workflow n'a pas encore été lancé dans l'UI GitHub ; la vérification distante sous Python 3.12 reste à faire par `workflow_dispatch`. Aucune ingestion live, aucun cron, aucun auto-commit et aucune publication de raw/logs/abstracts/scores/chemins locaux n'ont été lancés.
+- Prochaine étape recommandée : lancer manuellement `Antenne Radio Tests` depuis l'onglet GitHub Actions, vérifier qu'il passe à distance, puis seulement ensuite poursuivre le Prompt 2 v2.
+
+## 2026-05-20 - Prompt 2 v2 navigation Hugo antenne radio
+
+- Objectif du chantier : rendre `/antenne-radio/` visible dans la navigation principale desktop et mobile, sans toucher au pipeline ni régénérer les données de veille.
+- État initial : `git status --short` montrait les changements non encore commités du Prompt 1 (`README.md`, `codex_memoire_materielle.md`, `.github/workflows/tests.yml`) et le changement préexistant `antenne_radio/05_plan_amelioration.md`.
+- Chemins vérifiés avant modification : configuration principale `config/_default/hugo.yaml`; partiels de navigation `layouts/partials/sidebar.html` et `layouts/partials/mobile-nav.html`; page existante `content/antenne-radio/_index.md`; JSON public existant `static/antenne-radio/index.json`.
+- Fichiers modifiés : `config/_default/hugo.yaml`, `layouts/partials/sidebar.html`, `layouts/partials/mobile-nav.html`, `antenne_radio/codex_memoire_materielle.md`.
+- Changement de menu : entrée `antenne radio` ajoutée dans `menus.main` avec `url: /antenne-radio/` et `weight: 35`, entre `ondes & pixels` et `rhizome curieux`.
+- Changement d'icônes : dictionnaire SVG ajouté à la sidebar ; icône signal/antenne associée à `antenne radio` dans la sidebar et dans `$icons` du menu mobile ; icône explicite ajoutée aussi pour `patafoin` afin d'éviter le fallback étoile.
+- Ajustement mobile : labels de menu passés en texte bas-de-casse issu du menu, centrés en petit format, pour conserver `antenne radio` lisible malgré l'entrée supplémentaire.
+- Commandes lancées : `git status --short`; lectures de `docs/AGENTS.md`, de cette mémoire, de `config/_default/hugo.yaml`, `layouts/partials/sidebar.html`, `layouts/partials/mobile-nav.html`, `content/antenne-radio/_index.md`, `layouts/antenne-radio/list.html`; repérage `rg --files config layouts/partials content static`; `git diff --check -- config/_default/hugo.yaml layouts/partials/sidebar.html layouts/partials/mobile-nav.html`; `pnpm exec hugo --gc --minify --cleanDestinationDir --logLevel info --printPathWarnings`; contrôle `rg` dans `public/antenne-radio/index.html` et `public/index.html`; serveur local `make dev`; vérification navigateur desktop/mobile.
+- Résultats réels : build Hugo complet OK avec Hugo `0.160.1`; warning connu pnpm/Tailwind seulement ; HTML généré contient `antenne radio` et l'icône SVG antenne dans la sidebar et le menu mobile ; `public/antenne-radio/index.xml` reste absent ; page publique garde 152 items depuis le JSON existant.
+- Vérification navigateur : à 1280x720, ouverture de la sidebar OK, lien `antenne radio` visible avec icône antenne ; à 390x844, menu mobile visible, lien `antenne radio` dans le viewport avec icône antenne.
+- Limites restantes : pas de capture visuelle archivée ; aucun test GitHub Actions distant lancé ; le serveur local n'a servi que le JSON public existant et aucune ingestion live n'a été lancée.
+- Prochaine étape recommandée : poursuivre le Prompt 3 v2 seulement après validation visuelle humaine rapide si souhaitée, en gardant la même discipline de build et d'absence d'ingestion automatique.

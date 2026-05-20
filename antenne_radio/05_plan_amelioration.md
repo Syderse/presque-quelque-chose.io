@@ -125,6 +125,7 @@ Tâches :
    - Déclencheur : workflow_dispatch uniquement (déclenchement volontaire et manuel via l'UI GitHub). Aucun cron, aucun commit automatique sur pull request ou push.
    - Étapes : Checkout du dépôt, installation de Python 3.11 ou 3.12 (avec cache pip pour accélérer le processus), installation des dépendances à partir de `antenne_radio/requirements.txt` et exécution de la suite de tests via `make test` dans `antenne_radio/`.
 3. Valider la syntaxe et s'assurer que la commande de test s'exécute correctement localement sans secrets.
+4. Reprends à 0 le antenne_radio/README.md pour expliquer comme à un débutant comment faire l'opération manuelle, à quoi elle sert, comment actualiser la récolte de sources du projet chaque semaine, etc. 
 
 Vérification : Le fichier `.github/workflows/tests.yml` est valide. La commande `make test` passe localement à 100%.
 

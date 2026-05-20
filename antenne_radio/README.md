@@ -1,147 +1,182 @@
 # radio-watch / antenne_radio
 
-`radio-watch` est une antenne locale de veille en études radiophoniques. Elle produit des fichiers locaux, sans service vivant exécuté par Netlify à chaque visite.
+`antenne_radio` est une petite antenne de veille pour suivre des textes, billets et notices utiles aux études radiophoniques. Elle fonctionne d'abord en local : elle interroge des sources choisies, range les résultats dans des fichiers JSON, applique un score lexical simple, puis produit des exports privés ou publics selon des règles très strictes.
 
-Le principe de v0.1 est simple : générer localement les données de veille, les normaliser, les scorer, puis exporter des fichiers Markdown compatibles Obsidian. Le site ne doit recevoir que des fichiers déjà produits au moment du build.
+Elle n'est pas un service permanent. Elle ne tourne pas toute seule, ne crée pas de commit, ne publie pas de données brutes et ne lance aucun traitement caché.
 
-## Périmètre strict v0.1
+## Ce que fait le projet
 
-- Ingestion RSS/Atom.
-- Ingestion HAL.
-- Normalisation avec Pydantic.
-- Scoring lexical simple.
-- Export Markdown Obsidian.
-- Exécution locale et manuelle.
+Le pipeline local peut :
 
-Le pipeline v0.1 reste local et manuel : il n’ajoute ni cron, ni auto-commit, ni publication Hugo.
+- lire des flux RSS/Atom configurés ;
+- interroger HAL ;
+- préparer un connecteur Crossref, désactivé par défaut tant qu'une adresse `CROSSREF_MAILTO` réelle n'est pas fournie ;
+- normaliser les résultats dans `data/normalized/db.json` ;
+- attribuer un statut avec un scoring lexical explicable ;
+- générer un rapport Markdown privé pour Obsidian ;
+- générer un export CSL JSON privé pour Zotero ;
+- générer un JSON public minimal pour la page Hugo, seulement avec les champs autorisés par l'audit légal.
 
-## Hors-périmètre v0.1
+Le pipeline public ne doit jamais exposer les données de travail internes : pas de `raw`, pas de logs, pas d'abstracts, pas de scores, pas d'explications de score, pas de chemins locaux, pas de secrets.
 
-- Crossref.
-- OpenAlex.
-- CiNii.
-- NDL.
-- J-STAGE.
-- Zotero CSL ou synchronisation automatique Zotero.
-- Intégration Hugo.
-- `changedetection.io`.
-- Cron automatique.
-- Résumés ou traitements LLM.
-- Scraping.
-- Intégration japonaise spécialisée.
+## Ce que le projet ne fait pas
 
-## Commandes
+Par défaut, l'antenne ne fait pas ceci :
 
-Depuis ce dossier :
+- pas de cron ;
+- pas d'auto-commit ;
+- pas de publication automatique ;
+- pas de scraping HTML ;
+- pas de résumé LLM ;
+- pas d'écriture automatique dans Zotero ou Obsidian ;
+- pas d'appel Crossref live sans activation explicite et adresse de contact locale ;
+- pas d'OpenAlex, CiNii, NDL ou J-STAGE dans l'état actuel.
 
-```sh
-make install
-make test
-make run
-```
+## Où sont les fichiers
 
-`make run` lance le pipeline complet : ingestion RSS/Atom, ingestion HAL, normalisation, scoring lexical et export Markdown dans `data/exports/`.
+Depuis la racine du dépôt, le module vit dans `antenne_radio/`.
 
-## Documentation d'usage pour débutants
+Les fichiers à connaître :
 
-Cette antenne se lance depuis le dossier `antenne_radio/`. Elle ne publie rien toute seule : elle lit des sources configurées, écrit des fichiers locaux dans `data/`, puis génère un rapport Markdown que tu peux ouvrir dans Obsidian.
+- `README.md` : ce mode d'emploi.
+- `Makefile` : commandes courantes.
+- `requirements.txt` : dépendances Python.
+- `config/sources.yaml` : sources suivies ou gardées en réserve.
+- `config/keywords.yaml` : mots-clés positifs et négatifs.
+- `config/scoring.yaml` : poids et seuils du scoring.
+- `01_RESSOURCES_SUIVIES.md` : registre humain des sources.
+- `LEGAL_AUDIT.md` : limites de publication publique.
+- `scripts/pipeline.py` : orchestration de la récolte.
+- `data/raw/` : dumps bruts locaux.
+- `data/normalized/db.json` : base locale normalisée.
+- `data/exports/` : exports privés Markdown et CSL JSON.
+- `data/logs/` : journaux locaux du pipeline.
 
-### Installation
+Le workflow GitHub Actions de tests vit à la racine du dépôt : `.github/workflows/tests.yml`.
 
-Pré-requis :
+## Première installation locale
 
-- Python 3 disponible avec la commande `python3`.
-- Une connexion internet pour récupérer les sources RSS/HAL lors de `make run`.
+Prérequis :
 
-Depuis la racine du site :
+- Python disponible avec la commande `python3`.
+- Une connexion internet seulement quand tu veux lancer une vraie récolte avec `make run`.
+
+Depuis la racine du dépôt :
 
 ```sh
 cd antenne_radio
 make install
 ```
 
-Cette commande crée un environnement Python local dans `.venv/` puis installe les dépendances de `requirements.txt`. Tu n'as pas besoin d'activer manuellement l'environnement virtuel pour les commandes Makefile : `make test` et `make run` utilisent directement `.venv/`.
+Cette commande crée `.venv/` dans `antenne_radio/`, puis installe les dépendances depuis `requirements.txt`. Les commandes du `Makefile` utilisent ensuite cet environnement automatiquement.
 
-### Configuration des sources
+## Vérifier que tout tient
 
-Les sources vivent dans `config/sources.yaml`.
+Avant de toucher aux sources ou de lancer une récolte, lance :
 
-- `rss_atom` liste les flux RSS ou Atom.
-- `hal` configure la recherche HAL.
-- `enabled: true` active une source.
-- `enabled: false` garde une source en réserve sans la lancer.
-- `limit` limite le nombre de résultats HAL récupérés.
+```sh
+cd antenne_radio
+make test
+```
 
-La liste lisible des ressources actuellement suivies est maintenue dans `01_RESSOURCES_SUIVIES.md`. Quand tu ajoutes, désactives ou modifies une source dans `config/sources.yaml`, mets aussi ce fichier à jour.
+`make test` lance la suite de tests avec `.venv/bin/pytest`. Cette commande ne doit pas appeler les sources live et ne demande pas de secret.
 
-Les mots-clés vivent dans `config/keywords.yaml`. Les règles de score vivent dans `config/scoring.yaml`. Pour v0.1, il vaut mieux ajuster ces fichiers plutôt que toucher au code.
+Si `make test` échoue parce que `.venv/bin/pytest` n'existe pas, relance :
 
-### Lancement courant
+```sh
+make install
+make test
+```
 
-Pour vérifier que la base tient :
+## Récolte manuelle hebdomadaire
+
+La routine simple, une fois par semaine :
+
+1. Ouvre un terminal à la racine du dépôt.
+2. Regarde l'état Git avant de commencer :
+
+```sh
+git status --short
+```
+
+3. Va dans le module :
+
+```sh
+cd antenne_radio
+```
+
+4. Vérifie les tests :
 
 ```sh
 make test
 ```
 
-Pour lancer toute la veille :
+5. Lance volontairement la récolte :
 
 ```sh
 make run
 ```
 
-Après un run réussi, les fichiers importants sont :
+`make run` interroge les sources activées, normalise les résultats, applique le scoring et génère le rapport Markdown privé. C'est la commande qui peut faire des appels réseau. Elle ne doit pas être transformée en cron sans décision explicite.
 
-- `data/raw/rss_latest.json` : dernier dump RSS/Atom.
-- `data/raw/hal_latest.json` : dernier dump HAL.
-- `data/normalized/db.json` : base normalisée unique.
-- `data/exports/veille-YYYY-WW.md` : rapport Markdown hebdomadaire.
-- `data/exports/zotero-veille-YYYY-WW.csl.json` : export CSL JSON manuel pour Zotero, si tu le génères.
-- `data/logs/pipeline.log` : journal des étapes du pipeline.
-- `data/logs/api.log` : erreurs ou avertissements des sources.
+6. Lis le résultat annoncé par le terminal, puis vérifie les journaux si quelque chose semble vide ou étrange :
 
-`make clean-data` supprime les dumps, la base, les exports et les logs locaux. À utiliser seulement si tu veux repartir de zéro.
+```sh
+tail -n 50 data/logs/pipeline.log
+tail -n 50 data/logs/api.log
+```
 
-### Lecture du rapport Obsidian
+7. Ouvre les exports générés dans `data/exports/` pour lire la veille.
 
-Le rapport est un fichier Markdown simple dans `data/exports/`, par exemple `data/exports/veille-2026-21.md`.
+Après un run réussi, les fichiers importants sont généralement :
 
-Dans Obsidian, tu peux soit ouvrir ce dossier comme partie de ton coffre, soit déplacer/copier le fichier manuellement dans ton coffre. Le script ne modifie jamais ton vrai vault Obsidian.
+- `data/raw/rss_latest.json`
+- `data/raw/hal_latest.json`
+- `data/raw/crossref_latest.json`
+- `data/normalized/db.json`
+- `data/exports/veille-YYYY-WW.md`
+- `data/logs/pipeline.log`
+- `data/logs/api.log`
 
-Le rapport contient :
+Un pipeline peut finir techniquement "ok" même si une source a renvoyé peu de résultats. Il faut donc lire les compteurs et les logs, surtout après une erreur réseau.
 
-- un frontmatter avec la semaine et les compteurs ;
-- une section `À lire` pour les items `to_read` ;
-- une section `Candidats` pour les items `candidate` ;
-- pour chaque item : titre, auteurs, source, date, lien, score, explication et abstract si disponible.
+## Rapport Obsidian privé
 
-Par défaut, l'export ne marque pas les items comme `exported`. L'option avancée existe, mais elle doit être explicite :
+Le rapport Markdown est écrit dans `data/exports/`, par exemple `data/exports/veille-2026-21.md`.
+
+Il sert à la lecture privée. Il peut contenir des informations qui ne doivent pas être publiées telles quelles : abstracts, score, explication de score, auteurs, tags ou détails de sélection.
+
+Le script ne modifie pas ton vault Obsidian. Tu peux importer ou déplacer le fichier manuellement selon ton propre usage.
+
+Par défaut, l'export ne change pas les statuts dans `db.json`. L'option suivante existe, mais elle doit rester un choix explicite :
 
 ```sh
 .venv/bin/python scripts/pipeline.py --mark-exported
 ```
 
-### Export Zotero manuel
+## Export Zotero privé
 
-Un export CSL JSON manuel peut être généré sans API Zotero et sans synchronisation :
+Pour générer un fichier CSL JSON importable manuellement dans Zotero :
 
 ```sh
 .venv/bin/python scripts/export/export_csl.py
 ```
 
-Le fichier est écrit dans `data/exports/`, par exemple `data/exports/zotero-veille-2026-21.csl.json`. Il contient par défaut les items `to_read` et `candidate`, avec titre, auteurs, source, date, URL, DOI si disponible, type bibliographique approximatif et abstract privé si disponible.
+Le fichier est écrit dans `data/exports/`, par exemple `data/exports/zotero-veille-2026-21.csl.json`.
 
-Tu peux ensuite importer ce fichier manuellement dans Zotero avec l'import de fichier standard. Le script ne modifie pas `db.json` et n'écrit pas dans ta bibliothèque Zotero.
+Cet export reste privé. Il ne synchronise rien avec Zotero, ne modifie pas `db.json` et ne doit pas être publié automatiquement.
 
-### Export public minimal pour Hugo
+## Export public minimal Hugo
 
-Après audit légal, un export public expurgé peut être généré :
+Le projet possède aussi un export public expurgé pour la section Hugo `/antenne-radio/`.
+
+Pour le générer volontairement :
 
 ```sh
 make export-public
 ```
 
-Cette commande écrit `../static/antenne-radio/index.json`, utilisé par la page Hugo `/antenne-radio/`. Le JSON public est limité à une whitelist stricte par item :
+Cette commande écrit `../static/antenne-radio/index.json`. Elle ne doit publier que cette whitelist par item :
 
 - `id`
 - `title`
@@ -154,57 +189,81 @@ Cette commande écrit `../static/antenne-radio/index.json`, utilisé par la page
 - `source_family`
 - `attribution_id`
 
-Il exclut les données brutes, résumés, journaux d'exécution, notes privées, chemins locaux, secrets, statuts, scores, explications, mots-clés internes, auteurs et tags. Les items `ignored` et les sources non auditées ne sont pas exportés.
+Tout le reste est interdit en public, notamment `raw`, `abstract`, logs, notes privées, chemins locaux, secrets, statuts, scores, explications, mots-clés internes, auteurs et tags.
 
-La page Hugo reste sobre et sans JavaScript dédié. Elle affiche seulement les métadonnées publiques et les liens d'origine. La section désactive ses sorties RSS pour éviter un flux public sortant.
+Avant toute publication, relis `LEGAL_AUDIT.md` et relance les tests. En cas de doute, ne publie pas.
 
-### Dépannage
+## CI manuelle GitHub Actions
 
-Si `make test` dit que `.venv/bin/pytest` est introuvable, relance :
+Le dépôt contient un workflow de test manuel : `.github/workflows/tests.yml`.
+
+Ce workflow sert uniquement à vérifier que la suite de tests de `antenne_radio/` passe dans GitHub Actions. Il ne lance pas `make run`, ne récolte aucune source live, ne génère aucun export, ne publie rien et ne demande aucun secret.
+
+Pour le lancer dans GitHub :
+
+1. Va dans l'onglet `Actions` du dépôt.
+2. Choisis `Antenne Radio Tests`.
+3. Clique sur `Run workflow`.
+4. Garde la branche proposée ou choisis celle que tu veux tester.
+5. Clique de nouveau sur `Run workflow`.
+
+Le workflow fait seulement ceci :
+
+- checkout du dépôt ;
+- installation de Python 3.12 ;
+- cache pip basé sur `antenne_radio/requirements.txt` ;
+- `make install` dans `antenne_radio/` ;
+- `make test` dans `antenne_radio/`.
+
+Il est déclenché par `workflow_dispatch` uniquement. Il n'y a pas de déclenchement sur `push`, pas de déclenchement sur `pull_request`, pas de cron et pas d'auto-commit.
+
+## Modifier les sources
+
+Les sources se règlent dans `config/sources.yaml`.
+
+Règles simples :
+
+- `enabled: true` active une source.
+- `enabled: false` garde une source documentée mais inactive.
+- Toute modification de source doit être reportée dans `01_RESSOURCES_SUIVIES.md`.
+- Après modification, lance `make test`.
+- Pour une vraie récolte, lance ensuite `make run` manuellement.
+
+Pour Crossref, ne mets jamais une adresse personnelle ou un secret directement dans le dépôt. Utilise une variable d'environnement locale si tu décides de l'activer :
 
 ```sh
-make install
+export CROSSREF_MAILTO="adresse-de-contact@example.org"
+make run
 ```
 
-Si `make run` finit avec peu ou pas de résultats, lis d'abord :
+Ne configure pas cette variable dans la CI de tests tant que le but est seulement de vérifier la suite locale.
+
+## Nettoyage local
+
+Pour supprimer les données générées et repartir de zéro :
 
 ```sh
-tail -n 50 data/logs/pipeline.log
+make clean-data
+```
+
+Attention : cette commande supprime les dumps, la base normalisée, les exports et les logs locaux sous `data/`. Ne l'utilise pas si tu veux conserver l'historique de veille.
+
+## Dépannage rapide
+
+Si une source ne répond pas, regarde d'abord :
+
+```sh
 tail -n 50 data/logs/api.log
 ```
 
-Une erreur réseau peut produire un dump RSS/HAL vide. Dans ce cas, ne conclus pas que les sources sont mortes : relance `make run` avec une connexion valide.
+Si le pipeline semble avoir sauté une étape, regarde :
 
-Le warning Transom actuel est connu : le flux répond avec une redirection/statut 301 et peut produire un avertissement de parsing. Le pipeline continue grâce aux autres sources.
+```sh
+tail -n 50 data/logs/pipeline.log
+```
 
-Si HAL renvoie des résultats trop techniques, commence par ajuster `config/keywords.yaml` ou `config/scoring.yaml`. Le connecteur HAL doit rester simple en v0.1.
+Si HAL produit trop de bruit technique, commence par `config/keywords.yaml` et `config/scoring.yaml`.
 
-Si le rapport est vide alors que `db.json` contient des items, vérifie les statuts dans `data/normalized/db.json` : seuls `to_read` et `candidate` apparaissent par défaut.
+Si le rapport Markdown est vide alors que `db.json` contient des items, vérifie les statuts : l'export privé affiche surtout les items `to_read` et `candidate`.
 
-### Limites de v0.1
-
-- Le scoring est lexical et explicable, pas intelligent.
-- Le dédoublonnage est volontairement strict : même ID seulement.
-- Les abstracts bruts peuvent contenir du HTML venu des flux ; les exports privés les nettoient au mieux sans modifier la source.
-- Le pipeline est local et manuel.
-- Le pipeline continue après certaines erreurs de source : il faut lire les logs.
-- Les fichiers `data/` sont des fichiers plats locaux, pas une base de données serveur.
-- Aucun résumé LLM n'est généré.
-
-### Ne pas faire en v0.1
-
-- Pas de scraping.
-- Pas d'auto-commit.
-- Pas de publication publique.
-- Pas d'API japonaise.
-- Pas de Zotero automatique.
-
-### Roadmap v0.2
-
-La v0.2 doit rester incrémentale : une extension à la fois.
-
-- Ajouter Crossref ou OpenAlex, mais pas les deux dans le même chantier.
-- Préparer un export CSL-JSON manuel, sans synchronisation Zotero automatique.
-- Tester éventuellement une GitHub Action manuelle, sans cron.
-- Garder CiNii, NDL et J-STAGE pour une phase ultérieure.
-- Garder Hugo public pour plus tard, seulement avec un export expurgé et assumé.
+Si le JSON public contient un champ non prévu par la whitelist, ne publie pas et corrige `scripts/export/export_public.py` ou ses tests avant de continuer.
