@@ -5,7 +5,7 @@ import re
 from datetime import date, datetime
 from enum import Enum
 from typing import Any
-from urllib.parse import parse_qsl, urlencode, urlsplit, urlunsplit
+from urllib.parse import parse_qsl, unquote, urlencode, urlsplit, urlunsplit
 
 from pydantic import BaseModel, ConfigDict, Field, field_validator
 
@@ -30,6 +30,7 @@ class WatchStatus(str, Enum):
 
 
 DOI_PREFIX_RE = re.compile(r"^(?:doi:\s*|https?://(?:dx\.)?doi\.org/)", re.IGNORECASE)
+DOI_VALUE_RE = re.compile(r"\b10\.\d{4,9}/[^\s\"<>#?]+", re.IGNORECASE)
 TRACKING_QUERY_PREFIXES = ("utm_",)
 TRACKING_QUERY_KEYS = {"fbclid", "gclid", "mc_cid", "mc_eid"}
 
@@ -52,7 +53,25 @@ def normalize_doi(doi: str | None) -> str | None:
     if compacted is None:
         return None
 
-    normalized = DOI_PREFIX_RE.sub("", compacted).strip().lower()
+    normalized = DOI_PREFIX_RE.sub("", compacted).strip()
+    parsed = urlsplit(compacted)
+    if parsed.scheme.lower() in {"http", "https"}:
+        path = unquote(parsed.path.lstrip("/"))
+        if parsed.netloc.lower() in {"doi.org", "dx.doi.org"}:
+            normalized = path
+        else:
+            match = DOI_VALUE_RE.search(path)
+            if match:
+                normalized = match.group(0)
+
+    if not normalized.lower().startswith("10."):
+        match = DOI_VALUE_RE.search(normalized)
+        if match:
+            normalized = match.group(0)
+        else:
+            return None
+
+    normalized = normalized.strip().lower()
     normalized = normalized.rstrip(".,;)")
     return normalized or None
 
@@ -99,7 +118,7 @@ def generate_stable_id(
     published_at: date | datetime | str | None = None,
     source_name: str | None = None,
 ) -> str:
-    normalized_doi = normalize_doi(doi)
+    normalized_doi = normalize_doi(doi) or normalize_doi(url)
     if normalized_doi:
         return _stable_hash("doi", normalized_doi)
 

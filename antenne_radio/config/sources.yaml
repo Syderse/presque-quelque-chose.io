@@ -202,7 +202,7 @@ hal:
   sort: "producedDate_tdate desc"
 
 crossref:
-  enabled: false
+  enabled: true
   name: Crossref radio journals
   base_url: "https://api.crossref.org"
   mailto_env: "CROSSREF_MAILTO"

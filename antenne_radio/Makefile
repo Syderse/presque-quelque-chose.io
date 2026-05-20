@@ -3,6 +3,7 @@ VENV ?= .venv
 PIP := $(VENV)/bin/pip
 PYTEST := $(VENV)/bin/pytest
 DATA_DIRS := data/raw data/normalized data/exports data/logs
+ENV_LOADER := if [ -f ../.env.local ]; then set -a; source ../.env.local; set +a; fi; if [ -f .env.local ]; then set -a; source .env.local; set +a; fi
 
 .PHONY: install test run export-public clean-data
 
@@ -15,7 +16,7 @@ test:
 
 run:
 	@mkdir -p $(DATA_DIRS)
-	$(VENV)/bin/python scripts/pipeline.py
+	@bash -c '$(ENV_LOADER); $(VENV)/bin/python scripts/pipeline.py'
 
 export-public:
 	$(VENV)/bin/python scripts/export/export_public.py

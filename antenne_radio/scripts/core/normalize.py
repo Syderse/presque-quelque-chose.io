@@ -1,6 +1,7 @@
 from __future__ import annotations
 
 import argparse
+import re
 import sys
 from datetime import datetime, timezone
 from pathlib import Path
@@ -21,6 +22,7 @@ from scripts.core.models import (  # noqa: E402
     WatchStatus,
     generate_stable_id,
     normalize_doi,
+    normalize_url,
 )
 
 
@@ -150,8 +152,15 @@ def normalize_rss_entry(
     published_at = _parse_datetime(entry.get("published")) or _parse_datetime(entry.get("updated"))
     title = _first_text(entry.get("title"))
     url = _first_text(entry.get("link"))
+    doi = normalize_doi(_first_text(entry.get("doi")) or _first_text(entry.get("dc_identifier")) or url)
     source_name = _first_text(entry.get("source_name")) or "RSS"
-    item_id = generate_stable_id(url=url, title=title, published_at=published_at, source_name=source_name)
+    item_id = generate_stable_id(
+        doi=doi,
+        url=url,
+        title=title,
+        published_at=published_at,
+        source_name=source_name,
+    )
 
     return RadioWatchItem(
         id=item_id,
@@ -164,6 +173,7 @@ def normalize_rss_entry(
         authors=_text_list(entry.get("authors")),
         published_at=published_at,
         url=url,
+        doi=doi,
         abstract=_first_text(entry.get("summary")),
         source_feed=_first_text(entry.get("source_feed")),
         source_api="rss",
@@ -307,19 +317,122 @@ def load_existing_db(path: str | Path = DEFAULT_DB, *, log_path: str | Path = DE
     return items
 
 
+TITLE_KEY_RE = re.compile(r"\W+")
+
+
+def _normalized_title_key(title: str | None) -> str | None:
+    text = _compact_text(title)
+    if text is None:
+        return None
+
+    normalized = TITLE_KEY_RE.sub(" ", text.casefold()).strip()
+    return normalized or None
+
+
+def _identity_keys(item: RadioWatchItem) -> set[str]:
+    keys = {f"id:{item.id}"}
+    doi = normalize_doi(item.doi) or normalize_doi(item.url)
+    normalized_url = normalize_url(item.url)
+
+    if doi:
+        keys.add(f"doi:{doi}")
+    if normalized_url:
+        keys.add(f"url:{normalized_url}")
+    if doi is None and normalized_url is None and item.published_at is not None:
+        title_key = _normalized_title_key(item.title)
+        if title_key:
+            keys.add(f"title-date:{title_key}|{item.published_at.date().isoformat()}")
+
+    return keys
+
+
+def _merge_text_lists(existing_values: list[str], incoming_values: list[str]) -> list[str]:
+    merged: list[str] = []
+    seen: set[str] = set()
+    for value in [*existing_values, *incoming_values]:
+        text = _compact_text(value)
+        key = text.casefold() if text else None
+        if text and key not in seen:
+            merged.append(text)
+            seen.add(key)
+
+    return merged
+
+
+def _merge_raw_metadata(existing: RadioWatchItem, incoming: RadioWatchItem) -> dict[str, Any]:
+    if not existing.raw:
+        return dict(incoming.raw)
+    if not incoming.raw:
+        return dict(existing.raw)
+
+    raw = dict(existing.raw)
+    merged_sources = raw.get("_merged_sources")
+    if not isinstance(merged_sources, list):
+        merged_sources = []
+
+    source_metadata = {
+        "id": incoming.id,
+        "source_name": incoming.source_name,
+        "source_api": incoming.source_api,
+        "doi": normalize_doi(incoming.doi) or normalize_doi(incoming.url),
+        "url": normalize_url(incoming.url),
+    }
+    if source_metadata not in merged_sources:
+        merged_sources.append(source_metadata)
+
+    raw["_merged_sources"] = merged_sources
+    return raw
+
+
+def _merge_duplicate_item(existing: RadioWatchItem, incoming: RadioWatchItem) -> RadioWatchItem:
+    incoming_doi = normalize_doi(incoming.doi) or normalize_doi(incoming.url)
+    existing_doi = normalize_doi(existing.doi) or normalize_doi(existing.url)
+
+    return existing.model_copy(
+        update={
+            "id": existing.id,
+            "status": existing.status,
+            "doi": incoming_doi or existing_doi,
+            "url": existing.url or incoming.url,
+            "published_at": existing.published_at or incoming.published_at,
+            "title_original": existing.title_original or incoming.title_original,
+            "language": incoming.language if existing.language == "und" and incoming.language != "und" else existing.language,
+            "authors": _merge_text_lists(existing.authors, incoming.authors),
+            "abstract": existing.abstract or incoming.abstract,
+            "tags": _merge_text_lists(existing.tags, incoming.tags),
+            "keywords_matched": existing.keywords_matched,
+            "negative_keywords_matched": existing.negative_keywords_matched,
+            "relevance_score": existing.relevance_score,
+            "score_explanation": existing.score_explanation,
+            "source_feed": existing.source_feed or incoming.source_feed,
+            "source_api": existing.source_api,
+            "raw": _merge_raw_metadata(existing, incoming),
+        }
+    )
+
+
+def _remember_identity_keys(key_to_index: dict[str, int], item: RadioWatchItem, index: int) -> None:
+    for key in _identity_keys(item):
+        key_to_index[key] = index
+
+
 def merge_items_without_duplicates(
     existing_items: list[RadioWatchItem],
     new_items: list[RadioWatchItem],
 ) -> list[RadioWatchItem]:
-    merged = list(existing_items)
-    known_ids = {item.id for item in existing_items}
+    merged: list[RadioWatchItem] = []
+    key_to_index: dict[str, int] = {}
 
-    for item in new_items:
-        if item.id in known_ids:
-            continue
+    for item in [*existing_items, *new_items]:
+        duplicate_index = next((key_to_index[key] for key in _identity_keys(item) if key in key_to_index), None)
+        if duplicate_index is None:
+            duplicate_index = len(merged)
+            merged.append(item)
+        else:
+            merged[duplicate_index] = _merge_duplicate_item(merged[duplicate_index], item)
 
-        merged.append(item)
-        known_ids.add(item.id)
+        _remember_identity_keys(key_to_index, merged[duplicate_index], duplicate_index)
+        _remember_identity_keys(key_to_index, item, duplicate_index)
 
     return sort_items(merged)
 

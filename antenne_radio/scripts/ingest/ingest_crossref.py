@@ -2,6 +2,7 @@ from __future__ import annotations
 
 import argparse
 import os
+import re
 import sys
 import time
 from pathlib import Path
@@ -26,6 +27,7 @@ DEFAULT_ROWS = 20
 DEFAULT_TIMEOUT_SECONDS = 20
 DEFAULT_DELAY_SECONDS = 1.0
 DEFAULT_USER_AGENT = "radio-watch/0.1 (https://presque-quelque-chose.io)"
+MAILTO_QUERY_RE = re.compile(r"([?&]mailto=)[^&\s'\"]+")
 
 
 def load_yaml(path: str | Path) -> dict[str, Any]:
@@ -64,6 +66,10 @@ def _compact_text(value: Any) -> str | None:
     return compacted or None
 
 
+def _safe_error_message(value: Any) -> str:
+    return MAILTO_QUERY_RE.sub(r"\1<redacted>", str(value))
+
+
 def _error_entry(
     *,
     error_type: str,
@@ -92,8 +98,9 @@ def _error_payload(
     source_api: str,
     error_type: str,
     message: str,
+    crossref_config: dict[str, Any] | None = None,
 ) -> dict[str, Any]:
-    return {
+    payload = {
         "connector": "crossref",
         "generated_at": utc_now_iso(),
         "config": str(config_path),
@@ -105,6 +112,11 @@ def _error_payload(
         "raw_responses": [],
         "errors": [_error_entry(error_type=error_type, message=message)],
     }
+    if crossref_config is not None:
+        payload["mailto_env"] = crossref_config.get("mailto_env")
+        payload["rows"] = _as_positive_int(crossref_config.get("rows"), DEFAULT_ROWS)
+
+    return payload
 
 
 def _selected_journals(crossref_config: dict[str, Any]) -> list[dict[str, Any]]:
@@ -271,6 +283,7 @@ def ingest_crossref(
             source_api=source_api,
             error_type="disabled",
             message="Crossref source is disabled",
+            crossref_config=crossref_config,
         )
         write_json(output_path, payload)
         return payload
@@ -285,6 +298,7 @@ def ingest_crossref(
             source_api=source_api,
             error_type="missing_mailto",
             message=message,
+            crossref_config=crossref_config,
         )
         write_json(output_path, payload)
         return payload
@@ -373,11 +387,12 @@ def ingest_crossref(
                 }
             )
         except httpx.TimeoutException as exc:
-            message = f"Crossref request timed out for {journal_name}: {exc}"
+            error_message = _safe_error_message(exc)
+            message = f"Crossref request timed out for {journal_name}: {error_message}"
             append_log(log_path, message, level="ERROR")
             error = _error_entry(
                 error_type="timeout",
-                message=str(exc),
+                message=error_message,
                 journal_id=journal_id,
                 journal_name=journal_name,
                 issn=primary_issn,
@@ -396,11 +411,12 @@ def ingest_crossref(
         except httpx.HTTPStatusError as exc:
             status_code = exc.response.status_code
             error_type = _status_error_type(status_code)
-            message = f"Crossref HTTP error {status_code} for {journal_name}: {exc}"
+            error_message = _safe_error_message(exc)
+            message = f"Crossref HTTP error {status_code} for {journal_name}: {error_message}"
             append_log(log_path, message, level="ERROR")
             error = _error_entry(
                 error_type=error_type,
-                message=str(exc),
+                message=error_message,
                 journal_id=journal_id,
                 journal_name=journal_name,
                 issn=primary_issn,
@@ -418,11 +434,12 @@ def ingest_crossref(
                 }
             )
         except httpx.RequestError as exc:
-            message = f"Crossref request failed for {journal_name}: {exc}"
+            error_message = _safe_error_message(exc)
+            message = f"Crossref request failed for {journal_name}: {error_message}"
             append_log(log_path, message, level="ERROR")
             error = _error_entry(
                 error_type="request",
-                message=str(exc),
+                message=error_message,
                 journal_id=journal_id,
                 journal_name=journal_name,
                 issn=primary_issn,

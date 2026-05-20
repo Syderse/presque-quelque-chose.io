@@ -3,11 +3,14 @@ import sys
 from datetime import datetime, timezone
 from pathlib import Path
 
+import pytest
+
 
 ROOT = Path(__file__).resolve().parents[1]
 sys.path.insert(0, str(ROOT))
 
 from scripts.core import normalize  # noqa: E402
+from scripts.core.models import RadioWatchItem, SourceType, WatchStatus  # noqa: E402
 from scripts.ingest import ingest_rss  # noqa: E402
 
 
@@ -56,6 +59,16 @@ def crossref_fixture_item():
     }
 
 
+def taylor_rss_doi_entry():
+    return {
+        "title": "Community radio and podcast publics",
+        "link": "https://www.tandfonline.com/doi/full/10.1080/19376529.2026.1234567?src=recsys",
+        "published": "2026-05-01T00:00:00Z",
+        "source_name": "Journal of Radio & Audio Media",
+        "source_feed": "https://www.tandfonline.com/feed/rss/hjrs20",
+    }
+
+
 def test_normalize_rss_entry_from_fixture():
     item = normalize.normalize_rss_entry(rss_fixture_entry(), discovered_at=DISCOVERED_AT)
 
@@ -92,6 +105,101 @@ def test_normalize_crossref_entry_from_fixture():
     assert item.source_api == "crossref"
     assert item.authors == ["Ada Radio"]
     assert item.tags == ["Communication", "Radio studies"]
+
+
+def test_merge_deduplicates_hal_and_crossref_with_same_doi():
+    hal_item = normalize.normalize_hal_entry(
+        {
+            "title_s": ["Community radio and podcast publics"],
+            "uri_s": "https://hal.science/hal-999999",
+            "doiId_s": "DOI:10.1080/19376529.2026.1234567",
+            "producedDate_tdate": "2026-05-01T00:00:00Z",
+            "language_s": ["en"],
+            "authorFullName_s": ["HAL Author"],
+            "abstract_s": ["HAL abstract"],
+            "keyword_s": ["radio"],
+        },
+        source_name="HAL radio studies search",
+        source_api="hal",
+        discovered_at=DISCOVERED_AT,
+    )
+    crossref_item = normalize.normalize_crossref_entry(crossref_fixture_item(), discovered_at=DISCOVERED_AT)
+
+    merged = normalize.merge_items_without_duplicates([], [hal_item, crossref_item])
+
+    assert len(merged) == 1
+    assert merged[0].id == hal_item.id
+    assert merged[0].source_api == "hal"
+    assert merged[0].doi == "10.1080/19376529.2026.1234567"
+    assert merged[0].authors == ["HAL Author", "Ada Radio"]
+
+
+def test_merge_deduplicates_taylor_rss_url_and_crossref_doi():
+    rss_item = normalize.normalize_rss_entry(taylor_rss_doi_entry(), discovered_at=DISCOVERED_AT)
+    crossref_item = normalize.normalize_crossref_entry(crossref_fixture_item(), discovered_at=DISCOVERED_AT)
+
+    merged = normalize.merge_items_without_duplicates([], [rss_item, crossref_item])
+
+    assert len(merged) == 1
+    assert merged[0].id == rss_item.id
+    assert merged[0].source_name == "Journal of Radio & Audio Media"
+    assert merged[0].source_api == "rss"
+    assert merged[0].doi == "10.1080/19376529.2026.1234567"
+    assert merged[0].abstract == "<jats:p>Radio studies abstract.</jats:p>"
+
+
+@pytest.mark.parametrize("status", [WatchStatus.to_read, WatchStatus.ignored, WatchStatus.exported])
+def test_merge_preserves_existing_human_status_and_legacy_id(status):
+    existing_item = RadioWatchItem(
+        id="url:legacy-taylor-item",
+        title="Community radio and podcast publics",
+        source_name="Journal of Radio & Audio Media",
+        source_type=SourceType.journal_article,
+        language="en",
+        status=status,
+        discovered_at=DISCOVERED_AT,
+        published_at=DISCOVERED_AT,
+        url="https://www.tandfonline.com/doi/full/10.1080/19376529.2026.1234567?src=recsys",
+        raw={"source": "existing"},
+    )
+    crossref_item = normalize.normalize_crossref_entry(crossref_fixture_item(), discovered_at=DISCOVERED_AT)
+
+    merged = normalize.merge_items_without_duplicates([existing_item], [crossref_item])
+
+    assert len(merged) == 1
+    assert merged[0].id == "url:legacy-taylor-item"
+    assert merged[0].status is status
+    assert merged[0].doi == "10.1080/19376529.2026.1234567"
+
+
+def test_merge_deduplicates_title_and_date_when_doi_and_url_are_absent():
+    first_item = RadioWatchItem(
+        id="fallback:first",
+        title="Radio Archives: everyday listening!",
+        source_name="Fixture source",
+        source_type=SourceType.blog,
+        language="en",
+        status=WatchStatus.new,
+        discovered_at=DISCOVERED_AT,
+        published_at=DISCOVERED_AT,
+    )
+    second_item = RadioWatchItem(
+        id="fallback:second",
+        title="radio archives everyday listening",
+        source_name="Other fixture source",
+        source_type=SourceType.blog,
+        language="en",
+        status=WatchStatus.new,
+        discovered_at=DISCOVERED_AT,
+        published_at=DISCOVERED_AT,
+        abstract="Useful private metadata",
+    )
+
+    merged = normalize.merge_items_without_duplicates([], [first_item, second_item])
+
+    assert len(merged) == 1
+    assert merged[0].id == "fallback:first"
+    assert merged[0].abstract == "Useful private metadata"
 
 
 def test_identical_passes_do_not_create_duplicates(tmp_path):

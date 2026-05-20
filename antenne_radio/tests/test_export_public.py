@@ -143,6 +143,47 @@ def test_public_export_excludes_private_fields_recursively(tmp_path):
     assert "https://example.org/feed.xml" not in content
 
 
+def test_public_export_schema_stays_whitelisted_for_merged_private_metadata(tmp_path):
+    db_path = tmp_path / "db.json"
+    output_path = tmp_path / "public" / "index.json"
+    write_db(
+        db_path,
+        [
+            item_payload(
+                id="manual:merged",
+                authors=["Ada Radio"],
+                tags=["Crossref"],
+                abstract="Private Crossref abstract",
+                raw={
+                    "entry": "private",
+                    "_merged_sources": [
+                        {
+                            "source_name": "Crossref",
+                            "source_api": "crossref",
+                            "doi": "10.1234/radio.2026",
+                        }
+                    ],
+                },
+            )
+        ],
+    )
+
+    export_public.export_public_json(
+        db_path=db_path,
+        output_path=output_path,
+        generated_at=GENERATED_AT,
+    )
+    exported = json.loads(output_path.read_text(encoding="utf-8"))
+    public_item = exported["items"][0]
+    content = output_path.read_text(encoding="utf-8")
+
+    assert set(public_item) == PUBLIC_ITEM_KEYS
+    assert forbidden_keys(exported) == set()
+    assert "Private Crossref abstract" not in content
+    assert "Ada Radio" not in content
+    assert "_merged_sources" not in content
+
+
 def test_public_export_keeps_only_public_statuses_and_audited_sources(tmp_path):
     db_path = tmp_path / "db.json"
     output_path = tmp_path / "public" / "index.json"

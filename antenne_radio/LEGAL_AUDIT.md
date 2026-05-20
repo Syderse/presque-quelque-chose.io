@@ -1010,7 +1010,7 @@ Faible. Source institutionnelle conçue pour le partage ouvert.
 ### Crossref
 
 **Statut recommandé :**  
-VALIDÉ
+VALIDÉ PRUDENT
 
 **Famille :**  
 API / agence d'enregistrement DOI
@@ -1035,12 +1035,18 @@ API REST (api.crossref.org).
 **Affichage public recommandé :**
 - title
 - URL (via résolveur doi.org)
-- auteurs
 - date de publication
 - revue d'accueil
+- DOI
+
+Dans l'implémentation actuelle de l'antenne, l'export public reste encore plus strict : pas d'auteurs, pas de tags, pas d'abstracts et aucun dump brut Crossref. Les auteurs et sujets Crossref peuvent rester en privé dans `db.json` pour la curation et l'export Zotero manuel.
 
 **Champs interdits en public :**
 - Réponses API brutes
+- abstracts
+- auteurs
+- tags
+- scores et explications de score
 
 **Attribution minimale :**  
 `Source: Crossref — lien DOI.`
@@ -1052,9 +1058,9 @@ L'accès au Polite Pool exige la transmission d'une adresse email valide via le 
 Faible. Organisation à but non lucratif d'intérêt public.
 
 **Décision pratique pour `sources.yaml` :**
-- `active: true`
+- `active: true`, avec `mailto_env: CROSSREF_MAILTO`.
 - raison : Données bibliographiques de référence absolue.
-- notes d’implémentation : Configuration obligatoire du paramètre mailto pour la courtoisie réseau.
+- notes d’implémentation : Configuration obligatoire du paramètre mailto pour la courtoisie réseau, limite basse `rows: 20`, une seule famille de revue au démarrage, et aucun appel réseau si le mailto local manque.
 
 ### OpenAlex
 

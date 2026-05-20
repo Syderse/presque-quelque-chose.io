@@ -10,7 +10,7 @@ Le pipeline local peut :
 
 - lire des flux RSS/Atom configurés ;
 - interroger HAL ;
-- préparer et activer de manière contrôlée un connecteur Crossref (planifié en V3 via `CROSSREF_MAILTO` local) ;
+- interroger Crossref de manière contrôlée, seulement avec `CROSSREF_MAILTO` local ;
 - préparer et intégrer un connecteur OpenAlex (planifié en V3 via `OPENALEX_MAILTO` local) ;
 - normaliser les résultats dans `data/normalized/db.json` ;
 - attribuer un statut avec un scoring lexical explicable ;
@@ -30,7 +30,7 @@ Par défaut, l'antenne ne fait pas ceci :
 - pas de scraping HTML ;
 - pas de résumé LLM ;
 - pas d'écriture automatique dans Zotero ou Obsidian ;
-- pas d'appels API live sans activation explicite et adresse de contact locale (`CROSSREF_MAILTO` / `OPENALEX_MAILTO`) ;
+- pas d'appels API live sans adresse de contact locale (`CROSSREF_MAILTO` / `OPENALEX_MAILTO`) ;
 - pas d'OpenAlex (en cours de conception en V3), ni de CiNii, NDL ou J-STAGE (reportés à la V4 japonaise) par défaut.
 
 ## Philosophie de maintenance et doctrine de données
@@ -138,6 +138,8 @@ make run
 ```
 
 `make run` interroge les sources activées, normalise les résultats, applique le scoring et génère le rapport Markdown privé. C'est la commande qui peut faire des appels réseau. Elle ne doit pas être transformée en cron sans décision explicite.
+
+Pour Crossref, `make run` charge automatiquement `../.env.local` puis `./.env.local` si ces fichiers existent. Ces fichiers sont ignorés par Git. Si `CROSSREF_MAILTO` n'est pas défini, le connecteur Crossref écrit une erreur locale `missing_mailto`, ne fait aucun appel réseau Crossref, et le pipeline continue avec les autres sources.
 
 6. Lis le résultat annoncé par le terminal, puis vérifie les journaux si quelque chose semble vide ou étrange :
 
@@ -259,15 +261,20 @@ Règles simples :
 
 ### Activation polie et sobre des API (Crossref et OpenAlex)
 
-Les connecteurs pour les API Crossref et OpenAlex sont désactivés par défaut (`enabled: false`). Leur objectif n'est pas de moissonner massivement, mais de servir de complément ciblé. Si vous décidez de les activer (planifié en V3), vous devez impérativement respecter les règles de politesse et de sobriété suivantes :
+Crossref est activé durablement dans `config/sources.yaml`, mais avec un garde-fou strict : aucun appel réseau Crossref n'a lieu si `CROSSREF_MAILTO` n'est pas disponible localement. OpenAlex reste désactivé jusqu'à une décision ultérieure. Leur objectif n'est pas de moissonner massivement, mais de servir de complément ciblé. Vous devez impérativement respecter les règles de politesse et de sobriété suivantes :
 
-1.  **Identification polie obligatoire** : Ne mettez jamais d'adresse personnelle ou de secret en dur dans le dépôt. Utilisez les variables d'environnement locales :
+1.  **Identification polie obligatoire** : Ne mettez jamais d'adresse personnelle ou de secret en dur dans le dépôt. Utilisez les variables d'environnement locales, soit dans votre shell, soit dans un fichier `.env.local` ignoré par Git :
     ```sh
     export CROSSREF_MAILTO="adresse-de-contact@example.org"
     export OPENALEX_MAILTO="adresse-de-contact@example.org"
     ```
+    Variante `.env.local` :
+    ```sh
+    CROSSREF_MAILTO=adresse-de-contact@example.org
+    ```
 2.  **Sobriété & Limitation** : Assurez-vous que les limites de résultats (`rows: 20` ou moins) et de pagination restent basses par run pour éviter d'aspirer inutilement des volumes massifs.
 3.  **Rate limiting et délai poli** : Le connecteur doit obligatoirement respecter un délai poli d'au moins `1` seconde (`polite_delay_seconds`) entre chaque requête séquentielle pour ne pas surcharger l'API ni risquer de bloquer votre adresse IP locale.
+4.  **Départ contrôlé** : Crossref est limité à une seule famille de revues pour la recette initiale : `Journal of Radio & Audio Media`, avec `rows: 20`.
 
 Ne configurez pas ces variables d'identification dans la CI de tests tant que le but est seulement de vérifier la suite locale.
 

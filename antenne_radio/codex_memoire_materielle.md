@@ -3,13 +3,13 @@
 ## Reprise rapide & État du pipeline v2
 - **Démarrage rapide** : Lancer `git status --short`, lire `docs/AGENTS.md` et `antenne_radio/README.md`.
 - **Architecture & Local** : Le sous-projet vit exclusivement dans `antenne_radio/` avec son `.venv` et ses dépendances. Pas de cron, pas d'auto-commit, pas de LLM.
-- **Pipeline opérationnel** : Ingestion RSS/Atom (10 sources actives) + HAL (requête ciblée resserrée) -> Normalisation `RadioWatchItem` dédupliquée dans `data/normalized/db.json` (283 items) -> Scoring lexical (poids positifs, négatifs `-6` et techniques `-2`) -> Exports privés (Obsidian hebdomadaire, Zotero CSL JSON) et Export public (`static/antenne-radio/index.json`, 227 items whitelistés).
+- **Pipeline opérationnel** : Ingestion RSS/Atom (10 sources actives) + HAL (requête ciblée resserrée) + Crossref contrôlé (1 revue, `rows: 20`, `CROSSREF_MAILTO` local obligatoire) -> Normalisation `RadioWatchItem` dédupliquée dans `data/normalized/db.json` (289 items) -> Scoring lexical (poids positifs, négatifs `-6` et techniques `-2`) -> Exports privés (Obsidian hebdomadaire, Zotero CSL JSON) et Export public (`static/antenne-radio/index.json`, 233 items whitelistés).
 - **Intégration Hugo** : Page `/antenne-radio/` lisant le JSON public au build-time (avec fallback `<noscript>` de 50 cartes) et l'hydratant via JS Vanilla dynamique en mémoire (recherche, filtres ET multi-critères, deep-linking, chargement progressif par 50).
 
 ## Contrats de données & Sécurité
 - **db.json** : Doit rester valide, UTF-8 non échappé, trié par clés. Déduplication par ID stable (DOI > URL > Title/Date). Jamais de suppression automatique des `ignored`.
 - **Confidentialité absolue (Anti-fuite)** : Interdiction stricte de publier abstracts, raw dumps, logs, scores, explications, mots-clés internes, auteurs, tags ou chemins locaux. Seul le JSON whitelisté est public.
-- **Crossref** : Connecteur préparé mais désactivé par défaut (`enabled: false`). Nécessite la configuration d'un `CROSSREF_MAILTO` valide localement.
+- **Crossref** : Connecteur activé durablement avec garde-fou (`enabled: true`). Sans `CROSSREF_MAILTO`, il écrit `missing_mailto` et ne fait aucun appel réseau ; avec mailto local, la recette validée interroge seulement Journal of Radio & Audio Media à `rows: 20`.
 - **OpenAlex** : Intégration planifiée en V3 avec `OPENALEX_MAILTO` local obligatoire, requêtes ciblées et score de pertinence strictement privé.
 
 ---
@@ -71,3 +71,119 @@
   - **Index public (`static/antenne-radio/index.json`)** : 227 items whitelistés sous format `antenne-radio-public-v0`.
 - **Garantie d'absence de fuites** : Scan complet du JSON et du HTML généré validant l'absence de champs sensibles (`raw`, `abstract`, logs, secrets, scores, auteurs, tags, etc.) ou de chemins locaux. Les quelques occurrences trouvées sont des faux positifs validés.
 - **Handoff & Transition V3** : Le projet local V2 est gelé et stable (81 tests unitaires OK). Le prochain chantier majeur est la V3 académique, documentée dans `06_plan_v3_academique.md` (activation et déduplication DOI Crossref, connecteur OpenAlex avec score de pertinence privé, et intégration des venues/réseaux prioritaires). Les moissonnages DOAJ, Persée, CAIRN ou OpenEdition OPML sont explicitement reportés hors V3.
+
+---
+
+## 2026-05-20 - Conversation 1 - Crossref propre, DOI et anti-fuite (Prompt 1.1)
+- **Objectif** : Auditer l'état actuel de Crossref dans le dépôt avant toute activation durable.
+- **Fichiers lus et inspectés** :
+  - `antenne_radio/config/sources.yaml`
+  - `antenne_radio/scripts/ingest/ingest_crossref.py`
+  - `antenne_radio/scripts/core/normalize.py`
+  - `antenne_radio/scripts/core/models.py`
+  - `antenne_radio/tests/test_ingest_crossref.py`
+  - `antenne_radio/tests/test_normalize.py`
+  - `antenne_radio/LEGAL_AUDIT.md`
+  - `antenne_radio/01_RESSOURCES_SUIVIES.md`
+- **Commandes lancées** :
+  - `git status --short` : vérification de l'état du dépôt (worktree propre).
+  - `make test` : exécution de la suite de tests (81 tests validés à 100% avec succès).
+  - Vérification par script python de l'intégrité et du nombre d'items de `db.json` (283 items) et `static/antenne-radio/index.json` (227 items).
+- **Résultats réels** :
+  - **Crossref inactif par défaut** : configuré à `enabled: false` dans `sources.yaml`.
+  - **Sécurité et anti-fuite** : `CROSSREF_MAILTO` est chargé dynamiquement depuis les variables d'environnement (`mailto_env: "CROSSREF_MAILTO"`), garantissant qu'aucun e-mail personnel ou secret n'est écrit dans le dépôt. Le pipeline lève proprement une erreur de type `missing_mailto` et s'arrête sans appel réseau si la variable est absente.
+  - **Sobriété et politesse** : limite `rows: 20` et `polite_delay_seconds: 1` bien configurés et respectés dans `ingest_crossref.py`.
+  - **Doctrine abstract & anti-fuite** : les abstracts peuvent être conservés en privé dans `db.json` et le dump brut local, mais `export_public.py` possède un filtre strict d'allowlist et un scan récursif d'interdiction qui empêche tout abstract ou donnée privée d'entrer dans `index.json` public.
+  - **Documentation** : Entièrement à jour et cohérente dans `README.md`, `LEGAL_AUDIT.md` et `01_RESSOURCES_SUIVIES.md`.
+- **Limites restantes & Bloquants** :
+  - Crossref n'est pas encore activé en live (c'est le but de la conversation V3).
+  - La déduplication des DOI (notamment le fait de dédupliquer des doublons issus de HAL et Crossref sur un même DOI) et l'activation durable ne sont pas encore effectives.
+- **Prochaine étape recommandée** :
+  - Procéder au point **1.2 Déduplication DOI robuste** de la roadmap V3 (dans `06_plan_v3_academique.md`) : s'assurer que si un article est ingéré via HAL et via Crossref avec le même DOI normalisé, la fusion dans `db.json` se passe proprement sans créer de doublon.
+
+---
+
+## 2026-05-20 - Conversation 1 - Déduplication DOI inter-sources (Prompt 1.2)
+- **Objectif** : Renforcer la déduplication avant toute activation durable de Crossref, sans ingestion live, sans cron, sans commit automatique et sans élargir l'export public.
+- **Fichiers modifiés** :
+  - `antenne_radio/scripts/core/models.py`
+  - `antenne_radio/scripts/core/normalize.py`
+  - `antenne_radio/tests/test_models.py`
+  - `antenne_radio/tests/test_normalize.py`
+  - `antenne_radio/tests/test_export_public.py`
+  - `antenne_radio/codex_memoire_materielle.md`
+- **Commandes lancées** :
+  - `git status --short` : worktree déjà modifié au départ sur `antenne_radio/codex_memoire_materielle.md` avec le handoff du Prompt 1.1.
+  - Lecture de `docs/AGENTS.md`, `antenne_radio/README.md` et `antenne_radio/codex_memoire_materielle.md`.
+  - `rg --files antenne_radio` et recherches ciblées sur `normalize_doi`, `generate_stable_id`, `merge_items_without_duplicates`.
+  - `make test` depuis `antenne_radio` : premier passage à 91/92, révélant une extraction DOI trop large sur URL sans DOI ; correction immédiate.
+  - `make test` depuis `antenne_radio` : 92 tests passent.
+  - `git diff --check` : aucune erreur whitespace.
+- **Résultats réels** :
+  - `normalize_doi` accepte maintenant les variantes `doi:`, `https://doi.org/...`, casse mixte, et les URL éditeur contenant un DOI, notamment `tandfonline.com/doi/full/...`, tout en rejetant les URL ordinaires sans DOI.
+  - `generate_stable_id` peut dériver un DOI depuis l'URL quand aucun champ DOI explicite n'est fourni, ce qui aligne les notices RSS éditeur et Crossref sur une identité stable commune.
+  - `normalize_rss_entry` renseigne désormais `doi` quand un DOI est disponible dans le flux ou dans l'URL.
+  - `merge_items_without_duplicates` ne dépend plus seulement de l'ID exact : il indexe les notices par ID, DOI normalisé, URL normalisée, puis titre normalisé + date si DOI et URL sont absents.
+  - En cas de doublon, le merge conserve l'ID et le statut de la notice déjà présente, donc ne remplace pas `to_read`, `ignored` ou `exported`; il complète seulement les métadonnées privées utiles (`doi`, auteurs, tags, abstract privé, trace privée de source fusionnée).
+  - L'export public reste strictement whitelisté : aucun champ nouveau, aucune fuite de `raw`, `abstract`, auteurs, tags, score, logs ou métadonnées de fusion.
+- **Couverture de tests ajoutée** :
+  - HAL + Crossref avec même DOI.
+  - RSS Taylor & Francis + Crossref avec DOI équivalent via URL éditeur.
+  - Variations de casse et de préfixe DOI.
+  - Conservation des statuts humains `to_read`, `ignored`, `exported`.
+  - Déduplication de secours par titre normalisé + date.
+  - Export public inchangé malgré métadonnées privées fusionnées.
+- **Limites restantes** :
+  - Aucune ingestion live Crossref n'a été lancée dans cette conversation.
+  - `db.json` et `static/antenne-radio/index.json` n'ont pas été régénérés.
+  - L'extraction DOI depuis URL éditeur est couverte pour le cas Taylor & Francis ; d'autres éditeurs pourront mériter des fixtures spécifiques au moment de leur activation.
+- **Prochaine étape recommandée** :
+  - Conversation fraîche Prompt 1.3 : activation Crossref ponctuelle et contrôlée avec `CROSSREF_MAILTO` local, volume bas, vérification des compteurs `db.json`/export public, et scan anti-fuite avant toute décision de rendre Crossref durable.
+
+---
+
+## 2026-05-20 - Conversation 1 - Activation Crossref contrôlée et recette anti-fuite (Prompt 1.3)
+- **Mode d'activation retenu** : activation durable conditionnelle. `crossref.enabled: true`, mais aucun appel réseau Crossref n'est possible sans `CROSSREF_MAILTO` local. `make run` charge désormais `../.env.local` puis `./.env.local` si disponibles, sans écrire de secret dans le dépôt.
+- **Fichiers modifiés** :
+  - `antenne_radio/Makefile`
+  - `antenne_radio/config/sources.yaml`
+  - `antenne_radio/scripts/ingest/ingest_crossref.py`
+  - `antenne_radio/tests/test_config.py`
+  - `antenne_radio/tests/test_ingest_crossref.py`
+  - `antenne_radio/README.md`
+  - `antenne_radio/01_RESSOURCES_SUIVIES.md`
+  - `antenne_radio/LEGAL_AUDIT.md`
+  - `antenne_radio/codex_memoire_materielle.md`
+  - `static/antenne-radio/index.json`
+- **Commandes lancées** :
+  - `git status --short`
+  - Lecture de `docs/AGENTS.md`, `antenne_radio/README.md`, `antenne_radio/codex_memoire_materielle.md`, `config/sources.yaml`, `scripts/ingest/ingest_crossref.py`, `LEGAL_AUDIT.md`, `01_RESSOURCES_SUIVIES.md`.
+  - Vérification locale de présence de `CROSSREF_MAILTO` sans afficher sa valeur : variable d'abord absente.
+  - `make test` : 92 tests OK.
+  - `.venv/bin/python scripts/ingest/ingest_crossref.py` sans mailto : 0 item, erreur propre `missing_mailto`, 0 appel réseau.
+  - `make export-public` puis `pnpm run build` avant live : export OK, build Hugo OK.
+  - `make run` avec `CROSSREF_MAILTO` local : premier passage sandbox en échec DNS, puis relance réseau autorisée OK.
+  - `make export-public` après live : 233 items publics.
+  - `pnpm run build` après live : build Hugo OK (83 pages).
+- **Résultats Crossref réels** :
+  - `data/raw/crossref_latest.json` : `result_count=20`, `rows=20`, `journal_count=1`, `raw_response_count=1`, `errors=[]`.
+  - Revue interrogée : `Journal of Radio & Audio Media`, ISSN primaire `1937-6529`, `total_results=623`.
+  - Le connecteur n'écrit pas la valeur du mailto dans le dump ; les erreurs HTTP futures redacteront `mailto=<redacted>` dans les logs et les payloads d'erreur.
+- **Compteurs DB et déduplication** :
+  - `data/normalized/db.json` : 289 items (`to_read=144`, `candidate=89`, `ignored=56`).
+  - 20 notices Crossref fusionnées par DOI avec les notices T&F/RSS existantes ; 16 sont publiables par statut (`to_read` ou `candidate`), 4 restent `ignored`.
+  - 0 doublon DOI détecté dans `db.json`.
+- **Export public et build** :
+  - `static/antenne-radio/index.json` : 233 items, schéma `antenne-radio-public-v0`, 11 sources publiques.
+  - Clés publiques par item inchangées : `id`, `title`, `url`, `doi`, `published_at`, `source_name`, `source_type`, `language`, `source_family`, `attribution_id`.
+  - `public/antenne-radio/index.xml` reste absent.
+- **Scan anti-fuite** :
+  - Scan récursif JSON des clés interdites : `[]`.
+  - `rg` sur `static/antenne-radio/index.json`, `public/antenne-radio/index.json` et `public/antenne-radio/index.html` : aucune clé `abstract`, `raw`, `score`, `score_explanation`, `keywords_matched`, `negative_keywords_matched`, `authors`, `tags`, `relevance_score`, `source_api`, `source_feed`, `raw_responses`, `logs`, `status`.
+  - Scan secrets/chemins : aucune occurrence de chemin local, `CROSSREF_MAILTO`, mailto, adresse email, token, bearer ou clé API dans les artefacts publics.
+  - Seul faux positif HTML : le mot `tags` dans le lien de navigation global `/tags/`, hors données Antenne.
+- **Limites restantes** :
+  - `api.log` contient encore des lignes anciennes de tests/sandbox antérieures à la redaction ; les tests ont été corrigés pour ne plus écrire dans le vrai log.
+  - Crossref est validé sur une seule famille de revue ; ne pas élargir sans nouvelle recette limitée et scan anti-fuite.
+- **Prochaine étape recommandée** :
+  - Conversation fraîche Prompt 1.4 : audit du bruit et de la pertinence des 20 notices Crossref fusionnées, ajustement éventuel du scoring privé ou de la requête Crossref, sans élargir encore à OpenAlex.
