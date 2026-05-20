@@ -10,6 +10,7 @@
 - **db.json** : Doit rester valide, UTF-8 non échappé, trié par clés. Déduplication par ID stable (DOI > URL > Title/Date). Jamais de suppression automatique des `ignored`.
 - **Confidentialité absolue (Anti-fuite)** : Interdiction stricte de publier abstracts, raw dumps, logs, scores, explications, mots-clés internes, auteurs, tags ou chemins locaux. Seul le JSON whitelisté est public.
 - **Crossref** : Connecteur préparé mais désactivé par défaut (`enabled: false`). Nécessite la configuration d'un `CROSSREF_MAILTO` valide localement.
+- **OpenAlex** : Intégration planifiée en V3 avec `OPENALEX_MAILTO` local obligatoire, requêtes ciblées et score de pertinence strictement privé.
 
 ---
 
@@ -69,4 +70,4 @@
   - **Base consolidée (`db.json`)** : 283 items (`to_read=141`, `candidate=86`, `ignored=56`).
   - **Index public (`static/antenne-radio/index.json`)** : 227 items whitelistés sous format `antenne-radio-public-v0`.
 - **Garantie d'absence de fuites** : Scan complet du JSON et du HTML généré validant l'absence de champs sensibles (`raw`, `abstract`, logs, secrets, scores, auteurs, tags, etc.) ou de chemins locaux. Les quelques occurrences trouvées sont des faux positifs validés.
-- **Handoff & Transition V3** : Le projet local V2 est gelé et stable (81 tests unitaires OK). Le prochain chantier majeur est la V3 académique, documentée dans `06_plan_v3_academique.md` avec ses 6 prompts progressifs (audit légal des sources universitaires, connecteur OpenAlex poli, OAI-PMH Persée/DOAJ, CAIRN/OpenEdition OPML, dédoublonnage et qualification active).
+- **Handoff & Transition V3** : Le projet local V2 est gelé et stable (81 tests unitaires OK). Le prochain chantier majeur est la V3 académique, documentée dans `06_plan_v3_academique.md` (activation et déduplication DOI Crossref, connecteur OpenAlex avec score de pertinence privé, et intégration des venues/réseaux prioritaires). Les moissonnages DOAJ, Persée, CAIRN ou OpenEdition OPML sont explicitement reportés hors V3.

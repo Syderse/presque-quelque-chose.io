@@ -10,7 +10,8 @@ Le pipeline local peut :
 
 - lire des flux RSS/Atom configurés ;
 - interroger HAL ;
-- préparer un connecteur Crossref, désactivé par défaut tant qu'une adresse `CROSSREF_MAILTO` réelle n'est pas fournie ;
+- préparer et activer de manière contrôlée un connecteur Crossref (planifié en V3 via `CROSSREF_MAILTO` local) ;
+- préparer et intégrer un connecteur OpenAlex (planifié en V3 via `OPENALEX_MAILTO` local) ;
 - normaliser les résultats dans `data/normalized/db.json` ;
 - attribuer un statut avec un scoring lexical explicable ;
 - générer un rapport Markdown privé pour Obsidian ;
@@ -29,8 +30,8 @@ Par défaut, l'antenne ne fait pas ceci :
 - pas de scraping HTML ;
 - pas de résumé LLM ;
 - pas d'écriture automatique dans Zotero ou Obsidian ;
-- pas d'appel Crossref live sans activation explicite et adresse de contact locale ;
-- pas d'OpenAlex, CiNii, NDL ou J-STAGE dans l'état actuel.
+- pas d'appels API live sans activation explicite et adresse de contact locale (`CROSSREF_MAILTO` / `OPENALEX_MAILTO`) ;
+- pas d'OpenAlex (en cours de conception en V3), ni de CiNii, NDL ou J-STAGE (reportés à la V4 japonaise) par défaut.
 
 ## Philosophie de maintenance et doctrine de données
 
@@ -256,18 +257,19 @@ Règles simples :
 - Après modification, lance `make test`.
 - Pour une vraie récolte, lance ensuite `make run` manuellement.
 
-### Activation polie et sobre de Crossref
+### Activation polie et sobre des API (Crossref et OpenAlex)
 
-Le connecteur pour l'API Crossref est implémenté mais **désactivé par défaut** (`crossref.enabled: false`). L'objectif de Crossref n'est pas de moissonner massivement, mais de servir de complément ciblé. Si vous décidez de l'activer, vous devez impérativement respecter les règles de politesse et de sobriété suivantes :
+Les connecteurs pour les API Crossref et OpenAlex sont désactivés par défaut (`enabled: false`). Leur objectif n'est pas de moissonner massivement, mais de servir de complément ciblé. Si vous décidez de les activer (planifié en V3), vous devez impérativement respecter les règles de politesse et de sobriété suivantes :
 
-1.  **Identification polie obligatoire** : Ne mettez jamais d'adresse personnelle ou de secret en dur dans le dépôt. Utilisez la variable d'environnement locale :
+1.  **Identification polie obligatoire** : Ne mettez jamais d'adresse personnelle ou de secret en dur dans le dépôt. Utilisez les variables d'environnement locales :
     ```sh
     export CROSSREF_MAILTO="adresse-de-contact@example.org"
+    export OPENALEX_MAILTO="adresse-de-contact@example.org"
     ```
 2.  **Sobriété & Limitation** : Assurez-vous que les limites de résultats (`rows: 20` ou moins) et de pagination restent basses par run pour éviter d'aspirer inutilement des volumes massifs.
 3.  **Rate limiting et délai poli** : Le connecteur doit obligatoirement respecter un délai poli d'au moins `1` seconde (`polite_delay_seconds`) entre chaque requête séquentielle pour ne pas surcharger l'API ni risquer de bloquer votre adresse IP locale.
 
-Ne configurez pas cette variable d'identification dans la CI de tests tant que le but est seulement de vérifier la suite locale.
+Ne configurez pas ces variables d'identification dans la CI de tests tant que le but est seulement de vérifier la suite locale.
 
 ## Nettoyage local
 
