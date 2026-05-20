@@ -1,0 +1,27 @@
+# Configuration du scoring v0.1 : pondération lexicale transparente.
+version: 0.1
+
+weights:
+  radio_core: 3
+  radio_free: 3
+  sound_studies: 2
+  podcast: 2
+  guattari_institutional_psychotherapy: 2
+  japan_later: 1
+  negative_noise: -6
+  technical_radio_noise: -2
+
+thresholds:
+  to_read:
+    gte: 6
+  candidate:
+    gte: 2
+    lt: 6
+  ignored:
+    lt: 2
+
+fields:
+  # Les multiplicateurs restent simples et modifiables sans toucher au code.
+  title: 2
+  abstract: 1
+  tags: 2

@@ -97,6 +97,9 @@ menus:
     - name: ondes & pixels
       url: /ondes-pixels/
       weight: 30
+    - name: antenne radio
+      url: /antenne-radio/
+      weight: 35
     - name: rhizome curieux
       url: /rhizome-curieux/
       weight: 40

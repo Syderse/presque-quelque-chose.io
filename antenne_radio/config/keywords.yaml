@@ -1,0 +1,102 @@
+# Les catégories servent au scoring lexical simple, sans LLM.
+version: 0.1
+
+radio_core:
+  - radio
+  - radiophonie
+  - radiophonic
+  - broadcasting
+  - radio studies
+  - radio art
+  - radio archive
+  - histoire de la radio
+
+radio_free:
+  - radio libre
+  - radios libres
+  - free radio
+  - pirate radio
+  - community radio
+  - radio associative
+  - independent radio
+  - low-power FM
+
+sound_studies:
+  - sound studies
+  - sonic
+  - listening
+  - auditory culture
+  - acoustic ecology
+  - soundscape
+  - écoute
+  - paysage sonore
+
+podcast:
+  - podcast
+  - podcasting
+  - baladodiffusion
+  - audio storytelling
+  - serialized audio
+  - documentaire sonore
+  - création sonore
+
+guattari_institutional_psychotherapy:
+  - Félix Guattari
+  - Guattari
+  - La Borde
+  - psychothérapie institutionnelle
+  - institutional psychotherapy
+  - schizoanalysis
+  - transversalité
+  - CERFI
+
+# Mots-clés conservés pour plus tard ; aucune intégration japonaise en v0.1.
+japan_later:
+  - ラジオ
+  - 放送
+  - ポッドキャスト
+  - 音
+  - 聴取
+  - ラジオ研究
+  - コミュニティFM
+  - ミニFM
+  - 放送史
+
+negative_noise:
+  - radiology
+  - radiologie
+  - radiofrequency
+  - radiofréquence
+  - radioastronomy
+  - radioastronomie
+  - wireless engineering
+  - antenna design
+  - RF engineering
+  - medical imaging
+
+# Bruit HAL où "radio" désigne plutôt les réseaux, le spectre ou la physique.
+technical_radio_noise:
+  - cognitive radio
+  - spectrum sensing
+  - dynamic spectrum access
+  - network slicing
+  - wireless networks
+  - wireless network
+  - mobile networks
+  - mobile network
+  - 5G
+  - 6G
+  - LoRa
+  - LoRaWAN
+  - UWB
+  - V2X
+  - MIMO-NOMA
+  - channel charting
+  - vehicular communications
+  - unmanned aerial systems
+  - radio telescope
+  - radio emission
+  - electromagnetic radiation
+  - solar wind
+  - X-rays
+  - microwave resonator
