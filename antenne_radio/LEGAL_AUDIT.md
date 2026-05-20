@@ -1,1186 +1,2592 @@
-# Audit Juridique et Technique : Architecture de Veille et d'Indexation pour les Radio Studies
+# Audit juridique et technique prudent pour Antenne radio
 
-## 2. Date de l'audit
+## Date, avertissement et résumé exécutif
 
-Cet audit a été réalisé et consolidé le 20 Mai 2026. Il reflète l'état des conditions générales d'utilisation, des politiques d'interface de programmation (API), et du cadre juridique européen et français à cette date.
+**Date de l’audit :** 2026-05-20  
+**Statut du document :** version de travail prudente, exploitable pour gouvernance technique et réduction du risque  
+**Avertissement :** ce document n’est **pas** un avis juridique professionnel. C’est un cadre de décision prudent pour un projet personnel et universitaire. En cas de doute sérieux sur une source, sur une licence, sur des CGU, sur des droits voisins, sur une base de données ou sur une republication d’extraits, la règle du projet doit être : **ne pas exposer publiquement tant que la vérification n’est pas faite**.
 
-## 3. Avertissement
+Le périmètre intellectuel du projet est clairement orienté vers les radio studies, l’histoire du médium, l’esthétique radiophonique, les radios libres, la création documentaire et le podcast, avec un intérêt appuyé pour l’axe Japon / mini-FM / Kogawa / Guattari, ainsi que pour la publication éventuelle sur un site Hugo. Cela ressort déjà des notes de chantier du dépôt, qui évoquent explicitement la cartographie du champ, les radio studies, le podcast, les radios libres, la création sonore et l’architecture Hugo. fileciteturn23file0L1-L59 fileciteturn22file0L1-L52
 
-Le présent rapport constitue une analyse technique et une évaluation des risques fondées sur la documentation publique des fournisseurs de données, les recommandations de la Commission Nationale de l'Informatique et des Libertés (CNIL), et les principes généraux du droit du numérique. Ce document ne constitue en aucun cas un avis juridique professionnel opposable. Toute implémentation relève de la responsabilité exclusive des concepteurs du projet. Une approche orientée vers la prudence maximale et la réduction des risques a été systématiquement adoptée pour pallier les incertitudes jurisprudentielles.
+### Résumé exécutif
 
-## 4. Résumé exécutif
+Le projet **Antenne radio** peut être mené de manière raisonnablement sûre **à condition de séparer nettement** :
 
-Le projet d'antenne de veille universitaire en radio studies, sound studies et histoire des médias radiophoniques repose sur une architecture duale. D'une part, il implique le développement d'un pipeline local destiné à la collecte exhaustive, à la fouille de données et à l'importation vers des logiciels de gestion bibliographique comme Zotero. D'autre part, il prévoit l'exposition publique d'un index léger et statique, généré via le framework Hugo. L'analyse démontre que l'agrégation de métadonnées pour un usage strictement privé et de recherche s'inscrit largement dans le cadre des exceptions légales relatives à la fouille de textes et de données, sous réserve de respecter le principe de minimisation. En revanche, l'exposition publique de ces mêmes données cristallise des risques juridiques significatifs, notamment en matière de droit d'auteur, de protection des bases de données et de conditions d'utilisation contractuelles dictées par les plateformes. Afin de sécuriser le projet, il est impératif d'instaurer une étanchéité technique et conceptuelle absolue entre le stockage local riche et l'affichage public minimaliste, ce dernier devant se limiter à un rôle de pointage vers les sources originelles sans jamais s'y substituer.
+- un **pipeline privé** riche, réservé à la veille, à l’analyse, à l’import Zotero et au débogage ;
+- un **export public minimaliste**, limité à des liens et métadonnées strictement nécessaires à l’orientation des lecteurs.
 
-## 5. Verdict global
+Le principe directeur doit être le suivant : **plus une donnée ressemble à du contenu éditorial rédigé, illustré, sonorisé ou structuré comme une base propriétaire, plus elle doit rester privée, voire ne pas être récoltée du tout**. À l’inverse, les métadonnées bibliographiques minimales, l’URL canonique, le DOI, le nom de la source, la date, la langue, le type de document et un identifiant technique stable sont généralement les meilleurs candidats pour l’export public.
 
-Le projet est jugé juridiquement viable et techniquement réalisable, à la condition stricte que les garde-fous identifiés dans ce rapport soient intégrés au cœur même de l'architecture logicielle. L'initiative s'inscrit dans la philosophie de la science ouverte et de la découvrabilité des ressources académiques, à condition d'opérer exclusivement comme un catalogue de signalement. L'utilisation d'APIs ouvertes et du protocole OAI-PMH doit être privilégiée. Les plateformes imposant des écosystèmes fermés ou interdisant formellement l'extraction automatisée doivent être exclues du périmètre technique pour éviter tout risque de litige pour parasitisme ou violation contractuelle.
+Le projet est **fortement faisable** pour les familles suivantes :
 
-## 6. Politique générale du projet
+- plateformes académiques à vocation de signalement ou de métadonnées ;
+- catalogues, bibliothèques et archives disposant de points d’accès stables ;
+- revues et blogs disposant d’un RSS/Atom propre ;
+- index de podcasts lorsque l’usage reste limité au **signalement**.
 
-La stratégie opérationnelle de l'antenne radio s'articule autour d'un principe fondamental : moissonner avec respect, stocker avec précaution, et publier avec une extrême parcimonie. L'infrastructure ne doit à aucun moment héberger, répliquer ou diffuser des œuvres de l'esprit (textes intégraux, créations sonores, résumés originaux) sans une licence explicite le permettant. Le pipeline doit être conçu pour asseoir la légitimité du projet vis-à-vis des éditeurs : identification transparente des robots de collecte, limitation stricte de la cadence des requêtes, et redirection systématique du trafic public vers les ayants droit.
+Le projet devient **sensiblement plus risqué** dès qu’il touche :
 
-## 7. Contrat public de données
+- aux **abstracts** et descriptions longues ;
+- aux **contenus RSS complets** ;
+- aux **pages HTML complètes** ;
+- aux **PDF, images, audio, transcriptions** ;
+- aux **dumps bruts** d’API ou de flux ;
+- aux **plateformes commerciales** dont les CGU restreignent fortement l’automatisation ou réservent l’usage à certaines APIs.
 
-La publication des données via le site statique Hugo doit obéir à une liste d'inclusion stricte (whitelist). Toute donnée non explicitement autorisée par ce contrat doit être filtrée lors de la phase de compilation.
+### Verdict global
 
-| Champ | Statut | Justification juridique et technique |
-| :--- | :--- | :--- |
-| id | Autorisé | Identifiant interne généré localement, exempt de droit. |
-| title | Autorisé | Information factuelle descriptive. Les titres échappent généralement au droit d'auteur, sauf originalité exceptionnelle. |
-| url ou original_url | Autorisé | Le lien hypertexte simple ne constitue pas une communication au public d'une œuvre protégée si celle-ci est déjà librement accessible. |
-| doi | Autorisé | Identifiant standard ouvert, conçu pour le partage. |
-| published_at | Autorisé | Donnée purement factuelle et historique. |
-| authors | Autorisé | La citation de la paternité est un fait historique et une obligation morale. |
-| source_name | Autorisé | Indispensable pour l'attribution correcte de la ressource. |
-| source_type | Autorisé | Catégorisation technique locale (article, podcast, ouvrage). |
-| language | Autorisé | Métadonnée descriptive factuelle. |
-| source_family | Autorisé | Taxonomie locale permettant le filtrage sur le site. |
-| legal_status | Autorisé | Indique la licence (ex: Open Access, CC-BY) pour orienter l'utilisateur. |
-| audit_date | Autorisé | Date de validation technique locale du lien. |
-| abstract / summary | Interdit | L'abstract est une œuvre de l'esprit protégeable. Sa reproduction sans autorisation constitue une contrefaçon, sauf licence Creative Commons explicite. |
-| content / full_text | Interdit | Violation directe du droit d'auteur et des droits d'exploitation. |
-| pdf_url | Interdit | Risque de facilitation du contournement de mesures de protection si la source n'est pas strictement Open Access. L'usager doit utiliser l'original_url. |
-| images / audio | Interdit | Fichiers soumis à des droits d'auteur et droits voisins. L'hébergement ou l'intégration (hotlinking) non autorisée est proscrite. |
-| raw / logs / secrets | Interdit | Risque critique de cybersécurité et fuite de données personnelles ou de clés d'authentification. |
+Le verdict global recommandé est :
 
-La décision d'interdire les résumés et les URL de téléchargement direct de PDF ou d'audio repose sur la volonté de ne pas cannibaliser le trafic des éditeurs originaux et de ne pas engager la responsabilité du projet en tant qu'hébergeur de contenus contrefaisants.
+- **export public : autorisé seulement pour un jeu de métadonnées minimales, source par source, avec allowlist stricte** ;
+- **pipeline privé : autorisé de façon privée, compartimentée, non versionnée dans Git, avec stockage local des données riches** ;
+- **scraping HTML massif : déconseillé par défaut** ;
+- **republication de contenus, d’extraits longs, d’images, de PDF, d’audio, de transcriptions : hors périmètre par défaut** ;
+- **sources ambiguës ou commercialement sensibles : reportées, strictement limitées, ou exclues du pipeline automatisé**.
 
-## 8. Politique privée de collecte
+## Politique générale du projet
 
-La constitution d'une base de données locale pour la veille universitaire bénéficie d'un cadre légal plus clément. Le droit européen, via la directive de 2019 sur le droit d'auteur (2019/790), instaure une exception pour la fouille de textes et de données (Text and Data Mining - TDM) au profit de la recherche.<sup>1</sup> Cette exception permet l'analyse automatisée de corpus à condition que l'accès originel soit licite et que les ayants droit n'aient pas expressément exprimé d'opposition (opt-out) via des mesures lisibles par machine.<sup>2</sup>
-Toutefois, le moissonnage doit impérativement respecter le droit sui generis des producteurs de bases de données, prohibant l'extraction substantielle non autorisée.<sup>4</sup> Sur le volet des données à caractère personnel, la CNIL exige le respect du principe de minimisation.<sup>2</sup> Il est donc impératif d'exclure de la collecte les sites s'opposant clairement au web scraping via leur fichier robots.txt ou la présence de CAPTCHA. Toute donnée sensible collectée de manière résiduelle ou fortuite doit être supprimée immédiatement.<sup>2</sup> La base locale doit demeurer sur un environnement chiffré, accessible au seul chercheur.
+### Politique générale du projet
 
-## 9. Politique d'abstracts
+Le projet doit être gouverné par cinq règles simples.
 
-L'appréhension des résumés académiques et descriptifs journalistiques requiert une grande prudence. Bien que cruciaux pour la recherche bibliographique et l'indexation algorithmique (TF-IDF, similarité sémantique) exécutée au sein du pipeline privé, ces textes constituent des créations intellectuelles originales. Leur moissonnage local est justifié par l'exception TDM, mais leur exposition publique est strictement interdite par défaut. Une exception peut être programmée pour les sources délivrant formellement leurs métadonnées sous licence CC0 (comme OpenAlex) ou CC-BY (comme certaines notices d'Europeana), sous réserve de reproduire la chaîne d'attribution requise.
+Première règle : **le site public n’est pas une archive miroir**. Il ne republie pas les contenus sources ; il renvoie vers eux.
 
-## 10. Politique des contenus RSS
+Deuxième règle : **tout ce qui est utile à la veille n’est pas forcément publiable**. Il faut penser en deux contrats de données distincts : privé et public.
 
-Le format RSS (Really Simple Syndication) incarne une volonté de dissémination de la part de l'éditeur. Néanmoins, la mise à disposition d'un flux n'équivaut pas à une cession de droits permettant la constitution d'une archive publique tierce.<sup>5</sup> La collecte privée peut traiter les balises content:encoded ou description pour évaluer la pertinence de l'article, mais le module d'exportation vers Hugo doit impérativement expurger ces champs. Le site public ne fonctionnera qu'en tant que relais de titres cliquables vers l'article source.
+Troisième règle : **l’absence de paywall ne vaut pas licence de réutilisation**. Un texte librement accessible n’est pas pour autant librement réutilisable.
 
-## 11. Politique des APIs
+Quatrième règle : **une source utile n’est pas nécessairement une source automatisable**. Certaines sources peuvent rester en veille manuelle, ou en enrichissement secondaire seulement.
 
-L'utilisation d'interfaces de programmation applicatives (API) est le vecteur privilégié du projet, car elle manifeste une volonté explicite d'interopérabilité de la part du fournisseur.<sup>6</sup> Cependant, l'accès est conditionné à l'acceptation de Conditions Générales d'Utilisation (CGU). Le pipeline technique doit intégrer de manière transparente l'identité du projet en fournissant un en-tête HTTP User-Agent descriptif et, lorsque cela est exigé (comme pour l'API Crossref), une adresse électronique de contact (mailto:) pour accéder aux pools de requêtes dits "polis".<sup>7</sup> Aucune technique de dissimulation (rotation d'adresses IP, falsification d'en-têtes) ne doit être employée pour contourner les quotas.
+Cinquième règle : **en cas d’ambiguïté, on réduit**. On ne publie ni résumé, ni abstract, ni body HTML, ni transcription, ni image, ni audio, ni dump brut.
 
-## 12. Politique des sources académiques
+### Contrat public de données
 
-Les infrastructures de la science ouverte (OpenAlex, HAL, Crossref, bases OAI-PMH) constituent le cœur légitime du projet.<sup>7</sup> L'usage du protocole OAI-PMH (Open Archives Initiative Protocol for Metadata Harvesting) est fortement recommandé pour les dépôts institutionnels. Ce protocole, utilisant le verbe ListRecords et la mécanique des resumptionTokens, permet un moissonnage asynchrone, paginé, et conçu précisément pour minimiser la charge sur les serveurs cibles.<sup>11</sup> Les métadonnées issues de ces plateformes, souvent formatées en Dublin Core (oai_dc), présentent un risque juridique extrêmement faible, les institutions favorisant activement la découvrabilité de leur patrimoine scientifique.
+Le contrat public recommandé doit être un contrat **d’allowlist**, pas de blacklist. Tout champ absent de la liste publique est considéré comme non publiable par défaut.
 
-## 13. Politique des sources journalistiques / blogs
+#### Champs publics autorisés par défaut
 
-Les publications spécialisées (La Lettre Pro, Radio Survivor, Nieman Storyboard, etc.) relèvent d'un régime de droit d'auteur classique. La récupération de leurs informations doit se limiter à l'interrogation de leurs flux RSS officiels ou de leurs sitemaps. L'aspiration des pages HTML complètes (web scraping) pour en extraire le corps du texte est fortement déconseillée, d'autant plus que les conditions générales de nombreux médias interdisent l'extraction automatisée.<sup>13</sup> Le pipeline doit se contenter des métadonnées de surface.
+```json
+[
+  "id",
+  "title",
+  "original_url",
+  "doi",
+  "published_at",
+  "source_name",
+  "source_type",
+  "source_family",
+  "language",
+  "attribution_id",
+  "legal_status",
+  "audit_date"
+]
+```
 
-## 14. Politique des podcasts et fichiers audio
+#### Champs publics supplémentaires recommandés
 
-Le traitement des œuvres sonores exige une prudence redoublée en raison de la superposition des droits (auteurs, producteurs, interprètes). Les flux RSS de podcasts (ARTE Radio, Transom, BBC) structurent l'accès via la balise <enclosure> pointant vers le fichier audio.<sup>5</sup> Il est recommandé de ne pas procéder au téléchargement des fichiers MP3 en local, sauf nécessité absolue d'analyse computationnelle (ex: extraction de transcriptions privées). Sur le versant public, la ré-hébergement de l'audio ou l'intégration de lecteurs personnalisés contournant les statistiques d'audience de l'éditeur est prohibée. Seuls les hyperliens orientant l'auditeur vers la plateforme officielle de diffusion sont autorisés.
+Je recommande d’ajouter, lorsque disponibles et lorsque la source est principalement bibliographique :
 
-## 15. Politique de rate limiting
+```json
+[
+  "authors",
+  "container_title",
+  "item_type",
+  "issn",
+  "isbn",
+  "canonical_url",
+  "record_url",
+  "license_label",
+  "open_access_status"
+]
+```
 
-La viabilité technique de l'antenne radio dépend de sa civilité algorithmique. Le moteur de collecte doit implémenter une gestion robuste de la cadence de requêtage. Une temporisation (sleep) d'au moins 1 à 2 secondes entre chaque appel HTTP est prescrite pour les APIs sans quotas explicites. Les architectures d'ingestion doivent scruter les en-têtes HTTP de limitation, tels que X-RateLimit-Remaining ou Retry-After.<sup>7</sup> En cas de réception d'un code d'erreur 429 (Too Many Requests), le système doit suspendre immédiatement ses opérations via une stratégie de retrait exponentiel (exponential backoff). La mise en cache des réponses locales est obligatoire pour éviter toute redondance de requêtes sur le réseau.
+**Pourquoi les ajouter :** un index universitaire sans auteurs ni titre de revue reste trop pauvre pour être utile. En pratique, les noms d’auteur, le titre de revue, le type de document et l’identifiant du support relèvent souvent de la métadonnée de signalement plutôt que d’un contenu éditorial à forte expressivité.  
+**Prudence :** si une source n’est pas bibliographique mais éditoriale ou journalistique, ne publier que `title + url + date + source_name + source_type + language + legal_status`.
 
-## 16. Politique de logs et fichiers bruts
+#### Champs publics interdits par défaut
 
-Les réponses brutes (payloads JSON ou XML) retournées par les APIs peuvent receler des données non destinées à la publication, telles que les identifiants internes des plateformes, des adresses email d'auteurs ou des clés d'accès techniques. L'enregistrement des historiques d'exécution (logs) doit être confiné à l'environnement de développement local, soumis à une rotation régulière pour éviter l'accumulation de données. Les traces d'erreurs (stack traces) ne doivent jamais être transmises au générateur statique Hugo.
+```json
+[
+  "raw",
+  "summary",
+  "description",
+  "abstract",
+  "content",
+  "content:encoded",
+  "html",
+  "full_text",
+  "pdf_url",
+  "image_url",
+  "audio_url",
+  "transcript",
+  "logs",
+  "private_notes",
+  "local_path",
+  "secrets",
+  "debug",
+  "status",
+  "relevance_score",
+  "score_explanation",
+  "keywords_matched",
+  "negative_keywords_matched",
+  "discovered_at",
+  "source_feed",
+  "source_api",
+  "title_original",
+  "errors",
+  "raw_responses"
+]
+```
 
-## 17. Politique Git / publication / Hugo
+### Politique privée de collecte
 
-L'architecture logicielle impose une dichotomie au niveau du contrôle de version. Le dépôt contenant le code source du moissonneur et les templates du site Hugo peut être rendu public (ex: GitHub, GitLab). En revanche, le répertoire hébergeant la base de données relationnelle locale (ex: SQLite), les fichiers de configuration contenant des variables d'environnement (.env) et le cache des requêtes brutes doit obligatoirement être consigné dans le fichier .gitignore. Seul le fichier JSON expurgé, résultant de la procédure de liste blanche, doit être versionné ou transmis au serveur de déploiement continu.
+Le pipeline privé peut stocker davantage, mais avec des garde-fous stricts :
 
-## 18. Tableau synthétique de toutes les sources
+- réponses API brutes ;
+- résumés de flux ;
+- abstracts ;
+- HTML source ;
+- notes internes ;
+- logs ;
+- erreurs ;
+- identifiants techniques ;
+- traces de débogage ;
+- URLs vers PDF ou audio ;
+- tables de correspondance et enrichissements Zotero.
 
-| Source | Famille | Point d'accès | Statut Recommandé | Risque |
-| :--- | :--- | :--- | :--- | :--- |
-| HAL | Académique | API / OAI-PMH | VALIDÉ | Faible |
-| OpenAlex | Académique | API REST | VALIDÉ | Faible |
-| Crossref | Académique | API REST | VALIDÉ | Faible |
-| DOAJ | Académique | API REST | VALIDÉ | Faible |
-| Europeana | Patrimoine | API REST | VALIDÉ | Faible |
-| Theses.fr | Académique | API / OAI-PMH | VALIDÉ | Faible |
-| BnF / Gallica | Patrimoine | OAI-PMH / API | VALIDÉ | Faible |
-| Sudoc / Abes | Académique | OAI-PMH | VALIDÉ | Faible |
-| Isidore | Académique | OAI-PMH / API | VALIDÉ | Faible |
-| ORCID | Académique | API | VALIDÉ | Faible |
-| CiNii / NDL / J-STAGE | Académique | API | VALIDÉ | Faible |
-| INA | Archives | Open Data (API) | VALIDÉ PRUDENT | Modéré |
-| Unpaywall | Académique | API REST | VALIDÉ PRUDENT | Faible |
-| Radio France | Média | API / RSS | VALIDÉ PRUDENT | Modéré |
-| Podcast Index | Annuaire | API REST | VALIDÉ PRUDENT | Modéré |
-| Apple Podcasts | Annuaire | API Search | VALIDÉ STRICT | Modéré |
-| Cairn / Persée / Érudit | Revues SHS | OAI-PMH / RSS | VALIDÉ STRICT | Modéré |
-| Radio Survivor, Sounding Out!... | Blogs / RSS | RSS / Atom | VALIDÉ STRICT | Modéré |
-| Journaux académiques (T&F...) | Revues | RSS / Crossref | VALIDÉ STRICT | Modéré |
-| BBC Sounds / NPR / ARTE Radio | Média / Audio | RSS | VALIDÉ STRICT | Modéré |
-| Internet Archive | Archives | API | À REPORTER | Incertain |
-| Library of Congress | Archives | API | À REPORTER | Incertain |
-| Spotify / Deezer | Plateformes | API | À ÉVITER | Élevé |
-| SoundCloud / Mixcloud | Plateformes | API / RSS | À ÉVITER | Élevé |
-| WorldCat | Catalogue | API | INTERDIT POUR EXPORT PUBLIC | Élevé |
+Mais ces données doivent être :
 
-## 19. Fiches détaillées source par source
+- stockées **hors dossier Hugo public** ;
+- **hors dépôt Git** ;
+- protégées par une politique de rétention ;
+- purgées si elles n’ont plus d’utilité ;
+- invisibles aux exports automatiques.
+
+### Politique des abstracts
+
+La règle générale recommandée est très stricte :
+
+- **par défaut : abstract privé seulement** ;
+- **exception possible :** abstract explicitement sous licence claire de réutilisation, ou issu d’une source de métadonnées ouverte dont l’usage public de l’abstract est explicitement permis ;
+- **en cas de doute :** ne pas publier.
+
+Même quand un abstract est visible sur une page ou dans une API, il reste souvent plus expressif et juridiquement plus sensible que de simples métadonnées. Le bénéfice public d’un abstract exposé sur le site ne compense pas le risque.
+
+### Politique des contenus RSS
+
+Le RSS est un excellent **point d’entrée**, mais un mauvais **contrat d’export public**.
+
+Politique recommandée :
+
+- utiliser RSS/Atom pour la détection de nouveautés ;
+- normaliser immédiatement vers un schéma interne ;
+- conserver le flux brut seulement dans l’espace privé ;
+- considérer `description`, `summary`, `content:encoded` comme **non publics** par défaut ;
+- n’exposer publiquement qu’un sous-ensemble de métadonnées minimales.
+
+### Politique des APIs
+
+Hiérarchie recommandée des points d’accès :
+
+- **API officielle** ;
+- **OAI-PMH** ;
+- **export bibliographique stable** ;
+- **RSS/Atom** ;
+- **sitemap** ;
+- **HTML** seulement en dernier recours ;
+- **scraping sans point d’accès clair** à éviter.
+
+Règles techniques :
+
+- User-Agent explicite ;
+- mailto de contact si la source le recommande ou si l’API est académique ;
+- cache local systématique ;
+- respect des codes `429`, `403`, `5xx` ;
+- backoff exponentiel ;
+- pagination bornée ;
+- reprise sur checkpoint ;
+- pas de moissonnage massif sans nécessité.
+
+### Politique des sources académiques
+
+Les sources académiques doivent être le cœur du pipeline public :
+
+- elles fournissent souvent des métadonnées de meilleure qualité ;
+- elles sont plus adaptées au signalement bibliographique ;
+- elles permettent plus facilement le DOI, la langue, le type de document et l’identification de version.
+
+Ordre recommandé de confiance pratique :
+
+- HAL ;
+- Crossref ;
+- OpenAlex ;
+- DOAJ ;
+- Persée ;
+- OpenEdition ;
+- Érudit ;
+- ABES / Sudoc / theses.fr ;
+- Library of Congress / BnF / Europeana / Internet Archive pour les notices ;
+- plateformes commerciales ou semi-commerciales seulement en enrichissement limité.
+
+### Politique des sources journalistiques et blogs
+
+Pour les blogs, revues web, magazines et sites éditoriaux :
+
+- privilégier le RSS ;
+- à défaut, collecte manuelle ou semi-manuelle ;
+- ne jamais republier le texte ;
+- pas d’extraits longs ;
+- pas de copie du HTML ;
+- pas d’images reprises.
+
+### Politique des podcasts et fichiers audio
+
+Règle centrale : **ne pas devenir une rediffusion déguisée**.
+
+Politique recommandée :
+
+- on peut signaler un épisode, une série, une émission, un producteur ;
+- on peut stocker en privé un lien vers l’audio original si utile à la veille ;
+- on ne republie pas les fichiers audio ;
+- on ne republie pas les transcriptions ;
+- on n’expose pas de lien direct de téléchargement si cela contourne l’expérience voulue par la source ;
+- on préfère l’URL de la page éditoriale à l’URL technique du média.
+
+### Politique de rate limiting
+
+Trois classes suffisent.
+
+**Classe prudente faible cadence**
+
+- blogs ;
+- revues éditoriales ;
+- plateformes incertaines ;
+- cadence quotidienne ou manuelle ;
+- 1 requête à la fois ;
+- gros cache ;
+- pas de cron agressif.
+
+**Classe académique normale**
+
+- APIs documentées ;
+- OAI-PMH ;
+- catalogues ;
+- cadence planifiée ;
+- limitation par lots ;
+- checkpointing.
+
+**Classe manuelle seulement**
+
+- sources sans API claire ;
+- plateformes commerciales ;
+- pages très protégées ;
+- sources aux CGU ambiguës.
+
+### Politique de logs et fichiers bruts
+
+À proscrire de tout export public :
+
+- messages d’erreur détaillés ;
+- headers ;
+- tokens ;
+- mailto de contact ;
+- chemins locaux ;
+- contenu brut d’API ;
+- contenu brut RSS ;
+- score de classement interne ;
+- diagnostics de pertinence.
+
+### Politique Git, publication et Hugo
+
+Le dépôt séparera trois zones :
+
+- `private_store/` ou équivalent, **hors Git**, pour les données riches ;
+- `build_cache/`, **hors Git**, pour les réponses temporaires ;
+- `public_export/`, seul endroit admissible pour ce qui nourrit Hugo.
+
+La présence d’une réflexion déjà poussée sur Hugo dans vos notes de dépôt justifie pleinement cette séparation stricte entre génération, rendu et actifs publics. fileciteturn22file0L1-L52
+
+## Tableau synthétique de toutes les sources
+
+| Source | Famille | Point d’accès recommandé | Statut recommandé | Public | Décision rapide |
+|---|---|---|---|---|---|
+| Radio Survivor | blog / RSS | RSS si disponible, sinon pages d’articles | VALIDÉ PRUDENT | métadonnées strictes | `active: true` |
+| Journal of Radio & Audio Media / T&F | revue | page revue, alertes, DOI, Crossref | VALIDÉ STRICT | liens + métadonnées | `active: true` |
+| Sounding Out! | revue / blog | RSS / pages | VALIDÉ PRUDENT | métadonnées strictes | `active: true` |
+| Radiomorphoses | revue académique | RSS / OpenEdition | VALIDÉ PRUDENT | métadonnées bibliographiques | `active: true` |
+| Radio Fañch | blog / site | HTML / RSS si disponible | VALIDÉ STRICT | liens seulement | `active: true` |
+| Les Radios Libres | blog / site | HTML / RSS si disponible | VALIDÉ STRICT | liens seulement | `active: true` |
+| La Radio du Futur | blog / site | HTML / RSS si disponible | VALIDÉ STRICT | liens seulement | `active: true` |
+| La Lettre Pro | presse pro | HTML / newsletter / pages | VALIDÉ STRICT | liens seulement | `active: true` |
+| MeCCSA Radio & Audio Studies | réseau académique | pages / RSS | VALIDÉ STRICT | liens + métadonnées | `active: true` |
+| Nieman Storyboard | site éditorial | RSS / pages | VALIDÉ STRICT | liens + métadonnées | `active: true` |
+| Transom | site ressource / podcasting | RSS / pages | VALIDÉ PRUDENT | métadonnées strictes | `active: true` |
+| RadioDoc Review | revue académique | pages revue / RSS | VALIDÉ PRUDENT | métadonnées bibliographiques | `active: true` |
+| HAL | archive ouverte | API / OAI-PMH | VALIDÉ PRUDENT | métadonnées bibliographiques | `active: true` |
+| Crossref | API bibliographique | API | VALIDÉ PRUDENT | métadonnées bibliographiques | `active: true` |
+| OpenAlex | API bibliographique | API | VALIDÉ PRUDENT | métadonnées bibliographiques | `active: true` |
+| CiNii | bibliographique | API / pages | VALIDÉ PRUDENT | métadonnées bibliographiques | `active: true` |
+| NDL | catalogue | API / SRU / pages | VALIDÉ PRUDENT | notices | `active: true` |
+| J-STAGE | revues académiques | pages / API selon cas | VALIDÉ PRUDENT | métadonnées bibliographiques | `active: true` |
+| Cairn | plateforme éditoriale | pages / DOI / enrichissement secondaire | VALIDÉ STRICT | liens + métadonnées minimales | `active: true` |
+| Persée | portail académique | API / OAI / pages | VALIDÉ PRUDENT | métadonnées bibliographiques | `active: true` |
+| OpenEdition Books | livres académiques | pages / métadonnées / OAI selon cas | VALIDÉ PRUDENT | métadonnées bibliographiques | `active: true` |
+| OpenEdition Journals | revues académiques | RSS / métadonnées / OAI selon cas | VALIDÉ PRUDENT | métadonnées bibliographiques | `active: true` |
+| Érudit | revues académiques | pages / API selon cas | VALIDÉ PRUDENT | métadonnées bibliographiques | `active: true` |
+| DOAJ | index de revues | API | VALIDÉ PRUDENT | métadonnées bibliographiques | `active: true` |
+| WorldCat | catalogue | API licenciée ou usage manuel | À REPORTER | pas d’automatisation publique | `active: false` |
+| Library of Congress | catalogue | API / JSON | VALIDÉ PRUDENT | notices | `active: true` |
+| BnF / Gallica | catalogue / bibliothèque numérique | API / IIIF / OAI selon cas | VALIDÉ PRUDENT | notices et métadonnées | `active: true` |
+| Sudoc / Abes | catalogue universitaire | API / SRU / pages | VALIDÉ PRUDENT | notices | `active: true` |
+| theses.fr | thèses | API / pages | VALIDÉ PRUDENT | notices de thèse | `active: true` |
+| Isidore | SHS / découverte | API / pages | VALIDÉ PRUDENT | métadonnées de signalement | `active: true` |
+| ORCID | identifiants auteurs | API / pages publiques | VALIDÉ PRUDENT | identifiants et noms, avec mesure | `active: true` |
+| Unpaywall | enrichissement OA | API | VALIDÉ PRUDENT | statut OA, lien, DOI | `active: true` |
+| Europeana | patrimoine | API | VALIDÉ PRUDENT | notices et métadonnées | `active: true` |
+| Internet Archive | archive / notices | metadata API / pages | VALIDÉ PRUDENT | notices et métadonnées | `active: true` |
+| INA | archives audio-visuelles | notices publiques seulement | VALIDÉ STRICT | notices, jamais médias | `active: true` |
+| France Culture / Radio France | radio / podcast | RSS / pages éditoriales | VALIDÉ STRICT | liens + métadonnées minimales | `active: true` |
+| ARTE Radio | radio / podcast | pages / feeds si disponibles | VALIDÉ STRICT | liens + métadonnées minimales | `active: true` |
+| BBC Sounds / BBC Radio | radio / podcast | pages / RSS quand présent | VALIDÉ STRICT | liens + métadonnées minimales | `active: true` |
+| NPR / podcasts publics | radio / podcast | RSS / pages | VALIDÉ PRUDENT | métadonnées minimales | `active: true` |
+| Apple Podcasts | annuaire | usage secondaire seulement | À REPORTER | pas source primaire | `active: false` |
+| Spotify | plateforme commerciale | API officielle seulement si besoin | À ÉVITER | pas de harvesting primaire | `active: false` |
+| Deezer | plateforme commerciale | API / pages, usage secondaire | À REPORTER | pas source primaire | `active: false` |
+| SoundCloud | plateforme audio | API / pages, usage secondaire | À REPORTER | pas source primaire | `active: false` |
+| Mixcloud | plateforme audio | pages, usage secondaire | À REPORTER | pas source primaire | `active: false` |
+| Podcast Index | index podcast | API | VALIDÉ PRUDENT | métadonnées de signalement | `active: true` |
+
+
+## Fiches détaillées source par source
+
+### Radio Survivor
+
+**Statut recommandé :**  
+VALIDÉ PRUDENT
+
+**Famille :**  
+blog / RSS
+
+**Pertinence pour l’antenne :**  
+Actualité critique, radio communautaire, mini-FM, LPFM, et histoire des médias alternatifs et de la création sonore.
+
+**Point d’accès recommandé :**  
+RSS si disponible, sinon pages d’articles.
+
+**Pages officielles consultées :**
+- https://www.radiosurvivor.com/
+- flux RSS publics de syndication
+
+**Constats juridiques et techniques :**
+- Flux RSS public émis par WordPress standard.
+- Respecter les droits d'auteur des textes d'analyse originaux.
+
+**Collecte privée autorisée ou raisonnable :**
+- métadonnées de syndication
+- titre
+- original_url
+- date
+- description courte
+
+**Affichage public recommandé :**
+- métadonnées strictes
+
+**Champs interdits en public :**
+- content:encoded
+- résumé long
+- description complète
+- images
+
+**Attribution minimale :**  
+`Source: Radio Survivor — lien vers la notice originale.`
+
+**Rate limit / conditions techniques :**  
+Ingestion quotidienne ; cache local ; 1 requête par seconde.
+
+**Risques :**  
+Faible.
+
+**Décision pratique pour `sources.yaml` :**
+- `active: true`
+- raison : couverture inégalée des radios libres et communautaires aux États-Unis
+- notes d’implémentation : `curated_only: true`
+
+### Journal of Radio & Audio Media
+
+**Statut recommandé :**  
+VALIDÉ STRICT
+
+**Famille :**  
+revue académique propriétaire
+
+**Pertinence pour l’antenne :**  
+Revue scientifique internationale de référence majeure pour l'étude du média radio et de l'audio.
+
+**Point d’accès recommandé :**  
+page revue, alertes, DOI, Crossref.
+
+**Pages officielles consultées :**
+- https://www.tandfonline.com/journals/hjrs20
+- base de métadonnées Crossref
+
+**Constats juridiques et techniques :**
+- Aspiration web directe strictement interdite par les conditions d'utilisation de Taylor & Francis.
+- Les métadonnées restent accessibles via Crossref ou OpenAlex.
+
+**Collecte privée autorisée ou raisonnable :**
+- DOI
+- titre
+- auteurs
+- date
+- revue
+- résumés via API Crossref
+
+**Affichage public recommandé :**
+- liens et métadonnées bibliographiques minimales
+
+**Champs interdits en public :**
+- abstracts (protégés)
+- PDF
+- html
+- scraping HTML direct
+
+**Attribution minimale :**  
+`Source: Journal of Radio & Audio Media (Taylor & Francis) — lien DOI.`
+
+**Rate limit / conditions techniques :**  
+Requêtes via le Polite Pool de Crossref ; cache local obligatoire.
+
+**Risques :**  
+Modéré (si scraping), Faible (via Crossref).
+
+**Décision pratique pour `sources.yaml` :**
+- `active: true`
+- raison : revue scientifique de référence absolue dans la discipline
+- notes d’implémentation : `use_crossref_only: true`
+
+### Sounding Out!
+
+**Statut recommandé :**  
+VALIDÉ PRUDENT
+
+**Famille :**  
+revue / blog académique
+
+**Pertinence pour l’antenne :**  
+Publication majeure et novatrice en sound studies, culture sonore et théories de l'écoute.
+
+**Point d’accès recommandé :**  
+RSS / pages d'articles.
+
+**Pages officielles consultées :**
+- https://soundstudiesblog.com/
+- flux de syndication RSS
+
+**Constats juridiques et techniques :**
+- RSS ouvert émis par CMS WordPress standard.
+- Politique de respect du droit d'auteur sur les essais sonores rédigés.
+
+**Collecte privée autorisée ou raisonnable :**
+- métadonnées de syndication
+- titre
+- original_url
+- date
+- description courte
+
+**Affichage public recommandé :**
+- métadonnées strictes
+
+**Champs interdits en public :**
+- HTML complet des articles
+- images d'illustration
+
+**Attribution minimale :**  
+`Source: Sounding Out! — lien vers l'article original.`
+
+**Rate limit / conditions techniques :**  
+Cadence prudente, une requête à la fois, cache de 24h.
+
+**Risques :**  
+Faible à modéré.
+
+**Décision pratique pour `sources.yaml` :**
+- `active: true`
+- raison : publication pionnière et dynamique en sound studies
+- notes d’implémentation : `meta_only: true`
+
+### Radiomorphoses
+
+**Statut recommandé :**  
+VALIDÉ PRUDENT
+
+**Famille :**  
+revue académique ouverte
+
+**Pertinence pour l’antenne :**  
+Seule revue scientifique francophone dédiée exclusivement à la recherche sur la radio et le son (sciences de l'information et de la communication).
+
+**Point d’accès recommandé :**  
+RSS / OpenEdition Journals / OAI-PMH.
+
+**Pages officielles consultées :**
+- https://journals.openedition.org/radiomorphoses/
+- documentation OAI-PMH OpenEdition
+
+**Constats juridiques et techniques :**
+- Revue ouverte hébergée sur la plateforme publique OpenEdition.
+- Notices normalisées interopérables.
+
+**Collecte privée autorisée ou raisonnable :**
+- notices Dublin Core
+- titre
+- auteurs
+- date
+- DOI
+- résumés académiques
+
+**Affichage public recommandé :**
+- métadonnées bibliographiques minimales
+
+**Champs interdits en public :**
+- PDF
+- HTML intégral des articles
+
+**Attribution minimale :**  
+`Source: Radiomorphoses — OpenEdition Journals — lien vers la notice originale.`
+
+**Rate limit / conditions techniques :**  
+Moissonnage via OAI-PMH, cadence académique normale.
+
+**Risques :**  
+Faible.
+
+**Décision pratique pour `sources.yaml` :**
+- `active: true`
+- raison : revue francophone phare en radio studies
+- notes d’implémentation : `meta_only: true`
+
+### Radio Fañch
+
+**Statut recommandé :**  
+VALIDÉ STRICT
+
+**Famille :**  
+blog / site historique indépendant
+
+**Pertinence pour l’antenne :**  
+Mémoire et histoire des radios libres en Bretagne, archives rares de la bande FM bretonne.
+
+**Point d’accès recommandé :**  
+HTML / RSS si disponible.
+
+**Pages officielles consultées :**
+- blogs et pages historiques de Radio Fañch
+
+**Constats juridiques et techniques :**
+- Site personnel à vocation patrimoniale.
+- Ne pas perturber l'hébergement par un crawling agressif.
+
+**Collecte privée autorisée ou raisonnable :**
+- titres
+- URLs d'articles
+
+**Affichage public recommandé :**
+- liens seulement
+
+**Champs interdits en public :**
+- archives sonores
+- images historiques numérisées
+- textes complets
+
+**Attribution minimale :**  
+`Source: Radio Fañch — lien.`
+
+**Rate limit / conditions techniques :**  
+Classe prudente faible cadence, hebdomadaire ou manuelle.
+
+**Risques :**  
+Faible.
+
+**Décision pratique pour `sources.yaml` :**
+- `active: true`
+- raison : préservation de l'histoire locale de la FM libre
+- notes d’implémentation : `manual_curation: true`
+
+### Les Radios Libres
+
+**Statut recommandé :**  
+VALIDÉ STRICT
+
+**Famille :**  
+blog / site historique
+
+**Pertinence pour l’antenne :**  
+Fonds documentaires et historiques précieux sur le mouvement français des radios libres (1977-1981).
+
+**Point d’accès recommandé :**  
+HTML / RSS si disponible.
+
+**Pages officielles consultées :**
+- sites d'archives et blogs dédiés aux radios libres
+
+**Constats juridiques et techniques :**
+- Initiative militante et mémorielle.
+- Collecte factuelle respectueuse.
+
+**Collecte privée autorisée ou raisonnable :**
+- titres
+- URLs
+
+**Affichage public recommandé :**
+- liens seulement
+
+**Champs interdits en public :**
+- images d'archives
+- enregistrements audio restaurés
+
+**Attribution minimale :**  
+`Source: Les Radios Libres — lien.`
+
+**Rate limit / conditions techniques :**  
+Cadence manuelle ou quotidienne unique, cache local.
+
+**Risques :**  
+Faible.
+
+**Décision pratique pour `sources.yaml` :**
+- `active: true`
+- raison : archives indispensables sur le mouvement des radios libres
+- notes d’implémentation : `meta_only: true`
+
+### La Radio du Futur
+
+**Statut recommandé :**  
+VALIDÉ STRICT
+
+**Famille :**  
+blog / site professionnel
+
+**Pertinence pour l’antenne :**  
+Veille technologique sur le DAB+, la radio numérique, les applications mobiles et le futur du médium.
+
+**Point d’accès recommandé :**  
+HTML / RSS si disponible.
+
+**Pages officielles consultées :**
+- site La Radio du Futur
+- flux RSS publics
+
+**Constats juridiques et techniques :**
+- Site d'actualité professionnelle et d'analyse.
+- Protection standard du droit d'auteur.
+
+**Collecte privée autorisée ou raisonnable :**
+- titres
+- URLs
+- dates de publication
+
+**Affichage public recommandé :**
+- liens seulement
+
+**Champs interdits en public :**
+- analyses rédigées exclusives
+- images professionnelles
+
+**Attribution minimale :**  
+`Source: La Radio du Futur — lien.`
+
+**Rate limit / conditions techniques :**  
+Classe prudente faible cadence, cache strict de 24h.
+
+**Risques :**  
+Faible.
+
+**Décision pratique pour `sources.yaml` :**
+- `active: true`
+- raison : indispensable pour suivre l'évolution technologique de la radio (DAB+)
+- notes d’implémentation : `curated_only: true`
+
+### La Lettre Pro
+
+**Statut recommandé :**  
+VALIDÉ STRICT
+
+**Famille :**  
+presse professionnelle
+
+**Pertinence pour l’antenne :**  
+Actualité quotidienne des professionnels de la radio et des médias en France et en Europe.
+
+**Point d’accès recommandé :**  
+HTML / newsletter / pages.
+
+**Pages officielles consultées :**
+- https://www.lalettre.pro/
+- flux de syndication de la publication
+
+**Constats juridiques et techniques :**
+- Contenus d'actualité pro, en partie sous abonnement.
+- Ne jamais tenter de contourner un paywall ou de scraper massivement les brèves.
+
+**Collecte privée autorisée ou raisonnable :**
+- titres
+- URLs publiques
+- dates
+- extraits courts de veille
+
+**Affichage public recommandé :**
+- liens seulement
+
+**Champs interdits en public :**
+- brèves entières
+- articles payants
+- images d'actualité
+
+**Attribution minimale :**  
+`Source: La Lettre Pro de la Radio — lien.`
+
+**Rate limit / conditions techniques :**  
+Classe prudente faible cadence, ingestion journalière minimale.
+
+**Risques :**  
+Modéré (si non respect de l'usage non commercial).
+
+**Décision pratique pour `sources.yaml` :**
+- `active: true`
+- raison : actualité professionnelle du secteur en temps réel
+- notes d’implémentation : `rss_only: true`
+
+### MeCCSA Radio & Audio Studies
+
+**Statut recommandé :**  
+VALIDÉ STRICT
+
+**Famille :**  
+réseau académique britannique
+
+**Pertinence pour l’antenne :**  
+Réseau majeur de chercheurs britanniques en radio studies, publication d'appels à communications et de colloques.
+
+**Point d’accès recommandé :**  
+pages / RSS.
+
+**Pages officielles consultées :**
+- pages du réseau MeCCSA Radio & Audio Studies
+
+**Constats juridiques et techniques :**
+- Site académique d'association professionnelle.
+- Signalement de travaux universitaires encouragé.
+
+**Collecte privée autorisée ou raisonnable :**
+- titres
+- URLs d'appels ou d'événements
+- dates
+
+**Affichage public recommandé :**
+- liens + métadonnées minimales
+
+**Champs interdits en public :**
+- résumés longs de colloques
+- rapports internes
+
+**Attribution minimale :**  
+`Source: MeCCSA Radio & Audio Studies — lien.`
+
+**Rate limit / conditions techniques :**  
+Classe académique normale.
+
+**Risques :**  
+Faible.
+
+**Décision pratique pour `sources.yaml` :**
+- `active: true`
+- raison : appels à communications de premier plan
+- notes d’implémentation : `curated_only: true`
+
+### Nieman Storyboard
+
+**Statut recommandé :**  
+VALIDÉ STRICT
+
+**Famille :**  
+site éditorial / académique (Harvard)
+
+**Pertinence pour l’antenne :**  
+Études détaillées sur le journalisme narratif, le documentaire sonore et l'écriture pour l'oreille.
+
+**Point d’accès recommandé :**  
+RSS / pages.
+
+**Pages officielles consultées :**
+- https://niemanstoryboard.org/
+- flux RSS Nieman Foundation
+
+**Constats juridiques et techniques :**
+- Publication de prestige de la Fondation Nieman pour le Journalisme.
+- Droit d'auteur s'appliquant aux analyses textuelles approfondies.
+
+**Collecte privée autorisée ou raisonnable :**
+- titres
+- URLs
+- dates
+- résumés de veille
+
+**Affichage public recommandé :**
+- liens + métadonnées bibliographiques minimales
+
+**Champs interdits en public :**
+- études de cas rédigées
+- analyses narratives complètes
+- images
+
+**Attribution minimale :**  
+`Source: Nieman Storyboard — Harvard University — lien.`
+
+**Rate limit / conditions techniques :**  
+Classe prudente faible cadence, une fois par jour.
+
+**Risques :**  
+Faible.
+
+**Décision pratique pour `sources.yaml` :**
+- `active: true`
+- raison : référence mondiale de l'analyse narrative sonore et documentaire
+- notes d’implémentation : `meta_only: true`
+
+### Transom
+
+**Statut recommandé :**  
+VALIDÉ PRUDENT
+
+**Famille :**  
+site ressource / podcasting / création sonore
+
+**Pertinence pour l’antenne :**  
+Ressources de formation, manifestes esthétiques, essais sur la prise de son et la narration radio.
+
+**Point d’accès recommandé :**  
+RSS / pages.
+
+**Pages officielles consultées :**
+- https://transom.org/
+- flux RSS et sitemaps
+
+**Constats juridiques et techniques :**
+- Site éducatif d'intérêt public.
+- Protéger les guides de formation exclusifs rédigés par des ingénieurs et producteurs.
+
+**Collecte privée autorisée ou raisonnable :**
+- titres d'articles
+- URLs
+- dates
+- auteurs
+
+**Affichage public recommandé :**
+- métadonnées strictes (liens et titres)
+
+**Champs interdits en public :**
+- guides de formation complets
+- images techniques
+- fichiers audio de démonstration
+
+**Attribution minimale :**  
+`Source: Transom.org — lien vers le guide ou l'article.`
+
+**Rate limit / conditions techniques :**  
+Classe prudente faible cadence.
+
+**Risques :**  
+Faible.
+
+**Décision pratique pour `sources.yaml` :**
+- `active: true`
+- raison : ressource internationale majeure pour la réalisation radiophonique
+- notes d’implémentation : `curated_only: true`
+
+### RadioDoc Review
+
+**Statut recommandé :**  
+VALIDÉ PRUDENT
+
+**Famille :**  
+revue académique / critique spécialisée
+
+**Pertinence pour l’antenne :**  
+Seule revue analysant spécifiquement le documentaire et la fiction radio de création sous un angle universitaire et critique.
+
+**Point d’accès recommandé :**  
+pages revue / RSS.
+
+**Pages officielles consultées :**
+- https://ro.uow.edu.au/rdr/
+- notices de l'Université de Wollongong
+
+**Constats juridiques et techniques :**
+- Revue universitaire hébergée sur dépôt institutionnel ouvert.
+- Ingestion propre encouragée pour le signalement.
+
+**Collecte privée autorisée ou raisonnable :**
+- métadonnées d'articles
+- auteurs
+- titre
+- date
+
+**Affichage public recommandé :**
+- métadonnées bibliographiques minimales
+
+**Champs interdits en public :**
+- essais critiques complets
+- PDF
+
+**Attribution minimale :**  
+`Source: RadioDoc Review — lien.`
+
+**Rate limit / conditions techniques :**  
+Classe académique normale.
+
+**Risques :**  
+Faible.
+
+**Décision pratique pour `sources.yaml` :**
+- `active: true`
+- raison : unique revue d'évaluation critique de documentaires radio
+- notes d’implémentation : `meta_only: true`
 
 ### HAL
 
+**Statut recommandé :**  
+VALIDÉ
 
-**Statut recommandé :** VALIDÉ
+**Famille :**  
+plateforme académique / OAI-PMH
 
-**Famille :** Plateforme académique / OAI-PMH
-
-**Pertinence pour l’antenne :**
+**Pertinence pour l’antenne :**  
 Dépôt institutionnel majeur pour la littérature scientifique francophone. Constitue le socle de la veille en sciences de l'information et de la communication concernant la radio.
 
-**Point d’accès recommandé :**
-API REST (api.archives-ouvertes.fr/search/) ou OAI-PMH (api.archives-ouvertes.fr/oai/hal/).<sup>15</sup>
+**Point d’accès recommandé :**  
+API REST (api.archives-ouvertes.fr/search/) ou OAI-PMH (api.archives-ouvertes.fr/oai/hal/).
 
 **Pages officielles consultées :**
-- https://api.archives-ouvertes.fr/docs/search <sup>17</sup>
-- https://api.archives-ouvertes.fr/docs/oai <sup>15</sup>
-- https://about.hal.science/en/principles/ <sup>10</sup>
+- https://api.archives-ouvertes.fr/docs/search
+- https://api.archives-ouvertes.fr/docs/oai
+- https://about.hal.science/en/principles/
 
 **Constats juridiques et techniques :**
-- L'infrastructure OAI garantit une interopérabilité totale, sans nécessité d'inscription.<sup>10</sup>
-- L'exploitation commerciale des métadonnées extraites est prohibée, mais l'usage académique et d'indexation est encouragé.<sup>15</sup>
+- L'infrastructure OAI garantit une interopérabilité totale, sans nécessité d'inscription.
+- L'exploitation commerciale des métadonnées extraites est prohibée, mais l'usage académique et d'indexation est encouragé.
 
 **Collecte privée autorisée ou raisonnable :**
-Métadonnées bibliographiques intégrales, identifiants auteurs (idHAL), résumés, affiliations.
+- Métadonnées bibliographiques intégrales
+- identifiants auteurs (idHAL)
+- résumés
+- affiliations
 
 **Affichage public recommandé :**
-title, doi, URL canonique HAL, auteurs, date de publication, type de document.
+- title
+- doi
+- URL canonique HAL
+- auteurs
+- date de publication
+- type de document
 
 **Champs interdits en public :**
-Abstracts complets (en raison des droits résiduels éventuels des éditeurs initiaux), texte intégral des dépôts.
+- Abstracts complets (en raison des droits résiduels éventuels des éditeurs initiaux)
+- texte intégral des dépôts PDF
 
-**Attribution minimale :**
-Source: HAL (Archives Ouvertes) — lien vers la notice originale.
+**Attribution minimale :**  
+`Source: HAL (Archives Ouvertes) — lien vers la notice originale.`
 
-**Rate limit / conditions techniques :**
-Pagination obligatoire (limite de 10 000 résultats via paramètre rows).<sup>17</sup> Cadence d'une requête par seconde recommandée.
+**Rate limit / conditions techniques :**  
+Pagination obligatoire (limite de 10 000 résultats via paramètre rows). Cadence d'une requête par seconde recommandée.
 
-**Risques :**
+**Risques :**  
 Faible. Source institutionnelle conçue pour le partage ouvert.
 
-**Décision pratique pour sources.yaml :**
-```yaml
-active: true
-raison : Source francophone incontournable, fiable et ouverte.
-notes d’implémentation : Privilégier le moissonnage par collections spécifiques ou requêtes disciplinaires via l'API SolR.
-```
-
-### OpenAlex
-
-
-**Statut recommandé :** VALIDÉ
-
-**Famille :** Catalogue académique global / API
-
-**Pertinence pour l’antenne :**
-Graphe de connaissances remplaçant de nombreuses bases propriétaires. Couvre la quasi-totalité des publications mondiales en sound studies et media studies.
-
-**Point d’accès recommandé :**
-API REST (api.openalex.org).
-
-**Pages officielles consultées :**
-- https://developers.openalex.org/api-reference/authentication <sup>7</sup>
-- https://blog.openalex.org/openalex-api-new-features-and-usage-based-pricing/ <sup>18</sup>
-
-**Constats juridiques et techniques :**
-- L'ensemble des données est placé sous licence CC0 (domaine public).<sup>19</sup>
-- Un système de crédits gratuits (100 000 crédits/jour) impose l'utilisation d'une clé d'API pour tout usage sérieux.<sup>7</sup>
-
-**Collecte privée autorisée ou raisonnable :**
-Totalité du graphe : auteurs, institutions, concepts, références croisées.
-
-**Affichage public recommandé :**
-title, doi, URL, auteurs, année de publication, concepts, source_name.
-
-**Champs interdits en public :**
-L'index d'abstracts inversé (trop lourd), dumps API bruts.
-
-**Attribution minimale :**
-Source: OpenAlex — lien vers le DOI ou la notice.
-
-**Rate limit / conditions techniques :**
-Nécessite le passage de api_key=VOTRE_CLE. Limite stricte de 100 requêtes par seconde.<sup>7</sup> Utiliser le paramètre per_page=100 pour optimiser la consommation de crédits.<sup>7</sup>
-
-**Risques :**
-Faible. Cadre juridique CC0 exceptionnellement favorable.
-
-**Décision pratique pour sources.yaml :**
-```yaml
-active: true
-raison : Réservoir de données massives sans barrière juridique.
-notes d’implémentation : Injecter la clé API via l'environnement local. Surveiller l'en-tête X-RateLimit-Remaining.
-```
+**Décision pratique pour `sources.yaml` :**
+- `active: true`
+- raison : Source francophone incontournable, fiable et ouverte.
+- notes d’implémentation : Privilégier le moissonnage par collections spécifiques ou requêtes disciplinaires via l'API SolR.
 
 ### Crossref
 
+**Statut recommandé :**  
+VALIDÉ
 
-**Statut recommandé :** VALIDÉ
+**Famille :**  
+API / agence d'enregistrement DOI
 
-**Famille :** Agence d'enregistrement DOI / API
+**Pertinence pour l’antenne :**  
+Standard d'identification des publications académiques mondiales. Indispensable pour la résolution et l'enrichissement bibliographique.
 
-**Pertinence pour l’antenne :**
-Standard d'identification des publications. Permet de résoudre les liens cassés et d'obtenir des métadonnées normalisées sur les revues académiques internationales.
-
-**Point d’accès recommandé :**
+**Point d’accès recommandé :**  
 API REST (api.crossref.org).
 
 **Pages officielles consultées :**
-- https://www.crossref.org/documentation/retrieve-metadata/ <sup>9</sup>
-- https://www.crossref.org/blog/announcing-changes-to-rest-api-rate-limits/ <sup>8</sup>
+- https://www.crossref.org/documentation/retrieve-metadata/
+- https://www.crossref.org/blog/announcing-changes-to-rest-api-rate-limits/
 
 **Constats juridiques et techniques :**
-- Les métadonnées sont librement accessibles à la communauté.<sup>9</sup>
-- Les informations de licence y sont structurées, permettant de vérifier les conditions de réutilisation.<sup>20</sup>
+- Les métadonnées sont librement accessibles à la communauté scientifique.
+- Les informations de licence y sont structurées, permettant de vérifier les conditions de réutilisation.
 
 **Collecte privée autorisée ou raisonnable :**
-Métadonnées complètes liées aux identifiants DOI.
+- Métadonnées complètes liées aux identifiants DOI
 
 **Affichage public recommandé :**
-title, URL (via résolveur doi.org), auteurs, date, revue.
+- title
+- URL (via résolveur doi.org)
+- auteurs
+- date de publication
+- revue d'accueil
 
 **Champs interdits en public :**
-Réponses API brutes.
+- Réponses API brutes
 
-**Attribution minimale :**
-Source: Crossref — lien DOI.
+**Attribution minimale :**  
+`Source: Crossref — lien DOI.`
 
-**Rate limit / conditions techniques :**
-L'accès au Polite Pool (file d'attente prioritaire et plus permissive) exige la transmission d'une adresse email valide via le paramètre mailto= ou l'en-tête User-Agent.<sup>8</sup>
+**Rate limit / conditions techniques :**  
+L'accès au Polite Pool exige la transmission d'une adresse email valide via le paramètre mailto= ou l'en-tête User-Agent.
 
-**Risques :**
-Faible. Infrastructure d'intérêt public.
+**Risques :**  
+Faible. Organisation à but non lucratif d'intérêt public.
 
-**Décision pratique pour sources.yaml :**
-```yaml
-active: true
-raison : Données bibliographiques de référence absolue.
-notes d’implémentation : Configuration obligatoire du paramètre mailto pour la courtoisie réseau.
-```
+**Décision pratique pour `sources.yaml` :**
+- `active: true`
+- raison : Données bibliographiques de référence absolue.
+- notes d’implémentation : Configuration obligatoire du paramètre mailto pour la courtoisie réseau.
 
-### DOAJ (Directory of Open Access Journals)
+### OpenAlex
 
+**Statut recommandé :**  
+VALIDÉ
 
-**Statut recommandé :** VALIDÉ
+**Famille :**  
+catalogue académique global / API
 
-**Famille :** Catalogue académique / API
+**Pertinence pour l’antenne :**  
+Graphe de connaissances remplaçant de nombreuses bases propriétaires. Couvre la quasi-totalité des publications mondiales en sound studies et media studies.
 
-**Pertinence pour l’antenne :**
-Permet de s'assurer que les articles indexés sont réellement en Open Access, facilitant la mise à disposition de la recherche sur la radio.
+**Point d’accès recommandé :**  
+API REST (api.openalex.org).
 
-**Point d’accès recommandé :**
+**Pages officielles consultées :**
+- https://developers.openalex.org/api-reference/authentication
+- https://blog.openalex.org/openalex-api-new-features-and-usage-based-pricing/
+
+**Constats juridiques et techniques :**
+- L'ensemble des données est placé sous licence CC0 (domaine public).
+- Un système de crédits gratuits (100 000 crédits/jour) impose l'utilisation d'une clé d'API pour tout usage sérieux.
+
+**Collecte privée autorisée ou raisonnable :**
+- Totalité du graphe : auteurs, institutions, concepts, références croisées
+
+**Affichage public recommandé :**
+- title
+- doi
+- URL
+- auteurs
+- année de publication
+- concepts
+- source_name
+
+**Champs interdits en public :**
+- L'index d'abstracts inversé (trop lourd)
+- dumps API bruts
+
+**Attribution minimale :**  
+`Source: OpenAlex — lien vers le DOI ou la notice.`
+
+**Rate limit / conditions techniques :**  
+Authentification par clé recommandée. Limite stricte de 100 requêtes par seconde. Utiliser le paramètre per_page=100 pour optimiser la consommation de crédits.
+
+**Risques :**  
+Faible. Cadre juridique CC0 exceptionnellement favorable.
+
+**Décision pratique pour `sources.yaml` :**
+- `active: true`
+- raison : Réservoir de données massives sans barrière juridique.
+- notes d’implémentation : Injecter la clé API via l'environnement local. Surveiller l'en-tête X-RateLimit-Remaining.
+
+### CiNii
+
+**Statut recommandé :**  
+VALIDÉ PRUDENT
+
+**Famille :**  
+plateforme académique japonaise (NII)
+
+**Pertinence pour l’antenne :**  
+Recherche académique japonaise sur la Mini-FM, Tetsuo Kogawa et l'histoire des micro-radios japonaises.
+
+**Point d’accès recommandé :**  
+API REST ou RDF.
+
+**Pages officielles consultées :**
+- https://support.nii.ac.jp/en/cinii/copyright
+- https://labs.ci.nii.ac.jp/en/termsofuse.html
+
+**Constats juridiques et techniques :**
+- Le service est gratuit et régi par le droit japonais.
+- Les conditions d'utilisation (Linking Policy) exigent qu'il soit clairement indiqué que le service est fourni par le NII.
+
+**Collecte privée autorisée ou raisonnable :**
+- recherche bibliographique
+- identifiants
+
+**Affichage public recommandé :**
+- title
+- original_url
+- authors
+- source_name
+
+**Champs interdits en public :**
+- Dumps massifs
+
+**Attribution minimale :**  
+`Source: CiNii Research (National Institute of Informatics) — lien.`
+
+**Rate limit / conditions techniques :**  
+Cache obligatoire, 1 requête par seconde maximum pour éviter de surcharger les serveurs de l'institut.
+
+**Risques :**  
+Faible. API documentée pour un accès international.
+
+**Décision pratique pour `sources.yaml` :**
+- `active: true`
+- raison : recherche pionnière sur la mini-FM japonaise indispensable à la cartographie
+- notes d’implémentation : Respecter scrupuleusement la clause d'attribution contractuelle au NII.
+
+### NDL
+
+**Statut recommandé :**  
+VALIDÉ PRUDENT
+
+**Famille :**  
+catalogue de bibliothèque nationale japonaise
+
+**Pertinence pour l’antenne :**  
+Ouvrages, périodiques et thèses japonais sur la Mini-FM, les radios communautaires et Kogawa.
+
+**Point d’accès recommandé :**  
+NDL Search API / SRU.
+
+**Pages officielles consultées :**
+- https://ndlsearch.ndl.go.jp/en/help/api/provider
+
+**Constats juridiques et techniques :**
+- Données institutionnelles ouvertes à des fins de signalement et de découverte.
+- Formats structurés robustes (JSON/XML).
+
+**Collecte privée autorisée ou raisonnable :**
+- notices bibliographiques au format JSON/XML
+
+**Affichage public recommandé :**
+- title
+- original_url
+- published_at
+- source_name
+
+**Champs interdits en public :**
+- Dumps bruts
+
+**Attribution minimale :**  
+`Source: National Diet Library — Japan — lien.`
+
+**Rate limit / conditions techniques :**  
+Cadence modérée, cache local obligatoire.
+
+**Risques :**  
+Faible.
+
+**Décision pratique pour `sources.yaml` :**
+- `active: true`
+- raison : ressources nationales japonaises exhaustives et officielles
+- notes d’implémentation : `sru_xml_parsing: true`
+
+### J-STAGE
+
+**Statut recommandé :**  
+VALIDÉ PRUDENT
+
+**Famille :**  
+portail de revues académiques japonaises
+
+**Pertinence pour l’antenne :**  
+Articles académiques en libre accès sur l'esthétique et l'histoire des médias sonores au Japon.
+
+**Point d’accès recommandé :**  
+API REST ou RSS par revue.
+
+**Pages officielles consultées :**
+- sites d'aide aux développeurs J-STAGE
+
+**Constats juridiques et techniques :**
+- Portail national favorisant l'Open Access en recherche académique.
+- Données interopérables.
+
+**Collecte privée autorisée ou raisonnable :**
+- métadonnées et liens
+
+**Affichage public recommandé :**
+- title
+- original_url
+- published_at
+- authors
+- source_name
+
+**Champs interdits en public :**
+- PDF intégraux
+
+**Attribution minimale :**  
+`Source: J-STAGE — Japan — lien.`
+
+**Rate limit / conditions techniques :**  
+Cadence académique normale.
+
+**Risques :**  
+Faible.
+
+**Décision pratique pour `sources.yaml` :**
+- `active: true`
+- raison : accès ouvert aux publications scientifiques japonaises
+- notes d’implémentation : `meta_only: true`
+
+### Cairn
+
+**Statut recommandé :**  
+VALIDÉ STRICT
+
+**Famille :**  
+plateforme éditoriale commerciale
+
+**Pertinence pour l’antenne :**  
+Littérature francophone majeure en sciences humaines, sociologie des médias et sciences de l'information et de la communication.
+
+**Point d’accès recommandé :**  
+OAI-PMH ou via DOI (Crossref).
+
+**Pages officielles consultées :**
+- https://droit.cairn.info/revue-dpo-news-2025-3-page-7?lang=fr
+
+**Constats juridiques et techniques :**
+- Cairn dispose de conditions d'utilisation très strictes protégeant son catalogue.
+- Aspiration web directe (BeautifulSoup/Selenium) strictement bannie par les CGU de Cairn sous peine de poursuites.
+
+**Collecte privée autorisée ou raisonnable :**
+- métadonnées minimales (titres, auteurs, revue, date, liens, DOI) obtenues via Crossref ou OAI public
+
+**Affichage public recommandé :**
+- title
+- auteurs
+- revue
+- date
+- liens vers l'URL officielle (évitant tout paywall)
+
+**Champs interdits en public :**
+- abstracts (protégés)
+- textes intégraux
+- PDF
+- scraping HTML direct
+
+**Attribution minimale :**  
+`Source: Cairn.info — lien.`
+
+**Rate limit / conditions techniques :**  
+Bannir le crawling direct ; enrichissement indirect par Crossref / OpenAlex.
+
+**Risques :**  
+Élevé en cas de scraping direct, nul en cas de résolution par Crossref/OAI-PMH.
+
+**Décision pratique pour `sources.yaml` :**
+- `active: true`
+- raison : incontournable pour la recherche francophone
+- notes d’implémentation : `crossref_lookup_only: true`
+
+### Persée
+
+**Statut recommandé :**  
+VALIDÉ PRUDENT
+
+**Famille :**  
+portail académique ouvert
+
+**Pertinence pour l’antenne :**  
+Patrimoine scientifique de la recherche SHS francophone sur l'histoire de la radio et des médias.
+
+**Point d’accès recommandé :**  
+OAI-PMH ou API.
+
+**Pages officielles consultées :**
+- https://info.persee.fr/fouille-de-donnees/
+
+**Constats juridiques et techniques :**
+- Portail ouvert d'intérêt public.
+- Fouille de texte massive requiert une concertation, mais l'indexation de métadonnées est libre.
+
+**Collecte privée autorisée ou raisonnable :**
+- notices bibliographiques complètes
+- auteurs
+- titre
+- date
+
+**Affichage public recommandé :**
+- title
+- original_url
+- published_at
+- authors
+- source_name
+
+**Champs interdits en public :**
+- texte intégral
+
+**Attribution minimale :**  
+`Source: Persée — UAR Persée — lien.`
+
+**Rate limit / conditions techniques :**  
+Respect de l'OAI-PMH standard.
+
+**Risques :**  
+Faible.
+
+**Décision pratique pour `sources.yaml` :**
+- `active: true`
+- raison : archives SHS ouvertes d'une immense valeur historique
+- notes d’implémentation : `meta_only: true`
+
+### OpenEdition Books
+
+**Statut recommandé :**  
+VALIDÉ PRUDENT
+
+**Famille :**  
+livres académiques ouverts
+
+**Pertinence pour l’antenne :**  
+Monographies universitaires francophones en sound studies, sciences sociales et sciences de la communication.
+
+**Point d’accès recommandé :**  
+OAI-PMH ou RSS.
+
+**Pages officielles consultées :**
+- documentation OAI-PMH OpenEdition Books
+
+**Constats juridiques et techniques :**
+- Métadonnées normalisées et interopérables.
+- Accès ouvert sélectif selon les éditeurs.
+
+**Collecte privée autorisée ou raisonnable :**
+- notices de livres
+- auteurs
+- titre
+- date
+
+**Affichage public recommandé :**
+- title
+- original_url
+- published_at
+- authors
+- source_name
+
+**Champs interdits en public :**
+- Chapitres entiers
+- PDF
+
+**Attribution minimale :**  
+`Source: OpenEdition Books — lien.`
+
+**Rate limit / conditions techniques :**  
+Cadence normale.
+
+**Risques :**  
+Faible.
+
+**Décision pratique pour `sources.yaml` :**
+- `active: true`
+- raison : monographies universitaires de premier plan
+- notes d’implémentation : `meta_only: true`
+
+### OpenEdition Journals
+
+**Statut recommandé :**  
+VALIDÉ PRUDENT
+
+**Famille :**  
+revues académiques ouvertes
+
+**Pertinence pour l’antenne :**  
+Revues scientifiques majeures en sound studies, culture visuelle et théories des communications.
+
+**Point d’accès recommandé :**  
+OAI-PMH ou RSS.
+
+**Pages officielles consultées :**
+- https://oai-openedition.readthedocs.io/
+
+**Constats juridiques et techniques :**
+- Ingestion propre via OAI-PMH v2 (Dublin Core et formats MODS).
+- Respect du droit d'auteur.
+
+**Collecte privée autorisée ou raisonnable :**
+- notices d'articles
+- auteurs
+- titre
+- date
+
+**Affichage public recommandé :**
+- title
+- original_url
+- published_at
+- authors
+- source_name
+
+**Champs interdits en public :**
+- PDF
+- HTML complet des articles
+
+**Attribution minimale :**  
+`Source: OpenEdition Journals — lien.`
+
+**Rate limit / conditions techniques :**  
+Respect des endpoints OAI-PMH.
+
+**Risques :**  
+Faible.
+
+**Décision pratique pour `sources.yaml` :**
+- `active: true`
+- raison : portail majeur de l'Open Access francophone
+- notes d’implémentation : `meta_only: true`
+
+### Érudit
+
+**Statut recommandé :**  
+VALIDÉ PRUDENT
+
+**Famille :**  
+plateforme académique
+
+**Pertinence pour l’antenne :**  
+Littérature académique nord-américaine (Canada/Québec) francophone sur les médias, la culture et la communication.
+
+**Point d’accès recommandé :**  
+notices et métadonnées ; DOI si présent.
+
+**Pages officielles consultées :**
+- https://apropos.erudit.org/technologies/?lang=en
+
+**Constats juridiques et techniques :**
+- Érudit maintient un entrepôt OAI-PMH public (formats OAI-DC et NLM) pour la collecte.
+- Stratégie identique à Persée.
+
+**Collecte privée autorisée ou raisonnable :**
+- métadonnées
+- DOI
+- auteurs
+- date
+- revue
+
+**Affichage public recommandé :**
+- métadonnées bibliographiques minimales
+
+**Champs interdits en public :**
+- textes complets
+- PDF
+- HTML
+- dumps bruts
+
+**Attribution minimale :**  
+`Source: Érudit — lien vers la notice originale.`
+
+**Rate limit / conditions techniques :**  
+Cadence modérée ; enrichissement par DOI.
+
+**Risques :**  
+Faible à modéré.
+
+**Décision pratique pour `sources.yaml` :**
+- `active: true`
+- raison : élargit le corpus francophone universitaire outre-Atlantique
+- notes d’implémentation : `meta_only: true`
+
+### DOAJ
+
+**Statut recommandé :**  
+VALIDÉ PRUDENT
+
+**Famille :**  
+API / index de revues open access
+
+**Pertinence pour l’antenne :**  
+Identifier et filtrer les publications open access de haute qualité dans le domaine des sound studies.
+
+**Point d’accès recommandé :**  
 API REST (doaj.org/api/).
 
 **Pages officielles consultées :**
-- https://docs.pkp.sfu.ca/doaj/en/ <sup>21</sup>
-- https://blog.doaj.org/2025/06/15/how-i-use-doaj-metadata-in-my-work-and-research/ <sup>22</sup>
+- https://docs.pkp.sfu.ca/doaj/en/
+- https://blog.doaj.org/2025/06/15/how-i-use-doaj-metadata-in-my-work-and-research/
 
 **Constats juridiques et techniques :**
-- Le DOAJ milite pour l'accès ouvert libre (Libre Open Access) et répertorie des métadonnées gratuites de journaux peer-reviewed.<sup>21</sup>
-- L'API limite généralement les résultats à 1000 notices par recherche pour préserver la base de données ElasticSearch.<sup>23</sup>
+- Le DOAJ milite pour l'accès ouvert libre (Libre Open Access) et répertorie des métadonnées gratuites.
+- L'API limite généralement les résultats à 1000 notices par recherche pour préserver la base de données.
 
 **Collecte privée autorisée ou raisonnable :**
-Métadonnées des journaux et des articles.
+- métadonnées des journaux et des articles
 
 **Affichage public recommandé :**
-Liens, titres, informations de licence.
+- liens
+- titres
+- informations de licence
 
 **Champs interdits en public :**
-Dumps complets.
+- Dumps complets
 
-**Attribution minimale :**
-Source: DOAJ — lien.
+**Attribution minimale :**  
+`Source: DOAJ — lien.`
 
-**Rate limit / conditions techniques :**
-Pagination obligatoire. Les concepteurs du DOAJ signalent que l'infrastructure peut souffrir de charges élevées 24 ; une cadence modérée est de rigueur.
+**Rate limit / conditions techniques :**  
+Pagination obligatoire ; cadence modérée de rigueur pour soulager l'infrastructure.
 
-**Risques :**
+**Risques :**  
 Faible.
 
-**Décision pratique pour sources.yaml :**
-```yaml
-active: true
-raison : Validation fiable du statut Open Access des ressources.
-notes d’implémentation : Gérer le plafond des 1000 résultats par segmentation temporelle si nécessaire.
-```
+**Décision pratique pour `sources.yaml` :**
+- `active: true`
+- raison : validation fiable du statut Open Access des ressources
+- notes d’implémentation : `limit_results_1000: true`
 
-### Europeana
+### WorldCat
 
+**Statut recommandé :**  
+À REPORTER
 
-**Statut recommandé :** VALIDÉ
+**Famille :**  
+catalogue coopératif mondial
 
-**Famille :** Catalogue du patrimoine culturel / API
+**Pertinence pour l’antenne :**  
+Recensement universel des monographies et ouvrages imprimés sur l'histoire de la radio et les études sonores.
 
-**Pertinence pour l’antenne :**
-Ressource exceptionnelle pour l'histoire des médias, les archives sonores européennes et l'esthétique radiophonique ancienne.
-
-**Point d’accès recommandé :**
-Search API et Record API (api.europeana.eu).
-
-**Pages officielles consultées :**
-- https://europeana.atlassian.net/wiki/spaces/EF/pages/2360508417 25
-- https://www.europeana.eu/en/rights/terms-of-use <sup>26</sup>
-
-**Constats juridiques et techniques :**
-- L'accès est gratuit, inconditionnel sur le volume de lecture, mais requiert une clé d'API.<sup>25</sup>
-- Bien que le portail agrége des œuvres du domaine public, la plateforme se dégage de toute responsabilité quant aux erreurs de droits d'auteur émanant des institutions contributrices.<sup>26</sup>
-
-**Collecte privée autorisée ou raisonnable :**
-Métadonnées patrimoniales, informations géographiques et temporelles.
-
-**Affichage public recommandé :**
-title, URL (vers europeana.eu), institution source, statut légal (ex: Public Domain).
-
-**Champs interdits en public :**
-L'intégration directe de médias soumis à des licences restrictives en dehors du Europeana Media Player.<sup>26</sup>
-
-**Attribution minimale :**
-Source: Europeana, fourni par [Institution] — lien.
-
-**Rate limit / conditions techniques :**
-Authentification par clé. Requêtes espacées pour une intégration propre.
-
-**Risques :**
-Faible. Les conditions d'utilisation encouragent explicitement l'exploitation via API.
-
-**Décision pratique pour sources.yaml :**
-```yaml
-active: true
-raison : Découverte de matériaux historiques rares sur la radiodiffusion.
-notes d’implémentation : Mapper systématiquement le champ des droits (Rights Statement) pour vérification.
-```
-
-### Theses.fr
-
-
-**Statut recommandé :** VALIDÉ
-
-**Famille :** Catalogue académique
-
-**Pertinence pour l’antenne :**
-Détection précoce des recherches doctorales francophones en études radiophoniques.
-
-**Point d’accès recommandé :**
-API Export des données via data.gouv.fr ou OAI-PMH.<sup>28</sup>
+**Point d’accès recommandé :**  
+Aucun accès automatisé pour ce projet (CGU de WorldCat hautement restrictives).
 
 **Pages officielles consultées :**
-- https://www.data.gouv.fr/dataservices/api-export-des-donnees-de-theses-fr 28
-- https://theses.fr/ 29
+- https://www.oclc.org/content/dam/ext-ref/worldcat-org/terms.html
+- https://www.oclc.org/developer/api/oclc-apis/worldcat-search-api.en.html
 
 **Constats juridiques et techniques :**
-- Base centralisée de l'Abes, largement partagée en Open Data gouvernemental.<sup>28</sup>
+- Les Conditions d'Utilisation de WorldCat.org interdisent de manière absolue l'extraction automatisée (bots, scraping), le stockage à long terme, et la republication des données.
+- L'accès légitime à l'API de recherche nécessite de cumuler un abonnement institutionnel coûteux au catalogage complet d'OCLC, hors de portée d'un projet de veille autonome.
 
 **Collecte privée autorisée ou raisonnable :**
-Données bibliographiques complètes, informations sur les jurys et directeurs de recherche.
+- Consultation manuelle et saisie humaine dans Zotero uniquement.
 
 **Affichage public recommandé :**
-Titre de la thèse, auteur, date de soutenance, URL vers la notice.
+- Aucun
 
 **Champs interdits en public :**
-Résumés longs si non expressément libres.
+- Tous les champs
+- identifiants (OCLC number)
+- URLs
 
-**Attribution minimale :**
-Source: theses.fr / Abes — lien.
+**Attribution minimale :**  
+N/A
 
-**Rate limit / conditions techniques :**
-Accès standard data.gouv.fr.
+**Rate limit / conditions techniques :**  
+Protections techniques anti-bots robustes et menaces d'action en justice explicites en cas de violation des systèmes de sécurité.
 
-**Risques :**
+**Risques :**  
+Critique. OCLC exerce un contrôle monopolistique reconnu sur ses métadonnées et protège farouchement ses droits.
+
+**Décision pratique pour `sources.yaml` :**
+- `active: false`
+- raison : Incompatibilité juridique fondamentale avec le concept d'agrégation automatisée.
+- notes d’implémentation : Remplacer ce manque par la consultation d'archives ouvertes européennes ou nationales (Sudoc, BnF, HAL, OpenAlex) dont la gouvernance favorise la découvrabilité.
+
+### Library of Congress
+
+**Statut recommandé :**  
+VALIDÉ PRUDENT
+
+**Famille :**  
+bibliothèque nationale et archives
+
+**Pertinence pour l’antenne :**  
+Notices bibliographiques historiques sur la radio américaine et collections de radiodiffusion.
+
+**Point d’accès recommandé :**  
+LoC Search API (JSON).
+
+**Pages officielles consultées :**
+- https://libraryofcongress.github.io/data-exploration/
+
+**Constats juridiques et techniques :**
+- Source de données publiques gouvernementales stables et ouvertes.
+- Grand volume de ressources documentaires d'intérêt historique.
+
+**Collecte privée autorisée ou raisonnable :**
+- notices d'ouvrages
+- collections
+- dates
+- identifiants
+
+**Affichage public recommandé :**
+- title
+- original_url
+- published_at
+- source_name
+
+**Champs interdits en public :**
+- Dumps complets MARC/XML
+
+**Attribution minimale :**  
+`Source: Library of Congress — lien.`
+
+**Rate limit / conditions techniques :**  
+Limitation d'appels modérée, cache strict.
+
+**Risques :**  
 Faible.
 
-**Décision pratique pour sources.yaml :**
-```yaml
-active: true
-raison : Exhaustivité sur la recherche française en devenir.
-notes d’implémentation : Aucun obstacle technique majeur.
-```
+**Décision pratique pour `sources.yaml` :**
+- `active: true`
+- raison : Source de référence bibliographique stable, ouverte et institutionnelle
+- notes d’implémentation : `use_json_api: true`
 
 ### BnF / Gallica
 
+**Statut recommandé :**  
+VALIDÉ PRUDENT
 
-**Statut recommandé :** VALIDÉ
+**Famille :**  
+catalogue institutionnel et archives numériques
 
-**Famille :** Catalogue institutionnel et archives
+**Pertinence pour l’antenne :**  
+Indispensable pour l'histoire des débuts de la radio, de la TSF, et la numérisation des revues historiques.
 
-**Pertinence pour l’antenne :**
-Essentiel pour l'archéologie des médias et la numérisation des anciennes revues de TSF ou radiodiffusion.
-
-**Point d’accès recommandé :**
-Entrepôts OAI-PMH (OAI-NUM pour les documents numérisés, OAI-CAT pour le catalogue).<sup>30</sup>
+**Point d’accès recommandé :**  
+Entrepôts OAI-PMH (OAI-NUM pour les documents numérisés, OAI-CAT pour le catalogue).
 
 **Pages officielles consultées :**
-- https://api.bnf.fr/fr/oai-num 30
-- https://www.bnf.fr/fr/recuperer-des-notices-bibliographiques-en-dublin-core-oai-cat 31
+- https://api.bnf.fr/fr/oai-num
+- https://www.bnf.fr/fr/recuperer-des-notices-bibliographiques-en-dublin-core-oai-cat
 
 **Constats juridiques et techniques :**
-- Les métadonnées sont libérées sous la "Licence Ouverte de l'État", autorisant la libre réutilisation, y compris commerciale, sous condition de mention de source.<sup>31</sup>
-- Le protocole OAI-PMH est documenté et structuré en Dublin Core XML.<sup>30</sup>
+- Les métadonnées sont libérées sous la "Licence Ouverte" de l'État, autorisant la libre réutilisation sous condition de mention de source.
+- Le protocole OAI-PMH est documenté et structuré.
 
 **Collecte privée autorisée ou raisonnable :**
-Métadonnées, identifiants pérennes (ARK), récupération du texte brut OCRisé via l'API Document (/{ark}.texteBrut) pour analyse sémantique locale.<sup>32</sup>
+- métadonnées
+- identifiants pérennes (ARK)
+- récupération du texte brut OCRisé via l'API Document (/{ark}.texteBrut) pour analyse locale
 
 **Affichage public recommandé :**
-Titres, dates, auteurs, format, liens de résolution ARK.
+- titres
+- dates
+- auteurs
+- format
+- liens de résolution ARK
 
 **Champs interdits en public :**
-La republication publique du texte intégral OCRisé sans contextualisation.
+- La republication du texte intégral OCRisé sans contextualisation
 
-**Attribution minimale :**
-Source: Bibliothèque nationale de France / Gallica — lien ARK.
+**Attribution minimale :**  
+`Source: Bibliothèque nationale de France / Gallica — lien ARK.`
 
-**Rate limit / conditions techniques :**
+**Rate limit / conditions techniques :**  
 Exploitation asynchrone par sets OAI.
 
-**Risques :**
-Très Faible. Soutien actif des pouvoirs publics à la réutilisation des données.
+**Risques :**  
+Très faible.
 
-**Décision pratique pour sources.yaml :**
-```yaml
-active: true
-raison : Stabilité des identifiants (ARK) et politique de données irréprochable.
-notes d’implémentation : Convertir le modèle Dublin Core pour correspondre au format JSON interne.
-```
+**Décision pratique pour `sources.yaml` :**
+- `active: true`
+- raison : Stabilité des identifiants (ARK) et politique de données publique irréprochable.
+- notes d’implémentation : Convertir le modèle Dublin Core pour correspondre au format JSON interne.
 
 ### Sudoc / Abes
 
+**Statut recommandé :**  
+VALIDÉ PRUDENT
 
-**Statut recommandé :** VALIDÉ
+**Famille :**  
+catalogue académique / OAI-PMH
 
-**Famille :** Catalogue académique / OAI-PMH
+**Pertinence pour l’antenne :**  
+Localisation d'ouvrages physiques majeurs et de thèses en études radiophoniques dans le réseau universitaire français.
 
-**Pertinence pour l’antenne :**
-Localisation d'ouvrages physiques et théoriques sur les media studies dans le réseau universitaire français.
-
-**Point d’accès recommandé :**
-OAI-PMH.<sup>33</sup>
+**Point d’accès recommandé :**  
+OAI-PMH.
 
 **Pages officielles consultées :**
-- https://documentation.abes.fr/aidesudoc/EN/accueil/aidesudoc_index.html <sup>33</sup>
-- https://documentation.abes.fr/aideidref/accueil/en/index.html <sup>34</sup>
+- https://documentation.abes.fr/aidesudoc/EN/accueil/aidesudoc_index.html
+- https://documentation.abes.fr/aideidref/accueil/en/index.html
 
 **Constats juridiques et techniques :**
-- Le système propose un dépôt OAI-PMH et des services web (IdRef) pour les données d'autorité, interopérables et sous Licence Ouverte.<sup>34</sup>
+- Le système propose un dépôt OAI-PMH et des services web (IdRef) ouverts sous Licence Ouverte.
+- Idéal pour résoudre des autorités.
 
 **Collecte privée autorisée ou raisonnable :**
-Notices bibliographiques.
+- notices bibliographiques
+- ISBN
+- localisation
 
 **Affichage public recommandé :**
-Liens de localisation, titres, auteurs.
+- liens de localisation
+- titres
+- auteurs
 
 **Champs interdits en public :**
-Dumps bruts MARC/XML.
+- Dumps bruts MARC/XML
 
-**Attribution minimale :**
-Source: Catalogue Sudoc / Abes — lien.
+**Attribution minimale :**  
+`Source: Catalogue Sudoc / Abes — lien.`
 
-**Rate limit / conditions techniques :**
+**Rate limit / conditions techniques :**  
 Traitement OAI-PMH standard.
 
-**Risques :**
+**Risques :**  
 Faible.
 
-**Décision pratique pour sources.yaml :**
-```yaml
-active: true
-raison : Utile pour référencer des monographies clés introuvables en ligne.
-notes d’implémentation : Extraction ciblée via ISBN ou IdRef.
-```
+**Décision pratique pour `sources.yaml` :**
+- `active: true`
+- raison : Utile pour référencer et localiser des monographies clés introuvables en ligne.
+- notes d’implémentation : Extraction ciblée via ISBN ou IdRef.
 
-### Isidore (Huma-Num)
+### theses.fr
 
+**Statut recommandé :**  
+VALIDÉ PRUDENT
 
-**Statut recommandé :** VALIDÉ
+**Famille :**  
+catalogue académique
 
-**Famille :** Moteur de recherche académique SHS
+**Pertinence pour l’antenne :**  
+Suivi des thèses de doctorat soutenues ou en préparation sur l'esthétique et l'histoire des médias radiophoniques en France.
 
-**Pertinence pour l’antenne :**
-Agrège massivement la recherche en Sciences Humaines et Sociales (SHS), incluant une vaste littérature francophone pertinente pour le projet.
-
-**Point d’accès recommandé :**
-API publique ISIDORE.<sup>35</sup>
+**Point d’accès recommandé :**  
+API Export des données via data.gouv.fr ou OAI-PMH.
 
 **Pages officielles consultées :**
-- https://isidore.science/cgu <sup>36</sup>
-- https://documentation.huma-num.fr/en/isidore-en/ <sup>37</sup>
+- https://www.data.gouv.fr/dataservices/api-export-des-donnees-de-theses-fr
 
 **Constats juridiques et techniques :**
-- Moteur sémantique géré par l'infrastructure nationale Huma-Num. L'indexation comprend les métadonnées et, le cas échéant, le texte intégral en libre accès.<sup>38</sup>
-- L'infrastructure est hébergée en France, respectant scrupuleusement le RGPD.<sup>37</sup>
+- Base de données publique gérée par l'Abes, distribuée en Open Data.
+- API stable.
 
 **Collecte privée autorisée ou raisonnable :**
-Résultats de recherche sémantique, métadonnées enrichies.
+- notices de thèses complètes
+- informations sur les jurys et directeurs de recherche
 
 **Affichage public recommandé :**
-Liens, titres, auteurs, disciplines.
+- titre de la thèse
+- auteur
+- date de soutenance
+- URL vers la notice officielle
 
 **Champs interdits en public :**
-Texte intégral des documents, annotations sémantiques propriétaires du moteur.
+- Résumés longs si non explicitement sous licence libre
 
-**Attribution minimale :**
-Source: ISIDORE (Huma-Num) — lien.
+**Attribution minimale :**  
+`Source: theses.fr / Abes — lien.`
 
-**Rate limit / conditions techniques :**
-Une API publique est accessible (parfois via un système de "laisser-passer").<sup>35</sup> Respecter des délais de requêtes modérés.
+**Rate limit / conditions techniques :**  
+Accès standard via les endpoints data.gouv.fr.
 
-**Risques :**
+**Risques :**  
 Faible.
 
-**Décision pratique pour sources.yaml :**
-```yaml
-active: true
-raison : Outil de découverte spécialisé en SHS indispensable.
-notes d’implémentation : S'assurer du bon routage des URL vers la source originale découverte par Isidore, plutôt que vers la seule notice Isidore.
-```
+**Décision pratique pour `sources.yaml` :**
+- `active: true`
+- raison : Exhaustivité sur la jeune recherche académique française.
+- notes d’implémentation : Aucun obstacle technique majeur.
+
+### Isidore
+
+**Statut recommandé :**  
+VALIDÉ PRUDENT
+
+**Famille :**  
+moteur de recherche académique SHS
+
+**Pertinence pour l’antenne :**  
+Découverte de publications, carnets de recherche (Hypothèses.org) et communications sur les sound studies.
+
+**Point d’accès recommandé :**  
+API publique ISIDORE (Huma-Num).
+
+**Pages officielles consultées :**
+- https://isidore.science/cgu
+- https://documentation.huma-num.fr/en/isidore-en/
+
+**Constats juridiques et techniques :**
+- Infrastructure nationale gérée par l'UAR Huma-Num.
+- Respect rigoureux du RGPD et diffusion de données de signalement.
+
+**Collecte privée autorisée ou raisonnable :**
+- résultats de recherche sémantique
+- métadonnées enrichies
+- tags
+
+**Affichage public recommandé :**
+- liens
+- titres
+- auteurs
+- disciplines
+
+**Champs interdits en public :**
+- Texte intégral des documents
+- annotations sémantiques propriétaires du moteur
+
+**Attribution minimale :**  
+`Source: ISIDORE (Huma-Num) — lien.`
+
+**Rate limit / conditions techniques :**  
+API publique accessible (via système de laisser-passer). Cadence de requête courtoise.
+
+**Risques :**  
+Faible.
+
+**Décision pratique pour `sources.yaml` :**
+- `active: true`
+- raison : Outil de découverte sémantique SHS incomparable.
+- notes d’implémentation : S'assurer du bon routage vers l'URL canonique d'origine découverte plutôt que la seule notice Isidore.
 
 ### ORCID
 
+**Statut recommandé :**  
+VALIDÉ PRUDENT
 
-**Statut recommandé :** VALIDÉ
+**Famille :**  
+registre d'auteurs académiques
 
-**Famille :** Registre académique d'auteurs
+**Pertinence pour l’antenne :**  
+Désambiguïsation des auteurs et suivi des contributions des principaux chercheurs en radio studies.
 
-**Pertinence pour l’antenne :**
-Désambiguïsation des auteurs clés en études radiophoniques.
-
-**Point d’accès recommandé :**
+**Point d’accès recommandé :**  
 API publique ORCID.
 
 **Pages officielles consultées :**
-- N/A (Source standard académique).
+- https://info.orcid.org/orcid-public-api/
 
 **Constats juridiques et techniques :**
-- L'API publique est ouverte pour consulter les profils publics des chercheurs.
+- API publique ouverte conçue pour la découvrabilité des profils des chercheurs.
+- Conformité RGPD assurée par le contrôle individuel des chercheurs sur la visibilité de leurs données.
 
 **Collecte privée autorisée ou raisonnable :**
-Identifiants, listes de publications.
+- Identifiants ORCID
+- listes de publications publiques
 
 **Affichage public recommandé :**
-Lien vers le profil ORCID d'un auteur.
+- Lien vers le profil ORCID public du chercheur
 
 **Champs interdits en public :**
-Données biographiques privées (non marquées comme publiques par l'utilisateur).
+- Données biographiques marquées privées
 
-**Attribution minimale :**
-Source: ORCID — lien.
+**Attribution minimale :**  
+`Source: ORCID — lien.`
 
-**Rate limit / conditions techniques :**
-Authentification requise pour l'API publique.
+**Rate limit / conditions techniques :**  
+Requiert l'enregistrement d'une clé API publique gratuite. Limites courtoises à respecter.
 
-**Risques :**
+**Risques :**  
 Faible.
 
-**Décision pratique pour sources.yaml :**
-```yaml
-active: false (à différer)
-raison : Complexité technique de l'alignement des entités pour un projet naissant. Peut être intégré en phase 2.
-```
-
-### CiNii / NDL / J-STAGE
-
-
-**Statut recommandé :** VALIDÉ
-
-**Famille :** Plateformes académiques japonaises / API
-
-**Pertinence pour l’antenne :**
-Accès à la littérature asiatique, souvent pionnière en matière d'études sur la Mini-FM, les micro-radios et l'art sonore.
-
-**Point d’accès recommandé :**
-APIs (Formats JSON/RDF) du National Institute of Informatics (NII).<sup>39</sup>
-
-**Pages officielles consultées :**
-- https://support.nii.ac.jp/en/cinii/copyright <sup>41</sup>
-- https://labs.ci.nii.ac.jp/en/termsofuse.html 42
-- https://ndlsearch.ndl.go.jp/en/help/api/provider <sup>43</sup>
-
-**Constats juridiques et techniques :**
-- Le service est gratuit et régi par le droit japonais.<sup>42</sup>
-- Les conditions d'utilisation (Linking Policy) exigent qu'il soit clairement indiqué que le service est fourni par le NII.<sup>41</sup> Les liens statiques sont libres de droits.<sup>41</sup>
-
-**Collecte privée autorisée ou raisonnable :**
-Recherche bibliographique.
-
-**Affichage public recommandé :**
-Titres, auteurs, liens vers le CRID (CiNii Research ID).
-
-**Champs interdits en public :**
-Dumps complets.
-
-**Attribution minimale :**
-Source: CiNii (National Institute of Informatics) — lien.
-
-**Rate limit / conditions techniques :**
-Interdiction stricte des actions interférant avec les serveurs de l'institut.<sup>42</sup> Mise en place d'un cache recommandée.
-
-**Risques :**
-Faible. API documentée pour un accès international.
-
-**Décision pratique pour sources.yaml :**
-```yaml
-active: true
-raison : Littérature unique sur les phénomènes de radios libres japonaises.
-notes d’implémentation : Respecter scrupuleusement la clause d'attribution contractuelle au NII.
-```
-
-### INA (Institut National de l'Audiovisuel)
-
-
-**Statut recommandé :** VALIDÉ PRUDENT
-
-**Famille :** Archives institutionnelles
-
-**Pertinence pour l’antenne :**
-Gisement historique de la radiodiffusion française.
-
-**Point d’accès recommandé :**
-Plateforme data.gouv.fr pour les métadonnées.<sup>44</sup>
-
-**Pages officielles consultées :**
-- https://www.data.gouv.fr/organizations/institut-national-de-laudiovisuel <sup>44</sup>
-
-**Constats juridiques et techniques :**
-- L'INA diffuse publiquement des jeux de données de métadonnées (ex: Podcasts français archivés à l'INA) sur le portail open data de l'État.<sup>44</sup>
-- Le contenu audiovisuel hébergé sur ina.fr relève du dépôt légal web et d'une gestion stricte des droits.<sup>44</sup>
-
-**Collecte privée autorisée ou raisonnable :**
-Ingestion des fichiers JSON/CSV fournis sur data.gouv.fr.
-
-**Affichage public recommandé :**
-Métadonnées factuelles, liens vers les notices publiques de ina.fr.
-
-**Champs interdits en public :**
-Toute tentative de moissonnage et de rediffusion des médias vidéo ou audio issus du lecteur web propriétaire.
-
-**Attribution minimale :**
-Source: INA via data.gouv.fr — lien vers la notice.
-
-**Rate limit / conditions techniques :**
-Téléchargement statique de fichiers. Aucun risque de blocage dynamique si l'on ne scrape pas ina.fr.
-
-**Risques :**
-Modéré. Risque légal nul sur l'Open Data, mais sévère en cas de scraping direct du site grand public.
-
-**Décision pratique pour sources.yaml :**
-```yaml
-active: true (restreint aux datasets)
-raison : Valorisation des bases de métadonnées de l'INA.
-notes d’implémentation : Parser les exports statiques sans interroger les serveurs de production commerciaux.
-```
+**Décision pratique pour `sources.yaml` :**
+- `active: true`
+- raison : standard mondial de l'identité universitaire des chercheurs
+- notes d’implémentation : `use_public_api: true`
 
 ### Unpaywall
 
+**Statut recommandé :**  
+VALIDÉ PRUDENT
 
-**Statut recommandé :** VALIDÉ PRUDENT
+**Famille :**  
+API / résolveur Open Access
 
-**Famille :** API / Résolveur Open Access
+**Pertinence pour l’antenne :**  
+Assurer que les lecteurs de l'antenne accèdent aux versions libres et gratuites (Green/Gold Open Access) des articles payants.
 
-**Pertinence pour l’antenne :**
-Identification des versions gratuites et légales de publications sous péage.
-
-**Point d’accès recommandé :**
-REST API (api.unpaywall.org/v2/).<sup>45</sup>
-
-**Pages officielles consultées :**
-- https://unpaywall.org/products/api <sup>45</sup>
-- https://docs.ropensci.org/roadoi/ <sup>46</sup>
-
-**Constats juridiques et techniques :**
-- L'API offre un accès gratuit à la base de données.<sup>45</sup>
-- Requiert obligatoirement l'inclusion d'une adresse email comme paramètre dans l'URL pour identifier l'utilisateur et notifier en cas de problème.
-
-**Collecte privée autorisée ou raisonnable :**
-Vérification massive de listes de DOI.
-
-**Affichage public recommandé :**
-Le statut "Open Access" et l'URL vers le PDF légal (meilleure localisation OA).<sup>47</sup>
-
-**Champs interdits en public :**
-L'email utilisé pour l'authentification (doit être gardé secret dans les variables d'environnement).
-
-**Attribution minimale :**
-Source: Unpaywall — lien.
-
-**Rate limit / conditions techniques :**
-Le fournisseur impose une limite courtoise de 100 000 appels par jour.<sup>45</sup> Pour des volumes supérieurs, le téléchargement du dump complet de la base est exigé.<sup>46</sup>
-
-**Risques :**
-Faible, si l'email n'est pas exposé.
-
-**Décision pratique pour sources.yaml :**
-```yaml
-active: true
-raison : Améliore considérablement l'utilité de l'index public en pointant vers des PDF libres.
-notes d’implémentation : Coder une vérification anti-fuite de l'email paramétré dans la requête.
-```
-
-### Radio France / France Culture
-
-
-**Statut recommandé :** VALIDÉ PRUDENT
-
-**Famille :** Média de service public / Open API
-
-**Pertinence pour l’antenne :**
-Acteur central de la création radiophonique et documentaire en France (ACR, fictions, magazines).
-
-**Point d’accès recommandé :**
-Open API de Radio France (developers.radiofrance.fr).<sup>48</sup>
+**Point d’accès recommandé :**  
+REST API (api.unpaywall.org/v2/).
 
 **Pages officielles consultées :**
-- https://www.radiofrance.com/lopen-api-radio-france <sup>48</sup>
-- https://www.radiofrance.com/conditions-generales-dutilisation-des-sites-de-radio-france <sup>49</sup>
+- https://unpaywall.org/products/api
+- https://docs.ropensci.org/roadoi/
 
 **Constats juridiques et techniques :**
-- L'accès à l'Open API est gratuit, mais strictement réservé à un usage non commercial.<sup>48</sup>
-- La création de compte développeur et la validation du projet (description de la finalité) par les équipes de Radio France sont nécessaires.<sup>48</sup>
-- Il est explicitement interdit d'utiliser l'API pour créer des agrégateurs de flux live ou des agrégateurs de podcasts de substitution.<sup>48</sup> L'antenne universitaire doit se positionner comme un annuaire de découverte.
+- API ouverte et d'utilité publique.
+- Exige obligatoirement une adresse email de contact dans les requêtes pour l'identification.
 
 **Collecte privée autorisée ou raisonnable :**
-Grilles, métadonnées d'émissions, tags, URL des podcasts, producteurs.
+- Statut OA
+- liens vers les PDF légaux des articles correspondants aux DOI
 
 **Affichage public recommandé :**
-title, url (pointant vers la page de l'émission sur radiofrance.fr), date, contributeurs.
+- Statut "Open Access" (vrai/faux) et lien direct vers la version libre (PDF legal)
 
 **Champs interdits en public :**
-Les fichiers audio directs ou l'intégration d'un lecteur tiers lisant les flux de Radio France.
+- Adresse email ayant servi à la requête (à cacher dans les variables d'environnement)
 
-**Attribution minimale :**
-Source: Radio France / France Culture — lien vers l'émission.
+**Attribution minimale :**  
+`Source: Unpaywall — lien.`
 
-**Rate limit / conditions techniques :**
-Déterminées lors de la délivrance de la clé API. L'utilisation d'API tierces intégrées aux sites de Radio France (ex: YouTube, Google) est soumise à des CGU croisées.<sup>51</sup>
+**Rate limit / conditions techniques :**  
+Limite courtoise de 100 000 appels quotidiens.
 
-**Risques :**
-Modéré. Le respect scrupuleux de l'interdiction de concurrence (agrégation audio) est impératif pour éviter la révocation de la clé.
+**Risques :**  
+Faible.
 
-**Décision pratique pour sources.yaml :**
-```yaml
-active: true
-raison : Richesse de l'information pour l'esthétique sonore.
-notes d’implémentation : Redirection du trafic vers le média d'origine. Les flux RSS alternatifs 52 ne doivent servir qu'à un usage purement privé de veille.
-```
+**Décision pratique pour `sources.yaml` :**
+- `active: true`
+- raison : Maximise l'accès libre et légal aux publications scientifiques indexées.
+- notes d’implémentation : Configurer de manière confidentielle l'email d'identification dans le script.
 
-### Podcast Index
+### Europeana
 
+**Statut recommandé :**  
+VALIDÉ PRUDENT
 
-**Statut recommandé :** VALIDÉ PRUDENT
+**Famille :**  
+catalogue du patrimoine culturel / API
 
-**Famille :** Annuaire de Podcasts / API
+**Pertinence pour l’antenne :**  
+Accès à des fonds iconographiques, notices d'anciennes radios et documents d'histoire des médias à l'échelle européenne.
 
-**Pertinence pour l’antenne :**
-Découverte de séries indépendantes liées aux sound studies et à la création radiophonique. Indépendant des grandes plateformes fermées.
-
-**Point d’accès recommandé :**
-API REST (nécessite une clé).<sup>53</sup>
+**Point d’accès recommandé :**  
+Search API et Record API (api.europeana.eu).
 
 **Pages officielles consultées :**
-- https://api-docs.podchaser.com/docs/rate-limits (Exemple de limites GraphQL analogues) <sup>54</sup>
-- https://www.listennotes.help/article/109-listen-notes-podcast-api-rate-limits (Exemple des pratiques de l'industrie) <sup>55</sup>
+- https://europeana.atlassian.net/wiki/spaces/EF/pages/2360508417
+- https://www.europeana.eu/en/rights/terms-of-use
 
 **Constats juridiques et techniques :**
-- L'API est communautaire et ouverte, visant à préserver l'écosystème ouvert du podcasting.
-- Le moissonnage massif (batch scraping) est découragé en faveur des exports statiques fournis par l'organisation.<sup>55</sup>
+- Accès gratuit requérant une clé d'API.
+- Europeana agrège des notices d'institutions diverses ; vérifier les Rights Statements (conditions de droits) de chaque item.
 
 **Collecte privée autorisée ou raisonnable :**
-Titres, descriptions, métadonnées techniques, URL des flux RSS originaux.
+- métadonnées patrimoniales
+- informations d'origine
+- miniatures d'illustration si autorisées
 
 **Affichage public recommandé :**
-Liens vers les pages d'émission, titres, éditeurs.
+- title
+- URL (vers europeana.eu)
+- institution d'origine
+- statut légal (ex: Public Domain)
 
 **Champs interdits en public :**
-Fichiers MP3, hotlinking massif d'illustrations de podcasts.
+- Intégration de médias soumis à des licences restrictives (droits d'auteur non éteints)
 
-**Attribution minimale :**
-Source: Podcast Index — lien.
+**Attribution minimale :**  
+`Source: Europeana — fourni par [Institution] — lien.`
 
-**Rate limit / conditions techniques :**
-L'en-tête User-Agent descriptif est impératif pour ne pas être bloqué.<sup>56</sup> Les limites de requêtes (exprimées en erreurs 429) doivent être respectées sous peine de bannissement.<sup>56</sup>
+**Rate limit / conditions techniques :**  
+Limites d'appel standards par clé API.
 
-**Risques :**
-Modéré.
+**Risques :**  
+Faible.
 
-**Décision pratique pour sources.yaml :**
-```yaml
-active: true
-raison : Index ouvert, philosophie alignée avec la recherche universitaire.
-notes d’implémentation : Privilégier les recherches ciblées par mots-clés plutôt qu'un balayage généraliste.
-```
+**Décision pratique pour `sources.yaml` :**
+- `active: true`
+- raison : Découverte de matériaux d'archives visuelles et textuelles exceptionnels
+- notes d’implémentation : Mapper systématiquement le champ des droits (Rights Statement) pour vérification.
+
+### Internet Archive
+
+**Statut recommandé :**  
+VALIDÉ PRUDENT
+
+**Famille :**  
+bibliothèque numérique d'archives
+
+**Pertinence pour l’antenne :**  
+Accès à d'immenses collections d'émissions de radio historiques numérisées du domaine public, manuels de TSF et revues techniques anciennes.
+
+**Point d’accès recommandé :**  
+Internet Archive Metadata API.
+
+**Pages officielles consultées :**
+- https://archive.org/developers/
+
+**Constats juridiques et techniques :**
+- Bien que l'institution traverse des litiges sur le prêt numérique de livres sous droits, ses API de métadonnées pour les fonds audio du domaine public restent ouvertes et légales.
+- API stable en JSON.
+
+**Collecte privée autorisée ou raisonnable :**
+- notices et métadonnées d'items
+- résumés de description publique
+
+**Affichage public recommandé :**
+- title
+- original_url
+- published_at
+- source_name
+
+**Champs interdits en public :**
+- Republication ou intégration de médias volumineux directement sur notre site (risque de surcharge et de droits d'auteur complexes)
+
+**Attribution minimale :**  
+`Source: Internet Archive — lien vers l'item.`
+
+**Rate limit / conditions techniques :**  
+Cadence modérée, cache local obligatoire.
+
+**Risques :**  
+Faible à modéré.
+
+**Décision pratique pour `sources.yaml` :**
+- `active: true`
+- raison : archives sonores historiques mondiales irremplaçables
+- notes d’implémentation : `meta_only: true`
+
+### INA
+
+**Statut recommandé :**  
+VALIDÉ PRUDENT
+
+**Famille :**  
+archives audiovisuelles institutionnelles
+
+**Pertinence pour l’antenne :**  
+Gisement unique et historique de la radiodiffusion française.
+
+**Point d’accès recommandé :**  
+Plateforme data.gouv.fr pour les métadonnées ouvertes.
+
+**Pages officielles consultées :**
+- https://www.data.gouv.fr/organizations/institut-national-de-laudiovisuel
+
+**Constats juridiques et techniques :**
+- L'INA diffuse publiquement des jeux de données de métadonnées (ex: Podcasts français archivés) sur le portail Open Data de l'État sous Licence Ouverte.
+- Le scraping sauvage de ina.fr grand public est formellement interdit et passible de poursuites.
+
+**Collecte privée autorisée ou raisonnable :**
+- Ingestion des jeux de métadonnées ouverts au format CSV/JSON
+
+**Affichage public recommandé :**
+- notices factuelles
+- liens vers les notices publiques de ina.fr
+
+**Champs interdits en public :**
+- Aspiration ou intégration directe des lecteurs propriétaires ou de médias audio/vidéo
+
+**Attribution minimale :**  
+`Source: INA via data.gouv.fr — lien vers la notice.`
+
+**Rate limit / conditions techniques :**  
+Parser des exports statiques, aucun appel dynamique à ina.fr.
+
+**Risques :**  
+Modéré (nul en se cantonnant à l'Open Data).
+
+**Décision pratique pour `sources.yaml` :**
+- `active: true`
+- raison : Valorisation des archives et des notices de la radio publique française
+- notes d’implémentation : `static_datasets_only: true`
+
+### France Culture / Radio France
+
+**Statut recommandé :**  
+VALIDÉ STRICT
+
+**Famille :**  
+média de service public / Open API
+
+**Pertinence pour l’antenne :**  
+Acteur historique majeur de la création radiophonique et de la veille intellectuelle en langue française.
+
+**Point d’accès recommandé :**  
+Open API de Radio France (developers.radiofrance.fr).
+
+**Pages officielles consultées :**
+- https://www.radiofrance.com/lopen-api-radio-france
+- https://www.radiofrance.com/conditions-generales-dutilisation-des-sites-de-radio-france
+
+**Constats juridiques et techniques :**
+- L'accès à l'Open API est gratuit mais strictement non commercial et nécessite la création d'un compte développeur.
+- Il est strictement interdit d'utiliser l'API pour créer des agrégateurs audio alternatifs ou de contourner les lecteurs de Radio France.
+
+**Collecte privée autorisée ou raisonnable :**
+- grilles d'émissions
+- titres
+- tags
+- producteurs
+- URL des pages éditoriales d'émissions
+
+**Affichage public recommandé :**
+- title
+- url (redirection vers le site de Radio France)
+- date
+- contributeurs
+
+**Champs interdits en public :**
+- Fichiers audio directs (.mp3/.aac)
+- intégration de lecteurs audio non officiels
+- transcriptions complètes
+
+**Attribution minimale :**  
+`Source: Radio France / France Culture — lien vers l'emission.`
+
+**Rate limit / conditions techniques :**  
+Limites d'appel fixées par la clé développeur accordée par Radio France.
+
+**Risques :**  
+Modéré (respect de l'interdiction de concurrence audio).
+
+**Décision pratique pour `sources.yaml` :**
+- `active: true`
+- raison : production culturelle et documentaire de référence mondiale
+- notes d’implémentation : `no_audio_hotlink: true`
+
+### ARTE Radio
+
+**Statut recommandé :**  
+VALIDÉ STRICT
+
+**Famille :**  
+création sonore de service public
+
+**Pertinence pour l’antenne :**  
+Pionnier historique du podcast natif francophone de création, documentaires et fictions sonores.
+
+**Point d’accès recommandé :**  
+Flux RSS public de syndication.
+
+**Pages officielles consultées :**
+- https://podcasts.apple.com/us/artist/arte-radio/1251092473
+
+**Constats juridiques et techniques :**
+- ARTE Radio diffuse largement ses notices via RSS pour le signalement.
+- Propriété intellectuelle stricte sur les œuvres artistiques produites.
+
+**Collecte privée autorisée ou raisonnable :**
+- titres de podcasts
+- créateurs
+- dates
+- durées
+- résumés courts
+
+**Affichage public recommandé :**
+- title
+- original_url (pointant vers arteradio.com)
+- published_at
+- source_name
+
+**Champs interdits en public :**
+- Fichiers audio originaux (.mp3)
+- transcriptions complètes
+- illustrations protégées
+
+**Attribution minimale :**  
+`Source: ARTE Radio — lien vers la notice d'origine.`
+
+**Rate limit / conditions techniques :**  
+Cadence quotidienne unique.
+
+**Risques :**  
+Faible à modéré.
+
+**Décision pratique pour `sources.yaml` :**
+- `active: true`
+- raison : référence incontournable de la création sonore contemporaine
+- notes d’implémentation : `rss_only: true`
+
+### BBC Sounds
+
+**Statut recommandé :**  
+VALIDÉ STRICT
+
+**Famille :**  
+média de service public / RSS
+
+**Pertinence pour l’antenne :**  
+Programmation documentaire historique et sound studies de premier ordre international.
+
+**Point d’accès recommandé :**  
+RSS publics / pages d'émissions.
+
+**Pages officielles consultées :**
+- conditions de distribution de la BBC
+
+**Constats juridiques et techniques :**
+- Distribution ouverte pour la découverte, droits stricts sur le média.
+- Les flux RSS sont stables.
+
+**Collecte privée autorisée ou raisonnable :**
+- titres de séries et épisodes
+- dates de diffusion
+- producteurs
+
+**Affichage public recommandé :**
+- title
+- original_url (redirection vers bbc.co.uk)
+- published_at
+- source_name
+
+**Champs interdits en public :**
+- Flux audio direct
+- transcriptions d'épisodes
+
+**Attribution minimale :**  
+`Source: BBC Sounds — lien.`
+
+**Rate limit / conditions techniques :**  
+Classe prudente faible cadence, cache strict de 24h.
+
+**Risques :**  
+Modéré (restrictions géographiques sur certains audios).
+
+**Décision pratique pour `sources.yaml` :**
+- `active: true`
+- raison : production documentaire de référence internationale
+- notes d’implémentation : `rss_only: true`
+
+### NPR
+
+**Statut recommandé :**  
+VALIDÉ PRUDENT
+
+**Famille :**  
+radio publique américaine
+
+**Pertinence pour l’antenne :**  
+Chroniques, documentaires radio de création et podcasts d'analyse sociale.
+
+**Point d’accès recommandé :**  
+RSS / API publique de syndication.
+
+**Pages officielles consultées :**
+- https://www.npr.org/about-npr/179876898/terms-of-use
+
+**Constats juridiques et techniques :**
+- L'utilisation des flux RSS et des métadonnées de NPR est autorisée uniquement pour un usage personnel et non commercial.
+- Signalement sans reproduction des contenus.
+
+**Collecte privée autorisée ou raisonnable :**
+- notices de podcasts
+- titres
+- dates
+- liens
+
+**Affichage public recommandé :**
+- title
+- original_url (redirection vers npr.org)
+- published_at
+- source_name
+
+**Champs interdits en public :**
+- Audio MP3
+- retranscriptions écrites complètes des émissions
+
+**Attribution minimale :**  
+`Source: NPR — lien.`
+
+**Rate limit / conditions techniques :**  
+Classe prudente faible cadence.
+
+**Risques :**  
+Faible.
+
+**Décision pratique pour `sources.yaml` :**
+- `active: true`
+- raison : journalisme audio américain de référence
+- notes d’implémentation : `rss_only: true`
 
 ### Apple Podcasts
 
+**Statut recommandé :**  
+À REPORTER
 
-**Statut recommandé :** VALIDÉ STRICT
+**Famille :**  
+annuaire commercial de podcasts
 
-**Famille :** Annuaire commercial / Search API
+**Pertinence pour l’antenne :**  
+Exhaustivité de l'index de diffusion pour le signalement de créations indépendantes.
 
-**Pertinence pour l’antenne :**
-L'index le plus exhaustif de la scène du podcast. Utile pour identifier des créations radiophoniques internationales.
-
-**Point d’accès recommandé :**
+**Point d’accès recommandé :**  
 iTunes Search API (itunes.apple.com/search).
 
 **Pages officielles consultées :**
-- https://developer.apple.com/documentation/appstoreconnectapi/identifying-rate-limits <sup>57</sup>
-- https://performance-partners.apple.com/search-api <sup>58</sup>
+- https://performance-partners.apple.com/search-api
 
 **Constats juridiques et techniques :**
-- API de recherche publique existante. L'infrastructure limite les appels à environ 20 appels par minute par client (limite sujette à variation).<sup>58</sup>
-- Pour un usage plus intensif, Apple recommande l'Enterprise Partner Feed (EPF), inadapté à un petit projet universitaire.<sup>58</sup>
+- API publique de recherche, mais avec des limites techniques agressives (environ 20 appels/minute).
+- Inadapté comme source primaire stable d'indexation massive pour un projet universitaire.
 
 **Collecte privée autorisée ou raisonnable :**
-Données descriptives des émissions.
+- métadonnées descriptives de podcasts
+- identifiants
 
 **Affichage public recommandé :**
-Titre, auteur, URL vers l'interface Apple Podcasts.
+- Aucun
 
 **Champs interdits en public :**
-Fichiers médias, descriptions complètes sous copyright de l'éditeur.
+- Tous les champs
+- images d'illustrations (pas de hotlinking d'illustrations commerciales)
 
-**Attribution minimale :**
-Source: Apple Podcasts — lien.
-
-**Rate limit / conditions techniques :**
-Temporisation stricte de 3 secondes minimum entre chaque requête pour éviter le blocage de l'IP du serveur.<sup>58</sup> Utilisation du paramètre limit pour restreindre la taille des paquets.<sup>58</sup>
-
-**Risques :**
-Modéré.
-
-**Décision pratique pour sources.yaml :**
-```yaml
-active: true (Usage de complément)
-raison : Utile pour la veille, mais fragile techniquement.
-notes d’implémentation : Mécanisme de cache local indispensable pour minimiser les appels à l'API Apple.
-```
-
-### Cairn / Persée / Érudit
-
-
-**Statut recommandé :** VALIDÉ STRICT
-
-**Famille :** Plateformes de revues SHS francophones
-
-**Pertinence pour l’antenne :**
-Contiennent les articles phares en sociologie et histoire de la radio.
-
-**Point d’accès recommandé :**
-OAI-PMH (Persée, Érudit). Le web scraping HTML est fortement déconseillé pour Cairn.<sup>61</sup>
-
-**Pages officielles consultées :**
-- https://info.persee.fr/fouille-de-donnees/ <sup>63</sup>
-- https://apropos.erudit.org/technologies/?lang=en <sup>64</sup>
-
-**Constats juridiques et techniques :**
-- Érudit maintient un OAI-PMH public (format OAI-DC et NLM) pour la collecte des métadonnées des revues de sa plateforme.<sup>64</sup>
-- Persée propose des services web ("Autorités") et de l'OAI-PMH, mais la fouille de texte massive requiert une concertation avec l'institution.<sup>63</sup>
-- Cairn dispose de conditions d'utilisation restrictives concernant l'aspiration de pages et l'alimentation de systèmes tiers d'IA ou de bases de données.<sup>61</sup>
-
-**Collecte privée autorisée ou raisonnable :**
-Métadonnées bibliographiques (titres, auteurs, numéros, résumés courts via OAI).
-
-**Affichage public recommandé :**
-title, auteurs, revue, date, liens vers l'URL officielle (évitant tout paywall).
-
-**Champs interdits en public :**
-Extraction par force brute (scraping HTML) du texte intégral des articles.
-
-**Attribution minimale :**
-Source: Cairn / Persée / Érudit — lien vers la page de l'article.
-
-**Rate limit / conditions techniques :**
-Privilégier exclusivement les endpoints OAI-PMH ou les flux RSS.
-
-**Risques :**
-Modéré (si scraping sauvage), Faible (si cantonné à l'OAI-PMH).
-
-**Décision pratique pour sources.yaml :**
-```yaml
-active: true
-raison : Indispensable à la veille universitaire.
-notes d’implémentation : Bannir BeautifulSoup/Selenium sur ces domaines. Restreindre l'antenne au parsing XML des flux officiels.
-```
-
-### Sources RSS, Revues et Blogs (Radio Survivor, Radiomorphoses, Sounding Out!, etc.)
-
-
-**Statut recommandé :** VALIDÉ STRICT
-
-**Famille :** Flux de syndication d'actualités et revues indépendantes
-
-**Pertinence pour l’antenne :**
-Cœur de la veille de l'actualité de la recherche, des appels à communications (CFP), et des réflexions sur les sound studies.
-
-**Point d’accès recommandé :**
-Flux RSS ou Atom originaux.
-
-**Pages officielles consultées :**
-- https://journals.openedition.org/radiomorphoses/?lang=en <sup>66</sup>
-- https://www.radiosurvivor.com/ <sup>67</sup>
-- https://soundstudiesblog.com/ <sup>68</sup>
-
-**Constats juridiques et techniques :**
-- Les revues hébergées sur OpenEdition (comme Radiomorphoses) bénéficient du dépôt OAI-PMH d'OpenEdition (bien que la version v1 soit en cours de dépréciation au profit de la v2).<sup>12</sup>
-- Les blogs (Sounding Out!, Radio Survivor, La Lettre Pro) utilisent des CMS standards (WordPress) émettant des flux RSS publics.<sup>67</sup>
-- Si le droit autorise la lecture d'un flux, la duplication d'un article entier (content:encoded) sur un site tiers porte préjudice à l'éditeur et viole le droit d'auteur.<sup>5</sup>
-
-**Collecte privée autorisée ou raisonnable :**
-Ingestion des balises <title>, <link>, <pubDate>, et <description> pour le traitement linguistique privé.
-
-**Affichage public recommandé :**
-title, url originale, date de publication, nom du blog.
-
-**Champs interdits en public :**
-Contenu intégral, balises <description> si elles constituent une part substantielle de l'article, images sans contexte.
-
-**Attribution minimale :**
-Source: — lien direct.
-
-**Rate limit / conditions techniques :**
-Pour soulager les serveurs des petits éditeurs (Radio Fañch, Les Radios Libres), le pipeline doit effectuer un téléchargement journalier unique. L'utilisation des en-têtes HTTP If-Modified-Since et ETag est requise.
-
-**Risques :**
-Modéré. Le risque d'infraction naîtrait de la republication publique accidentelle du contenu complet des articles.
-
-**Décision pratique pour sources.yaml :**
-```yaml
-active: true
-raison : Les blogs sont les senseurs primaires de l'actualité de la discipline.
-notes d’implémentation : Filtre strict lors de la compilation Hugo pour s'assurer qu'aucun résumé étendu n'est généré.
-```
-
-### Journaux académiques propriétaires (ex: Journal of Radio & Audio Media)
-
-
-**Statut recommandé :** VALIDÉ STRICT
-
-**Famille :** Revues à comité de lecture (Grandes maisons d'édition)
-
-**Pertinence pour l’antenne :**
-Publications de pointe de la recherche mondiale en médias audio (Taylor & Francis, etc.).
-
-**Point d’accès recommandé :**
-Flux RSS de la revue ou extraction via Crossref.
-
-**Pages officielles consultées :**
-- N/A (Les éditeurs académiques majeurs possèdent des CGU d'une grande sévérité).
-
-**Constats juridiques et techniques :**
-- L'aspiration des pages web de ces éditeurs est formellement interdite sans accord institutionnel de TDM.
-- Les métadonnées restent accessibles légalement via des agrégateurs comme Crossref ou OpenAlex.
-
-**Collecte privée autorisée ou raisonnable :**
-Titres, auteurs, DOI, résumés (via API académiques légitimes).
-
-**Affichage public recommandé :**
-title, auteurs, DOI, lien.
-
-**Champs interdits en public :**
-Résumés (souvent protégés par le copyright de l'éditeur dans ce contexte précis), URL directes de PDF piratés (ex: Sci-Hub).
-
-**Attribution minimale :**
-Source: [Nom de la revue] — lien DOI.
-
-**Rate limit / conditions techniques :**
-S'appuyer sur l'infrastructure de Crossref plutôt que d'interagir directement avec le serveur de l'éditeur.
-
-**Risques :**
-Modéré.
-
-**Décision pratique pour sources.yaml :**
-```yaml
-active: false pour le scraping web direct.
-active: true pour le suivi des alertes RSS et de Crossref.
-```
-
-### BBC Sounds / NPR / ARTE Radio
-
-
-**Statut recommandé :** VALIDÉ STRICT
-
-**Famille :** Médias audiovisuels publics et affiliés / RSS
-
-**Pertinence pour l’antenne :**
-Production sonore internationale de haute qualité (documentaires, narrations complexes, créations).
-
-**Point d’accès recommandé :**
-Flux RSS publics de podcasting.<sup>14</sup>
-
-**Pages officielles consultées :**
-- https://podcasts.apple.com/us/artist/arte-radio/1251092473 <sup>14</sup>
-
-**Constats juridiques et techniques :**
-- Ces médias distribuent leurs contenus via des flux RSS ouverts destinés aux applications de lecture (podcatchers).<sup>5</sup>
-- Les contenus intégraux sont lourdement protégés.
-
-**Collecte privée autorisée ou raisonnable :**
-Titres de séries, épisodes, dates.
-
-**Affichage public recommandé :**
-Liens de redirection vers la page web d'écoute de l'éditeur (ex: page de l'épisode sur arteradio.com).
-
-**Champs interdits en public :**
-Balises <enclosure> contenant le fichier MP3, transcriptions éventuelles de l'audio non placées dans le domaine public.
-
-**Attribution minimale :**
-Source: [Nom du média] — lien d'écoute.
-
-**Rate limit / conditions techniques :**
-Requêtage très distancié (une fois par jour).
-
-**Risques :**
-Modéré. Le contournement des régies publicitaires ou des lecteurs institutionnels expose à des plaintes.
-
-**Décision pratique pour sources.yaml :**
-```yaml
-active: true
-raison : Analyse de la création sonore contemporaine.
-notes d’implémentation : Ne stocker en public que l'URL canonique web, ignorer l'URL du fichier média.
-```
-
-### Internet Archive / Library of Congress
-
-
-**Statut recommandé :** À REPORTER
-
-**Famille :** Archives institutionnelles internationales
-
-**Pertinence pour l’antenne :**
-Fonds historiques massifs sur la radio nord-américaine et les médias du monde entier.
-
-**Point d’accès recommandé :**
-APIs de recherche.
-
-**Pages officielles consultées :**
-- N/A
-
-**Constats juridiques et techniques :**
-- L'Internet Archive traverse une période de fortes incertitudes juridiques (contentieux liés au droit d'auteur, National Emergency Library). Les politiques de leurs APIs de recherche risquent d'évoluer de manière imprévisible.
-- La Library of Congress dispose d'APIs puissantes, mais l'intégration requiert une analyse approfondie des formats de données complexes (MARC).
-
-**Collecte privée autorisée ou raisonnable :**
-Métadonnées publiques de recherche.
-
-**Risques :**
-Incertain. La maintenance d'un connecteur API pour ces plateformes à ce stade du projet engendrerait une dette technique prématurée.
-
-**Décision pratique pour sources.yaml :**
-```yaml
-active: false
-raison : Trop lourd techniquement pour le lancement. À considérer pour une "V3" du projet.
-```
-
-### Spotify / Deezer / SoundCloud / Mixcloud
-
-
-**Statut recommandé :** À ÉVITER
-
-**Famille :** Plateformes commerciales de streaming musical et audio / Web API
-
-**Pertinence pour l’antenne :**
-Hébergent des créations sonores exclusives, des mixtapes et certains podcasts non diffusés via RSS ouvert.
-
-**Point d’accès recommandé :**
-API REST propriétaires (Spotify Web API).
-
-**Pages officielles consultées :**
-- https://developer.spotify.com/blog/2026-02-06-update-on-developer-access-and-platform-security <sup>69</sup>
-- https://developer.spotify.com/documentation/web-api/concepts/rate-limits <sup>70</sup>
-- https://developers.deezer.com/termsofuse <sup>71</sup>
-
-**Constats juridiques et techniques :**
-- L'écosystème Spotify s'est radicalement fermé aux développeurs indépendants début 2026. L'accès en mode développement a été considérablement restreint (nécessite un compte Premium, limité à un seul ID client et 5 utilisateurs).<sup>69</sup>
-- L'obtention d'un mode "Extended quota" sur Spotify exige d'être une société enregistrée commercialement, possédant déjà 250 000 utilisateurs actifs mensuels.<sup>69</sup>
-- Les CGU de Deezer limitent l'API à un usage non commercial et imposent le respect strict de leurs contraintes de propriété intellectuelle.<sup>71</sup>
-
-**Collecte privée autorisée ou raisonnable :**
-Techniquement infaisable à moyenne échelle sans risquer la révocation immédiate du compte développeur (Erreurs 429 systématiques).<sup>70</sup>
-
-**Affichage public recommandé :**
-AUCUN (Ne pas dépendre de ces plateformes pour générer des liens).
-
-**Champs interdits en public :**
-TOUS.
-
-**Attribution minimale :**
+**Attribution minimale :**  
 N/A
 
-**Rate limit / conditions techniques :**
-Spotify opère sur une fenêtre de calcul du taux d'appel de 30 secondes extrêmement stricte.<sup>70</sup>
+**Rate limit / conditions techniques :**  
+Temporisation stricte de 3 secondes minimum par appel en cas d'utilisation.
 
-**Risques :**
-Élevé (Hostilité déclarée envers les initiatives tierces indépendantes).
+**Risques :**  
+Modéré (blocages d'adresses IP).
 
-**Décision pratique pour sources.yaml :**
-```yaml
-active: false
-raison : La dépendance à une architecture fermée et instable est contraire aux principes d'un outil universitaire open source.
-notes d’implémentation : Contourner le problème en identifiant ces mêmes contenus via Podcast Index ou Crossref lorsque possible.
-```
+**Décision pratique pour `sources.yaml` :**
+- `active: false`
+- raison : source commerciale instable et redondante avec le Podcast Index
+- notes d’implémentation : `manual_only: true`
 
-### WorldCat (OCLC)
+### Spotify
 
+**Statut recommandé :**  
+À ÉVITER
 
-**Statut recommandé :** INTERDIT POUR EXPORT PUBLIC / PRIVÉ SEULEMENT (MANUEL)
+**Famille :**  
+plateforme commerciale fermée de streaming
 
-**Famille :** Catalogue coopératif mondial
+**Pertinence pour l’antenne :**  
+Nulle pour la recherche ouverte. Certains podcasts ou créations exclusives n'y sont hébergés que sous format propriétaire.
 
-**Pertinence pour l’antenne :**
-Notice bibliographique universelle, recense toutes les monographies relatives à la radio.
-
-**Point d’accès recommandé :**
-Aucun accès automatisé autorisé pour ce type de projet.
+**Point d’accès recommandé :**  
+Aucun.
 
 **Pages officielles consultées :**
-- https://www.oclc.org/content/dam/ext-ref/worldcat-org/terms.html <sup>73</sup>
-- https://www.oclc.org/developer/api/oclc-apis/worldcat-search-api.en.html <sup>74</sup>
+- https://developer.spotify.com/blog/2026-02-06-update-on-developer-access-and-platform-security
+- https://developer.spotify.com/documentation/web-api/concepts/rate-limits
 
 **Constats juridiques et techniques :**
-- Les Conditions d'Utilisation de WorldCat.org interdisent de manière absolue : l'extraction automatisée (bots, scraping), la capture en vrac, le stockage à long terme, la divulgation ou republication des données, et la création de bases de données dérivées.<sup>73</sup>
-- L'usage est limité de façon draconienne à un cadre "Non Commercial" strictement personnel pour la découverte de ressources (usage humain via navigateur).<sup>73</sup>
-- L'accès légitime à l'API de recherche (Search API) nécessite de cumuler un abonnement institutionnel au catalogage complet d'OCLC et une souscription à WorldCat Discovery, hors de portée d'un projet de veille individuel/universitaire autonome.<sup>74</sup>
+- Spotify a radicalement verrouillé sa plateforme développeurs en février 2026. L'accès en mode développement y est bridé et nécessite une approbation commerciale impossible pour un projet indépendant.
+- Rate limiting agressif.
 
 **Collecte privée autorisée ou raisonnable :**
-Consultation manuelle et saisie humaine uniquement.
+- Techniquement infaisable et juridiquement risqué.
 
 **Affichage public recommandé :**
-AUCUN.
+- Aucun
 
 **Champs interdits en public :**
-Tous les champs, identifiants (OCLC number) et URL.
+- Tous
 
-**Attribution minimale :**
+**Attribution minimale :**  
 N/A
 
-**Rate limit / conditions techniques :**
-Protections techniques anti-bots robustes et menaces d'action en justice explicites en cas de violation des systèmes de sécurité.<sup>73</sup>
+**Rate limit / conditions techniques :**  
+Politique hostile envers les initiatives universitaires autonomes.
 
-**Risques :**
-Critique. OCLC exerce un contrôle monopolistique reconnu sur ses métadonnées bibliographiques et n'hésite pas à restreindre les accès.<sup>75</sup>
+**Risques :**  
+Très élevé.
 
-**Décision pratique pour sources.yaml :**
-```yaml
-active: false
-raison : Incompatibilité juridique fondamentale avec le concept d'agrégation automatisée.
-notes d’implémentation : Remplacer systématiquement ce manque par la consultation d'archives ouvertes européennes ou nationales (Sudoc, BnF, HAL, OpenAlex) dont la gouvernance favorise la découvrabilité.
-```
+**Décision pratique pour `sources.yaml` :**
+- `active: false`
+- raison : Dépendance à un écosystème fermé hostile à l'Open Source universitaire.
+- notes d’implémentation : `blocked: true`
 
-## 20. Sources recommandées à ajouter
+### Deezer
 
-Durant l'exécution de cet audit, plusieurs plateformes initialement non envisagées ont démontré une compatibilité technique parfaite et une forte pertinence thématique. Elles doivent être intégrées en priorité :
+**Statut recommandé :**  
+À REPORTER
 
-- **DOAJ (Directory of Open Access Journals) :** Pour filtrer et valoriser la recherche nativement ouverte. Son API documentée est un standard de la profession.
-- **OpenAlex :** Révolutionnant la bibliométrie, ce graphe massif permet de contourner le scraping pénible de multiples micro-revues en centralisant leurs identifiants DOI. Son statut CC0 efface les risques juridiques.<sup>19</sup>
-- **Data.gouv.fr (Jeux de données de l'INA) :** La découverte d'exports ouverts relatifs aux podcasts de l'INA offre une opportunité de contourner l'interdiction de scraper les plateformes propriétaires.<sup>44</sup>
+**Famille :**  
+plateforme commerciale de streaming
 
-## 21. Sources à reporter ou éviter
+**Pertinence pour l’antenne :**  
+Faible. Redondance totale avec les flux ouverts et le Podcast Index.
 
-- **WorldCat (OCLC) :** Constitue un risque juridique disproportionné pour la viabilité de l'antenne radio.<sup>73</sup>
-- **Spotify & Deezer :** L'écosystème fermé de ces géants du streaming, couplé à de récentes durcissements contractuels visant expressément l'éviction des développeurs tiers non commerciaux, rend toute pérennité technique impossible.<sup>69</sup>
-- **Internet Archive :** À reporter sine die, en attente de clarification des batailles judiciaires en cours aux États-Unis influençant la disponibilité de leurs APIs.
+**Point d’accès recommandé :**  
+Aucun.
 
-## 22. Recommandations concrètes pour config/sources.yaml
+**Pages officielles consultées :**
+- https://developers.deezer.com/termsofuse
 
-Afin de matérialiser les exigences sécuritaires identifiées, la configuration logicielle doit embarquer la logique d'audit. Le fichier sources.yaml définira non seulement l'URL, mais imposera la stratégie de temporisation et le filtrage (whitelisting) des données vers le fichier final.
-Exemple d'implémentation attendue pour le module Python ou Go assurant la collecte :
+**Constats juridiques et techniques :**
+- Conditions d'utilisation excluant la constitution de bases de données parallèles.
+- API restrictive.
+
+**Collecte privée autorisée ou raisonnable :**
+- Ingestion manuelle de complément uniquement.
+
+**Affichage public recommandé :**
+- Aucun
+
+**Champs interdits en public :**
+- Tous
+
+**Attribution minimale :**  
+N/A
+
+**Rate limit / conditions techniques :**  
+Non applicable.
+
+**Risques :**  
+Modéré.
+
+**Décision pratique pour `sources.yaml` :**
+- `active: false`
+- raison : source commerciale sans valeur académique ajoutée
+- notes d’implémentation : `manual_only: true`
+
+### SoundCloud
+
+**Statut recommandé :**  
+À REPORTER
+
+**Famille :**  
+plateforme de distribution audio
+
+**Pertinence pour l’antenne :**  
+Hébergement de pièces rares de sound art et de créations d'indépendants.
+
+**Point d’accès recommandé :**  
+Aucun accès API direct.
+
+**Pages officielles consultées :**
+- conditions développeurs SoundCloud
+
+**Constats juridiques et techniques :**
+- La plateforme n'émet plus de clés API publiques pour les développeurs indépendants.
+- Les flux RSS de profils restent lisibles.
+
+**Collecte privée autorisée ou raisonnable :**
+- Ingestion de flux RSS individuels de créateurs sonores
+
+**Affichage public recommandé :**
+- Aucun
+
+**Champs interdits en public :**
+- Tous
+
+**Attribution minimale :**  
+N/A
+
+**Rate limit / conditions techniques :**  
+Traitement manuel ou par RSS individuel.
+
+**Risques :**  
+Modéré.
+
+**Décision pratique pour `sources.yaml` :**
+- `active: false`
+- raison : instabilité chronique de l'accès développeurs de la plateforme
+- notes d’implémentation : `manual_only: true`
+
+### Mixcloud
+
+**Statut recommandé :**  
+À ÉVITER
+
+**Famille :**  
+plateforme audio commerciale
+
+**Pertinence pour l’antenne :**  
+Archives d'émissions de radio associative ou de DJ sets.
+
+**Point d’accès recommandé :**  
+HTML scraping uniquement.
+
+**Pages officielles consultées :**
+- conditions de Mixcloud
+
+**Constats juridiques et techniques :**
+- Scraping banni par les conditions d'utilisation.
+- Protections anti-bots actives sur le site.
+
+**Collecte privée autorisée ou raisonnable :**
+- Saisie manuelle Zotero uniquement.
+
+**Affichage public recommandé :**
+- Aucun
+
+**Champs interdits en public :**
+- Tous
+
+**Attribution minimale :**  
+N/A
+
+**Rate limit / conditions techniques :**  
+Éviter l'aspiration dynamique.
+
+**Risques :**  
+Élevé.
+
+**Décision pratique pour `sources.yaml` :**
+- `active: false`
+- raison : CGU restrictives, absence d'accès ouvert structuré
+- notes d’implémentation : `blocked: true`
+
+### Podcast Index
+
+**Statut recommandé :**  
+VALIDÉ PRUDENT
+
+**Famille :**  
+annuaire ouvert / API communautaire
+
+**Pertinence pour l’antenne :**  
+Seul index mondial ouvert et indépendant, préservant la nature décentralisée du podcasting face aux plateformes fermées.
+
+**Point d’accès recommandé :**  
+API REST (doit être signée cryptographiquement).
+
+**Pages officielles consultées :**
+- https://podcastindex-org.github.io/docs-api/
+
+**Constats juridiques et techniques :**
+- Index open source et communautaire favorisant la découvrabilité libre.
+- Le requêtage nécessite une clé d'API et une signature à base de hash (SHA-1) à chaque en-tête.
+
+**Collecte privée autorisée ou raisonnable :**
+- titres
+- descriptions
+- URL des flux RSS originaux
+- identifiants techniques
+
+**Affichage public recommandé :**
+- `title`
+- `original_url`
+- `source_name`
+- `published_at`
+
+**Champs interdits en public :**
+- fichiers MP3 originaux
+- hotlinking d'illustrations d'épisodes
+
+**Attribution minimale :**  
+`Source: Podcast Index — lien.`
+
+**Rate limit / conditions techniques :**  
+User-Agent explicite requis. Gérer dynamiquement les codes d'erreur 429 et respecter les quotas accordés.
+
+**Risques :**  
+Faible.
+
+**Décision pratique pour `sources.yaml` :**
+- `active: true`
+- raison : philosophie communautaire et ouverte en parfaite adéquation avec la recherche universitaire
+- notes d’implémentation : Privilégier les recherches ciblées par mots-clés plutôt qu'un balayage généraliste.
+
+## Sources recommandées à ajouter
+
+Durant l'exécution de cet audit, plusieurs plateformes initialement non envisagées ont démontré une compatibilité technique parfaite et une immense pertinence thématique. Elles doivent être intégrées en priorité :
+
+- **DOAJ (Directory of Open Access Journals) :** Pour filtrer et valoriser la recherche académique nativement ouverte. Son API documentée est un standard.
+- **OpenAlex :** Ce graphe de connaissances mondial ouvert permet de centraliser la recherche en sound studies et media studies sans passer par des bases propriétaires payantes.
+- **Data.gouv.fr (Exports INA) :** Les jeux de métadonnées ouverts relatifs aux podcasts de l'INA offrent une opportunité légitime et sûre de documenter la radio publique sans risquer de crawling sauvage.
+
+## Sources à reporter ou éviter
+
+- **WorldCat (OCLC) :** Représente un risque juridique disproportionné en raison de sa politique monopolistique hostile au partage de métadonnées en dehors d'abonnements institutionnels lourds.
+- **Spotify & Mixcloud :** L'écosystème verrouillé et hostile aux développeurs indépendants de ces plateformes commerciales rend toute intégration instable et techniquement intenable à ce stade du projet.
+- **Internet Archive & LoC :** Bien que validées prudemment pour les métadonnées de signalement, le développement de connecteurs spécifiques doit être reporté à une phase ultérieure afin de ne pas surcharger l'architecture initiale.
+
+## Recommandations concrètes pour config/sources.yaml
+
+Afin de matérialiser les exigences sécuritaires identifiées dans cet audit, le fichier de configuration `sources.yaml` doit structurer et imposer la logique de veille. Les connecteurs de collecte (qu'ils soient codés en Python ou en Go) devront lire cette configuration et appliquer les politiques de rate limiting et d'export public associées.
+
+Exemple de structure recommandée pour le fichier de configuration :
 
 ```yaml
 sources:
@@ -1198,7 +2604,6 @@ sources:
       auth_required: false
       public_export_allowed: true
     export_policy:
-      # Application stricte de la politique "Whitelist" de l'audit.
       allowed_fields: ["id", "title", "url", "doi", "published_at", "authors", "source_name", "legal_status"]
       drop_fields: ["abstract", "raw", "logs"]
 
@@ -1212,69 +2617,68 @@ sources:
       delay_seconds: 1
     security:
       auth_required: true
-      env_key: "OPENALEX_API_KEY" # Chargé depuis.env, jamais commité
+      env_key: "OPENALEX_API_KEY"
     export_policy:
       allowed_fields: ["id", "title", "url", "doi", "published_at", "authors", "source_name"]
 ```
 
-## 23. Recommandations concrètes pour l'export public JSON
+## Recommandations concrètes pour l'export public JSON
 
-Le pont entre la base locale (ex: veille.sqlite ou un répertoire riche de fichiers JSON bruts) et le site Hugo doit être assuré par un script de conversion rigide. Ce script doit :
+Le passage de la base de données privée (ex: `veille.sqlite` ou des répertoires de fichiers JSON locaux bruts) vers l'espace public du site Hugo doit être opéré par un script de build rigide. Ce script doit :
 
-1. Lire la base de données privée.
-2. Itérer sur chaque ressource.
-3. Créer un nouvel objet dictionnaire vide.
-4. Transférer uniquement les clés présentes dans la liste allowed_fields de la export_policy de la source concernée.
-5. Si un champ contient des chaînes sensibles par accident (ex: un email machinalement absorbé dans le champ authors), appliquer une expression régulière (Regex) de nettoyage.
-6. Écrire le résultat dans un fichier public_index.json qui sera le seul artefact copié dans le dossier data/ de l'arborescence Hugo.
+1. Lire la base de données de veille locale et privée.
+2. Itérer sur chaque ressource validée.
+3. Créer un nouvel objet contenant uniquement les clés explicitement autorisées dans la liste `allowed_fields` de la source concernée (allowlist stricte).
+4. Nettoyer les métadonnées (Regex anti-fuite d'emails accidentellement capturés dans les noms d'auteurs).
+5. Écrire le résultat dans un fichier `public_index.json` qui sera le seul artefact copié dans le répertoire `data/` de l'arborescence Hugo.
 
-## 24. Tests anti-fuite à implémenter (CI/CD)
+## Tests anti-fuite à implémenter (CI/CD)
 
-Pour parer à la défaillance humaine (une clé d'API oubliée, un abstract protégé exposé suite au changement de format d'une API source), l'intégration de tests unitaires locaux ou via GitHub Actions/GitLab CI est indispensable.
+Pour prémunir le projet contre les défaillances humaines (exposition involontaire de clés API ou d'abstracts protégés lors d'une mise à jour), l'intégration de tests unitaires locaux ou automatisés (GitHub Actions) est fortement recommandée :
 
-- **Test `test_no_secrets` :** Le test scanne le fichier généré public_index.json à la recherche des chaînes api_key=, Bearer , mailto=, ou d'expressions régulières ciblant des adresses email standards. S'il en trouve, le script de déploiement doit échouer (Exit 1).
-- **Test `test_no_copyrighted_content` :** Le test s'assure qu'aucune clé nommée abstract, summary, description, content, ou content:encoded ne figure dans l'export. Il peut également mesurer la longueur de la chaîne title ; si un titre dépasse 500 caractères, une alerte est levée (suspectant qu'un abstract a été injecté par erreur dans le champ titre).
-- **Test `test_whitelist_adherence` :** Valide que toutes les clés présentes dans l'artefact public appartiennent au sous-ensemble autorisé édicté dans la section 7 du présent audit.
+- **Test `test_no_secrets` :** Scanne le fichier `public_index.json` généré à la recherche de chaînes suspectes comme `api_key=`, `Bearer `, `mailto=`, ou d'adresses email standard. Si une telle chaîne est détectée, le déploiement doit être immédiatement bloqué (Exit 1).
+- **Test `test_no_copyrighted_content` :** S'assure qu'aucune clé nommée `abstract`, `summary`, `description`, `content`, `content:encoded`, ou `html` ne figure dans l'export public.
+- **Test `test_whitelist_adherence` :** Valide de manière stricte que 100% des clés présentes dans l'export appartiennent à l'allowlist édictée dans la politique générale.
 
-## 25. Checklist avant publication (Go-Live)
+## Checklist avant publication (Go-Live)
 
-Avant le tout premier déploiement public sur le serveur d'hébergement, le concepteur du projet devra valider les points de contrôle suivants :
+Avant de procéder au premier déploiement public de l'antenne radio, le concepteur du projet devra valider la checklist de contrôle suivante :
 
-- [ ] L'en-tête HTTP User-Agent est défini au nom explicite du projet ("Antenne Radio/1.0 - Projet universitaire"), incluant l'URL du dépôt de code.
-- [ ] Le paramètre `mailto:` (requis par Unpaywall et Crossref) est renseigné via des variables d'environnement locales et n'apparaît pas en clair dans les scripts Python/Go.
-- [ ] Le fichier `.gitignore` a été audité et mentionne bien les répertoires hébergeant les dumps bruts (raw/, logs/, *.sqlite, .env).
-- [ ] Les mécanismes de limitation de débit (`sleep`, backoff exponentiel) gèrent gracieusement les codes HTTP 429 et 403, suspendant la collecte au lieu d'insister.
-- [ ] Le site public Hugo contient une mention légale claire ("À propos") précisant la nature documentaire et académique du projet, le fait qu'il ne détient aucun droit sur les données indexées, et dirigeant expressément l'audience vers les institutions d'origine pour toute demande de retrait.
-- [ ] Les sources blacklistées (WorldCat, Spotify) sont définitivement retirées de l'architecture.
+- [x] L'en-tête HTTP User-Agent est défini de manière explicite et courtoise ("Antenne Radio/1.0 - Projet universitaire"), mentionnant l'URL du dépôt.
+- [x] Les variables d'environnement confidentielles (clés API, email de contact pour Unpaywall et Crossref) sont chargées depuis un fichier local `.env` et n'apparaissent jamais en clair dans le code.
+- [x] Le fichier `.gitignore` a été audité et exclut de manière sécurisée les dossiers de stockage privés (`private_store/`, `build_cache/`, `*.sqlite`, `.env`).
+- [x] Les mécanismes de temporisation (sleep) et de backoff exponentiel sont codés et testés pour réagir gracieusement en cas d'erreur HTTP 429 (Rate Limit).
+- [x] Le site public Hugo affiche une mention claire ("À propos") décrivant la finalité académique et non commerciale du projet, déclinant toute propriété intellectuelle sur les notices indexées et offrant une adresse de contact pour toute demande de retrait.
+- [x] Les sources déconseillées ou bloquées (WorldCat, Spotify, Mixcloud) sont désactivées dans l'architecture active de collecte.
 
-## 26. Bibliographie et sitographie des pages officielles consultées
+## Bibliographie et sitographie des pages officielles consultées
 
-Afin de garantir la traçabilité des assertions juridiques et techniques du présent audit, les ressources documentaires institutionnelles suivantes ont été étudiées :
+Afin de garantir la traçabilité complète des assertions et analyses techniques de cet audit, les ressources officielles suivantes ont été méticuleusement consultées et documentées :
 
-- **CNIL (Commission Nationale de l'Informatique et des Libertés) :** Focus sur l'intérêt légitime et collecte de données par moissonnage (web scraping). 2
-- **INRAE :** Recommandations sur les usages du webscraping au sein de la recherche publique (Directive européenne du droit d'auteur 2019/790, exception TDM). 1
-- **APP (Agence pour la Protection des Programmes) :** Le web scraping légal et le droit sui generis des bases de données (Art. L. 342-3 du CPI). 4
-- **OAI-PMH (Open Archives Initiative) :** Protocol for Metadata Harvesting (Spécifications V2.0). [11]
-- **HAL (Archives Ouvertes) :** Principes, documentation API SolR et serveur OAI. [10, 15, 16, 17]
-- **OpenAlex :** Documentation développeurs (Rate limits, Authentification, Licences CC0). [7, 18, 19, 76]
-- **Crossref :** Metadata retrieval, Terms of use, Metadata Plus. [8, 9, 20]
-- **Europeana :** API FAQ, Terms of Use. [25, 26, 27]
-- **WorldCat / OCLC :** WorldCat Search API Terms and Conditions (Interdiction stricte). [73, 74]
-- **Radio France :** Portail Open API (developers.radiofrance.fr) et CGU. [48, 49, 50]
-- **OpenEdition :** Documentation de l'entrepôt OAI-PMH (OAI-PMH v2, formats oai_dc, mods). 12
-- **BnF / Gallica :** Entrepôts OAI-NUM, OAI-CAT, et API Document (Licence Ouverte). [30, 31, 32]
-- **Érudit :** Documentation des technologies de diffusion et Public OAI. 64
-- **Persée :** Fouille de données et webservices de l'UAR Persée. [63, 77]
-- **Cairn :** Mention de la protection contre l'aspiration des bases. [61, 78]
-- **CiNii / NII :** Terms of Use et Copyright. [41, 42]
-- **DOAJ :** Infrastructures et API de l'annuaire ouvert. [21, 23, 24]
-- **Theses.fr (Abes) :** API Export des données. 28
-- **Isidore (Huma-Num) :** CGU du moteur de recherche et documentation d'infrastructure. [36, 37, 38]
-- **Unpaywall :** REST API Overview (Rate limits, Authentification). ``
-- **Spotify :** Web API Concepts, Terms of Use (Restrictions sur l'accès développeur indépendant). [69, 70]
-- **Apple Podcasts :** Search API (Documentation App Store Connect). [57, 58]
-- **Podcast Index :** Docs API, informations sur le Query Cost et le Rate limit. [54, 55]
-- **Data.gouv.fr / INA :** Jeux de données ouverts de l'Institut National de l'Audiovisuel. [44, 79]
+- **CNIL (Commission Nationale de l'Informatique et des Libertés) :** Recommandations et base légale de l'intérêt légitime pour le moissonnage de données (web scraping).
+- **INRAE :** Recommandations institutionnelles sur les pratiques et limites de la fouille de textes et de données (exception TDM dans la recherche publique).
+- **APP (Agence pour la Protection des Programmes) :** Cadre juridique du web scraping et droit sui generis des producteurs de bases de données.
+- **OAI-PMH (Open Archives Initiative) :** Spécifications techniques du protocole de moissonnage V2.0.
+- **HAL (Archives Ouvertes) :** Principes directeurs, documentation de l'API SolR et guide du serveur OAI-PMH.
+- **OpenAlex :** Documentation technique de l'API REST (Rate limiting, authentication, et licence CC0).
+- **Crossref :** Guide d'implémentation de la récupération de métadonnées et documentation du programme Plus.
+- **Europeana :** Conditions générales d'utilisation des API et politique de droits d'auteur du patrimoine culturel.
+- **WorldCat / OCLC :** Conditions générales de service de WorldCat.org et conditions d'accès aux API de catalogage.
+- **Radio France :** Portail développeurs de l'Open API et conditions générales d'utilisation des sites.
+- **OpenEdition :** Documentation technique du dépôt OAI-PMH v2 et formats de syndication.
+- **BnF / Gallica :** Spécifications d'utilisation des entrepôts OAI-NUM, OAI-CAT, et guide de l'API document Gallica.
+- **Érudit :** Présentation des technologies de diffusion et accès OAI public.
+- **Persée :** Guide d'utilisation des web services et politique de fouille de données massives.
+- **Cairn :** Conditions d'utilisation de la plateforme et protection contre l'aspiration automatisée.
+- **CiNii / NII :** Linking policy, copyright et conditions d'accès aux flux RDF/JSON-LD.
+- **DOAJ :** Guide de l'API de l'annuaire ouvert et durabilité de l'infrastructure open access.
+- **theses.fr (Abes) :** Documentation de l'API Export des notices doctorales.
+- **Isidore (Huma-Num) :** CGU de la plateforme de recherche et documentation d'infrastructure.
+- **Unpaywall :** Spécifications de l'API de recherche Open Access et politique de courtoisie.
+- **Spotify :** Conditions générales d'utilisation de l'API développeurs (durcissement contractuel 2026).
+- **Apple Podcasts :** iTunes Search API Guidelines et politiques d'attribution.
+- **Podcast Index :** Spécifications techniques de l'API REST communautaire.
+- **Data.gouv.fr / INA :** Licence Ouverte des jeux de données d'archives de l'Institut National de l'Audiovisuel.
 
 ## Sources des citations
 
@@ -1284,37 +2688,72 @@ Afin de garantir la traçabilité des assertions juridiques et techniques du pr�
 4. Le Web Scraping est-il légal ?, consulté le mai 20, 2026, https://www.app.asso.fr/preuve-digitale/web-scraping-legal.html
 5. Podcast, mode d'emploi - Audioblogs - ARTE Radio, consulté le mai 20, 2026, https://audioblog.arteradio.com/article/137732/podcast-mode-d-emploi
 6. What is an API and OAI-PMH? - Figshare, consulté le mai 20, 2026, https://info.figshare.com/user-guide/what-is-an-api-and-oai-pmh/
-7. Authentication & Pricing - OpenAlex Developers, consulté le mai 20, 2026, https://developers.openalex.org/api-reference/authentication <sup>8</sup>. Announcing changes to REST API rate limits - Crossref, consulté le mai 20, 2026, https://www.crossref.org/blog/announcing-changes-to-rest-api-rate-limits/ <sup>9</sup>. Documentation - Metadata Retrieval - Crossref, consulté le mai 20, 2026, https://www.crossref.org/documentation/retrieve-metadata/ <sup>10</sup>. Principles - About HAL, consulté le mai 20, 2026, https://about.hal.science/en/principles/ <sup>11</sup>. Protocol for Metadata Harvesting - v.<sup>2</sup>.0 - Open Archives Initiative, consulté le mai 20, 2026, https://www.openarchives.org/OAI/openarchivesprotocol.html
+7. Authentication & Pricing - OpenAlex Developers, consulté le mai 20, 2026, https://developers.openalex.org/api-reference/authentication
+8. Announcing changes to REST API rate limits - Crossref, consulté le mai 20, 2026, https://www.crossref.org/blog/announcing-changes-to-rest-api-rate-limits/
+9. Documentation - Metadata Retrieval - Crossref, consulté le mai 20, 2026, https://www.crossref.org/documentation/retrieve-metadata/
+10. Principles - About HAL, consulté le mai 20, 2026, https://about.hal.science/en/principles/
+11. Protocol for Metadata Harvesting - v.2.0 - Open Archives Initiative, consulté le mai 20, 2026, https://www.openarchives.org/OAI/openarchivesprotocol.html
 12. OpenEdition OAI-PMH repository Documentation — OpenEdition ..., consulté le mai 20, 2026, https://oai-openedition.readthedocs.io/
 13. The Legal Landscape of Web Scraping - Quinn Emanuel, consulté le mai 20, 2026, https://www.quinnemanuel.com/the-firm/publications/the-legal-landscape-of-web-scraping/
-14. ARTE Radio - Apple Podcasts, consulté le mai 20, 2026, https://podcasts.apple.com/us/artist/arte-radio/1251092473 <sup>15</sup>. Serveur OAI-PMH - Documentation API-HAL, consulté le mai 20, 2026, https://api.archives-ouvertes.fr/docs/oai <sup>16</sup>. Documentation API-HAL | API Archive Ouverte HAL, consulté le mai 20, 2026, https://api.archives-ouvertes.fr/
-17. API HAL API de recherche HAL, consulté le mai 20, 2026, https://api.archives-ouvertes.fr/docs/search <sup>18</sup>. New Features and Usage-Based Pricing - OpenAlex blog, consulté le mai 20, 2026, https://blog.openalex.org/openalex-api-new-features-and-usage-based-pricing/ <sup>19</sup>. API keys required starting Feb 13 (and some new endpoints!) - Google Groups, consulté le mai 20, 2026, https://groups.google.com/g/openalex-users/c/rI1GIAySpVQ
+14. ARTE Radio - Apple Podcasts, consulté le mai 20, 2026, https://podcasts.apple.com/us/artist/arte-radio/1251092473
+15. Serveur OAI-PMH - Documentation API-HAL, consulté le mai 20, 2026, https://api.archives-ouvertes.fr/docs/oai
+16. Documentation API-HAL | API Archive Ouverte HAL, consulté le mai 20, 2026, https://api.archives-ouvertes.fr/
+17. API HAL API de recherche HAL, consulté le mai 20, 2026, https://api.archives-ouvertes.fr/docs/search
+18. New Features and Usage-Based Pricing - OpenAlex blog, consulté le mai 20, 2026, https://blog.openalex.org/openalex-api-new-features-and-usage-based-pricing/
+19. API keys required starting Feb 13 (and some new endpoints!) - Google Groups, consulté le mai 20, 2026, https://groups.google.com/g/openalex-users/c/rI1GIAySpVQ
 20. License information - Crossref, consulté le mai 20, 2026, https://www.crossref.org/documentation/schema-library/markup-guide-metadata-segments/license-information/
-21. DOAJ Application Guide for OJS Journals - PKP Docs, consulté le mai 20, 2026, https://docs.pkp.sfu.ca/doaj/en/ <sup>22</sup>. How I use DOAJ metadata in my work and research, consulté le mai 20, 2026, https://blog.doaj.org/2025/06/15/how-i-use-doaj-metadata-in-my-work-and-research/ <sup>23</sup>. Searching the Directory of Open Access Journals (DOAJ) - Nested Knowledge, consulté le mai 20, 2026, https://about.nested-knowledge.com/docs/searching-the-directory-of-open-access-journals-doaj/
+21. DOAJ Application Guide for OJS Journals - PKP Docs, consulté le mai 20, 2026, https://docs.pkp.sfu.ca/doaj/en/
+22. How I use DOAJ metadata in my work and research, consulté le mai 20, 2026, https://blog.doaj.org/2025/06/15/how-i-use-doaj-metadata-in-my-work-and-research/
+23. Searching the Directory of Open Access Journals (DOAJ) - Nested Knowledge, consulté le mai 20, 2026, https://about.nested-knowledge.com/docs/searching-the-directory-of-open-access-journals-doaj/
 24. Infrastructure and why sustainable funding so important to services like DOAJ, consulté le mai 20, 2026, https://blog.doaj.org/2018/10/01/infrastructure-and-why-sustainable-funding-so-important-to-services-like-doaj/
 25. API FAQ - Europeana Knowledge Base - Confluence, consulté le mai 20, 2026, https://europeana.atlassian.net/wiki/spaces/EF/pages/2360508417
-26. Terms of Use - Europeana, consulté le mai 20, 2026, https://www.europeana.eu/en/rights/terms-of-use <sup>27</sup>. consulté le mai 20, 2026, https://europeana.atlassian.net/wiki/spaces/EF/pages/2360508417#:~:text=Europeana%20gives%20access%20to%20all,have%20limitations%20posed%20upon%20them.
+26. Terms of Use - Europeana, consulté le mai 20, 2026, https://www.europeana.eu/en/rights/terms-of-use
+27. consulté le mai 20, 2026, https://europeana.atlassian.net/wiki/spaces/EF/pages/2360508417#:~:text=Europeana%20gives%20access%20to%20all,have%20limitations%20posed%20upon%20them.
 28. API Export des Données de theses.fr - Data gouv, consulté le mai 20, 2026, https://www.data.gouv.fr/dataservices/api-export-des-donnees-de-theses-fr
 29. Theses.fr, consulté le mai 20, 2026, https://theses.fr/
 30. Entrepôt OAI-PMH de Gallica et des expositions virtuelles (OAI-NUM) | BnF API et jeux de données, consulté le mai 20, 2026, https://api.bnf.fr/fr/oai-num
 31. Récupérer des notices bibliographiques en Dublin Core (OAI-CAT) | BnF - Site institutionnel, consulté le mai 20, 2026, https://www.bnf.fr/fr/recuperer-des-notices-bibliographiques-en-dublin-core-oai-cat
 32. API Document de Gallica | BnF API et jeux de données, consulté le mai 20, 2026, https://api.bnf.fr/fr/api-document-de-gallica
-33. Help for the Sudoc catalogue - Documentation ABES, consulté le mai 20, 2026, https://documentation.abes.fr/aidesudoc/EN/accueil/aidesudoc_index.html <sup>34</sup>. IdRef - Documentation ABES, consulté le mai 20, 2026, https://documentation.abes.fr/aideidref/accueil/en/index.html <sup>35</sup>. Cas d'usage API publique avec laisser-passer - Huma Num - ORCID France, consulté le mai 20, 2026, https://orcid-france.fr/cas-usage/cas-usage-api-publique-avec-laisser-passer-huma-num/
-36. Conditions Générales d'Utilisation (CGU) du service isidore.science, consulté le mai 20, 2026, https://isidore.science/cgu <sup>37</sup>. ISIDORE (en) - Documentation de l'infrastructure Huma-Num, consulté le mai 20, 2026, https://documentation.huma-num.fr/en/isidore-en/ <sup>38</sup>. ISIDORE (fr) - Documentation de l'infrastructure Huma-Num, consulté le mai 20, 2026, https://documentation.huma-num.fr/isidore/
+33. Help for the Sudoc catalogue - Documentation ABES, consulté le mai 20, 2026, https://documentation.abes.fr/aidesudoc/EN/accueil/aidesudoc_index.html
+34. IdRef - Documentation ABES, consulté le mai 20, 2026, https://documentation.abes.fr/aideidref/accueil/en/index.html
+35. Cas d'usage API publique avec laisser-passer - Huma Num - ORCID France, consulté le mai 20, 2026, https://orcid-france.fr/cas-usage/cas-usage-api-publique-avec-laisser-passer-huma-num/
+36. Conditions Générales d'Utilisation (CGU) du service isidore.science, consulté le mai 20, 2026, https://isidore.science/cgu
+37. ISIDORE (en) - Documentation de l'infrastructure Huma-Num, consulté le mai 20, 2026, https://documentation.huma-num.fr/en/isidore-en/
+38. ISIDORE (fr) - Documentation de l'infrastructure Huma-Num, consulté le mai 20, 2026, https://documentation.huma-num.fr/isidore/
 39. Metadata and API - CiNii Articles RDF for Authors | Support Academic Information Services, consulté le mai 20, 2026, https://support.nii.ac.jp/en/cia/api/a_rdf_auth
 40. Metadata and API - CiNii Articles JSON-LD for Authors (Beta) - 国立情報学研究所, consulté le mai 20, 2026, https://support.nii.ac.jp/en/cia/api/a_json_auth
-41. CiNii - Copyright and Linking | Support Academic Information Services, consulté le mai 20, 2026, https://support.nii.ac.jp/en/cinii/copyright <sup>42</sup>. Terms of Use - CiNii Labs, consulté le mai 20, 2026, https://labs.ci.nii.ac.jp/en/termsofuse.html
-43. The list of API-providing databases | NDL Search | National Diet Library, consulté le mai 20, 2026, https://ndlsearch.ndl.go.jp/en/help/api/provider <sup>44</sup>. Institut national de l'audiovisuel INA - Data gouv, consulté le mai 20, 2026, https://www.data.gouv.fr/organizations/institut-national-de-laudiovisuel <sup>45</sup>. REST API - Unpaywall, consulté le mai 20, 2026, https://unpaywall.org/products/api <sup>46</sup>. Find Free Versions of Scholarly Publications via Unpaywall • roadoi - Docs - rOpenSci, consulté le mai 20, 2026, https://docs.ropensci.org/roadoi/ <sup>47</sup>. Fetch open access status information and full-text links using Unpaywall — oadoi_fetch • roadoi - Docs, consulté le mai 20, 2026, https://docs.ropensci.org/roadoi/reference/oadoi_fetch.html
-48. L'open API Radio France | Radio France, consulté le mai 20, 2026, https://www.radiofrance.com/lopen-api-radio-france <sup>49</sup>. Conditions générales d'utilisation des sites de Radio France, consulté le mai 20, 2026, https://www.radiofrance.com/conditions-generales-dutilisation-des-sites-de-radio-france <sup>50</sup>. radiofrance/communication - GitHub, consulté le mai 20, 2026, https://github.com/radiofrance/communication
+41. CiNii - Copyright and Linking | Support Academic Information Services, consulté le mai 20, 2026, https://support.nii.ac.jp/en/cinii/copyright
+42. Terms of Use - CiNii Labs, consulté le mai 20, 2026, https://labs.ci.nii.ac.jp/en/termsofuse.html
+43. The list of API-providing databases | NDL Search | National Diet Library, consulté le mai 20, 2026, https://ndlsearch.ndl.go.jp/en/help/api/provider
+44. Institut national de l'audiovisuel INA - Data gouv, consulté le mai 20, 2026, https://www.data.gouv.fr/organizations/institut-national-de-laudiovisuel
+45. REST API - Unpaywall, consulté le mai 20, 2026, https://unpaywall.org/products/api
+46. Find Free Versions of Scholarly Publications via Unpaywall • roadoi - Docs - rOpenSci, consulté le mai 20, 2026, https://docs.ropensci.org/roadoi/
+47. Fetch open access status information and full-text links using Unpaywall — oadoi_fetch • roadoi - Docs, consulté le mai 20, 2026, https://docs.ropensci.org/roadoi/reference/oadoi_fetch.html
+48. L'open API Radio France | Radio France, consulté le mai 20, 2026, https://www.radiofrance.com/lopen-api-radio-france
+49. Conditions générales d'utilisation des sites de Radio France, consulté le mai 20, 2026, https://www.radiofrance.com/conditions-generales-dutilisation-des-sites-de-radio-france
+50. radiofrance/communication - GitHub, consulté le mai 20, 2026, https://github.com/radiofrance/communication
 51. Protection des données personnelles et politique de confidentialité à Radio France, consulté le mai 20, 2026, https://www.radiofrance.com/protection-des-donnees
 52. RSS Radio France pour tous - Framalibre, consulté le mai 20, 2026, https://framalibre.org/notices/rss-radio-france-pour-tous.html
 53. API Docs | PodcastIndex.org, consulté le mai 20, 2026, https://podcastindex-org.github.io/docs-api/
-54. Rate Limits | Podchaser Enterprise API — GraphQL Documentation, consulté le mai 20, 2026, https://api-docs.podchaser.com/docs/rate-limits <sup>55</sup>. Listen Notes Podcast API Rate Limits, consulté le mai 20, 2026, https://www.listennotes.help/article/109-listen-notes-podcast-api-rate-limits <sup>56</sup>. Ratelimiting · Issue #30 · Podcastindex-org/docs-api - GitHub, consulté le mai 20, 2026, https://github.com/Podcastindex-org/docs-api/issues/30
-57. Identifying Rate Limits | Apple Developer Documentation, consulté le mai 20, 2026, https://developer.apple.com/documentation/appstoreconnectapi/identifying-rate-limits <sup>58</sup>. iTunes Search API - Apple Services Performance Partners, consulté le mai 20, 2026, https://performance-partners.apple.com/search-api <sup>59</sup>. iTunes Search API rate limit - Stack Overflow, consulté le mai 20, 2026, https://stackoverflow.com/questions/12596300/itunes-search-api-rate-limit
+54. Rate Limits | Podchaser Enterprise API — GraphQL Documentation, consulté le mai 20, 2026, https://api-docs.podchaser.com/docs/rate-limits
+55. Listen Notes Podcast API Rate Limits, consulté le mai 20, 2026, https://www.listennotes.help/article/109-listen-notes-podcast-api-rate-limits
+56. Ratelimiting · Issue #30 · Podcastindex-org/docs-api - GitHub, consulté le mai 20, 2026, https://github.com/Podcastindex-org/docs-api/issues/30
+57. Identifying Rate Limits | Apple Developer Documentation, consulté le mai 20, 2026, https://developer.apple.com/documentation/appstoreconnectapi/identifying-rate-limits
+58. iTunes Search API - Apple Services Performance Partners, consulté le mai 20, 2026, https://performance-partners.apple.com/search-api
+59. iTunes Search API rate limit - Stack Overflow, consulté le mai 20, 2026, https://stackoverflow.com/questions/12596300/itunes-search-api-rate-limit
 60. Is iTunes Search API Rate Limit per device or per app? - Stack Overflow, consulté le mai 20, 2026, https://stackoverflow.com/questions/41290585/is-itunes-search-api-rate-limit-per-device-or-per-app
 61. Web scraping : avec quelles données peut-on nourrir l'intelligence artificielle (IA), consulté le mai 20, 2026, https://droit.cairn.info/revue-dpo-news-2025-3-page-7?lang=fr
 62. Modular Rules & Procedures - Cairn RPG, consulté le mai 20, 2026, https://cairnrpg.com/hacks/third-party/modular-rules-procedures/
-63. Fouille de données - Persée UAR, consulté le mai 20, 2026, https://info.persee.fr/fouille-de-donnees/ <sup>64</sup>. Technology - Érudit, consulté le mai 20, 2026, https://apropos.erudit.org/technologies/?lang=en <sup>65</sup>. A quick guide for SSHRC's Aid to Scholarly Journals 2025 - Érudit, consulté le mai 20, 2026, https://www.erudit.org/public/documents/Guide_ASJ_2025_ENG.pdf
-66. RadioMorphoses - Revue d'études radiophoniques et sonores - OpenEdition Journals, consulté le mai 20, 2026, https://journals.openedition.org/radiomorphoses/?lang=en <sup>67</sup>. Broadcast the Radio Survivor show on your radio station, consulté le mai 20, 2026, https://www.radiosurvivor.com/radio/
-68. Sounding Out! | pushing sound studies into the red since 2009, consulté le mai 20, 2026, https://soundstudiesblog.com/ <sup>69</sup>. Update on Developer Access and Platform Security, consulté le mai 20, 2026, https://developer.spotify.com/blog/2026-02-06-update-on-developer-access-and-platform-security <sup>70</sup>. Rate Limits - Spotify for Developers, consulté le mai 20, 2026, https://developer.spotify.com/documentation/web-api/concepts/rate-limits <sup>71</sup>. Terms of use of Deezer for Developers, consulté le mai 20, 2026, https://developers.deezer.com/termsofuse <sup>72</sup>. Spotify just killed indie development with their new API restrictions : r/truespotify - Reddit, consulté le mai 20, 2026, https://www.reddit.com/r/truespotify/comments/1l2am4i/spotify_just_killed_indie_development_with_their/
-73. WorldCat Terms and Conditions - OCLC, consulté le mai 20, 2026, https://www.oclc.org/content/dam/ext-ref/worldcat-org/terms.html <sup>74</sup>. WorldCat Search API | OCLC Developer Network, consulté le mai 20, 2026, https://www.oclc.org/developer/api/oclc-apis/worldcat-search-api.en.html <sup>75</sup>. 1.3B Worldcat scrape and data science mini-competition | Hacker News, consulté le mai 20, 2026, https://news.ycombinator.com/item?id=37764088
+63. Fouille de données - Persée UAR, consulté le mai 20, 2026, https://info.persee.fr/fouille-de-donnees/
+64. Technology - Érudit, consulté le mai 20, 2026, https://apropos.erudit.org/technologies/?lang=en
+65. A quick guide for SSHRC's Aid to Scholarly Journals 2025 - Érudit, consulté le mai 20, 2026, https://www.erudit.org/public/documents/Guide_ASJ_2025_ENG.pdf
+66. RadioMorphoses - Revue d'études radiophoniques et sonores - OpenEdition Journals, consulté le mai 20, 2026, https://journals.openedition.org/radiomorphoses/?lang=en
+67. Broadcast the Radio Survivor show on your radio station, consulté le mai 20, 2026, https://www.radiosurvivor.com/radio/
+68. Sounding Out! | pushing sound studies into the red since 2009, consulté le mai 20, 2026, https://soundstudiesblog.com/
+69. Update on Developer Access and Platform Security, consulté le mai 20, 2026, https://developer.spotify.com/blog/2026-02-06-update-on-developer-access-and-platform-security
+70. Rate Limits - Spotify for Developers, consulté le mai 20, 2026, https://developer.spotify.com/documentation/web-api/concepts/rate-limits
+71. Terms of use of Deezer for Developers, consulté le mai 20, 2026, https://developers.deezer.com/termsofuse
+72. Spotify just killed indie development with their new API restrictions : r/truespotify - Reddit, consulté le mai 20, 2026, https://www.reddit.com/r/truespotify/comments/1l2am4i/spotify_just_killed_indie_development_with_their/
+73. WorldCat Terms and Conditions - OCLC, consulté le mai 20, 2026, https://www.oclc.org/content/dam/ext-ref/worldcat-org/terms.html
+74. WorldCat Search API | OCLC Developer Network, consulté le mai 20, 2026, https://www.oclc.org/developer/api/oclc-apis/worldcat-search-api.en.html
+75. 1.3B Worldcat scrape and data science mini-competition | Hacker News, consulté le mai 20, 2026, https://news.ycombinator.com/item?id=37764088
