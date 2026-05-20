@@ -156,7 +156,7 @@
 - `make run` relancé avec accès réseau : pipeline OK, `failed_steps=none`, RSS 52 entrées, HAL 20 résultats, db 72 items, export `data/exports/veille-2026-21.md` avec 56 `to_read` et 11 `candidate`.
 - Artefacts vérifiés : `data/raw/rss_latest.json`, `data/raw/hal_latest.json`, `data/normalized/db.json`, `data/exports/veille-2026-21.md`, `data/logs/pipeline.log`.
 - Documentation débutant ajoutée en fin de `README.md` : installation, configuration, lancement, lecture Obsidian, dépannage, limites v0.1, ne-pas-faire v0.1, roadmap v0.2.
-- Registre humain des sources créé : `RESSOURCES_SUIVIES.md`.
+- Registre humain des sources créé : `01_RESSOURCES_SUIVIES.md`.
 
 ## 2026-05-19 - Gel du périmètre v1 après audit réel
 
@@ -176,7 +176,7 @@ Handoff prêt à copier :
 Objectif : démarrer la Conversation 2 du master plan v1 par l'audit des sources RSS/HAL existantes.
 
 Avant toute action, lance `git status --short`.
-Lis `docs/AGENTS.md`, `antenne_radio/codex_memoire_materielle.md`, `antenne_radio/V1_SCOPE.md`, `antenne_radio/README.md`, `antenne_radio/RESSOURCES_SUIVIES.md` et la Conversation 2 de `antenne_radio/04_master_plan.md`.
+Lis `docs/AGENTS.md`, `antenne_radio/codex_memoire_materielle.md`, `antenne_radio/V1_SCOPE.md`, `antenne_radio/README.md`, `antenne_radio/01_RESSOURCES_SUIVIES.md` et la Conversation 2 de `antenne_radio/04_master_plan.md`.
 
 État de départ confirmé le 2026-05-19 : v0.1 complète, `make test` passe avec 41 tests, `data/normalized/db.json` contient 72 items (`to_read=56`, `candidate=11`, `ignored=5`), `source_api` `rss=52` et `hal=20`, `raw` présent partout. Ne relance pas les anciens prompts v0.1. Ne commence pas Crossref/OpenAlex, Hugo, cron, auto-commit, scraping ou LLM.
 ```
@@ -184,8 +184,8 @@ Lis `docs/AGENTS.md`, `antenne_radio/codex_memoire_materielle.md`, `antenne_radi
 ## 2026-05-19 - Clôture du chantier sources RSS/HAL
 
 - Objectif du chantier : clore la Conversation 2 en appliquant les ajustements simples issus de l'audit, puis vérifier et documenter l'état RSS/HAL sans commencer la Conversation 3.
-- Fichiers modifiés pendant les Prompts 4 et 5 : `antenne_radio/config/sources.yaml`, `antenne_radio/RESSOURCES_SUIVIES.md`, `antenne_radio/codex_memoire_materielle.md`, et les artefacts régénérés `data/raw/rss_latest.json`, `data/raw/hal_latest.json`, `data/normalized/db.json`, `data/exports/veille-2026-21.md`.
-- Commandes lancées : `git status --short` ; lectures de `docs/AGENTS.md`, de cette mémoire, de `config/sources.yaml` et de `RESSOURCES_SUIVIES.md` ; `make test` ; `make run` ; contrôles `jq` sur les dumps et `db.json` ; inspection des 80 dernières lignes de `data/logs/api.log` et `data/logs/pipeline.log` ; contrôle de correspondance entre `sources.yaml` et `RESSOURCES_SUIVIES.md`.
+- Fichiers modifiés pendant les Prompts 4 et 5 : `antenne_radio/config/sources.yaml`, `antenne_radio/01_RESSOURCES_SUIVIES.md`, `antenne_radio/codex_memoire_materielle.md`, et les artefacts régénérés `data/raw/rss_latest.json`, `data/raw/hal_latest.json`, `data/normalized/db.json`, `data/exports/veille-2026-21.md`.
+- Commandes lancées : `git status --short` ; lectures de `docs/AGENTS.md`, de cette mémoire, de `config/sources.yaml` et de `01_RESSOURCES_SUIVIES.md` ; `make test` ; `make run` ; contrôles `jq` sur les dumps et `db.json` ; inspection des 80 dernières lignes de `data/logs/api.log` et `data/logs/pipeline.log` ; contrôle de correspondance entre `sources.yaml` et `01_RESSOURCES_SUIVIES.md`.
 - Tests : `make test` passe avec 41 tests sous Python 3.14.5 / pytest 9.0.3.
 - Run final du 2026-05-19 11:08 JST : pipeline OK, `failed_steps=none`, RSS `entry_count=144`, HAL `result_count=20`, normalisation `added_count=0`, `saved_count=187`, scoring `scored_count=0`, `skipped_count=187`, export `97 to_read` et `55 candidate`.
 - Compteurs observés dans `data/normalized/db.json` : 187 items, `source_api` `rss=144` et `hal=43`, statuts `to_read=97`, `candidate=55`, `ignored=35`, champ `raw` présent sur 187/187 items.
@@ -203,7 +203,7 @@ Handoff prêt à copier :
 ```text
 Objectif : démarrer la Conversation 3 du master plan v1 : scoring, bruit, faux positifs et doublons non destructeurs.
 
-Avant toute action, lance `git status --short`. Relis `docs/AGENTS.md`, `antenne_radio/codex_memoire_materielle.md`, `antenne_radio/V1_SCOPE.md`, `antenne_radio/README.md`, `antenne_radio/RESSOURCES_SUIVIES.md`, `antenne_radio/config/sources.yaml`, `antenne_radio/config/keywords.yaml`, `antenne_radio/config/scoring.yaml`, et la Conversation 3 de `antenne_radio/04_master_plan.md`.
+Avant toute action, lance `git status --short`. Relis `docs/AGENTS.md`, `antenne_radio/codex_memoire_materielle.md`, `antenne_radio/V1_SCOPE.md`, `antenne_radio/README.md`, `antenne_radio/01_RESSOURCES_SUIVIES.md`, `antenne_radio/config/sources.yaml`, `antenne_radio/config/keywords.yaml`, `antenne_radio/config/scoring.yaml`, et la Conversation 3 de `antenne_radio/04_master_plan.md`.
 
 État confirmé le 2026-05-19 11:08 JST : `make test` passe avec 41 tests ; dernier `make run` OK avec RSS 144 entrées, HAL 20 résultats, `db.json` 187 items (`to_read=97`, `candidate=55`, `ignored=35`), `source_api` `rss=144` et `hal=43`, `raw` présent partout. Sources actives : Radio Survivor, Journal of Radio & Audio Media, Sounding Out! blog, HAL resserré. Transom est désactivé ; Sounding Out! podcast est déclaré mais désactivé ; RadioDoc Review n'est pas ajouté faute de flux stable. Ne pas commencer Crossref/OpenAlex, CiNii/NDL/J-STAGE, scraping, Hugo, cron, auto-commit ou LLM.
 ```
@@ -258,7 +258,7 @@ Handoff prêt à copier :
 ```text
 Objectif : démarrer la Conversation 5 du master plan v1 : décider entre Crossref, OpenAlex ou un report documenté.
 
-Avant toute action, lance `git status --short`. Relis `docs/AGENTS.md`, `antenne_radio/codex_memoire_materielle.md`, `antenne_radio/README.md`, `antenne_radio/RESSOURCES_SUIVIES.md`, les scripts d'export privés, puis seulement la Conversation 5 de `antenne_radio/04_master_plan.md`.
+Avant toute action, lance `git status --short`. Relis `docs/AGENTS.md`, `antenne_radio/codex_memoire_materielle.md`, `antenne_radio/README.md`, `antenne_radio/01_RESSOURCES_SUIVIES.md`, les scripts d'export privés, puis seulement la Conversation 5 de `antenne_radio/04_master_plan.md`.
 
 État confirmé le 2026-05-19 : `make test` passe avec 55 tests. Les exports privés existent : `data/exports/veille-2026-21.md` et `data/exports/zotero-veille-2026-21.csl.json`. Le format Zotero manuel retenu est CSL JSON. L'export CSL contient 152 items (`to_read` + `candidate`), 152 URL, 115 auteurs, 152 dates, 126 abstracts, mais 0 DOI car `db.json` ne contient actuellement aucun DOI. Le hash de `data/normalized/db.json` reste inchangé après exports. Ne commence pas CiNii/NDL/J-STAGE, scraping, Hugo public, cron, auto-commit, LLM ou publication publique.
 ```
@@ -268,7 +268,7 @@ Avant toute action, lance `git status --short`. Relis `docs/AGENTS.md`, `antenne
 - Objectif du chantier : vérifier que l'ajout Crossref issu des Prompts 12 et 13 est propre, sans commencer la Conversation 6.
 - Décision Crossref/OpenAlex : Crossref est retenu comme unique connecteur occidental préparé, pour le suivi de revues par ISSN et la récupération future de DOI; OpenAlex est reporté pour éviter une découverte large plus bruyante et une deuxième complexité API dans le même lot.
 - Conditions d'usage retenues : source désactivée par défaut (`crossref.enabled: false`), activation seulement avec `CROSSREF_MAILTO`, aucun secret dans le dépôt, `User-Agent` explicite, `mailto` transmis aux requêtes, `rows: 20`, requêtes séquentielles, `polite_delay_seconds: 1`, timeouts, et erreurs 403/429/500 classées dans le dump brut.
-- Fichiers modifiés ou créés pour le chantier Crossref/QA : `config/sources.yaml`, `RESSOURCES_SUIVIES.md`, `scripts/ingest/ingest_crossref.py`, `scripts/pipeline.py`, `scripts/core/normalize.py`, `tests/test_config.py`, `tests/test_ingest_crossref.py`, `tests/test_normalize.py`, `tests/test_pipeline.py`, `data/raw/crossref_latest.json`, `data/raw/rss_latest.json`, `data/raw/hal_latest.json`, `data/exports/veille-2026-21.md`, et ce fichier.
+- Fichiers modifiés ou créés pour le chantier Crossref/QA : `config/sources.yaml`, `01_RESSOURCES_SUIVIES.md`, `scripts/ingest/ingest_crossref.py`, `scripts/pipeline.py`, `scripts/core/normalize.py`, `tests/test_config.py`, `tests/test_ingest_crossref.py`, `tests/test_normalize.py`, `tests/test_pipeline.py`, `data/raw/crossref_latest.json`, `data/raw/rss_latest.json`, `data/raw/hal_latest.json`, `data/exports/veille-2026-21.md`, et ce fichier.
 - Tests : `make test` passe avec 65 tests sous Python 3.14.5 / pytest 9.0.3.
 - Run QA du 2026-05-19 15:43 JST : `make run` passe avec `Pipeline ok`, `failed_steps=none`; Crossref est exécuté en chemin désactivé contrôlé (`result_count=0`, erreur `disabled`) car `CROSSREF_MAILTO` est absent localement.
 - Compteurs RSS/HAL observés au même run : RSS `entry_count=144` (`Radio Survivor=52`, `Journal of Radio & Audio Media=42`, `Sounding Out!=50`), HAL `result_count=20`, `num_found=931`, sans erreur HAL dans le dump.
@@ -283,7 +283,7 @@ Handoff prêt à copier :
 ```text
 Objectif : reprendre après la Conversation 5 du master plan v1, sans relancer les prompts déjà faits et sans commencer une publication publique par accident.
 
-Avant toute action, lance `git status --short`. Relis `docs/AGENTS.md`, `antenne_radio/codex_memoire_materielle.md`, `antenne_radio/RESSOURCES_SUIVIES.md`, `antenne_radio/config/sources.yaml`, puis seulement la prochaine section utile de `antenne_radio/04_master_plan.md`.
+Avant toute action, lance `git status --short`. Relis `docs/AGENTS.md`, `antenne_radio/codex_memoire_materielle.md`, `antenne_radio/01_RESSOURCES_SUIVIES.md`, `antenne_radio/config/sources.yaml`, puis seulement la prochaine section utile de `antenne_radio/04_master_plan.md`.
 
 État confirmé le 2026-05-19 15:43 JST : `make test` passe avec 65 tests; `make run` passe avec `failed_steps=none`; RSS produit 144 entrées, HAL 20 résultats (`num_found=931`), `db.json` contient 187 items (`rss=144`, `hal=43`, `crossref=0`; `to_read=97`, `candidate=55`, `ignored=35`), aucun doublon exact ID/DOI/URL. Crossref a été ajouté mais reste désactivé par défaut; il nécessite une vraie variable locale `CROSSREF_MAILTO` avant tout appel live. OpenAlex est reporté. Le prochain chantier recommandé est la Conversation 6 (contrat public et audit légal), uniquement si l'utilisateur le demande explicitement. Ne pas ajouter OpenAlex, CiNii/NDL/J-STAGE, scraping, Hugo public, cron, auto-commit ou LLM.
 ```
@@ -355,4 +355,24 @@ Objectif : reprendre après la clôture de la Conversation 7 export public/Hugo 
 Avant toute action, lance `git status --short`. Relis `docs/AGENTS.md`, `antenne_radio/codex_memoire_materielle.md`, `antenne_radio/LEGAL_AUDIT.md`, puis seulement la prochaine section utile de `antenne_radio/04_master_plan.md`.
 
 État confirmé le 2026-05-19 JST : l'intégration Hugo sobre `/antenne-radio/` est validée prudemment. Le JSON public `static/antenne-radio/index.json` contient 152 items et seulement les champs `id`, `title`, `url`, `doi`, `published_at`, `source_name`, `source_type`, `language`, `source_family`, `attribution_id`. Les attributions HAL, Journal of Radio & Audio Media / Taylor & Francis Online, Radio Survivor et Sounding Out! sont présentes. Les scans anti-fuite sur JSON et HTML publics ne trouvent pas `raw`, abstracts, logs, notes privées, chemins locaux, secrets, statuts, scores, explications, mots-clés internes, auteurs ou tags. `make test` passe avec 72 tests, les 7 tests anti-fuite passent, et `pnpm exec hugo --gc --minify --cleanDestinationDir --logLevel info --printPathWarnings` passe. `public/antenne-radio/index.xml` est absent : pas de RSS public sortant. Ne pas publier les exports privés, ne pas ajouter d'abstracts, ne pas activer Crossref public sans `CROSSREF_MAILTO` réel + run live limité, ne pas commencer cron/auto-commit/scraping/LLM ou Conversation 8 sans demande explicite.
+```
+
+## 2026-05-19 - Scission et restructuration des plans d'amélioration v2 et v3
+
+- **Objectif du chantier** : Restructurer en profondeur le plan d'amélioration d'antenne_radio en le divisant en deux plans distincts : une v2 stable et publiable (navigation, fenêtre 18 mois, nouveaux RSS simples, UI premium neo-brutaliste légère interactive, filtrage en mémoire, deep-linking, accessibilité) et une v3 académique (moissonneurs et connecteurs OpenAlex, DOAJ, Persée, Cairn, OpenEdition OPML, volume capé, polite pool, scoring strict du bruit, dédoublonnage inter-sources et qualification active).
+- **Fichiers modifiés ou créés** :
+  - `antenne_radio/05_plan_amelioration.md` : Remplacé entièrement par le plan de progression v2 resserré en 9 prompts clairs.
+  - `antenne_radio/06_plan_v3_academique.md` : Créé comme le nouveau plan d'intégration académique v3 en 6 prompts progressifs.
+- **Commandes lancées** : `git status --short`.
+- **Résultats réels** : Deux plans documentés exhaustifs et structurés, intégrant tous les garde-fous opérationnels, l'absence de framework/CDN, la discipline de transition CSS unique, le fallback no-JS statique, la politesse d'API, le parser XML natif, le dédoublonnage par DOI/Titre normé et la qualification active.
+- **Prochaine étape recommandée** : Démarrer la v2 stable par le Prompt 1 (Audit d'état réel et CI manuelle).
+
+Handoff prêt à copier :
+
+```text
+Objectif : Démarrer la v2 de l'antenne radio conformément au plan d'amélioration restructuré.
+
+Avant toute action, lance `git status --short`. Relis `docs/AGENTS.md`, `antenne_radio/codex_memoire_materielle.md` et `antenne_radio/05_plan_amelioration.md`.
+
+État de départ confirmé le 2026-05-19 : Les plans v2 (`05_plan_amelioration.md` en 9 prompts) et v3 (`06_plan_v3_academique.md` en 6 prompts) ont été scindés et finalisés avec tous les retours d'architecture, d'UX et légaux. La v1 locale est stable. Prépare-toi à exécuter le Prompt 1 du plan v2 (Mise en place de la CI manuelle et audit d'état réel).
 ```

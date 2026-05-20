@@ -72,7 +72,7 @@ Les sources vivent dans `config/sources.yaml`.
 - `enabled: false` garde une source en réserve sans la lancer.
 - `limit` limite le nombre de résultats HAL récupérés.
 
-La liste lisible des ressources actuellement suivies est maintenue dans `RESSOURCES_SUIVIES.md`. Quand tu ajoutes, désactives ou modifies une source dans `config/sources.yaml`, mets aussi ce fichier à jour.
+La liste lisible des ressources actuellement suivies est maintenue dans `01_RESSOURCES_SUIVIES.md`. Quand tu ajoutes, désactives ou modifies une source dans `config/sources.yaml`, mets aussi ce fichier à jour.
 
 Les mots-clés vivent dans `config/keywords.yaml`. Les règles de score vivent dans `config/scoring.yaml`. Pour v0.1, il vaut mieux ajuster ces fichiers plutôt que toucher au code.
 

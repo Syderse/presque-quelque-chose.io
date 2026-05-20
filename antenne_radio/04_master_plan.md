@@ -40,7 +40,7 @@ Acquis à préserver :
 - pipeline local `scripts/pipeline.py` ;
 - commandes Makefile ;
 - tests existants ;
-- documentation `README.md`, `RESSOURCES_SUIVIES.md`, `codex_memoire_materielle.md`.
+- documentation `README.md`, `01_RESSOURCES_SUIVIES.md`, `codex_memoire_materielle.md`.
 
 Ne pas relancer les prompts de construction v0.1.  
 Ne pas transformer un chantier de consolidation en refonte.
@@ -110,7 +110,7 @@ Lis ensuite :
 - `docs/AGENTS.md` ;
 - `antenne_radio/codex_memoire_materielle.md`, en priorité les sections liées au chantier actuel ;
 - `antenne_radio/README.md` ;
-- `antenne_radio/RESSOURCES_SUIVIES.md` si le chantier touche aux sources ;
+- `antenne_radio/01_RESSOURCES_SUIVIES.md` si le chantier touche aux sources ;
 - `antenne_radio/04_master_plan.md`, uniquement la conversation en cours et les règles générales.
 
 Ne suppose jamais que le plan décrit l’état réel. Vérifie les fichiers existants avant de modifier quoi que ce soit.
@@ -187,7 +187,7 @@ Lis ensuite :
 - `docs/AGENTS.md` ;
 - `antenne_radio/codex_memoire_materielle.md`, en priorité `Reprise rapide`, `État actuel du pipeline`, `Données présentes`, `Contrats de données à préserver` et `Fragilités` ;
 - `antenne_radio/README.md` ;
-- `antenne_radio/RESSOURCES_SUIVIES.md` ;
+- `antenne_radio/01_RESSOURCES_SUIVIES.md` ;
 - `antenne_radio/04_master_plan.md`, sections 0 à 5 et Conversation 1 seulement.
 
 Tâches :
@@ -267,7 +267,7 @@ Lis ensuite :
 - `docs/AGENTS.md` ;
 - `antenne_radio/codex_memoire_materielle.md`, en priorité les sections sur sources RSS/HAL, données présentes, fragilités et dernier run ;
 - `antenne_radio/README.md` ;
-- `antenne_radio/RESSOURCES_SUIVIES.md` ;
+- `antenne_radio/01_RESSOURCES_SUIVIES.md` ;
 - `antenne_radio/config/sources.yaml` ;
 - `antenne_radio/04_master_plan.md`, Conversation 2 seulement.
 
@@ -300,7 +300,7 @@ Au début, lance `git status --short`, relis la mémoire matérielle et le bilan
 
 Tâches :
 1. Mets à jour `config/sources.yaml` pour corriger, désactiver ou ajouter uniquement des sources simples.
-2. Mets à jour `RESSOURCES_SUIVIES.md` en miroir.
+2. Mets à jour `01_RESSOURCES_SUIVIES.md` en miroir.
 3. Si HAL doit être resserré, ajuste la configuration sans rendre la requête trop fragile.
 4. Si une source est incertaine, ajoute-la désactivée avec une note claire.
 5. Lance `make test`.
@@ -326,7 +326,7 @@ Tâches :
 2. Lance `make run` si le Prompt 4 a modifié des sources actives.
 3. Vérifie les compteurs de `db.json` si disponible.
 4. Inspecte les 80 dernières lignes de `data/logs/api.log` et `data/logs/pipeline.log` si disponibles.
-5. Vérifie que `RESSOURCES_SUIVIES.md` correspond à `config/sources.yaml`.
+5. Vérifie que `01_RESSOURCES_SUIVIES.md` correspond à `config/sources.yaml`.
 6. Mets à jour `antenne_radio/codex_memoire_materielle.md` avec un bilan factuel :
    - date ;
    - objectif du chantier ;
@@ -535,7 +535,7 @@ Avant toute action, lance `git status --short`.
 Lis ensuite :
 - `docs/AGENTS.md` ;
 - `antenne_radio/codex_memoire_materielle.md`, en priorité les sections sources, API non encore intégrées, contrats de données et fragilités ;
-- `antenne_radio/RESSOURCES_SUIVIES.md` ;
+- `antenne_radio/01_RESSOURCES_SUIVIES.md` ;
 - `antenne_radio/config/sources.yaml` ;
 - les connecteurs existants ;
 - `antenne_radio/04_master_plan.md`, Conversation 5 seulement.
@@ -584,7 +584,7 @@ Tâches si un connecteur est retenu :
 8. Lance `make test`.
 
 Tâches si le report est retenu :
-1. Documente le report dans `RESSOURCES_SUIVIES.md` ou un court fichier dédié.
+1. Documente le report dans `01_RESSOURCES_SUIVIES.md` ou un court fichier dédié.
 2. Note les raisons : conditions, clé, bruit, utilité insuffisante, complexité.
 3. Ajoute au besoin un placeholder désactivé, sans code mort.
 4. Lance les tests pertinents.
@@ -643,7 +643,7 @@ Lis ensuite :
 - `docs/AGENTS.md` ;
 - `antenne_radio/codex_memoire_materielle.md`, en priorité contrats de données, raw, exports, sources et fragilités ;
 - `antenne_radio/README.md` ;
-- `antenne_radio/RESSOURCES_SUIVIES.md` ;
+- `antenne_radio/01_RESSOURCES_SUIVIES.md` ;
 - les modèles et exports existants ;
 - `antenne_radio/04_master_plan.md`, Conversation 6 seulement.
 
@@ -674,7 +674,7 @@ Contraintes :
 ```text
 Objectif : produire un audit légal/éthique minimal avant publication.
 
-Au début, lance `git status --short`, relis la mémoire matérielle, `RESSOURCES_SUIVIES.md`, puis le bilan du Prompt 15.
+Au début, lance `git status --short`, relis la mémoire matérielle, `01_RESSOURCES_SUIVIES.md`, puis le bilan du Prompt 15.
 
 Tâches :
 1. Crée ou mets à jour `antenne_radio/LEGAL_AUDIT.md`.
@@ -1004,7 +1004,7 @@ Lis ensuite :
 - `docs/AGENTS.md` ;
 - `antenne_radio/codex_memoire_materielle.md`, en entier si possible ;
 - `antenne_radio/README.md` ;
-- `antenne_radio/RESSOURCES_SUIVIES.md` ;
+- `antenne_radio/01_RESSOURCES_SUIVIES.md` ;
 - `antenne_radio/V1_SCOPE.md` si le fichier existe ;
 - `antenne_radio/LEGAL_AUDIT.md` si le fichier existe ;
 - `antenne_radio/04_master_plan.md`, Conversation 9 et critères v1.
@@ -1040,7 +1040,7 @@ Au début, lance `git status --short`, relis la mémoire matérielle, puis le bi
 Tâches :
 1. Corrige uniquement les petits bloquants clairement identifiés.
 2. Ne lance aucune refonte.
-3. Mets à jour README, `RESSOURCES_SUIVIES.md`, `LEGAL_AUDIT.md` ou `V1_SCOPE.md` si nécessaire.
+3. Mets à jour README, `01_RESSOURCES_SUIVIES.md`, `LEGAL_AUDIT.md` ou `V1_SCOPE.md` si nécessaire.
 4. Lance `make test`.
 5. Lance `make run` si une correction touche au pipeline.
 6. Si Hugo est touché, lance le build recommandé dans `docs/AGENTS.md`.
@@ -1083,7 +1083,7 @@ La v1 est réussie si :
 - l’export Obsidian est exploitable ;
 - l’export Zotero manuel existe ou son report est justifié ;
 - l’API occidentale unique existe ou son report est justifié ;
-- `RESSOURCES_SUIVIES.md` est à jour ;
+- `01_RESSOURCES_SUIVIES.md` est à jour ;
 - `codex_memoire_materielle.md` permet une reprise claire ;
 - `LEGAL_AUDIT.md` existe avant toute publication ;
 - aucun champ privé n’est exposé publiquement ;
