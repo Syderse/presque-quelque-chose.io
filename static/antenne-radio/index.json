@@ -1,7 +1,103 @@
 {
-  "generated_at": "2026-05-19T07:26:29Z",
-  "item_count": 152,
+  "generated_at": "2026-05-20T01:15:39Z",
+  "item_count": 226,
   "items": [
+    {
+      "attribution_id": "la_lettre_pro",
+      "doi": null,
+      "id": "url:bb8ece6bce646fdb94b3",
+      "language": "und",
+      "published_at": "2026-05-19T10:10:00Z",
+      "source_family": "rss",
+      "source_name": "La Lettre Pro de la Radio & du Podcast",
+      "source_type": "blog",
+      "title": "L'Arcom veut achever la transition numérique de la radio",
+      "url": "https://www.lalettre.pro/L-Arcom-veut-achever-la-transition-numerique-de-la-radio_a41178.html"
+    },
+    {
+      "attribution_id": "la_lettre_pro",
+      "doi": null,
+      "id": "url:8a15d2cfa0b9c32023fa",
+      "language": "und",
+      "published_at": "2026-05-19T07:10:00Z",
+      "source_family": "rss",
+      "source_name": "La Lettre Pro de la Radio & du Podcast",
+      "source_type": "blog",
+      "title": "10% des podcasts vidéo concentrent 85.4% des heures consommées",
+      "url": "https://www.lalettre.pro/10-des-podcasts-video-concentrent-85-4-des-heures-consommees_a41150.html"
+    },
+    {
+      "attribution_id": "la_lettre_pro",
+      "doi": null,
+      "id": "url:8b458e2467ece054c97c",
+      "language": "und",
+      "published_at": "2026-05-19T06:35:00Z",
+      "source_family": "rss",
+      "source_name": "La Lettre Pro de la Radio & du Podcast",
+      "source_type": "blog",
+      "title": "Le 208e numéro de La Lettre Pro L'Hebdo parait ce mardi",
+      "url": "https://www.lalettre.pro/Le-208e-numero-de-La-Lettre-Pro-L-Hebdo-parait-ce-mardi_a41172.html"
+    },
+    {
+      "attribution_id": "radio_fanch",
+      "doi": null,
+      "id": "url:1c67ef153e3190472d5a",
+      "language": "und",
+      "published_at": "2026-05-19T06:25:00Z",
+      "source_family": "rss",
+      "source_name": "Radio Fañch",
+      "source_type": "blog",
+      "title": "José Artur : le pop en mai 68…",
+      "url": "https://radiofanch.blogspot.com/2026/05/jose-artur-le-pop-en-mai-68.html"
+    },
+    {
+      "attribution_id": "la_lettre_pro",
+      "doi": null,
+      "id": "url:508a4cb0e5afab6b812d",
+      "language": "und",
+      "published_at": "2026-05-19T06:10:00Z",
+      "source_family": "rss",
+      "source_name": "La Lettre Pro de la Radio & du Podcast",
+      "source_type": "blog",
+      "title": "Au Canada, 29 radios francophones rappellent le rôle de la radio en situation d’urgence",
+      "url": "https://www.lalettre.pro/Au-Canada-29-radios-francophones-rappellent-le-role-de-la-radio-en-situation-d-urgence_a41156.html"
+    },
+    {
+      "attribution_id": "la_lettre_pro",
+      "doi": null,
+      "id": "url:0005b0db36aff45aad44",
+      "language": "und",
+      "published_at": "2026-05-19T05:45:00Z",
+      "source_family": "rss",
+      "source_name": "La Lettre Pro de la Radio & du Podcast",
+      "source_type": "blog",
+      "title": "La BBC reste la première marque radio au Royaume-Uni au premier trimestre 2026",
+      "url": "https://www.lalettre.pro/La-BBC-reste-la-premiere-marque-radio-au-Royaume-Uni-au-premier-trimestre-2026_a41151.html"
+    },
+    {
+      "attribution_id": "la_lettre_pro",
+      "doi": null,
+      "id": "url:1f405ef55c12e6f28390",
+      "language": "und",
+      "published_at": "2026-05-19T05:05:00Z",
+      "source_family": "rss",
+      "source_name": "La Lettre Pro de la Radio & du Podcast",
+      "source_type": "blog",
+      "title": "L’écran embarqué devient un relais visuel pour les campagnes radio",
+      "url": "https://www.lalettre.pro/L-ecran-embarque-devient-un-relais-visuel-pour-les-campagnes-radio_a41152.html"
+    },
+    {
+      "attribution_id": "la_lettre_pro",
+      "doi": null,
+      "id": "url:798f995704a29eb29c4a",
+      "language": "und",
+      "published_at": "2026-05-19T03:50:00Z",
+      "source_family": "rss",
+      "source_name": "La Lettre Pro de la Radio & du Podcast",
+      "source_type": "blog",
+      "title": "Marco Rossignoli : \"La radio locale joue un rôle essentiel sur le marché italien\"",
+      "url": "https://www.lalettre.pro/Marco-Rossignoli-La-radio-locale-joue-un-role-essentiel-sur-le-marche-italien_a41140.html"
+    },
     {
       "attribution_id": "sounding_out",
       "doi": null,
@@ -13,6 +109,138 @@
       "source_type": "blog",
       "title": "This Past Weekend with Theo Von: Brocasting Trump, Part II",
       "url": "https://soundstudiesblog.com/2026/05/18/this-past-weekend-with-theo-von-brocasting-trump-part-ii"
+    },
+    {
+      "attribution_id": "la_lettre_pro",
+      "doi": null,
+      "id": "url:e1752491821e774fabd2",
+      "language": "und",
+      "published_at": "2026-05-18T12:15:00Z",
+      "source_family": "rss",
+      "source_name": "La Lettre Pro de la Radio & du Podcast",
+      "source_type": "blog",
+      "title": "En Île-de-France, la radio touche 10 millions d’auditeurs sur 28 jours",
+      "url": "https://www.lalettre.pro/En-Ile-de-France-la-radio-touche-10-millions-d-auditeurs-sur-28-jours_a41144.html"
+    },
+    {
+      "attribution_id": "la_lettre_pro",
+      "doi": null,
+      "id": "url:c8d1081b6accbba49aaf",
+      "language": "und",
+      "published_at": "2026-05-18T10:10:00Z",
+      "source_family": "rss",
+      "source_name": "La Lettre Pro de la Radio & du Podcast",
+      "source_type": "blog",
+      "title": "En Suède, NRJ rebondit avec 20 licences FM régionales après la perte de sa licence nationale",
+      "url": "https://www.lalettre.pro/En-Suede-NRJ-rebondit-avec-20-licences-FM-regionales-apres-la-perte-de-sa-licence-nationale_a41146.html"
+    },
+    {
+      "attribution_id": "la_lettre_pro",
+      "doi": null,
+      "id": "url:fbcfe3e8fe2563d996a4",
+      "language": "und",
+      "published_at": "2026-05-18T09:05:00Z",
+      "source_family": "rss",
+      "source_name": "La Lettre Pro de la Radio & du Podcast",
+      "source_type": "blog",
+      "title": "Estación Podcast annonce sa 5e édition à Madrid du 19 au 23 mai 2026",
+      "url": "https://www.lalettre.pro/Estacion-Podcast-annonce-sa-5e-edition-a-Madrid-du-19-au-23-mai-2026_a41142.html"
+    },
+    {
+      "attribution_id": "la_lettre_pro",
+      "doi": null,
+      "id": "url:d32f693bf0efd84ea532",
+      "language": "und",
+      "published_at": "2026-05-18T06:35:00Z",
+      "source_family": "rss",
+      "source_name": "La Lettre Pro de la Radio & du Podcast",
+      "source_type": "blog",
+      "title": "Le Canada défend sa radio face aux plateformes étrangères",
+      "url": "https://www.lalettre.pro/Le-Canada-defend-sa-radio-face-aux-plateformes-etrangeres_a41147.html"
+    },
+    {
+      "attribution_id": "radio_fanch",
+      "doi": null,
+      "id": "url:371fbe0bf4cf433950af",
+      "language": "und",
+      "published_at": "2026-05-18T06:30:00Z",
+      "source_family": "rss",
+      "source_name": "Radio Fañch",
+      "source_type": "blog",
+      "title": "Nagui sur France Inter : Stop ou encore… ?",
+      "url": "https://radiofanch.blogspot.com/2026/05/nagui-sur-france-inter-stop-ou-encore.html"
+    },
+    {
+      "attribution_id": "la_lettre_pro",
+      "doi": null,
+      "id": "url:0b55395ccdb47d7211a1",
+      "language": "und",
+      "published_at": "2026-05-18T05:20:00Z",
+      "source_family": "rss",
+      "source_name": "La Lettre Pro de la Radio & du Podcast",
+      "source_type": "blog",
+      "title": "Score My Engagement propose aux radios un diagnostic gratuit de leur engagement audience",
+      "url": "https://www.lalettre.pro/Score-My-Engagement-propose-aux-radios-un-diagnostic-gratuit-de-leur-engagement-audience_a41149.html"
+    },
+    {
+      "attribution_id": "la_lettre_pro",
+      "doi": null,
+      "id": "url:b62dcdb1c0f6079a8964",
+      "language": "und",
+      "published_at": "2026-05-18T04:50:00Z",
+      "source_family": "rss",
+      "source_name": "La Lettre Pro de la Radio & du Podcast",
+      "source_type": "blog",
+      "title": "Allemagne : le streaming audio payant se rapproche de la radio dans les usages musicaux",
+      "url": "https://www.lalettre.pro/Allemagne-le-streaming-audio-payant-se-rapproche-de-la-radio-dans-les-usages-musicaux_a41145.html"
+    },
+    {
+      "attribution_id": "radio_fanch",
+      "doi": null,
+      "id": "url:1a38ec0534a1feec00a2",
+      "language": "und",
+      "published_at": "2026-05-17T06:30:00Z",
+      "source_family": "rss",
+      "source_name": "Radio Fañch",
+      "source_type": "blog",
+      "title": "Les coulisses de la radio… (d'avant)",
+      "url": "https://radiofanch.blogspot.com/2026/05/les-coulisses-de-la-radio-davant.html"
+    },
+    {
+      "attribution_id": "nieman_storyboard",
+      "doi": null,
+      "id": "url:b79be813fa529833ed21",
+      "language": "und",
+      "published_at": "2026-05-15T13:03:05Z",
+      "source_family": "rss",
+      "source_name": "Nieman Storyboard",
+      "source_type": "blog",
+      "title": "Your next story is outside",
+      "url": "https://niemanstoryboard.org/2026/05/15/your-next-story-is-outside"
+    },
+    {
+      "attribution_id": "la_lettre_pro",
+      "doi": null,
+      "id": "url:156920249286b555a965",
+      "language": "und",
+      "published_at": "2026-05-15T11:20:00Z",
+      "source_family": "rss",
+      "source_name": "La Lettre Pro de la Radio & du Podcast",
+      "source_type": "blog",
+      "title": "Classement \"Le Radio Buzz 40\" / La Lettre Pro de la Radio",
+      "url": "https://www.lalettre.pro/Classement-Le-Radio-Buzz-40-La-Lettre-Pro-de-la-Radio_a41127.html"
+    },
+    {
+      "attribution_id": "radio_fanch",
+      "doi": null,
+      "id": "url:54f67baaf0fa6db7f19a",
+      "language": "und",
+      "published_at": "2026-05-13T06:30:00Z",
+      "source_family": "rss",
+      "source_name": "Radio Fañch",
+      "source_type": "blog",
+      "title": "Fip : Patrick Derlon, programmateur, un vrai métier (sic)…",
+      "url": "https://radiofanch.blogspot.com/2026/05/fip-patrick-derlon-programmateur-un.html"
     },
     {
       "attribution_id": "radio_survivor",
@@ -27,6 +255,66 @@
       "url": "https://www.radiosurvivor.com/2026/05/radio-station-visit-202-wcch-fm-at-holyoke-community-college"
     },
     {
+      "attribution_id": "radio_fanch",
+      "doi": null,
+      "id": "url:6d2fdc2b43ce5bcd6bdf",
+      "language": "und",
+      "published_at": "2026-05-11T06:30:00Z",
+      "source_family": "rss",
+      "source_name": "Radio Fañch",
+      "source_type": "blog",
+      "title": "D'un 10 mai (1936) à l'autre (1981)…",
+      "url": "https://radiofanch.blogspot.com/2026/05/dun-10-mai-1936-lautre-1981.html"
+    },
+    {
+      "attribution_id": "nieman_storyboard",
+      "doi": null,
+      "id": "url:70046855d39fa59ded73",
+      "language": "und",
+      "published_at": "2026-05-08T12:56:02Z",
+      "source_family": "rss",
+      "source_name": "Nieman Storyboard",
+      "source_type": "blog",
+      "title": "Behind the scenes as a Pulitzer juror",
+      "url": "https://niemanstoryboard.org/2026/05/08/behind-the-scenes-pulitzer-juror"
+    },
+    {
+      "attribution_id": "radio_fanch",
+      "doi": null,
+      "id": "url:71381b53e7fe0ce7aa52",
+      "language": "und",
+      "published_at": "2026-05-08T06:30:00Z",
+      "source_family": "rss",
+      "source_name": "Radio Fañch",
+      "source_type": "blog",
+      "title": "Le petit rapporteur… (de la Commission) !",
+      "url": "https://radiofanch.blogspot.com/2026/05/le-petit-rapporteur-de-la-commission.html"
+    },
+    {
+      "attribution_id": "meccsa_radio_audio_studies",
+      "doi": null,
+      "id": "url:6c084645f52e54d49518",
+      "language": "und",
+      "published_at": "2026-05-07T16:05:41Z",
+      "source_family": "rss",
+      "source_name": "MeCCSA Radio and Audio Studies",
+      "source_type": "blog",
+      "title": "NEWS: Online Symposium planned for February 2027",
+      "url": "https://radiostudiesnetworkreadinggroup.wordpress.com/2026/05/07/news-online-symposium-planned-for-february-2027"
+    },
+    {
+      "attribution_id": "radio_fanch",
+      "doi": null,
+      "id": "url:423d41c60c642cbd529c",
+      "language": "und",
+      "published_at": "2026-05-07T06:30:00Z",
+      "source_family": "rss",
+      "source_name": "Radio Fañch",
+      "source_type": "blog",
+      "title": "France Inter : Devillers numérote…",
+      "url": "https://radiofanch.blogspot.com/2026/05/france-inter-devillers-numerote.html"
+    },
+    {
       "attribution_id": "sounding_out",
       "doi": null,
       "id": "url:f119c8a6066b5edb9d83",
@@ -37,6 +325,42 @@
       "source_type": "blog",
       "title": "El Llanto Against I.C.E.: Toward a Latinx Sonic Phenomenology of the Dignified Cry",
       "url": "https://soundstudiesblog.com/2026/05/04/el-llanto-against-i-c-e-toward-a-latinx-sonic-phenomenology-of-the-dignified-cry"
+    },
+    {
+      "attribution_id": "les_radios_libres",
+      "doi": null,
+      "id": "url:2b8dc8603103a9d39f46",
+      "language": "und",
+      "published_at": "2026-05-01T17:15:57Z",
+      "source_family": "rss",
+      "source_name": "Les Radios Libres",
+      "source_type": "blog",
+      "title": "Article « Mutations des radios étatiques et civiles de mobilisation »",
+      "url": "https://lesradioslibres.wordpress.com/2026/05/01/article-mutations-des-radios-etatiques-et-civiles-de-mobilisation"
+    },
+    {
+      "attribution_id": "nieman_storyboard",
+      "doi": null,
+      "id": "url:3b7840bb8362a8e23d60",
+      "language": "und",
+      "published_at": "2026-05-01T13:02:19Z",
+      "source_family": "rss",
+      "source_name": "Nieman Storyboard",
+      "source_type": "blog",
+      "title": "Tell us your best advice for journalists in the current moment",
+      "url": "https://niemanstoryboard.org/2026/05/01/your-best-advice-for-journalists"
+    },
+    {
+      "attribution_id": "nieman_storyboard",
+      "doi": null,
+      "id": "url:6241995576a73aa937ff",
+      "language": "und",
+      "published_at": "2026-04-30T19:15:31Z",
+      "source_family": "rss",
+      "source_name": "Nieman Storyboard",
+      "source_type": "blog",
+      "title": "Look beyond the headlines — and five other lessons for journalists from Power of Narrative 2026",
+      "url": "https://niemanstoryboard.org/2026/04/30/lessons-for-journalists-power-of-narrative-2026"
     },
     {
       "attribution_id": "journal_radio_audio_media",
@@ -51,6 +375,18 @@
       "url": "https://www.tandfonline.com/doi/full/10.1080/19376529.2026.2660650?af=R"
     },
     {
+      "attribution_id": "radio_fanch",
+      "doi": null,
+      "id": "url:bacb0b0883e6fca9bf34",
+      "language": "und",
+      "published_at": "2026-04-29T06:30:00Z",
+      "source_family": "rss",
+      "source_name": "Radio Fañch",
+      "source_type": "blog",
+      "title": "Comment peut-on aimer la radio ?",
+      "url": "https://radiofanch.blogspot.com/2026/04/comment-peut-on-aimer-la-radio.html"
+    },
+    {
       "attribution_id": "radio_survivor",
       "doi": null,
       "id": "url:df8b741e0b351f272e1f",
@@ -61,6 +397,18 @@
       "source_type": "blog",
       "title": "Radio Station Visit #201: WMHC-FM at Mount Holyoke College",
       "url": "https://www.radiosurvivor.com/2026/04/radio-station-visit-201-wmhc-fm-at-mount-holyoke-college"
+    },
+    {
+      "attribution_id": "radio_fanch",
+      "doi": null,
+      "id": "url:b148c71ec68127e3b5e1",
+      "language": "und",
+      "published_at": "2026-04-28T06:30:00Z",
+      "source_family": "rss",
+      "source_name": "Radio Fañch",
+      "source_type": "blog",
+      "title": "Fip… en pile !",
+      "url": "https://radiofanch.blogspot.com/2026/04/fip-en-pile.html"
     },
     {
       "attribution_id": "sounding_out",
@@ -75,6 +423,18 @@
       "url": "https://soundstudiesblog.com/2026/04/27/27909"
     },
     {
+      "attribution_id": "radio_fanch",
+      "doi": null,
+      "id": "url:9a0571087fbb982e1574",
+      "language": "und",
+      "published_at": "2026-04-27T06:30:00Z",
+      "source_family": "rss",
+      "source_name": "Radio Fañch",
+      "source_type": "blog",
+      "title": "Audiovisuel public : ce n'est qu'un combat continuons le début…",
+      "url": "https://radiofanch.blogspot.com/2026/04/audiovisuel-public-ce-nest-quun-combat.html"
+    },
+    {
       "attribution_id": "radio_survivor",
       "doi": null,
       "id": "url:49ccc2711015d6b16791",
@@ -85,6 +445,30 @@
       "source_type": "blog",
       "title": "Radio Station Visit #200: WOZQ-FM at Smith College",
       "url": "https://www.radiosurvivor.com/2026/04/radio-station-visit-200-wozq-fm-at-smith-college"
+    },
+    {
+      "attribution_id": "nieman_storyboard",
+      "doi": null,
+      "id": "url:b2234e97b99ad10a2f79",
+      "language": "und",
+      "published_at": "2026-04-24T13:02:32Z",
+      "source_family": "rss",
+      "source_name": "Nieman Storyboard",
+      "source_type": "blog",
+      "title": "Making ‘a documentary that you could dance to’",
+      "url": "https://niemanstoryboard.org/2026/04/24/making-a-documentary-that-you-could-dance-to"
+    },
+    {
+      "attribution_id": "radio_fanch",
+      "doi": null,
+      "id": "url:b6726364d24aeba253ea",
+      "language": "und",
+      "published_at": "2026-04-24T06:30:00Z",
+      "source_family": "rss",
+      "source_name": "Radio Fañch",
+      "source_type": "blog",
+      "title": "Peut-on se passer du \"Pays d'ici\" ? Non…",
+      "url": "https://radiofanch.blogspot.com/2026/04/peut-on-se-passer-du-pays-dici-non.html"
     },
     {
       "attribution_id": "hal",
@@ -99,6 +483,42 @@
       "url": "https://hal.science/hal-05603550v1"
     },
     {
+      "attribution_id": "nieman_storyboard",
+      "doi": null,
+      "id": "url:ee2aee5e842b63fd10a4",
+      "language": "und",
+      "published_at": "2026-04-23T17:50:27Z",
+      "source_family": "rss",
+      "source_name": "Nieman Storyboard",
+      "source_type": "blog",
+      "title": "How Jad Abumrad transports listeners to a legendary club in Lagos for the acclaimed podcast, ‘Fela Kuti: Fear No Man’",
+      "url": "https://niemanstoryboard.org/2026/04/23/jad-abumrad-podcast-fela-kuti-fear-no-man"
+    },
+    {
+      "attribution_id": "radio_fanch",
+      "doi": null,
+      "id": "url:57c713694ae9675e0a93",
+      "language": "und",
+      "published_at": "2026-04-23T06:30:00Z",
+      "source_family": "rss",
+      "source_name": "Radio Fañch",
+      "source_type": "blog",
+      "title": "\"Mon petit France Musique\"… On ne va quand même pas l'inventer ?",
+      "url": "https://radiofanch.blogspot.com/2026/04/mon-petit-france-musique-on-ne-va-quand.html"
+    },
+    {
+      "attribution_id": "radio_fanch",
+      "doi": null,
+      "id": "url:307cb91ad6237f6b3a97",
+      "language": "und",
+      "published_at": "2026-04-22T06:00:00Z",
+      "source_family": "rss",
+      "source_name": "Radio Fañch",
+      "source_type": "blog",
+      "title": "Midi magnétique : Catherine Soullard jour et nuit…",
+      "url": "https://radiofanch.blogspot.com/2026/04/midi-magnetique-catherine-soullard-jour.html"
+    },
+    {
       "attribution_id": "hal",
       "doi": null,
       "id": "url:ffbf066e184a41ebd0c6",
@@ -109,6 +529,18 @@
       "source_type": "journal_article",
       "title": "Santé mentale au travail et Droit",
       "url": "https://shs.hal.science/halshs-05605140v1"
+    },
+    {
+      "attribution_id": "radio_fanch",
+      "doi": null,
+      "id": "url:14b75fa6b7f1f451de58",
+      "language": "und",
+      "published_at": "2026-04-21T06:30:00Z",
+      "source_family": "rss",
+      "source_name": "Radio Fañch",
+      "source_type": "blog",
+      "title": "Sibyle Veil : un port très… austère !",
+      "url": "https://radiofanch.blogspot.com/2026/04/sibyle-veil-un-port-tres-austere.html"
     },
     {
       "attribution_id": "journal_radio_audio_media",
@@ -183,6 +615,42 @@
       "url": "https://www.tandfonline.com/doi/full/10.1080/19376529.2026.2612964?af=R"
     },
     {
+      "attribution_id": "radio_fanch",
+      "doi": null,
+      "id": "url:3d5b2e09216831b42cac",
+      "language": "und",
+      "published_at": "2026-04-20T06:30:00Z",
+      "source_family": "rss",
+      "source_name": "Radio Fañch",
+      "source_type": "blog",
+      "title": "Le Studio du temps : pendant trente-quatre ans des détenus ont numérisé les archives sonores de l'Ina !",
+      "url": "https://radiofanch.blogspot.com/2026/04/le-studio-du-temps-pendant-trente.html"
+    },
+    {
+      "attribution_id": "nieman_storyboard",
+      "doi": null,
+      "id": "url:05551005685b17d56e8f",
+      "language": "und",
+      "published_at": "2026-04-17T13:07:56Z",
+      "source_family": "rss",
+      "source_name": "Nieman Storyboard",
+      "source_type": "blog",
+      "title": "The art of the micro-narrative",
+      "url": "https://niemanstoryboard.org/2026/04/17/art-of-the-micro-narrative"
+    },
+    {
+      "attribution_id": "radio_fanch",
+      "doi": null,
+      "id": "url:253023f74520370962e3",
+      "language": "und",
+      "published_at": "2026-04-16T06:30:00Z",
+      "source_family": "rss",
+      "source_name": "Radio Fañch",
+      "source_type": "blog",
+      "title": "Audiences radio : grand bluff, tarte à la crème et vague… à l'âme !",
+      "url": "https://radiofanch.blogspot.com/2026/04/audiences-radio-grand-bluff-tarte-la.html"
+    },
+    {
       "attribution_id": "journal_radio_audio_media",
       "doi": null,
       "id": "url:2a310cb024c9bb073fb3",
@@ -219,6 +687,18 @@
       "url": "https://soundstudiesblog.com/2026/04/13/mimicked-voices-and-nonhuman-listening-deepfakes-speech-and-sonic-manipulation-in-the-digital-war-on-ukraine"
     },
     {
+      "attribution_id": "radio_fanch",
+      "doi": null,
+      "id": "url:68a97a659e1295a4575e",
+      "language": "und",
+      "published_at": "2026-04-13T06:30:00Z",
+      "source_family": "rss",
+      "source_name": "Radio Fañch",
+      "source_type": "blog",
+      "title": "France Inter radieuse… (en 1999) !",
+      "url": "https://radiofanch.blogspot.com/2026/04/france-inter-radieuse-en-1999.html"
+    },
+    {
       "attribution_id": "hal",
       "doi": null,
       "id": "url:aeabdbf08056af1a91fc",
@@ -229,6 +709,30 @@
       "source_type": "journal_article",
       "title": "Au nom du son",
       "url": "https://shs.hal.science/halshs-05598075v1"
+    },
+    {
+      "attribution_id": "nieman_storyboard",
+      "doi": null,
+      "id": "url:66f6ba09c1584d6c0e2d",
+      "language": "und",
+      "published_at": "2026-04-10T13:04:25Z",
+      "source_family": "rss",
+      "source_name": "Nieman Storyboard",
+      "source_type": "blog",
+      "title": "‘Stay long enough to be boring,’ and other notes from the Power of Narrative conference",
+      "url": "https://niemanstoryboard.org/2026/04/10/stay-long-enough-to-be-boring-power-of-narrative-conference"
+    },
+    {
+      "attribution_id": "radio_fanch",
+      "doi": null,
+      "id": "url:b334bad3a4cee3ef9bc2",
+      "language": "und",
+      "published_at": "2026-04-10T06:30:00Z",
+      "source_family": "rss",
+      "source_name": "Radio Fañch",
+      "source_type": "blog",
+      "title": "Le transsibérien de Colette Fellous : voyage, voyage…",
+      "url": "https://radiofanch.blogspot.com/2026/04/le-transsiberien-de-colette-fellous.html"
     },
     {
       "attribution_id": "radio_survivor",
@@ -327,6 +831,18 @@
       "url": "https://shs.hal.science/halshs-05606557v1"
     },
     {
+      "attribution_id": "radio_fanch",
+      "doi": null,
+      "id": "url:6d3f6f0b694d2d76dfe0",
+      "language": "und",
+      "published_at": "2026-03-31T06:30:00Z",
+      "source_family": "rss",
+      "source_name": "Radio Fañch",
+      "source_type": "blog",
+      "title": "Radio publique : une mue lente et implacable !",
+      "url": "https://radiofanch.blogspot.com/2026/03/radio-publique-une-mue-lente-et.html"
+    },
+    {
       "attribution_id": "sounding_out",
       "doi": null,
       "id": "url:00920fb219d7e32ba9a3",
@@ -337,6 +853,18 @@
       "source_type": "blog",
       "title": "Hate & Non-Human Listening, an Introduction",
       "url": "https://soundstudiesblog.com/2026/03/30/hate-non-human-listening-an-introduction"
+    },
+    {
+      "attribution_id": "radio_fanch",
+      "doi": null,
+      "id": "url:24698a7a5de7fbe921a3",
+      "language": "und",
+      "published_at": "2026-03-30T06:30:00Z",
+      "source_family": "rss",
+      "source_name": "Radio Fañch",
+      "source_type": "blog",
+      "title": "Été 1996 : une très longue traversée atlantique… sur France Culture !",
+      "url": "https://radiofanch.blogspot.com/2026/03/ete-1996-une-tres-longue-traversee.html"
     },
     {
       "attribution_id": "hal",
@@ -363,6 +891,30 @@
       "url": "https://hal.science/hal-05610597v1"
     },
     {
+      "attribution_id": "radio_fanch",
+      "doi": null,
+      "id": "url:077c532cf02c4b7e3d0a",
+      "language": "und",
+      "published_at": "2026-03-24T07:30:00Z",
+      "source_family": "rss",
+      "source_name": "Radio Fañch",
+      "source_type": "blog",
+      "title": "Radio France : les grilles sont… grillées !",
+      "url": "https://radiofanch.blogspot.com/2026/03/radio-france-les-grilles-sont-grillees.html"
+    },
+    {
+      "attribution_id": "la_radio_du_futur",
+      "doi": null,
+      "id": "url:c6c8aa48d9b581878c3f",
+      "language": "und",
+      "published_at": "2026-03-21T14:31:25Z",
+      "source_family": "rss",
+      "source_name": "La Radio du Futur",
+      "source_type": "blog",
+      "title": "La mise en image de la radio : recherche d’Andrès Godefroy",
+      "url": "https://radiodufutur.wordpress.com/2026/03/21/la-mise-en-image-de-la-radio-recherche-dandres-godefroy"
+    },
+    {
       "attribution_id": "hal",
       "doi": null,
       "id": "url:10fc49a8ff1167595aab",
@@ -385,6 +937,18 @@
       "source_type": "journal_article",
       "title": "Politique des corps en lutte dans le catch japonais",
       "url": "https://hal.science/hal-05553184v1"
+    },
+    {
+      "attribution_id": "radiomorphoses",
+      "doi": null,
+      "id": "url:7cb9f6754d5571bde588",
+      "language": "und",
+      "published_at": "2026-03-09T00:00:00Z",
+      "source_family": "rss",
+      "source_name": "Radiomorphoses / OpenEdition Journals",
+      "source_type": "blog",
+      "title": "N° 18, 2027 - Les radios de folie, coordonné par Martin Bakero Carrasco et David Christoffel",
+      "url": "http://journals.openedition.org/radiomorphoses/7635"
     },
     {
       "attribution_id": "hal",
@@ -423,6 +987,18 @@
       "url": "https://www.radiosurvivor.com/2026/02/radio-station-visit-193-civl-fm-at-university-of-the-fraser-valley"
     },
     {
+      "attribution_id": "la_radio_du_futur",
+      "doi": null,
+      "id": "url:e21c66aff431a3a2cb05",
+      "language": "und",
+      "published_at": "2026-02-15T17:10:37Z",
+      "source_family": "rss",
+      "source_name": "La Radio du Futur",
+      "source_type": "blog",
+      "title": "Journée mondiale de la radio à RCF Radio Notre Dame",
+      "url": "https://radiodufutur.wordpress.com/2026/02/15/journee-mondiale-de-la-radio-a-rcf-radio-notre-dame"
+    },
+    {
       "attribution_id": "hal",
       "doi": null,
       "id": "url:7680e727e9a8103ef973",
@@ -445,6 +1021,18 @@
       "source_type": "journal_article",
       "title": "Droit comme un arbre - Episode 4 : Justice alimentaire : nourrir le monde ou nourrir le marché ?",
       "url": "https://media.hal.science/hal-05505081v1"
+    },
+    {
+      "attribution_id": "radiomorphoses",
+      "doi": null,
+      "id": "url:fcac872e0f206ab2ef90",
+      "language": "und",
+      "published_at": "2026-02-09T00:00:00Z",
+      "source_family": "rss",
+      "source_name": "Radiomorphoses / OpenEdition Journals",
+      "source_type": "blog",
+      "title": "N° 16, 2026 - La radio comme laboratoire d’innovation sociale et culturelle",
+      "url": "http://journals.openedition.org/radiomorphoses/7633"
     },
     {
       "attribution_id": "sounding_out",
@@ -507,6 +1095,18 @@
       "url": "https://soundstudiesblog.com/2026/01/19/so-reads-justin-ecksteins-sound-tactics-auditory-power-in-political-protests"
     },
     {
+      "attribution_id": "meccsa_radio_audio_studies",
+      "doi": null,
+      "id": "url:79ce9c4c93053714556c",
+      "language": "und",
+      "published_at": "2026-01-18T21:06:38Z",
+      "source_family": "rss",
+      "source_name": "MeCCSA Radio and Audio Studies",
+      "source_type": "blog",
+      "title": "WORLD RADIO DAY 2026 – MeCCSA Radio and Audio Studies Section’s Online Symposium 2026",
+      "url": "https://radiostudiesnetworkreadinggroup.wordpress.com/2026/01/18/world-radio-day-2026-meccsa-radio-and-audio-studies-sections-online-symposium-2026"
+    },
+    {
       "attribution_id": "hal",
       "doi": null,
       "id": "url:5d011e91760ad0a13d08",
@@ -529,6 +1129,30 @@
       "source_type": "journal_article",
       "title": "Podcast Opcit! Épisode 43 (12 janvier 2026), Rahul Markovits – Bharuch, Paris, Londres : une odyssée indienne (1791-1796)",
       "url": "https://hal.science/hal-05490768v1"
+    },
+    {
+      "attribution_id": "la_radio_du_futur",
+      "doi": null,
+      "id": "url:215cae8e18db3fcdeb9b",
+      "language": "und",
+      "published_at": "2026-01-04T15:48:42Z",
+      "source_family": "rss",
+      "source_name": "La Radio du Futur",
+      "source_type": "blog",
+      "title": "Les radios scolaires dans La Lettre Pro de la Radio & du Podcast",
+      "url": "https://radiodufutur.wordpress.com/2026/01/04/les-radios-scolaires-dans-la-lettre-pro-de-la-radio-du-podcast"
+    },
+    {
+      "attribution_id": "la_radio_du_futur",
+      "doi": null,
+      "id": "url:a38bea3d8e63a79f7c74",
+      "language": "und",
+      "published_at": "2026-01-04T15:39:37Z",
+      "source_family": "rss",
+      "source_name": "La Radio du Futur",
+      "source_type": "blog",
+      "title": "Les radios scolaires en Roumanie à Radio România",
+      "url": "https://radiodufutur.wordpress.com/2026/01/04/les-radios-scolaires-en-roumanie-a-radio-romania"
     },
     {
       "attribution_id": "hal",
@@ -759,6 +1383,90 @@
       "url": "https://hal.science/hal-05395262v2"
     },
     {
+      "attribution_id": "radiomorphoses",
+      "doi": null,
+      "id": "url:9753cc9fcd52e8c098bf",
+      "language": "und",
+      "published_at": "2025-12-30T00:00:00Z",
+      "source_family": "rss",
+      "source_name": "Radiomorphoses / OpenEdition Journals",
+      "source_type": "blog",
+      "title": "Écrire avec les voix des autres : pratiques, poétiques et politiques du documentaire sonore",
+      "url": "http://journals.openedition.org/radiomorphoses/7412"
+    },
+    {
+      "attribution_id": "radiomorphoses",
+      "doi": null,
+      "id": "url:7667dd3f0ce14357510f",
+      "language": "und",
+      "published_at": "2025-12-30T00:00:00Z",
+      "source_family": "rss",
+      "source_name": "Radiomorphoses / OpenEdition Journals",
+      "source_type": "blog",
+      "title": "Éliane Beaufils, Christophe Deleu et Pierre-Marie Héron (dir.), Le désir de belle radio aujourd’hui. Fiction, documentaire",
+      "url": "http://journals.openedition.org/radiomorphoses/7380"
+    },
+    {
+      "attribution_id": "radiomorphoses",
+      "doi": null,
+      "id": "url:686279b7c8eaf14ad3aa",
+      "language": "und",
+      "published_at": "2025-12-30T00:00:00Z",
+      "source_family": "rss",
+      "source_name": "Radiomorphoses / OpenEdition Journals",
+      "source_type": "blog",
+      "title": "La radio à l’épreuve de la désinformation climatique. Analyse des stratégies des journalistes francophones lors de la COP 28",
+      "url": "http://journals.openedition.org/radiomorphoses/7524"
+    },
+    {
+      "attribution_id": "radiomorphoses",
+      "doi": null,
+      "id": "url:62671a821e11602fffed",
+      "language": "und",
+      "published_at": "2025-12-30T00:00:00Z",
+      "source_family": "rss",
+      "source_name": "Radiomorphoses / OpenEdition Journals",
+      "source_type": "blog",
+      "title": "Les signes de crises au sein d’une radio communautaire en milieu urbain. Matériaux archivistiques témoignant des crises financière, écologique et du logement à CKIA-FM Radio Basse-Ville",
+      "url": "http://journals.openedition.org/radiomorphoses/7216"
+    },
+    {
+      "attribution_id": "radiomorphoses",
+      "doi": null,
+      "id": "url:518c7f27c3ed8c2724b9",
+      "language": "und",
+      "published_at": "2025-12-30T00:00:00Z",
+      "source_family": "rss",
+      "source_name": "Radiomorphoses / OpenEdition Journals",
+      "source_type": "blog",
+      "title": "Les médias publics polonais face à l’alternance du pouvoir : redémocratisation ou reféodalisation politique ? Le cas de Polskie Radio, radio publique polonaise, depuis décembre 2023",
+      "url": "http://journals.openedition.org/radiomorphoses/7426"
+    },
+    {
+      "attribution_id": "radiomorphoses",
+      "doi": null,
+      "id": "url:388c37bbd5a951139690",
+      "language": "und",
+      "published_at": "2025-12-30T00:00:00Z",
+      "source_family": "rss",
+      "source_name": "Radiomorphoses / OpenEdition Journals",
+      "source_type": "blog",
+      "title": "Surréalisme et radio : une même longueur d’onde ? Étude sociohistorique et audiopoétique (1924-1969)",
+      "url": "http://journals.openedition.org/radiomorphoses/7403"
+    },
+    {
+      "attribution_id": "radiomorphoses",
+      "doi": null,
+      "id": "url:0a7530d01c77f84ba2db",
+      "language": "und",
+      "published_at": "2025-12-30T00:00:00Z",
+      "source_family": "rss",
+      "source_name": "Radiomorphoses / OpenEdition Journals",
+      "source_type": "blog",
+      "title": "Des médias de crise ? Rhétorique de l’humour et de la proximité dans les Brexit Podcasts",
+      "url": "http://journals.openedition.org/radiomorphoses/7304"
+    },
+    {
       "attribution_id": "hal",
       "doi": null,
       "id": "url:9b982f4c69ffa56749a9",
@@ -769,6 +1477,18 @@
       "source_type": "journal_article",
       "title": "L'effet socio. Episode 4 : L'amour pas si ouf : confier ses peines de cœur",
       "url": "https://hal.science/hal-05546484v1"
+    },
+    {
+      "attribution_id": "meccsa_radio_audio_studies",
+      "doi": null,
+      "id": "url:b1fe8c6f19fcf1ed5f2f",
+      "language": "und",
+      "published_at": "2025-12-22T14:48:05Z",
+      "source_family": "rss",
+      "source_name": "MeCCSA Radio and Audio Studies",
+      "source_type": "blog",
+      "title": "WORLD RADIO DAY 2026 – draft List of Panels and Presenters, Friday 13th February 2026, 0900 – 1230 UTC/GMT",
+      "url": "https://radiostudiesnetworkreadinggroup.wordpress.com/2025/12/22/world-radio-day-2026-draft-list-of-panels-and-presenters-friday-13th-february-2026-0900-1230-utc-gmt"
     },
     {
       "attribution_id": "radio_survivor",
@@ -1011,6 +1731,18 @@
       "url": "https://soundstudiesblog.com/2025/10/20/press-play-and-lean-back-passive-listening-and-platform-power-on-nintendos-music-streaming-service"
     },
     {
+      "attribution_id": "meccsa_radio_audio_studies",
+      "doi": null,
+      "id": "url:9cac4b719cafbdddb598",
+      "language": "und",
+      "published_at": "2025-10-20T12:42:06Z",
+      "source_family": "rss",
+      "source_name": "MeCCSA Radio and Audio Studies",
+      "source_type": "blog",
+      "title": "Call for Expressions of Interest: World Radio Day 2026 Online Symposium",
+      "url": "https://radiostudiesnetworkreadinggroup.wordpress.com/2025/10/20/call-for-expressions-of-interest-world-radio-day-2026-online-symposium"
+    },
+    {
       "attribution_id": "radio_survivor",
       "doi": null,
       "id": "url:77a5693d6ee274f15785",
@@ -1071,6 +1803,18 @@
       "url": "https://www.radiosurvivor.com/2025/10/love-to-college-radio-on-college-radio-day-2025"
     },
     {
+      "attribution_id": "meccsa_radio_audio_studies",
+      "doi": null,
+      "id": "url:cc66ca08d81de882b99f",
+      "language": "und",
+      "published_at": "2025-09-30T11:31:41Z",
+      "source_family": "rss",
+      "source_name": "MeCCSA Radio and Audio Studies",
+      "source_type": "blog",
+      "title": "UK Academics raise concerns for the future of local radio news",
+      "url": "https://radiostudiesnetworkreadinggroup.wordpress.com/2025/09/30/uk-academics-raise-concerns-for-the-future-of-local-radio-news"
+    },
+    {
       "attribution_id": "sounding_out",
       "doi": null,
       "id": "url:a3912057a16de9dcdb1a",
@@ -1119,6 +1863,18 @@
       "url": "https://www.tandfonline.com/doi/full/10.1080/19376529.2025.2558934?af=R"
     },
     {
+      "attribution_id": "les_radios_libres",
+      "doi": null,
+      "id": "url:7c06c1a510f4445ecb27",
+      "language": "und",
+      "published_at": "2025-09-01T09:53:57Z",
+      "source_family": "rss",
+      "source_name": "Les Radios Libres",
+      "source_type": "blog",
+      "title": "Myrtille Laurent-Bourioux : Que reste-t-il des radios libres des années 80 en 2025 ?",
+      "url": "https://lesradioslibres.wordpress.com/2025/09/01/myrtille-laurent-bourioux-que-reste-t-il-des-radios-libres-des-annees-80-en-2025"
+    },
+    {
       "attribution_id": "radio_survivor",
       "doi": null,
       "id": "url:a9c9c175cfc2a889d06b",
@@ -1129,6 +1885,18 @@
       "source_type": "blog",
       "title": "2026 “Best College Radio Stations” List from Princeton Review",
       "url": "https://www.radiosurvivor.com/2025/08/2026-best-college-radio-stations-list-from-princeton-review"
+    },
+    {
+      "attribution_id": "meccsa_radio_audio_studies",
+      "doi": null,
+      "id": "url:e03bf7b340f34a85e79c",
+      "language": "und",
+      "published_at": "2025-08-13T11:34:28Z",
+      "source_family": "rss",
+      "source_name": "MeCCSA Radio and Audio Studies",
+      "source_type": "blog",
+      "title": "MeCCSA Radio and Audio Studies to host an Online Forum to discuss Ofcom Consultation on Local News and Information on Analogue Commercial Radio",
+      "url": "https://radiostudiesnetworkreadinggroup.wordpress.com/2025/08/13/meccsa-radio-and-audio-studies-to-host-an-online-forum-to-discuss-ofcom-consultation-on-local-news-and-information-on-analogue-commercial-radio"
     },
     {
       "attribution_id": "journal_radio_audio_media",
@@ -1539,6 +2307,18 @@
       "url": "https://www.tandfonline.com/doi/full/10.1080/19376529.2024.2396840?af=R"
     },
     {
+      "attribution_id": "meccsa_radio_audio_studies",
+      "doi": null,
+      "id": "url:fb5a3a48f73e9e7c93a0",
+      "language": "und",
+      "published_at": "2024-08-19T15:48:41Z",
+      "source_family": "rss",
+      "source_name": "MeCCSA Radio and Audio Studies",
+      "source_type": "blog",
+      "title": "MeCCSA RSN to attend MeCCSA Annual Conference, Manchester, Sept 4-6th 2024",
+      "url": "https://radiostudiesnetworkreadinggroup.wordpress.com/2024/08/19/meccsa-rsn-to-attend-meccsa-annual-conference-manchester-sept-4-6th-2024"
+    },
+    {
       "attribution_id": "radio_survivor",
       "doi": null,
       "id": "url:9fbb012eb66cf9c68a91",
@@ -1659,6 +2439,42 @@
       "url": "https://soundstudiesblog.com/2024/02/26/the-latent-present-listening-to-lags-delays-and-other-temporal-disjunctions"
     },
     {
+      "attribution_id": "les_radios_libres",
+      "doi": null,
+      "id": "url:b083cb730e5a3abce192",
+      "language": "und",
+      "published_at": "2024-02-16T09:55:53Z",
+      "source_family": "rss",
+      "source_name": "Les Radios Libres",
+      "source_type": "blog",
+      "title": "euradio invite les radios associatives pour la semaine des radios associatives en Pays de la Loire et la journée mondiale de la radio",
+      "url": "https://lesradioslibres.wordpress.com/2024/02/16/euradio-invite-les-radios-associatives-pour-la-semaine-des-radios-associatives-en-pays-de-la-loire-et-la-journee-mondiale-de-la-radio"
+    },
+    {
+      "attribution_id": "meccsa_radio_audio_studies",
+      "doi": null,
+      "id": "url:153f73d0be6a63d01b9e",
+      "language": "und",
+      "published_at": "2024-02-07T14:25:27Z",
+      "source_family": "rss",
+      "source_name": "MeCCSA Radio and Audio Studies",
+      "source_type": "blog",
+      "title": "New Term of Readings for February and March 2024 – update! 4th meeting announced",
+      "url": "https://radiostudiesnetworkreadinggroup.wordpress.com/2024/02/07/new-term-of-readings-for-february-and-march-2024"
+    },
+    {
+      "attribution_id": "les_radios_libres",
+      "doi": null,
+      "id": "url:8a11480707187bfdb8e3",
+      "language": "und",
+      "published_at": "2024-01-27T00:35:27Z",
+      "source_family": "rss",
+      "source_name": "Les Radios Libres",
+      "source_type": "blog",
+      "title": "Radio Paradis invite les radios libres à son antenne",
+      "url": "https://lesradioslibres.wordpress.com/2024/01/27/radio-paradis-invite-les-radios-libres-a-son-antenne"
+    },
+    {
       "attribution_id": "sounding_out",
       "doi": null,
       "id": "url:559871227e92a3a0863c",
@@ -1683,6 +2499,18 @@
       "url": "https://www.radiosurvivor.com/2023/11/podcast-336-educational-radio-and-the-beginnings-of-public-radio"
     },
     {
+      "attribution_id": "meccsa_radio_audio_studies",
+      "doi": null,
+      "id": "url:0943b15917501ebd7597",
+      "language": "und",
+      "published_at": "2023-11-21T14:35:19Z",
+      "source_family": "rss",
+      "source_name": "MeCCSA Radio and Audio Studies",
+      "source_type": "blog",
+      "title": "Stay tuned …",
+      "url": "https://radiostudiesnetworkreadinggroup.wordpress.com/2023/11/21/stay-tuned"
+    },
+    {
       "attribution_id": "radio_survivor",
       "doi": null,
       "id": "url:5d4adad780508ff9c96f",
@@ -1705,6 +2533,18 @@
       "source_type": "blog",
       "title": "Podcast #335 – Digital Library of Amateur Radio and Communications",
       "url": "https://www.radiosurvivor.com/2023/11/podcast-335-digital-library-of-amateur-radio-and-communications"
+    },
+    {
+      "attribution_id": "les_radios_libres",
+      "doi": null,
+      "id": "url:d40e769d2059a824f0ee",
+      "language": "und",
+      "published_at": "2023-10-20T14:35:33Z",
+      "source_family": "rss",
+      "source_name": "Les Radios Libres",
+      "source_type": "blog",
+      "title": "Idé HAMANI sur Les radios locales : histoires, territoires et réseaux",
+      "url": "https://lesradioslibres.wordpress.com/2023/10/20/ide-hamani-sur-les-radios-locales-histoires-territoires-et-reseaux"
     },
     {
       "attribution_id": "radio_survivor",
@@ -1825,6 +2665,54 @@
       "source_type": "blog",
       "title": "Your Voice is (Not) Your Passport",
       "url": "https://soundstudiesblog.com/2023/06/12/your-voice-is-not-your-passport"
+    },
+    {
+      "attribution_id": "les_radios_libres",
+      "doi": null,
+      "id": "url:af9ce3d47b8c3e13ecdb",
+      "language": "und",
+      "published_at": "2023-04-14T23:02:42Z",
+      "source_family": "rss",
+      "source_name": "Les Radios Libres",
+      "source_type": "blog",
+      "title": "Magazine « Rétrospective » de Valentin Bertrand sur les radios libres",
+      "url": "https://lesradioslibres.wordpress.com/2023/04/14/magazine-retrospective-de-valentin-bertrand-sur-les-radios-libres"
+    },
+    {
+      "attribution_id": "les_radios_libres",
+      "doi": null,
+      "id": "url:5389a11d7809c72b0cf0",
+      "language": "und",
+      "published_at": "2023-04-14T17:24:14Z",
+      "source_family": "rss",
+      "source_name": "Les Radios Libres",
+      "source_type": "blog",
+      "title": "Les radios internationales de mobilisation dans The Conversation",
+      "url": "https://lesradioslibres.wordpress.com/2023/04/14/les-radios-internationales-de-mobilisation-dans-the-conversation"
+    },
+    {
+      "attribution_id": "les_radios_libres",
+      "doi": null,
+      "id": "url:49d928713048255b9803",
+      "language": "und",
+      "published_at": "2023-03-29T16:16:08Z",
+      "source_family": "rss",
+      "source_name": "Les Radios Libres",
+      "source_type": "blog",
+      "title": "Les Assises du journalisme de Tours par le prisme de la radio à Cité Radio",
+      "url": "https://lesradioslibres.wordpress.com/2023/03/29/les-assises-du-journalisme-de-tours-par-le-prisme-de-la-radio-a-cite-radio"
+    },
+    {
+      "attribution_id": "les_radios_libres",
+      "doi": null,
+      "id": "url:42d08fd0b79eabca53dc",
+      "language": "und",
+      "published_at": "2023-03-29T16:12:00Z",
+      "source_family": "rss",
+      "source_name": "Les Radios Libres",
+      "source_type": "blog",
+      "title": "Radio Plouf : une radio festivalière culturelle et politique au CCNRB",
+      "url": "https://lesradioslibres.wordpress.com/2023/03/29/radio-plouf-une-radio-festivaliere-culturelle-et-politique-au-ccnrb"
     }
   ],
   "schema_version": "antenne-radio-public-v0",
@@ -1844,11 +2732,60 @@
       "url": "https://www.tandfonline.com/journals/hjrs20"
     },
     {
+      "attribution_id": "la_lettre_pro",
+      "attribution_text": "Source: La Lettre Pro de la Radio & du Podcast - lien vers l'article original.",
+      "name": "La Lettre Pro de la Radio & du Podcast",
+      "source_family": "rss",
+      "url": "https://www.lalettre.pro/"
+    },
+    {
+      "attribution_id": "la_radio_du_futur",
+      "attribution_text": "Source: La Radio du Futur - lien vers le billet original.",
+      "name": "La Radio du Futur",
+      "source_family": "rss",
+      "url": "https://radiodufutur.wordpress.com/"
+    },
+    {
+      "attribution_id": "les_radios_libres",
+      "attribution_text": "Source: Les Radios Libres - lien vers le billet original.",
+      "name": "Les Radios Libres",
+      "source_family": "rss",
+      "url": "https://lesradioslibres.wordpress.com/"
+    },
+    {
+      "attribution_id": "meccsa_radio_audio_studies",
+      "attribution_text": "Source: MeCCSA Radio and Audio Studies - lien vers le billet original.",
+      "name": "MeCCSA Radio and Audio Studies",
+      "source_family": "rss",
+      "url": "https://radiostudiesnetworkreadinggroup.wordpress.com/"
+    },
+    {
+      "attribution_id": "nieman_storyboard",
+      "attribution_text": "Source: Nieman Storyboard - lien vers l'article original.",
+      "name": "Nieman Storyboard",
+      "source_family": "rss",
+      "url": "https://niemanstoryboard.org/"
+    },
+    {
+      "attribution_id": "radio_fanch",
+      "attribution_text": "Source: Radio Fañch - lien vers le billet original.",
+      "name": "Radio Fañch",
+      "source_family": "rss",
+      "url": "https://radiofanch.blogspot.com/"
+    },
+    {
       "attribution_id": "radio_survivor",
       "attribution_text": "Source: Radio Survivor - lien vers l'article original.",
       "name": "Radio Survivor",
       "source_family": "rss",
       "url": "https://www.radiosurvivor.com/"
+    },
+    {
+      "attribution_id": "radiomorphoses",
+      "attribution_text": "Source: Radiomorphoses / OpenEdition Journals - lien vers la notice originale.",
+      "name": "Radiomorphoses / OpenEdition Journals",
+      "source_family": "rss",
+      "url": "https://journals.openedition.org/radiomorphoses/"
     },
     {
       "attribution_id": "sounding_out",

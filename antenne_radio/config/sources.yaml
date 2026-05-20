@@ -7,10 +7,16 @@ rss_atom:
     enabled: false
     kind: rss
     url: "https://transom.org/feed/"
-    note: "Désactivé le 2026-05-19 : statut 301, warning feedparser, 0 entrée sur plusieurs variantes de flux."
+    legal_status: "VALIDÉ PRUDENT — métadonnées uniquement"
+    audit_date: "2026-05-20"
+    note: "Reporté techniquement le 2026-05-20 : le run contrôlé retrouve statut 301, warning feedparser et 0 entrée."
+    categories:
+      - podcast
+      - sound_studies
     tags:
-      - radio_documentary
-      - audio_storytelling
+      - audio storytelling
+      - radio documentary
+      - podcast
 
   - id: radio_survivor
     name: Radio Survivor
@@ -20,6 +26,111 @@ rss_atom:
     tags:
       - radio_culture
       - community_radio
+
+  - id: radiomorphoses
+    name: Radiomorphoses
+    enabled: true
+    kind: rss
+    url: "https://journals.openedition.org/radiomorphoses/backend?format=rssdocuments"
+    legal_status: "VALIDÉ — métadonnées ; contenu sous conditions CC"
+    audit_date: "2026-05-20"
+    categories:
+      - radio_core
+      - sound_studies
+    tags:
+      - radio studies
+      - sound studies
+      - OpenEdition
+
+  - id: radio_fanch
+    name: Radio Fañch
+    enabled: true
+    kind: rss
+    url: "https://radiofanch.blogspot.com/feeds/posts/default?alt=rss"
+    legal_status: "VALIDÉ PRUDENT — métadonnées uniquement"
+    audit_date: "2026-05-20"
+    categories:
+      - radio_free
+      - radio_core
+    tags:
+      - radio libre
+      - radios libres
+      - community radio
+
+  - id: les_radios_libres
+    name: Les Radios Libres
+    enabled: true
+    kind: rss
+    url: "https://lesradioslibres.wordpress.com/feed/"
+    legal_status: "VALIDÉ PRUDENT — métadonnées uniquement"
+    audit_date: "2026-05-20"
+    categories:
+      - radio_free
+      - radio_core
+    tags:
+      - radios libres
+      - free radio
+      - radio associative
+
+  - id: la_radio_du_futur
+    name: La Radio du Futur
+    enabled: true
+    kind: rss
+    url: "https://radiodufutur.wordpress.com/feed/"
+    legal_status: "VALIDÉ PRUDENT — métadonnées uniquement"
+    audit_date: "2026-05-20"
+    categories:
+      - radio_core
+      - podcast
+    tags:
+      - radio
+      - podcast
+      - radiophonie
+
+  - id: la_lettre_pro
+    name: La Lettre Pro de la Radio
+    enabled: true
+    kind: rss
+    url: "https://www.lalettre.pro/xml/syndication.rss"
+    legal_status: "VALIDÉ STRICT — liens uniquement"
+    audit_date: "2026-05-20"
+    categories:
+      - radio_core
+      - podcast
+    tags:
+      - radio
+      - podcast
+      - broadcasting
+
+  - id: meccsa_radio_audio_studies
+    name: MeCCSA Radio & Audio Studies
+    enabled: true
+    kind: rss
+    url: "https://radiostudiesnetworkreadinggroup.wordpress.com/feed/"
+    legal_status: "VALIDÉ PRUDENT — métadonnées uniquement"
+    audit_date: "2026-05-20"
+    categories:
+      - radio_core
+      - sound_studies
+      - podcast
+    tags:
+      - radio studies
+      - audio studies
+      - podcast studies
+
+  - id: nieman_storyboard
+    name: Nieman Storyboard
+    enabled: true
+    kind: rss
+    url: "https://niemanstoryboard.org/feed/"
+    legal_status: "VALIDÉ PRUDENT — métadonnées uniquement"
+    audit_date: "2026-05-20"
+    categories:
+      - podcast
+    tags:
+      - audio storytelling
+      - narrative journalism
+      - podcast
 
   - id: journal_radio_audio_media
     name: Journal of Radio & Audio Media

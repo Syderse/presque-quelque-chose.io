@@ -384,3 +384,46 @@ Un futur export public doit:
 Prochain chantier recommande: Prompt 17, QA du contrat public et mise a jour de
 la memoire materielle. Ne pas commencer l'export public ni l'integration Hugo
 avant cette QA.
+
+# Legal audit — Antenne radio
+
+Dernier audit : 2026-05-20  
+Objet : sources RSS faciles pour agrégateur public léger sur le site.
+
+## Règle générale retenue
+
+Pour toutes les sources ci-dessous, l’antenne radio ne stocke et n’affiche que :
+
+- `source_name`
+- `title`
+- `published_at`
+- `original_url`
+- `fetched_at`
+- `legal_status`
+- `audit_date`
+
+Champs à ne pas stocker / republier par défaut :
+
+- `summary`
+- `description`
+- `abstract`
+- `content`
+- `content:encoded`
+- extraits longs
+- images reprises depuis la source
+- audio repris depuis la source
+
+Raison : l’objectif est un index de liens, non une republication éditoriale.
+
+## Sources auditées
+
+| Source | Statut | Usage autorisé retenu | Attribution | Résumés / abstracts | URLs consultées | Date |
+|---|---|---|---|---|---|---|
+| Radiomorphoses | VALIDÉ — métadonnées ; contenu sous conditions CC | Titre, date, URL originale. Contenus potentiellement réutilisables sous CC BY-NC-SA 4.0, mais non repris dans l’antenne. | Mentionner Radiomorphoses, auteur si disponible, OpenEdition, URL/DOI. | Ne pas stocker par homogénéité, sauf traitement CC explicite futur. | https://journals.openedition.org/radiomorphoses/?lang=en&page=informations ; https://www.openedition.org/33667?lang=en | 2026-05-20 |
+| Radio Fañch | VALIDÉ PRUDENT — métadonnées uniquement | Titre, date, URL originale. | Mentionner Radio Fañch + lien vers le billet. | Ne pas stocker / republier. Aucune licence ouverte identifiée. | https://radiofanch.blogspot.com/ ; http://radiofanch.blogspot.com/feeds/posts/default?alt=rss ; https://radio5312.rssing.com/chan-34736084/all_p1.html | 2026-05-20 |
+| Les Radios Libres | VALIDÉ PRUDENT — métadonnées uniquement | Titre, date, URL originale. | Mentionner Les Radios Libres + lien vers le billet. | Ne pas stocker / republier. Aucune licence ouverte identifiée. | https://lesradioslibres.wordpress.com/ ; https://lesradioslibres.wordpress.com/about/ ; https://lesradioslibres.wordpress.com/contact/ | 2026-05-20 |
+| La Radio du Futur | VALIDÉ PRUDENT — métadonnées uniquement | Titre, date, URL originale. | Mentionner La Radio du Futur + lien vers le billet. | Ne pas stocker / republier. Aucune licence ouverte identifiée. | https://radiodufutur.wordpress.com/ ; https://radiodufutur.wordpress.com/about/ ; https://radiodufutur.wordpress.com/author/sebastienpoulain/ | 2026-05-20 |
+| La Lettre Pro de la Radio | VALIDÉ STRICT — liens uniquement | Titre, date, URL originale. Le site propose explicitement la syndication sous forme de liste de liens récents. | Mentionner La Lettre Pro de la Radio & du Podcast + lien vers l’article. | Ne pas stocker / republier. Les mentions légales interdisent la reproduction partielle ou totale sur support électronique. | https://www.lalettre.pro/feeds/ ; https://www.lalettre.pro/rgpd/ | 2026-05-20 |
+| MeCCSA Radio & Audio Studies | VALIDÉ PRUDENT — métadonnées uniquement | Titre, date, URL originale. | Mentionner MeCCSA Radio and Audio Studies + lien vers le billet. | Ne pas stocker / republier. Aucune licence ouverte identifiée. | https://www.meccsa.org.uk/networks/radio-studies-section/ ; https://radiostudiesnetworkreadinggroup.wordpress.com/ | 2026-05-20 |
+| Nieman Storyboard | VALIDÉ PRUDENT — métadonnées uniquement | Titre, date, URL originale. | Mentionner Nieman Storyboard + lien vers l’article. | Ne pas stocker / republier. Pas de licence générale ; certains contenus sont sous droits réservés ou reproduits par permission. | https://niemanstoryboard.org/about/ ; https://niemanstoryboard.org/about/subscribe-to-nieman-storyboard/ ; https://niemanstoryboard.org/2016/05/06/turbulent-times/ | 2026-05-20 |
+| Transom | VALIDÉ PRUDENT — métadonnées uniquement | Titre, date, URL originale. Flux retesté : endpoint repéré. | Mentionner Transom + lien vers l’article ; attribution requise en cas de réutilisation. | Ne pas stocker / republier. Les auteurs conservent leurs droits. | https://transom.org/about/about-transom/ ; https://transom.org/about/submit-your-work/ ; https://transom.org/faq/ ; https://transom.org/feed/ | 2026-05-20 |

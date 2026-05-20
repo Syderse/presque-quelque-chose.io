@@ -3,6 +3,8 @@ import sys
 from datetime import datetime, timezone
 from pathlib import Path
 
+import pytest
+
 
 ROOT = Path(__file__).resolve().parents[1]
 sys.path.insert(0, str(ROOT))
@@ -198,6 +200,42 @@ def test_public_export_adds_source_attributions(tmp_path):
     assert {item["attribution_id"] for item in exported["items"]} == {"hal", "sounding_out"}
     assert {item["source_name"] for item in exported["items"]} == {"HAL open archive", "Sounding Out!"}
     assert all(source["attribution_text"].startswith("Source: ") for source in exported["sources"])
+
+
+@pytest.mark.parametrize(
+    ("source_name", "attribution_id", "public_name"),
+    [
+        ("Radiomorphoses", "radiomorphoses", "Radiomorphoses / OpenEdition Journals"),
+        ("Radio Fañch", "radio_fanch", "Radio Fañch"),
+        ("Les Radios Libres", "les_radios_libres", "Les Radios Libres"),
+        ("La Radio du Futur", "la_radio_du_futur", "La Radio du Futur"),
+        ("La Lettre Pro de la Radio", "la_lettre_pro", "La Lettre Pro de la Radio & du Podcast"),
+        ("MeCCSA Radio & Audio Studies", "meccsa_radio_audio_studies", "MeCCSA Radio and Audio Studies"),
+        ("Nieman Storyboard", "nieman_storyboard", "Nieman Storyboard"),
+        ("Transom", "transom", "Transom"),
+    ],
+)
+def test_public_export_maps_legal_audit_2026_05_20_sources(
+    tmp_path,
+    source_name,
+    attribution_id,
+    public_name,
+):
+    db_path = tmp_path / "db.json"
+    output_path = tmp_path / "public" / "index.json"
+    write_db(db_path, [item_payload(source_name=source_name)])
+
+    result = export_public.export_public_json(
+        db_path=db_path,
+        output_path=output_path,
+        generated_at=GENERATED_AT,
+    )
+    exported = json.loads(output_path.read_text(encoding="utf-8"))
+
+    assert result["items_exported"] == 1
+    assert exported["items"][0]["attribution_id"] == attribution_id
+    assert exported["items"][0]["source_name"] == public_name
+    assert exported["sources"][0]["attribution_id"] == attribution_id
 
 
 def test_public_export_uses_doi_url_fallback(tmp_path):

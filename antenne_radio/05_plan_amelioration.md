@@ -291,6 +291,7 @@ Tâches :
 4. Lancer un run local contrôlé avec accès réseau via `make run` pour ingérer les nouveaux flux.
 5. Vérifier `antenne_radio/data/logs/api.log` et `antenne_radio/data/logs/pipeline.log` afin de s'assurer qu'aucun avertissement ou timeout n'est levé.
 6. Régénérer le JSON public via `make export-public` et vérifier l'incrément des items dans `static/antenne-radio/index.json`.
+7. Mettre à jour antenne_radio/01_RESSOURCES_SUIVIES.md en fonctions des sources concrètement ajoutées
 
 Vérification : Les nouveaux flux RSS sont correctement ingérés, normalisés et exportés dans le JSON public. `make test` passe à 100%.
 
