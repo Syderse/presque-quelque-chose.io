@@ -485,4 +485,44 @@ Avant toute action, lance `git status --short`. Relis `docs/AGENTS.md`, `antenne
   - Les exports privés Obsidian et CSL JSON restent strictement locaux et séparés.
   - Pas d'automatisation par cron ou d'auto-commit sur le dépôt Git.
 - **Prochaine étape recommandée** :
-  - Passer au Prompt 9 de la v2 (Revue finale de conformité accessibilité RGAA/WCAG et optimisation mobile) ou valider la publication de la branche.
+  - Passer au Prompt 9 de la v2 (Recette finale, validation et handoff v2) pour geler le périmètre.
+
+## 2026-05-20 - Prompt 9 v2 Recette finale, validation et handoff de la v2
+
+- **Objectif du chantier** : Effectuer la recette technique complète de la v2 de l'antenne radio, s'assurer de l'absence totale de fuites de données sensibles, geler le périmètre et documenter le potentiel académique de la v3.
+- **Fichiers modifiés** :
+  - `antenne_radio/README.md`
+  - `antenne_radio/01_RESSOURCES_SUIVIES.md`
+  - `antenne_radio/LEGAL_AUDIT.md`
+  - `docs/CHANTIERS.md`
+  - `antenne_radio/codex_memoire_materielle.md` (ce fichier)
+- **Fichiers générés ou rafraîchis** :
+  - `static/antenne-radio/index.json`
+  - Dossier `public/` (build Hugo complet)
+- **Commandes lancées** :
+  - `make test` (validation des 81 tests unitaires)
+  - `make run` (exécution complète du pipeline d'ingestion et normalisation)
+  - `make export-public` (génération de l'index public filtré)
+  - `pnpm exec hugo --gc --minify --cleanDestinationDir` (build de production Hugo)
+- **Résultats réels** :
+  - Base de données consolidée à 283 items (`to_read: 141`, `candidate: 86`, `ignored: 56`).
+  - Index public whitelisté contenant 227 items stables conformes à la spécification `antenne-radio-public-v0`.
+  - Build Hugo de production réussi à 100% générant 83 pages statiques sans aucune erreur.
+  - Absence totale de fuite réelle d'informations sensibles (champs privés, secrets, logs, abstracts ou chemins locaux). Les seuls motifs correspondants sont des faux positifs validés (`LoRaWAN` pour `raw` et `Score My Engagement` pour `score`).
+- **Limites restantes** :
+  - Connecteur Crossref inactif par défaut (`enabled: false`) en attente de configuration `CROSSREF_MAILTO`.
+  - Pas d'automatisation (cron ou auto-commit).
+  - Pas de scraping HTML des pages d'articles.
+- **Prochaine étape recommandée** :
+  - Procéder au merge de la v2 vers la branche principale, puis initier le plan de la v3 académique.
+
+### Planification de la v3 académique
+
+Pour le chantier futur d'intégration académique v3, la séquence de 6 prompts progressifs a été planifiée et documentée (voir [06_plan_v3_academique.md](file:///Users/mathieu/Documents/presque-quelque-chose.io/antenne_radio/06_plan_v3_academique.md)) :
+1. **Prompt 1 — Audit légal des sources universitaires** : Analyse de conformité juridique et conditions d'usage pour DOAJ, OpenEdition, CAIRN, Persée.
+2. **Prompt 2 — Ingestion OpenAlex ciblée et polie** : Connecteur d'API REST robuste avec Polite Pool (`mailto`) et restriction conceptuelle stricte.
+3. **Prompt 3 — Ingestion DOAJ et Persée** : Intégration de DOAJ (REST) et moissonneur XML natif OAI-PMH pour Persée, avec distinction des dates de publication réelles.
+4. **Prompt 4 — Ingestion CAIRN et catalogue OpenEdition OPML** : Sélection fine de revues et parseur OPML en XML natif.
+5. **Prompt 5 — Qualification Active et Dédoublonnage inter-sources** : Rejet automatique du bruit technique à la volée (< score 2) et fusion par DOI/titres préservant les identifiants stables.
+6. **Prompt 6 — Ingestion globale, recette & handoff final v3** : Orchestration, exécution complète avec garde-fous d'activation temporaire pour test, et documentation finale.
+

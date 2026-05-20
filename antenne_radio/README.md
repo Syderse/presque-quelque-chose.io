@@ -176,7 +176,7 @@ Pour le générer volontairement :
 make export-public
 ```
 
-Cette commande écrit `../static/antenne-radio/index.json`. Elle ne doit publier que cette whitelist par item :
+Cette commande écrit `../static/antenne-radio/index.json` en respectant la version de schéma `antenne-radio-public-v0`. Elle ne doit publier que cette whitelist par item :
 
 - `id`
 - `title`

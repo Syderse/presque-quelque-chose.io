@@ -1,5 +1,87 @@
 [
   {
+    "abstract": "Le Sales House Report 2026-1 du JNLR mesure l’audience radio irlandaise sur la période d’avril 2025 à mars 2026. Le rapport indique que 3.46 millions d’adultes écoutent la radio chaque jour, 3.965 millions chaque semaine, et que 529 000 personnes utilisent quotidiennement une plateforme digitale...",
+    "authors": [
+      "Brulhatour"
+    ],
+    "discovered_at": "2026-05-20T05:06:00.150996Z",
+    "doi": null,
+    "id": "url:4040ef05859b4c05236a",
+    "keywords_matched": [
+      "radio"
+    ],
+    "language": "und",
+    "negative_keywords_matched": [],
+    "published_at": "2026-05-20T04:50:00Z",
+    "raw": {
+      "author": "Brulhatour",
+      "author_detail": {
+        "name": "Brulhatour"
+      },
+      "authors": [
+        {
+          "name": "Brulhatour"
+        }
+      ],
+      "guidislink": false,
+      "id": "tag:https://www.lalettre.pro,2026:rss-96619304",
+      "language": "fr",
+      "link": "https://www.lalettre.pro/En-Irlande-la-radio-reunit-3-46-millions-d-auditeurs-quotidiens_a41163.html",
+      "links": [
+        {
+          "href": "https://www.lalettre.pro/En-Irlande-la-radio-reunit-3-46-millions-d-auditeurs-quotidiens_a41163.html",
+          "rel": "alternate",
+          "type": "text/html"
+        }
+      ],
+      "photo_imgsrc": "https://www.lalettre.pro/photo/art/imagette/96619304-67349396.jpg",
+      "published": "Wed, 20 May 2026 06:50:00 +0200",
+      "published_parsed": [
+        2026,
+        5,
+        20,
+        4,
+        50,
+        0,
+        2,
+        140,
+        0
+      ],
+      "summary": "Le Sales House Report 2026-1 du JNLR mesure l’audience radio irlandaise sur la période d’avril 2025 à mars 2026. Le rapport indique que 3.46 millions d’adultes écoutent la radio chaque jour, 3.965 millions chaque semaine, et que 529 000 personnes utilisent quotidiennement une plateforme digitale...",
+      "summary_detail": {
+        "base": "https://www.lalettre.pro/xml/syndication.rss",
+        "language": null,
+        "type": "text/html",
+        "value": "Le Sales House Report 2026-1 du JNLR mesure l’audience radio irlandaise sur la période d’avril 2025 à mars 2026. Le rapport indique que 3.46 millions d’adultes écoutent la radio chaque jour, 3.965 millions chaque semaine, et que 529 000 personnes utilisent quotidiennement une plateforme digitale..."
+      },
+      "tags": [
+        {
+          "label": null,
+          "scheme": null,
+          "term": "International"
+        }
+      ],
+      "title": "En Irlande, la radio réunit 3.46 millions d’auditeurs quotidiens",
+      "title_detail": {
+        "base": "https://www.lalettre.pro/xml/syndication.rss",
+        "language": null,
+        "type": "text/plain",
+        "value": "En Irlande, la radio réunit 3.46 millions d’auditeurs quotidiens"
+      }
+    },
+    "relevance_score": 9.0,
+    "score_explanation": "+6 radio dans title (radio_core: 3 x 2); +3 radio dans abstract (radio_core: 3 x 1); score final 9; statut to_read car score 9 >= 6",
+    "source_api": "rss",
+    "source_feed": "https://www.lalettre.pro/xml/syndication.rss",
+    "source_name": "La Lettre Pro de la Radio",
+    "source_type": "blog",
+    "status": "to_read",
+    "tags": [],
+    "title": "En Irlande, la radio réunit 3.46 millions d’auditeurs quotidiens",
+    "title_original": null,
+    "url": "https://www.lalettre.pro/En-Irlande-la-radio-reunit-3-46-millions-d-auditeurs-quotidiens_a41163.html"
+  },
+  {
     "abstract": "Ce mercredi 20 mai, de 10h à 15h, France Culture et SNCF Gares & Connexions organiseront une nouvelle étape de \"La Dictée En Gare\" dans le hall de la gare de Saint-Quentin, avec le soutien de la ville. Cette troisième dictée en gare de l’année sera consacrée à l’Art déco et au patrimoine remarquable de Saint-Quentin. <div style=\"text-align: center; padding-bottom: 1em;\"> <img alt=\"France Culture poursuit \" src=\"https://www.lalettre.pro/photo/art/default/96620870-67350425.jpg?v=1779120015\" /> </div> <div> </div> <br style=\"clear: both;\" /> <div> France Culture et SNCF Gares &amp; Connexions poursuivent le Tour de France 2026 de \"La Dictée En Gare\" avec une nouvelle étape prévue mercredi 20 mai dans le hall de la gare de Saint-Quentin. Organisée de 10h à 15h, avec le soutien de la ville de Saint-Quentin, cette édition picarde sera la troisième dictée en gare de l’année. Elle mettra en avant le patrimoine remarquable de Saint-Quentin à travers une thématique consacrée à l’Art déco, dont la ville constitue l’un des plus beaux témoignages en France. <br /> Les participants seront invités à travailler sur des textes issus de la littérature française, sélectionnés en écho au style Art déco qui fait la renommée de Saint-Quentin. Les dictées seront ouvertes à tous, sans réservation, et animées par Rachid Santaki. Cinq sessions sont programmées au cours de la journée, à 10h, 11h, 12h, 14h et 15h. </div> <br style=\"clear: both;\" />",
     "authors": [
       "Brulhatour"

@@ -1,6 +1,6 @@
 # Ressources suivies par l'antenne radio
 
-Dernière vérification : 2026-05-20 10:15 JST avec `make run`.
+Dernière vérification : 2026-05-20 14:06 JST avec `make run` et `make export-public` (recette de recette v2 finalisée).
 
 Source technique : `config/sources.yaml`. Ce fichier est la liste humaine à tenir à jour quand une source est ajoutée, désactivée ou modifiée.
 
@@ -23,9 +23,9 @@ Source technique : `config/sources.yaml`. Ce fichier est la liste humaine à ten
 ## Derniers compteurs publics
 
 - `data/raw/rss_latest.json` : 239 entrées RSS actives, 0 erreur au run final.
-- `data/normalized/db.json` : 282 items, dont `to_read=140`, `candidate=86`, `ignored=56`.
-- `static/antenne-radio/index.json` : 226 items publics whitelisted après `make export-public`.
-- Répartition publique des nouvelles sources : Radiomorphoses 9, Radio Fañch 21, Les Radios Libres 9, La Radio du Futur 4, La Lettre Pro de la Radio 14, MeCCSA Radio and Audio Studies 9, Nieman Storyboard 8.
+- `data/normalized/db.json` : 283 items, dont `to_read=141`, `candidate=86`, `ignored=56`.
+- `static/antenne-radio/index.json` : 227 items publics whitelisted après `make export-public`.
+- Répartition publique des nouvelles sources : Radiomorphoses 9, Radio Fañch 21, Les Radios Libres 9, La Radio du Futur 4, La Lettre Pro de la Radio 15, MeCCSA Radio and Audio Studies 9, Nieman Storyboard 8.
 
 ## Paramètres HAL actuels
 

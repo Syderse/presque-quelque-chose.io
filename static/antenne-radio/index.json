@@ -1,7 +1,19 @@
 {
-  "generated_at": "2026-05-20T01:15:39Z",
-  "item_count": 226,
+  "generated_at": "2026-05-20T05:10:59Z",
+  "item_count": 227,
   "items": [
+    {
+      "attribution_id": "la_lettre_pro",
+      "doi": null,
+      "id": "url:4040ef05859b4c05236a",
+      "language": "und",
+      "published_at": "2026-05-20T04:50:00Z",
+      "source_family": "rss",
+      "source_name": "La Lettre Pro de la Radio & du Podcast",
+      "source_type": "blog",
+      "title": "En Irlande, la radio réunit 3.46 millions d’auditeurs quotidiens",
+      "url": "https://www.lalettre.pro/En-Irlande-la-radio-reunit-3-46-millions-d-auditeurs-quotidiens_a41163.html"
+    },
     {
       "attribution_id": "la_lettre_pro",
       "doi": null,

@@ -2,6 +2,23 @@
 
 ## Antenne radio
 
+### Phase v2 (Recette de Fermeture) [TERMINÉ]
+
+La v2 de l'antenne radio est officiellement close et gelée avec les caractéristiques suivantes :
+- **Navigation & Template Néo-brutaliste** : Interface web interactive, responsive et intégrée harmonieusement au site avec un design néo-brutaliste premium.
+- **Intégration & Recueil RSS/HAL** : 8 flux RSS actifs et conformes + connecteur HAL pour les recherches académiques (limité à 20 entrées par moissonnage).
+- **Filtres en mémoire & Deep-Linking** : Tri, filtrage thématique temps réel ultra-rapide et persistance de l'état de filtrage via les paramètres d'URL (deep-linking).
+- **Validation Juridique Stricte** : Audit légal complet (voir [LEGAL_AUDIT.md](file:///Users/mathieu/Documents/presque-quelque-chose.io/antenne_radio/LEGAL_AUDIT.md)) validant une whitelist publique de métadonnées pour éviter toute fuite ou republication de contenus sous droits.
+- **Tests d'intégration & Anti-fuite** : Pipeline de validation robuste (`make test`, `make run`, `make export-public`) assurant l'intégrité de la base de données et l'absence totale de fuites réelles dans l'index public (`static/antenne-radio/index.json`) et les pages web générées (`public/antenne-radio/`).
+
+### Phase v3 académique (Reporté / À venir)
+
+Les chantiers suivants sont différés pour la phase académique v3 :
+- **Intégration de nouvelles sources académiques** : OpenAlex, DOAJ, Cairn, etc.
+- **Dédoublonnage inter-sources** : Algorithme avancé pour éliminer les doublons d'articles indexés simultanément via HAL, Crossref et les flux RSS.
+- **Activation du connecteur Crossref** : Configuration sécurisée de `CROSSREF_MAILTO` et traitement des rate-limits polis.
+- **Automatisation avancée** : Pipeline d'auto-ingestion planifié sans risque de pollution ou fuite.
+
 ### Liste de ressources à récolter
 
 - Radiomorphoses
@@ -18,6 +35,7 @@
 - AIR, Third Coast, Nieman Storyboard / Audio Danger
 - SchooP
 - Syntone
+
 
 ## Autres
 
