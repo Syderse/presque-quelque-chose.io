@@ -1,0 +1,18 @@
+# Python cache and environment
+__pycache__/
+*.pyc
+.pytest_cache/
+.venv/
+
+# Antenne Radio Data (Private / Cache / Intermediate)
+data/raw/*.json
+data/normalized/*.json
+data/logs/*.log
+data/exports/*.md
+data/exports/*.json
+
+# Keep gitkeep tracked
+!data/raw/.gitkeep
+!data/normalized/.gitkeep
+!data/logs/.gitkeep
+!data/exports/.gitkeep
