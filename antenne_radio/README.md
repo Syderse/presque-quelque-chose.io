@@ -31,7 +31,27 @@ Par défaut, l'antenne ne fait pas ceci :
 - pas de résumé LLM ;
 - pas d'écriture automatique dans Zotero ou Obsidian ;
 - pas d'appels API live sans adresse de contact locale (`CROSSREF_MAILTO` / `OPENALEX_MAILTO`) ;
-- pas d'OpenAlex (en cours de conception en V3), ni de CiNii, NDL ou J-STAGE (reportés à la V4 japonaise) par défaut.
+- pas d'OpenAlex live par défaut, ni de CiNii, NDL ou J-STAGE (reportés à la V4 japonaise).
+
+## État de clôture V3 académique
+
+Recette locale finale du 2026-05-21 13:47 JST :
+
+- `make test` : 127 tests passent.
+- `make run` : pipeline terminé avec `failed_steps=none`, uniquement sur les sources actives validées, avec `CROSSREF_MAILTO` fourni en variable d'environnement locale non inscrite dans le dépôt.
+- `make export-public` : 239 items publics générés.
+- `pnpm run build` depuis la racine du dépôt : build Hugo réussi, 83 pages.
+
+Compteurs réels après recette :
+
+- `data/raw/rss_latest.json` : 239 entrées RSS/Atom, 10 sources actives.
+- `data/raw/hal_latest.json` : 20 documents HAL récupérés, 0 erreur.
+- `data/raw/crossref_latest.json` : 20 notices Crossref récupérées, 1 revue active, 0 erreur.
+- `data/raw/openalex_latest.json` : 0 item, OpenAlex désactivé par défaut.
+- `data/normalized/db.json` : 295 items (`to_read=150`, `candidate=89`, `ignored=56`), 0 doublon DOI détecté.
+- `static/antenne-radio/index.json` : 239 items publics sous schéma `antenne-radio-public-v0`.
+
+La V3 académique est donc gelée sur un périmètre sobre : RSS/Atom, HAL, Crossref borné et garde-foué, OpenAlex configuré mais inactif, venues prioritaires documentées mais non activées tant qu'elles n'ont pas leur propre recette inspectée. La littérature japonaise (`CiNii`, `NDL`, `J-STAGE`) reste hors V3 et relève d'une V4 séparée.
 
 ## Philosophie de maintenance et doctrine de données
 

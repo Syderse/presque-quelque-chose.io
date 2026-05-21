@@ -8,16 +8,27 @@ La v2 de l'antenne radio est officiellement close et gelée avec les caractéris
 - **Navigation & Template Néo-brutaliste** : Interface web interactive, responsive et intégrée harmonieusement au site avec un design néo-brutaliste premium.
 - **Intégration & Recueil RSS/HAL** : 8 flux RSS actifs et conformes + connecteur HAL pour les recherches académiques (limité à 20 entrées par moissonnage).
 - **Filtres en mémoire & Deep-Linking** : Tri, filtrage thématique temps réel ultra-rapide et persistance de l'état de filtrage via les paramètres d'URL (deep-linking).
-- **Validation Juridique Stricte** : Audit légal complet (voir [LEGAL_AUDIT.md](file:///Users/mathieu/Documents/presque-quelque-chose.io/antenne_radio/LEGAL_AUDIT.md)) validant une whitelist publique de métadonnées pour éviter toute fuite ou republication de contenus sous droits.
+- **Validation Juridique Stricte** : Audit légal complet (voir `antenne_radio/LEGAL_AUDIT.md`) validant une whitelist publique de métadonnées pour éviter toute fuite ou republication de contenus sous droits.
 - **Tests d'intégration & Anti-fuite** : Pipeline de validation robuste (`make test`, `make run`, `make export-public`) assurant l'intégrité de la base de données et l'absence totale de fuites réelles dans l'index public (`static/antenne-radio/index.json`) et les pages web générées (`public/antenne-radio/`).
 
-### Phase v3 académique (Reporté / À venir)
+### Phase v3 académique (Recette de fermeture) [TERMINÉ]
 
-Les chantiers suivants sont différés pour la phase académique v3 :
-- **Intégration de nouvelles sources académiques** : OpenAlex, DOAJ, Cairn, etc.
-- **Dédoublonnage inter-sources** : Algorithme avancé pour éliminer les doublons d'articles indexés simultanément via HAL, Crossref et les flux RSS.
-- **Activation du connecteur Crossref** : Configuration sécurisée de `CROSSREF_MAILTO` et traitement des rate-limits polis.
-- **Automatisation avancée** : Pipeline d'auto-ingestion planifié sans risque de pollution ou fuite.
+La v3 académique est close localement au 2026-05-21 avec les caractéristiques suivantes :
+- **Crossref borné** : connecteur activé avec garde-fou `CROSSREF_MAILTO`, une seule revue active (`Journal of Radio & Audio Media`), `rows: 20`, délai poli, erreurs redacted.
+- **Déduplication DOI** : fusion inter-sources robuste sans écraser les statuts humains (`to_read`, `ignored`, `exported`) et 0 doublon DOI détecté dans la recette finale.
+- **OpenAlex prêt mais inactif** : connecteur, normalisation, scoring privé et tests en place ; `enabled: false`, aucun abstract reconstruit, aucun score ou keyword public.
+- **Venues prioritaires clarifiées** : Radio Journal, Sound Studies, Journal of Sonic Studies et Resonance documentés comme candidats inactifs ; IAMCR/ECREA reportés faute de flux officiel stable spécifique.
+- **Recette finale** : `make test` OK (127 tests), `make run` OK, `make export-public` à 239 items, build Hugo OK (83 pages), scans anti-fuite validés.
+
+### Phase v4 japonaise (À part / Plus tard)
+
+Périmètre explicitement séparé de la v3 :
+- CiNii ;
+- NDL ;
+- J-STAGE ;
+- littérature japonaise sur mini-FM, Tetsuo Kogawa, micro-radios et médias sonores japonais.
+
+Avant toute implémentation V4 : refaire un audit légal et technique dédié, vérifier les APIs et conditions d'attribution, définir une whitelist publique, écrire des tests anti-fuite, puis commencer par une recette très limitée et sans cron.
 
 ### Liste de ressources à récolter
 

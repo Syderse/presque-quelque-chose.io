@@ -43,6 +43,12 @@ Le verdict global recommandé est :
 - **republication de contenus, d’extraits longs, d’images, de PDF, d’audio, de transcriptions : hors périmètre par défaut** ;
 - **sources ambiguës ou commercialement sensibles : reportées, strictement limitées, ou exclues du pipeline automatisé**.
 
+### Note de clôture V3 académique
+
+Au gel V3 du 2026-05-21, l'implémentation réelle est plus restrictive que plusieurs recommandations prospectives de cet audit : l'export public Hugo reste limité à la whitelist technique `id`, `title`, `url`, `doi`, `published_at`, `source_name`, `source_type`, `language`, `source_family`, `attribution_id`.
+
+Crossref est activé seulement avec garde-fou local (`CROSSREF_MAILTO` obligatoire, `rows: 20`, une revue active). OpenAlex est configuré, testé et documenté, mais désactivé par défaut. Les venues prioritaires ajoutées en V3 restent inactives tant qu'une recette limitée par source n'a pas été inspectée. La littérature japonaise (`CiNii`, `NDL`, `J-STAGE`) est explicitement reportée dans une V4 séparée et ne doit pas être traitée comme active dans la configuration V3.
+
 ## Politique générale du projet
 
 ### Politique générale du projet
@@ -325,9 +331,9 @@ La présence d’une réflexion déjà poussée sur Hugo dans vos notes de dép�
 | HAL | archive ouverte | API / OAI-PMH | VALIDÉ PRUDENT | métadonnées bibliographiques | `active: true` |
 | Crossref | API bibliographique | API | VALIDÉ PRUDENT | métadonnées bibliographiques | `active: true` |
 | OpenAlex | API bibliographique | API Works | VALIDÉ PRUDENT | métadonnées bibliographiques strictes | `active: false` jusqu'à recette live |
-| CiNii | bibliographique | API / pages | VALIDÉ PRUDENT | métadonnées bibliographiques | `active: true` |
-| NDL | catalogue | API / SRU / pages | VALIDÉ PRUDENT | notices | `active: true` |
-| J-STAGE | revues académiques | pages / API selon cas | VALIDÉ PRUDENT | métadonnées bibliographiques | `active: true` |
+| CiNii | bibliographique | API / pages | VALIDÉ PRUDENT | métadonnées bibliographiques | reporté V4 japonaise, non actif en V3 |
+| NDL | catalogue | API / SRU / pages | VALIDÉ PRUDENT | notices | reporté V4 japonaise, non actif en V3 |
+| J-STAGE | revues académiques | pages / API selon cas | VALIDÉ PRUDENT | métadonnées bibliographiques | reporté V4 japonaise, non actif en V3 |
 | Cairn | plateforme éditoriale | pages / DOI / enrichissement secondaire | VALIDÉ STRICT | liens + métadonnées minimales | `active: true` |
 | Persée | portail académique | API / OAI / pages | VALIDÉ PRUDENT | métadonnées bibliographiques | `active: true` |
 | OpenEdition Books | livres académiques | pages / métadonnées / OAI selon cas | VALIDÉ PRUDENT | métadonnées bibliographiques | `active: true` |
@@ -1177,9 +1183,9 @@ Cache obligatoire, 1 requête par seconde maximum pour éviter de surcharger les
 Faible. API documentée pour un accès international.
 
 **Décision pratique pour `sources.yaml` :**
-- `active: true`
-- raison : recherche pionnière sur la mini-FM japonaise indispensable à la cartographie
-- notes d’implémentation : Respecter scrupuleusement la clause d'attribution contractuelle au NII.
+- reporté V4 japonaise ; aucune entrée CiNii ne doit être ajoutée à `sources.yaml` en V3.
+- raison : recherche pionnière sur la mini-FM japonaise indispensable à la cartographie, mais nécessite un audit dédié de langue, API, attribution NII, encodage, rate limit et contrat public.
+- notes d’implémentation V4 : respecter scrupuleusement la clause d'attribution contractuelle au NII, démarrer par métadonnées minimales et conserver les abstracts/rich data hors export public.
 
 ### NDL
 
@@ -1224,9 +1230,9 @@ Cadence modérée, cache local obligatoire.
 Faible.
 
 **Décision pratique pour `sources.yaml` :**
-- `active: true`
-- raison : ressources nationales japonaises exhaustives et officielles
-- notes d’implémentation : `sru_xml_parsing: true`
+- reporté V4 japonaise ; aucune entrée NDL ne doit être ajoutée à `sources.yaml` en V3.
+- raison : ressources nationales japonaises exhaustives et officielles, mais audit SRU/API, notices, translittération et attribution à faire dans une conversation séparée.
+- notes d’implémentation V4 : `sru_xml_parsing: true`, cache local, cadence modérée, métadonnées minimales seulement en public.
 
 ### J-STAGE
 
@@ -1272,9 +1278,9 @@ Cadence académique normale.
 Faible.
 
 **Décision pratique pour `sources.yaml` :**
-- `active: true`
-- raison : accès ouvert aux publications scientifiques japonaises
-- notes d’implémentation : `meta_only: true`
+- reporté V4 japonaise ; aucune entrée J-STAGE ne doit être ajoutée à `sources.yaml` en V3.
+- raison : accès ouvert aux publications scientifiques japonaises, mais la sélection de revues, l'API/RSS disponible et les conditions de réutilisation doivent être auditées avant implémentation.
+- notes d’implémentation V4 : `meta_only: true`, aucune récupération PDF, aucun abstract public, scan anti-fuite obligatoire.
 
 ### Cairn
 

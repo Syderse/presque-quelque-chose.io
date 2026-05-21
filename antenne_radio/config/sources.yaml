@@ -224,6 +224,48 @@ crossref:
         - radio_studies
         - podcast_studies
 
+    - id: radio_journal
+      name: "Radio Journal: International Studies in Broadcast & Audio Media"
+      enabled: false
+      issn:
+        - "1476-4504"
+        - "2040-1388"
+      legal_status: "CANDIDAT — métadonnées Crossref uniquement, run non inspecté"
+      audit_date: "2026-05-21"
+      note: "Venue prioritaire Prompt 3.1 ; ajoutée désactivée jusqu'à recette Crossref limitée par ISSN."
+      tags:
+        - academic_watch
+        - radio_studies
+        - podcast_studies
+        - sound_studies
+
+    - id: sound_studies_journal
+      name: "Sound Studies: An Interdisciplinary Journal"
+      enabled: false
+      issn:
+        - "2055-1940"
+        - "2055-1959"
+      legal_status: "CANDIDAT — métadonnées Crossref uniquement, run non inspecté"
+      audit_date: "2026-05-21"
+      note: "Venue prioritaire distincte de Sounding Out! ; ajoutée désactivée jusqu'à recette Crossref limitée par ISSN."
+      tags:
+        - academic_watch
+        - sound_studies
+        - sonic_media
+
+    - id: resonance_journal
+      name: "Resonance: The Journal of Sound and Culture"
+      enabled: false
+      issn:
+        - "2688-867X"
+      legal_status: "CANDIDAT — métadonnées Crossref uniquement, run non inspecté"
+      audit_date: "2026-05-21"
+      note: "Venue prioritaire UC Press ; ajoutée désactivée jusqu'à recette Crossref limitée par ISSN."
+      tags:
+        - academic_watch
+        - sound_studies
+        - sound_art
+
 openalex:
   enabled: false
   name: OpenAlex targeted radio/audio works
@@ -324,3 +366,15 @@ openalex:
       tags:
         - academic_watch
         - radio_free
+
+    - id: journal_sonic_studies_venue
+      label: Journal of Sonic Studies
+      enabled: false
+      filters:
+        primary_location.source.issn: "2212-6252"
+      sort: "publication_date:desc"
+      note: "Venue prioritaire Prompt 3.1 ; OpenAlex par ISSN, désactivé jusqu'à recette live inspectée."
+      tags:
+        - academic_watch
+        - sound_studies
+        - sonic_media

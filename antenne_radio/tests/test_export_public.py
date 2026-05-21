@@ -279,6 +279,69 @@ def test_public_export_maps_legal_audit_2026_05_20_sources(
     assert exported["sources"][0]["attribution_id"] == attribution_id
 
 
+@pytest.mark.parametrize(
+    ("source_name", "attribution_id", "public_name", "source_family"),
+    [
+        (
+            "Radio Journal: International Studies in Broadcast & Audio Media",
+            "radio_journal",
+            "Radio Journal: International Studies in Broadcast & Audio Media",
+            "crossref",
+        ),
+        (
+            "Radio Journal:International Studies in Broadcast & Audio Media",
+            "radio_journal",
+            "Radio Journal: International Studies in Broadcast & Audio Media",
+            "crossref",
+        ),
+        (
+            "Sound Studies",
+            "sound_studies_journal",
+            "Sound Studies: An Interdisciplinary Journal",
+            "crossref",
+        ),
+        (
+            "Journal of Sonic Studies",
+            "journal_sonic_studies",
+            "Journal of Sonic Studies",
+            "openalex",
+        ),
+        (
+            "Resonance The Journal of Sound and Culture",
+            "resonance_journal",
+            "Resonance: The Journal of Sound and Culture",
+            "crossref",
+        ),
+    ],
+)
+def test_public_export_maps_priority_venue_candidates(
+    tmp_path,
+    source_name,
+    attribution_id,
+    public_name,
+    source_family,
+):
+    db_path = tmp_path / "db.json"
+    output_path = tmp_path / "public" / "index.json"
+    write_db(db_path, [item_payload(source_name=source_name, source_type=SourceType.journal_article.value)])
+
+    result = export_public.export_public_json(
+        db_path=db_path,
+        output_path=output_path,
+        generated_at=GENERATED_AT,
+    )
+    exported = json.loads(output_path.read_text(encoding="utf-8"))
+    public_item = exported["items"][0]
+
+    assert result["items_exported"] == 1
+    assert set(public_item) == PUBLIC_ITEM_KEYS
+    assert public_item["attribution_id"] == attribution_id
+    assert public_item["source_name"] == public_name
+    assert public_item["source_family"] == source_family
+    assert exported["sources"][0]["attribution_id"] == attribution_id
+    assert forbidden_keys(exported) == set()
+
+
 def test_public_export_uses_doi_url_fallback(tmp_path):
     db_path = tmp_path / "db.json"
     output_path = tmp_path / "public" / "index.json"
@@ -428,4 +491,3 @@ def test_public_export_anti_leak_reinforced(tmp_path):
     assert "leak-tag" not in content
     assert "private explanation" not in content
     assert "_merged_sources" not in content
-

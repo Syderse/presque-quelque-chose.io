@@ -1,7 +1,79 @@
 {
-  "generated_at": "2026-05-20T10:19:26Z",
-  "item_count": 233,
+  "generated_at": "2026-05-21T04:47:17Z",
+  "item_count": 239,
   "items": [
+    {
+      "attribution_id": "la_lettre_pro",
+      "doi": null,
+      "id": "url:d70e1c8011473f6c1ac7",
+      "language": "und",
+      "published_at": "2026-05-21T04:40:00Z",
+      "source_family": "rss",
+      "source_name": "La Lettre Pro de la Radio & du Podcast",
+      "source_type": "blog",
+      "title": "La publicité DAB+ embarquée s’installe sur les écrans radio des véhicules",
+      "url": "https://www.lalettre.pro/La-publicite-DAB-embarquee-s-installe-sur-les-ecrans-radio-des-vehicules_a41180.html"
+    },
+    {
+      "attribution_id": "la_lettre_pro",
+      "doi": null,
+      "id": "url:c62ff95d0b95d2610853",
+      "language": "und",
+      "published_at": "2026-05-21T04:30:00Z",
+      "source_family": "rss",
+      "source_name": "La Lettre Pro de la Radio & du Podcast",
+      "source_type": "blog",
+      "title": "INSIGHT by La Lettre Pro de la Radio — Avril 2026",
+      "url": "https://www.lalettre.pro/INSIGHT-by-La-Lettre-Pro-de-la-Radio-—-Avril-2026_a41009.html"
+    },
+    {
+      "attribution_id": "la_lettre_pro",
+      "doi": null,
+      "id": "url:5f9a387eb6cbed1865d0",
+      "language": "und",
+      "published_at": "2026-05-21T04:30:00Z",
+      "source_family": "rss",
+      "source_name": "La Lettre Pro de la Radio & du Podcast",
+      "source_type": "blog",
+      "title": "L'INSIGHT s'installe avec RCS Europe",
+      "url": "https://www.lalettre.pro/L-INSIGHT-s-installe-avec-RCS-Europe_a41171.html"
+    },
+    {
+      "attribution_id": "la_lettre_pro",
+      "doi": null,
+      "id": "url:7b771d32d0cfd6b47ac7",
+      "language": "und",
+      "published_at": "2026-05-20T14:45:00Z",
+      "source_family": "rss",
+      "source_name": "La Lettre Pro de la Radio & du Podcast",
+      "source_type": "blog",
+      "title": "L’Alliance de la Radio alerte sur les effets concurrentiels du plan de bascule de Radio France",
+      "url": "https://www.lalettre.pro/L-Alliance-de-la-Radio-alerte-sur-les-effets-concurrentiels-du-plan-de-bascule-de-Radio-France_a41168.html"
+    },
+    {
+      "attribution_id": "la_lettre_pro",
+      "doi": null,
+      "id": "url:4d6209a252b39b6522ee",
+      "language": "und",
+      "published_at": "2026-05-20T11:20:00Z",
+      "source_family": "rss",
+      "source_name": "La Lettre Pro de la Radio & du Podcast",
+      "source_type": "blog",
+      "title": "L’UER appelle Bruxelles à protéger l’accès direct à la radio dans les véhicules",
+      "url": "https://www.lalettre.pro/L-UER-appelle-Bruxelles-a-proteger-l-acces-direct-a-la-radio-dans-les-vehicules_a41174.html"
+    },
+    {
+      "attribution_id": "la_lettre_pro",
+      "doi": null,
+      "id": "url:21da85c25357f70f9e5c",
+      "language": "und",
+      "published_at": "2026-05-20T10:30:00Z",
+      "source_family": "rss",
+      "source_name": "La Lettre Pro de la Radio & du Podcast",
+      "source_type": "blog",
+      "title": "iHeartMedia affiche un chiffre d’affaires en hausse de 9.6% au premier trimestre 2026",
+      "url": "https://www.lalettre.pro/iHeartMedia-affiche-un-chiffre-d-affaires-en-hausse-de-9-6-au-premier-trimestre-2026_a41159.html"
+    },
     {
       "attribution_id": "la_lettre_pro",
       "doi": null,

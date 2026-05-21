@@ -183,6 +183,58 @@ def test_build_params_applies_window_select_and_noise_exclusions(tmp_path):
     assert params["sort"] == "relevance_score:desc"
 
 
+def test_build_params_supports_profile_level_venue_filters_without_search(tmp_path):
+    config = yaml.safe_load(
+        write_config(
+            tmp_path,
+            profiles=[
+                {
+                    "id": "journal_sonic_studies_venue",
+                    "label": "Journal of Sonic Studies",
+                    "filters": {"primary_location.source.issn": "2212-6252"},
+                    "sort": "publication_date:desc",
+                }
+            ],
+        ).read_text(encoding="utf-8")
+    )["openalex"]
+    params = ingest_openalex.build_params(
+        config,
+        config["profiles"][0],
+        mailto="radio@example.org",
+        page=1,
+        today=date(2026, 5, 21),
+    )
+
+    assert "search" not in params
+    assert "primary_location.source.issn:2212-6252" in params["filter"]
+    assert params["sort"] == "publication_date:desc"
+
+
+def test_selected_profiles_include_filter_only_profiles_and_ignore_disabled(tmp_path):
+    config = yaml.safe_load(
+        write_config(
+            tmp_path,
+            profiles=[
+                {
+                    "id": "journal_sonic_studies_venue",
+                    "label": "Journal of Sonic Studies",
+                    "filters": {"primary_location.source.issn": "2212-6252"},
+                },
+                {
+                    "id": "disabled_radio_journal",
+                    "label": "Radio Journal",
+                    "enabled": False,
+                    "search": '"Radio Journal"',
+                },
+            ],
+        ).read_text(encoding="utf-8")
+    )["openalex"]
+
+    selected = ingest_openalex._selected_profiles(config)
+
+    assert [profile["id"] for profile in selected] == ["journal_sonic_studies_venue"]
+
+
 def test_ingest_openalex_uses_profiles_and_respects_volume_limits(tmp_path):
     config_path = write_config(tmp_path)
     output_path = tmp_path / "data" / "raw" / "openalex_latest.json"

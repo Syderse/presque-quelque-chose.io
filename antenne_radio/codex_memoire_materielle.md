@@ -341,3 +341,179 @@
 - **Prochaine étape recommandée** :
   - Conversation fraîche Prompt 2.4 : activation temporaire OpenAlex avec `OPENALEX_MAILTO` local, run ultra-limité (1 profil, 1 page, `per_page: 5`), inspection de `openalex_latest.json` et `db.json`, vérification des compteurs et de la déduplication réelle, `make export-public` + scan anti-fuite, puis remise à `enabled: false` sauf décision contraire documentée. Mise à jour de `LEGAL_AUDIT.md` pour l'attribution OpenAlex.
 
+---
+
+## 2026-05-21 - Conversation 3 - Audit des venues et réseaux prioritaires (Prompt 3.1)
+- **Objectif** : Identifier les accès stables et légaux pour les venues/réseaux prioritaires sans ingestion live, sans cron, sans auto-commit et sans publication de données privées.
+- **Résultat synthétique** :
+
+| Venue/réseau | Statut humain | Classement retenu | Décision |
+|---|---|---|---|
+| Radio Journal: International Studies in Broadcast & Audio Media | `candidat` | Activable via Crossref ; RSS Intellect à valider | Revue distincte de Journal of Radio & Audio Media ; prochaine étape par ISSN `1476-4504` / `2040-1388`, pas de doublon. |
+| Sound Studies: An Interdisciplinary Journal | `candidat` | Activable via Crossref ou OpenAlex ; RSS Taylor & Francis probable à valider | Revue T&F distincte de Sounding Out! ; prochaine étape par ISSN `2055-1940` / `2055-1959`. |
+| JSS / Journal of Sonic Studies | `candidat` | Activable via OpenAlex ; Crossref à vérifier | ISSN `2212-6252`, DOIs JSS repérés, mais pas de RSS JSS dédié confirmé ; ne pas utiliser le flux global Research Catalogue. |
+| Resonance: The Journal of Sound and Culture | `candidat` | Activable via Crossref ou OpenAlex ; RSS UC Press non confirmé | e-ISSN `2688-867X`, DOI UC Press ; ne pas scraper `online.ucpress.edu`. |
+| IAMCR Music, Audio, Radio and Sound Working Group | `reporté` | Réseau à suivre par annonces | Page officielle riche mais aucun RSS/API stable repéré ; veille manuelle seulement pour l'instant. |
+| ECREA Radio and Sound Section | `reporté` | Réseau à suivre par annonces | Page section + Weekly Digest général ; aucun flux stable spécifique repéré. |
+| MeCCSA Radio & Audio Studies | `actif` | Réseau suivi par RSS/annonces | Déjà configuré via `meccsa_radio_audio_studies`, flux WordPress actif ; ne pas créer de doublon. |
+
+- **Fichiers modifiés** :
+  - `antenne_radio/01_RESSOURCES_SUIVIES.md` : ajout de la table d'audit venues/réseaux, qualification des statuts humains et enrichissement de la ligne MeCCSA active.
+  - `antenne_radio/codex_memoire_materielle.md` : présent handoff.
+- **Commandes lancées** :
+  - `git status --short` : worktree propre au départ.
+  - Lecture de `docs/AGENTS.md`, `antenne_radio/README.md`, `antenne_radio/codex_memoire_materielle.md`.
+  - `rg --files antenne_radio` : chemins réels repérés avant modification.
+  - Lectures ciblées : `antenne_radio/01_RESSOURCES_SUIVIES.md`, `antenne_radio/LEGAL_AUDIT.md`, `antenne_radio/config/sources.yaml`.
+  - Recherches web officielles/documentaires : pages Intellect/Intellect Discover, Taylor & Francis, Research Catalogue/JSS, ISSN Portal, DOAJ, UC Press/Scholastica, IAMCR, ECREA, MeCCSA, OpenAlex docs, Crossref docs.
+- **Contraintes respectées** :
+  - Aucune ingestion live lancée.
+  - Aucun cron créé.
+  - Aucun auto-commit.
+  - Aucune source live ajoutée dans `config/sources.yaml`.
+  - Aucun raw, log, abstract, score, auteur, tag privé ou chemin local publié.
+  - Pas de scraping HTML retenu comme stratégie pour IAMCR/ECREA/JSS.
+- **Incertitudes restantes** :
+  - Les URL exactes de RSS article pour Radio Journal/Intellect, Sound Studies/Taylor & Francis et Resonance/UC Press devront être validées techniquement dans une recette séparée avant configuration.
+  - La couverture Crossref de JSS doit rester prudente : les DOIs existent, mais OpenAlex/DOAJ/ISSN sont les points d'accès les plus propres à ce stade.
+  - IAMCR et ECREA sont intellectuellement prioritaires, mais restent non automatisables sans flux officiel stable spécifique.
+- **Prochaine étape recommandée pour une conversation fraîche** :
+  - Prompt 3.2 : ajouter uniquement des sources candidates désactivées ou une recette de test ultra-limitée pour une seule revue à la fois, en commençant par Radio Journal ou Sound Studies via Crossref par ISSN avec `CROSSREF_MAILTO` local, `rows: 5`, tests mockés si code changé, puis scan anti-fuite avant toute activation durable. Garder IAMCR/ECREA hors pipeline automatisé tant qu'aucun flux officiel stable n'est confirmé.
+
+---
+
+## 2026-05-21 - Conversation 3 - Configuration des venues et profils de requête (Prompt 3.2)
+- **Objectif** : Ajouter les venues validées dans la configuration sans doublonner les sources V2 et sans créer de bruit massif.
+- **Aucune ingestion live** : aucun `make run`, aucun appel réseau Crossref/OpenAlex, aucun export public régénéré.
+- **Sources ajoutées ou modifiées** :
+  - `crossref.journals.radio_journal` : nouvelle revue candidate désactivée (`enabled: false`), ISSN `1476-4504` et `2040-1388`, métadonnées Crossref uniquement jusqu'à run inspecté.
+  - `crossref.journals.sound_studies_journal` : nouvelle revue candidate désactivée, ISSN `2055-1940` et `2055-1959`, distincte de `sounding_out_blog`.
+  - `crossref.journals.resonance_journal` : nouvelle revue candidate désactivée, e-ISSN `2688-867X`, sans RSS UC Press forcé.
+  - `openalex.profiles.journal_sonic_studies_venue` : nouveau profil de venue désactivé, filtre `primary_location.source.issn:2212-6252`, tri `publication_date:desc`.
+  - `scripts/ingest/ingest_openalex.py` : support réel des filtres par profil OpenAlex, y compris les profils sans `search` mais avec filtre de venue, et support d'un `sort` propre au profil.
+  - `scripts/export/export_public.py` : attributions publiques ajoutées pour `radio_journal`, `sound_studies_journal`, `journal_sonic_studies`, `resonance_journal`, sans modifier la whitelist publique.
+- **Sources laissées inactives ou non ajoutées** :
+  - Les quatre nouvelles venues restent désactivées tant qu'aucun run contrôlé n'a été inspecté.
+  - IAMCR MAR et ECREA Radio & Sound restent hors `config/sources.yaml` faute de flux officiel stable spécifique.
+  - `journal_radio_audio_media`, `sounding_out_blog` et `meccsa_radio_audio_studies` n'ont pas été dupliqués.
+- **Fichiers modifiés** :
+  - `antenne_radio/config/sources.yaml`
+  - `antenne_radio/scripts/ingest/ingest_openalex.py`
+  - `antenne_radio/scripts/export/export_public.py`
+  - `antenne_radio/tests/test_config.py`
+  - `antenne_radio/tests/test_ingest_openalex.py`
+  - `antenne_radio/tests/test_export_public.py`
+  - `antenne_radio/01_RESSOURCES_SUIVIES.md`
+  - `antenne_radio/codex_memoire_materielle.md`
+- **Commandes lancées** :
+  - `git status --short` : worktree déjà modifié par le handoff/documentation du Prompt 3.1.
+  - Lecture de `docs/AGENTS.md`, `antenne_radio/README.md`, `antenne_radio/codex_memoire_materielle.md`.
+  - `rg --files antenne_radio` : chemins réels repérés avant modification.
+  - Lectures ciblées : `config/sources.yaml`, `scripts/ingest/ingest_crossref.py`, `scripts/ingest/ingest_openalex.py`, `scripts/core/normalize.py`, `scripts/export/export_public.py`, `tests/test_config.py`, `tests/test_ingest_openalex.py`, `tests/test_ingest_crossref.py`, `tests/test_export_public.py`, `01_RESSOURCES_SUIVIES.md`.
+  - Recherche documentaire officielle OpenAlex sur les filtres de Works, notamment `primary_location.source.issn`.
+  - `.venv/bin/pytest tests/test_config.py tests/test_ingest_openalex.py tests/test_export_public.py -v --tb=short` : 40 tests passent.
+- **Résultats de tests** :
+  - Tests ciblés : 40 passed.
+  - `make test` depuis `antenne_radio` : 127 passed.
+- **Contraintes respectées** :
+  - Pas de cron, pas d'auto-commit.
+  - Pas de nouvelle source activée.
+  - Pas de publication de raw, logs, abstracts, scores, auteurs, tags ou chemins locaux.
+  - Whitelist publique inchangée : `id`, `title`, `url`, `doi`, `published_at`, `source_name`, `source_type`, `language`, `source_family`, `attribution_id`.
+- **Prochaine étape recommandée pour une conversation fraîche** :
+  - Prompt 3.3 : recette de validation contrôlée pour une seule venue désactivée à la fois, idéalement `radio_journal` ou `sound_studies_journal`, avec `CROSSREF_MAILTO` local, `rows` abaissé temporairement à `5`, activation d'un seul profil, inspection de `crossref_latest.json`/normalisation/déduplication, puis `make export-public` et scan anti-fuite avant toute activation durable. Ne pas activer IAMCR/ECREA tant qu'un flux officiel stable spécifique n'existe pas.
+
+---
+
+## 2026-05-21 - Conversation 3 - Recette finale V3 et gel du périmètre V4 (Prompt 3.3)
+- **État final V3** : V3 académique validée localement puis gelée. Le pipeline reste volontairement manuel, sans cron, sans auto-commit, sans publication automatique et sans élargissement silencieux de la whitelist publique.
+- **Pré-vol demandé** :
+  - `git status --short` lancé avant modification : worktree déjà modifié par les travaux 3.1/3.2 (`01_RESSOURCES_SUIVIES.md`, `codex_memoire_materielle.md`, `config/sources.yaml`, `export_public.py`, `ingest_openalex.py`, tests OpenAlex/export/config).
+  - Lecture effectuée de `docs/AGENTS.md`, `antenne_radio/README.md`, `antenne_radio/codex_memoire_materielle.md`.
+  - Chemins réels repérés avec `rg --files`/`find` avant création ou édition ; aucun nouveau fichier créé pour la V3.
+- **Sources actives dans la recette finale** :
+  - RSS/Atom : 10 sources actives (`radio_survivor`, `radiomorphoses`, `radio_fanch`, `les_radios_libres`, `la_radio_du_futur`, `la_lettre_pro`, `meccsa_radio_audio_studies`, `nieman_storyboard`, `journal_radio_audio_media`, `sounding_out_blog`).
+  - HAL : actif, limite 20.
+  - Crossref : actif seulement sur `journal_radio_audio_media`, `rows: 20`, `polite_delay_seconds: 1`, `CROSSREF_MAILTO` fourni uniquement comme variable d'environnement de commande pour le run final, sans écriture dans le dépôt ni dans les docs.
+- **Sources configurées mais inactives** :
+  - RSS : `transom`, `sounding_out_podcast`, `example_disabled_journal`.
+  - Crossref candidates : `radio_journal`, `sound_studies_journal`, `resonance_journal`.
+  - OpenAlex : `openalex.enabled: false`, profils désactivés ou inactifs (`radio_studies`, `radio_audio_media`, `sound_studies`, `podcast_studies`, `community_free_radio`, `journal_sonic_studies_venue`).
+  - Réseaux reportés hors config : IAMCR MAR et ECREA Radio and Sound tant qu'aucun flux officiel stable spécifique n'est identifié.
+- **Commandes et résultats** :
+  - `make test` depuis `antenne_radio` : 127 tests passent.
+  - `make run` sans contact Crossref local : pipeline OK mais Crossref a correctement déclenché `missing_mailto`; ce passage a servi à vérifier le garde-fou.
+  - `make run` final avec contact Crossref fourni en variable d'environnement locale et réseau autorisé : pipeline OK, `failed_steps=none`.
+  - `make export-public` final : 239 items publics générés.
+  - `pnpm run build` depuis la racine : Hugo 0.160.1, build OK, 83 pages.
+- **Compteurs réels finaux** :
+  - `data/raw/rss_latest.json` : 239 entrées, 0 erreur.
+  - `data/raw/hal_latest.json` : 20 documents, `num_found=931`, 0 erreur.
+  - `data/raw/crossref_latest.json` : 20 notices, `rows=20`, 0 erreur.
+  - `data/raw/openalex_latest.json` : 0 item, erreur locale `disabled`, comportement attendu.
+  - `data/normalized/db.json` : 295 items (`to_read=150`, `candidate=89`, `ignored=56`), 0 doublon DOI détecté.
+  - `static/antenne-radio/index.json` et `public/antenne-radio/index.json` : 239 items, schéma `antenne-radio-public-v0`, clés publiques strictement limitées à `id`, `title`, `url`, `doi`, `published_at`, `source_name`, `source_type`, `language`, `source_family`, `attribution_id`.
+  - Export privé Obsidian `veille-2026-21.md` : 238 entrées listées dans le rapport privé.
+  - Export privé Zotero CSL `zotero-veille-2026-21.csl.json` : 152 items.
+- **Scans anti-fuite** :
+  - JSON public statique et buildé : 0 clé interdite (`raw`, `abstract`, `authors`, `tags`, `score`, `score_explanation`, `keywords`, `logs`, `status`, `source_api`, `source_feed`, `raw_responses`, `errors`, `relevance_score`, `abstract_inverted_index`, etc.).
+  - JSON public et HTML : 0 email, 0 occurrence du contact fourni, 0 chemin local, 0 nom de variable sensible, 0 bearer/token/key.
+  - Faux positifs contrôlés : le token `score` apparaît uniquement dans un titre/URL bibliographique public ; `tags` apparaît une seule fois dans la navigation globale Hugo (`/tags/`), pas dans les données Antenne.
+  - Logs privés inspectés : aucune adresse email ni contact fourni détecté ; les paramètres `mailto=` présents dans l'historique du log ne contiennent pas d'adresse et les erreurs sensibles restent redacted.
+- **Documentation mise à jour** :
+  - `antenne_radio/README.md` : état de clôture V3, compteurs et périmètre V4.
+  - `antenne_radio/01_RESSOURCES_SUIVIES.md` : recette finale, compteurs, statuts actifs/inactifs.
+  - `antenne_radio/LEGAL_AUDIT.md` : note de clôture V3 et report explicite de CiNii/NDL/J-STAGE en V4.
+  - `docs/CHANTIERS.md` : V3 marquée terminée, V4 japonaise séparée.
+  - `antenne_radio/codex_memoire_materielle.md` : présent handoff.
+- **Limites restantes** :
+  - Crossref reste validé sur une seule revue active ; ne pas activer `radio_journal`, `sound_studies_journal` ou `resonance_journal` sans recette limitée par une seule revue, volume bas et scan anti-fuite.
+  - OpenAlex est prêt techniquement mais reste inactif ; aucun run live OpenAlex n'a été lancé.
+  - IAMCR/ECREA restent des veilles humaines tant qu'aucun flux officiel stable spécifique n'est confirmé.
+  - Le pruning 18 mois de `db.json` reste un chantier futur.
+
+### V4 japonaise plus tard
+
+La V4 japonaise est explicitement hors bilan V3. Elle pourra couvrir :
+
+- `CiNii` ;
+- `NDL` ;
+- `J-STAGE` ;
+- littérature japonaise sur mini-FM, Tetsuo Kogawa, radios communautaires, micro-radios, sound/media studies au Japon.
+
+Conditions d'audit avant implémentation V4 :
+
+- relire `docs/AGENTS.md`, `antenne_radio/README.md`, `antenne_radio/LEGAL_AUDIT.md`, `01_RESSOURCES_SUIVIES.md` et cette mémoire ;
+- auditer les APIs officielles, conditions d'utilisation, attribution obligatoire, cadence, encodage japonais, translittération et types de métadonnées ;
+- définir une whitelist publique V4 avant toute ligne de code ;
+- écrire les tests anti-fuite avant ingestion live ;
+- commencer par une source unique, volume minimal, sans cron, sans auto-commit, sans abstracts publics et sans données brutes publiques.
+
+Première proposition de Conversation 1 pour la V4 japonaise :
+
+```text
+Objectif : ouvrir la V4 japonaise sans implémenter encore de connecteur.
+
+Avant toute modification :
+- lancer git status --short ;
+- lire docs/AGENTS.md ;
+- lire antenne_radio/README.md ;
+- lire antenne_radio/LEGAL_AUDIT.md ;
+- lire antenne_radio/01_RESSOURCES_SUIVIES.md ;
+- lire antenne_radio/codex_memoire_materielle.md ;
+- ne lancer aucune ingestion live ;
+- ne créer aucun cron ;
+- ne publier aucun raw, log, abstract, score, auteur, tag, chemin local ou secret.
+
+Tâches :
+1. Auditer séparément CiNii, NDL et J-STAGE : API officielle, conditions d'utilisation, attribution, rate limit, formats, champs disponibles, risques de fuite.
+2. Définir le contrat public V4 minimal, en distinguant titres japonais, romanisation éventuelle, auteurs, revue/source, date, DOI/identifiants, URL canonique.
+3. Choisir une seule première source candidate pour Conversation 2, sans l'activer.
+4. Mettre à jour LEGAL_AUDIT.md, 01_RESSOURCES_SUIVIES.md et codex_memoire_materielle.md avec les décisions.
+
+Vérification :
+- aucune donnée live collectée ;
+- aucun secret écrit ;
+- V4 reste séparée de la V3 ;
+- prochain prompt limité à un seul connecteur mocké.
+```

@@ -18,6 +18,19 @@ AUDITED_2026_05_20_RSS_DECLARED = {
     *AUDITED_2026_05_20_RSS_ENABLED,
     "transom",
 }
+PRIORITY_CROSSREF_CANDIDATES = {
+    "radio_journal": ["1476-4504", "2040-1388"],
+    "sound_studies_journal": ["2055-1940", "2055-1959"],
+    "resonance_journal": ["2688-867X"],
+}
+PRIORITY_OPENALEX_CANDIDATES = {
+    "journal_sonic_studies_venue": "2212-6252",
+}
+V2_SOURCE_IDS = {
+    "journal_radio_audio_media",
+    "sounding_out_blog",
+    "meccsa_radio_audio_studies",
+}
 
 
 def load_yaml(name: str):
@@ -67,6 +80,31 @@ def test_legal_audit_2026_05_20_rss_sources_are_configured():
     assert transom["enabled"] is False
     assert transom["audit_date"] == "2026-05-20"
     assert transom["legal_status"].startswith("VALIDÉ")
+
+
+def test_priority_venues_are_configured_as_disabled_candidates_without_v2_duplicates():
+    sources = load_yaml("sources.yaml")
+    rss_source_ids = [source["id"] for source in sources["rss_atom"]]
+    crossref_journals = {journal["id"]: journal for journal in sources["crossref"]["journals"]}
+    openalex_profiles = {profile["id"]: profile for profile in sources["openalex"]["profiles"]}
+
+    for source_id in V2_SOURCE_IDS:
+        assert rss_source_ids.count(source_id) == 1
+
+    for journal_id, issns in PRIORITY_CROSSREF_CANDIDATES.items():
+        journal = crossref_journals[journal_id]
+        assert journal["enabled"] is False
+        assert journal["issn"] == issns
+        assert journal["audit_date"] == "2026-05-21"
+        assert journal["legal_status"].startswith("CANDIDAT")
+        assert "academic_watch" in journal["tags"]
+
+    for profile_id, issn in PRIORITY_OPENALEX_CANDIDATES.items():
+        profile = openalex_profiles[profile_id]
+        assert profile["enabled"] is False
+        assert profile["filters"]["primary_location.source.issn"] == issn
+        assert profile["sort"] == "publication_date:desc"
+        assert "academic_watch" in profile["tags"]
 
 
 def test_scoring_references_keyword_categories():

@@ -92,7 +92,11 @@ def _selected_profiles(openalex_config: dict[str, Any]) -> list[dict[str, Any]]:
             continue
         if profile.get("enabled") is False:
             continue
-        if _compact_text(profile.get("search")):
+        profile_filters = profile.get("filters")
+        has_filters = isinstance(profile_filters, dict) and any(
+            _compact_text(key) and _filter_value(value) for key, value in profile_filters.items()
+        )
+        if _compact_text(profile.get("search")) or has_filters:
             selected.append(profile)
 
     return selected
@@ -153,10 +157,10 @@ def _quote_search_term(term: str) -> str:
     return escaped
 
 
-def _search_with_exclusions(openalex_config: dict[str, Any], profile: dict[str, Any]) -> str:
+def _search_with_exclusions(openalex_config: dict[str, Any], profile: dict[str, Any]) -> str | None:
     search = _compact_text(profile.get("search"))
     if search is None:
-        raise ValueError("OpenAlex profile has no search query")
+        return None
 
     exclusions = openalex_config.get("noise_exclusions", [])
     if not isinstance(exclusions, list):
@@ -169,7 +173,29 @@ def _search_with_exclusions(openalex_config: dict[str, Any], profile: dict[str, 
     return f"({search}) NOT (" + " OR ".join(negative_terms) + ")"
 
 
-def _filter_parts(openalex_config: dict[str, Any], *, today: date | None = None) -> list[str]:
+def _filter_value(value: Any) -> str | None:
+    if isinstance(value, bool):
+        return str(value).lower()
+    if isinstance(value, list):
+        values = [_compact_text(item) for item in value]
+        compacted = [item for item in values if item]
+        return "|".join(compacted) if compacted else None
+    return _compact_text(value)
+
+
+def _add_filter_part(parts: list[str], key: Any, value: Any) -> None:
+    key_text = _compact_text(key)
+    value_text = _filter_value(value)
+    if key_text and value_text:
+        parts.append(f"{key_text}:{value_text}")
+
+
+def _filter_parts(
+    openalex_config: dict[str, Any],
+    *,
+    profile: dict[str, Any] | None = None,
+    today: date | None = None,
+) -> list[str]:
     filters = openalex_config.get("filters", {})
     filters = filters if isinstance(filters, dict) else {}
 
@@ -191,6 +217,11 @@ def _filter_parts(openalex_config: dict[str, Any], *, today: date | None = None)
             value = str(filters[key]).lower()
             if value in {"true", "false"}:
                 parts.append(f"{key}:{value}")
+
+    profile_filters = profile.get("filters") if isinstance(profile, dict) else None
+    if isinstance(profile_filters, dict):
+        for key, value in profile_filters.items():
+            _add_filter_part(parts, key, value)
 
     return parts
 
@@ -224,14 +255,17 @@ def build_params(
     today: date | None = None,
 ) -> dict[str, Any]:
     params: dict[str, Any] = {
-        "search": _search_with_exclusions(openalex_config, profile),
-        "filter": ",".join(_filter_parts(openalex_config, today=today)),
+        "filter": ",".join(_filter_parts(openalex_config, profile=profile, today=today)),
         "per_page": _as_positive_int(openalex_config.get("per_page"), DEFAULT_PER_PAGE, maximum=100),
         "page": _as_positive_int(page, 1),
         "mailto": mailto,
     }
 
-    sort = _compact_text(openalex_config.get("sort")) or DEFAULT_SORT
+    search = _search_with_exclusions(openalex_config, profile)
+    if search:
+        params["search"] = search
+
+    sort = _compact_text(profile.get("sort")) or _compact_text(openalex_config.get("sort")) or DEFAULT_SORT
     if sort:
         params["sort"] = sort
 
