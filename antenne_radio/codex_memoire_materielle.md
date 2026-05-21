@@ -10,7 +10,7 @@
 - **db.json** : Doit rester valide, UTF-8 non échappé, trié par clés. Déduplication par ID stable (DOI > URL > Title/Date). Jamais de suppression automatique des `ignored`.
 - **Confidentialité absolue (Anti-fuite)** : Interdiction stricte de publier abstracts, raw dumps, logs, scores, explications, mots-clés internes, auteurs, tags ou chemins locaux. Seul le JSON whitelisté est public.
 - **Crossref** : Connecteur activé durablement avec garde-fou (`enabled: true`). Sans `CROSSREF_MAILTO`, il écrit `missing_mailto` et ne fait aucun appel réseau ; avec mailto local, la recette validée interroge seulement Journal of Radio & Audio Media à `rows: 20`.
-- **OpenAlex** : Intégration planifiée en V3 avec `OPENALEX_MAILTO` local obligatoire, requêtes ciblées et score de pertinence strictement privé.
+- **OpenAlex** : Connecteur mocké présent mais désactivé (`openalex.enabled: false`). `OPENALEX_MAILTO` local obligatoire avant tout appel réseau, requêtes ciblées, aucun abstract reconstruit, score de pertinence strictement privé.
 
 ---
 
@@ -187,3 +187,88 @@
   - Crossref est validé sur une seule famille de revue ; ne pas élargir sans nouvelle recette limitée et scan anti-fuite.
 - **Prochaine étape recommandée** :
   - Conversation fraîche Prompt 1.4 : audit du bruit et de la pertinence des 20 notices Crossref fusionnées, ajustement éventuel du scoring privé ou de la requête Crossref, sans élargir encore à OpenAlex.
+
+---
+
+## 2026-05-21 - Conversation 2 - Audit OpenAlex et design des requêtes (Prompt 2.1)
+- **Objectif** : Concevoir l'intégration OpenAlex avant ingestor live, en gardant OpenAlex désactivé et en bornant le bruit technique.
+- **État Crossref repris depuis la conversation 1** :
+  - Crossref est activé durablement avec garde-fou (`crossref.enabled: true`) ; aucun appel Crossref sans `CROSSREF_MAILTO` local.
+  - Recette validée sur une seule famille : `Journal of Radio & Audio Media`, `rows: 20`, `total_results=623`, `result_count=20`, 0 erreur.
+  - `db.json` contient 289 items (`to_read=144`, `candidate=89`, `ignored=56`) ; export public : 233 items whitelistés ; 20 notices Crossref fusionnées par DOI ; 0 doublon DOI.
+- **Sources OpenAlex auditées** :
+  - Documentation officielle consultée : API Overview, Authentication & Pricing, List Works, Search, Select Fields, Get a single work.
+  - OpenAlex Works expose `id`, DOI, titre, date, type, langue, source primaire, topics, keywords, `relevance_score`, `abstract_inverted_index`, etc.
+  - L'API actuelle documente une clé API gratuite pour l'usage courant ; le projet garde donc `OPENALEX_API_KEY` local si nécessaire, en plus de `OPENALEX_MAILTO` local obligatoire pour l'identification polie du connecteur futur.
+- **Décision de configuration** :
+  - Section `openalex` ajoutée dans `antenne_radio/config/sources.yaml` plutôt qu'un fichier dédié : la configuration reste lisible et proche de HAL/Crossref.
+  - `openalex.enabled: false` par défaut ; aucun ingestor OpenAlex n'est encore branché dans `scripts/pipeline.py`.
+  - Sortie prévue seulement pour une future recette : `data/raw/openalex_latest.json`.
+  - Fenêtre et volume : 18 mois, `per_page: 20`, 1 page maximum par profil, `polite_delay_seconds: 1`, `sort: relevance_score:desc`.
+- **Profils de requête retenus** :
+  - `radio_studies` : `"radio studies"`, `radiophonic`, `"radio art"`, `"broadcasting history"`.
+  - `radio_audio_media` : `"radio and audio media"`, `"audio media"`, `"broadcast media"`, `"Journal of Radio & Audio Media"`.
+  - `sound_studies` : `"sound studies"`, `"sonic media"`, `"auditory culture"`, `"listening studies"`.
+  - `podcast_studies` : `"podcast studies"`, `podcasting`, `"audio storytelling"`, `"serialized audio"`.
+  - `community_free_radio` : `"community radio"`, `"free radio"`, `"pirate radio"`, `"radio libre"`, `"radios libres"`.
+- **Exclusions de bruit obligatoires** :
+  - `radio frequency`, `radiofrequency`, `radiotherapy`, `radioactive`, `radio telescope`, `radio astronomy`, `electromagnetic radiation`, `cognitive radio`, `spectrum sensing`, `beamforming`, `MIMO`, `5G`, `6G`.
+- **Champs autorisés/interdits** :
+  - Autorisés en privé au premier passage : identifiants OpenAlex/DOI, titre, date, type, langue, source primaire, `topics`, `primary_topic`, `keywords`, `relevance_score` OpenAlex.
+  - Interdits ou reportés : `abstract_inverted_index`, abstract reconstruit, auteurs, affiliations, `locations`, PDF/fulltext, références, `content_url`, `has_content`, raw/logs/secrets en public.
+  - Le score de pertinence OpenAlex et le score interne restent strictement privés ; aucun champ nouveau ne doit entrer dans `static/antenne-radio/index.json`.
+- **Fichiers modifiés** :
+  - `antenne_radio/config/sources.yaml`
+  - `antenne_radio/LEGAL_AUDIT.md`
+  - `antenne_radio/01_RESSOURCES_SUIVIES.md`
+  - `antenne_radio/codex_memoire_materielle.md`
+- **Commandes lancées** :
+  - `git status --short` : worktree propre au départ.
+  - Lecture de `docs/AGENTS.md`, `antenne_radio/README.md`, `antenne_radio/codex_memoire_materielle.md`, `antenne_radio/06_plan_v3_academique.md`.
+  - `rg --files antenne_radio` et lectures ciblées de `config/sources.yaml`, `LEGAL_AUDIT.md`, `01_RESSOURCES_SUIVIES.md`, `tests/test_config.py`, `scripts/pipeline.py`, `config/keywords.yaml`, `config/scoring.yaml`.
+  - Recherche web documentaire officielle OpenAlex ; aucune ingestion live lancée.
+  - `git diff --check` : OK.
+  - `make test` depuis `antenne_radio` : 92 tests passent.
+- **Limites restantes** :
+  - Aucun connecteur `ingest_openalex.py`, aucune normalisation OpenAlex, aucun run OpenAlex, aucun export public régénéré.
+  - Le premier ingestor devra gérer les secrets sans les logger, appliquer les exclusions dans les requêtes ou en post-filtrage, mocker les tests réseau, et refuser le réseau sans `OPENALEX_MAILTO`.
+- **Prochaine étape recommandée** :
+  - Conversation fraîche Prompt 2.2 : créer `scripts/ingest/ingest_openalex.py` avec tests mockés, lire la section `openalex` déjà présente, écrire `data/raw/openalex_latest.json`, ne pas reconstruire les abstracts, ne pas brancher d'appel réseau si `enabled: false`, puis lancer `make test`.
+
+---
+
+## 2026-05-21 - Conversation 2 - Ingestor OpenAlex mocké et désactivé (Prompt 2.2)
+- **Objectif** : Ajouter le connecteur OpenAlex en code et tests mockés, sans activation live implicite, sans cron, sans auto-commit et sans publication de données sensibles.
+- **Mode retenu** :
+  - `openalex.enabled` reste `false` dans `config/sources.yaml`.
+  - Le pipeline sait appeler `ingest_openalex`, mais l'ingestor écrit seulement un dump local `data/raw/openalex_latest.json` avec erreur `disabled` tant que la source n'est pas activée.
+  - Sans `OPENALEX_MAILTO` local, l'ingestor renvoie `missing_mailto`, écrit le dump local, logge l'erreur dans le log fourni et ne fait aucun appel réseau.
+  - `OPENALEX_API_KEY` reste optionnel côté code et strictement local ; si présent, il est envoyé comme paramètre API mais redacted dans les erreurs.
+- **Fichiers modifiés** :
+  - `antenne_radio/scripts/ingest/ingest_openalex.py` : nouveau connecteur Works mockable, profils multiples, fenêtre 18 mois, `select` borné, exclusions de bruit, redaction `mailto`/`api_key`, classification des erreurs HTTP.
+  - `antenne_radio/scripts/pipeline.py` : ajout de `DEFAULT_OPENALEX_RAW`, `openalex_raw_path`, `PipelineFunctions.ingest_openalex`, étape `ingest_openalex` et option CLI `--skip-openalex`.
+  - `antenne_radio/tests/test_ingest_openalex.py` : tests mockés sans réseau réel.
+  - `antenne_radio/tests/test_pipeline.py` : ordre pipeline mis à jour avec OpenAlex et skip flag.
+  - `antenne_radio/tests/test_config.py` : verrou `openalex.enabled: false`, `mailto_env`, limites basses, interdiction `abstract_inverted_index`, exclusions de bruit.
+  - `antenne_radio/01_RESSOURCES_SUIVIES.md` : statut humain mis à jour : ingestor présent mais désactivé.
+  - `antenne_radio/codex_memoire_materielle.md` : présent handoff.
+- **Comportement testé** :
+  - Source désactivée : aucun appel réseau, dump local écrit, `result_count=0`.
+  - `OPENALEX_MAILTO` absent : aucun appel réseau, erreur `missing_mailto`, log local.
+  - Paramètres : `/works`, `mailto`, `per_page`, `page`, `sort=relevance_score:desc`, User-Agent, `select` sans `abstract_inverted_index` ni `authorships`.
+  - Requêtes : profils `radio_studies` et `sound_studies` utilisés, exclusions `NOT (...)`, fenêtre `from_publication_date` calculée.
+  - Limites : `per_page` respecté, 1 page par profil dans la config, `request_count` attendu.
+  - Erreurs : timeout et HTTP `403`/`429`/`500` loggés et classifiés ; secrets redacted dans les messages.
+- **Commandes lancées** :
+  - `git status --short`
+  - Lecture de `docs/AGENTS.md`, `antenne_radio/README.md`, `antenne_radio/codex_memoire_materielle.md`.
+  - `rg --files antenne_radio`
+  - Lectures ciblées : `scripts/ingest/ingest_crossref.py`, `scripts/ingest/ingest_hal.py`, `scripts/core/io.py`, `scripts/pipeline.py`, `tests/test_ingest_crossref.py`, `tests/test_pipeline.py`, `tests/test_config.py`, `config/sources.yaml`.
+  - `.venv/bin/pytest tests/test_ingest_openalex.py tests/test_pipeline.py tests/test_config.py` : 17 tests passent.
+- **Limites restantes** :
+  - Aucun run live OpenAlex lancé.
+  - Aucune normalisation OpenAlex dans `normalize.py`.
+  - `normalize_latest_dumps` ignore encore `openalex_latest.json`; ce sera le sujet du Prompt 2.3.
+  - Aucun export public régénéré ; aucun champ public ajouté.
+- **Prochaine étape recommandée** :
+  - Conversation fraîche Prompt 2.3 : ajouter la normalisation OpenAlex privée dans `scripts/core/normalize.py`, dédupliquer par DOI avec Crossref/HAL/RSS, brancher le score de pertinence privé, vérifier que `abstract_inverted_index`, abstracts, auteurs, tags/topics/keywords et scores restent hors export public, puis lancer `make test` et seulement les recettes publiques explicitement demandées.

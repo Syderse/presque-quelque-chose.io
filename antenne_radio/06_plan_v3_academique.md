@@ -454,7 +454,7 @@ Taches :
    - activable via OpenAlex ;
    - reseau a suivre par RSS/annonces ;
    - a reporter faute de flux stable.
-4. Mettre a jour antenne_radio/LEGAL_AUDIT.md avec un verdict prudent par source.
+4. Consulter la manière de faire antenne_radio/LEGAL_AUDIT.md.
 5. Mettre a jour antenne_radio/01_RESSOURCES_SUIVIES.md avec le statut humain :
    - actif ;
    - inactif configure ;

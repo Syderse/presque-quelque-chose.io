@@ -16,6 +16,7 @@ def tmp_paths(tmp_path):
         rss_raw_path=tmp_path / "data" / "raw" / "rss_latest.json",
         hal_raw_path=tmp_path / "data" / "raw" / "hal_latest.json",
         crossref_raw_path=tmp_path / "data" / "raw" / "crossref_latest.json",
+        openalex_raw_path=tmp_path / "data" / "raw" / "openalex_latest.json",
         db_path=tmp_path / "data" / "normalized" / "db.json",
         export_dir=tmp_path / "data" / "exports",
         api_log_path=tmp_path / "data" / "logs" / "api.log",
@@ -35,6 +36,7 @@ def fake_functions(events):
         ingest_rss=step("ingest_rss"),
         ingest_hal=step("ingest_hal"),
         ingest_crossref=step("ingest_crossref"),
+        ingest_openalex=step("ingest_openalex"),
         normalize=step("normalize"),
         scoring=step("scoring"),
         export_obsidian=step("export_obsidian"),
@@ -50,6 +52,7 @@ def test_pipeline_runs_steps_in_order_and_logs(tmp_path):
         "ingest_rss",
         "ingest_hal",
         "ingest_crossref",
+        "ingest_openalex",
         "normalize",
         "scoring",
         "export_obsidian",
@@ -72,6 +75,7 @@ def test_pipeline_continues_after_failed_step(tmp_path):
         ingest_rss=broken_rss,
         ingest_hal=functions.ingest_hal,
         ingest_crossref=functions.ingest_crossref,
+        ingest_openalex=functions.ingest_openalex,
         normalize=functions.normalize,
         scoring=functions.scoring,
         export_obsidian=functions.export_obsidian,
@@ -85,6 +89,7 @@ def test_pipeline_continues_after_failed_step(tmp_path):
         "ingest_rss",
         "ingest_hal",
         "ingest_crossref",
+        "ingest_openalex",
         "normalize",
         "scoring",
         "export_obsidian",
@@ -102,12 +107,14 @@ def test_pipeline_skip_flags_skip_ingestions_and_export(tmp_path):
         skip_rss=True,
         skip_hal=True,
         skip_crossref=True,
+        skip_openalex=True,
         skip_export=True,
     )
 
     assert result["status"] == "ok"
     assert [name for name, _ in events] == ["normalize", "scoring"]
     assert [step["status"] for step in result["steps"]] == [
+        "skipped",
         "skipped",
         "skipped",
         "skipped",
@@ -119,6 +126,7 @@ def test_pipeline_skip_flags_skip_ingestions_and_export(tmp_path):
     assert "SKIP ingest_rss" in log
     assert "SKIP ingest_hal" in log
     assert "SKIP ingest_crossref" in log
+    assert "SKIP ingest_openalex" in log
     assert "SKIP export_obsidian" in log
 
 

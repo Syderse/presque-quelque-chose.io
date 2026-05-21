@@ -223,3 +223,104 @@ crossref:
         - academic_watch
         - radio_studies
         - podcast_studies
+
+openalex:
+  enabled: false
+  name: OpenAlex targeted radio/audio works
+  base_url: "https://api.openalex.org"
+  endpoint: "/works"
+  mailto_env: "OPENALEX_MAILTO"
+  api_key_env: "OPENALEX_API_KEY"
+  user_agent: "radio-watch/0.1 (mailto via OPENALEX_MAILTO)"
+  output_path: "data/raw/openalex_latest.json"
+  timeout_seconds: 20
+  polite_delay_seconds: 1
+  window_months: 18
+  per_page: 20
+  max_pages_per_profile: 1
+  sort: "relevance_score:desc"
+  filters:
+    type: "article|book|book-chapter|dissertation|review"
+    language:
+      - fr
+      - en
+    is_retracted: false
+    is_paratext: false
+  select:
+    - id
+    - doi
+    - title
+    - display_name
+    - publication_year
+    - publication_date
+    - type
+    - language
+    - primary_location
+    - open_access
+    - topics
+    - primary_topic
+    - keywords
+    - relevance_score
+    - is_retracted
+    - is_paratext
+    - ids
+  forbidden_select:
+    - abstract_inverted_index
+    - authorships
+    - locations
+    - best_oa_location
+    - content_url
+    - has_content
+    - referenced_works
+    - related_works
+    - raw_affiliation_strings
+  noise_exclusions:
+    - radio frequency
+    - radiofrequency
+    - radiotherapy
+    - radioactive
+    - radio telescope
+    - radio astronomy
+    - electromagnetic radiation
+    - cognitive radio
+    - spectrum sensing
+    - beamforming
+    - MIMO
+    - 5G
+    - 6G
+  profiles:
+    - id: radio_studies
+      label: Radio studies
+      search: '("radio studies" OR radiophonic OR "radio art" OR "broadcasting history")'
+      tags:
+        - academic_watch
+        - radio_studies
+
+    - id: radio_audio_media
+      label: Radio and audio media
+      search: '("radio and audio media" OR "audio media" OR "broadcast media" OR "Journal of Radio & Audio Media")'
+      tags:
+        - academic_watch
+        - radio_studies
+        - audio_media
+
+    - id: sound_studies
+      label: Sound studies
+      search: '("sound studies" OR "sonic media" OR "auditory culture" OR "listening studies")'
+      tags:
+        - academic_watch
+        - sound_studies
+
+    - id: podcast_studies
+      label: Podcast studies
+      search: '("podcast studies" OR podcasting OR "audio storytelling" OR "serialized audio")'
+      tags:
+        - academic_watch
+        - podcast_studies
+
+    - id: community_free_radio
+      label: Community radio and free radio
+      search: '("community radio" OR "free radio" OR "pirate radio" OR "radio libre" OR "radios libres")'
+      tags:
+        - academic_watch
+        - radio_free

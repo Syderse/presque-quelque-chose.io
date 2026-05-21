@@ -324,7 +324,7 @@ La présence d’une réflexion déjà poussée sur Hugo dans vos notes de dép�
 | RadioDoc Review | revue académique | pages revue / RSS | VALIDÉ PRUDENT | métadonnées bibliographiques | `active: true` |
 | HAL | archive ouverte | API / OAI-PMH | VALIDÉ PRUDENT | métadonnées bibliographiques | `active: true` |
 | Crossref | API bibliographique | API | VALIDÉ PRUDENT | métadonnées bibliographiques | `active: true` |
-| OpenAlex | API bibliographique | API | VALIDÉ PRUDENT | métadonnées bibliographiques | `active: true` |
+| OpenAlex | API bibliographique | API Works | VALIDÉ PRUDENT | métadonnées bibliographiques strictes | `active: false` jusqu'à recette live |
 | CiNii | bibliographique | API / pages | VALIDÉ PRUDENT | métadonnées bibliographiques | `active: true` |
 | NDL | catalogue | API / SRU / pages | VALIDÉ PRUDENT | notices | `active: true` |
 | J-STAGE | revues académiques | pages / API selon cas | VALIDÉ PRUDENT | métadonnées bibliographiques | `active: true` |
@@ -1065,54 +1065,72 @@ Faible. Organisation à but non lucratif d'intérêt public.
 ### OpenAlex
 
 **Statut recommandé :**  
-VALIDÉ
+VALIDÉ PRUDENT, DÉSACTIVÉ PAR DÉFAUT
 
 **Famille :**  
 catalogue académique global / API
 
 **Pertinence pour l’antenne :**  
-Graphe de connaissances remplaçant de nombreuses bases propriétaires. Couvre la quasi-totalité des publications mondiales en sound studies et media studies.
+Graphe de connaissances académique ouvert, utile pour compléter Crossref et HAL sur les radio studies, sound studies, podcast studies et media studies. Sa largeur impose toutefois une entrée très bornée : OpenAlex peut améliorer la couverture, mais peut aussi ramener massivement du bruit technique autour du mot "radio".
 
 **Point d’accès recommandé :**  
-API REST (api.openalex.org).
+API REST Works (`https://api.openalex.org/works`).
 
 **Pages officielles consultées :**
 - https://developers.openalex.org/api-reference/authentication
-- https://blog.openalex.org/openalex-api-new-features-and-usage-based-pricing/
+- https://developers.openalex.org/api-reference/works/list-works
+- https://developers.openalex.org/guides/searching
+- https://developers.openalex.org/guides/selecting-fields
+- https://developers.openalex.org/api-reference/works/get-a-single-work
 
 **Constats juridiques et techniques :**
 - L'ensemble des données est placé sous licence CC0 (domaine public).
-- Un système de crédits gratuits (100 000 crédits/jour) impose l'utilisation d'une clé d'API pour tout usage sérieux.
+- La documentation actuelle exige une clé API gratuite pour les appels API ; elle doit rester locale via `OPENALEX_API_KEY` si elle est utilisée.
+- Le projet exige aussi une identification polie locale via `OPENALEX_MAILTO`. Aucune adresse personnelle ne doit être inscrite dans Git, les logs publics ou les artefacts Hugo.
+- Les recherches Works portent sur `title`, `abstract` et `fulltext`; les résultats de recherche incluent un `relevance_score` OpenAlex privé, utile au tri mais interdit en public.
+- Le champ `abstract_inverted_index` encode l'abstract sous forme d'index inversé ; OpenAlex ne fournit pas d'abstract en clair pour des raisons juridiques. Le projet ne doit ni le sélectionner pour le premier connecteur, ni le reconstruire, ni le publier.
 
 **Collecte privée autorisée ou raisonnable :**
-- Totalité du graphe : auteurs, institutions, concepts, références croisées
+- métadonnées minimales de Works : `id`, `doi`, `title`/`display_name`, `publication_date`, `publication_year`, `type`, `language`, `ids` ;
+- métadonnées de source strictement utiles : `primary_location.source.display_name`, DOI ou landing page, sans PDF public ;
+- signaux de tri privés : `topics`, `primary_topic`, `keywords`, `relevance_score` ;
+- dump brut local strictement privé dans `data/raw/openalex_latest.json`, jamais publié.
 
 **Affichage public recommandé :**
 - title
 - doi
 - URL
-- auteurs
-- année de publication
-- concepts
+- date de publication
 - source_name
 
+Dans l'implémentation actuelle de l'antenne, l'export public reste plus strict encore : pas d'auteurs, pas de tags/concepts/keywords OpenAlex, pas de score de pertinence, pas d'abstract, pas de raw dump.
+
 **Champs interdits en public :**
-- L'index d'abstracts inversé (trop lourd)
-- dumps API bruts
+- `abstract_inverted_index`
+- abstract reconstruit
+- réponses API brutes
+- auteurs et affiliations
+- topics, concepts, keywords, tags
+- `relevance_score` OpenAlex et score interne de l'antenne
+- PDF, fulltext, `content_url`, `has_content`, `locations`
+- logs, chemins locaux, secrets, `OPENALEX_MAILTO`, `OPENALEX_API_KEY`
 
 **Attribution minimale :**  
 `Source: OpenAlex — lien vers le DOI ou la notice.`
 
 **Rate limit / conditions techniques :**  
-Authentification par clé recommandée. Limite stricte de 100 requêtes par seconde. Utiliser le paramètre per_page=100 pour optimiser la consommation de crédits.
+Clé API gratuite locale pour l'usage courant, identification polie locale, `per_page` borné à 20 pour la recette initiale, 1 page maximum par profil, délai local d'au moins 1 seconde entre profils, backoff sur `429`/`5xx`, et lecture des en-têtes `X-RateLimit-*` si disponibles. Les limites OpenAlex documentées permettent davantage, mais l'antenne choisit volontairement moins pour éviter le bruit.
 
 **Risques :**  
-Faible. Cadre juridique CC0 exceptionnellement favorable.
+Juridique faible pour les métadonnées CC0, mais risque documentaire élevé si les requêtes ne filtrent pas le bruit technique.
 
 **Décision pratique pour `sources.yaml` :**
-- `active: true`
-- raison : Réservoir de données massives sans barrière juridique.
-- notes d’implémentation : Injecter la clé API via l'environnement local. Surveiller l'en-tête X-RateLimit-Remaining.
+- `enabled: false` jusqu'à recette live inspectée.
+- raison : complément académique utile, mais seulement par profils ciblés.
+- structure retenue : section `openalex` dans `config/sources.yaml`, plutôt qu'un nouveau fichier, car la configuration reste lisible et tient dans le même registre que HAL et Crossref.
+- profils initiaux : `radio_studies`, `radio_audio_media`, `sound_studies`, `podcast_studies`, `community_free_radio`.
+- exclusions obligatoires : `radio frequency`, `radiofrequency`, `radiotherapy`, `radioactive`, `radio telescope`, `radio astronomy`, `electromagnetic radiation`, `cognitive radio`, `spectrum sensing`, `beamforming`, `MIMO`, `5G`, `6G`.
+- notes d’implémentation : ne pas lancer le réseau sans `OPENALEX_MAILTO` local ; utiliser `OPENALEX_API_KEY` local si l'API l'exige ; ne pas sélectionner `abstract_inverted_index` ; ne pas reconstruire d'abstract ; garder `relevance_score` strictement privé.
 
 ### CiNii
 
@@ -2616,16 +2634,20 @@ sources:
   - id: "openalex_media_studies"
     name: "OpenAlex"
     family: "catalogue_global"
-    active: true
+    active: false
     type: "api_rest"
     url: "https://api.openalex.org/works"
     rate_limit:
       delay_seconds: 1
+      per_page: 20
+      max_pages_per_profile: 1
     security:
       auth_required: true
-      env_key: "OPENALEX_API_KEY"
+      mailto_env: "OPENALEX_MAILTO"
+      api_key_env: "OPENALEX_API_KEY"
     export_policy:
-      allowed_fields: ["id", "title", "url", "doi", "published_at", "authors", "source_name"]
+      allowed_fields: ["id", "title", "url", "doi", "published_at", "source_name"]
+      drop_fields: ["abstract_inverted_index", "abstract", "raw", "logs", "authors", "topics", "keywords", "relevance_score"]
 ```
 
 ## Recommandations concrètes pour l'export public JSON

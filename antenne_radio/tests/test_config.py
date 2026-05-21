@@ -42,6 +42,12 @@ def test_sources_keep_enabled_flags():
     assert sources["crossref"]["rows"] <= 20
     assert sources["crossref"]["polite_delay_seconds"] >= 1
     assert sources["crossref"]["journals"][0]["issn"] == ["1937-6529", "1937-6537"]
+    assert sources["openalex"]["enabled"] is False
+    assert sources["openalex"]["mailto_env"] == "OPENALEX_MAILTO"
+    assert sources["openalex"]["per_page"] <= 20
+    assert sources["openalex"]["max_pages_per_profile"] == 1
+    assert "abstract_inverted_index" in sources["openalex"]["forbidden_select"]
+    assert "radio frequency" in sources["openalex"]["noise_exclusions"]
 
 
 def test_legal_audit_2026_05_20_rss_sources_are_configured():

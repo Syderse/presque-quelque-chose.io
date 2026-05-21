@@ -1,6 +1,7 @@
 # Ressources suivies par l'antenne radio
 
-Dernière vérification : 2026-05-20 19:19 JST avec `make test`, `make run`, `make export-public` et `pnpm run build` (recette Crossref contrôlée).
+Dernière recette live complète : 2026-05-20 19:19 JST avec `make test`, `make run`, `make export-public` et `pnpm run build` (recette Crossref contrôlée).
+Dernière mise à jour documentaire : 2026-05-21 JST avec audit OpenAlex et `make test`, sans ingestion live OpenAlex.
 
 Source technique : `config/sources.yaml`. Ce fichier est la liste humaine à tenir à jour quand une source est ajoutée, désactivée ou modifiée.
 
@@ -49,6 +50,7 @@ Source technique : `config/sources.yaml`. Ce fichier est la liste humaine à ten
 | `transom` | Transom | RSS | `https://transom.org/feed/` | Juridiquement validé en métadonnées le 2026-05-20, mais techniquement reporté : le run contrôlé a retrouvé 0 entrée, statut 301 et warning feedparser. |
 | `sounding_out_podcast` | Sounding Out! podcast | RSS | `https://feeds.feedburner.com/SoundingOutPodcast` | Flux valide, mais gardé désactivé pour éviter un doublon thématique avant décision sur les podcasts. |
 | `example_disabled_journal` | Example journal feed to replace | Atom | `https://example.org/radio-studies.atom` | Exemple désactivé, à remplacer par une vraie source si utile. |
+| `openalex` | OpenAlex targeted radio/audio works | API OpenAlex Works | `https://api.openalex.org/works` | Section configurée mais désactivée (`enabled: false`) jusqu'à recette live avec `OPENALEX_MAILTO` local et, si requis par l'API, `OPENALEX_API_KEY` local. |
 
 ## Paramètres Crossref préparés
 
@@ -58,9 +60,26 @@ Source technique : `config/sources.yaml`. Ce fichier est la liste humaine à ten
 - Revue configurée pour démarrage contrôlé : `Journal of Radio & Audio Media`, ISSN `1937-6529` et `1937-6537`.
 - Sortie brute prévue : `data/raw/crossref_latest.json`.
 
+## Paramètres OpenAlex préparés
+
+- État : déclaré et ingestor mocké présent (`scripts/ingest/ingest_openalex.py`), mais désactivé (`openalex.enabled: false`) ; le pipeline l'appelle seulement via ce garde-fou, donc aucun appel réseau OpenAlex n'a lieu sans activation explicite et `OPENALEX_MAILTO`.
+- Identification polie : `OPENALEX_MAILTO` doit rester local (`.env.local` ou variable d'environnement), jamais commité, jamais écrit dans les artefacts publics.
+- Authentification API : la documentation OpenAlex actuelle indique une clé API gratuite pour l'usage courant ; si le connecteur la nécessite, utiliser `OPENALEX_API_KEY` local, jamais commité.
+- Point d'accès : API Works `https://api.openalex.org/works`.
+- Fenêtre et volume : 18 mois, `per_page: 20`, 1 page maximum par profil, délai poli de 1 seconde entre profils.
+- Filtres initiaux : types `article`, `book`, `book-chapter`, `dissertation`, `review` ; langues `fr` et `en` ; exclusion des notices rétractées ou paratextuelles.
+- Profils stricts :
+  - `radio_studies` : `"radio studies"`, `radiophonic`, `"radio art"`, `"broadcasting history"`.
+  - `radio_audio_media` : `"radio and audio media"`, `"audio media"`, `"broadcast media"`, `"Journal of Radio & Audio Media"`.
+  - `sound_studies` : `"sound studies"`, `"sonic media"`, `"auditory culture"`, `"listening studies"`.
+  - `podcast_studies` : `"podcast studies"`, `podcasting`, `"audio storytelling"`, `"serialized audio"`.
+  - `community_free_radio` : `"community radio"`, `"free radio"`, `"pirate radio"`, `"radio libre"`, `"radios libres"`.
+- Exclusions de bruit obligatoires : `radio frequency`, `radiofrequency`, `radiotherapy`, `radioactive`, `radio telescope`, `radio astronomy`, `electromagnetic radiation`, `cognitive radio`, `spectrum sensing`, `beamforming`, `MIMO`, `5G`, `6G`.
+- Champs privés autorisés au premier passage : identifiants OpenAlex/DOI, titre, date, type, langue, source primaire, signaux `topics`/`primary_topic`/`keywords`, et `relevance_score` OpenAlex uniquement pour tri privé.
+- Champs interdits : `abstract_inverted_index`, abstract reconstruit, auteurs, affiliations, `locations`, PDF/fulltext, références, raw/logs/secrets en public. Le score de pertinence interne et `relevance_score` OpenAlex ne doivent jamais entrer dans `static/antenne-radio/index.json`.
+
 ## Ressources explicitement non suivies en v0.1
 
-- OpenAlex.
 - CiNii.
 - NDL.
 - J-STAGE.
