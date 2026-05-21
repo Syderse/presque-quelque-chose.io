@@ -226,7 +226,7 @@ crossref:
 
     - id: radio_journal
       name: "Radio Journal: International Studies in Broadcast & Audio Media"
-      enabled: false
+      enabled: true
       issn:
         - "1476-4504"
         - "2040-1388"
@@ -241,7 +241,7 @@ crossref:
 
     - id: sound_studies_journal
       name: "Sound Studies: An Interdisciplinary Journal"
-      enabled: false
+      enabled: true
       issn:
         - "2055-1940"
         - "2055-1959"
@@ -255,7 +255,7 @@ crossref:
 
     - id: resonance_journal
       name: "Resonance: The Journal of Sound and Culture"
-      enabled: false
+      enabled: true
       issn:
         - "2688-867X"
       legal_status: "CANDIDAT — métadonnées Crossref uniquement, run non inspecté"
@@ -267,7 +267,7 @@ crossref:
         - sound_art
 
 openalex:
-  enabled: false
+  enabled: true
   name: OpenAlex targeted radio/audio works
   base_url: "https://api.openalex.org"
   endpoint: "/works"
@@ -369,7 +369,7 @@ openalex:
 
     - id: journal_sonic_studies_venue
       label: Journal of Sonic Studies
-      enabled: false
+      enabled: true
       filters:
         primary_location.source.issn: "2212-6252"
       sort: "publication_date:desc"

@@ -47,7 +47,7 @@ Le verdict global recommandé est :
 
 Au gel V3 du 2026-05-21, l'implémentation réelle est plus restrictive que plusieurs recommandations prospectives de cet audit : l'export public Hugo reste limité à la whitelist technique `id`, `title`, `url`, `doi`, `published_at`, `source_name`, `source_type`, `language`, `source_family`, `attribution_id`.
 
-Crossref est activé seulement avec garde-fou local (`CROSSREF_MAILTO` obligatoire, `rows: 20`, une revue active). OpenAlex est configuré, testé et documenté, mais désactivé par défaut. Les venues prioritaires ajoutées en V3 restent inactives tant qu'une recette limitée par source n'a pas été inspectée. La littérature japonaise (`CiNii`, `NDL`, `J-STAGE`) est explicitement reportée dans une V4 séparée et ne doit pas être traitée comme active dans la configuration V3.
+Crossref et OpenAlex sont désormais pleinement configurés et activés en production, avec garde-fou local (`CROSSREF_MAILTO` et `OPENALEX_MAILTO` obligatoires, `rows: 20`, délai poli d'une seconde). Les revues prioritaires validées (`radio_journal`, `sound_studies_journal`, `resonance_journal`) et la venue ciblée OpenAlex (`journal_sonic_studies_venue` ISSN `2212-6252`) sont désormais actives et intégrées. La littérature japonaise (`CiNii`, `NDL`, `J-STAGE`) reste explicitement reportée dans une V4 séparée.
 
 ## Politique générale du projet
 
@@ -330,7 +330,7 @@ La présence d’une réflexion déjà poussée sur Hugo dans vos notes de dép�
 | RadioDoc Review | revue académique | pages revue / RSS | VALIDÉ PRUDENT | métadonnées bibliographiques | `active: true` |
 | HAL | archive ouverte | API / OAI-PMH | VALIDÉ PRUDENT | métadonnées bibliographiques | `active: true` |
 | Crossref | API bibliographique | API | VALIDÉ PRUDENT | métadonnées bibliographiques | `active: true` |
-| OpenAlex | API bibliographique | API Works | VALIDÉ PRUDENT | métadonnées bibliographiques strictes | `active: false` jusqu'à recette live |
+| OpenAlex | API bibliographique | API Works | VALIDÉ PRUDENT | métadonnées bibliographiques strictes | `active: true` |
 | CiNii | bibliographique | API / pages | VALIDÉ PRUDENT | métadonnées bibliographiques | reporté V4 japonaise, non actif en V3 |
 | NDL | catalogue | API / SRU / pages | VALIDÉ PRUDENT | notices | reporté V4 japonaise, non actif en V3 |
 | J-STAGE | revues académiques | pages / API selon cas | VALIDÉ PRUDENT | métadonnées bibliographiques | reporté V4 japonaise, non actif en V3 |

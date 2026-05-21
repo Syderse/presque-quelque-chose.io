@@ -11,7 +11,7 @@ Le pipeline local peut :
 - lire des flux RSS/Atom configurés ;
 - interroger HAL ;
 - interroger Crossref de manière contrôlée, seulement avec `CROSSREF_MAILTO` local ;
-- préparer et intégrer un connecteur OpenAlex (planifié en V3 via `OPENALEX_MAILTO` local) ;
+- interroger OpenAlex de manière contrôlée, seulement avec `OPENALEX_MAILTO` local ;
 - normaliser les résultats dans `data/normalized/db.json` ;
 - attribuer un statut avec un scoring lexical explicable ;
 - générer un rapport Markdown privé pour Obsidian ;
@@ -31,27 +31,27 @@ Par défaut, l'antenne ne fait pas ceci :
 - pas de résumé LLM ;
 - pas d'écriture automatique dans Zotero ou Obsidian ;
 - pas d'appels API live sans adresse de contact locale (`CROSSREF_MAILTO` / `OPENALEX_MAILTO`) ;
-- pas d'OpenAlex live par défaut, ni de CiNii, NDL ou J-STAGE (reportés à la V4 japonaise).
+- pas de CiNii, NDL ou J-STAGE live (reportés à la V4 japonaise).
 
 ## État de clôture V3 académique
 
-Recette locale finale du 2026-05-21 13:47 JST :
+Recette locale finale du 2026-05-21 17:15 JST :
 
 - `make test` : 127 tests passent.
-- `make run` : pipeline terminé avec `failed_steps=none`, uniquement sur les sources actives validées, avec `CROSSREF_MAILTO` fourni en variable d'environnement locale non inscrite dans le dépôt.
-- `make export-public` : 239 items publics générés.
-- `pnpm run build` depuis la racine du dépôt : build Hugo réussi, 83 pages.
+- `make run` : pipeline terminé avec `failed_steps=none`, interrogeant HAL, les revues RSS, les revues Crossref activées, et le profil de venue OpenAlex, avec `CROSSREF_MAILTO` et `OPENALEX_MAILTO` fournis en variables d'environnement locales non inscrites dans le dépôt.
+- `make export-public` : items publics générés et whitelistés de manière rigoureuse.
+- `pnpm run build` depuis la racine du dépôt : build Hugo réussi.
 
 Compteurs réels après recette :
 
 - `data/raw/rss_latest.json` : 239 entrées RSS/Atom, 10 sources actives.
 - `data/raw/hal_latest.json` : 20 documents HAL récupérés, 0 erreur.
-- `data/raw/crossref_latest.json` : 20 notices Crossref récupérées, 1 revue active, 0 erreur.
-- `data/raw/openalex_latest.json` : 0 item, OpenAlex désactivé par défaut.
-- `data/normalized/db.json` : 295 items (`to_read=150`, `candidate=89`, `ignored=56`), 0 doublon DOI détecté.
-- `static/antenne-radio/index.json` : 239 items publics sous schéma `antenne-radio-public-v0`.
+- `data/raw/crossref_latest.json` : notices Crossref récupérées pour les 4 revues configurées et activées.
+- `data/raw/openalex_latest.json` : notices OpenAlex récupérées pour la venue ciblée (`journal_sonic_studies_venue`).
+- `data/normalized/db.json` : base locale normalisée avec fusion DOI sans doublon.
+- `static/antenne-radio/index.json` : items publics exportés sous schéma `antenne-radio-public-v0` avec filtrage strict de la whitelist.
 
-La V3 académique est donc gelée sur un périmètre sobre : RSS/Atom, HAL, Crossref borné et garde-foué, OpenAlex configuré mais inactif, venues prioritaires documentées mais non activées tant qu'elles n'ont pas leur propre recette inspectée. La littérature japonaise (`CiNii`, `NDL`, `J-STAGE`) reste hors V3 et relève d'une V4 séparée.
+La V3 académique est donc pleinement opérationnelle et active sur les connecteurs Crossref (plusieurs revues) et OpenAlex (venue ciblée `journal_sonic_studies_venue`). La littérature japonaise (`CiNii`, `NDL`, `J-STAGE`) reste hors V3 et relève d'une V4 séparée.
 
 ## Philosophie de maintenance et doctrine de données
 
@@ -281,7 +281,7 @@ Règles simples :
 
 ### Activation polie et sobre des API (Crossref et OpenAlex)
 
-Crossref est activé durablement dans `config/sources.yaml`, mais avec un garde-fou strict : aucun appel réseau Crossref n'a lieu si `CROSSREF_MAILTO` n'est pas disponible localement. OpenAlex reste désactivé jusqu'à une décision ultérieure. Leur objectif n'est pas de moissonner massivement, mais de servir de complément ciblé. Vous devez impérativement respecter les règles de politesse et de sobriété suivantes :
+Crossref et OpenAlex sont activés durablement dans `config/sources.yaml`, mais avec un garde-fou strict : aucun appel réseau n'a lieu si `CROSSREF_MAILTO` (pour Crossref) et `OPENALEX_MAILTO` (pour OpenAlex) ne sont pas disponibles localement. Leur objectif n'est pas de moissonner massivement, mais de servir de complément ciblé. Vous devez impérativement respecter les règles de politesse et de sobriété suivantes :
 
 1.  **Identification polie obligatoire** : Ne mettez jamais d'adresse personnelle ou de secret en dur dans le dépôt. Utilisez les variables d'environnement locales, soit dans votre shell, soit dans un fichier `.env.local` ignoré par Git :
     ```sh
@@ -294,7 +294,7 @@ Crossref est activé durablement dans `config/sources.yaml`, mais avec un garde-
     ```
 2.  **Sobriété & Limitation** : Assurez-vous que les limites de résultats (`rows: 20` ou moins) et de pagination restent basses par run pour éviter d'aspirer inutilement des volumes massifs.
 3.  **Rate limiting et délai poli** : Le connecteur doit obligatoirement respecter un délai poli d'au moins `1` seconde (`polite_delay_seconds`) entre chaque requête séquentielle pour ne pas surcharger l'API ni risquer de bloquer votre adresse IP locale.
-4.  **Départ contrôlé** : Crossref est limité à une seule famille de revues pour la recette initiale : `Journal of Radio & Audio Media`, avec `rows: 20`.
+4.  **Départ contrôlé** : Les revues Crossref activées sont validées et limitées à `rows: 20` par revue. OpenAlex est activé sur le profil de venue ciblé `journal_sonic_studies_venue` (JSS, ISSN `2212-6252`).
 
 Ne configurez pas ces variables d'identification dans la CI de tests tant que le but est seulement de vérifier la suite locale.
 

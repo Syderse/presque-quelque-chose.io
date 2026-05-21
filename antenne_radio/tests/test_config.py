@@ -55,7 +55,7 @@ def test_sources_keep_enabled_flags():
     assert sources["crossref"]["rows"] <= 20
     assert sources["crossref"]["polite_delay_seconds"] >= 1
     assert sources["crossref"]["journals"][0]["issn"] == ["1937-6529", "1937-6537"]
-    assert sources["openalex"]["enabled"] is False
+    assert sources["openalex"]["enabled"] is True
     assert sources["openalex"]["mailto_env"] == "OPENALEX_MAILTO"
     assert sources["openalex"]["per_page"] <= 20
     assert sources["openalex"]["max_pages_per_profile"] == 1
@@ -82,7 +82,7 @@ def test_legal_audit_2026_05_20_rss_sources_are_configured():
     assert transom["legal_status"].startswith("VALIDÉ")
 
 
-def test_priority_venues_are_configured_as_disabled_candidates_without_v2_duplicates():
+def test_priority_venues_are_configured_as_enabled_candidates_without_v2_duplicates():
     sources = load_yaml("sources.yaml")
     rss_source_ids = [source["id"] for source in sources["rss_atom"]]
     crossref_journals = {journal["id"]: journal for journal in sources["crossref"]["journals"]}
@@ -93,7 +93,7 @@ def test_priority_venues_are_configured_as_disabled_candidates_without_v2_duplic
 
     for journal_id, issns in PRIORITY_CROSSREF_CANDIDATES.items():
         journal = crossref_journals[journal_id]
-        assert journal["enabled"] is False
+        assert journal["enabled"] is True
         assert journal["issn"] == issns
         assert journal["audit_date"] == "2026-05-21"
         assert journal["legal_status"].startswith("CANDIDAT")
@@ -101,7 +101,7 @@ def test_priority_venues_are_configured_as_disabled_candidates_without_v2_duplic
 
     for profile_id, issn in PRIORITY_OPENALEX_CANDIDATES.items():
         profile = openalex_profiles[profile_id]
-        assert profile["enabled"] is False
+        assert profile["enabled"] is True
         assert profile["filters"]["primary_location.source.issn"] == issn
         assert profile["sort"] == "publication_date:desc"
         assert "academic_watch" in profile["tags"]

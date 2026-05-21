@@ -9,8 +9,8 @@
 ## Contrats de données & Sécurité
 - **db.json** : Doit rester valide, UTF-8 non échappé, trié par clés. Déduplication par ID stable (DOI > URL > Title/Date). Jamais de suppression automatique des `ignored`.
 - **Confidentialité absolue (Anti-fuite)** : Interdiction stricte de publier abstracts, raw dumps, logs, scores, explications, mots-clés internes, auteurs, tags ou chemins locaux. Seul le JSON whitelisté est public.
-- **Crossref** : Connecteur activé durablement avec garde-fou (`enabled: true`). Sans `CROSSREF_MAILTO`, il écrit `missing_mailto` et ne fait aucun appel réseau ; avec mailto local, la recette validée interroge seulement Journal of Radio & Audio Media à `rows: 20`.
-- **OpenAlex** : Connecteur mocké présent mais désactivé (`openalex.enabled: false`). `OPENALEX_MAILTO` local obligatoire avant tout appel réseau, requêtes ciblées, aucun abstract reconstruit, score de pertinence strictement privé.
+- **Crossref** : Connecteur activé durablement avec garde-fou (`enabled: true`). Sans `CROSSREF_MAILTO` local, il ne fait aucun appel réseau. Les revues ciblées prioritaires (`radio_journal`, `sound_studies_journal`, `resonance_journal`) sont désormais actives et interrogées à `rows: 20` par revue.
+- **OpenAlex** : Connecteur pleinement actif (`openalex.enabled: true`). `OPENALEX_MAILTO` local obligatoire avant tout appel réseau. La venue ciblée (`journal_sonic_studies_venue`, ISSN `2212-6252`) est désormais active en production. Aucun abstract reconstruit, score de pertinence strictement privé.
 
 ---
 
@@ -517,3 +517,19 @@ Vérification :
 - V4 reste séparée de la V3 ;
 - prochain prompt limité à un seul connecteur mocké.
 ```
+
+## 2026-05-21 - Conversation 4 - Activation de Crossref (plusieurs revues) et d'OpenAlex en production (Prompt 3.1)
+
+- **Objectif** : Activer pleinement en production le connecteur OpenAlex (venue JSS) et les 3 revues académiques Crossref validées (`radio_journal`, `sound_studies_journal`, `resonance_journal`), tout en maintenant la politique stricte de confidentialité (zéro fuite, respect de `LEGAL_AUDIT.md`).
+- **Actions réalisées** :
+  - Mise à jour de `config/sources.yaml` : activation globale d'OpenAlex (`openalex.enabled: true`), de la venue JSS (`journal_sonic_studies_venue.enabled: true`) et des 3 revues prioritaires de la famille Crossref.
+  - Mise à jour documentaire complète :
+    - `01_RESSOURCES_SUIVIES.md` : mise à jour des statuts et compteurs d'activation.
+    - `LEGAL_AUDIT.md` : note de clôture mise à jour pour refléter l'état "active: true" de Crossref (plusieurs revues) et OpenAlex (JSS venue).
+    - `README.md` : actualisation de la section "Ce que fait le projet", de l'état de clôture de la V3 académique, et des consignes de rate limit / mailto locaux.
+    - `codex_memoire_materielle.md` : actualisation du présent Codex.
+  - Validation technique locale :
+    - Exécution de `make test` : validation des 127 tests unitaires réussie à 100%.
+    - Exécution de `make run` avec un fichier `.env.local` configuré localement (ignoré par Git) pour l'usage poli des API : aucun exception lancée, récolte fructueuse.
+    - Exécution de `make export-public` : 239 items exportés en public avec application rigoureuse de la whitelist anti-fuite.
+
