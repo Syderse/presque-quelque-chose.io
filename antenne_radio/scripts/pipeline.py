@@ -201,6 +201,7 @@ def run_pipeline(
                 rss_raw_path=paths.rss_raw_path,
                 hal_raw_path=paths.hal_raw_path,
                 crossref_raw_path=paths.crossref_raw_path,
+                openalex_raw_path=paths.openalex_raw_path,
                 db_path=paths.db_path,
                 log_path=paths.api_log_path,
             ),

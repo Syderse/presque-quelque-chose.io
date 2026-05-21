@@ -128,6 +128,12 @@ AUDITED_ATTRIBUTIONS: dict[str, dict[str, str]] = {
         "source_family": "hal",
         "attribution_text": "Source: HAL open archive - lien vers la notice HAL.",
     },
+    "openalex": {
+        "name": "OpenAlex",
+        "url": "https://openalex.org/",
+        "source_family": "openalex",
+        "attribution_text": "Source: OpenAlex - lien vers la notice originale.",
+    },
 }
 
 ATTRIBUTION_BY_SOURCE_NAME = {
@@ -143,6 +149,7 @@ ATTRIBUTION_BY_SOURCE_NAME = {
     "Nieman Storyboard": "nieman_storyboard",
     "Transom": "transom",
     "HAL radio studies search": "hal",
+    "OpenAlex": "openalex",
 }
 
 

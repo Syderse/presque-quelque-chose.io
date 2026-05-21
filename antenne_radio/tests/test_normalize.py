@@ -267,3 +267,251 @@ def test_invalid_entry_is_logged_and_valid_entries_continue(tmp_path):
 
     assert result["saved_count"] == 1
     assert "Invalid RSS entry skipped at index 0" in log_path.read_text(encoding="utf-8")
+
+
+def openalex_fixture_entry(**overrides):
+    entry = {
+        "id": "https://openalex.org/W1234567890",
+        "doi": "https://doi.org/10.1080/19376529.2026.9999999",
+        "display_name": "Community Radio and Sound Art Practices",
+        "title": "Community Radio and Sound Art Practices",
+        "publication_date": "2026-03-15",
+        "publication_year": 2026,
+        "type": "article",
+        "language": "en",
+        "primary_location": {
+            "source": {
+                "display_name": "Journal of Radio & Audio Media",
+            },
+            "landing_page_url": "https://www.tandfonline.com/doi/full/10.1080/19376529.2026.9999999",
+        },
+        "keywords": [
+            {"display_name": "Radio studies", "keyword": "Radio studies"},
+            {"display_name": "Community radio", "keyword": "Community radio"},
+        ],
+        "primary_topic": {
+            "display_name": "Broadcasting and Media Studies",
+        },
+        "relevance_score": 42.5,
+        "_openalex_source": {
+            "profile_id": "radio_studies",
+            "profile_label": "Radio studies",
+            "endpoint": "https://api.openalex.org/works",
+        },
+    }
+    entry.update(overrides)
+    return entry
+
+
+def test_normalize_openalex_entry_basic():
+    item = normalize.normalize_openalex_entry(openalex_fixture_entry(), discovered_at=DISCOVERED_AT)
+
+    assert item.title == "Community Radio and Sound Art Practices"
+    assert item.doi == "10.1080/19376529.2026.9999999"
+    assert item.url == "https://doi.org/10.1080/19376529.2026.9999999"
+    assert item.source_name == "Journal of Radio & Audio Media"
+    assert item.source_api == "openalex"
+    assert item.language == "en"
+    assert "Radio studies" in item.tags
+    assert "Community radio" in item.tags
+    assert "Broadcasting and Media Studies" in item.tags
+    assert item.published_at is not None
+    assert item.published_at.year == 2026
+    assert item.abstract is None  # Never reconstructed
+
+
+def test_normalize_openalex_doi_as_url_form():
+    item = normalize.normalize_openalex_entry(
+        openalex_fixture_entry(doi="https://doi.org/10.1080/19376529.2026.9999999"),
+        discovered_at=DISCOVERED_AT,
+    )
+    assert item.doi == "10.1080/19376529.2026.9999999"
+
+    item2 = normalize.normalize_openalex_entry(
+        openalex_fixture_entry(doi="http://dx.doi.org/10.1080/19376529.2026.9999999"),
+        discovered_at=DISCOVERED_AT,
+    )
+    assert item2.doi == "10.1080/19376529.2026.9999999"
+
+    item3 = normalize.normalize_openalex_entry(
+        openalex_fixture_entry(doi="doi:10.1080/19376529.2026.9999999"),
+        discovered_at=DISCOVERED_AT,
+    )
+    assert item3.doi == "10.1080/19376529.2026.9999999"
+
+    # All should produce the same stable ID
+    assert item.id == item2.id == item3.id
+
+
+def test_normalize_openalex_doi_from_ids_field():
+    entry = openalex_fixture_entry(doi=None)
+    entry["ids"] = {"doi": "https://doi.org/10.1080/19376529.2026.9999999", "openalex": "https://openalex.org/W1234567890"}
+    item = normalize.normalize_openalex_entry(entry, discovered_at=DISCOVERED_AT)
+
+    assert item.doi == "10.1080/19376529.2026.9999999"
+    assert item.url == "https://doi.org/10.1080/19376529.2026.9999999"
+
+
+def test_normalize_openalex_no_doi_with_landing_page():
+    entry = openalex_fixture_entry(doi=None)
+    entry["primary_location"]["landing_page_url"] = "https://example.org/article/radio-community"
+    item = normalize.normalize_openalex_entry(entry, discovered_at=DISCOVERED_AT)
+
+    assert item.doi is None
+    assert item.url == "https://example.org/article/radio-community"
+
+
+def test_normalize_openalex_no_doi_no_landing_page_fallback_openalex_id():
+    entry = openalex_fixture_entry(doi=None)
+    entry["primary_location"] = None
+    item = normalize.normalize_openalex_entry(entry, discovered_at=DISCOVERED_AT)
+
+    assert item.doi is None
+    assert item.url == "https://openalex.org/W1234567890"
+
+
+def test_normalize_openalex_keywords_as_strings():
+    entry = openalex_fixture_entry(keywords=["radio studies", "sound art", "broadcasting"])
+    item = normalize.normalize_openalex_entry(entry, discovered_at=DISCOVERED_AT)
+
+    assert "radio studies" in item.tags
+    assert "sound art" in item.tags
+    assert "broadcasting" in item.tags
+
+
+def test_normalize_openalex_keywords_mixed_and_invalid():
+    entry = openalex_fixture_entry(keywords=[
+        {"display_name": "Radio studies"},
+        "sound art",
+        42,  # should be silently ignored
+        None,  # should be silently ignored
+        {"keyword": "broadcasting"},
+    ])
+    item = normalize.normalize_openalex_entry(entry, discovered_at=DISCOVERED_AT)
+
+    assert "Radio studies" in item.tags
+    assert "sound art" in item.tags
+    assert "broadcasting" in item.tags
+
+
+def test_merge_deduplicates_openalex_and_crossref_with_same_doi():
+    openalex_item = normalize.normalize_openalex_entry(
+        openalex_fixture_entry(doi="https://doi.org/10.1080/19376529.2026.1234567"),
+        discovered_at=DISCOVERED_AT,
+    )
+    crossref_item = normalize.normalize_crossref_entry(crossref_fixture_item(), discovered_at=DISCOVERED_AT)
+
+    # Crossref arrives first → OpenAlex must not overwrite it
+    merged = normalize.merge_items_without_duplicates([crossref_item], [openalex_item])
+
+    assert len(merged) == 1
+    assert merged[0].id == crossref_item.id
+    assert merged[0].source_api == "crossref"
+    assert merged[0].source_name == "Journal of Radio & Audio Media"
+    assert merged[0].doi == "10.1080/19376529.2026.1234567"
+    assert merged[0].url == crossref_item.url  # Crossref URL preserved
+    assert merged[0].status == crossref_item.status
+
+
+def test_merge_openalex_does_not_overwrite_existing_stronger_source():
+    existing_item = RadioWatchItem(
+        id="doi:existing-hal-item",
+        title="Community Radio and Sound Art Practices",
+        source_name="HAL radio studies search",
+        source_type=SourceType.journal_article,
+        language="en",
+        status=WatchStatus.to_read,
+        discovered_at=DISCOVERED_AT,
+        published_at=DISCOVERED_AT,
+        url="https://hal.science/hal-999999",
+        doi="10.1080/19376529.2026.9999999",
+        source_api="hal",
+        raw={"source": "hal"},
+    )
+    openalex_item = normalize.normalize_openalex_entry(
+        openalex_fixture_entry(),
+        discovered_at=DISCOVERED_AT,
+    )
+
+    merged = normalize.merge_items_without_duplicates([existing_item], [openalex_item])
+
+    assert len(merged) == 1
+    assert merged[0].id == "doi:existing-hal-item"
+    assert merged[0].source_name == "HAL radio studies search"
+    assert merged[0].source_api == "hal"
+    assert merged[0].status is WatchStatus.to_read
+    assert merged[0].url == "https://hal.science/hal-999999"
+
+
+def test_normalize_latest_dumps_includes_openalex(tmp_path):
+    rss_dump = tmp_path / "data" / "raw" / "rss_latest.json"
+    hal_dump = tmp_path / "data" / "raw" / "hal_latest.json"
+    crossref_dump = tmp_path / "data" / "raw" / "crossref_latest.json"
+    openalex_dump = tmp_path / "data" / "raw" / "openalex_latest.json"
+    db_path = tmp_path / "data" / "normalized" / "db.json"
+    log_path = tmp_path / "data" / "logs" / "api.log"
+    rss_dump.parent.mkdir(parents=True, exist_ok=True)
+    hal_dump.parent.mkdir(parents=True, exist_ok=True)
+    crossref_dump.parent.mkdir(parents=True, exist_ok=True)
+    openalex_dump.parent.mkdir(parents=True, exist_ok=True)
+
+    rss_dump.write_text(json.dumps({"entries": []}), encoding="utf-8")
+    hal_dump.write_text(json.dumps({"docs": []}), encoding="utf-8")
+    crossref_dump.write_text(json.dumps({"items": []}), encoding="utf-8")
+    openalex_dump.write_text(json.dumps({"items": [openalex_fixture_entry()]}), encoding="utf-8")
+
+    result = normalize.normalize_latest_dumps(
+        rss_raw_path=rss_dump,
+        hal_raw_path=hal_dump,
+        crossref_raw_path=crossref_dump,
+        openalex_raw_path=openalex_dump,
+        db_path=db_path,
+        log_path=log_path,
+    )
+
+    assert result["normalized_count"] == 1
+    assert result["saved_count"] == 1
+    saved = normalize.load_existing_db(db_path, log_path=log_path)
+    assert len(saved) == 1
+    assert saved[0].source_api == "openalex"
+    assert saved[0].doi == "10.1080/19376529.2026.9999999"
+
+
+def test_normalize_latest_dumps_deduplicates_openalex_crossref(tmp_path):
+    rss_dump = tmp_path / "data" / "raw" / "rss_latest.json"
+    hal_dump = tmp_path / "data" / "raw" / "hal_latest.json"
+    crossref_dump = tmp_path / "data" / "raw" / "crossref_latest.json"
+    openalex_dump = tmp_path / "data" / "raw" / "openalex_latest.json"
+    db_path = tmp_path / "data" / "normalized" / "db.json"
+    log_path = tmp_path / "data" / "logs" / "api.log"
+    rss_dump.parent.mkdir(parents=True, exist_ok=True)
+    hal_dump.parent.mkdir(parents=True, exist_ok=True)
+    crossref_dump.parent.mkdir(parents=True, exist_ok=True)
+    openalex_dump.parent.mkdir(parents=True, exist_ok=True)
+
+    # Same DOI in both sources
+    rss_dump.write_text(json.dumps({"entries": []}), encoding="utf-8")
+    hal_dump.write_text(json.dumps({"docs": []}), encoding="utf-8")
+    crossref_dump.write_text(json.dumps({"items": [crossref_fixture_item()]}), encoding="utf-8")
+    openalex_dump.write_text(
+        json.dumps({"items": [openalex_fixture_entry(doi="https://doi.org/10.1080/19376529.2026.1234567")]}),
+        encoding="utf-8",
+    )
+
+    result = normalize.normalize_latest_dumps(
+        rss_raw_path=rss_dump,
+        hal_raw_path=hal_dump,
+        crossref_raw_path=crossref_dump,
+        openalex_raw_path=openalex_dump,
+        db_path=db_path,
+        log_path=log_path,
+    )
+
+    assert result["normalized_count"] == 2  # 1 crossref + 1 openalex
+    assert result["saved_count"] == 1  # Deduplicated to 1
+    saved = normalize.load_existing_db(db_path, log_path=log_path)
+    assert len(saved) == 1
+    # Crossref was normalized first, so it's the existing one
+    assert saved[0].source_api == "crossref"
+    assert saved[0].doi == "10.1080/19376529.2026.1234567"
+

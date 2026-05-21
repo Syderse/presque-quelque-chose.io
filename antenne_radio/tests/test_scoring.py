@@ -167,3 +167,65 @@ def test_score_db_writes_only_new_items(tmp_path):
     assert saved[0] == exported
     assert saved[1]["status"] == WatchStatus.to_read.value
     assert saved[1]["score_explanation"]
+
+
+def test_radio_audio_studies_item_scores_high():
+    scored = score_payload(
+        item_payload(
+            title="Radio studies in the digital age",
+            abstract="An analysis of broadcasting history and radio journalism practices.",
+            tags=["radio studies", "broadcasting"],
+        )
+    )
+
+    assert scored.status is WatchStatus.to_read
+    assert scored.relevance_score >= 6
+    assert "radio studies" in scored.keywords_matched
+    assert scored.negative_keywords_matched == []
+
+
+def test_sound_studies_item_scores_positive():
+    scored = score_payload(
+        item_payload(
+            title="Sonic geography and auditory culture",
+            abstract="Exploring soundscapes and acoustic ecology in urban settings.",
+            tags=["sound studies"],
+        )
+    )
+
+    assert scored.status in {WatchStatus.to_read, WatchStatus.candidate}
+    assert scored.relevance_score >= 2
+    assert any(kw in scored.keywords_matched for kw in ["sound studies", "sonic", "auditory culture", "soundscape", "acoustic ecology", "sonic geography"])
+    assert scored.negative_keywords_matched == []
+
+
+def test_telecom_radio_noise_with_openalex_keywords():
+    scored = score_payload(
+        item_payload(
+            title="Beamforming and signal processing for radio propagation",
+            abstract="Antenna array optimization in wireless networks using MIMO-NOMA systems.",
+            tags=["signal processing", "beamforming", "radio propagation"],
+        )
+    )
+
+    assert scored.status is WatchStatus.ignored
+    assert scored.relevance_score < 2
+    assert len(scored.negative_keywords_matched) > 0
+
+
+def test_source_name_does_not_dominate_scoring():
+    scored = score_payload(
+        item_payload(
+            title="Spectrum sensing optimization for cognitive radio networks",
+            abstract="Dynamic spectrum access in 5G mobile networks.",
+            tags=["cognitive radio", "5G"],
+            source_name="International Journal of Radio Frequency Engineering",
+        )
+    )
+
+    # source_name contains "radio" giving a small positive boost,
+    # but the heavy negative keywords should still push it to ignored
+    assert scored.status is WatchStatus.ignored
+    assert scored.relevance_score < 2
+    assert "cognitive radio" in scored.negative_keywords_matched
+

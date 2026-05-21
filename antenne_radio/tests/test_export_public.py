@@ -324,3 +324,108 @@ def test_public_export_does_not_modify_db(tmp_path):
     )
 
     assert json.loads(db_path.read_text(encoding="utf-8")) == items
+
+
+def test_openalex_item_export_public_without_score_or_abstract(tmp_path):
+    db_path = tmp_path / "db.json"
+    output_path = tmp_path / "public" / "index.json"
+    write_db(
+        db_path,
+        [
+            item_payload(
+                id="manual:openalex",
+                source_name="OpenAlex",
+                source_api="openalex",
+                source_type=SourceType.journal_article.value,
+                abstract="Private OpenAlex abstract that must not leak",
+                relevance_score=15.5,
+                score_explanation="+8 radio dans title; score final 15.5",
+                keywords_matched=["radio", "community radio"],
+                negative_keywords_matched=[],
+                tags=["radio studies", "broadcasting"],
+                authors=["Private Author"],
+                raw={
+                    "id": "https://openalex.org/W999",
+                    "abstract_inverted_index": {"This": [0], "is": [1], "private": [2]},
+                    "authorships": [{"author": {"display_name": "Private Author"}}],
+                    "relevance_score": 42.5,
+                },
+            )
+        ],
+    )
+
+    result = export_public.export_public_json(
+        db_path=db_path,
+        output_path=output_path,
+        generated_at=GENERATED_AT,
+    )
+    exported = json.loads(output_path.read_text(encoding="utf-8"))
+    content = output_path.read_text(encoding="utf-8")
+
+    assert result["items_exported"] == 1
+    assert set(exported["items"][0]) == PUBLIC_ITEM_KEYS
+    assert exported["items"][0]["attribution_id"] == "openalex"
+    assert exported["items"][0]["source_name"] == "OpenAlex"
+    assert exported["items"][0]["source_family"] == "openalex"
+    assert forbidden_keys(exported) == set()
+    # Reinforced anti-leak checks
+    assert "Private OpenAlex abstract" not in content
+    assert "abstract_inverted_index" not in content
+    assert "authorships" not in content
+    assert "Private Author" not in content
+    assert "relevance_score" not in content
+    assert "score_explanation" not in content
+    assert "keywords_matched" not in content
+    assert "score final" not in content
+
+
+def test_openalex_attribution_mapping():
+    assert "OpenAlex" in export_public.ATTRIBUTION_BY_SOURCE_NAME
+    assert export_public.ATTRIBUTION_BY_SOURCE_NAME["OpenAlex"] == "openalex"
+    assert "openalex" in export_public.AUDITED_ATTRIBUTIONS
+    assert export_public.AUDITED_ATTRIBUTIONS["openalex"]["source_family"] == "openalex"
+    assert export_public.AUDITED_ATTRIBUTIONS["openalex"]["url"] == "https://openalex.org/"
+
+
+def test_public_export_anti_leak_reinforced(tmp_path):
+    """Reinforced anti-leak: abstract_inverted_index, authorships, and all forbidden keys must never appear."""
+    db_path = tmp_path / "db.json"
+    output_path = tmp_path / "public" / "index.json"
+    write_db(
+        db_path,
+        [
+            item_payload(
+                id="manual:leak-check",
+                raw={
+                    "abstract_inverted_index": {"hidden": [0, 1]},
+                    "authorships": [{"author": {"display_name": "Leak Author"}}],
+                    "_merged_sources": [{"source_api": "openalex"}],
+                },
+                abstract="Leak abstract content",
+                authors=["Leak Author"],
+                tags=["leak-tag"],
+                relevance_score=9.0,
+                score_explanation="private explanation",
+                keywords_matched=["radio"],
+                negative_keywords_matched=["wireless"],
+            )
+        ],
+    )
+
+    export_public.export_public_json(
+        db_path=db_path,
+        output_path=output_path,
+        generated_at=GENERATED_AT,
+    )
+    exported = json.loads(output_path.read_text(encoding="utf-8"))
+    content = output_path.read_text(encoding="utf-8")
+
+    assert forbidden_keys(exported) == set()
+    assert "abstract_inverted_index" not in content
+    assert "authorships" not in content
+    assert "Leak Author" not in content
+    assert "Leak abstract content" not in content
+    assert "leak-tag" not in content
+    assert "private explanation" not in content
+    assert "_merged_sources" not in content
+

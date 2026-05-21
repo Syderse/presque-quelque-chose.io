@@ -25,3 +25,4 @@ fields:
   title: 2
   abstract: 1
   tags: 2
+  source_name: 1

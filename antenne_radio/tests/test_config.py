@@ -80,4 +80,4 @@ def test_scoring_references_keyword_categories():
     assert scoring["thresholds"]["to_read"]["gte"] == 6
     assert scoring["thresholds"]["candidate"]["gte"] == 2
     assert scoring["thresholds"]["ignored"]["lt"] == 2
-    assert set(scoring["fields"]) == {"title", "abstract", "tags"}
+    assert set(scoring["fields"]) == {"title", "abstract", "tags", "source_name"}

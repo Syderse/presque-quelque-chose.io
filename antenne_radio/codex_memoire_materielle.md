@@ -272,3 +272,72 @@
   - Aucun export public régénéré ; aucun champ public ajouté.
 - **Prochaine étape recommandée** :
   - Conversation fraîche Prompt 2.3 : ajouter la normalisation OpenAlex privée dans `scripts/core/normalize.py`, dédupliquer par DOI avec Crossref/HAL/RSS, brancher le score de pertinence privé, vérifier que `abstract_inverted_index`, abstracts, auteurs, tags/topics/keywords et scores restent hors export public, puis lancer `make test` et seulement les recettes publiques explicitement demandées.
+
+---
+
+## 2026-05-21 - Conversation 3 - Normalisation OpenAlex, scoring et anti-fuite (Prompt 2.3)
+- **Objectif** : Normaliser les items OpenAlex, les intégrer à la déduplication DOI inter-sources, ajuster le scoring, ajouter l'attribution publique OpenAlex, et vérifier l'absence de fuite de données privées.
+- **Pas de run live OpenAlex** : aucun appel réseau, aucune donnée réelle ingérée.
+- **Décisions de scoring** :
+  - `keywords.yaml` enrichi :
+    - `radio_core` : ajout de `broadcasting history`, `radio production`, `radio journalism`.
+    - `sound_studies` : ajout de `sound art`, `sonic geography`, `audio culture`, `noise studies`.
+    - `podcast` : ajout de `podcast studies`, `audio documentary`.
+    - `negative_noise` : ajout de `radiotherapy`, `radiation therapy`, `nuclear medicine`.
+    - `technical_radio_noise` : ajout de `beamforming`, `radio propagation`, `antenna array`, `signal processing`.
+  - `scoring.yaml` : ajout du champ `source_name` avec multiplicateur `1` dans `fields`. Les noms de revues comme « Journal of Radio & Audio Media » apportent un petit boost explicable ; mais les poids négatifs techniques dominent toujours le bruit.
+  - Poids inchangés : `radio_core`/`radio_free` à 3, `sound_studies`/`podcast` à 2, `negative_noise` à −6, `technical_radio_noise` à −2.
+  - Seuils inchangés : `to_read ≥ 6`, `candidate ≥ 2`, `ignored < 2`.
+- **Attribution publique OpenAlex** :
+  - `export_public.py` : ajout de l'entrée `"openalex"` dans `AUDITED_ATTRIBUTIONS` (famille `openalex`, URL `https://openalex.org/`) et `ATTRIBUTION_BY_SOURCE_NAME` (`"OpenAlex"` → `"openalex"`).
+  - Si un item existe **uniquement** via OpenAlex, il reçoit l'attribution publique `openalex`.
+  - Si un item OpenAlex doublonne un item Crossref/HAL/RSS par DOI, l'item existant conserve son attribution/source canonique ; OpenAlex ne remplace ni `source_name`, ni `url`, ni `status`, ni `source_api`.
+- **Normalisation OpenAlex dans `normalize.py`** :
+  - `normalize_openalex_entry()` : DOI normalisé via `normalize_doi()` existant (accepte `https://doi.org/...`, `http://dx.doi.org/...`, `doi:...`, `10....`, et `entry["ids"]["doi"]`).
+  - URL canonique : DOI → `https://doi.org/...` ; sinon `primary_location.landing_page_url` ; sinon `entry["id"]` OpenAlex en dernier fallback.
+  - Titre depuis `display_name` ou `title`.
+  - Date depuis `publication_date` (ISO), fallback `publication_year`.
+  - Langue depuis `language` ou `"und"`.
+  - `source_name` depuis `primary_location.source.display_name` ou `"OpenAlex"`.
+  - `source_api = "openalex"`.
+  - Tags : extraction défensive de `keywords` (gère `str`, `dict` avec `display_name`/`keyword`, et formes invalides silencieusement ignorées) + `primary_topic.display_name`.
+  - `source_type` mappé depuis `entry["type"]` (article, book, book-chapter, dissertation, review).
+  - **Interdit** : abstract jamais reconstruit, `abstract_inverted_index` jamais touché.
+  - `raw = entry` (privé, jamais exporté publiquement).
+  - `normalize_latest_dumps()` accepte et lit `openalex_raw_path`, les items OpenAlex passent par `merge_items_without_duplicates` → déduplication DOI avec toutes les sources.
+  - CLI : `--openalex` ajouté à `parse_args()`.
+- **Pipeline** :
+  - `pipeline.py` : `openalex_raw_path=paths.openalex_raw_path` passé à `functions.normalize(...)`.
+- **Fichiers modifiés** :
+  - `antenne_radio/scripts/core/normalize.py` : `DEFAULT_OPENALEX_RAW`, `normalize_openalex_entry()` et helpers, mise à jour de `normalize_latest_dumps()`, CLI.
+  - `antenne_radio/scripts/pipeline.py` : passage de `openalex_raw_path` au normalize.
+  - `antenne_radio/config/keywords.yaml` : termes radio/audio/sound renforcés, bruit technique ajouté.
+  - `antenne_radio/config/scoring.yaml` : `source_name: 1` ajouté aux champs scorés.
+  - `antenne_radio/scripts/export/export_public.py` : attribution `openalex` ajoutée.
+  - `antenne_radio/tests/test_normalize.py` : 12 tests OpenAlex ajoutés.
+  - `antenne_radio/tests/test_scoring.py` : 4 tests ajoutés (radio/audio, sound studies, bruit technique, source_name ne domine pas).
+  - `antenne_radio/tests/test_export_public.py` : 3 tests ajoutés (item OpenAlex public sans score/abstract, mapping attribution, anti-fuite renforcé).
+  - `antenne_radio/tests/test_config.py` : assertion `fields` mise à jour pour inclure `source_name`.
+  - `antenne_radio/codex_memoire_materielle.md` : présent handoff.
+- **Commandes lancées** :
+  - `git status --short` : worktree propre au départ.
+  - Lecture de `docs/AGENTS.md`, `antenne_radio/README.md`, `antenne_radio/codex_memoire_materielle.md`.
+  - `find antenne_radio -type f` : inventaire complet des fichiers.
+  - Lectures ciblées : `normalize.py`, `models.py`, `scoring.py`, `pipeline.py`, `ingest_openalex.py`, `export_public.py`, `keywords.yaml`, `scoring.yaml`, `sources.yaml`, `test_normalize.py`, `test_scoring.py`, `test_export_public.py`, `test_config.py`.
+  - `.venv/bin/pytest tests/ -v --tb=short` : 119 tests passent (0 échecs).
+- **Résultats anti-fuite** :
+  - Tests vérifient que `abstract_inverted_index`, `authorships`, `abstract`, `raw`, `score`, `score_explanation`, `keywords_matched`, `negative_keywords_matched`, `authors`, `tags`, `source_api`, `source_feed`, `_merged_sources` sont absents du JSON public.
+  - La whitelist publique reste strictement : `id`, `title`, `url`, `doi`, `published_at`, `source_name`, `source_type`, `language`, `source_family`, `attribution_id`.
+- **Politique 18 mois** :
+  - L'ingestion OpenAlex filtre déjà les items par `from_publication_date` dans l'ingestor (fenêtre 18 mois configurée dans `sources.yaml`).
+  - La normalisation n'ajoute pas de filtre de rétention supplémentaire (pas le sujet de ce prompt).
+  - Le pruning explicite (suppression des items anciens de `db.json`) reste un chantier futur documenté.
+- **Compteurs OpenAlex** : aucun run live → 0 item OpenAlex réel ingéré.
+- **Limites restantes** :
+  - Aucun run live OpenAlex lancé.
+  - `db.json` et `static/antenne-radio/index.json` n'ont pas été régénérés.
+  - `LEGAL_AUDIT.md` pourrait être mis à jour pour documenter l'attribution OpenAlex publique.
+  - Le pruning 18 mois de `db.json` n'est pas encore implémenté.
+- **Prochaine étape recommandée** :
+  - Conversation fraîche Prompt 2.4 : activation temporaire OpenAlex avec `OPENALEX_MAILTO` local, run ultra-limité (1 profil, 1 page, `per_page: 5`), inspection de `openalex_latest.json` et `db.json`, vérification des compteurs et de la déduplication réelle, `make export-public` + scan anti-fuite, puis remise à `enabled: false` sauf décision contraire documentée. Mise à jour de `LEGAL_AUDIT.md` pour l'attribution OpenAlex.
+
