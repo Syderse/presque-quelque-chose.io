@@ -450,6 +450,73 @@ def test_openalex_attribution_mapping():
     assert export_public.AUDITED_ATTRIBUTIONS["openalex"]["url"] == "https://openalex.org/"
 
 
+@pytest.mark.parametrize(
+    ("source_name", "attribution_id", "source_family"),
+    [
+        ("Organised Sound", "organised_sound", "crossref"),
+        ("SoundEffects", "sound_effects_journal", "crossref"),
+        ("SoundEffects: An Interdisciplinary Journal of Sound and Sound Experience", "sound_effects_journal", "crossref"),
+        ("Popular Communication", "popular_communication", "openalex"),
+        ("Convergence", "convergence_journal", "openalex"),
+        ("Convergence: The International Journal of Research into New Media Technologies", "convergence_journal", "openalex"),
+        ("Media, Culture & Society", "media_culture_society", "openalex"),
+        ("Feminist Media Studies", "feminist_media_studies", "openalex"),
+        ("Participations", "participations_journal", "openalex"),
+        ("Participations: Journal of Audience & Reception Studies", "participations_journal", "openalex"),
+        ("Critical Studies in Television", "critical_studies_tv", "openalex"),
+        ("VIEW Journal of European Television History and Culture", "view_journal", "openalex"),
+        ("Réseaux", "reseaux", "openalex"),
+        ("Réseaux (Paris)", "reseaux", "openalex"),
+        ("Questions de communication", "questions_communication", "openalex"),
+        ("Études de communication", "etudes_communication", "openalex"),
+        ("Volume!", "volume_journal", "openalex"),
+        ("Transposition", "transposition_journal", "openalex"),
+        ("Sociétés & Représentations", "societes_representations", "openalex"),
+    ],
+)
+def test_public_export_maps_new_2026_05_25_sources(
+    tmp_path,
+    source_name,
+    attribution_id,
+    source_family,
+):
+    db_path = tmp_path / "db.json"
+    output_path = tmp_path / "public" / "index.json"
+    write_db(db_path, [item_payload(source_name=source_name, source_type=SourceType.journal_article.value)])
+
+    result = export_public.export_public_json(
+        db_path=db_path,
+        output_path=output_path,
+        generated_at=GENERATED_AT,
+    )
+    exported = json.loads(output_path.read_text(encoding="utf-8"))
+    public_item = exported["items"][0]
+
+    assert result["items_exported"] == 1
+    assert set(public_item) == PUBLIC_ITEM_KEYS
+    assert public_item["attribution_id"] == attribution_id
+    assert public_item["source_family"] == source_family
+    assert exported["sources"][0]["attribution_id"] == attribution_id
+    assert forbidden_keys(exported) == set()
+
+
+def test_new_crossref_attribution_integrity():
+    for attribution_id in ("organised_sound", "sound_effects_journal"):
+        assert attribution_id in export_public.AUDITED_ATTRIBUTIONS
+        assert export_public.AUDITED_ATTRIBUTIONS[attribution_id]["source_family"] == "crossref"
+
+def test_new_openalex_attribution_integrity():
+    new_openalex_ids = (
+        "popular_communication", "convergence_journal", "media_culture_society",
+        "feminist_media_studies", "participations_journal", "critical_studies_tv",
+        "view_journal", "reseaux", "questions_communication", "etudes_communication",
+        "volume_journal", "transposition_journal", "societes_representations",
+    )
+    for attribution_id in new_openalex_ids:
+        assert attribution_id in export_public.AUDITED_ATTRIBUTIONS, f"Attribution manquante : {attribution_id}"
+        assert export_public.AUDITED_ATTRIBUTIONS[attribution_id]["source_family"] == "openalex"
+
+
 def test_public_export_anti_leak_reinforced(tmp_path):
     """Reinforced anti-leak: abstract_inverted_index, authorships, and all forbidden keys must never appear."""
     db_path = tmp_path / "db.json"

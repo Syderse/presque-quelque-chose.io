@@ -158,6 +158,96 @@ AUDITED_ATTRIBUTIONS: dict[str, dict[str, str]] = {
         "source_family": "openalex",
         "attribution_text": "Source: OpenAlex - lien vers la notice originale.",
     },
+    "organised_sound": {
+        "name": "Organised Sound",
+        "url": "https://www.cambridge.org/core/journals/organised-sound",
+        "source_family": "crossref",
+        "attribution_text": "Source: Organised Sound (Cambridge University Press) - lien vers la notice originale.",
+    },
+    "sound_effects_journal": {
+        "name": "SoundEffects",
+        "url": "https://www.soundeffects.dk/",
+        "source_family": "crossref",
+        "attribution_text": "Source: SoundEffects (Roskilde University Press) - lien vers la notice originale.",
+    },
+    "popular_communication": {
+        "name": "Popular Communication",
+        "url": "https://www.tandfonline.com/journals/hppc20",
+        "source_family": "openalex",
+        "attribution_text": "Source: Popular Communication (Taylor & Francis) - lien vers la notice originale.",
+    },
+    "convergence_journal": {
+        "name": "Convergence",
+        "url": "https://journals.sagepub.com/home/con",
+        "source_family": "openalex",
+        "attribution_text": "Source: Convergence (SAGE) - lien vers la notice originale.",
+    },
+    "media_culture_society": {
+        "name": "Media, Culture & Society",
+        "url": "https://journals.sagepub.com/home/mcs",
+        "source_family": "openalex",
+        "attribution_text": "Source: Media, Culture & Society (SAGE) - lien vers la notice originale.",
+    },
+    "feminist_media_studies": {
+        "name": "Feminist Media Studies",
+        "url": "https://www.tandfonline.com/journals/rfms20",
+        "source_family": "openalex",
+        "attribution_text": "Source: Feminist Media Studies (Taylor & Francis) - lien vers la notice originale.",
+    },
+    "participations_journal": {
+        "name": "Participations",
+        "url": "https://www.participations.org/",
+        "source_family": "openalex",
+        "attribution_text": "Source: Participations: Journal of Audience & Reception Studies - lien vers la notice originale.",
+    },
+    "critical_studies_tv": {
+        "name": "Critical Studies in Television",
+        "url": "https://journals.sagepub.com/home/cst",
+        "source_family": "openalex",
+        "attribution_text": "Source: Critical Studies in Television (SAGE/Manchester UP) - lien vers la notice originale.",
+    },
+    "view_journal": {
+        "name": "VIEW Journal of European Television History and Culture",
+        "url": "https://viewjournal.eu/",
+        "source_family": "openalex",
+        "attribution_text": "Source: VIEW Journal of European Television History and Culture - lien vers la notice originale.",
+    },
+    "reseaux": {
+        "name": "Réseaux",
+        "url": "https://www.cairn.info/revue-reseaux.htm",
+        "source_family": "openalex",
+        "attribution_text": "Source: Réseaux (La Découverte) - lien vers la notice originale.",
+    },
+    "questions_communication": {
+        "name": "Questions de communication",
+        "url": "https://journals.openedition.org/questionsdecommunication/",
+        "source_family": "openalex",
+        "attribution_text": "Source: Questions de communication (PUL) - lien vers la notice originale.",
+    },
+    "etudes_communication": {
+        "name": "Études de communication",
+        "url": "https://journals.openedition.org/edc/",
+        "source_family": "openalex",
+        "attribution_text": "Source: Études de communication (OpenEdition) - lien vers la notice originale.",
+    },
+    "volume_journal": {
+        "name": "Volume!",
+        "url": "https://journals.openedition.org/volume/",
+        "source_family": "openalex",
+        "attribution_text": "Source: Volume! (OpenEdition) - lien vers la notice originale.",
+    },
+    "transposition_journal": {
+        "name": "Transposition",
+        "url": "https://journals.openedition.org/transposition/",
+        "source_family": "openalex",
+        "attribution_text": "Source: Transposition (OpenEdition) - lien vers la notice originale.",
+    },
+    "societes_representations": {
+        "name": "Sociétés & Représentations",
+        "url": "https://www.cairn.info/revue-societes-et-representations.htm",
+        "source_family": "openalex",
+        "attribution_text": "Source: Sociétés & Représentations (Publications de la Sorbonne) - lien vers la notice originale.",
+    },
 }
 
 ATTRIBUTION_BY_SOURCE_NAME = {
@@ -182,6 +272,35 @@ ATTRIBUTION_BY_SOURCE_NAME = {
     "Transom": "transom",
     "HAL radio studies search": "hal",
     "OpenAlex": "openalex",
+    # Nouvelles revues Crossref (container-title tel que retourné par l'API)
+    "Organised Sound": "organised_sound",
+    "SoundEffects": "sound_effects_journal",
+    "SoundEffects: An Interdisciplinary Journal of Sound and Sound Experience": "sound_effects_journal",
+    # Nouvelles revues OpenAlex (primary_location.source.display_name — variantes observées)
+    "Popular Communication": "popular_communication",
+    "Convergence: The International Journal of Research into New Media Technologies": "convergence_journal",
+    "Convergence The International Journal of Research into New Media Technologies": "convergence_journal",
+    "Convergence": "convergence_journal",
+    "Media, Culture & Society": "media_culture_society",
+    "Media Culture & Society": "media_culture_society",
+    "Feminist Media Studies": "feminist_media_studies",
+    "Participations": "participations_journal",
+    "Participations: Journal of Audience & Reception Studies": "participations_journal",
+    "Critical Studies in Television": "critical_studies_tv",
+    "Critical Studies in Television The International Journal of Television Studies": "critical_studies_tv",
+    "VIEW Journal of European Television History and Culture": "view_journal",
+    "VIEW": "view_journal",
+    "Réseaux": "reseaux",
+    "Réseaux (Paris)": "reseaux",
+    "Questions de communication": "questions_communication",
+    "Études de communication": "etudes_communication",
+    "Volume!": "volume_journal",
+    "Volume !": "volume_journal",
+    "Transposition": "transposition_journal",
+    "Sociétés & Représentations": "societes_representations",
+    # Variantes de noms avec entités HTML (retournées par certaines APIs)
+    "Radio Journal:International Studies in Broadcast &amp; Audio Media": "radio_journal",
+    "Journal of sonic studies": "journal_sonic_studies",
 }
 
 

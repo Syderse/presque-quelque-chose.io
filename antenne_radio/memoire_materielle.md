@@ -79,6 +79,52 @@ Chaque notice exportée doit contenir **exclusivement** les clés suivantes :
 
 ---
 
+---
+
+## 6. Bilan — Prompt 1 / Plan final (2026-05-25)
+
+**Objectif :** exhaustivité des revues + scoring abouti + désactivation définitive de la_lettre_pro.
+
+### Fichiers modifiés
+- `config/sources.yaml` : désactivation définitive `la_lettre_pro` ; +2 revues Crossref (`organised_sound`, `sound_effects_journal`) ; +13 profils OpenAlex venue+mots-clés (7 anglophones + 6 francophones).
+- `config/keywords.yaml` : enrichissement FR+EN de `radio_core` (+9 termes), `radio_free` (+6), `sound_studies` (+12), `podcast` (+5).
+- `config/scoring.yaml` : ajout du bloc `academic_source_floor` (min_score=0, source_apis: crossref/openalex/hal).
+- `scripts/core/scoring.py` : implémentation de `_apply_academic_floor` dans `score_item` — les articles académiques avec score brut ≥ 0 remontent à `candidate` au minimum.
+- `scripts/export/export_public.py` : +16 entrées dans `AUDITED_ATTRIBUTIONS` + mappings `ATTRIBUTION_BY_SOURCE_NAME` avec variantes réelles observées post-run (noms sans ponctuation, entités HTML, casse).
+- `tests/test_config.py` : +4 nouveaux tests (floor config, nouvelles revues Crossref, profils OpenAlex, la_lettre_pro).
+- `tests/test_scoring.py` : +7 tests du plancher académique.
+- `tests/test_export_public.py` : +3 tests d'attribution pour les nouvelles sources (19 cas paramétrés).
+- `antenne_radio/01_RESSOURCES_SUIVIES.md` : mise à jour Crossref (6 revues), OpenAlex (20 profils), la_lettre_pro → désactivée définitivement.
+
+### Compteurs réels (run du 2026-05-25)
+- `make run` : 0 step échoué.
+- `data/normalized/db.json` : **660 items** (vs 295 avant) — `to_read=292`, `candidate=266`, `ignored=102`.
+- Source APIs : crossref=80, hal=45, openalex=276, rss=259.
+- `make export-public` → **505 items publics** (vs 233 avant), 28 sources.
+- Répartition publique : HAL 39, RSS Radio Survivor 52, La Lettre Pro (anciens) 30, Sounding Out! 30, Radio Fañch 23, Organised Sound 21, Media C&S 20, Sound Studies 20, Convergence 20, JSS 20, Réseaux 20, VIEW 20, Radio Journal 20, Questions de comm 20, Transposition 17, Sociétés & Repr. 13, Resonance 12, Volume! 11, JRAM T&F 35…
+- **Doublons DOI : 0**.
+- `make test` : **159/159 passés** (127 initiaux + 32 nouveaux).
+
+### Scan anti-fuite
+- 0 clé interdite dans l'index public.
+- 0 e-mail, 0 chemin local.
+- Whitelist stricte respectée (10 clés exactes par item).
+
+### Plancher de confiance
+- Articles Crossref/OpenAlex/HAL avec score ≥ 0 → minimum `candidate` (jamais `ignored`).
+- Les poids négatifs techniques (-2) restent dominants si score < 0 : le bruit RF/médical intense reste `ignored`.
+- Mention dans `score_explanation` : "plancher académique: statut élevé de ignored à candidate".
+
+### Limites et points à surveiller
+- Quelques sources OpenAlex bruyantes (SAGE Open, Social Sciences génériques) captées par les profils filtrés → bruit technique → `ignored`. Acceptable.
+- `la_lettre_pro` : 30 anciens items restent en base (statut `to_read`/`candidate`) et sont exportés — c'est le comportement attendu (pas de suppression automatique des items existants).
+- Les profils francophones (Réseaux, Questions de comm, etc.) retournent 20 items chacun → bien mais certains peuvent être hors-sujet radio ; le scoring les filtre.
+
+### Prochaine étape
+**Prompt 2** — Contrat public enrichi : ajouter `authors`, `container_title`, `item_type` pour les sources bibliographiques uniquement (crossref/openalex/hal), avec anti-fuite e-mail renforcé.
+
+---
+
 ## 5. Perspectives : V4 Japonaise
 
 La future V4 couvrira la littérature académique japonaise (mini-FM, radios communautaires, Tetsuo Kogawa, sound/media studies au Japon).

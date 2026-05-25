@@ -6,6 +6,7 @@
 **Décisions prises avec l'auteur (2026-05-24) :**
 - Contrat public **enrichi** : ajout de `authors` + `container_title` (nom de revue) + `item_type`, **pour les sources bibliographiques uniquement** (Crossref / OpenAlex / HAL). Les sources éditoriales/journalistiques (blogs RSS) restent au contrat minimal. Conforme à la recommandation du `LEGAL_AUDIT.md`.
 - Publication hebdomadaire : commande unique qui **génère + affiche les compteurs + rappelle le `git push` à lancer soi-même**. **Pas d'auto-commit** (doctrine `antenne_radio`).
+- **Désactivation de source bruyante** : désactiver la source *La lettre de la radio & du podcast* (`la_lettre_pro`) car elle génère beaucoup trop de bruit dans la base.
 
 ---
 
@@ -25,22 +26,23 @@
 
 **But :** rendre la veille exhaustive sur le champ et fiabiliser le tri automatique, pour qu'aucune curation manuelle ne soit nécessaire ensuite.
 
-**Contexte (depuis la mémoire) :** sources actives = RSS×10, HAL, Crossref (`journal_radio_audio_media`, `radio_journal`, `sound_studies_journal`, `resonance_journal`), OpenAlex (profils + venue JSS). Scoring lexical : poids `radio_core/radio_free=3`, `sound_studies/podcast=2`, `negative_noise=-6`, `technical_radio_noise=-2` ; seuils `to_read≥6`, `candidate≥2`. Dédup DOI inter-sources opérationnelle.
+**Contexte (depuis la mémoire) :** sources actives = RSS×9 (après désactivation définitive de *La lettre de la radio & du podcast*), HAL, Crossref (`journal_radio_audio_media`, `radio_journal`, `sound_studies_journal`, `resonance_journal`), OpenAlex (profils + venue JSS). Scoring lexical : poids `radio_core/radio_free=3`, `sound_studies/podcast=2`, `negative_noise=-6`, `technical_radio_noise=-2` ; seuils `to_read≥6`, `candidate≥2`. Dédup DOI inter-sources opérationnelle.
 
 **Tâches :**
-1. **Compléter la cartographie des revues** du champ et adjacentes, en réutilisant les méthodes déjà éprouvées (Crossref par ISSN, venues OpenAlex par ISSN, profils OpenAlex par mots-clés). Vérifier chaque ISSN avant ajout. Seed à valider/compléter (ne pas dupliquer l'existant) :
+1. **Désactiver définitivement la source *La lettre de la radio & du podcast*** (`la_lettre_pro`) : s'assurer qu'elle est marquée inactive (`enabled: false`) dans `config/sources.yaml`, et mettre à jour la documentation (`01_RESSOURCES_SUIVIES.md`, `memoire_materielle.md`) ainsi que les tests correspondants (ex. `test_config.py`).
+2. **Compléter la cartographie des revues** du champ et adjacentes, en réutilisant les méthodes déjà éprouvées (Crossref par ISSN, venues OpenAlex par ISSN, profils OpenAlex par mots-clés). Vérifier chaque ISSN avant ajout. Seed à valider/compléter (ne pas dupliquer l'existant) :
    - Études radio/audio : *RadioDoc Review*, *Interference: A Journal of Audio Culture*, *SoundEffects* (open access), *The Senses and Society*, *Organised Sound*, *Twentieth-Century Music*.
    - Médias/communication adjacents (publient régulièrement sur radio/podcast/son) : *Popular Communication*, *Convergence*, *Media, Culture & Society*, *Participations*, *Critical Studies in Television*, *VIEW Journal of European Television History and Culture*, *Feminist Media Studies*.
-   - Francophone : *Réseaux*, *Questions de communication*, *Études de communication*, *Communication & langages*, *Volume!*, *Transposition*, *Sociétés & Représentations*.
+   - Francophone : *Réseaux*, *Questions de communication*, *Études de communication*, *Communication & langages*, *Volume!*, *Transposition*, *Sociétés & Représentations*. 
    - Réseaux sans flux stable (IAMCR MAR, ECREA Radio & Sound) : **rester hors pipeline** (veille humaine), comme acté en V3.
-2. **Stratégie anti-bruit par source** : les revues **mono-thématiques** (radio/son/podcast) → ingestion par revue entière (Crossref/OpenAlex venue). Les revues **généralistes adjacentes** → **profils OpenAlex filtrés par mots-clés** (jamais la revue entière), pour ne pas inonder la base d'articles hors-sujet.
-3. **Ajouter les attributions publiques** correspondantes dans `export_public.py` (`AUDITED_ATTRIBUTIONS` + `ATTRIBUTION_BY_SOURCE_NAME`) pour chaque nouvelle source, sans toucher la whitelist.
-4. **Scoring abouti** (`scoring.yaml`, `keywords.yaml`, et si besoin `scoring.py`) :
+3. **Stratégie anti-bruit par source** : les revues **mono-thématiques** (radio/son/podcast) → ingestion par revue entière (Crossref/OpenAlex venue). Les revues **généralistes adjacentes** → **profils OpenAlex filtrés par mots-clés** (jamais la revue entière), pour ne pas inonder la base d'articles hors-sujet.
+4. **Ajouter les attributions publiques** correspondantes dans `export_public.py` (`AUDITED_ATTRIBUTIONS` + `ATTRIBUTION_BY_SOURCE_NAME`) pour chaque nouvelle source, sans toucher la whitelist.
+5. **Scoring abouti** (`scoring.yaml`, `keywords.yaml`, et si besoin `scoring.py`) :
    - Enrichir les listes de mots-clés (FR+EN) pour couvrir les nouveaux champs sans gonfler les faux positifs.
    - Ajouter un **plancher de confiance par source** : un article issu d'une revue cœur du champ (familles `academic_watch`/venues whitelistées) ne doit **jamais** tomber sous `candidate` même si son titre est laconique — tout en gardant la domination des poids négatifs techniques pour le vrai bruit RF/médical.
    - Conserver des seuils explicables ; documenter tout changement de poids dans `scoring.yaml`.
-5. **Tests** (`test_config.py`, `test_scoring.py`, `test_export_public.py`) : nouvelles sources verrouillées, plancher de confiance vérifié, bruit technique toujours `ignored`, article interdisciplinaire pertinent jamais perdu, attributions présentes.
-6. **Run contrôlé unique** avec `.env.local` : `make run` puis `make export-public`. Relever compteurs réels (`db.json`, export public, dédup DOI = 0 doublon) et **scan anti-fuite**.
+6. **Tests** (`test_config.py`, `test_scoring.py`, `test_export_public.py`) : nouvelles sources verrouillées, plancher de confiance vérifié, bruit technique toujours `ignored`, article interdisciplinaire pertinent jamais perdu, attributions présentes.
+7. **Run contrôlé unique** avec `.env.local` : `make run` puis `make export-public`. Relever compteurs réels (`db.json`, export public, dédup DOI = 0 doublon) et **scan anti-fuite**.
 
 **Validation :** `make test` 100 % ; compteurs cohérents ; 0 clé interdite dans `static/antenne-radio/index.json`.
 

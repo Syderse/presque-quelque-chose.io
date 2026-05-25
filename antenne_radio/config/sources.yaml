@@ -266,6 +266,34 @@ crossref:
         - sound_studies
         - sound_art
 
+    - id: organised_sound
+      name: "Organised Sound"
+      enabled: true
+      issn:
+        - "1355-7718"
+        - "1469-8153"
+      legal_status: "CANDIDAT — métadonnées Crossref uniquement"
+      audit_date: "2026-05-25"
+      note: "Revue Cambridge UP sur la musique électroacoustique et le son organisé. Mono-thématique son → ingestion venue entière."
+      tags:
+        - academic_watch
+        - sound_studies
+        - sonic_media
+
+    - id: sound_effects_journal
+      name: "SoundEffects"
+      enabled: true
+      issn:
+        - "1904-4566"
+        - "1904-4577"
+      legal_status: "CANDIDAT — métadonnées Crossref uniquement"
+      audit_date: "2026-05-25"
+      note: "Revue open access danoise (Roskilde) sur l'expérience du son. Mono-thématique son → ingestion venue entière."
+      tags:
+        - academic_watch
+        - sound_studies
+        - sonic_media
+
 openalex:
   enabled: true
   name: OpenAlex targeted radio/audio works
@@ -378,3 +406,177 @@ openalex:
         - academic_watch
         - sound_studies
         - sonic_media
+
+    # --- Revues généralistes adjacentes : venue ISSN + filtre mots-clés radio/audio ---
+    # Stratégie : jamais la revue entière ; seulement les articles radio/audio/son.
+
+    - id: popular_communication_filtered
+      label: Popular Communication - articles radio/audio
+      search: '("radio" OR "podcast" OR "broadcasting" OR "audio culture" OR "sound studies" OR "sonic" OR "radiophonie" OR "baladodiffusion")'
+      filters:
+        primary_location.source.issn: "1540-5710"
+      sort: "publication_date:desc"
+      legal_status: "CANDIDAT — métadonnées OpenAlex uniquement"
+      audit_date: "2026-05-25"
+      note: "Popular Communication (T&F), généraliste comm. Filtré par mots-clés radio/audio uniquement."
+      tags:
+        - academic_watch
+        - radio_studies
+
+    - id: convergence_filtered
+      label: Convergence - articles radio/audio
+      search: '("radio" OR "podcast" OR "broadcasting" OR "audio culture" OR "sound studies" OR "sonic" OR "radiophonie" OR "baladodiffusion")'
+      filters:
+        primary_location.source.issn: "1748-7382"
+      sort: "publication_date:desc"
+      legal_status: "CANDIDAT — métadonnées OpenAlex uniquement"
+      audit_date: "2026-05-25"
+      note: "Convergence (SAGE), généraliste médias numériques. Filtré par mots-clés radio/audio uniquement."
+      tags:
+        - academic_watch
+        - radio_studies
+
+    - id: media_culture_society_filtered
+      label: Media Culture Society - articles radio/audio
+      search: '("radio" OR "podcast" OR "broadcasting" OR "audio culture" OR "sound studies" OR "sonic" OR "radiophonie" OR "baladodiffusion")'
+      filters:
+        primary_location.source.issn: "1460-3675"
+      sort: "publication_date:desc"
+      legal_status: "CANDIDAT — métadonnées OpenAlex uniquement"
+      audit_date: "2026-05-25"
+      note: "Media, Culture & Society (SAGE), généraliste comm. Filtré par mots-clés radio/audio uniquement."
+      tags:
+        - academic_watch
+        - radio_studies
+
+    - id: feminist_media_studies_filtered
+      label: Feminist Media Studies - articles radio/audio
+      search: '("radio" OR "podcast" OR "broadcasting" OR "audio culture" OR "sound studies" OR "sonic" OR "radiophonie" OR "baladodiffusion")'
+      filters:
+        primary_location.source.issn: "1471-5902"
+      sort: "publication_date:desc"
+      legal_status: "CANDIDAT — métadonnées OpenAlex uniquement"
+      audit_date: "2026-05-25"
+      note: "Feminist Media Studies (T&F), généraliste féministe médias. Filtré par mots-clés radio/audio uniquement."
+      tags:
+        - academic_watch
+        - radio_studies
+
+    - id: participations_filtered
+      label: Participations - articles radio/audio
+      search: '("radio" OR "podcast" OR "broadcasting" OR "audio culture" OR "sound studies" OR "sonic" OR "radiophonie" OR "baladodiffusion")'
+      filters:
+        primary_location.source.issn: "1749-8716"
+      sort: "publication_date:desc"
+      legal_status: "CANDIDAT — métadonnées OpenAlex uniquement"
+      audit_date: "2026-05-25"
+      note: "Participations: Journal of Audience & Reception Studies, généraliste audience. Filtré par mots-clés radio/audio."
+      tags:
+        - academic_watch
+        - radio_studies
+
+    - id: critical_studies_tv_filtered
+      label: Critical Studies in Television - articles radio/audio
+      search: '("radio" OR "podcast" OR "broadcasting" OR "audio culture" OR "sound studies" OR "sonic" OR "radiophonie")'
+      filters:
+        primary_location.source.issn: "2040-0616"
+      sort: "publication_date:desc"
+      legal_status: "CANDIDAT — métadonnées OpenAlex uniquement"
+      audit_date: "2026-05-25"
+      note: "Critical Studies in Television (Manchester UP/SAGE), adjacent TV. Filtré par mots-clés radio/audio uniquement."
+      tags:
+        - academic_watch
+        - radio_studies
+
+    - id: view_journal_filtered
+      label: VIEW Journal - articles radio/broadcasting
+      search: '("radio" OR "podcast" OR "broadcasting" OR "audio" OR "sound" OR "radiophonie")'
+      filters:
+        primary_location.source.issn: "2213-0969"
+      sort: "publication_date:desc"
+      legal_status: "CANDIDAT — métadonnées OpenAlex uniquement"
+      audit_date: "2026-05-25"
+      note: "VIEW Journal of European Television History and Culture (open access), adjacent TV/histoire. Filtré par mots-clés radio/broadcasting."
+      tags:
+        - academic_watch
+        - radio_studies
+
+    # --- Revues francophones : venue ISSN + filtre mots-clés radio/son ---
+
+    - id: reseaux_filtered
+      label: Réseaux - articles radio/son
+      search: '("radio" OR "podcast" OR "radiophonie" OR "son" OR "écoute" OR "baladodiffusion" OR "broadcasting" OR "audio" OR "paysage sonore")'
+      filters:
+        primary_location.source.issn: "1777-5809"
+      sort: "publication_date:desc"
+      legal_status: "CANDIDAT — métadonnées OpenAlex uniquement"
+      audit_date: "2026-05-25"
+      note: "Réseaux (La Découverte), généraliste comm/technologies. Filtré par mots-clés radio/son uniquement."
+      tags:
+        - academic_watch
+        - radio_studies
+
+    - id: questions_communication_filtered
+      label: Questions de communication - articles radio/son
+      search: '("radio" OR "podcast" OR "radiophonie" OR "son" OR "écoute" OR "baladodiffusion" OR "audio" OR "paysage sonore")'
+      filters:
+        primary_location.source.issn: "1633-5961"
+      sort: "publication_date:desc"
+      legal_status: "CANDIDAT — métadonnées OpenAlex uniquement"
+      audit_date: "2026-05-25"
+      note: "Questions de communication (PUL), généraliste comm française. Filtré par mots-clés radio/son uniquement."
+      tags:
+        - academic_watch
+        - radio_studies
+
+    - id: etudes_communication_filtered
+      label: Études de communication - articles radio/son
+      search: '("radio" OR "podcast" OR "radiophonie" OR "son" OR "écoute" OR "baladodiffusion" OR "audio")'
+      filters:
+        primary_location.source.issn: "1968-0473"
+      sort: "publication_date:desc"
+      legal_status: "CANDIDAT — métadonnées OpenAlex uniquement"
+      audit_date: "2026-05-25"
+      note: "Études de communication (OpenEdition), généraliste SIC. Filtré par mots-clés radio/son uniquement."
+      tags:
+        - academic_watch
+        - radio_studies
+
+    - id: volume_filtered
+      label: Volume! - articles radio/broadcast
+      search: '("radio" OR "podcast" OR "broadcast" OR "radiophonie" OR "son" OR "écoute" OR "audio" OR "musique électronique")'
+      filters:
+        primary_location.source.issn: "1950-568X"
+      sort: "publication_date:desc"
+      legal_status: "CANDIDAT — métadonnées OpenAlex uniquement"
+      audit_date: "2026-05-25"
+      note: "Volume! (OpenEdition), spécialisé musiques populaires. Filtré par mots-clés radio/son/audio uniquement."
+      tags:
+        - academic_watch
+        - sound_studies
+
+    - id: transposition_filtered
+      label: Transposition - articles radio/son
+      search: '("radio" OR "broadcast" OR "radiophonie" OR "son" OR "écoute" OR "audio" OR "paysage sonore" OR "musique électroacoustique")'
+      filters:
+        primary_location.source.issn: "2110-6134"
+      sort: "publication_date:desc"
+      legal_status: "CANDIDAT — métadonnées OpenAlex uniquement"
+      audit_date: "2026-05-25"
+      note: "Transposition (OpenEdition), musicologie. Filtré par mots-clés radio/son/audio uniquement."
+      tags:
+        - academic_watch
+        - sound_studies
+
+    - id: societes_representations_filtered
+      label: Sociétés & Représentations - articles radio/son
+      search: '("radio" OR "podcast" OR "radiophonie" OR "son" OR "écoute" OR "baladodiffusion" OR "audio")'
+      filters:
+        primary_location.source.issn: "1262-2966"
+      sort: "publication_date:desc"
+      legal_status: "CANDIDAT — métadonnées OpenAlex uniquement"
+      audit_date: "2026-05-25"
+      note: "Sociétés & Représentations (Publications de la Sorbonne), sociologie/cultures visuelles. Filtré par mots-clés radio/son."
+      tags:
+        - academic_watch
+        - radio_studies

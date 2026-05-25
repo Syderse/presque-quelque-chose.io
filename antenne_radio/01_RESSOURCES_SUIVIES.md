@@ -68,7 +68,7 @@ Notes de non-duplication :
 
 | ID | Nom | Famille | URL | Raison |
 |---|---|---|---|---|
-| `la_lettre_pro` | La Lettre Pro de la Radio | RSS | `https://www.lalettre.pro/xml/syndication.rss` | Désactivée temporairement ("trop de bruit") le 2026-05-21. |
+| `la_lettre_pro` | La Lettre Pro de la Radio | RSS | `https://www.lalettre.pro/xml/syndication.rss` | **Désactivée définitivement** le 2026-05-25 (trop de bruit industriel/commercial, non académique). |
 | `transom` | Transom | RSS | `https://transom.org/feed/` | Juridiquement validé en métadonnées le 2026-05-20, mais techniquement reporté : le run contrôlé a retrouvé 0 entrée, statut 301 et warning feedparser. |
 | `sounding_out_podcast` | Sounding Out! podcast | RSS | `https://feeds.feedburner.com/SoundingOutPodcast` | Flux valide, mais gardé désactivé pour éviter un doublon thématique avant décision sur les podcasts. |
 | `example_disabled_journal` | Example journal feed to replace | Atom | `https://example.org/radio-studies.atom` | Exemple désactivé, à remplacer par une vraie source si utile. |
@@ -78,30 +78,31 @@ Notes de non-duplication :
 - État : activé durablement avec garde-fou (`crossref.enabled: true`) ; sans `CROSSREF_MAILTO`, le connecteur écrit `missing_mailto` et ne fait aucun appel réseau Crossref.
 - Identification polie : variable locale `CROSSREF_MAILTO` ou `.env.local` ignoré par Git ; aucune adresse personnelle n'est inscrite dans le dépôt.
 - Limite basse : `rows: 20`, requêtes séquentielles, `polite_delay_seconds: 1`.
-- Revue active pour démarrage contrôlé : `Journal of Radio & Audio Media`, ISSN `1937-6529` et `1937-6537`.
-- Revues désormais activées : `Radio Journal: International Studies in Broadcast & Audio Media` (`1476-4504`, `2040-1388`), `Sound Studies: An Interdisciplinary Journal` (`2055-1940`, `2055-1959`), `Resonance: The Journal of Sound and Culture` (`2688-867X`).
+- **Revues actives (6 au total)** :
+  - `Journal of Radio & Audio Media` (ISSN `1937-6529`, `1937-6537`)
+  - `Radio Journal: International Studies in Broadcast & Audio Media` (`1476-4504`, `2040-1388`)
+  - `Sound Studies: An Interdisciplinary Journal` (`2055-1940`, `2055-1959`)
+  - `Resonance: The Journal of Sound and Culture` (`2688-867X`)
+  - `Organised Sound` (`1355-7718`, `1469-8153`) — ajoutée 2026-05-25
+  - `SoundEffects` (`1904-4566`, `1904-4577`) — ajoutée 2026-05-25
 - Sortie brute prévue : `data/raw/crossref_latest.json`.
-- Recette finale V3 du 2026-05-21 : `CROSSREF_MAILTO` fourni seulement en variable d'environnement locale pour la commande, 20 notices récupérées, 0 erreur, aucun secret exposé dans les artefacts publics ou les logs scannés. Ne pas élargir Crossref sans recette limitée par une seule revue et scan anti-fuite.
 
 ## Paramètres OpenAlex préparés
 
 - État : déclaré et désigné actif (`openalex.enabled: true`) ; le pipeline l'appelle en live via `OPENALEX_MAILTO` local.
 - Identification polie : `OPENALEX_MAILTO` doit rester local (`.env.local` ou variable d'environnement), jamais commité, jamais écrit dans les artefacts publics.
-- Authentification API : la documentation OpenAlex actuelle indique une clé API gratuite pour l'usage courant ; si le connecteur la nécessite, utiliser `OPENALEX_API_KEY` local, jamais commité.
 - Point d'accès : API Works `https://api.openalex.org/works`.
 - Fenêtre et volume : 18 mois, `per_page: 20`, 1 page maximum par profil, délai poli de 1 seconde entre profils.
-- Filtres initiaux : types `article`, `book`, `book-chapter`, `dissertation`, `review` ; langues `fr` et `en` ; exclusion des notices rétractées ou paratextuelles.
-- Profils stricts :
-  - `radio_studies` : `"radio studies"`, `radiophonic`, `"radio art"`, `"broadcasting history"`.
-  - `radio_audio_media` : `"radio and audio media"`, `"audio media"`, `"broadcast media"`, `"Journal of Radio & Audio Media"`.
-  - `sound_studies` : `"sound studies"`, `"sonic media"`, `"auditory culture"`, `"listening studies"`.
-  - `podcast_studies` : `"podcast studies"`, `podcasting`, `"audio storytelling"`, `"serialized audio"`.
-  - `community_free_radio` : `"community radio"`, `"free radio"`, `"pirate radio"`, `"radio libre"`, `"radios libres"`.
-  - `journal_sonic_studies_venue` : profil de venue par filtre `primary_location.source.issn:2212-6252`, désormais activé.
-- Exclusions de bruit obligatoires : `radio frequency`, `radiofrequency`, `radiotherapy`, `radioactive`, `radio telescope`, `radio astronomy`, `electromagnetic radiation`, `cognitive radio`, `spectrum sensing`, `beamforming`, `MIMO`, `5G`, `6G`.
-- Champs privés autorisés au premier passage : identifiants OpenAlex/DOI, titre, date, type, langue, source primaire, signaux `topics`/`primary_topic`/`keywords`, et `relevance_score` OpenAlex uniquement pour tri privé.
-- Champs interdits : `abstract_inverted_index`, abstract reconstruit, auteurs, affiliations, `locations`, PDF/fulltext, références, raw/logs/secrets en public. Le score de pertinence interne et `relevance_score` OpenAlex ne doivent jamais entrer dans `static/antenne-radio/index.json`.
-- Recette d'activation V3 du 2026-05-21 : OpenAlex et Crossref (plusieurs revues) sont désormais actifs et intégrés dans la récolte live.
+- **Stratégie par type de revue** :
+  - Revues **mono-thématiques** (radio/son) → profil venue entière par ISSN (`journal_sonic_studies_venue` = JSS par ISSN).
+  - Revues **généralistes adjacentes** → profil venue ISSN + filtre mots-clés (`search`), jamais la revue entière.
+- **Profils thématiques (6)** :
+  - `radio_studies`, `radio_audio_media`, `sound_studies`, `podcast_studies`, `community_free_radio`, `journal_sonic_studies_venue`.
+- **Nouveaux profils généraux filtrés (13, ajoutés 2026-05-25)** :
+  - Anglophone : `popular_communication_filtered`, `convergence_filtered`, `media_culture_society_filtered`, `feminist_media_studies_filtered`, `participations_filtered`, `critical_studies_tv_filtered`, `view_journal_filtered`.
+  - Francophone : `reseaux_filtered`, `questions_communication_filtered`, `etudes_communication_filtered`, `volume_filtered`, `transposition_filtered`, `societes_representations_filtered`.
+- Exclusions de bruit obligatoires (inchangées) : `radio frequency`, `radiofrequency`, `radiotherapy`, `radioactive`, `radio telescope`, `radio astronomy`, `electromagnetic radiation`, `cognitive radio`, `spectrum sensing`, `beamforming`, `MIMO`, `5G`, `6G`.
+- Champs interdits : `abstract_inverted_index`, abstract reconstruit, auteurs, affiliations, `locations`, PDF/fulltext, références, raw/logs/secrets en public.
 
 ## Ressources explicitement non suivies en v0.1
 

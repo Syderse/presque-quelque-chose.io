@@ -129,10 +129,11 @@ def test_ambiguous_radio_technical_item_stays_candidate():
 
 
 def test_light_positive_match_becomes_candidate():
+    # Titre peu chargé en mots-clés → un seul match → score dans [2, 6)
     scored = score_payload(
         item_payload(
-            title="Carnet sonore hebdomadaire",
-            abstract="Un podcast documentaire sur les pratiques d'écoute ordinaires.",
+            title="Court podcast hebdomadaire",
+            abstract=None,
         )
     )
 
@@ -228,4 +229,103 @@ def test_source_name_does_not_dominate_scoring():
     assert scored.status is WatchStatus.ignored
     assert scored.relevance_score < 2
     assert "cognitive radio" in scored.negative_keywords_matched
+
+
+def test_academic_floor_applies_for_crossref_source():
+    # Titre laconique sans mot-clé connu, source Crossref → plancher candidate
+    scored = score_payload(
+        item_payload(
+            title="Compositional practices in contemporary electroacoustic music",
+            abstract=None,
+            source_api="crossref",
+        )
+    )
+    # "electroacoustic" and "electroacoustic music" match sound_studies (weight 2 × title 2 = +4)
+    # but "Compositional practices" alone with no source_api would be ignored.
+    # Test: a truly laconic title with zero keyword match on crossref → floor to candidate.
+    scored_laconic = score_payload(
+        item_payload(
+            title="Recent developments in notational practice",
+            abstract=None,
+            source_api="crossref",
+        )
+    )
+    assert scored_laconic.relevance_score == 0.0
+    assert scored_laconic.status is WatchStatus.candidate
+    assert "plancher académique" in scored_laconic.score_explanation
+
+
+def test_academic_floor_does_not_apply_for_rss_source():
+    # Même titre laconique, source RSS → pas de plancher → ignored
+    scored = score_payload(
+        item_payload(
+            title="Recent developments in notational practice",
+            abstract=None,
+            source_api="rss",
+        )
+    )
+    assert scored.relevance_score == 0.0
+    assert scored.status is WatchStatus.ignored
+
+
+def test_academic_floor_does_not_apply_without_source_api():
+    # Pas de source_api (None) → pas de plancher
+    scored = score_payload(
+        item_payload(
+            title="Recent developments in notational practice",
+            abstract=None,
+        )
+    )
+    assert scored.status is WatchStatus.ignored
+
+
+def test_academic_floor_does_not_apply_for_heavy_technical_noise():
+    # Article Crossref avec fort bruit technique → score très négatif → reste ignored
+    scored = score_payload(
+        item_payload(
+            title="Cognitive radio spectrum sensing for 5G wireless networks",
+            abstract="Dynamic spectrum access and beamforming in mobile networks.",
+            source_api="crossref",
+        )
+    )
+    assert scored.relevance_score < 0
+    assert scored.status is WatchStatus.ignored
+    assert "plancher académique" not in scored.score_explanation
+
+
+def test_academic_floor_applies_for_openalex_source():
+    scored = score_payload(
+        item_payload(
+            title="Recent developments in notational practice",
+            abstract=None,
+            source_api="openalex",
+        )
+    )
+    assert scored.status is WatchStatus.candidate
+    assert "plancher académique" in scored.score_explanation
+
+
+def test_academic_floor_applies_for_hal_source():
+    scored = score_payload(
+        item_payload(
+            title="Recent developments in notational practice",
+            abstract=None,
+            source_api="hal",
+        )
+    )
+    assert scored.status is WatchStatus.candidate
+    assert "plancher académique" in scored.score_explanation
+
+
+def test_academic_floor_does_not_override_existing_to_read():
+    # Si déjà to_read, le plancher ne change rien
+    scored = score_payload(
+        item_payload(
+            title="Radio libre et archives sonores",
+            abstract="Une enquête sur l'écoute radiophonique.",
+            source_api="crossref",
+        )
+    )
+    assert scored.status is WatchStatus.to_read
+    assert "plancher académique" not in scored.score_explanation
 
