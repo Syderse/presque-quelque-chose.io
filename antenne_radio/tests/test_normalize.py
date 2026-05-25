@@ -206,11 +206,13 @@ def test_identical_passes_do_not_create_duplicates(tmp_path):
     rss_dump = tmp_path / "data" / "raw" / "rss_latest.json"
     hal_dump = tmp_path / "data" / "raw" / "hal_latest.json"
     crossref_dump = tmp_path / "data" / "raw" / "crossref_latest.json"
+    openalex_dump = tmp_path / "data" / "raw" / "openalex_latest.json"
     db_path = tmp_path / "data" / "normalized" / "db.json"
     log_path = tmp_path / "data" / "logs" / "api.log"
     rss_dump.parent.mkdir(parents=True, exist_ok=True)
     hal_dump.parent.mkdir(parents=True, exist_ok=True)
     crossref_dump.parent.mkdir(parents=True, exist_ok=True)
+    openalex_dump.parent.mkdir(parents=True, exist_ok=True)
 
     rss_dump.write_text(json.dumps({"entries": [rss_fixture_entry()]}), encoding="utf-8")
     hal_dump.write_text(
@@ -218,11 +220,13 @@ def test_identical_passes_do_not_create_duplicates(tmp_path):
         encoding="utf-8",
     )
     crossref_dump.write_text(json.dumps({"items": [crossref_fixture_item()]}), encoding="utf-8")
+    openalex_dump.write_text(json.dumps({"items": []}), encoding="utf-8")
 
     first = normalize.normalize_latest_dumps(
         rss_raw_path=rss_dump,
         hal_raw_path=hal_dump,
         crossref_raw_path=crossref_dump,
+        openalex_raw_path=openalex_dump,
         db_path=db_path,
         log_path=log_path,
     )
@@ -230,6 +234,7 @@ def test_identical_passes_do_not_create_duplicates(tmp_path):
         rss_raw_path=rss_dump,
         hal_raw_path=hal_dump,
         crossref_raw_path=crossref_dump,
+        openalex_raw_path=openalex_dump,
         db_path=db_path,
         log_path=log_path,
     )
@@ -244,11 +249,13 @@ def test_invalid_entry_is_logged_and_valid_entries_continue(tmp_path):
     rss_dump = tmp_path / "data" / "raw" / "rss_latest.json"
     hal_dump = tmp_path / "data" / "raw" / "hal_latest.json"
     crossref_dump = tmp_path / "data" / "raw" / "crossref_latest.json"
+    openalex_dump = tmp_path / "data" / "raw" / "openalex_latest.json"
     db_path = tmp_path / "data" / "normalized" / "db.json"
     log_path = tmp_path / "data" / "logs" / "api.log"
     rss_dump.parent.mkdir(parents=True, exist_ok=True)
     hal_dump.parent.mkdir(parents=True, exist_ok=True)
     crossref_dump.parent.mkdir(parents=True, exist_ok=True)
+    openalex_dump.parent.mkdir(parents=True, exist_ok=True)
 
     rss_dump.write_text(
         json.dumps({"entries": [{"title": "", "link": "", "source_name": "Broken"}, rss_fixture_entry()]}),
@@ -256,11 +263,13 @@ def test_invalid_entry_is_logged_and_valid_entries_continue(tmp_path):
     )
     hal_dump.write_text(json.dumps({"docs": []}), encoding="utf-8")
     crossref_dump.write_text(json.dumps({"items": []}), encoding="utf-8")
+    openalex_dump.write_text(json.dumps({"items": []}), encoding="utf-8")
 
     result = normalize.normalize_latest_dumps(
         rss_raw_path=rss_dump,
         hal_raw_path=hal_dump,
         crossref_raw_path=crossref_dump,
+        openalex_raw_path=openalex_dump,
         db_path=db_path,
         log_path=log_path,
     )

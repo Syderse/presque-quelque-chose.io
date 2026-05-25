@@ -36,7 +36,6 @@ Notes de non-duplication :
 | `radio_fanch` | Radio Fañch | RSS | `https://radiofanch.blogspot.com/feeds/posts/default?alt=rss` | `data/raw/rss_latest.json` | Activée ; 25 entrées au dernier run ; statut 200. |
 | `les_radios_libres` | Les Radios Libres | RSS | `https://lesradioslibres.wordpress.com/feed/` | `data/raw/rss_latest.json` | Activée ; 10 entrées au dernier run ; statut 200. |
 | `la_radio_du_futur` | La Radio du Futur | RSS | `https://radiodufutur.wordpress.com/feed/` | `data/raw/rss_latest.json` | Activée ; 10 entrées au dernier run ; statut 200. |
-| `la_lettre_pro` | La Lettre Pro de la Radio | RSS | `https://www.lalettre.pro/xml/syndication.rss` | `data/raw/rss_latest.json` | Activée ; 20 entrées au dernier run ; statut 200. |
 | `meccsa_radio_audio_studies` | MeCCSA Radio & Audio Studies | RSS | `https://radiostudiesnetworkreadinggroup.wordpress.com/feed/` | `data/raw/rss_latest.json` | Activée ; 10 entrées au dernier run ; statut 200 ; confirmé comme cible prioritaire déjà couverte, sans doublon. |
 | `nieman_storyboard` | Nieman Storyboard | RSS | `https://niemanstoryboard.org/feed/` | `data/raw/rss_latest.json` | Activée ; 10 entrées au dernier run ; statut 200. |
 | `journal_radio_audio_media` | Journal of Radio & Audio Media | RSS | `https://www.tandfonline.com/action/showFeed?type=etoc&feed=rss&jc=hjrs20` | `data/raw/rss_latest.json` | Activée ; 42 entrées au dernier run ; statut 200. |
@@ -69,6 +68,7 @@ Notes de non-duplication :
 
 | ID | Nom | Famille | URL | Raison |
 |---|---|---|---|---|
+| `la_lettre_pro` | La Lettre Pro de la Radio | RSS | `https://www.lalettre.pro/xml/syndication.rss` | Désactivée temporairement ("trop de bruit") le 2026-05-21. |
 | `transom` | Transom | RSS | `https://transom.org/feed/` | Juridiquement validé en métadonnées le 2026-05-20, mais techniquement reporté : le run contrôlé a retrouvé 0 entrée, statut 301 et warning feedparser. |
 | `sounding_out_podcast` | Sounding Out! podcast | RSS | `https://feeds.feedburner.com/SoundingOutPodcast` | Flux valide, mais gardé désactivé pour éviter un doublon thématique avant décision sur les podcasts. |
 | `example_disabled_journal` | Example journal feed to replace | Atom | `https://example.org/radio-studies.atom` | Exemple désactivé, à remplacer par une vraie source si utile. |

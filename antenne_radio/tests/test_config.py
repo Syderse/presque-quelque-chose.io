@@ -10,12 +10,12 @@ AUDITED_2026_05_20_RSS_ENABLED = {
     "radio_fanch",
     "les_radios_libres",
     "la_radio_du_futur",
-    "la_lettre_pro",
     "meccsa_radio_audio_studies",
     "nieman_storyboard",
 }
 AUDITED_2026_05_20_RSS_DECLARED = {
     *AUDITED_2026_05_20_RSS_ENABLED,
+    "la_lettre_pro",
     "transom",
 }
 PRIORITY_CROSSREF_CANDIDATES = {
@@ -75,6 +75,11 @@ def test_legal_audit_2026_05_20_rss_sources_are_configured():
         assert source["legal_status"].startswith("VALIDÉ")
         assert source["tags"]
         assert source["categories"]
+
+    la_lettre_pro = rss_sources["la_lettre_pro"]
+    assert la_lettre_pro["enabled"] is False
+    assert la_lettre_pro["audit_date"] == "2026-05-20"
+    assert la_lettre_pro["legal_status"].startswith("VALIDÉ")
 
     transom = rss_sources["transom"]
     assert transom["enabled"] is False

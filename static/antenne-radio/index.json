@@ -1,7 +1,55 @@
 {
-  "generated_at": "2026-05-21T08:09:52Z",
-  "item_count": 239,
+  "generated_at": "2026-05-21T08:31:54Z",
+  "item_count": 283,
   "items": [
+    {
+      "attribution_id": "la_lettre_pro",
+      "doi": null,
+      "id": "url:b966b231fdc2bcb1b299",
+      "language": "und",
+      "published_at": "2026-05-21T07:00:00Z",
+      "source_family": "rss",
+      "source_name": "La Lettre Pro de la Radio & du Podcast",
+      "source_type": "blog",
+      "title": "États-Unis : le podcast s’installe davantage dans les usages quotidiens",
+      "url": "https://www.lalettre.pro/Etats-Unis-le-podcast-s-installe-davantage-dans-les-usages-quotidiens_a41183.html"
+    },
+    {
+      "attribution_id": "la_lettre_pro",
+      "doi": null,
+      "id": "url:238b2804e0c2659b7abc",
+      "language": "und",
+      "published_at": "2026-05-21T06:20:00Z",
+      "source_family": "rss",
+      "source_name": "La Lettre Pro de la Radio & du Podcast",
+      "source_type": "blog",
+      "title": "SUN prépare la quatrième édition de \"SUN fait la JAVA\" à Nantes",
+      "url": "https://www.lalettre.pro/SUN-prepare-la-quatrieme-edition-de-SUN-fait-la-JAVA-a-Nantes_a41186.html"
+    },
+    {
+      "attribution_id": "la_lettre_pro",
+      "doi": null,
+      "id": "url:ee07853d2c41f8f5a1f2",
+      "language": "und",
+      "published_at": "2026-05-21T05:55:00Z",
+      "source_family": "rss",
+      "source_name": "La Lettre Pro de la Radio & du Podcast",
+      "source_type": "blog",
+      "title": "L’écoute radio connectée atteint un niveau record au Royaume-Uni",
+      "url": "https://www.lalettre.pro/L-ecoute-radio-connectee-atteint-un-niveau-record-au-Royaume-Uni_a41182.html"
+    },
+    {
+      "attribution_id": "la_lettre_pro",
+      "doi": null,
+      "id": "url:41975b937a28566fcc1f",
+      "language": "und",
+      "published_at": "2026-05-21T05:25:00Z",
+      "source_family": "rss",
+      "source_name": "La Lettre Pro de la Radio & du Podcast",
+      "source_type": "blog",
+      "title": "Le WorldDAB publie un guide mondial pour accélérer le déploiement du DAB+",
+      "url": "https://www.lalettre.pro/Le-WorldDAB-publie-un-guide-mondial-pour-accelerer-le-deploiement-du-DAB_a41181.html"
+    },
     {
       "attribution_id": "la_lettre_pro",
       "doi": null,
@@ -387,6 +435,30 @@
       "url": "https://www.lalettre.pro/Classement-Le-Radio-Buzz-40-La-Lettre-Pro-de-la-Radio_a41127.html"
     },
     {
+      "attribution_id": "sound_studies_journal",
+      "doi": "10.1080/20551940.2026.2658872",
+      "id": "doi:81ca66ac07640eb71e55",
+      "language": "en",
+      "published_at": "2026-05-14T00:00:00Z",
+      "source_family": "crossref",
+      "source_name": "Sound Studies: An Interdisciplinary Journal",
+      "source_type": "journal_article",
+      "title": "Counterpoint and transnational sound in mikhail kalatozov’s <i>soy cuba</i>",
+      "url": "https://doi.org/10.1080/20551940.2026.2658872"
+    },
+    {
+      "attribution_id": "sound_studies_journal",
+      "doi": "10.1080/20551940.2026.2657728",
+      "id": "doi:3d2559d3c97acabbdffe",
+      "language": "en",
+      "published_at": "2026-05-14T00:00:00Z",
+      "source_family": "crossref",
+      "source_name": "Sound Studies: An Interdisciplinary Journal",
+      "source_type": "journal_article",
+      "title": "Is there a sound in this text? toward a noisy textuality",
+      "url": "https://doi.org/10.1080/20551940.2026.2657728"
+    },
+    {
       "attribution_id": "radio_fanch",
       "doi": null,
       "id": "url:54f67baaf0fa6db7f19a",
@@ -481,6 +553,18 @@
       "source_type": "blog",
       "title": "El Llanto Against I.C.E.: Toward a Latinx Sonic Phenomenology of the Dignified Cry",
       "url": "https://soundstudiesblog.com/2026/05/04/el-llanto-against-i-c-e-toward-a-latinx-sonic-phenomenology-of-the-dignified-cry"
+    },
+    {
+      "attribution_id": "sound_studies_journal",
+      "doi": "10.1080/20551940.2026.2658870",
+      "id": "doi:d380d109085b15e0e095",
+      "language": "en",
+      "published_at": "2026-05-04T00:00:00Z",
+      "source_family": "crossref",
+      "source_name": "Sound Studies: An Interdisciplinary Journal",
+      "source_type": "journal_article",
+      "title": "Constructing a reverberant temporality: sonic articulations of national belonging in <i>Clear Light of Day</i>",
+      "url": "https://doi.org/10.1080/20551940.2026.2658870"
     },
     {
       "attribution_id": "les_radios_libres",
@@ -1071,6 +1155,18 @@
       "url": "https://radiodufutur.wordpress.com/2026/03/21/la-mise-en-image-de-la-radio-recherche-dandres-godefroy"
     },
     {
+      "attribution_id": "openalex",
+      "doi": "10.54103/milanoup.232.c663",
+      "id": "doi:c524589f92cfdf5277da",
+      "language": "en",
+      "published_at": "2026-03-19T00:00:00Z",
+      "source_family": "openalex",
+      "source_name": "OpenAlex",
+      "source_type": "chapter",
+      "title": "Being There / Being Then. Rhetoric and Poetics of Tele-Presence from Art Radio to Radio-Art",
+      "url": "https://doi.org/10.54103/milanoup.232.c663"
+    },
+    {
       "attribution_id": "hal",
       "doi": null,
       "id": "url:10fc49a8ff1167595aab",
@@ -1117,6 +1213,66 @@
       "source_type": "journal_article",
       "title": "Podcast : À propos de la liberté du chercheur et de la recherche : Comment passer d’une recherche à une autre, d’une approche globale aux a priori",
       "url": "https://shs.hal.science/halshs-05532985v1"
+    },
+    {
+      "attribution_id": "resonance_journal",
+      "doi": "10.1525/res.2026.7.1.27",
+      "id": "doi:dc7f394a8633078cb79f",
+      "language": "en",
+      "published_at": "2026-03-01T00:00:00Z",
+      "source_family": "crossref",
+      "source_name": "Resonance: The Journal of Sound and Culture",
+      "source_type": "journal_article",
+      "title": "Transmission, Not Translation",
+      "url": "https://doi.org/10.1525/res.2026.7.1.27"
+    },
+    {
+      "attribution_id": "resonance_journal",
+      "doi": "10.1525/res.2026.7.1.98",
+      "id": "doi:b7c5d878b45a11e1577b",
+      "language": "en",
+      "published_at": "2026-03-01T00:00:00Z",
+      "source_family": "crossref",
+      "source_name": "Resonance: The Journal of Sound and Culture",
+      "source_type": "journal_article",
+      "title": "Introducing the Series “Considerations of a Sonic Continent: The Arts in Antarctica”",
+      "url": "https://doi.org/10.1525/res.2026.7.1.98"
+    },
+    {
+      "attribution_id": "resonance_journal",
+      "doi": "10.1525/res.2026.7.1.55",
+      "id": "doi:90ca4a8670d058fa9a4f",
+      "language": "en",
+      "published_at": "2026-03-01T00:00:00Z",
+      "source_family": "crossref",
+      "source_name": "Resonance: The Journal of Sound and Culture",
+      "source_type": "journal_article",
+      "title": "The Story as a Drum",
+      "url": "https://doi.org/10.1525/res.2026.7.1.55"
+    },
+    {
+      "attribution_id": "resonance_journal",
+      "doi": "10.1525/res.2026.7.1.122",
+      "id": "doi:78749e69ad2e9bdc3398",
+      "language": "en",
+      "published_at": "2026-03-01T00:00:00Z",
+      "source_family": "crossref",
+      "source_name": "Resonance: The Journal of Sound and Culture",
+      "source_type": "journal_article",
+      "title": "Representing, Curating, and Celebrating Antarctic Artists and Ambassadors Through Discussions with Four Composers from Aotearoa New Zealand",
+      "url": "https://doi.org/10.1525/res.2026.7.1.122"
+    },
+    {
+      "attribution_id": "resonance_journal",
+      "doi": "10.1525/res.2026.7.1.102",
+      "id": "doi:73e87e4c78f8e33b13fa",
+      "language": "en",
+      "published_at": "2026-03-01T00:00:00Z",
+      "source_family": "crossref",
+      "source_name": "Resonance: The Journal of Sound and Culture",
+      "source_type": "journal_article",
+      "title": "Sounding Antarctica",
+      "url": "https://doi.org/10.1525/res.2026.7.1.102"
     },
     {
       "attribution_id": "radio_survivor",
@@ -1321,6 +1477,126 @@
       "source_type": "journal_article",
       "title": "[Thèse et vous !] Comment YouTube transforme la vulgarisation scientifique ?",
       "url": "https://hal.science/hal-05472348v1"
+    },
+    {
+      "attribution_id": "sound_studies_journal",
+      "doi": "10.1080/20551940.2026.2619197",
+      "id": "doi:f710a3bd946f097808aa",
+      "language": "en",
+      "published_at": "2026-01-02T00:00:00Z",
+      "source_family": "crossref",
+      "source_name": "Sound Studies: An Interdisciplinary Journal",
+      "source_type": "journal_article",
+      "title": "Editorial",
+      "url": "https://doi.org/10.1080/20551940.2026.2619197"
+    },
+    {
+      "attribution_id": "sound_studies_journal",
+      "doi": "10.1080/20551940.2025.2541534",
+      "id": "doi:ed2100e2a593eb77ecf4",
+      "language": "en",
+      "published_at": "2026-01-02T00:00:00Z",
+      "source_family": "crossref",
+      "source_name": "Sound Studies: An Interdisciplinary Journal",
+      "source_type": "journal_article",
+      "title": "Towards a capacious understanding of listening: affect, sounds and other inputs",
+      "url": "https://doi.org/10.1080/20551940.2025.2541534"
+    },
+    {
+      "attribution_id": "sound_studies_journal",
+      "doi": "10.1080/20551940.2025.2534768",
+      "id": "doi:e8ccff497ac71579d664",
+      "language": "en",
+      "published_at": "2026-01-02T00:00:00Z",
+      "source_family": "crossref",
+      "source_name": "Sound Studies: An Interdisciplinary Journal",
+      "source_type": "journal_article",
+      "title": "A practical guide to the silent disco",
+      "url": "https://doi.org/10.1080/20551940.2025.2534768"
+    },
+    {
+      "attribution_id": "sound_studies_journal",
+      "doi": "10.1080/20551940.2025.2589600",
+      "id": "doi:b61ab80d4e0746e8eb71",
+      "language": "en",
+      "published_at": "2026-01-02T00:00:00Z",
+      "source_family": "crossref",
+      "source_name": "Sound Studies: An Interdisciplinary Journal",
+      "source_type": "journal_article",
+      "title": "The enduring resonance of Steven Feld beyond an anthropology of sound <i>in</i> sound",
+      "url": "https://doi.org/10.1080/20551940.2025.2589600"
+    },
+    {
+      "attribution_id": "sound_studies_journal",
+      "doi": "10.1080/20551940.2026.2622167",
+      "id": "doi:8615d28d31f137512ecf",
+      "language": "en",
+      "published_at": "2026-01-02T00:00:00Z",
+      "source_family": "crossref",
+      "source_name": "Sound Studies: An Interdisciplinary Journal",
+      "source_type": "journal_article",
+      "title": "Everything ether at once",
+      "url": "https://doi.org/10.1080/20551940.2026.2622167"
+    },
+    {
+      "attribution_id": "sound_studies_journal",
+      "doi": "10.1080/20551940.2025.2537483",
+      "id": "doi:809de91efb93d0535888",
+      "language": "en",
+      "published_at": "2026-01-02T00:00:00Z",
+      "source_family": "crossref",
+      "source_name": "Sound Studies: An Interdisciplinary Journal",
+      "source_type": "journal_article",
+      "title": "Musicscaping Tirana: sound, identity, and the transformation of post-communist Albania",
+      "url": "https://doi.org/10.1080/20551940.2025.2537483"
+    },
+    {
+      "attribution_id": "sound_studies_journal",
+      "doi": "10.1080/20551940.2025.2598963",
+      "id": "doi:73d97b48fb26c0e2e064",
+      "language": "en",
+      "published_at": "2026-01-02T00:00:00Z",
+      "source_family": "crossref",
+      "source_name": "Sound Studies: An Interdisciplinary Journal",
+      "source_type": "journal_article",
+      "title": "Titles available for review",
+      "url": "https://doi.org/10.1080/20551940.2025.2598963"
+    },
+    {
+      "attribution_id": "sound_studies_journal",
+      "doi": "10.1080/20551940.2026.2623739",
+      "id": "doi:7137752bb684ce6d631b",
+      "language": "en",
+      "published_at": "2026-01-02T00:00:00Z",
+      "source_family": "crossref",
+      "source_name": "Sound Studies: An Interdisciplinary Journal",
+      "source_type": "journal_article",
+      "title": "Listening, mapping, and the contemporary soundscape",
+      "url": "https://doi.org/10.1080/20551940.2026.2623739"
+    },
+    {
+      "attribution_id": "sound_studies_journal",
+      "doi": "10.1080/20551940.2026.2622156",
+      "id": "doi:4f02c6354be20409dbba",
+      "language": "en",
+      "published_at": "2026-01-02T00:00:00Z",
+      "source_family": "crossref",
+      "source_name": "Sound Studies: An Interdisciplinary Journal",
+      "source_type": "journal_article",
+      "title": "Making music and sound with the <i>GreenWaves</i> : a modern reimagination of the Ondes Martenot",
+      "url": "https://doi.org/10.1080/20551940.2026.2622156"
+    },
+    {
+      "attribution_id": "openalex",
+      "doi": "10.1007/978-3-032-10480-9_4",
+      "id": "doi:3b66af48f431e806dd7a",
+      "language": "en",
+      "published_at": "2026-01-01T00:00:00Z",
+      "source_family": "openalex",
+      "source_name": "OpenAlex",
+      "source_type": "chapter",
+      "title": "Spectral Sounds: Ghost Stories on Audio Media",
+      "url": "https://doi.org/10.1007/978-3-032-10480-9_4"
     },
     {
       "attribution_id": "hal",
@@ -1731,6 +2007,30 @@
       "url": "https://www.radiosurvivor.com/2025/12/radio-station-visit-188-wybcx-at-yale-university"
     },
     {
+      "attribution_id": "resonance_journal",
+      "doi": "10.1525/res.2025.6.4.400",
+      "id": "doi:a7652bdb753aefa50ae6",
+      "language": "en",
+      "published_at": "2025-12-01T00:00:00Z",
+      "source_family": "crossref",
+      "source_name": "Resonance: The Journal of Sound and Culture",
+      "source_type": "journal_article",
+      "title": "Interview",
+      "url": "https://doi.org/10.1525/res.2025.6.4.400"
+    },
+    {
+      "attribution_id": "resonance_journal",
+      "doi": "10.1525/res.2025.6.4.340",
+      "id": "doi:a2ffb3eee6ecb0bace19",
+      "language": "en",
+      "published_at": "2025-12-01T00:00:00Z",
+      "source_family": "crossref",
+      "source_name": "Resonance: The Journal of Sound and Culture",
+      "source_type": "journal_article",
+      "title": "<i>Circles of Breath</i>",
+      "url": "https://doi.org/10.1525/res.2025.6.4.340"
+    },
+    {
       "attribution_id": "journal_radio_audio_media",
       "doi": "10.1080/19376529.2025.2592916",
       "id": "url:6d46eabd2fe0158ddff6",
@@ -2031,6 +2331,30 @@
       "url": "https://lesradioslibres.wordpress.com/2025/09/01/myrtille-laurent-bourioux-que-reste-t-il-des-radios-libres-des-annees-80-en-2025"
     },
     {
+      "attribution_id": "resonance_journal",
+      "doi": "10.1525/res.2025.6.3.280",
+      "id": "doi:e3be1c5504cb963ebee3",
+      "language": "en",
+      "published_at": "2025-09-01T00:00:00Z",
+      "source_family": "crossref",
+      "source_name": "Resonance: The Journal of Sound and Culture",
+      "source_type": "journal_article",
+      "title": "Sonic Gumbo",
+      "url": "https://doi.org/10.1525/res.2025.6.3.280"
+    },
+    {
+      "attribution_id": "resonance_journal",
+      "doi": "10.1525/res.2025.6.3.264",
+      "id": "doi:9d8d8574747d2655074a",
+      "language": "en",
+      "published_at": "2025-09-01T00:00:00Z",
+      "source_family": "crossref",
+      "source_name": "Resonance: The Journal of Sound and Culture",
+      "source_type": "journal_article",
+      "title": "A Plague on All Our Houses",
+      "url": "https://doi.org/10.1525/res.2025.6.3.264"
+    },
+    {
       "attribution_id": "radio_survivor",
       "doi": null,
       "id": "url:a9c9c175cfc2a889d06b",
@@ -2041,6 +2365,18 @@
       "source_type": "blog",
       "title": "2026 “Best College Radio Stations” List from Princeton Review",
       "url": "https://www.radiosurvivor.com/2025/08/2026-best-college-radio-stations-list-from-princeton-review"
+    },
+    {
+      "attribution_id": "openalex",
+      "doi": "10.1215/9781478061021-004",
+      "id": "doi:aa979a7c24d349d8958f",
+      "language": "en",
+      "published_at": "2025-08-15T00:00:00Z",
+      "source_family": "openalex",
+      "source_name": "OpenAlex",
+      "source_type": "chapter",
+      "title": "Radiophonic Restlessness",
+      "url": "https://doi.org/10.1215/9781478061021-004"
     },
     {
       "attribution_id": "meccsa_radio_audio_studies",
@@ -2089,6 +2425,102 @@
       "source_type": "blog",
       "title": "“Keep it Weird”: Listening with Jonathan Sterne (1970-2025)",
       "url": "https://soundstudiesblog.com/2025/07/14/in-memorium-jonathan-sterne-1970-2025"
+    },
+    {
+      "attribution_id": "sound_studies_journal",
+      "doi": "10.1080/20551940.2025.2537059",
+      "id": "doi:f23aa75cec28201a91a0",
+      "language": "en",
+      "published_at": "2025-07-03T00:00:00Z",
+      "source_family": "crossref",
+      "source_name": "Sound Studies: An Interdisciplinary Journal",
+      "source_type": "journal_article",
+      "title": "Japanese bamboo flutes in Texas",
+      "url": "https://doi.org/10.1080/20551940.2025.2537059"
+    },
+    {
+      "attribution_id": "sound_studies_journal",
+      "doi": "10.1080/20551940.2025.2539559",
+      "id": "doi:eb94f45450c9ce359d7f",
+      "language": "en",
+      "published_at": "2025-07-03T00:00:00Z",
+      "source_family": "crossref",
+      "source_name": "Sound Studies: An Interdisciplinary Journal",
+      "source_type": "journal_article",
+      "title": "Active/activist listening, 10th annual <i>Drone Not Drones</i> . Minneapolis, the Cedar Cultural Center, January 24–25, 2025",
+      "url": "https://doi.org/10.1080/20551940.2025.2539559"
+    },
+    {
+      "attribution_id": "sound_studies_journal",
+      "doi": "10.1080/20551940.2025.2548040",
+      "id": "doi:ded7cb2c461072fcf09a",
+      "language": "en",
+      "published_at": "2025-07-03T00:00:00Z",
+      "source_family": "crossref",
+      "source_name": "Sound Studies: An Interdisciplinary Journal",
+      "source_type": "journal_article",
+      "title": "Audible aftershocks of the CCRU: multisensory magic and the modern audio essay",
+      "url": "https://doi.org/10.1080/20551940.2025.2548040"
+    },
+    {
+      "attribution_id": "sound_studies_journal",
+      "doi": "10.1080/20551940.2025.2539003",
+      "id": "doi:ba3532a315f1805693f6",
+      "language": "en",
+      "published_at": "2025-07-03T00:00:00Z",
+      "source_family": "crossref",
+      "source_name": "Sound Studies: An Interdisciplinary Journal",
+      "source_type": "journal_article",
+      "title": "Noise reduction: tape hiss as problem and aesthetics",
+      "url": "https://doi.org/10.1080/20551940.2025.2539003"
+    },
+    {
+      "attribution_id": "sound_studies_journal",
+      "doi": "10.1080/20551940.2025.2531648",
+      "id": "doi:ae5b84a5d28d255cb444",
+      "language": "en",
+      "published_at": "2025-07-03T00:00:00Z",
+      "source_family": "crossref",
+      "source_name": "Sound Studies: An Interdisciplinary Journal",
+      "source_type": "journal_article",
+      "title": "Between “freedom” and “indetermination”: contributions to a scientific history of the sonic in the 19th century",
+      "url": "https://doi.org/10.1080/20551940.2025.2531648"
+    },
+    {
+      "attribution_id": "sound_studies_journal",
+      "doi": "10.1080/20551940.2025.2544503",
+      "id": "doi:9eb70e0eb5db855c62ac",
+      "language": "en",
+      "published_at": "2025-07-03T00:00:00Z",
+      "source_family": "crossref",
+      "source_name": "Sound Studies: An Interdisciplinary Journal",
+      "source_type": "journal_article",
+      "title": "Silicon listening. MEMS, near-ultrasound, and machine listening beyond AI",
+      "url": "https://doi.org/10.1080/20551940.2025.2544503"
+    },
+    {
+      "attribution_id": "sound_studies_journal",
+      "doi": "10.1080/20551940.2025.2539006",
+      "id": "doi:922314fbd832aa2f4e7c",
+      "language": "en",
+      "published_at": "2025-07-03T00:00:00Z",
+      "source_family": "crossref",
+      "source_name": "Sound Studies: An Interdisciplinary Journal",
+      "source_type": "journal_article",
+      "title": "Negotiating contingency: between personalisation and customisation in digital hearing systems",
+      "url": "https://doi.org/10.1080/20551940.2025.2539006"
+    },
+    {
+      "attribution_id": "sound_studies_journal",
+      "doi": "10.1080/20551940.2025.2539008",
+      "id": "doi:728e04115aaa7667abf3",
+      "language": "en",
+      "published_at": "2025-07-03T00:00:00Z",
+      "source_family": "crossref",
+      "source_name": "Sound Studies: An Interdisciplinary Journal",
+      "source_type": "journal_article",
+      "title": "Crafting orchestral sound around 1900: writing music and listening to music in Gustav Mahler’s Sixth Symphony",
+      "url": "https://doi.org/10.1080/20551940.2025.2539008"
     },
     {
       "attribution_id": "sounding_out",
@@ -2149,6 +2581,18 @@
       "source_type": "blog",
       "title": "“You’re the Gatekeeper”: Exploring Open-Access Podcast Creation in the Sport and Exercise Sciences",
       "url": "https://www.tandfonline.com/doi/full/10.1080/19376529.2025.2495349?af=R"
+    },
+    {
+      "attribution_id": "resonance_journal",
+      "doi": "10.1525/res.2025.6.2.149",
+      "id": "doi:a561dccc37708895e7ea",
+      "language": "en",
+      "published_at": "2025-06-01T00:00:00Z",
+      "source_family": "crossref",
+      "source_name": "Resonance: The Journal of Sound and Culture",
+      "source_type": "journal_article",
+      "title": "Sonic Crimes",
+      "url": "https://doi.org/10.1525/res.2025.6.2.149"
     },
     {
       "attribution_id": "sounding_out",
@@ -2247,6 +2691,18 @@
       "url": "https://www.tandfonline.com/doi/full/10.1080/19376529.2024.2449331?af=R"
     },
     {
+      "attribution_id": "journal_radio_audio_media",
+      "doi": "10.1080/19376529.2025.2472764",
+      "id": "doi:2552108cbba6ce55696a",
+      "language": "en",
+      "published_at": "2025-03-28T00:00:00Z",
+      "source_family": "rss",
+      "source_name": "Journal of Radio & Audio Media / Taylor & Francis Online",
+      "source_type": "journal_article",
+      "title": "Examining Perceptions of ‘Peacebuildings’ in Radiophonic Debates – a Narrative Analysis of Media Talk in the Central African Republic",
+      "url": "https://doi.org/10.1080/19376529.2025.2472764"
+    },
+    {
       "attribution_id": "radio_survivor",
       "doi": null,
       "id": "url:f5b79cea7bf7c55bd929",
@@ -2286,7 +2742,7 @@
       "attribution_id": "journal_radio_audio_media",
       "doi": "10.1080/19376529.2025.2469248",
       "id": "url:150d405b5ed2cec103e5",
-      "language": "und",
+      "language": "en",
       "published_at": "2025-03-12T10:45:44Z",
       "source_family": "rss",
       "source_name": "Journal of Radio & Audio Media / Taylor & Francis Online",
@@ -2319,6 +2775,42 @@
       "url": "https://soundstudiesblog.com/2025/03/03/clapping-back-responses-from-sound-studies-to-censorship-silencing"
     },
     {
+      "attribution_id": "resonance_journal",
+      "doi": "10.1525/res.2025.6.1.110",
+      "id": "doi:dc6a89f5e7fdd35d8e6d",
+      "language": "en",
+      "published_at": "2025-03-01T00:00:00Z",
+      "source_family": "crossref",
+      "source_name": "Resonance: The Journal of Sound and Culture",
+      "source_type": "journal_article",
+      "title": "The Folkness of Harry Shearer",
+      "url": "https://doi.org/10.1525/res.2025.6.1.110"
+    },
+    {
+      "attribution_id": "resonance_journal",
+      "doi": "10.1525/res.2025.6.1.5",
+      "id": "doi:983257303aaad63dc0fe",
+      "language": "en",
+      "published_at": "2025-03-01T00:00:00Z",
+      "source_family": "crossref",
+      "source_name": "Resonance: The Journal of Sound and Culture",
+      "source_type": "journal_article",
+      "title": "Against All Odds",
+      "url": "https://doi.org/10.1525/res.2025.6.1.5"
+    },
+    {
+      "attribution_id": "openalex",
+      "doi": "10.4324/9780367810207-47",
+      "id": "doi:07c11d090db6a489a4c9",
+      "language": "en",
+      "published_at": "2025-02-28T00:00:00Z",
+      "source_family": "openalex",
+      "source_name": "OpenAlex",
+      "source_type": "chapter",
+      "title": "Auditory Culture in Early Twentieth-Century Spain",
+      "url": "https://doi.org/10.4324/9780367810207-47"
+    },
+    {
       "attribution_id": "journal_radio_audio_media",
       "doi": "10.1080/19376529.2025.2460834",
       "id": "url:94682741c77826f0b0e4",
@@ -2341,6 +2833,42 @@
       "source_type": "blog",
       "title": "On a Blind Date with My First Love, Radio, for 30 Years",
       "url": "https://www.tandfonline.com/doi/full/10.1080/19376529.2024.2437388?af=R"
+    },
+    {
+      "attribution_id": "openalex",
+      "doi": "10.1007/978-3-032-05689-4_11",
+      "id": "doi:838efd3d9df2109e1165",
+      "language": "en",
+      "published_at": "2025-01-01T00:00:00Z",
+      "source_family": "openalex",
+      "source_name": "OpenAlex",
+      "source_type": "chapter",
+      "title": "Community Radio Is Hot Stuff",
+      "url": "https://doi.org/10.1007/978-3-032-05689-4_11"
+    },
+    {
+      "attribution_id": "openalex",
+      "doi": "10.5040/9798765121405",
+      "id": "doi:4a6184eda29a3f299144",
+      "language": "en",
+      "published_at": "2025-01-01T00:00:00Z",
+      "source_family": "openalex",
+      "source_name": "OpenAlex",
+      "source_type": "book",
+      "title": "Literature as Sound Studies",
+      "url": "https://doi.org/10.5040/9798765121405"
+    },
+    {
+      "attribution_id": "openalex",
+      "doi": "10.51644/9781771126465",
+      "id": "doi:d0712607e5bc821ad077",
+      "language": "en",
+      "published_at": "2024-12-13T00:00:00Z",
+      "source_family": "openalex",
+      "source_name": "OpenAlex",
+      "source_type": "book",
+      "title": "Podcast Studies",
+      "url": "https://doi.org/10.51644/9781771126465"
     },
     {
       "attribution_id": "sounding_out",
@@ -2923,6 +3451,13 @@
       "url": "https://niemanstoryboard.org/"
     },
     {
+      "attribution_id": "openalex",
+      "attribution_text": "Source: OpenAlex - lien vers la notice originale.",
+      "name": "OpenAlex",
+      "source_family": "openalex",
+      "url": "https://openalex.org/"
+    },
+    {
       "attribution_id": "radio_fanch",
       "attribution_text": "Source: Radio Fañch - lien vers le billet original.",
       "name": "Radio Fañch",
@@ -2942,6 +3477,20 @@
       "name": "Radiomorphoses / OpenEdition Journals",
       "source_family": "rss",
       "url": "https://journals.openedition.org/radiomorphoses/"
+    },
+    {
+      "attribution_id": "resonance_journal",
+      "attribution_text": "Source: Resonance: The Journal of Sound and Culture - lien vers la notice originale.",
+      "name": "Resonance: The Journal of Sound and Culture",
+      "source_family": "crossref",
+      "url": "https://online.ucpress.edu/res"
+    },
+    {
+      "attribution_id": "sound_studies_journal",
+      "attribution_text": "Source: Sound Studies: An Interdisciplinary Journal - lien vers la notice originale.",
+      "name": "Sound Studies: An Interdisciplinary Journal",
+      "source_family": "crossref",
+      "url": "https://www.tandfonline.com/journals/rfso20"
     },
     {
       "attribution_id": "sounding_out",

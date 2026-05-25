@@ -89,7 +89,7 @@ rss_atom:
 
   - id: la_lettre_pro
     name: La Lettre Pro de la Radio
-    enabled: true
+    enabled: false
     kind: rss
     url: "https://www.lalettre.pro/xml/syndication.rss"
     legal_status: "VALIDÉ STRICT — liens uniquement"
