@@ -1,8 +1,29 @@
 # Ressources suivies par l'antenne radio
 
-Dernière vérification : 2026-05-20 14:06 JST avec `make run` et `make export-public` (recette de recette v2 finalisée).
+Dernière recette locale complète — Plan final gelé : 2026-05-25, `make test` (172 passés) + `make weekly`.
+Compteurs finaux : RSS/Atom ~259 entrées ; HAL 45 ; Crossref 80 ; OpenAlex 276 ; `db.json` 660 items (to_read=292, candidate=266, ignored=102) ; index public 505 items, 28 sources, 0 doublon DOI.
 
 Source technique : `config/sources.yaml`. Ce fichier est la liste humaine à tenir à jour quand une source est ajoutée, désactivée ou modifiée.
+
+## Audit venues et réseaux prioritaires
+
+Statuts humains utilisés : `actif`, `inactif configuré`, `candidat`, `reporté`.
+
+| Cible | Statut humain | Classement | Points d'accès stables repérés | Décision |
+|---|---|---|---|---|
+| Radio Journal: International Studies in Broadcast & Audio Media | `actif` | Activable via Crossref ; RSS Intellect à valider techniquement | Page officielle Intellect/Intellect Discover ; ISSN `1476-4504`, e-ISSN `2040-1388` ; DOI Intellect de type `10.1386/rjao...` ; page Intellect Discover annonçant un RSS "Latest Articles" | Ajouté dans `crossref.journals` sous `radio_journal`, `enabled: true`. Ne pas dupliquer `journal_radio_audio_media` : c'est une autre revue. |
+| Sound Studies: An Interdisciplinary Journal | `actif` | Activable via Crossref ; RSS Taylor & Francis probable à valider | Page officielle Taylor & Francis `https://www.tandfonline.com/journals/rfso20` ; ISSN `2055-1940`, e-ISSN `2055-1959` ; DOI de type `10.1080/20551940...` ; source OpenAlex recherchable par ISSN | Ajouté dans `crossref.journals` sous `sound_studies_journal`, `enabled: true`. Complète `sounding_out_blog` sans le remplacer. |
+| JSS / Journal of Sonic Studies | `actif` | Activable via OpenAlex ; Crossref à vérifier ; RSS dédié non confirmé | Page officielle Research Catalogue/JSS ; ISSN `2212-6252` ; DOIs JSS de type `10.22501/JSS...` ; indexation DOAJ et OpenAlex signalée par ISSN Portal/DOAJ | Ajouté comme profil OpenAlex par `primary_location.source.issn`, `enabled: true`. Ne pas utiliser le flux global Research Catalogue comme source JSS. |
+| Resonance: The Journal of Sound and Culture | `actif` | Activable via Crossref ; RSS UC Press non confirmé | Page officielle Scholastica/UC Press ; e-ISSN `2688-867X` ; DOI UC Press de type `10.1525/res...` ; revue trimestrielle en ligne | Ajouté dans `crossref.journals` sous `resonance_journal`, `enabled: true`. Ne pas scraper `online.ucpress.edu`. |
+| IAMCR Music, Audio, Radio and Sound Working Group | `reporté` | Réseau à suivre par annonces ; pas activable automatiquement | Page officielle IAMCR MARS/MAR avec appels, newsletters et événements ; aucun RSS/API stable repéré pour la page du groupe | Veille manuelle ou semi-manuelle seulement. Pas de scraping HTML ; pas d'ajout à `config/sources.yaml` tant qu'un flux officiel stable n'est pas identifié. |
+| ECREA Radio and Sound Section | `reporté` | Réseau à suivre par annonces ; pas activable automatiquement | Page officielle ECREA Radio and Sound ; ECREA Weekly Digest général ; aucun RSS/API stable repéré pour la section | Veille manuelle via page section/Weekly Digest. Pas de scraping HTML ; pas d'ajout à `config/sources.yaml` tant qu'un flux officiel stable n'est pas identifié. |
+| MeCCSA Radio & Audio Studies | `actif` | Réseau suivi par RSS/annonces | Flux WordPress officiel `https://radiostudiesnetworkreadinggroup.wordpress.com/feed/`, déjà configuré sous `meccsa_radio_audio_studies` | Déjà couvert : enrichir la fiche humaine, ne pas créer de doublon. |
+
+Notes de non-duplication :
+
+- `journal_radio_audio_media` couvre déjà Journal of Radio & Audio Media par RSS Taylor & Francis et par Crossref contrôlé.
+- `sounding_out_blog` couvre déjà Sounding Out! par RSS ; ce n'est pas la revue Taylor & Francis `Sound Studies`.
+- Les réseaux IAMCR/ECREA sont pertinents intellectuellement, mais restent reportés côté pipeline faute de flux officiel stable et spécifique.
 
 ## Sources actives
 
@@ -13,19 +34,22 @@ Source technique : `config/sources.yaml`. Ce fichier est la liste humaine à ten
 | `radio_fanch` | Radio Fañch | RSS | `https://radiofanch.blogspot.com/feeds/posts/default?alt=rss` | `data/raw/rss_latest.json` | Activée ; 25 entrées au dernier run ; statut 200. |
 | `les_radios_libres` | Les Radios Libres | RSS | `https://lesradioslibres.wordpress.com/feed/` | `data/raw/rss_latest.json` | Activée ; 10 entrées au dernier run ; statut 200. |
 | `la_radio_du_futur` | La Radio du Futur | RSS | `https://radiodufutur.wordpress.com/feed/` | `data/raw/rss_latest.json` | Activée ; 10 entrées au dernier run ; statut 200. |
-| `la_lettre_pro` | La Lettre Pro de la Radio | RSS | `https://www.lalettre.pro/xml/syndication.rss` | `data/raw/rss_latest.json` | Activée ; 20 entrées au dernier run ; statut 200. |
-| `meccsa_radio_audio_studies` | MeCCSA Radio & Audio Studies | RSS | `https://radiostudiesnetworkreadinggroup.wordpress.com/feed/` | `data/raw/rss_latest.json` | Activée ; 10 entrées au dernier run ; statut 200. |
+| `meccsa_radio_audio_studies` | MeCCSA Radio & Audio Studies | RSS | `https://radiostudiesnetworkreadinggroup.wordpress.com/feed/` | `data/raw/rss_latest.json` | Activée ; 10 entrées au dernier run ; statut 200 ; confirmé comme cible prioritaire déjà couverte, sans doublon. |
 | `nieman_storyboard` | Nieman Storyboard | RSS | `https://niemanstoryboard.org/feed/` | `data/raw/rss_latest.json` | Activée ; 10 entrées au dernier run ; statut 200. |
 | `journal_radio_audio_media` | Journal of Radio & Audio Media | RSS | `https://www.tandfonline.com/action/showFeed?type=etoc&feed=rss&jc=hjrs20` | `data/raw/rss_latest.json` | Activée ; 42 entrées au dernier run ; statut 200. |
 | `sounding_out_blog` | Sounding Out! | RSS | `https://soundstudiesblog.com/feed/` | `data/raw/rss_latest.json` | Activée ; 50 entrées au dernier run ; statut 200. |
 | `hal` | HAL radio studies search | API HAL | `https://api.archives-ouvertes.fr/search/` | `data/raw/hal_latest.json` | Activée ; 20 documents au dernier run ; `num_found` annoncé : 931. |
+| `crossref` | Crossref radio journals | API Crossref | `https://api.crossref.org` | `data/raw/crossref_latest.json` | Activée durablement avec garde-fou : recette live OK, 20 notices pour Journal of Radio & Audio Media, `total_results=623`, `rows: 20`. |
 
 ## Derniers compteurs publics
 
 - `data/raw/rss_latest.json` : 239 entrées RSS actives, 0 erreur au run final.
-- `data/normalized/db.json` : 283 items, dont `to_read=141`, `candidate=86`, `ignored=56`.
-- `static/antenne-radio/index.json` : 227 items publics whitelisted après `make export-public`.
-- Répartition publique des nouvelles sources : Radiomorphoses 9, Radio Fañch 21, Les Radios Libres 9, La Radio du Futur 4, La Lettre Pro de la Radio 15, MeCCSA Radio and Audio Studies 9, Nieman Storyboard 8.
+- `data/raw/hal_latest.json` : 20 documents, 0 erreur, `num_found=931`.
+- `data/raw/crossref_latest.json` : 20 notices Crossref, 1 revue interrogée, 0 erreur, `total_results=623`.
+- `data/normalized/db.json` : 289 items, dont `to_read=144`, `candidate=89`, `ignored=56`.
+- `static/antenne-radio/index.json` : 233 items publics whitelisted après `make export-public`.
+- Fusion DOI Crossref : les 20 notices Crossref ont été fusionnées avec les notices T&F/RSS existantes ; 0 doublon DOI observé dans `db.json`.
+- Répartition publique actuelle : HAL 37, Journal of Radio & Audio Media / Taylor & Francis Online 33, La Lettre Pro 20, Radio Survivor 52, Sounding Out! 30, Radio Fañch 22, Radiomorphoses 9, Les Radios Libres 9, MeCCSA Radio and Audio Studies 9, Nieman Storyboard 8, La Radio du Futur 4.
 
 ## Paramètres HAL actuels
 
@@ -42,22 +66,44 @@ Source technique : `config/sources.yaml`. Ce fichier est la liste humaine à ten
 
 | ID | Nom | Famille | URL | Raison |
 |---|---|---|---|---|
+| `la_lettre_pro` | La Lettre Pro de la Radio | RSS | `https://www.lalettre.pro/xml/syndication.rss` | **Désactivée définitivement** le 2026-05-25 (trop de bruit industriel/commercial, non académique). |
 | `transom` | Transom | RSS | `https://transom.org/feed/` | Juridiquement validé en métadonnées le 2026-05-20, mais techniquement reporté : le run contrôlé a retrouvé 0 entrée, statut 301 et warning feedparser. |
 | `sounding_out_podcast` | Sounding Out! podcast | RSS | `https://feeds.feedburner.com/SoundingOutPodcast` | Flux valide, mais gardé désactivé pour éviter un doublon thématique avant décision sur les podcasts. |
 | `example_disabled_journal` | Example journal feed to replace | Atom | `https://example.org/radio-studies.atom` | Exemple désactivé, à remplacer par une vraie source si utile. |
-| `crossref` | Crossref radio journals | API Crossref | `https://api.crossref.org` | Ajouté désactivé après audit Prompt 12 : activation seulement avec identification polie via `CROSSREF_MAILTO`, limite basse et dumps bruts. |
 
 ## Paramètres Crossref préparés
 
-- État : désactivé par défaut (`crossref.enabled: false`).
-- Identification polie : variable locale `CROSSREF_MAILTO`; aucune adresse personnelle n'est inscrite dans le dépôt.
+- État : activé durablement avec garde-fou (`crossref.enabled: true`) ; sans `CROSSREF_MAILTO`, le connecteur écrit `missing_mailto` et ne fait aucun appel réseau Crossref.
+- Identification polie : variable locale `CROSSREF_MAILTO` ou `.env.local` ignoré par Git ; aucune adresse personnelle n'est inscrite dans le dépôt.
 - Limite basse : `rows: 20`, requêtes séquentielles, `polite_delay_seconds: 1`.
-- Revue configurée pour démarrage contrôlé : `Journal of Radio & Audio Media`, ISSN `1937-6529` et `1937-6537`.
+- **Revues actives (6 au total)** :
+  - `Journal of Radio & Audio Media` (ISSN `1937-6529`, `1937-6537`)
+  - `Radio Journal: International Studies in Broadcast & Audio Media` (`1476-4504`, `2040-1388`)
+  - `Sound Studies: An Interdisciplinary Journal` (`2055-1940`, `2055-1959`)
+  - `Resonance: The Journal of Sound and Culture` (`2688-867X`)
+  - `Organised Sound` (`1355-7718`, `1469-8153`) — ajoutée 2026-05-25
+  - `SoundEffects` (`1904-4566`, `1904-4577`) — ajoutée 2026-05-25
 - Sortie brute prévue : `data/raw/crossref_latest.json`.
+
+## Paramètres OpenAlex préparés
+
+- État : déclaré et désigné actif (`openalex.enabled: true`) ; le pipeline l'appelle en live via `OPENALEX_MAILTO` local.
+- Identification polie : `OPENALEX_MAILTO` doit rester local (`.env.local` ou variable d'environnement), jamais commité, jamais écrit dans les artefacts publics.
+- Point d'accès : API Works `https://api.openalex.org/works`.
+- Fenêtre et volume : 18 mois, `per_page: 20`, 1 page maximum par profil, délai poli de 1 seconde entre profils.
+- **Stratégie par type de revue** :
+  - Revues **mono-thématiques** (radio/son) → profil venue entière par ISSN (`journal_sonic_studies_venue` = JSS par ISSN).
+  - Revues **généralistes adjacentes** → profil venue ISSN + filtre mots-clés (`search`), jamais la revue entière.
+- **Profils thématiques (6)** :
+  - `radio_studies`, `radio_audio_media`, `sound_studies`, `podcast_studies`, `community_free_radio`, `journal_sonic_studies_venue`.
+- **Nouveaux profils généraux filtrés (13, ajoutés 2026-05-25)** :
+  - Anglophone : `popular_communication_filtered`, `convergence_filtered`, `media_culture_society_filtered`, `feminist_media_studies_filtered`, `participations_filtered`, `critical_studies_tv_filtered`, `view_journal_filtered`.
+  - Francophone : `reseaux_filtered`, `questions_communication_filtered`, `etudes_communication_filtered`, `volume_filtered`, `transposition_filtered`, `societes_representations_filtered`.
+- Exclusions de bruit obligatoires (inchangées) : `radio frequency`, `radiofrequency`, `radiotherapy`, `radioactive`, `radio telescope`, `radio astronomy`, `electromagnetic radiation`, `cognitive radio`, `spectrum sensing`, `beamforming`, `MIMO`, `5G`, `6G`.
+- Champs interdits : `abstract_inverted_index`, abstract reconstruit, auteurs, affiliations, `locations`, PDF/fulltext, références, raw/logs/secrets en public.
 
 ## Ressources explicitement non suivies en v0.1
 
-- OpenAlex.
 - CiNii.
 - NDL.
 - J-STAGE.
@@ -71,5 +117,23 @@ Source technique : `config/sources.yaml`. Ce fichier est la liste humaine à ten
 1. Modifier `config/sources.yaml`.
 2. Mettre à jour ce fichier.
 3. Lancer `make test`.
-4. Lancer `make run`.
+4. Lancer `make weekly` (récolte + pruning + export + récapitulatif + scan anti-fuite).
 5. Vérifier `data/logs/api.log`, `data/logs/pipeline.log` et les compteurs dans `data/raw/*.json`.
+6. Si le scan est OK, copier-coller les commandes git affichées par `make weekly`.
+
+## Routine hebdomadaire
+
+```sh
+cd antenne_radio
+make weekly
+```
+
+Récolte, élague (18 mois, sauf `exported`), exporte, affiche les compteurs, scanne les fuites, imprime les commandes git. Aucun commit automatique.
+
+## État du projet — Gel plan final (2026-05-25)
+
+- **Pipeline** : opérationnel, 172 tests passés.
+- **Rétention 18 mois** : implémentée dans `scripts/core/prune.py`, intégrée au pipeline, testée.
+- **Commande hebdo** : `make weekly` (récolte + pruning + export + scan + instructions push).
+- **Interface Hugo** : `/antenne-radio/` avec filtres (type, source, langue, année, tri), deep-linking, bloc « À propos / contact / retrait ».
+- **V4 japonaise** : reportée (CiNii, NDL, J-STAGE hors périmètre).

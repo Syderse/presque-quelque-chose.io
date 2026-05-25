@@ -109,6 +109,17 @@ Netlify :
 - Ne jamais masquer un test échoué.
 - À la fin des blocs, mettre à jour antenne_radio/codex_memoire_materielle.md pour transmettre la mémoire des sessions.
 
+### Philosophie & Doctrine de données — Antenne radio
+
+L’antenne radio est un outil léger de veille académique, non une archive exhaustive.
+
+**Principes cardinaux pour les agents :**
+- **Impermanence & Rétention** : Conserver une fenêtre de veille récente de **18 mois** max. Ne pas accumuler indéfiniment les notices locales. Les caches bruts, bases intermédiaires, logs et exports privés sont jetables et ignorés par Git.
+- **Archivage savant externe** : Zotero et Obsidian privé sont les uniques espaces d'archivage pérennes. La curation finale est manuelle et consciente.
+- **Sobriété & Whitelist publique** : Garder les exports publics Hugo sobres, minimaux et strictement limités à la whitelist auditée. Ne jamais exporter de champ supplémentaire sans un audit explicite, justifié légalement et testé.
+- **Intégrité de la curation humaine** : Le pipeline peut recalculer dynamiquement les scores machines et suggestions de toute la base si la configuration change, mais il ne doit **jamais** écraser silencieusement les décisions humaines de curation (`to_read`, `ignored`, `exported`, etc.).
+- **Simplicité & Transmission** : Préférer des mécanismes ultra-simples, lisibles et transmissibles (ex. overrides via YAML externe) à toute forme d'architecture logicielle complexe ou d'automatisation cachée. Le projet a vocation à être partagé avec un laboratoire de recherche.
+
 `/solutions-imaginaires/`
 
 - Fond clair, jardin automnal, cartes-feuilles CSS.

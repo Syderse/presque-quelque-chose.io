@@ -1,0 +1,9 @@
+# Configuration pnpm au niveau du projet
+# requis pour pnpm v10+ pour remplacer l'ancien bloc "pnpm" de package.json
+
+overrides:
+  picomatch: 2.3.2
+
+onlyBuiltDependencies:
+  - "@parcel/watcher"
+  - hugo-extended

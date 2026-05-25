@@ -1,6 +1,7 @@
 from __future__ import annotations
 
 import argparse
+import re
 import sys
 from datetime import datetime, timezone
 from pathlib import Path
@@ -22,7 +23,11 @@ DEFAULT_DB = ROOT / "data" / "normalized" / "db.json"
 DEFAULT_OUTPUT = SITE_ROOT / "static" / "antenne-radio" / "index.json"
 SCHEMA_VERSION = "antenne-radio-public-v0"
 
-PUBLIC_ITEM_KEYS = {
+# Sources bibliographiques : notices citables avec auteurs + revue + type
+BIBLIOGRAPHIC_SOURCE_FAMILIES = {"crossref", "openalex", "hal"}
+
+# Clés communes à tous les items (éditoriaux et bibliographiques)
+_BASE_ITEM_KEYS = {
     "id",
     "title",
     "url",
@@ -34,6 +39,16 @@ PUBLIC_ITEM_KEYS = {
     "source_family",
     "attribution_id",
 }
+
+# 3 clés supplémentaires pour sources bibliographiques uniquement
+_BIBLIOGRAPHIC_EXTRA_KEYS = {"authors", "container_title", "item_type"}
+
+EDITORIAL_ITEM_KEYS = _BASE_ITEM_KEYS
+BIBLIOGRAPHIC_ITEM_KEYS = _BASE_ITEM_KEYS | _BIBLIOGRAPHIC_EXTRA_KEYS
+# Whitelist complète (documentation + contrôle d'exhaustivité dans les tests)
+PUBLIC_ITEM_KEYS = BIBLIOGRAPHIC_ITEM_KEYS
+
+EMAIL_RE = re.compile(r"[a-zA-Z0-9._%+\-]+@[a-zA-Z0-9.\-]+\.[a-zA-Z]{2,}", re.IGNORECASE)
 
 FORBIDDEN_PUBLIC_KEYS = {
     "raw",
@@ -51,7 +66,6 @@ FORBIDDEN_PUBLIC_KEYS = {
     "title_original",
     "errors",
     "raw_responses",
-    "authors",
     "tags",
 }
 
@@ -67,6 +81,30 @@ AUDITED_ATTRIBUTIONS: dict[str, dict[str, str]] = {
         "url": "https://www.tandfonline.com/journals/hjrs20",
         "source_family": "rss",
         "attribution_text": "Source: Journal of Radio & Audio Media / Taylor & Francis Online - lien vers la notice originale.",
+    },
+    "radio_journal": {
+        "name": "Radio Journal: International Studies in Broadcast & Audio Media",
+        "url": "https://intellectdiscover.com/content/journals/rj",
+        "source_family": "crossref",
+        "attribution_text": "Source: Radio Journal: International Studies in Broadcast & Audio Media - lien vers la notice originale.",
+    },
+    "sound_studies_journal": {
+        "name": "Sound Studies: An Interdisciplinary Journal",
+        "url": "https://www.tandfonline.com/journals/rfso20",
+        "source_family": "crossref",
+        "attribution_text": "Source: Sound Studies: An Interdisciplinary Journal - lien vers la notice originale.",
+    },
+    "journal_sonic_studies": {
+        "name": "Journal of Sonic Studies",
+        "url": "https://www.researchcatalogue.net/view/558606/558607",
+        "source_family": "openalex",
+        "attribution_text": "Source: Journal of Sonic Studies - lien vers la notice originale.",
+    },
+    "resonance_journal": {
+        "name": "Resonance: The Journal of Sound and Culture",
+        "url": "https://online.ucpress.edu/res",
+        "source_family": "crossref",
+        "attribution_text": "Source: Resonance: The Journal of Sound and Culture - lien vers la notice originale.",
     },
     "sounding_out": {
         "name": "Sounding Out!",
@@ -128,11 +166,115 @@ AUDITED_ATTRIBUTIONS: dict[str, dict[str, str]] = {
         "source_family": "hal",
         "attribution_text": "Source: HAL open archive - lien vers la notice HAL.",
     },
+    "openalex": {
+        "name": "OpenAlex",
+        "url": "https://openalex.org/",
+        "source_family": "openalex",
+        "attribution_text": "Source: OpenAlex - lien vers la notice originale.",
+    },
+    "organised_sound": {
+        "name": "Organised Sound",
+        "url": "https://www.cambridge.org/core/journals/organised-sound",
+        "source_family": "crossref",
+        "attribution_text": "Source: Organised Sound (Cambridge University Press) - lien vers la notice originale.",
+    },
+    "sound_effects_journal": {
+        "name": "SoundEffects",
+        "url": "https://www.soundeffects.dk/",
+        "source_family": "crossref",
+        "attribution_text": "Source: SoundEffects (Roskilde University Press) - lien vers la notice originale.",
+    },
+    "popular_communication": {
+        "name": "Popular Communication",
+        "url": "https://www.tandfonline.com/journals/hppc20",
+        "source_family": "openalex",
+        "attribution_text": "Source: Popular Communication (Taylor & Francis) - lien vers la notice originale.",
+    },
+    "convergence_journal": {
+        "name": "Convergence",
+        "url": "https://journals.sagepub.com/home/con",
+        "source_family": "openalex",
+        "attribution_text": "Source: Convergence (SAGE) - lien vers la notice originale.",
+    },
+    "media_culture_society": {
+        "name": "Media, Culture & Society",
+        "url": "https://journals.sagepub.com/home/mcs",
+        "source_family": "openalex",
+        "attribution_text": "Source: Media, Culture & Society (SAGE) - lien vers la notice originale.",
+    },
+    "feminist_media_studies": {
+        "name": "Feminist Media Studies",
+        "url": "https://www.tandfonline.com/journals/rfms20",
+        "source_family": "openalex",
+        "attribution_text": "Source: Feminist Media Studies (Taylor & Francis) - lien vers la notice originale.",
+    },
+    "participations_journal": {
+        "name": "Participations",
+        "url": "https://www.participations.org/",
+        "source_family": "openalex",
+        "attribution_text": "Source: Participations: Journal of Audience & Reception Studies - lien vers la notice originale.",
+    },
+    "critical_studies_tv": {
+        "name": "Critical Studies in Television",
+        "url": "https://journals.sagepub.com/home/cst",
+        "source_family": "openalex",
+        "attribution_text": "Source: Critical Studies in Television (SAGE/Manchester UP) - lien vers la notice originale.",
+    },
+    "view_journal": {
+        "name": "VIEW Journal of European Television History and Culture",
+        "url": "https://viewjournal.eu/",
+        "source_family": "openalex",
+        "attribution_text": "Source: VIEW Journal of European Television History and Culture - lien vers la notice originale.",
+    },
+    "reseaux": {
+        "name": "Réseaux",
+        "url": "https://www.cairn.info/revue-reseaux.htm",
+        "source_family": "openalex",
+        "attribution_text": "Source: Réseaux (La Découverte) - lien vers la notice originale.",
+    },
+    "questions_communication": {
+        "name": "Questions de communication",
+        "url": "https://journals.openedition.org/questionsdecommunication/",
+        "source_family": "openalex",
+        "attribution_text": "Source: Questions de communication (PUL) - lien vers la notice originale.",
+    },
+    "etudes_communication": {
+        "name": "Études de communication",
+        "url": "https://journals.openedition.org/edc/",
+        "source_family": "openalex",
+        "attribution_text": "Source: Études de communication (OpenEdition) - lien vers la notice originale.",
+    },
+    "volume_journal": {
+        "name": "Volume!",
+        "url": "https://journals.openedition.org/volume/",
+        "source_family": "openalex",
+        "attribution_text": "Source: Volume! (OpenEdition) - lien vers la notice originale.",
+    },
+    "transposition_journal": {
+        "name": "Transposition",
+        "url": "https://journals.openedition.org/transposition/",
+        "source_family": "openalex",
+        "attribution_text": "Source: Transposition (OpenEdition) - lien vers la notice originale.",
+    },
+    "societes_representations": {
+        "name": "Sociétés & Représentations",
+        "url": "https://www.cairn.info/revue-societes-et-representations.htm",
+        "source_family": "openalex",
+        "attribution_text": "Source: Sociétés & Représentations (Publications de la Sorbonne) - lien vers la notice originale.",
+    },
 }
 
 ATTRIBUTION_BY_SOURCE_NAME = {
     "Radio Survivor": "radio_survivor",
     "Journal of Radio & Audio Media": "journal_radio_audio_media",
+    "Radio Journal: International Studies in Broadcast & Audio Media": "radio_journal",
+    "Radio Journal:International Studies in Broadcast & Audio Media": "radio_journal",
+    "The Radio Journal: International Studies in Broadcast & Audio Media": "radio_journal",
+    "Sound Studies": "sound_studies_journal",
+    "Sound Studies: An Interdisciplinary Journal": "sound_studies_journal",
+    "Journal of Sonic Studies": "journal_sonic_studies",
+    "Resonance: The Journal of Sound and Culture": "resonance_journal",
+    "Resonance The Journal of Sound and Culture": "resonance_journal",
     "Sounding Out!": "sounding_out",
     "Radiomorphoses": "radiomorphoses",
     "Radio Fañch": "radio_fanch",
@@ -143,6 +285,36 @@ ATTRIBUTION_BY_SOURCE_NAME = {
     "Nieman Storyboard": "nieman_storyboard",
     "Transom": "transom",
     "HAL radio studies search": "hal",
+    "OpenAlex": "openalex",
+    # Nouvelles revues Crossref (container-title tel que retourné par l'API)
+    "Organised Sound": "organised_sound",
+    "SoundEffects": "sound_effects_journal",
+    "SoundEffects: An Interdisciplinary Journal of Sound and Sound Experience": "sound_effects_journal",
+    # Nouvelles revues OpenAlex (primary_location.source.display_name — variantes observées)
+    "Popular Communication": "popular_communication",
+    "Convergence: The International Journal of Research into New Media Technologies": "convergence_journal",
+    "Convergence The International Journal of Research into New Media Technologies": "convergence_journal",
+    "Convergence": "convergence_journal",
+    "Media, Culture & Society": "media_culture_society",
+    "Media Culture & Society": "media_culture_society",
+    "Feminist Media Studies": "feminist_media_studies",
+    "Participations": "participations_journal",
+    "Participations: Journal of Audience & Reception Studies": "participations_journal",
+    "Critical Studies in Television": "critical_studies_tv",
+    "Critical Studies in Television The International Journal of Television Studies": "critical_studies_tv",
+    "VIEW Journal of European Television History and Culture": "view_journal",
+    "VIEW": "view_journal",
+    "Réseaux": "reseaux",
+    "Réseaux (Paris)": "reseaux",
+    "Questions de communication": "questions_communication",
+    "Études de communication": "etudes_communication",
+    "Volume!": "volume_journal",
+    "Volume !": "volume_journal",
+    "Transposition": "transposition_journal",
+    "Sociétés & Représentations": "societes_representations",
+    # Variantes de noms avec entités HTML (retournées par certaines APIs)
+    "Radio Journal:International Studies in Broadcast &amp; Audio Media": "radio_journal",
+    "Journal of sonic studies": "journal_sonic_studies",
 }
 
 
@@ -238,13 +410,25 @@ def _sort_items(items: list[RadioWatchItem]) -> list[RadioWatchItem]:
     return sorted(items, key=sort_key, reverse=True)
 
 
+def _clean_authors(authors: list[str]) -> list[str]:
+    cleaned = []
+    for name in authors:
+        safe = EMAIL_RE.sub("", name).strip()
+        if safe:
+            cleaned.append(safe)
+    return cleaned
+
+
 def _item_to_public(item: RadioWatchItem) -> dict[str, Any]:
     attribution_id = _attribution_id(item)
     if attribution_id is None:
         raise ValueError(f"Unaudited source cannot be exported: {item.source_name}")
 
     attribution = AUDITED_ATTRIBUTIONS[attribution_id]
-    public_item = {
+    source_family = attribution["source_family"]
+    is_bibliographic = source_family in BIBLIOGRAPHIC_SOURCE_FAMILIES
+
+    public_item: dict[str, Any] = {
         "id": item.id,
         "title": item.title,
         "url": _public_url(item),
@@ -253,11 +437,17 @@ def _item_to_public(item: RadioWatchItem) -> dict[str, Any]:
         "source_name": attribution["name"],
         "source_type": item.source_type.value,
         "language": item.language,
-        "source_family": attribution["source_family"],
+        "source_family": source_family,
         "attribution_id": attribution_id,
     }
 
-    if set(public_item) != PUBLIC_ITEM_KEYS:
+    if is_bibliographic:
+        public_item["authors"] = _clean_authors(item.authors)
+        public_item["container_title"] = item.container_title
+        public_item["item_type"] = item.source_type.value
+
+    expected_keys = BIBLIOGRAPHIC_ITEM_KEYS if is_bibliographic else EDITORIAL_ITEM_KEYS
+    if set(public_item) != expected_keys:
         raise ValueError("Public item does not match the strict whitelist")
 
     return public_item

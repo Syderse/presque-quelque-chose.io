@@ -10,6 +10,21 @@ radio_core:
   - radio art
   - radio archive
   - histoire de la radio
+  - broadcasting history
+  - radio production
+  - radio journalism
+  - audio media
+  - broadcast
+  - public radio
+  - webradio
+  - web radio
+  - radio programme
+  - radio program
+  - radiodiffusion
+  - émission de radio
+  - émissions de radio
+  - radio documentary
+  - histoire radiophonique
 
 radio_free:
   - radio libre
@@ -20,6 +35,14 @@ radio_free:
   - radio associative
   - independent radio
   - low-power FM
+  - local radio
+  - radio locale
+  - radio communautaire
+  - radio pirate
+  - microradio
+  - micro-radio
+  - low power radio
+  - radio basse puissance
 
 sound_studies:
   - sound studies
@@ -30,6 +53,26 @@ sound_studies:
   - soundscape
   - écoute
   - paysage sonore
+  - sound art
+  - sonic geography
+  - audio culture
+  - noise studies
+  - sonore
+  - musique concrète
+  - acousmatic
+  - acousmatique
+  - listening practice
+  - aural culture
+  - aural history
+  - sonic culture
+  - musique électroacoustique
+  - électroacoustique
+  - electroacoustic
+  - organised sound
+  - electroacoustic music
+  - voice studies
+  - études de la voix
+  - auditory studies
 
 podcast:
   - podcast
@@ -39,6 +82,15 @@ podcast:
   - serialized audio
   - documentaire sonore
   - création sonore
+  - podcast studies
+  - audio documentary
+  - audio drama
+  - audiodrama
+  - narrative audio
+  - radio narrative
+  - audio narrative
+  - radio drama
+  - radio fiction
 
 guattari_institutional_psychotherapy:
   - Félix Guattari
@@ -73,8 +125,11 @@ negative_noise:
   - antenna design
   - RF engineering
   - medical imaging
+  - radiotherapy
+  - radiation therapy
+  - nuclear medicine
 
-# Bruit HAL où "radio" désigne plutôt les réseaux, le spectre ou la physique.
+# Bruit HAL et OpenAlex où "radio" désigne plutôt les réseaux, le spectre ou la physique.
 technical_radio_noise:
   - cognitive radio
   - spectrum sensing
@@ -100,3 +155,7 @@ technical_radio_noise:
   - solar wind
   - X-rays
   - microwave resonator
+  - beamforming
+  - radio propagation
+  - antenna array
+  - signal processing

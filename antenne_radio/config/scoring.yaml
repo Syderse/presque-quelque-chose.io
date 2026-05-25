@@ -25,3 +25,14 @@ fields:
   title: 2
   abstract: 1
   tags: 2
+  source_name: 1
+
+# Plancher de confiance par source : un article issu d'une source académique
+# (crossref, openalex, hal) avec un score brut non négatif ne peut pas tomber
+# sous "candidate". Les poids négatifs techniques restent dominants si score < 0.
+academic_source_floor:
+  min_score: 0
+  source_apis:
+    - crossref
+    - openalex
+    - hal

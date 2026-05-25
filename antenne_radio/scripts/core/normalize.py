@@ -1,6 +1,7 @@
 from __future__ import annotations
 
 import argparse
+import re
 import sys
 from datetime import datetime, timezone
 from pathlib import Path
@@ -21,12 +22,14 @@ from scripts.core.models import (  # noqa: E402
     WatchStatus,
     generate_stable_id,
     normalize_doi,
+    normalize_url,
 )
 
 
 DEFAULT_RSS_RAW = ROOT / "data" / "raw" / "rss_latest.json"
 DEFAULT_HAL_RAW = ROOT / "data" / "raw" / "hal_latest.json"
 DEFAULT_CROSSREF_RAW = ROOT / "data" / "raw" / "crossref_latest.json"
+DEFAULT_OPENALEX_RAW = ROOT / "data" / "raw" / "openalex_latest.json"
 DEFAULT_DB = ROOT / "data" / "normalized" / "db.json"
 DEFAULT_LOG = ROOT / "data" / "logs" / "api.log"
 
@@ -150,8 +153,15 @@ def normalize_rss_entry(
     published_at = _parse_datetime(entry.get("published")) or _parse_datetime(entry.get("updated"))
     title = _first_text(entry.get("title"))
     url = _first_text(entry.get("link"))
+    doi = normalize_doi(_first_text(entry.get("doi")) or _first_text(entry.get("dc_identifier")) or url)
     source_name = _first_text(entry.get("source_name")) or "RSS"
-    item_id = generate_stable_id(url=url, title=title, published_at=published_at, source_name=source_name)
+    item_id = generate_stable_id(
+        doi=doi,
+        url=url,
+        title=title,
+        published_at=published_at,
+        source_name=source_name,
+    )
 
     return RadioWatchItem(
         id=item_id,
@@ -164,6 +174,7 @@ def normalize_rss_entry(
         authors=_text_list(entry.get("authors")),
         published_at=published_at,
         url=url,
+        doi=doi,
         abstract=_first_text(entry.get("summary")),
         source_feed=_first_text(entry.get("source_feed")),
         source_api="rss",
@@ -199,6 +210,7 @@ def normalize_hal_entry(
         status=WatchStatus.new,
         discovered_at=discovered_at or _now(),
         title_original=_first_text(entry.get("title_s")),
+        container_title=_first_text(entry.get("journalTitle_s")),
         authors=_text_list(entry.get("authorFullName_s")),
         published_at=published_at,
         url=url,
@@ -275,6 +287,7 @@ def normalize_crossref_entry(
         status=WatchStatus.new,
         discovered_at=discovered_at or _now(),
         title_original=title,
+        container_title=_first_text(entry.get("container-title")),
         authors=_crossref_authors(entry.get("author")),
         published_at=published_at,
         url=url,
@@ -283,6 +296,156 @@ def normalize_crossref_entry(
         tags=_text_list(entry.get("subject")),
         source_feed=_first_text(source.get("endpoint")),
         source_api="crossref",
+        raw=entry,
+    )
+
+
+def _openalex_doi(entry: dict[str, Any]) -> str | None:
+    doi = normalize_doi(_first_text(entry.get("doi")))
+    if doi:
+        return doi
+
+    ids = entry.get("ids")
+    if isinstance(ids, dict):
+        doi = normalize_doi(_first_text(ids.get("doi")))
+        if doi:
+            return doi
+
+    return None
+
+
+def _openalex_url(entry: dict[str, Any], doi: str | None) -> str | None:
+    if doi:
+        return f"https://doi.org/{doi}"
+
+    primary_location = entry.get("primary_location")
+    if isinstance(primary_location, dict):
+        landing = _first_text(primary_location.get("landing_page_url"))
+        if landing:
+            return landing
+
+    openalex_id = _first_text(entry.get("id"))
+    if openalex_id:
+        return openalex_id
+
+    return None
+
+
+def _openalex_source_name(entry: dict[str, Any]) -> str:
+    primary_location = entry.get("primary_location")
+    if isinstance(primary_location, dict):
+        source = primary_location.get("source")
+        if isinstance(source, dict):
+            name = _first_text(source.get("display_name"))
+            if name:
+                return name
+
+    return "OpenAlex"
+
+
+def _openalex_tags(entry: dict[str, Any]) -> list[str]:
+    tags: list[str] = []
+    seen: set[str] = set()
+
+    keywords = entry.get("keywords")
+    if isinstance(keywords, list):
+        for item in keywords:
+            if isinstance(item, str):
+                text = _compact_text(item)
+            elif isinstance(item, dict):
+                text = _compact_text(item.get("display_name") or item.get("keyword"))
+            else:
+                continue
+            if text:
+                key = text.casefold()
+                if key not in seen:
+                    tags.append(text)
+                    seen.add(key)
+
+    primary_topic = entry.get("primary_topic")
+    if isinstance(primary_topic, dict):
+        topic_name = _compact_text(primary_topic.get("display_name"))
+        if topic_name:
+            key = topic_name.casefold()
+            if key not in seen:
+                tags.append(topic_name)
+                seen.add(key)
+
+    return tags
+
+
+def _openalex_authors(entry: dict[str, Any]) -> list[str]:
+    authorships = entry.get("authorships")
+    if not isinstance(authorships, list):
+        return []
+
+    authors: list[str] = []
+    seen: set[str] = set()
+    for authorship in authorships:
+        if not isinstance(authorship, dict):
+            continue
+        author = authorship.get("author")
+        if not isinstance(author, dict):
+            continue
+        name = _compact_text(author.get("display_name"))
+        key = name.casefold() if name else None
+        if name and key not in seen:
+            authors.append(name)
+            seen.add(key)
+
+    return authors
+
+
+def _openalex_source_type(entry: dict[str, Any]) -> SourceType:
+    entry_type = _first_text(entry.get("type"))
+    if entry_type is None:
+        return SourceType.unknown
+
+    type_map = {
+        "article": SourceType.journal_article,
+        "journal-article": SourceType.journal_article,
+        "book": SourceType.book,
+        "book-chapter": SourceType.chapter,
+        "dissertation": SourceType.thesis,
+        "review": SourceType.journal_article,
+    }
+    return type_map.get(entry_type.lower(), SourceType.unknown)
+
+
+def normalize_openalex_entry(
+    entry: dict[str, Any],
+    *,
+    discovered_at: datetime | None = None,
+) -> RadioWatchItem:
+    doi = _openalex_doi(entry)
+    url = _openalex_url(entry, doi)
+    title = _first_text(entry.get("display_name")) or _first_text(entry.get("title"))
+    published_at = _parse_datetime(entry.get("publication_date")) or _year_datetime(entry.get("publication_year"))
+    source_name = _openalex_source_name(entry)
+    item_id = generate_stable_id(
+        doi=doi,
+        url=url,
+        title=title,
+        published_at=published_at,
+        source_name=source_name,
+    )
+
+    return RadioWatchItem(
+        id=item_id,
+        title=title or "",
+        source_name=source_name,
+        source_type=_openalex_source_type(entry),
+        language=_first_text(entry.get("language")) or "und",
+        status=WatchStatus.new,
+        discovered_at=discovered_at or _now(),
+        title_original=title,
+        container_title=source_name if source_name != "OpenAlex" else None,
+        authors=_openalex_authors(entry),
+        published_at=published_at,
+        url=url,
+        doi=doi,
+        tags=_openalex_tags(entry),
+        source_api="openalex",
         raw=entry,
     )
 
@@ -307,19 +470,123 @@ def load_existing_db(path: str | Path = DEFAULT_DB, *, log_path: str | Path = DE
     return items
 
 
+TITLE_KEY_RE = re.compile(r"\W+")
+
+
+def _normalized_title_key(title: str | None) -> str | None:
+    text = _compact_text(title)
+    if text is None:
+        return None
+
+    normalized = TITLE_KEY_RE.sub(" ", text.casefold()).strip()
+    return normalized or None
+
+
+def _identity_keys(item: RadioWatchItem) -> set[str]:
+    keys = {f"id:{item.id}"}
+    doi = normalize_doi(item.doi) or normalize_doi(item.url)
+    normalized_url = normalize_url(item.url)
+
+    if doi:
+        keys.add(f"doi:{doi}")
+    if normalized_url:
+        keys.add(f"url:{normalized_url}")
+    if doi is None and normalized_url is None and item.published_at is not None:
+        title_key = _normalized_title_key(item.title)
+        if title_key:
+            keys.add(f"title-date:{title_key}|{item.published_at.date().isoformat()}")
+
+    return keys
+
+
+def _merge_text_lists(existing_values: list[str], incoming_values: list[str]) -> list[str]:
+    merged: list[str] = []
+    seen: set[str] = set()
+    for value in [*existing_values, *incoming_values]:
+        text = _compact_text(value)
+        key = text.casefold() if text else None
+        if text and key not in seen:
+            merged.append(text)
+            seen.add(key)
+
+    return merged
+
+
+def _merge_raw_metadata(existing: RadioWatchItem, incoming: RadioWatchItem) -> dict[str, Any]:
+    if not existing.raw:
+        return dict(incoming.raw)
+    if not incoming.raw:
+        return dict(existing.raw)
+
+    raw = dict(existing.raw)
+    merged_sources = raw.get("_merged_sources")
+    if not isinstance(merged_sources, list):
+        merged_sources = []
+
+    source_metadata = {
+        "id": incoming.id,
+        "source_name": incoming.source_name,
+        "source_api": incoming.source_api,
+        "doi": normalize_doi(incoming.doi) or normalize_doi(incoming.url),
+        "url": normalize_url(incoming.url),
+    }
+    if source_metadata not in merged_sources:
+        merged_sources.append(source_metadata)
+
+    raw["_merged_sources"] = merged_sources
+    return raw
+
+
+def _merge_duplicate_item(existing: RadioWatchItem, incoming: RadioWatchItem) -> RadioWatchItem:
+    incoming_doi = normalize_doi(incoming.doi) or normalize_doi(incoming.url)
+    existing_doi = normalize_doi(existing.doi) or normalize_doi(existing.url)
+
+    return existing.model_copy(
+        update={
+            "id": existing.id,
+            "status": existing.status,
+            "doi": incoming_doi or existing_doi,
+            "url": existing.url or incoming.url,
+            "published_at": existing.published_at or incoming.published_at,
+            "title_original": existing.title_original or incoming.title_original,
+            "container_title": existing.container_title or incoming.container_title,
+            "language": incoming.language if existing.language == "und" and incoming.language != "und" else existing.language,
+            "authors": _merge_text_lists(existing.authors, incoming.authors),
+            "abstract": existing.abstract or incoming.abstract,
+            "tags": _merge_text_lists(existing.tags, incoming.tags),
+            "keywords_matched": existing.keywords_matched,
+            "negative_keywords_matched": existing.negative_keywords_matched,
+            "relevance_score": existing.relevance_score,
+            "score_explanation": existing.score_explanation,
+            "source_feed": existing.source_feed or incoming.source_feed,
+            "source_api": existing.source_api,
+            "raw": _merge_raw_metadata(existing, incoming),
+        }
+    )
+
+
+def _remember_identity_keys(key_to_index: dict[str, int], item: RadioWatchItem, index: int) -> None:
+    for key in _identity_keys(item):
+        key_to_index[key] = index
+
+
 def merge_items_without_duplicates(
     existing_items: list[RadioWatchItem],
     new_items: list[RadioWatchItem],
 ) -> list[RadioWatchItem]:
-    merged = list(existing_items)
-    known_ids = {item.id for item in existing_items}
+    merged: list[RadioWatchItem] = []
+    key_to_index: dict[str, int] = {}
 
-    for item in new_items:
-        if item.id in known_ids:
-            continue
+    for item in [*existing_items, *new_items]:
+        duplicate_index = next((key_to_index[key] for key in _identity_keys(item) if key in key_to_index), None)
+        if duplicate_index is None:
+            duplicate_index = len(merged)
+            merged.append(item)
+        else:
+            merged[duplicate_index] = _merge_duplicate_item(merged[duplicate_index], item)
 
-        merged.append(item)
-        known_ids.add(item.id)
+        _remember_identity_keys(key_to_index, merged[duplicate_index], duplicate_index)
+        _remember_identity_keys(key_to_index, item, duplicate_index)
 
     return sort_items(merged)
 
@@ -351,6 +618,7 @@ def normalize_latest_dumps(
     rss_raw_path: str | Path = DEFAULT_RSS_RAW,
     hal_raw_path: str | Path = DEFAULT_HAL_RAW,
     crossref_raw_path: str | Path = DEFAULT_CROSSREF_RAW,
+    openalex_raw_path: str | Path = DEFAULT_OPENALEX_RAW,
     db_path: str | Path = DEFAULT_DB,
     log_path: str | Path = DEFAULT_LOG,
 ) -> dict[str, Any]:
@@ -406,6 +674,21 @@ def normalize_latest_dumps(
     else:
         append_log(log_path, f"Invalid Crossref dump at {crossref_raw_path}; items is not a list", level="ERROR")
 
+    openalex_payload = read_json(openalex_raw_path, default={}) or {}
+    openalex_entries = openalex_payload.get("items", []) if isinstance(openalex_payload, dict) else []
+    if isinstance(openalex_entries, list):
+        new_items.extend(
+            _normalize_entries(
+                openalex_entries,
+                normalize_openalex_entry,
+                log_path=log_path,
+                label="OpenAlex",
+                discovered_at=discovered_at,
+            )
+        )
+    else:
+        append_log(log_path, f"Invalid OpenAlex dump at {openalex_raw_path}; items is not a list", level="ERROR")
+
     merged_items = merge_items_without_duplicates(existing_items, new_items)
     save_db(db_path, merged_items)
 
@@ -420,10 +703,11 @@ def normalize_latest_dumps(
 
 
 def parse_args() -> argparse.Namespace:
-    parser = argparse.ArgumentParser(description="Normalize latest raw RSS/HAL/Crossref dumps into db.json.")
+    parser = argparse.ArgumentParser(description="Normalize latest raw RSS/HAL/Crossref/OpenAlex dumps into db.json.")
     parser.add_argument("--rss", default=str(DEFAULT_RSS_RAW), help="Path to data/raw/rss_latest.json.")
     parser.add_argument("--hal", default=str(DEFAULT_HAL_RAW), help="Path to data/raw/hal_latest.json.")
     parser.add_argument("--crossref", default=str(DEFAULT_CROSSREF_RAW), help="Path to data/raw/crossref_latest.json.")
+    parser.add_argument("--openalex", default=str(DEFAULT_OPENALEX_RAW), help="Path to data/raw/openalex_latest.json.")
     parser.add_argument("--db", default=str(DEFAULT_DB), help="Path to data/normalized/db.json.")
     return parser.parse_args()
 
@@ -434,6 +718,7 @@ def main() -> None:
         rss_raw_path=args.rss,
         hal_raw_path=args.hal,
         crossref_raw_path=args.crossref,
+        openalex_raw_path=args.openalex,
         db_path=args.db,
     )
     print(f"Saved {result['saved_count']} items to {args.db} ({result['added_count']} added)")

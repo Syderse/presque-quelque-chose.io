@@ -118,6 +118,7 @@ def test_missing_mailto_is_logged_and_does_not_call_network(tmp_path):
     )
 
     assert payload["errors"][0]["type"] == "missing_mailto"
+    assert payload["rows"] == 2
     assert "requires a mailto" in log_path.read_text(encoding="utf-8")
 
 
@@ -153,26 +154,40 @@ def test_timeout_is_logged_and_raw_output_is_written(tmp_path):
 def test_http_status_errors_are_classified(tmp_path, status_code, error_type):
     config_path = write_config(tmp_path)
     output_path = tmp_path / "data" / "raw" / "crossref_latest.json"
+    log_path = tmp_path / "data" / "logs" / "api.log"
 
     def handler(request: httpx.Request) -> httpx.Response:
         return httpx.Response(status_code, json={"message": "nope"}, request=request)
 
     client = httpx.Client(transport=httpx.MockTransport(handler))
-    payload = ingest_crossref.ingest_crossref(config_path=config_path, output_path=output_path, client=client)
+    payload = ingest_crossref.ingest_crossref(
+        config_path=config_path,
+        output_path=output_path,
+        log_path=log_path,
+        client=client,
+    )
 
     assert payload["errors"][0]["type"] == error_type
     assert payload["errors"][0]["status_code"] == status_code
+    assert "radio%40example.org" not in payload["errors"][0]["message"]
+    assert "mailto=<redacted>" in payload["errors"][0]["message"]
 
 
 def test_empty_response_is_recorded_without_failing(tmp_path):
     config_path = write_config(tmp_path)
     output_path = tmp_path / "data" / "raw" / "crossref_latest.json"
+    log_path = tmp_path / "data" / "logs" / "api.log"
 
     def handler(request: httpx.Request) -> httpx.Response:
         return httpx.Response(200, json=crossref_payload([]))
 
     client = httpx.Client(transport=httpx.MockTransport(handler))
-    payload = ingest_crossref.ingest_crossref(config_path=config_path, output_path=output_path, client=client)
+    payload = ingest_crossref.ingest_crossref(
+        config_path=config_path,
+        output_path=output_path,
+        log_path=log_path,
+        client=client,
+    )
     written = json.loads(output_path.read_text(encoding="utf-8"))
 
     assert payload["result_count"] == 0

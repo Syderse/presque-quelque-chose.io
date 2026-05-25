@@ -137,6 +137,31 @@ def _status_for_score(score: float, scoring_config: dict[str, Any]) -> WatchStat
     return WatchStatus.ignored
 
 
+def _apply_academic_floor(
+    source_api: str | None,
+    score: float,
+    status: WatchStatus,
+    scoring_config: dict[str, Any],
+) -> tuple[WatchStatus, bool]:
+    """Applies a minimum 'candidate' status for academic sources with non-negative score."""
+    floor_config = scoring_config.get("academic_source_floor")
+    if not isinstance(floor_config, dict):
+        return status, False
+
+    source_apis = set(floor_config.get("source_apis", []))
+    if not source_apis or source_api not in source_apis:
+        return status, False
+
+    min_score = float(floor_config.get("min_score", 0))
+    if score < min_score:
+        return status, False
+
+    if status is WatchStatus.ignored:
+        return WatchStatus.candidate, True
+
+    return status, False
+
+
 def _status_reason(score: float, scoring_config: dict[str, Any], status: WatchStatus) -> str:
     thresholds = scoring_config.get("thresholds", {})
     to_read_gte = float(thresholds.get("to_read", {}).get("gte", 6))
@@ -208,17 +233,22 @@ def score_item(
             )
 
     score = sum(contribution.contribution for contribution in contributions)
-    status = _status_for_score(score, scoring_config)
+    raw_status = _status_for_score(score, scoring_config)
+    floored_status, floor_applied = _apply_academic_floor(item.source_api, score, raw_status, scoring_config)
     positive_contributions = [contribution for contribution in contributions if contribution.contribution > 0]
     negative_contributions = [contribution for contribution in contributions if contribution.contribution < 0]
+
+    explanation = build_score_explanation(contributions, score, raw_status, scoring_config)
+    if floor_applied:
+        explanation += f"; plancher académique: statut élevé de ignored à candidate (source_api={item.source_api})"
 
     return item.model_copy(
         update={
             "keywords_matched": _unique_keywords(positive_contributions),
             "negative_keywords_matched": _unique_keywords(negative_contributions),
             "relevance_score": score,
-            "score_explanation": build_score_explanation(contributions, score, status, scoring_config),
-            "status": status,
+            "score_explanation": explanation,
+            "status": floored_status,
         }
     )
 

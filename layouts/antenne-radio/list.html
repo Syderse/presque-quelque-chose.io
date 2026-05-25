@@ -44,6 +44,8 @@
   .antenne-radio-stat-label,
   .antenne-radio-meta,
   .antenne-radio-source-kicker,
+  .antenne-radio-container-title,
+  .antenne-radio-authors,
   .antenne-radio-link,
   .antenne-radio-load-more,
   .antenne-radio-empty {
@@ -117,6 +119,8 @@
     display: block;
   }
 
+  /* ── Controls ─────────────────────────────────────────────────────── */
+
   .antenne-radio-controls {
     margin-top: 2.25rem;
     padding: 1rem;
@@ -124,8 +128,21 @@
   }
 
   .antenne-radio-form {
+    display: flex;
+    flex-direction: column;
+    gap: 0.85rem;
+  }
+
+  .antenne-radio-form-filters {
     display: grid;
-    grid-template-columns: repeat(4, minmax(0, 1fr)) auto;
+    grid-template-columns: repeat(4, minmax(0, 1fr));
+    gap: 0.85rem;
+    align-items: end;
+  }
+
+  .antenne-radio-form-actions {
+    display: grid;
+    grid-template-columns: 1fr 1fr auto;
     gap: 0.85rem;
     align-items: end;
   }
@@ -179,6 +196,7 @@
     font-size: 0.75rem;
     font-weight: 900;
     text-transform: uppercase;
+    white-space: nowrap;
   }
 
   .antenne-radio-status {
@@ -186,6 +204,8 @@
     color: var(--ctp-subtext1);
     font-size: 0.9rem;
   }
+
+  /* ── Grid & Cards ─────────────────────────────────────────────────── */
 
   .antenne-radio-grid {
     display: grid;
@@ -233,6 +253,18 @@
     text-transform: uppercase;
   }
 
+  .antenne-radio-container-title {
+    margin-top: 0.25rem;
+    color: var(--ctp-sky);
+    font-size: 0.68rem;
+    font-style: italic;
+    font-weight: 700;
+    line-height: 1.3;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+  }
+
   .antenne-radio-card-body {
     display: flex;
     flex: 1;
@@ -260,11 +292,22 @@
     outline-offset: 3px;
   }
 
+  .antenne-radio-authors {
+    margin: 0.45rem 0 0;
+    color: var(--ctp-subtext1);
+    font-size: 0.72rem;
+    font-weight: 600;
+    line-height: 1.4;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+  }
+
   .antenne-radio-meta-list {
     display: flex;
     flex-wrap: wrap;
     gap: 0.45rem;
-    margin-top: 1rem;
+    margin-top: 0.85rem;
   }
 
   .antenne-radio-meta {
@@ -341,6 +384,8 @@
     text-transform: uppercase;
   }
 
+  /* ── Noscript & Ethics ────────────────────────────────────────────── */
+
   .antenne-radio-noscript,
   .antenne-radio-ethics {
     margin-top: 2.5rem;
@@ -366,10 +411,30 @@
     text-transform: uppercase;
   }
 
+  .antenne-radio-sub-title {
+    margin: 1.75rem 0 0.75rem;
+    color: var(--ctp-sapphire);
+    font-family: Georgia, "Times New Roman", serif;
+    font-size: clamp(1.1rem, 2.5vw, 1.5rem);
+    font-weight: 900;
+    line-height: 1.1;
+    text-transform: uppercase;
+  }
+
   .antenne-radio-ethics p {
     max-width: 820px;
     color: var(--ctp-subtext0);
     line-height: 1.65;
+    margin: 0.65rem 0 0;
+  }
+
+  .antenne-radio-ethics p strong {
+    color: var(--ctp-text);
+  }
+
+  .antenne-radio-ethics p a {
+    color: var(--ctp-mauve);
+    font-weight: 700;
   }
 
   .antenne-radio-attribution-list {
@@ -400,36 +465,8 @@
     line-height: 1.5;
   }
 
-  @media (max-width: 900px) {
-    .antenne-radio-form {
-      grid-template-columns: repeat(2, minmax(0, 1fr));
-    }
-  }
+  /* ── Active Filters Bar ───────────────────────────────────────────── */
 
-  @media (max-width: 640px) {
-    .antenne-radio-page {
-      padding-bottom: 7rem;
-    }
-
-    .antenne-radio-hero {
-      box-shadow: 7px 7px 0 var(--ctp-mauve);
-    }
-
-    .antenne-radio-form {
-      grid-template-columns: 1fr;
-    }
-
-    .antenne-radio-card {
-      min-height: 0;
-    }
-
-    .antenne-radio-card-footer {
-      align-items: start;
-      flex-direction: column;
-    }
-  }
-
-  /* Active Filters Bar Styles */
   .active-filters-bar {
     display: none;
     flex-wrap: wrap;
@@ -517,7 +554,8 @@
     outline-offset: 2px;
   }
 
-  /* Empty State Styles */
+  /* ── Empty State ──────────────────────────────────────────────────── */
+
   .antenne-radio-empty-state {
     grid-column: 1 / -1;
     display: flex;
@@ -544,14 +582,8 @@
   }
 
   @keyframes empty-pulse {
-    0%, 100% {
-      transform: scale(1);
-      opacity: 0.8;
-    }
-    50% {
-      transform: scale(1.05);
-      opacity: 1;
-    }
+    0%, 100% { transform: scale(1); opacity: 0.8; }
+    50%       { transform: scale(1.05); opacity: 1; }
   }
 
   .antenne-radio-empty-text {
@@ -588,6 +620,42 @@
     outline: 3px solid var(--ctp-mauve);
     outline-offset: 2px;
   }
+
+  /* ── Responsive ───────────────────────────────────────────────────── */
+
+  @media (max-width: 900px) {
+    .antenne-radio-form-filters {
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+    }
+
+    .antenne-radio-form-actions {
+      grid-template-columns: 1fr auto;
+    }
+  }
+
+  @media (max-width: 640px) {
+    .antenne-radio-page {
+      padding-bottom: 7rem;
+    }
+
+    .antenne-radio-hero {
+      box-shadow: 7px 7px 0 var(--ctp-mauve);
+    }
+
+    .antenne-radio-form-filters,
+    .antenne-radio-form-actions {
+      grid-template-columns: 1fr;
+    }
+
+    .antenne-radio-card {
+      min-height: 0;
+    }
+
+    .antenne-radio-card-footer {
+      align-items: start;
+      flex-direction: column;
+    }
+  }
 </style>
 
 <div class="antenne-radio-page" data-antenne-radio-root data-index-url="/antenne-radio/index.json">
@@ -622,35 +690,56 @@
       <section class="antenne-radio-enhanced antenne-radio-controls" aria-labelledby="antenne-radio-controls-title">
         <h2 id="antenne-radio-controls-title" class="sr-only">Filtres de l'antenne radio</h2>
         <form id="antenne-radio-filter-form" class="antenne-radio-form" role="search">
-          <div class="antenne-radio-field">
-            <label class="antenne-radio-label" for="antenne-radio-filter-category">Catégorie</label>
-            <select id="antenne-radio-filter-category" class="antenne-radio-select" name="category">
-              <option value="">Toutes</option>
-            </select>
+
+          <div class="antenne-radio-form-filters">
+            <div class="antenne-radio-field">
+              <label class="antenne-radio-label" for="antenne-radio-filter-category">Catégorie</label>
+              <select id="antenne-radio-filter-category" class="antenne-radio-select" name="category" aria-label="Filtrer par catégorie">
+                <option value="">Toutes</option>
+              </select>
+            </div>
+            <div class="antenne-radio-field">
+              <label class="antenne-radio-label" for="antenne-radio-filter-source">Source</label>
+              <select id="antenne-radio-filter-source" class="antenne-radio-select" name="source" aria-label="Filtrer par source">
+                <option value="">Toutes</option>
+              </select>
+            </div>
+            <div class="antenne-radio-field">
+              <label class="antenne-radio-label" for="antenne-radio-filter-language">Langue</label>
+              <select id="antenne-radio-filter-language" class="antenne-radio-select" name="language" aria-label="Filtrer par langue">
+                <option value="">Toutes</option>
+              </select>
+            </div>
+            <div class="antenne-radio-field">
+              <label class="antenne-radio-label" for="antenne-radio-filter-year">Année</label>
+              <select id="antenne-radio-filter-year" class="antenne-radio-select" name="year" aria-label="Filtrer par année de publication">
+                <option value="">Toutes</option>
+              </select>
+            </div>
           </div>
-          <div class="antenne-radio-field">
-            <label class="antenne-radio-label" for="antenne-radio-filter-source">Source</label>
-            <select id="antenne-radio-filter-source" class="antenne-radio-select" name="source">
-              <option value="">Toutes</option>
-            </select>
+
+          <div class="antenne-radio-form-actions">
+            <div class="antenne-radio-field">
+              <label class="antenne-radio-label" for="antenne-radio-filter-search">Recherche</label>
+              <input id="antenne-radio-filter-search" class="antenne-radio-input" name="search" type="search" autocomplete="off" placeholder="titre, auteur, revue, DOI…">
+            </div>
+            <div class="antenne-radio-field">
+              <label class="antenne-radio-label" for="antenne-radio-filter-sort">Tri</label>
+              <select id="antenne-radio-filter-sort" class="antenne-radio-select" name="sort" aria-label="Trier les résultats">
+                <option value="date-desc">Date ↓ (récent d'abord)</option>
+                <option value="date-asc">Date ↑ (ancien d'abord)</option>
+                <option value="title-asc">Titre A→Z</option>
+              </select>
+            </div>
+            <button id="antenne-radio-filter-reset" class="antenne-radio-reset" type="reset" aria-label="Réinitialiser tous les filtres">Réinitialiser</button>
           </div>
-          <div class="antenne-radio-field">
-            <label class="antenne-radio-label" for="antenne-radio-filter-language">Langue</label>
-            <select id="antenne-radio-filter-language" class="antenne-radio-select" name="language">
-              <option value="">Toutes</option>
-            </select>
-          </div>
-          <div class="antenne-radio-field">
-            <label class="antenne-radio-label" for="antenne-radio-filter-search">Recherche</label>
-            <input id="antenne-radio-filter-search" class="antenne-radio-input" name="search" type="search" autocomplete="off" placeholder="titre, source, DOI">
-          </div>
-          <button id="antenne-radio-filter-reset" class="antenne-radio-reset" type="reset">Réinitialiser</button>
+
         </form>
       </section>
 
       <section class="antenne-radio-enhanced" aria-labelledby="antenne-radio-results-title">
         <h2 id="antenne-radio-results-title" class="sr-only">Résultats de l'antenne radio</h2>
-        
+
         <div id="active-filters-bar" class="active-filters-bar" hidden>
           <span class="active-filters-label">Filtres actifs :</span>
           <div class="active-filters-badges" role="list"></div>
@@ -677,11 +766,17 @@
               <article class="antenne-radio-card" data-family="{{ .source_family }}" role="listitem">
                 <div class="antenne-radio-card-head">
                   <div class="antenne-radio-source-kicker">{{ .source_name }}</div>
+                  {{ with .container_title }}<div class="antenne-radio-container-title">{{ . }}</div>{{ end }}
                 </div>
                 <div class="antenne-radio-card-body">
                   <h3 class="antenne-radio-card-title">
                     <a href="{{ .url }}" target="_blank" rel="noopener noreferrer">{{ .title }}</a>
                   </h3>
+                  {{ if .authors }}
+                    {{ $authorSlice := first 3 .authors }}
+                    {{ $authorCount := len .authors }}
+                    <p class="antenne-radio-authors">{{ delimit $authorSlice ", " }}{{ if gt $authorCount 3 }} +{{ sub $authorCount 3 }}{{ end }}</p>
+                  {{ end }}
                   <div class="antenne-radio-meta-list" aria-label="métadonnées publiques">
                     <span class="antenne-radio-meta">{{ .source_type }}</span>
                     <span class="antenne-radio-meta">{{ .language }}</span>
@@ -704,12 +799,17 @@
     {{ end }}
 
     <section class="antenne-radio-ethics" aria-labelledby="antenne-radio-ethics-title">
-      <h2 id="antenne-radio-ethics-title" class="antenne-radio-section-title">Attributions</h2>
-      <p>
-        Cet index public ne republie que des métadonnées minimales et des liens d'origine. Les contenus
-        enrichis, détails techniques du pipeline, évaluations privées, chemins de travail et données
-        personnelles ambiguës restent hors publication.
-      </p>
+      <h2 id="antenne-radio-ethics-title" class="antenne-radio-section-title">À propos &amp; contact</h2>
+
+      <p><strong>Finalité</strong> — Cette veille est conduite à des fins strictement académiques et non commerciales, dans le cadre de recherches personnelles sur les études radiophoniques (radio, podcast, cultures sonores). Elle ne génère aucune publicité et ne fait l'objet d'aucune exploitation commerciale.</p>
+
+      <p><strong>Données publiées</strong> — L'index public ne contient que des métadonnées minimales librement accessibles : titre, source, date de publication, lien vers l'original, langue, DOI lorsqu'il est connu, et pour les sources bibliographiques (HAL, Crossref, OpenAlex) : nom de la revue et liste partielle des auteurs. Aucun texte intégral, aucun résumé, aucune évaluation privée ni donnée personnelle sensible n'est republié.</p>
+
+      <p><strong>Droits de propriété intellectuelle</strong> — Nous ne revendiquons aucun droit de propriété intellectuelle sur les notices indexées. Les droits restent acquis à leurs auteurs et éditeurs respectifs. Les liens pointent exclusivement vers les sources originales.</p>
+
+      <p><strong>Demande de retrait</strong> — Toute personne ou organisation souhaitant que ses contenus soient retirés de cet index peut adresser sa demande par courriel à <a href="mailto:mathieu.allag@gmail.com">mathieu.allag@gmail.com</a>. La demande sera prise en compte dans les meilleurs délais.</p>
+
+      <h3 class="antenne-radio-sub-title">Sources référencées</h3>
       {{ if $sources }}
         <ul class="antenne-radio-attribution-list">
           {{ range $sources }}

@@ -14,6 +14,7 @@ from scripts.core.models import (  # noqa: E402
     SourceType,
     WatchStatus,
     generate_stable_id,
+    normalize_doi,
 )
 
 
@@ -47,6 +48,19 @@ def test_stable_id_prefers_doi():
 
     assert from_doi == from_normalized_doi
     assert from_doi.startswith("doi:")
+
+
+@pytest.mark.parametrize(
+    "raw_doi",
+    [
+        "10.1080/19376529.2026.1234567",
+        "DOI:10.1080/19376529.2026.1234567",
+        "https://doi.org/10.1080/19376529.2026.1234567",
+        "https://www.tandfonline.com/doi/full/10.1080/19376529.2026.1234567?src=recsys",
+    ],
+)
+def test_normalize_doi_accepts_case_prefix_and_publisher_url(raw_doi):
+    assert normalize_doi(raw_doi) == "10.1080/19376529.2026.1234567"
 
 
 def test_stable_id_uses_url_when_doi_is_missing():
