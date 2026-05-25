@@ -120,7 +120,7 @@ rss_atom:
 
   - id: nieman_storyboard
     name: Nieman Storyboard
-    enabled: true
+    enabled: false
     kind: rss
     url: "https://niemanstoryboard.org/feed/"
     legal_status: "VALIDÉ PRUDENT — métadonnées uniquement"
