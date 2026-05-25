@@ -34,7 +34,8 @@ weekly:
 	@$(VENV)/bin/python scripts/weekly_report.py
 	@echo ""
 	@echo "=== Scan OK. Pour publier (geste conscient, manuel) ==="
-	@echo "  git add static/antenne-radio/index.json"
+	@echo "  # depuis antenne_radio/ :"
+	@echo "  git add ../static/antenne-radio/index.json"
 	@echo "  git commit -m \"veille antenne-radio $$(date '+%Y-%m-%d')\""
 	@echo "  git push"
 	@echo ""
