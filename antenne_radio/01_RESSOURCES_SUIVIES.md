@@ -1,9 +1,7 @@
 # Ressources suivies par l'antenne radio
 
-Dernière recette locale complète V3 : 2026-05-21 17:15 JST avec `make test`, `make run`, `make export-public` et `pnpm run build`.
-Dernière mise à jour documentaire : 2026-05-21 JST avec l'activation de Crossref (plusieurs revues) et d'OpenAlex en live.
-
-Compteurs d'activation V3 : RSS/Atom 239 entrées ; HAL 20 documents ; Crossref actif sur plusieurs revues ; OpenAlex actif sur plusieurs profils et la revue ciblée ; `db.json` trié et mis à jour.
+Dernière recette locale complète — Plan final gelé : 2026-05-25, `make test` (172 passés) + `make weekly`.
+Compteurs finaux : RSS/Atom ~259 entrées ; HAL 45 ; Crossref 80 ; OpenAlex 276 ; `db.json` 660 items (to_read=292, candidate=266, ignored=102) ; index public 505 items, 28 sources, 0 doublon DOI.
 
 Source technique : `config/sources.yaml`. Ce fichier est la liste humaine à tenir à jour quand une source est ajoutée, désactivée ou modifiée.
 
@@ -119,5 +117,23 @@ Notes de non-duplication :
 1. Modifier `config/sources.yaml`.
 2. Mettre à jour ce fichier.
 3. Lancer `make test`.
-4. Lancer `make run`.
+4. Lancer `make weekly` (récolte + pruning + export + récapitulatif + scan anti-fuite).
 5. Vérifier `data/logs/api.log`, `data/logs/pipeline.log` et les compteurs dans `data/raw/*.json`.
+6. Si le scan est OK, copier-coller les commandes git affichées par `make weekly`.
+
+## Routine hebdomadaire
+
+```sh
+cd antenne_radio
+make weekly
+```
+
+Récolte, élague (18 mois, sauf `exported`), exporte, affiche les compteurs, scanne les fuites, imprime les commandes git. Aucun commit automatique.
+
+## État du projet — Gel plan final (2026-05-25)
+
+- **Pipeline** : opérationnel, 172 tests passés.
+- **Rétention 18 mois** : implémentée dans `scripts/core/prune.py`, intégrée au pipeline, testée.
+- **Commande hebdo** : `make weekly` (récolte + pruning + export + scan + instructions push).
+- **Interface Hugo** : `/antenne-radio/` avec filtres (type, source, langue, année, tri), deep-linking, bloc « À propos / contact / retrait ».
+- **V4 japonaise** : reportée (CiNii, NDL, J-STAGE hors périmètre).

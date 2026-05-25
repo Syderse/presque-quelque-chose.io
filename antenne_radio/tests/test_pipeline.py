@@ -38,6 +38,7 @@ def fake_functions(events):
         ingest_crossref=step("ingest_crossref"),
         ingest_openalex=step("ingest_openalex"),
         normalize=step("normalize"),
+        prune=step("prune"),
         scoring=step("scoring"),
         export_obsidian=step("export_obsidian"),
     )
@@ -54,6 +55,7 @@ def test_pipeline_runs_steps_in_order_and_logs(tmp_path):
         "ingest_crossref",
         "ingest_openalex",
         "normalize",
+        "prune",
         "scoring",
         "export_obsidian",
     ]
@@ -77,6 +79,7 @@ def test_pipeline_continues_after_failed_step(tmp_path):
         ingest_crossref=functions.ingest_crossref,
         ingest_openalex=functions.ingest_openalex,
         normalize=functions.normalize,
+        prune=functions.prune,
         scoring=functions.scoring,
         export_obsidian=functions.export_obsidian,
     )
@@ -91,6 +94,7 @@ def test_pipeline_continues_after_failed_step(tmp_path):
         "ingest_crossref",
         "ingest_openalex",
         "normalize",
+        "prune",
         "scoring",
         "export_obsidian",
     ]
@@ -112,12 +116,13 @@ def test_pipeline_skip_flags_skip_ingestions_and_export(tmp_path):
     )
 
     assert result["status"] == "ok"
-    assert [name for name, _ in events] == ["normalize", "scoring"]
+    assert [name for name, _ in events] == ["normalize", "prune", "scoring"]
     assert [step["status"] for step in result["steps"]] == [
         "skipped",
         "skipped",
         "skipped",
         "skipped",
+        "ok",
         "ok",
         "ok",
         "skipped",

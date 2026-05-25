@@ -146,6 +146,7 @@ class RadioWatchItem(BaseModel):
     discovered_at: datetime
 
     title_original: str | None = None
+    container_title: str | None = None
     authors: list[str] = Field(default_factory=list)
     published_at: datetime | None = None
     url: str | None = None
@@ -166,6 +167,7 @@ class RadioWatchItem(BaseModel):
         "source_name",
         "language",
         "title_original",
+        "container_title",
         "abstract",
         "score_explanation",
         "source_feed",

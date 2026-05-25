@@ -14,7 +14,8 @@ from scripts.export import export_public  # noqa: E402
 
 
 GENERATED_AT = datetime(2026, 5, 19, 12, 0, tzinfo=timezone.utc)
-PUBLIC_ITEM_KEYS = {
+
+EDITORIAL_ITEM_KEYS = {
     "id",
     "title",
     "url",
@@ -26,6 +27,10 @@ PUBLIC_ITEM_KEYS = {
     "source_family",
     "attribution_id",
 }
+BIBLIOGRAPHIC_ITEM_KEYS = EDITORIAL_ITEM_KEYS | {"authors", "container_title", "item_type"}
+# Alias pour les tests qui vérifient la whitelist complète (13 clés)
+PUBLIC_ITEM_KEYS = BIBLIOGRAPHIC_ITEM_KEYS
+
 FORBIDDEN_KEYS = {
     "raw",
     "abstract",
@@ -42,7 +47,6 @@ FORBIDDEN_KEYS = {
     "title_original",
     "errors",
     "raw_responses",
-    "authors",
     "tags",
 }
 
@@ -108,7 +112,8 @@ def test_public_export_creates_whitelisted_json(tmp_path):
     assert exported["schema_version"] == "antenne-radio-public-v0"
     assert exported["generated_at"] == "2026-05-19T12:00:00Z"
     assert exported["item_count"] == 1
-    assert set(exported["items"][0]) == PUBLIC_ITEM_KEYS
+    # Radio Survivor = source éditoriale (RSS) → 10 clés, pas d'auteurs/revue/type biblio
+    assert set(exported["items"][0]) == EDITORIAL_ITEM_KEYS
     assert exported["items"][0] == {
         "attribution_id": "radio_survivor",
         "doi": "10.1234/radio.2026",
@@ -177,7 +182,8 @@ def test_public_export_schema_stays_whitelisted_for_merged_private_metadata(tmp_
     public_item = exported["items"][0]
     content = output_path.read_text(encoding="utf-8")
 
-    assert set(public_item) == PUBLIC_ITEM_KEYS
+    # Radio Survivor = éditoriale → 10 clés, pas d'auteurs
+    assert set(public_item) == EDITORIAL_ITEM_KEYS
     assert forbidden_keys(exported) == set()
     assert "Private Crossref abstract" not in content
     assert "Ada Radio" not in content
@@ -334,10 +340,14 @@ def test_public_export_maps_priority_venue_candidates(
     public_item = exported["items"][0]
 
     assert result["items_exported"] == 1
-    assert set(public_item) == PUBLIC_ITEM_KEYS
+    # Toutes les venues prioritaires sont bibliographiques (crossref ou openalex)
+    assert set(public_item) == BIBLIOGRAPHIC_ITEM_KEYS
     assert public_item["attribution_id"] == attribution_id
     assert public_item["source_name"] == public_name
     assert public_item["source_family"] == source_family
+    assert "authors" in public_item
+    assert "container_title" in public_item
+    assert "item_type" in public_item
     assert exported["sources"][0]["attribution_id"] == attribution_id
     assert forbidden_keys(exported) == set()
 
@@ -426,16 +436,19 @@ def test_openalex_item_export_public_without_score_or_abstract(tmp_path):
     content = output_path.read_text(encoding="utf-8")
 
     assert result["items_exported"] == 1
-    assert set(exported["items"][0]) == PUBLIC_ITEM_KEYS
+    # OpenAlex = source bibliographique → 13 clés avec auteurs, container_title, item_type
+    assert set(exported["items"][0]) == BIBLIOGRAPHIC_ITEM_KEYS
     assert exported["items"][0]["attribution_id"] == "openalex"
     assert exported["items"][0]["source_name"] == "OpenAlex"
     assert exported["items"][0]["source_family"] == "openalex"
+    assert "authors" in exported["items"][0]
+    assert "container_title" in exported["items"][0]
+    assert "item_type" in exported["items"][0]
     assert forbidden_keys(exported) == set()
-    # Reinforced anti-leak checks
+    # Champs privés stricts : jamais dans l'index public
     assert "Private OpenAlex abstract" not in content
     assert "abstract_inverted_index" not in content
     assert "authorships" not in content
-    assert "Private Author" not in content
     assert "relevance_score" not in content
     assert "score_explanation" not in content
     assert "keywords_matched" not in content
@@ -493,9 +506,13 @@ def test_public_export_maps_new_2026_05_25_sources(
     public_item = exported["items"][0]
 
     assert result["items_exported"] == 1
-    assert set(public_item) == PUBLIC_ITEM_KEYS
+    # Toutes ces nouvelles sources sont bibliographiques (crossref ou openalex)
+    assert set(public_item) == BIBLIOGRAPHIC_ITEM_KEYS
     assert public_item["attribution_id"] == attribution_id
     assert public_item["source_family"] == source_family
+    assert "authors" in public_item
+    assert "container_title" in public_item
+    assert "item_type" in public_item
     assert exported["sources"][0]["attribution_id"] == attribution_id
     assert forbidden_keys(exported) == set()
 
@@ -553,8 +570,151 @@ def test_public_export_anti_leak_reinforced(tmp_path):
     assert forbidden_keys(exported) == set()
     assert "abstract_inverted_index" not in content
     assert "authorships" not in content
+    # Source éditoriale (Radio Survivor) → auteurs absents du public même s'ils sont en base
     assert "Leak Author" not in content
     assert "Leak abstract content" not in content
     assert "leak-tag" not in content
     assert "private explanation" not in content
     assert "_merged_sources" not in content
+
+
+def test_bibliographic_item_has_enriched_keys(tmp_path):
+    """Items bibliographiques (crossref/openalex/hal) : 13 clés avec auteurs, revue et type."""
+    db_path = tmp_path / "db.json"
+    output_path = tmp_path / "public" / "index.json"
+    write_db(
+        db_path,
+        [
+            item_payload(
+                id="manual:biblio",
+                source_name="Sound Studies",
+                source_type=SourceType.journal_article.value,
+                authors=["Alice Chercheure", "Bob Étude"],
+            )
+        ],
+    )
+
+    result = export_public.export_public_json(
+        db_path=db_path,
+        output_path=output_path,
+        generated_at=GENERATED_AT,
+    )
+    exported = json.loads(output_path.read_text(encoding="utf-8"))
+    public_item = exported["items"][0]
+
+    assert result["items_exported"] == 1
+    assert set(public_item) == BIBLIOGRAPHIC_ITEM_KEYS
+    assert public_item["authors"] == ["Alice Chercheure", "Bob Étude"]
+    assert public_item["item_type"] == "journal_article"
+    assert "container_title" in public_item
+    assert forbidden_keys(exported) == set()
+
+
+def test_editorial_item_has_no_bibliographic_keys(tmp_path):
+    """Items éditoriaux (RSS) : 10 clés exactement, sans auteurs, revue ni type biblio."""
+    db_path = tmp_path / "db.json"
+    output_path = tmp_path / "public" / "index.json"
+    write_db(
+        db_path,
+        [
+            item_payload(
+                id="manual:editorial",
+                source_name="Radio Survivor",
+                authors=["Ghost Author"],
+            )
+        ],
+    )
+
+    export_public.export_public_json(
+        db_path=db_path,
+        output_path=output_path,
+        generated_at=GENERATED_AT,
+    )
+    exported = json.loads(output_path.read_text(encoding="utf-8"))
+    public_item = exported["items"][0]
+    content = output_path.read_text(encoding="utf-8")
+
+    assert set(public_item) == EDITORIAL_ITEM_KEYS
+    assert "authors" not in public_item
+    assert "container_title" not in public_item
+    assert "item_type" not in public_item
+    assert "Ghost Author" not in content
+
+
+def test_authors_email_cleaning(tmp_path):
+    """Les adresses e-mail accidentellement capturées dans les noms d'auteurs sont retirées."""
+    db_path = tmp_path / "db.json"
+    output_path = tmp_path / "public" / "index.json"
+    write_db(
+        db_path,
+        [
+            item_payload(
+                id="manual:email-clean",
+                source_name="Sound Studies",
+                source_type=SourceType.journal_article.value,
+                authors=[
+                    "Alice Chercheure alice.chercheure@univ.fr",
+                    "Bob Étude <bob@research.org>",
+                    "Carol Sans Email",
+                ],
+            )
+        ],
+    )
+
+    export_public.export_public_json(
+        db_path=db_path,
+        output_path=output_path,
+        generated_at=GENERATED_AT,
+    )
+    exported = json.loads(output_path.read_text(encoding="utf-8"))
+    content = output_path.read_text(encoding="utf-8")
+    public_authors = exported["items"][0]["authors"]
+
+    assert "@" not in content
+    assert "alice.chercheure@univ.fr" not in content
+    assert "bob@research.org" not in content
+    assert "Carol Sans Email" in content
+    # Les noms nettoyés sont bien présents (sans le mail)
+    assert any("Alice Chercheure" in a for a in public_authors)
+    assert any("Bob Étude" in a for a in public_authors)
+    assert "Carol Sans Email" in public_authors
+
+
+def test_hal_item_has_bibliographic_keys(tmp_path):
+    """Items HAL : source bibliographique → 13 clés."""
+    db_path = tmp_path / "db.json"
+    output_path = tmp_path / "public" / "index.json"
+    write_db(
+        db_path,
+        [
+            item_payload(
+                id="manual:hal-biblio",
+                source_name="HAL radio studies search",
+                source_type=SourceType.journal_article.value,
+                authors=["Dupont Aline"],
+            )
+        ],
+    )
+
+    export_public.export_public_json(
+        db_path=db_path,
+        output_path=output_path,
+        generated_at=GENERATED_AT,
+    )
+    exported = json.loads(output_path.read_text(encoding="utf-8"))
+    public_item = exported["items"][0]
+
+    assert set(public_item) == BIBLIOGRAPHIC_ITEM_KEYS
+    assert public_item["source_family"] == "hal"
+    assert public_item["authors"] == ["Dupont Aline"]
+    assert "container_title" in public_item
+    assert "item_type" in public_item
+    assert forbidden_keys(exported) == set()
+
+
+def test_public_export_whitelist_has_exactly_13_keys():
+    """La whitelist complète (sources bibliographiques) comporte exactement 13 clés."""
+    assert len(export_public.PUBLIC_ITEM_KEYS) == 13
+    assert len(export_public.EDITORIAL_ITEM_KEYS) == 10
+    assert len(export_public.BIBLIOGRAPHIC_ITEM_KEYS) == 13
+    assert export_public.BIBLIOGRAPHIC_SOURCE_FAMILIES == {"crossref", "openalex", "hal"}

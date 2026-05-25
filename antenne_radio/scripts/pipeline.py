@@ -13,6 +13,7 @@ if str(ROOT) not in sys.path:
 
 from scripts.core import normalize, scoring  # noqa: E402
 from scripts.core.io import append_log, utc_now_iso  # noqa: E402
+from scripts.core.prune import prune_db  # noqa: E402
 from scripts.export import export_obsidian  # noqa: E402
 from scripts.ingest import ingest_crossref, ingest_hal, ingest_openalex, ingest_rss  # noqa: E402
 
@@ -54,6 +55,7 @@ class PipelineFunctions:
     ingest_crossref: StepCallable = ingest_crossref.ingest_crossref
     ingest_openalex: StepCallable = ingest_openalex.ingest_openalex
     normalize: StepCallable = normalize.normalize_latest_dumps
+    prune: StepCallable = prune_db
     scoring: StepCallable = scoring.score_db
     export_obsidian: StepCallable = export_obsidian.export_weekly_report
 
@@ -122,6 +124,7 @@ def run_pipeline(
     skip_hal: bool = False,
     skip_crossref: bool = False,
     skip_openalex: bool = False,
+    skip_prune: bool = False,
     skip_export: bool = False,
     mark_exported: bool = False,
     paths: PipelinePaths | None = None,
@@ -208,6 +211,19 @@ def run_pipeline(
             log_path=paths.pipeline_log_path,
         )
     )
+    if skip_prune:
+        steps.append(_skip_step("prune", log_path=paths.pipeline_log_path))
+    else:
+        steps.append(
+            _run_step(
+                "prune",
+                lambda: functions.prune(
+                    db_path=paths.db_path,
+                    log_path=paths.pipeline_log_path,
+                ),
+                log_path=paths.pipeline_log_path,
+            )
+        )
     steps.append(
         _run_step(
             "scoring",
@@ -254,6 +270,7 @@ def parse_args() -> argparse.Namespace:
     parser.add_argument("--skip-hal", action="store_true", help="Skip HAL ingestion and reuse existing raw dump.")
     parser.add_argument("--skip-crossref", action="store_true", help="Skip Crossref ingestion and reuse existing raw dump.")
     parser.add_argument("--skip-openalex", action="store_true", help="Skip OpenAlex ingestion and reuse existing raw dump.")
+    parser.add_argument("--skip-prune", action="store_true", help="Skip 18-month retention pruning.")
     parser.add_argument("--skip-export", action="store_true", help="Skip Markdown export.")
     parser.add_argument("--mark-exported", action="store_true", help="Mark exported to_read items as exported.")
     return parser.parse_args()
@@ -266,6 +283,7 @@ def main() -> None:
         skip_hal=args.skip_hal,
         skip_crossref=args.skip_crossref,
         skip_openalex=args.skip_openalex,
+        skip_prune=args.skip_prune,
         skip_export=args.skip_export,
         mark_exported=args.mark_exported,
     )

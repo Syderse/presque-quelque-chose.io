@@ -45,9 +45,13 @@ Le verdict global recommandé est :
 
 ### Note de clôture V3 académique
 
-Au gel V3 du 2026-05-21, l'implémentation réelle est plus restrictive que plusieurs recommandations prospectives de cet audit : l'export public Hugo reste limité à la whitelist technique `id`, `title`, `url`, `doi`, `published_at`, `source_name`, `source_type`, `language`, `source_family`, `attribution_id`.
+Au gel V3 du 2026-05-21, l'implémentation était plus restrictive que plusieurs recommandations prospectives de cet audit : l'export public Hugo restait limité à la whitelist technique `id`, `title`, `url`, `doi`, `published_at`, `source_name`, `source_type`, `language`, `source_family`, `attribution_id`.
+
+**Mise à jour 2026-05-25 (Prompt 2 / Plan final) :** le contrat public est désormais enrichi conformément aux recommandations de la section « Contrat public de données ». Les sources bibliographiques (Crossref, OpenAlex, HAL) exposent trois champs supplémentaires : `authors` (liste de noms, avec regex anti-fuite e-mail), `container_title` (titre de la revue), `item_type` (type bibliographique dérivé de `source_type`). Les sources éditoriales et journalistiques (RSS) restent au contrat minimal de 10 clés : pas d'auteurs, pas de revue. La règle est `source_family ∈ {crossref, openalex, hal}` → contrat bibliographique (13 clés) ; sinon → contrat éditorial (10 clés). Cette règle est encodée dans `export_public.py` (`BIBLIOGRAPHIC_SOURCE_FAMILIES`) et validée par la suite de tests.
 
 Crossref et OpenAlex sont désormais pleinement configurés et activés en production, avec garde-fou local (`CROSSREF_MAILTO` et `OPENALEX_MAILTO` obligatoires, `rows: 20`, délai poli d'une seconde). Les revues prioritaires validées (`radio_journal`, `sound_studies_journal`, `resonance_journal`) et la venue ciblée OpenAlex (`journal_sonic_studies_venue` ISSN `2212-6252`) sont désormais actives et intégrées. La littérature japonaise (`CiNii`, `NDL`, `J-STAGE`) reste explicitement reportée dans une V4 séparée.
+
+**Mise à jour 2026-05-25 (Prompt 4 / Gel du plan final) :** l'implémentation est gelée. Le pipeline intègre désormais une étape de pruning automatique (rétention 18 mois) : les notices de travail (`to_read`, `candidate`, `ignored`, `new`) publiées ou découvertes il y a plus de 18 mois sont supprimées de `db.json` à chaque run. Les notices marquées `exported` (curation humaine explicite) sont toujours préservées, conformément au principe d'impermanence et de sobriété de la doctrine du projet. La commande hebdomadaire unique `make weekly` intègre récolte, pruning, export public, récapitulatif lisible et scan anti-fuite automatique. Aucun commit ni push automatique : le geste de publication reste manuel et conscient. Tests : 172/172 passés. Scan final : 0 clé interdite, 0 e-mail non autorisé, 0 chemin local dans l'index public.
 
 ## Politique générale du projet
 
@@ -88,26 +92,25 @@ Le contrat public recommandé doit être un contrat **d’allowlist**, pas de bl
 ]
 ```
 
-#### Champs publics supplémentaires recommandés
+#### Champs publics supplémentaires — implémentés pour sources bibliographiques
 
-Je recommande d’ajouter, lorsque disponibles et lorsque la source est principalement bibliographique :
+Les champs suivants sont désormais exposés pour les sources bibliographiques (`source_family ∈ {crossref, openalex, hal}`) uniquement :
 
 ```json
 [
   "authors",
   "container_title",
-  "item_type",
-  "issn",
-  "isbn",
-  "canonical_url",
-  "record_url",
-  "license_label",
-  "open_access_status"
+  "item_type"
 ]
 ```
 
-**Pourquoi les ajouter :** un index universitaire sans auteurs ni titre de revue reste trop pauvre pour être utile. En pratique, les noms d’auteur, le titre de revue, le type de document et l’identifiant du support relèvent souvent de la métadonnée de signalement plutôt que d’un contenu éditorial à forte expressivité.  
-**Prudence :** si une source n’est pas bibliographique mais éditoriale ou journalistique, ne publier que `title + url + date + source_name + source_type + language + legal_status`.
+Les champs `issn`, `isbn`, `canonical_url`, `record_url`, `license_label`, `open_access_status` restent hors périmètre (recommandés mais non implémentés).
+
+**Justification :** un index universitaire sans auteurs ni titre de revue reste trop pauvre pour être citable. Les noms d’auteur, le titre de revue et le type de document relèvent de la métadonnée de signalement bibliographique, non d’un contenu éditorial à forte expressivité. Ces métadonnées sont issues des APIs publiques Crossref, OpenAlex et HAL, qui les publient explicitement sous conditions de réutilisation compatibles (données bibliographiques factuelles hors copyright du contenu).
+
+**Règle anti-fuite renforcée :** le champ `authors` est nettoyé par une regex avant export pour éliminer toute adresse e-mail accidentellement capturée dans les noms d’auteurs. Les sources éditoriales et journalistiques (RSS) ne reçoivent pas ces trois champs (contrat minimal de 10 clés).
+
+**Prudence maintenue :** les sources éditoriales/journalistiques restent limitées à `title + url + date + source_name + source_type + language + attribution_id + doi + id + source_family` (10 clés). Pas d’auteurs, pas de revue, conformément à l’esprit du LEGAL_AUDIT sur ces sources.
 
 #### Champs publics interdits par défaut
 

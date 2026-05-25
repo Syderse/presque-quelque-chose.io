@@ -210,6 +210,7 @@ def normalize_hal_entry(
         status=WatchStatus.new,
         discovered_at=discovered_at or _now(),
         title_original=_first_text(entry.get("title_s")),
+        container_title=_first_text(entry.get("journalTitle_s")),
         authors=_text_list(entry.get("authorFullName_s")),
         published_at=published_at,
         url=url,
@@ -286,6 +287,7 @@ def normalize_crossref_entry(
         status=WatchStatus.new,
         discovered_at=discovered_at or _now(),
         title_original=title,
+        container_title=_first_text(entry.get("container-title")),
         authors=_crossref_authors(entry.get("author")),
         published_at=published_at,
         url=url,
@@ -372,6 +374,28 @@ def _openalex_tags(entry: dict[str, Any]) -> list[str]:
     return tags
 
 
+def _openalex_authors(entry: dict[str, Any]) -> list[str]:
+    authorships = entry.get("authorships")
+    if not isinstance(authorships, list):
+        return []
+
+    authors: list[str] = []
+    seen: set[str] = set()
+    for authorship in authorships:
+        if not isinstance(authorship, dict):
+            continue
+        author = authorship.get("author")
+        if not isinstance(author, dict):
+            continue
+        name = _compact_text(author.get("display_name"))
+        key = name.casefold() if name else None
+        if name and key not in seen:
+            authors.append(name)
+            seen.add(key)
+
+    return authors
+
+
 def _openalex_source_type(entry: dict[str, Any]) -> SourceType:
     entry_type = _first_text(entry.get("type"))
     if entry_type is None:
@@ -415,6 +439,8 @@ def normalize_openalex_entry(
         status=WatchStatus.new,
         discovered_at=discovered_at or _now(),
         title_original=title,
+        container_title=source_name if source_name != "OpenAlex" else None,
+        authors=_openalex_authors(entry),
         published_at=published_at,
         url=url,
         doi=doi,
@@ -523,6 +549,7 @@ def _merge_duplicate_item(existing: RadioWatchItem, incoming: RadioWatchItem) ->
             "url": existing.url or incoming.url,
             "published_at": existing.published_at or incoming.published_at,
             "title_original": existing.title_original or incoming.title_original,
+            "container_title": existing.container_title or incoming.container_title,
             "language": incoming.language if existing.language == "und" and incoming.language != "und" else existing.language,
             "authors": _merge_text_lists(existing.authors, incoming.authors),
             "abstract": existing.abstract or incoming.abstract,

@@ -1,6 +1,7 @@
 from __future__ import annotations
 
 import argparse
+import re
 import sys
 from datetime import datetime, timezone
 from pathlib import Path
@@ -22,7 +23,11 @@ DEFAULT_DB = ROOT / "data" / "normalized" / "db.json"
 DEFAULT_OUTPUT = SITE_ROOT / "static" / "antenne-radio" / "index.json"
 SCHEMA_VERSION = "antenne-radio-public-v0"
 
-PUBLIC_ITEM_KEYS = {
+# Sources bibliographiques : notices citables avec auteurs + revue + type
+BIBLIOGRAPHIC_SOURCE_FAMILIES = {"crossref", "openalex", "hal"}
+
+# Clés communes à tous les items (éditoriaux et bibliographiques)
+_BASE_ITEM_KEYS = {
     "id",
     "title",
     "url",
@@ -34,6 +39,16 @@ PUBLIC_ITEM_KEYS = {
     "source_family",
     "attribution_id",
 }
+
+# 3 clés supplémentaires pour sources bibliographiques uniquement
+_BIBLIOGRAPHIC_EXTRA_KEYS = {"authors", "container_title", "item_type"}
+
+EDITORIAL_ITEM_KEYS = _BASE_ITEM_KEYS
+BIBLIOGRAPHIC_ITEM_KEYS = _BASE_ITEM_KEYS | _BIBLIOGRAPHIC_EXTRA_KEYS
+# Whitelist complète (documentation + contrôle d'exhaustivité dans les tests)
+PUBLIC_ITEM_KEYS = BIBLIOGRAPHIC_ITEM_KEYS
+
+EMAIL_RE = re.compile(r"[a-zA-Z0-9._%+\-]+@[a-zA-Z0-9.\-]+\.[a-zA-Z]{2,}", re.IGNORECASE)
 
 FORBIDDEN_PUBLIC_KEYS = {
     "raw",
@@ -51,7 +66,6 @@ FORBIDDEN_PUBLIC_KEYS = {
     "title_original",
     "errors",
     "raw_responses",
-    "authors",
     "tags",
 }
 
@@ -396,13 +410,25 @@ def _sort_items(items: list[RadioWatchItem]) -> list[RadioWatchItem]:
     return sorted(items, key=sort_key, reverse=True)
 
 
+def _clean_authors(authors: list[str]) -> list[str]:
+    cleaned = []
+    for name in authors:
+        safe = EMAIL_RE.sub("", name).strip()
+        if safe:
+            cleaned.append(safe)
+    return cleaned
+
+
 def _item_to_public(item: RadioWatchItem) -> dict[str, Any]:
     attribution_id = _attribution_id(item)
     if attribution_id is None:
         raise ValueError(f"Unaudited source cannot be exported: {item.source_name}")
 
     attribution = AUDITED_ATTRIBUTIONS[attribution_id]
-    public_item = {
+    source_family = attribution["source_family"]
+    is_bibliographic = source_family in BIBLIOGRAPHIC_SOURCE_FAMILIES
+
+    public_item: dict[str, Any] = {
         "id": item.id,
         "title": item.title,
         "url": _public_url(item),
@@ -411,11 +437,17 @@ def _item_to_public(item: RadioWatchItem) -> dict[str, Any]:
         "source_name": attribution["name"],
         "source_type": item.source_type.value,
         "language": item.language,
-        "source_family": attribution["source_family"],
+        "source_family": source_family,
         "attribution_id": attribution_id,
     }
 
-    if set(public_item) != PUBLIC_ITEM_KEYS:
+    if is_bibliographic:
+        public_item["authors"] = _clean_authors(item.authors)
+        public_item["container_title"] = item.container_title
+        public_item["item_type"] = item.source_type.value
+
+    expected_keys = BIBLIOGRAPHIC_ITEM_KEYS if is_bibliographic else EDITORIAL_ITEM_KEYS
+    if set(public_item) != expected_keys:
         raise ValueError("Public item does not match the strict whitelist")
 
     return public_item

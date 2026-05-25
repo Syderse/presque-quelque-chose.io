@@ -109,11 +109,11 @@
 2. **Rétention 18 mois** (principe d'impermanence) : élaguer de `db.json` les items dont la date dépasse 18 mois, **sauf `status == exported`** (ne jamais écraser une décision humaine de curation). Implémenter dans le pipeline avec tests dédiés (un item récent conservé, un ancien non-exporté élagué, un ancien `exported` conservé).
 3. **Documentation** : section « Routine hebdomadaire » dans `README.md` (une commande, lecture des compteurs, push manuel) ; mettre à jour `01_RESSOURCES_SUIVIES.md` (sources finales, statuts) et la note de clôture de `LEGAL_AUDIT.md`.
 4. **Recette finale complète** avec `.env.local` : `make test` → `make weekly` → push manuel → vérifier le build Netlify. Relever tous les compteurs réels et refaire un **scan anti-fuite exhaustif** (index statique + HTML buildé : 0 clé interdite, 0 e-mail, 0 chemin local, faux positifs documentés).
-5. **Gel** : marquer le projet terminé dans `memoire_materielle.md` et `docs/CHANTIERS.md`.
+5. Réécrire `antenne_radio/README.md` à jour. 
 
 **Validation :** `make test` 100 % ; `make weekly` reproductible et lisible ; rétention testée ; scan final propre ; build OK.
 
-**Fin :** consigner le bilan final dans `memoire_materielle.md` (commande hebdo, règle de rétention, compteurs finaux, scan, état « projet finalisé »).
+**Fin :** consigner le bilan final dans `memoire_materielle.md` (commande hebdo, règle de rétention, compteurs finaux, scan, état projet).
 
 ---
 
