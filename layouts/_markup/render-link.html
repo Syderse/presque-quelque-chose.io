@@ -18,11 +18,11 @@
 
 {{- if $page -}}
 {{- /* CAS A : Page trouvée ! On utilise son permalien canonique */ -}}
-<a href="{{ $page.RelPermalink }}" class="text-ctp-mauve hover:text-ctp-mauve/80 transition-colors"{{ with .Title }} title="{{ . }}"{{ end }}>{{ .Text | safeHTML }}</a>
+<a href="{{ $page.RelPermalink }}" class="internal-link"{{ with .Title }} title="{{ . }}"{{ end }}>{{ .Text | safeHTML }}</a>
 
 {{- else -}}
 {{- /* CAS B : Pas trouvé (Fichier statique, PDF, ou lien cassé). On laisse tel quel. */ -}}
-<a href="{{ $dest | safeURL }}"{{ with .Title }} title="{{ . }}"{{ end }} class="text-red-500">{{ .Text | safeHTML }}</a>
+<a href="{{ $dest | safeURL }}"{{ with .Title }} title="{{ . }}"{{ end }} class="broken-link">{{ .Text | safeHTML }}</a>
 {{- end -}}
 
 {{- end -}}

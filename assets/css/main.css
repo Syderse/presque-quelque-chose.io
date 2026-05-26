@@ -194,6 +194,25 @@
       border-color: var(--ctp-yellow);
     }
 
+    /* 3b. SPECIALIZED LINKS: Internal (Mauve) & Broken (Red) */
+    & :where(a.internal-link):not(.not-prose) {
+      color: var(--ctp-mauve) !important;
+    }
+
+    & :where(a.internal-link):not(.not-prose):hover {
+      color: var(--ctp-rosewater) !important;
+      border-color: var(--ctp-rosewater);
+    }
+
+    & :where(a.broken-link):not(.not-prose) {
+      color: var(--ctp-red) !important;
+    }
+
+    & :where(a.broken-link):not(.not-prose):hover {
+      color: var(--ctp-maroon) !important;
+      border-color: var(--ctp-maroon);
+    }
+
     /* 4. POLISH: Bold Text (Deep Blue) */
     & :where(strong, b) {
       color: var(--ctp-deep-blue) !important;
