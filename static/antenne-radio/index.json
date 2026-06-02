@@ -1,7 +1,99 @@
 {
-  "generated_at": "2026-05-25T07:55:48Z",
-  "item_count": 440,
+  "generated_at": "2026-06-02T06:16:43Z",
+  "item_count": 430,
   "items": [
+    {
+      "attribution_id": "sounding_out",
+      "doi": null,
+      "id": "url:0daa81c963b919cf8a71",
+      "language": "und",
+      "published_at": "2026-06-01T14:24:23Z",
+      "source_family": "rss",
+      "source_name": "Sounding Out!",
+      "source_type": "blog",
+      "title": "Sounding Out! Unplugged: “Power in Listening” (August 2026)",
+      "url": "https://soundstudiesblog.com/2026/06/01/sounding-out-unplugged-power-in-listening-august-2026"
+    },
+    {
+      "attribution_id": "radio_fanch",
+      "doi": null,
+      "id": "url:d5b6737bbd3c450131df",
+      "language": "und",
+      "published_at": "2026-06-01T06:30:00Z",
+      "source_family": "rss",
+      "source_name": "Radio Fañch",
+      "source_type": "blog",
+      "title": "France Télévisions : une bergerie, un loup et pas le moindre raton-laveur en vue !",
+      "url": "https://radiofanch.blogspot.com/2026/06/france-televisions-une-bergerie-un-loup.html"
+    },
+    {
+      "attribution_id": "radio_fanch",
+      "doi": null,
+      "id": "url:40c8129efcc074c40348",
+      "language": "und",
+      "published_at": "2026-05-30T06:30:00Z",
+      "source_family": "rss",
+      "source_name": "Radio Fañch",
+      "source_type": "blog",
+      "title": "Patachou, Brassens et Pierre-Arnaud de Chassy-Poulay… c'est peut-être un détail pour vous !",
+      "url": "https://radiofanch.blogspot.com/2026/05/patachou-brassens-et-pierre-arnaud-de.html"
+    },
+    {
+      "attribution_id": "media_culture_society",
+      "authors": [],
+      "container_title": "Media Culture & Society",
+      "doi": "10.1177/01634437261454508",
+      "id": "doi:41388b5ddcc256b556cc",
+      "item_type": "journal_article",
+      "language": "en",
+      "published_at": "2026-05-29T00:00:00Z",
+      "source_family": "openalex",
+      "source_name": "Media, Culture & Society",
+      "source_type": "journal_article",
+      "title": "Radio discovery in smart speakers: The gatekeeping function of voice assistant platforms and aggregators",
+      "url": "https://doi.org/10.1177/01634437261454508"
+    },
+    {
+      "attribution_id": "radio_fanch",
+      "doi": null,
+      "id": "url:ae95eb339654753daa74",
+      "language": "und",
+      "published_at": "2026-05-27T06:30:00Z",
+      "source_family": "rss",
+      "source_name": "Radio Fañch",
+      "source_type": "blog",
+      "title": "Radio France : l'arroseur arrosé ! Qu'est-ce-qu'on se marre… (à bout)",
+      "url": "https://radiofanch.blogspot.com/2026/05/radio-france-larroseur-arrose-quest-ce.html"
+    },
+    {
+      "attribution_id": "radio_fanch",
+      "doi": null,
+      "id": "url:ff74b966ac9f048dfc12",
+      "language": "und",
+      "published_at": "2026-05-26T06:30:00Z",
+      "source_family": "rss",
+      "source_name": "Radio Fañch",
+      "source_type": "blog",
+      "title": "Radio France : la radio est sortie du jeu… Renoncement définitif !",
+      "url": "https://radiofanch.blogspot.com/2026/05/radio-france-la-radio-est-sortie-du-jeu.html"
+    },
+    {
+      "attribution_id": "organised_sound",
+      "authors": [
+        "Mohammed Rafiq Hossain"
+      ],
+      "container_title": "Organised Sound",
+      "doi": "10.1017/s1355771826101290",
+      "id": "doi:a17481dd86945c40a343",
+      "item_type": "journal_article",
+      "language": "en",
+      "published_at": "2026-05-26T00:00:00Z",
+      "source_family": "crossref",
+      "source_name": "Organised Sound",
+      "source_type": "journal_article",
+      "title": "Towards a Sonic Scenography of Robotic Performance: A Theoretical Framework",
+      "url": "https://doi.org/10.1017/s1355771826101290"
+    },
     {
       "attribution_id": "radio_fanch",
       "doi": null,
@@ -13,6 +105,23 @@
       "source_type": "blog",
       "title": "France Culture retrouve la mémoire… Eureka !",
       "url": "https://radiofanch.blogspot.com/2026/05/france-culture-retrouve-la-memoire.html"
+    },
+    {
+      "attribution_id": "sound_studies_journal",
+      "authors": [
+        "Giancarlo Tursi"
+      ],
+      "container_title": "Sound Studies",
+      "doi": "10.1080/20551940.2026.2663143",
+      "id": "doi:3e6b908131a268c96008",
+      "item_type": "journal_article",
+      "language": "en",
+      "published_at": "2026-05-25T00:00:00Z",
+      "source_family": "crossref",
+      "source_name": "Sound Studies: An Interdisciplinary Journal",
+      "source_type": "journal_article",
+      "title": "Trans-latency: Katie Kitamura’s <i>Intimacies</i> on the radio",
+      "url": "https://doi.org/10.1080/20551940.2026.2663143"
     },
     {
       "attribution_id": "journal_radio_audio_media",
@@ -37,18 +146,6 @@
       "source_type": "blog",
       "title": "La radio, vous l'écoutez comment ?",
       "url": "https://radiofanch.blogspot.com/2026/05/la-radio-vous-lecoutez-comment.html"
-    },
-    {
-      "attribution_id": "nieman_storyboard",
-      "doi": null,
-      "id": "url:0f86f7206c9270a085c8",
-      "language": "und",
-      "published_at": "2026-05-22T12:47:10Z",
-      "source_family": "rss",
-      "source_name": "Nieman Storyboard",
-      "source_type": "blog",
-      "title": "Scenes from National Magazine Award winners",
-      "url": "https://niemanstoryboard.org/2026/05/22/scenes-from-national-magazine-award-winners"
     },
     {
       "attribution_id": "media_culture_society",
@@ -93,6 +190,21 @@
       "source_type": "journal_article",
       "title": "Spectralism reimagined: AI, orchestration and improvisation",
       "url": "https://doi.org/10.1017/s1355771826101289"
+    },
+    {
+      "attribution_id": "hal",
+      "authors": [],
+      "container_title": null,
+      "doi": null,
+      "id": "url:9306ffbece8971507eb9",
+      "item_type": "journal_article",
+      "language": "en",
+      "published_at": "2026-05-20T00:00:00Z",
+      "source_family": "hal",
+      "source_name": "HAL open archive",
+      "source_type": "journal_article",
+      "title": "A Link to the Past: A Dual Pedagogical Approach to Accounting and Finance History",
+      "url": "https://hal.science/hal-05629627v1"
     },
     {
       "attribution_id": "radio_fanch",
@@ -141,18 +253,6 @@
       "source_type": "blog",
       "title": "Les coulisses de la radio… (d'avant)",
       "url": "https://radiofanch.blogspot.com/2026/05/les-coulisses-de-la-radio-davant.html"
-    },
-    {
-      "attribution_id": "nieman_storyboard",
-      "doi": null,
-      "id": "url:b79be813fa529833ed21",
-      "language": "und",
-      "published_at": "2026-05-15T13:03:05Z",
-      "source_family": "rss",
-      "source_name": "Nieman Storyboard",
-      "source_type": "blog",
-      "title": "Your next story is outside",
-      "url": "https://niemanstoryboard.org/2026/05/15/your-next-story-is-outside"
     },
     {
       "attribution_id": "media_culture_society",
@@ -267,18 +367,6 @@
       "source_type": "journal_article",
       "title": "Vibrant algorithms: Sonic collaborations with the living environment",
       "url": "https://doi.org/10.1017/s1355771826101277"
-    },
-    {
-      "attribution_id": "nieman_storyboard",
-      "doi": null,
-      "id": "url:70046855d39fa59ded73",
-      "language": "und",
-      "published_at": "2026-05-08T12:56:02Z",
-      "source_family": "rss",
-      "source_name": "Nieman Storyboard",
-      "source_type": "blog",
-      "title": "Behind the scenes as a Pulitzer juror",
-      "url": "https://niemanstoryboard.org/2026/05/08/behind-the-scenes-pulitzer-juror"
     },
     {
       "attribution_id": "radio_fanch",
@@ -586,28 +674,34 @@
       "url": "https://lesradioslibres.wordpress.com/2026/05/01/article-mutations-des-radios-etatiques-et-civiles-de-mobilisation"
     },
     {
-      "attribution_id": "nieman_storyboard",
+      "attribution_id": "hal",
+      "authors": [],
+      "container_title": null,
       "doi": null,
-      "id": "url:3b7840bb8362a8e23d60",
-      "language": "und",
-      "published_at": "2026-05-01T13:02:19Z",
-      "source_family": "rss",
-      "source_name": "Nieman Storyboard",
-      "source_type": "blog",
-      "title": "Tell us your best advice for journalists in the current moment",
-      "url": "https://niemanstoryboard.org/2026/05/01/your-best-advice-for-journalists"
+      "id": "url:6921be3c60cb6784bb0c",
+      "item_type": "journal_article",
+      "language": "fr",
+      "published_at": "2026-05-01T00:00:00Z",
+      "source_family": "hal",
+      "source_name": "HAL open archive",
+      "source_type": "journal_article",
+      "title": "« Essor du podcast natif : quelques pistes pour l’approfondissement d’un champ de recherche en France »",
+      "url": "https://univ-pantheon-assas.hal.science/hal-05636899v1"
     },
     {
-      "attribution_id": "nieman_storyboard",
+      "attribution_id": "hal",
+      "authors": [],
+      "container_title": null,
       "doi": null,
-      "id": "url:6241995576a73aa937ff",
-      "language": "und",
-      "published_at": "2026-04-30T19:15:31Z",
-      "source_family": "rss",
-      "source_name": "Nieman Storyboard",
-      "source_type": "blog",
-      "title": "Look beyond the headlines — and five other lessons for journalists from Power of Narrative 2026",
-      "url": "https://niemanstoryboard.org/2026/04/30/lessons-for-journalists-power-of-narrative-2026"
+      "id": "url:31ec5ec11bd96eb2439b",
+      "item_type": "journal_article",
+      "language": "fr",
+      "published_at": "2026-05-01T00:00:00Z",
+      "source_family": "hal",
+      "source_name": "HAL open archive",
+      "source_type": "journal_article",
+      "title": "« Le podcast natif d’information pour restaurer le lien de confiance avec le public ? »",
+      "url": "https://univ-pantheon-assas.hal.science/hal-05636898v1"
     },
     {
       "attribution_id": "journal_radio_audio_media",
@@ -739,18 +833,6 @@
       "url": "https://www.radiosurvivor.com/2026/04/radio-station-visit-200-wozq-fm-at-smith-college"
     },
     {
-      "attribution_id": "nieman_storyboard",
-      "doi": null,
-      "id": "url:b2234e97b99ad10a2f79",
-      "language": "und",
-      "published_at": "2026-04-24T13:02:32Z",
-      "source_family": "rss",
-      "source_name": "Nieman Storyboard",
-      "source_type": "blog",
-      "title": "Making ‘a documentary that you could dance to’",
-      "url": "https://niemanstoryboard.org/2026/04/24/making-a-documentary-that-you-could-dance-to"
-    },
-    {
       "attribution_id": "radio_fanch",
       "doi": null,
       "id": "url:b6726364d24aeba253ea",
@@ -776,18 +858,6 @@
       "source_type": "journal_article",
       "title": "Modélisation pollinique et alertes",
       "url": "https://hal.science/hal-05603550v1"
-    },
-    {
-      "attribution_id": "nieman_storyboard",
-      "doi": null,
-      "id": "url:ee2aee5e842b63fd10a4",
-      "language": "und",
-      "published_at": "2026-04-23T17:50:27Z",
-      "source_family": "rss",
-      "source_name": "Nieman Storyboard",
-      "source_type": "blog",
-      "title": "How Jad Abumrad transports listeners to a legendary club in Lagos for the acclaimed podcast, ‘Fela Kuti: Fear No Man’",
-      "url": "https://niemanstoryboard.org/2026/04/23/jad-abumrad-podcast-fela-kuti-fear-no-man"
     },
     {
       "attribution_id": "radio_fanch",
@@ -964,18 +1034,6 @@
       "url": "https://radiofanch.blogspot.com/2026/04/le-studio-du-temps-pendant-trente.html"
     },
     {
-      "attribution_id": "nieman_storyboard",
-      "doi": null,
-      "id": "url:05551005685b17d56e8f",
-      "language": "und",
-      "published_at": "2026-04-17T13:07:56Z",
-      "source_family": "rss",
-      "source_name": "Nieman Storyboard",
-      "source_type": "blog",
-      "title": "The art of the micro-narrative",
-      "url": "https://niemanstoryboard.org/2026/04/17/art-of-the-micro-narrative"
-    },
-    {
       "attribution_id": "radio_fanch",
       "doi": null,
       "id": "url:253023f74520370962e3",
@@ -1043,18 +1101,6 @@
       "url": "https://soundstudiesblog.com/2026/04/13/mimicked-voices-and-nonhuman-listening-deepfakes-speech-and-sonic-manipulation-in-the-digital-war-on-ukraine"
     },
     {
-      "attribution_id": "radio_fanch",
-      "doi": null,
-      "id": "url:68a97a659e1295a4575e",
-      "language": "und",
-      "published_at": "2026-04-13T06:30:00Z",
-      "source_family": "rss",
-      "source_name": "Radio Fañch",
-      "source_type": "blog",
-      "title": "France Inter radieuse… (en 1999) !",
-      "url": "https://radiofanch.blogspot.com/2026/04/france-inter-radieuse-en-1999.html"
-    },
-    {
       "attribution_id": "openalex",
       "authors": [],
       "container_title": null,
@@ -1110,30 +1156,6 @@
       "source_type": "journal_article",
       "title": "Understanding TV audiences in the multiplatform era: How televisual viewing modes shape content popularity",
       "url": "https://doi.org/10.1177/13548565261442042"
-    },
-    {
-      "attribution_id": "nieman_storyboard",
-      "doi": null,
-      "id": "url:66f6ba09c1584d6c0e2d",
-      "language": "und",
-      "published_at": "2026-04-10T13:04:25Z",
-      "source_family": "rss",
-      "source_name": "Nieman Storyboard",
-      "source_type": "blog",
-      "title": "‘Stay long enough to be boring,’ and other notes from the Power of Narrative conference",
-      "url": "https://niemanstoryboard.org/2026/04/10/stay-long-enough-to-be-boring-power-of-narrative-conference"
-    },
-    {
-      "attribution_id": "radio_fanch",
-      "doi": null,
-      "id": "url:b334bad3a4cee3ef9bc2",
-      "language": "und",
-      "published_at": "2026-04-10T06:30:00Z",
-      "source_family": "rss",
-      "source_name": "Radio Fañch",
-      "source_type": "blog",
-      "title": "Le transsibérien de Colette Fellous : voyage, voyage…",
-      "url": "https://radiofanch.blogspot.com/2026/04/le-transsiberien-de-colette-fellous.html"
     },
     {
       "attribution_id": "radio_survivor",
@@ -1203,7 +1225,7 @@
       "source_family": "hal",
       "source_name": "HAL open archive",
       "source_type": "journal_article",
-      "title": "Manuel d'analyse du podcast natif.",
+      "title": "Le podcast natif",
       "url": "https://univ-pantheon-assas.hal.science/hal-05625067v1"
     },
     {
@@ -1220,18 +1242,6 @@
       "source_type": "journal_article",
       "title": "Le podcast comme outil pédagogique : un cas de culture mobile au sein d'une perspective d'ensemble du sonore",
       "url": "https://hal.science/hal-05630378v1"
-    },
-    {
-      "attribution_id": "radio_fanch",
-      "doi": null,
-      "id": "url:d4bbabd5510b546d9dbd",
-      "language": "und",
-      "published_at": "2026-04-06T06:30:00Z",
-      "source_family": "rss",
-      "source_name": "Radio Fañch",
-      "source_type": "blog",
-      "title": "Jo Privat : le laborieux du dépliant…",
-      "url": "https://radiofanch.blogspot.com/2026/04/jo-privat-le-laborieux-du-depliant.html"
     },
     {
       "attribution_id": "organised_sound",
@@ -1358,24 +1368,6 @@
       "source_type": "journal_article",
       "title": "The LADIM’s story or something over <i>One Thousand and One Nights</i> of an electroacoustic music laboratory in Venezuela in the 21st century. The electroacoustic music at <i>Universidad Simón Bolívar</i>",
       "url": "https://doi.org/10.1017/s1355771825100812"
-    },
-    {
-      "attribution_id": "organised_sound",
-      "authors": [
-        "Raúl Minsburg",
-        "Jorge Rodrigo Sigal Sefchovich"
-      ],
-      "container_title": "Organised Sound",
-      "doi": "10.1017/s1355771826101174",
-      "id": "doi:808c89bcbb66b533fdc2",
-      "item_type": "journal_article",
-      "language": "en",
-      "published_at": "2026-04-01T00:00:00Z",
-      "source_family": "crossref",
-      "source_name": "Organised Sound",
-      "source_type": "journal_article",
-      "title": "Editorial: Sound, music and technology in Latin America",
-      "url": "https://doi.org/10.1017/s1355771826101174"
     },
     {
       "attribution_id": "organised_sound",
@@ -1510,18 +1502,6 @@
       "source_type": "blog",
       "title": "Les radios scolaires dans Les Alpes Mancelles libérées",
       "url": "https://radiodufutur.wordpress.com/2026/03/31/les-radios-scolaires-dans-les-alpes-mancelles-liberees"
-    },
-    {
-      "attribution_id": "radio_fanch",
-      "doi": null,
-      "id": "url:6d3f6f0b694d2d76dfe0",
-      "language": "und",
-      "published_at": "2026-03-31T06:30:00Z",
-      "source_family": "rss",
-      "source_name": "Radio Fañch",
-      "source_type": "blog",
-      "title": "Radio publique : une mue lente et implacable !",
-      "url": "https://radiofanch.blogspot.com/2026/03/radio-publique-une-mue-lente-et.html"
     },
     {
       "attribution_id": "convergence_journal",
@@ -2253,21 +2233,6 @@
       "url": "https://doi.org/10.1177/13548565251410685"
     },
     {
-      "attribution_id": "hal",
-      "authors": [],
-      "container_title": null,
-      "doi": null,
-      "id": "url:17aaf7a1c8b8cc55c4ce",
-      "item_type": "journal_article",
-      "language": "fr",
-      "published_at": "2026-01-05T00:00:00Z",
-      "source_family": "hal",
-      "source_name": "HAL open archive",
-      "source_type": "journal_article",
-      "title": "Podcast Opcit! Épisode 43 (12 janvier 2026), Rahul Markovits – Bharuch, Paris, Londres : une odyssée indienne (1791-1796)",
-      "url": "https://hal.science/hal-05490768v1"
-    },
-    {
       "attribution_id": "la_radio_du_futur",
       "doi": null,
       "id": "url:215cae8e18db3fcdeb9b",
@@ -2290,21 +2255,6 @@
       "source_type": "blog",
       "title": "Les radios scolaires en Roumanie à Radio România",
       "url": "https://radiodufutur.wordpress.com/2026/01/04/les-radios-scolaires-en-roumanie-a-radio-romania"
-    },
-    {
-      "attribution_id": "hal",
-      "authors": [],
-      "container_title": null,
-      "doi": null,
-      "id": "url:58b7fb2ff78c0edb17e4",
-      "item_type": "journal_article",
-      "language": "fr",
-      "published_at": "2026-01-04T00:00:00Z",
-      "source_family": "hal",
-      "source_name": "HAL open archive",
-      "source_type": "journal_article",
-      "title": "[Thèse et vous !] Comment YouTube transforme la vulgarisation scientifique ?",
-      "url": "https://hal.science/hal-05472348v1"
     },
     {
       "attribution_id": "sound_studies_journal",
@@ -2473,21 +2423,6 @@
       "url": "https://doi.org/10.1007/978-3-032-10480-9_4"
     },
     {
-      "attribution_id": "hal",
-      "authors": [],
-      "container_title": null,
-      "doi": "10.5281/zenodo.19810291",
-      "id": "doi:2c28451df000243ebf53",
-      "item_type": "journal_article",
-      "language": "en",
-      "published_at": "2026-01-01T00:00:00Z",
-      "source_family": "hal",
-      "source_name": "HAL open archive",
-      "source_type": "journal_article",
-      "title": "Manufactured Success: The Model Minority Myth",
-      "url": "https://hal.science/hal-05631525v1"
-    },
-    {
       "attribution_id": "view_journal",
       "authors": [],
       "container_title": "VIEW Journal of European Television History and Culture",
@@ -2636,6 +2571,21 @@
       "source_type": "journal_article",
       "title": "Broadcasting from Below: Television Archives, Microhistory, and the Many Voices of 1990s Sicily",
       "url": "https://doi.org/10.18146/view.380"
+    },
+    {
+      "attribution_id": "view_journal",
+      "authors": [],
+      "container_title": "VIEW Journal of European Television History and Culture",
+      "doi": "10.18146/view.374",
+      "id": "doi:44ca48c50bce35c4a827",
+      "item_type": "journal_article",
+      "language": "en",
+      "published_at": "2025-12-31T00:00:00Z",
+      "source_family": "openalex",
+      "source_name": "VIEW Journal of European Television History and Culture",
+      "source_type": "journal_article",
+      "title": "Caring for Past Media from Below: Bottom-up Practices and Networks Supporting Obsolete Broadcast Technologies",
+      "url": "https://doi.org/10.18146/view.374"
     },
     {
       "attribution_id": "view_journal",
@@ -3861,6 +3811,21 @@
       "url": "https://www.tandfonline.com/doi/full/10.1080/19376529.2025.2530719?af=R"
     },
     {
+      "attribution_id": "openalex",
+      "authors": [],
+      "container_title": null,
+      "doi": "10.30965/9783657798209_003",
+      "id": "doi:787e5d2a0dd35d7fdb14",
+      "item_type": "chapter",
+      "language": "en",
+      "published_at": "2025-07-24T00:00:00Z",
+      "source_family": "openalex",
+      "source_name": "OpenAlex",
+      "source_type": "chapter",
+      "title": "Polish Wartime Poems as a Part of Radiophonic Propaganda During World War II",
+      "url": "https://doi.org/10.30965/9783657798209_003"
+    },
+    {
       "attribution_id": "journal_radio_audio_media",
       "doi": "10.1080/19376529.2025.2529907",
       "id": "doi:0c2564ec23001f87e7d2",
@@ -4085,23 +4050,6 @@
     {
       "attribution_id": "sound_studies_journal",
       "authors": [
-        "Jens Schröter"
-      ],
-      "container_title": "Sound Studies",
-      "doi": "10.1080/20551940.2025.2539003",
-      "id": "doi:ba3532a315f1805693f6",
-      "item_type": "journal_article",
-      "language": "en",
-      "published_at": "2025-07-03T00:00:00Z",
-      "source_family": "crossref",
-      "source_name": "Sound Studies: An Interdisciplinary Journal",
-      "source_type": "journal_article",
-      "title": "Noise reduction: tape hiss as problem and aesthetics",
-      "url": "https://doi.org/10.1080/20551940.2025.2539003"
-    },
-    {
-      "attribution_id": "sound_studies_journal",
-      "authors": [
         "Bettina Schlüter"
       ],
       "container_title": "Sound Studies",
@@ -4312,7 +4260,7 @@
       "attribution_id": "journal_radio_audio_media",
       "doi": "10.1080/19376529.2025.2497830",
       "id": "doi:d2631714da03116c417b",
-      "language": "und",
+      "language": "en",
       "published_at": "2025-06-16T10:52:35Z",
       "source_family": "rss",
       "source_name": "Journal of Radio & Audio Media / Taylor & Francis Online",
@@ -5110,21 +5058,6 @@
       "url": "https://doi.org/10.1080/14680777.2025.2461123"
     },
     {
-      "attribution_id": "media_culture_society",
-      "authors": [],
-      "container_title": "Media Culture & Society",
-      "doi": "10.1177/01634437241313040",
-      "id": "doi:11ff438317065d08625b",
-      "item_type": "journal_article",
-      "language": "en",
-      "published_at": "2025-01-26T00:00:00Z",
-      "source_family": "openalex",
-      "source_name": "Media, Culture & Society",
-      "source_type": "journal_article",
-      "title": "Default viewing: Reconceptualising choice and habit in television audience research",
-      "url": "https://doi.org/10.1177/01634437241313040"
-    },
-    {
       "attribution_id": "feminist_media_studies",
       "authors": [],
       "container_title": "Feminist Media Studies",
@@ -5165,21 +5098,6 @@
       "source_type": "journal_article",
       "title": "Beyond explainability. Study of the design of intelligible artificial intelligence in pathological anatomy and cytology",
       "url": "https://doi.org/10.3917/res.248.0073"
-    },
-    {
-      "attribution_id": "media_culture_society",
-      "authors": [],
-      "container_title": "Media Culture & Society",
-      "doi": "10.1177/01634437241308729",
-      "id": "doi:acbe3054e97bf7296282",
-      "item_type": "journal_article",
-      "language": "en",
-      "published_at": "2025-01-04T00:00:00Z",
-      "source_family": "openalex",
-      "source_name": "Media, Culture & Society",
-      "source_type": "journal_article",
-      "title": "Listening in times of crisis: The value and limits of radio phone-in shows",
-      "url": "https://doi.org/10.1177/01634437241308729"
     },
     {
       "attribution_id": "volume_journal",
@@ -6115,31 +6033,16 @@
       "attribution_id": "openalex",
       "authors": [],
       "container_title": null,
-      "doi": "10.1007/978-3-032-05689-4_11",
-      "id": "doi:838efd3d9df2109e1165",
-      "item_type": "chapter",
+      "doi": "10.5040/9798765121405",
+      "id": "doi:4a6184eda29a3f299144",
+      "item_type": "book",
       "language": "en",
       "published_at": "2025-01-01T00:00:00Z",
       "source_family": "openalex",
       "source_name": "OpenAlex",
-      "source_type": "chapter",
-      "title": "Community Radio Is Hot Stuff",
-      "url": "https://doi.org/10.1007/978-3-032-05689-4_11"
-    },
-    {
-      "attribution_id": "view_journal",
-      "authors": [],
-      "container_title": "VIEW Journal of European Television History and Culture",
-      "doi": "10.18146/view.353",
-      "id": "doi:e05f09a4d09cbfc5bbb2",
-      "item_type": "journal_article",
-      "language": "en",
-      "published_at": "2024-12-30T00:00:00Z",
-      "source_family": "openalex",
-      "source_name": "VIEW Journal of European Television History and Culture",
-      "source_type": "journal_article",
-      "title": "Television in and After the Archive: Catalogues, Databases, Interfaces and Other Ways to Organize Audiovisual Records",
-      "url": "https://doi.org/10.18146/view.353"
+      "source_type": "book",
+      "title": "Literature as Sound Studies",
+      "url": "https://doi.org/10.5040/9798765121405"
     },
     {
       "attribution_id": "media_culture_society",
@@ -6302,30 +6205,6 @@
       "source_type": "blog",
       "title": "“This AI will heat up any club”: Reggaetón and the Rise of the Cyborg Genre",
       "url": "https://soundstudiesblog.com/2024/12/09/this-ai-will-heat-up-any-club-reggaeton-music-and-the-rise-of-the-cyborg-genre"
-    },
-    {
-      "attribution_id": "radio_survivor",
-      "doi": null,
-      "id": "url:66e336b171b67c02520b",
-      "language": "und",
-      "published_at": "2024-11-27T19:45:17Z",
-      "source_family": "rss",
-      "source_name": "Radio Survivor",
-      "source_type": "blog",
-      "title": "Alice’s Restaurant on the Radio Thanksgiving 2024",
-      "url": "https://www.radiosurvivor.com/2024/11/alices-restaurant-on-the-radio-thanksgiving-2024"
-    },
-    {
-      "attribution_id": "radio_survivor",
-      "doi": null,
-      "id": "url:27fe0ff34f77ca239833",
-      "language": "und",
-      "published_at": "2024-11-27T18:09:21Z",
-      "source_family": "rss",
-      "source_name": "Radio Survivor",
-      "source_type": "blog",
-      "title": "Podcast: Remembering Alice Brock of Alice’s Restaurant",
-      "url": "https://www.radiosurvivor.com/2024/11/podcast-remembering-alice-brock-of-alices-restaurant"
     }
   ],
   "schema_version": "antenne-radio-public-v0",
@@ -6399,13 +6278,6 @@
       "name": "Media, Culture & Society",
       "source_family": "openalex",
       "url": "https://journals.sagepub.com/home/mcs"
-    },
-    {
-      "attribution_id": "nieman_storyboard",
-      "attribution_text": "Source: Nieman Storyboard - lien vers l'article original.",
-      "name": "Nieman Storyboard",
-      "source_family": "rss",
-      "url": "https://niemanstoryboard.org/"
     },
     {
       "attribution_id": "openalex",

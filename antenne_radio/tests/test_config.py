@@ -11,10 +11,10 @@ AUDITED_2026_05_20_RSS_ENABLED = {
     "les_radios_libres",
     "la_radio_du_futur",
     "meccsa_radio_audio_studies",
-    "nieman_storyboard",
 }
 AUDITED_2026_05_20_RSS_DECLARED = {
     *AUDITED_2026_05_20_RSS_ENABLED,
+    "nieman_storyboard",
     "la_lettre_pro",
     "transom",
 }
@@ -105,6 +105,11 @@ def test_legal_audit_2026_05_20_rss_sources_are_configured():
     assert transom["enabled"] is False
     assert transom["audit_date"] == "2026-05-20"
     assert transom["legal_status"].startswith("VALIDÉ")
+
+    nieman_storyboard = rss_sources["nieman_storyboard"]
+    assert nieman_storyboard["enabled"] is False
+    assert nieman_storyboard["audit_date"] == "2026-05-20"
+    assert nieman_storyboard["legal_status"].startswith("VALIDÉ")
 
 
 def test_priority_venues_are_configured_as_enabled_candidates_without_v2_duplicates():
