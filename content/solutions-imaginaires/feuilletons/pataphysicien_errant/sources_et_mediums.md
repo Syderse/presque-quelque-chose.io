@@ -1,3 +1,6 @@
+---
+draft: true
+---
 # Sources et mediums narratifs
 
 La contrainte : chaque episode est raconte a travers un type de source different. La source determine le style, le vocabulaire, le rythme, ce qui est visible et ce qui reste dans l'ombre. Le pataphysicien n'est jamais le narrateur.

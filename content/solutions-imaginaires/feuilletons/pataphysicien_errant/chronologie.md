@@ -1,3 +1,6 @@
+---
+draft: true
+---
 # Chronologie
 
 La chronologie couvre environ 220 ans (1830-2050). Le pataphysicien traverse les epoques. On ne sait pas s'il vieillit, s'ils sont plusieurs, ou si c'est autre chose. La question n'est jamais tranchee. Elle ne se pose meme pas vraiment : ce sont les sources qui parlent, pas lui.

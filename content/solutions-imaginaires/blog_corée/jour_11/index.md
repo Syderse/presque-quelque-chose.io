@@ -1,7 +1,7 @@
 ---
 title: "Jour 11 Gyeongju : visiter Gyeongju depuis Busan, tumulus de Silla, Bulguksa et Seokguram"
 date: 2026-05-11
-draft: false
+draft: true
 weight: 120
 tags:
   - corée du sud

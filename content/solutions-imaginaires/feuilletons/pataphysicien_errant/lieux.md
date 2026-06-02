@@ -1,3 +1,6 @@
+---
+draft: true
+---
 # Lieux
 
 Les lieux sont inspires de lieux terrestres reels. Les noms seront changes pour creer un monde. Chaque lieu a une couleur, une texture, une raison d'etre marginal.

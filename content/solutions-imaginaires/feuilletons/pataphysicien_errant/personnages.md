@@ -1,3 +1,6 @@
+---
+draft: true
+---
 # Personnages recurrents
 
 Le pataphysicien n'est jamais un personnage. On ne le voit qu'a travers les autres. Les personnages recurrents sont les yeux, les oreilles, les voix a travers lesquels on accede aux evenements.

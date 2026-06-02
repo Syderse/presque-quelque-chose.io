@@ -1,3 +1,6 @@
+---
+draft: true
+---
 # Bibliographie
 
 Deux fonctions : des auteurs a pasticher (imiter la voix pour developper la sienne) et des oeuvres proches en esprit (pour nourrir l'imaginaire). Certains font les deux.

@@ -1,7 +1,7 @@
 ---
 title: "Jour 13 Busan : musée, cérémonie du thé, hanbok et dwaeji gukbap"
 date: 2026-05-13
-draft: false
+draft: true
 weight: 140
 tags:
   - corée du sud

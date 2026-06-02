@@ -1,3 +1,6 @@
+---
+draft: true
+---
 # Catalogue des evenements
 
 Les quatre premiers viennent directement de la note fondatrice. Les suivants sont des propositions a trier, enrichir, modifier, jeter.
