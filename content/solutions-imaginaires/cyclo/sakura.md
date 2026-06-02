@@ -1,0 +1,1 @@
+une recherche personnelle approfondie sur les cerisiers au japon mais aussi ailleurs dans le monde, la variété des espèces, le métabolisme et fonctionnement biologique, la poésie produite en lien, les pratiques culturelles liées, l'objet de contemplation etc
