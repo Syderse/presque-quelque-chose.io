@@ -1,7 +1,7 @@
 ---
 title: "Jour 10 Busan : randonner à Geumjeongsan : forteresse, Beomeosa et barbecue"
 date: 2026-05-10
-draft: true
+draft: false
 weight: 110
 tags:
   - corée du sud
