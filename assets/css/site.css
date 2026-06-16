@@ -459,6 +459,10 @@ caption {
   margin-left: 1rem;
 }
 
+.site-footer-social {
+  margin-top: 0.5rem;
+}
+
 /* --- Sidenotes Tufte, CSS pur (P09) -----------------------------------------
    Appel numéroté en exposant ; note repliée par défaut, ouverte au clic via une
    case à cocher cachée (technique :checked, zéro JS). Sur écran étroit la note
