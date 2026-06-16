@@ -17,12 +17,16 @@ document.addEventListener('DOMContentLoaded', async () => {
 
     // Initialisation Supabase
     try {
-        if (typeof supabase === 'undefined') throw new Error("Supabase Library Missing");
+        if (typeof supabase === 'undefined') throw new Error("client Supabase introuvable");
+        if (!window.SUPABASE_CONFIG.url || !window.SUPABASE_CONFIG.key) throw new Error("forum non configuré");
         sb = supabase.createClient(window.SUPABASE_CONFIG.url, window.SUPABASE_CONFIG.key);
     } catch (e) {
-        dom.tree.innerHTML = `<div class="text-ctp-red font-mono p-4 border border-ctp-red bg-ctp-mantle">Oups, impossible de se connecter : ${e.message}</div>`;
+        dom.tree.innerHTML = `<p class="pf-error">Le forum est momentanément indisponible (${e.message}).</p>`;
         return;
     }
+
+    // Le forum répond : on révèle le bouton de création (caché en repli sans JS).
+    if (dom.btnRoot) dom.btnRoot.hidden = false;
 
     // --- 2. FONCTIONS UTILITAIRES ---
     const utils = {
@@ -125,7 +129,7 @@ document.addEventListener('DOMContentLoaded', async () => {
                     treeContainer.appendChild(renderNode(child, 0));
                 });
         } else {
-            treeContainer.innerHTML = '<div class="text-ctp-surface2 text-xs italic pl-4 border-l border-dashed border-ctp-surface1 opacity-50">aucune réponse pour le moment...</div>';
+            treeContainer.innerHTML = '<p class="pf-noreply">Aucune réponse pour le moment.</p>';
         }
 
         return clone;
@@ -133,7 +137,7 @@ document.addEventListener('DOMContentLoaded', async () => {
 
     // Fonction Principale de Chargement
     async function loadSystem() {
-        dom.tree.innerHTML = '<div class="text-ctp-blue font-mono pl-2">chargement...</div>';
+        dom.tree.innerHTML = '<p class="pf-loading">Chargement…</p>';
 
         // 1. Fetch Topics
         const { data: topics, error: errT } = await sb.from('topics').select('*').order('created_at', { ascending: false });
@@ -177,7 +181,7 @@ document.addEventListener('DOMContentLoaded', async () => {
         // Rendu DOM
         dom.tree.innerHTML = '';
         if (fullTree.length === 0) {
-            dom.tree.innerHTML = '<div class="text-ctp-overlay0 pl-2">aucun sujet pour le moment. patafoin chafouine </div>';
+            dom.tree.innerHTML = '<p class="pf-empty">Aucun sujet pour le moment. Patafoin chafouine.</p>';
             return;
         }
 
@@ -189,8 +193,8 @@ document.addEventListener('DOMContentLoaded', async () => {
     // --- 4. GESTION DES INTERACTIONS ---
 
     dom.btnRoot?.addEventListener('click', () => {
-        dom.panelRoot.classList.toggle('hidden');
-        if (!dom.panelRoot.classList.contains('hidden')) {
+        dom.panelRoot.hidden = !dom.panelRoot.hidden;
+        if (!dom.panelRoot.hidden) {
             document.getElementById('topic-title').focus();
         }
     });
@@ -207,7 +211,7 @@ document.addEventListener('DOMContentLoaded', async () => {
         titleInput.value = `À propos de « ${sujetFromUrl} »`;
 
         // Ouvrir le panneau
-        dom.panelRoot.classList.remove('hidden');
+        dom.panelRoot.hidden = false;
 
         // Focus sur le contenu (le titre est déjà rempli)
         contentTextarea?.focus();
@@ -217,7 +221,7 @@ document.addEventListener('DOMContentLoaded', async () => {
     }
 
     dom.btnCancelRoot?.addEventListener('click', () => {
-        dom.panelRoot.classList.add('hidden');
+        dom.panelRoot.hidden = true;
     });
 
     // Soumission Nouveau Topic
@@ -225,7 +229,7 @@ document.addEventListener('DOMContentLoaded', async () => {
         e.preventDefault();
         const btnSubmit = dom.formRoot.querySelector('button[type="submit"]');
         const originalText = btnSubmit.textContent;
-        btnSubmit.textContent = "[en cours...]";
+        btnSubmit.textContent = "envoi…";
         btnSubmit.disabled = true;
 
         const title = document.getElementById('topic-title').value;
@@ -248,7 +252,7 @@ document.addEventListener('DOMContentLoaded', async () => {
             if (postError) throw new Error(postError.message);
 
             dom.formRoot.reset();
-            dom.panelRoot.classList.add('hidden');
+            dom.panelRoot.hidden = true;
             loadSystem();
         } catch (err) {
             alert(`patafoin s'emmêle les pattes : ${err.message}`);
@@ -303,7 +307,7 @@ document.addEventListener('DOMContentLoaded', async () => {
 
         const form = e.target;
         const btn = form.querySelector('button[type="submit"]');
-        btn.textContent = "...";
+        btn.textContent = "envoi…";
         btn.disabled = true;
 
         const content = form.content.value;
@@ -320,7 +324,7 @@ document.addEventListener('DOMContentLoaded', async () => {
 
         if (error) {
             alert(`Impossible d'envoyer : ${error.message}`);
-            btn.textContent = "[rentez le coup]";
+            btn.textContent = "réessayer";
             btn.disabled = false;
         } else {
             form.remove();
