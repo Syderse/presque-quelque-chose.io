@@ -79,6 +79,7 @@ Ici on reconvertit les fonctionnalités signature en versions minimales et fidè
 > - **Supprime** le moteur de filtres JS (`antenne-radio.js`) et le style néo-brutaliste (`border: 4px`, ombres `12px 12px`, mono partout). Si tu veux un filtre, fais-en un minimal **sans dépendance** (un `<input>` qui masque/affiche des lignes en JS vanilla de ~15 lignes) — sinon, pas de filtre, la liste statique suffit.
 > - Conserve un `<noscript>`/repli propre : tout doit être lisible sans JS.
 > Passe au socle `site.css`, zéro gris, zéro fonte distante. Vérifie le rendu. Ne touche pas au JSON ni au projet `antenne_radio/`. Commit : `refonte: antenne radio en liste statique`.
+> Profites en pour réécrire la description beaucoup plus simple, concise et propre.
 
 **Vérif.** La veille s'affiche entièrement sans JS, champs limités à la whitelist, lisible.
 
@@ -125,6 +126,7 @@ Ici on reconvertit les fonctionnalités signature en versions minimales et fidè
 
 **But.** Remplacer la carte d'identité RPG par une présentation texte : une ligne « à propos » + le clin d'œil du niveau (jours de vie) + liens sociaux texte.
 **Fichiers.** `layouts/index.html` (ou une page `/about`), `assets/css/site.css`. `assets/js/daily-exp.js` et `layouts/partials/widgets/identity-card.html` seront retirés au P23. L'avatar `static/media/avatar-explorer.jpg` peut être gardé (vrai asset) ou non.
+> Avant, demande moi si sur le moment je veux quand même juste supprimer cette carte d'identité, je répondrai sûrement oui.
 
 **Prompt à coller :**
 

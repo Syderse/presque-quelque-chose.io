@@ -105,8 +105,7 @@ Lis d'abord `00_PLAN.md` (esprit, décisions verrouillées, règles d'or, tokens
 
 > Crée `layouts/partials/footer.html` dans `<footer class="wide">` : minimal.
 > - Ligne de copyright + licence à partir de `site.Params.footer.copyright` (notice avec l'année, licence si activée). Garde la mention de licence Creative Commons existante.
-> - Une courte ligne de pied optionnelle dans l'esprit du site (ex. « fait à la main, sans fontes distantes »).
-> - Liens utiles : accueil, manuel, thésaurus. Tout en texte, soulignés.
+> - Liens utiles : accueil, manuel, thésaurus. Tout en texte.
 > - Styles dans `COMPOSANTS` de `site.css` (`.site-footer`), filet de séparation en `--rule`, pas de gris.
 > Vérifie le build. Ne touche pas à `content/`. Commit : `refonte: footer minimal`.
 

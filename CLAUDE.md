@@ -69,3 +69,4 @@ Quand tu touches à l'UI : tends vers ces principes, n'en ré-éloigne pas le si
 - **Mesurer avant/après** dès qu'on touche `static/`, `_vendor/`, le CSS généré, les embeds ou le pipeline : `du -sh .git static _vendor public`, poids CSS/JS, présence des endpoints.
 - **Hugo récent** : `build` (pas `_build`), `cascade.target`, `files`, `locale`, `hugo.Data`, parcours via `hugo.Sites` (pas `site.AllPages`). Détails dans `docs/AGENTS.md` › « Configuration A Ne Pas Casser ».
 - **Commits** petits, testés, réversibles ; un sujet par commit. Ne jamais masquer un build ou un test échoué.
+- **Style** : non catégorique aux emojis et aux tirets cadratins. Attention à la casse, évite de mettre des majuscules partout comme en anglais. 
