@@ -828,6 +828,101 @@ caption {
   display: none;
 }
 
+/* --- Listes de section : gabarit unifié (P13) -------------------------------
+   Les _index.md de section sont full_width, donc <main> est .wide ; on recentre
+   la liste dans une colonne sobre comme l'accueil. Entrées en flux : titre serif
+   en lien, date/tags en mono, description en dessous. Sous-dossiers groupés sous
+   un intertitre. Différenciation par taille/graisse/casse, jamais par un gris. */
+
+.list {
+  max-width: 44rem;
+  margin-inline: auto;
+}
+
+.list-head {
+  margin-bottom: 2rem;
+}
+
+.list-title {
+  margin: 0;
+  font-size: clamp(2rem, 1.5rem + 2.2vw, 2.7rem);
+  letter-spacing: -0.01em;
+}
+
+.list-intro {
+  margin-top: 0.6rem;
+}
+
+/* Regroupement par sous-dossier : intertitre à filet bas. */
+.list-group {
+  margin-top: 2.5rem;
+}
+
+.list-group-title {
+  margin: 0 0 0.3rem;
+  padding-bottom: 0.3rem;
+  font-size: 1.3rem;
+  border-bottom: 1px solid var(--rule);
+}
+
+.list-group-title a {
+  text-decoration: none;
+}
+
+.list-group-title a:hover,
+.list-group-title a:focus {
+  text-decoration: underline;
+}
+
+.list-group-desc {
+  margin: 0 0 0.9rem;
+  font-style: italic;
+}
+
+/* Entrées : liste sans puces, titre serif puis méta et description. */
+.entry-list {
+  list-style: none;
+  padding-inline-start: 0;
+  margin: 0;
+}
+
+.entry {
+  padding-block: 0.6rem;
+}
+
+.entry + .entry {
+  border-top: 1px solid var(--rule);
+}
+
+.entry-title {
+  font-size: 1.2rem;
+  font-weight: 700;
+  text-decoration: none;
+}
+
+.entry-title:hover,
+.entry-title:focus {
+  text-decoration: underline;
+}
+
+.entry-meta {
+  margin: 0.2em 0 0;
+}
+
+.entry-meta a {
+  text-decoration: none;
+}
+
+.entry-meta a:hover,
+.entry-meta a:focus {
+  text-decoration: underline;
+}
+
+.entry-desc {
+  margin: 0.25em 0 0;
+  font-size: 0.95rem;
+}
+
 /* =============================================================================
    7. UTILITAIRES
    ========================================================================== */
