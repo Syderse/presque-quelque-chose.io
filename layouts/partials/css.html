@@ -22,3 +22,14 @@
   {{/* Sécurité : Si le fichier est mal nommé, le build échoue explicitement */}}
   {{ errorf "Architecture Error: assets/css/main.css est introuvable. Vérifiez le dossier assets/." }}
 {{ end }}
+
+{{/* P03 — site.css type-heavy, chargé après Tailwind pour primer */}}
+{{ $sitecss := resources.Get "css/site.css" }}
+{{ if $sitecss }}
+  {{ if hugo.IsDevelopment }}
+    <link rel="stylesheet" href="{{ $sitecss.RelPermalink }}" />
+  {{ else }}
+    {{ $sitecss = $sitecss | minify | fingerprint }}
+    <link rel="stylesheet" href="{{ $sitecss.RelPermalink }}" integrity="{{ $sitecss.Data.Integrity }}" />
+  {{ end }}
+{{ end }}
