@@ -3,16 +3,13 @@
   "version": "1.0.0",
   "private": true,
   "packageManager": "pnpm@10.14.0",
-  "description": "Blog starter template for Hugo Blox with Tailwind CSS v4",
+  "description": "presque-quelque-chose — site Hugo, un seul CSS écrit à la main, sans Tailwind ni Hugo Blox",
   "scripts": {
     "dev": "bash -c 'if [ -f .env.local ]; then set -a; source .env.local; set +a; fi; pnpm exec hugo server --disableFastRender'",
     "build": "pnpm exec hugo --minify"
   },
   "dependencies": {
-    "@tailwindcss/cli": "^4.1.12",
-    "@tailwindcss/typography": "^0.5.19",
     "hugo-extended": "0.160.1",
-    "preact": "^10.27.3",
-    "tailwindcss": "^4.1.17"
+    "preact": "^10.27.3"
   }
 }

@@ -43,6 +43,13 @@
   {{ .Content }}
 </article>
 
+{{/* --- PIÈCE JOINTE PDF — sobre, n'apparaît que si la page en porte un ---- */}}
+{{ with .Resources.GetMatch "*.pdf" }}
+  <p class="article-attachment measure">
+    <a href="{{ .RelPermalink }}" target="_blank" rel="noopener">↓ télécharger le document (PDF)</a>
+  </p>
+{{ end }}
+
 {{/* --- PIED D'ARTICLE ----------------------------------------------------- */}}
 {{ if not .Params.hide_footer }}
   {{ partial "article-footer.html" . }}
