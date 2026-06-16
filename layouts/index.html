@@ -17,8 +17,12 @@
     laissez le hasard décider.</p>
   </div>
 
-  {{/* Ligne almanach — date pataphysique du jour, remplie au P16. */}}
-  <p id="almanach-line" class="almanach-line" hidden></p>
+  {{/* Almanach — date pataphysique du jour + entrée tirée au hasard (P16).
+       Les deux lignes restent cachées sans JS, sans rien casser. */}}
+  <section class="almanach" aria-label="Almanach pataphysique">
+    <p id="almanach-line" class="almanach-line" hidden></p>
+    <p id="almanach-entry" class="almanach-entry" hidden></p>
+  </section>
 
   <nav class="home-sections" aria-label="Sections du site">
     <h2 class="home-h2">Les sections</h2>
@@ -59,4 +63,4 @@
 </div>
 {{ end }}
 
-{{ define "scripts" }}{{ partial "functions/js-loader.html" (slice "dom") }}{{/* almanach (P16) à brancher ici */}}{{ end }}
+{{ define "scripts" }}{{ partial "functions/js-loader.html" (slice "PataphysicalDate" "dom" "almanach") }}{{ end }}

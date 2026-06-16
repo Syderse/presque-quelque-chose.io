@@ -740,11 +740,21 @@ caption {
   margin-bottom: 2rem;
 }
 
-/* Ligne almanach : kicker mono discret, calée au-dessus des sections. */
+/* Almanach : date pataphysique (kicker mono) + entrée du jour (serif),
+   calées au-dessus des sections. */
+.almanach {
+  margin-bottom: 2rem;
+}
+
 .almanach-line {
   font-family: var(--mono);
   font-size: 0.85rem;
-  margin-bottom: 2rem;
+  margin: 0 0 0.4rem;
+}
+
+.almanach-entry {
+  margin: 0;
+  font-style: italic;
 }
 
 /* Titres de bloc d'accueil : filet bas, casse normale. */
