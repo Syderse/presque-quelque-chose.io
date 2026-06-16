@@ -603,6 +603,111 @@ caption {
   }
 }
 
+/* --- Pied d'article (P11) ----------------------------------------------------
+   Méta sobre, partage presse-papier, CTA Patafoin, articles liés et prev/next.
+   Tout en liens texte ; différenciation par la taille/la graisse/la casse,
+   jamais par un gris. */
+
+.article-footer {
+  margin-top: 3rem;
+  padding-top: 1.5rem;
+  border-top: 1px solid var(--rule);
+}
+
+/* Méta : libellés mono petits, valeurs en corps — distinction par la taille. */
+.article-footer-meta {
+  display: grid;
+  grid-template-columns: auto 1fr;
+  gap: 0.2em 1em;
+  margin-bottom: 1.25rem;
+}
+
+.article-footer-meta dt {
+  font-family: var(--mono);
+  font-size: 0.78rem;
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+  align-self: baseline;
+}
+
+.article-footer-meta dd {
+  margin-inline-start: 0;
+  font-family: var(--mono);
+  font-size: 0.95rem;
+}
+
+/* Actions : partage + lien Patafoin, en ligne, sobres. */
+.article-footer-actions {
+  margin-bottom: 1.5rem;
+}
+
+/* Bouton présenté comme un lien (partage presse-papier), zéro habillage. */
+.linklike {
+  border: 0;
+  background: none;
+  padding: 0;
+  cursor: pointer;
+  color: var(--link);
+  font-family: inherit;
+  font-size: inherit;
+  text-decoration: underline;
+  text-decoration-thickness: 1px;
+  text-underline-offset: 0.15em;
+}
+
+.linklike:hover,
+.linklike:focus {
+  text-decoration-thickness: 2px;
+}
+
+/* Titre de section ("à lire aussi") : kicker mono, marge calée. */
+.article-footer-head {
+  margin: 0 0 0.6rem;
+}
+
+/* Articles liés : liste de liens, titre + date sur une ligne. */
+.related {
+  margin-bottom: 1.5rem;
+}
+
+.related-list {
+  list-style: none;
+  padding-inline-start: 0;
+  margin-bottom: 0;
+}
+
+.related-item {
+  display: flex;
+  justify-content: space-between;
+  align-items: baseline;
+  gap: 1em;
+}
+
+.related-item .related-date {
+  flex: none;
+}
+
+/* Prev / next : deux liens texte, libellé kicker au-dessus du titre. */
+.prevnext {
+  display: flex;
+  justify-content: space-between;
+  gap: 1.5rem;
+}
+
+.prevnext a {
+  display: block;
+  max-width: 48%;
+}
+
+.prevnext-next {
+  margin-left: auto;
+  text-align: right;
+}
+
+.prevnext .kicker {
+  display: block;
+}
+
 /* =============================================================================
    7. UTILITAIRES
    ========================================================================== */
