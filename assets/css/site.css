@@ -1121,6 +1121,149 @@ caption {
   padding-block: 0.35rem;
 }
 
+/* --- Antenne radio (P18) : index de veille en table statique ---------------
+   Page full_width (donc <main> est .wide) : on recentre dans une colonne sobre.
+   Table sémantique lisible (filets couleur du texte), filtre vanilla minimal
+   révélé par JS. Sur petit écran, la table se replie en blocs étiquetés. La
+   différenciation reste typographique : taille, mono, petites capitales. */
+
+.antenne {
+  max-width: 60rem;
+  margin-inline: auto;
+}
+
+.antenne-meta {
+  margin-top: 0.8rem;
+}
+
+/* Filtre : libellé mono + champ, sur une ligne, sobre. */
+.antenne-filter {
+  display: flex;
+  align-items: baseline;
+  flex-wrap: wrap;
+  gap: 0.6rem;
+  margin: 2rem 0 0.5rem;
+}
+
+.antenne-filter input {
+  flex: 1 1 16rem;
+  padding: 0.35em 0.5em;
+  border: 1px solid var(--rule);
+  background: var(--bg);
+  color: var(--fg);
+}
+
+.antenne-filter-count {
+  font-family: var(--mono);
+  font-size: 0.8rem;
+  font-variant-numeric: tabular-nums;
+}
+
+/* Table : un peu plus compacte que le corps, chiffres tabulaires pour les dates. */
+.antenne-table {
+  font-size: 0.95rem;
+  margin-top: 1rem;
+}
+
+.antenne-table th {
+  font-variant: small-caps;
+  letter-spacing: 0.03em;
+}
+
+.antenne-table time,
+.antenne-table td:last-child {
+  font-family: var(--mono);
+  font-size: 0.85rem;
+  font-variant-numeric: tabular-nums;
+}
+
+.antenne-table time {
+  white-space: nowrap;
+}
+
+.antenne-empty {
+  margin-top: 2rem;
+  font-style: italic;
+}
+
+/* À propos & retrait : prose sobre, sources en liste sans puces. */
+.antenne-about {
+  margin-top: 3rem;
+  padding-top: 1.5rem;
+  border-top: 2px solid var(--rule);
+}
+
+.antenne-about-title,
+.antenne-about-subtitle {
+  font-variant: small-caps;
+  letter-spacing: 0.02em;
+}
+
+.antenne-sources {
+  list-style: none;
+  padding-inline-start: 0;
+  margin: 0;
+}
+
+.antenne-sources li {
+  padding-block: 0.4rem;
+}
+
+.antenne-sources li + li {
+  border-top: 1px solid var(--rule);
+}
+
+.antenne-source-note {
+  display: block;
+  font-size: 0.9rem;
+  font-style: italic;
+}
+
+/* Repli mobile : chaque ligne devient un bloc étiqueté (data-label). */
+@media (max-width: 38rem) {
+  .antenne-table,
+  .antenne-table tbody,
+  .antenne-table tr,
+  .antenne-table td {
+    display: block;
+    width: 100%;
+  }
+
+  .antenne-table thead {
+    position: absolute;
+    width: 1px;
+    height: 1px;
+    overflow: hidden;
+    clip: rect(0 0 0 0);
+    clip-path: inset(50%);
+  }
+
+  .antenne-table tr {
+    padding-block: 0.6rem;
+    border-bottom: 1px solid var(--rule);
+  }
+
+  .antenne-table td {
+    border-bottom: 0;
+    padding: 0.15em 0;
+  }
+
+  .antenne-table td::before {
+    content: attr(data-label) " : ";
+    font-variant: small-caps;
+    letter-spacing: 0.02em;
+  }
+
+  /* La date et le DOI absent ne méritent pas leur propre ligne étiquetée. */
+  .antenne-table td[data-label="titre"] {
+    font-size: 1.05rem;
+  }
+
+  .antenne-table td[data-label="titre"]::before {
+    content: none;
+  }
+}
+
 /* =============================================================================
    7. UTILITAIRES
    ========================================================================== */
