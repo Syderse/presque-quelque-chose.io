@@ -11,6 +11,7 @@ L'expérience de lecture est ce qui compte le plus : *rien ne doit gêner le tex
 
 **Prompt à coller :**
 
+> Lis `CLAUDE.md` d'abord.
 > Réécris `layouts/_default/single.html` en page article minimale et type-heavy, dans la colonne `.measure`.
 > - **Supprime** tout le système TOC overlay : backdrop, `#toc-panel`, `reader-plan-shell`, le bouton « Plan » et le `<script>` de pilotage. À la place, SI `.TableOfContents` existe, propose une table des matières **statique** repliable en haut de l'article via `<details><summary>Plan</summary>…</details>` (HTML natif, zéro JS). Nettoie toujours les placeholders `HAHAHUGOSHORTCODE…HBHB` comme avant.
 > - Garde un fil d'Ariane texte simple (accueil › section › titre), sobre.
@@ -32,6 +33,7 @@ L'expérience de lecture est ce qui compte le plus : *rien ne doit gêner le tex
 
 **Prompt à coller :**
 
+> Lis `CLAUDE.md` d'abord.
 > Dans `assets/css/site.css`, ajoute les styles de prose sous `.article-prose` (la prose des articles). Objectif : confort de lecture maximal, contraste franc, zéro gris.
 > - Largeur de lecture héritée de `.measure` (~66ch). Interlignage `1.6`–`1.7` pour les paragraphes.
 > - Hiérarchie de titres claire en serif (`h2`,`h3`,`h4` dans la prose), marges hautes généreuses, graisse forte. Pas de couleurs néon : noir/`--fg-strong`, éventuellement l'`--accent` avec parcimonie.
@@ -54,6 +56,7 @@ L'expérience de lecture est ce qui compte le plus : *rien ne doit gêner le tex
 
 **Prompt à coller :**
 
+> Lis `CLAUDE.md` d'abord.
 > Reconvertis les sidenotes en version **CSS pure**, sans `sidenote-adjuster.js`, en gardant exactement la même syntaxe de shortcode dans le contenu (`{{< sidenote >}}…{{< /sidenote >}}` et la variante `variant="comment"`, plus les libellés `label`/`caption`/`author` et `sidenote_comment_label`). Lis l'actuel `layouts/shortcodes/sidenote.html` pour préserver toute la logique de variantes.
 > - Mécanique sans JS : un appel numéroté en exposant dans le texte ; la note s'affiche **en marge** sur écran large via CSS (positionnement par `float`/marge négative ou colonne dédiée), et **en bloc inline** juste après le paragraphe sur écran étroit. Tu peux garder la technique checkbox/`:checked` (label + input caché) pour le repli/dépli mobile, mais **sans dépendance JS** et sans classes Tailwind. Idéalement : à l'ouverture de l'article toutes les sidenotes sont pliées, et les lecteurs peuvent cliquer sur le numéro d'appel pour que la sidenote s'ouvre ? 
 > - Deux variantes visuelles distinctes : `note` (érudite, sobre) et `comment` (voix de commentaire, ex. les remarques d'A.) — différenciées par un filet/italique/petite capitale de libellé, pas par un gris.
@@ -73,6 +76,7 @@ L'expérience de lecture est ce qui compte le plus : *rien ne doit gêner le tex
 
 **Prompt à coller :**
 
+> Lis `CLAUDE.md` d'abord.
 > Revois le render hook `layouts/_markup/render-link.html` et les styles associés pour distinguer, de façon lisible et sobre :
 > - **liens internes** (vers une page du site) : couleur `--accent`, soulignés, éventuellement un petit marqueur discret (ex. `›` ou un trait), classe `internal-link`.
 > - **liens externes** : couleur `--link`, soulignés. Tu peux ajouter `rel="noopener"` et un repère externe discret (ex. `↗`) en pseudo-élément.
@@ -90,6 +94,7 @@ L'expérience de lecture est ce qui compte le plus : *rien ne doit gêner le tex
 
 **Prompt à coller :**
 
+> Lis `CLAUDE.md` d'abord. et `00_PLAN.md`.
 > Réécris `layouts/partials/article-footer.html` en version minimale type-heavy (retire tout le néo-brutalisme : ombres dures, bordures épaisses, classes `ctp-*`/Tailwind).
 > - Bloc méta sobre : date de publication, nombre de caractères, version Git si dispo — en `--mono` discret, différencié par la taille pas par le gris.
 > - **Bouton Partager** : garde le petit script presse-papier (copie `window.location.href`) ; remplace la grosse infobulle stylée par un retour minimal (changement de libellé « lien copié » pendant 1 s, ou un petit texte). JS minuscule et inline, sans dépendance.

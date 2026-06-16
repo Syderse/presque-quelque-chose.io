@@ -11,6 +11,7 @@ Ici on reconvertit les fonctionnalités signature en versions minimales et fidè
 
 **Prompt à coller :**
 
+> Lis `CLAUDE.md` d'abord. et `00_PLAN.md`.
 > DOM est un élément auquel je tiens énormément : c'est un bouton récalcitrant qui, clic après clic, raconte sa vie d'élément du DOM en 999 répliques, jusqu'à une pierre tombale au clic 999. Lis `static/data/dom-story.json` (999 lignes, **à préserver tel quel**), l'ancien `assets/js/dom-engine.js` et `layouts/partials/widgets/dom-card.html` pour comprendre la mécanique d'origine (compteur, révélation de la réplique suivante, persistance, pierre tombale « Ici repose DOM. Il a bien cliqué. », option admin de réglage du compteur).
 >
 > Reconvertis DOM fidèlement, mais dans l'esprit manifeste (clair, sobre, type-heavy, fontes système, haut contraste, **aucune** dépendance, pas de Tailwind ni de classes `ctp-*`, pas d'effets GPU/glitch lourds) :
@@ -38,6 +39,7 @@ Ici on reconvertit les fonctionnalités signature en versions minimales et fidè
 
 **Prompt à coller :**
 
+> Lis `CLAUDE.md` d'abord. et `00_PLAN.md`.
 > Reconvertis l'almanach en version texte minimale, sans la carte animée.
 > 1. **Ligne pataphysique** sur l'accueil : un petit script branche, dans `#almanach-line` (slot prévu au P12), la date pataphysique du jour + le saint, calculés par `assets/js/PataphysicalDate.js` (lib autonome, offline — conserve-la). Sortie en une phrase sobre (ex. « Nous sommes le [jour] [mois] [année] E.P. — fête de [saint]. »). Charge le script uniquement sur l'accueil. Gère proprement l'absence de JS (la ligne reste vide, sans casser).
 > 2. **Page almanach lisible** : si utile, une page HTML qui liste les entrées de `data/almanach.yaml` (ou via l'endpoint `/almanach/index.json`) en **texte** : chaque entrée en paragraphe. Réutilise la logique de lecture existante sans dénaturer le contenu. **Ne remets pas** `ALMANACH` dans `outputs.section` ; l'endpoint `public/almanach/index.json` doit continuer d'exister et `public/almanach/index.html` ne doit pas exister.
@@ -55,6 +57,7 @@ Ici on reconvertit les fonctionnalités signature en versions minimales et fidè
 
 **Prompt à coller :**
 
+> Lis `CLAUDE.md` d'abord. et `00_PLAN.md`.
 > Réécris `layouts/rhizome-curieux/list.html` pour rendre le rhizome **lisible par défaut, sans JS**, en réutilisant `layouts/partials/functions/get-rhizome-items.html` (mêmes données : racines internes = mes pages/notes, spores = liens externes).
 > - **Liste imbriquée** : les racines (notes internes du rhizome, avec leur petit texte) en section, puis les spores (liens externes) regroupées et listées en liens. Garde les icônes/emoji système éventuels mais discrets. Conserve la description de section (`_index.md`).
 > - **Graphe en option** : garde le graphe D3 comme *amélioration progressive*, chargé **seulement au clic** sur un bouton « voir le graphe ». Ne charge `d3` + `rhizome-engine.js` que dans ce cas (pas au chargement de page). Pour rester self-contained et compatible CSP « self », **héberge d3 en local** (`static/vendor/d3.min.js`) plutôt que via le CDN jsdelivr ; adapte le `<script>` en conséquence. Si tu préfères, le graphe peut vivre sur une sous-page `/rhizome-curieux/graphe/` plutôt qu'en overlay. Demande moi-même auparavant si je souhaite supprimer le graphe et le D3. 
@@ -73,6 +76,7 @@ Ici on reconvertit les fonctionnalités signature en versions minimales et fidè
 
 **Prompt à coller :**
 
+> Lis `CLAUDE.md` d'abord. et `00_PLAN.md`.
 > Réécris `layouts/antenne-radio/list.html` en liste/table statique sobre. Le fichier lit déjà `static/antenne-radio/index.json` au build (`readFile | transform.Unmarshal`) — garde cette lecture build-time.
 > - Garde l'intro/avertissement (mise à jour manuelle, index minimal whitelisté) et la date de génération.
 > - Rends les items en **table sémantique** ou liste : source, titre (lien vers l'origine), date, langue, DOI (lien) quand présent — strictement les champs déjà exposés (respecte la whitelist, n'ajoute aucun champ).
@@ -92,6 +96,7 @@ Ici on reconvertit les fonctionnalités signature en versions minimales et fidè
 
 **Prompt à coller :**
 
+> Lis `CLAUDE.md` d'abord. et `00_PLAN.md`.
 > Allège les embeds d'`ondes & pixels` pour qu'ils ne pèsent rien tant qu'on ne clique pas, sans perdre de contenu.
 > 1. Inspecte les pages de `content/ondes-pixels/` pour voir les formes d'embed utilisées (iframes YouTube, embed Spotify, lecteur RedCircle/podcache via `<script>`).
 > 2. Crée un shortcode `embed` (`layouts/shortcodes/embed.html`) qui produit une **façade click-to-load** : un bloc cliquable (titre + type : vidéo/podcast) qui, **au clic**, injecte l'iframe réelle (vanilla JS, ~15 lignes, sans dépendance, fonction réutilisable). Paramètres : `type` (youtube/spotify/redcircle), `id`/`src`, `title`.
@@ -111,6 +116,7 @@ Ici on reconvertit les fonctionnalités signature en versions minimales et fidè
 
 **Prompt à coller :**
 
+> Lis `CLAUDE.md` d'abord. et `00_PLAN.md`.
 > Réécris `layouts/patafoin/list.html` en version type-heavy sobre, en gardant le forum **pleinement fonctionnel** mais **isolé** :
 > - Charge le client Supabase (UMD) et `assets/js/patafoin.js` **uniquement sur cette page** (pas globalement). Idéalement héberge le bundle Supabase en local (`static/vendor/`) pour rester compatible CSP « self » ; sinon garde la source actuelle et veille à la CSP.
 > - Conserve toute la logique : lecture des topics/posts, création de sujet, réponses, et le **préremplissage du sujet** via le paramètre `?sujet=` (utilisé par le CTA d'article).
@@ -130,7 +136,8 @@ Ici on reconvertit les fonctionnalités signature en versions minimales et fidè
 
 **Prompt à coller :**
 
-> Reconvertis la carte d'identité RPG en présentation texte sobre (sur l'accueil ou une courte page `/about`, au choix le plus simple) :
+> Lis `CLAUDE.md` d'abord. et `00_PLAN.md`.
+> Reconvertis la carte d'identité RPG en présentation texte sobre (sur l'accueil ou une courte page `/about`, au choix le plus simple) : 
 > - Une ou deux phrases « à propos » : qui je suis (Mathieu Allag, doctorant en études radiophoniques, venu de l'histoire de l'art et du cinéma), ce qu'est ce site.
 > - Le clin d'œil du **niveau** : au lieu d'une barre d'XP animée, une seule phrase calculée — « niveau [N] » où N = jours depuis `site.Params.author.birthdate` (calcul Hugo build-time, pas de JS ; reprends la formule de `identity-card.html`). Ton joueur, mais texte.
 > - **Liens sociaux en texte** : YouTube, Instagram, Patafoin, Manuel — liens soulignés, libellés clairs (résous au passage le TODO de CHANTIERS sur les libellés de destination, mais en texte simple, sans tooltip JS).

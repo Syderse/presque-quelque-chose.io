@@ -11,6 +11,7 @@ Lis d'abord `00_PLAN.md` (esprit, décisions verrouillées, règles d'or, tokens
 
 **Prompt à coller :**
 
+> Lis `CLAUDE.md` d'abord.
 > Nous démarrons une refonte UI radicale du site (voir `docs/refonte-typeheavy/00_PLAN.md`). Avant tout :
 > 1. Lance `git status --short` et confirme un worktree propre. Crée et bascule sur la branche `refonte-typeheavy`.
 > 2. Mesure et **affiche** la baseline, puis recopie-la dans un nouveau fichier `docs/refonte-typeheavy/BASELINE.md` (date du jour en titre) :
@@ -34,6 +35,7 @@ Lis d'abord `00_PLAN.md` (esprit, décisions verrouillées, règles d'or, tokens
 
 Tu peux lire docs/refonte-typeheavy/00_PLAN.md pour contexte uniquement si besoin.
 
+> Lis `CLAUDE.md` d'abord.
 > Crée `assets/css/site.css` : un **unique** fichier CSS écrit à la main, lisible, commenté, sans aucune dépendance (pas de Tailwind, pas de `@import` distant, **aucune fonte distante**). Objectif : socle type-heavy clair, haut contraste, fontes système, même rendu partout. Structure le fichier en sections commentées : `TOKENS`, `RESET`, `BASE`, `LAYOUT`, `TYPOGRAPHIE`, `COMPOSANTS` (vide pour l'instant), `UTILITAIRES`.
 >
 > 1. **TOKENS** — reprends exactement les custom properties de `docs/refonte-typeheavy/00_PLAN.md` §4 (palette claire, `--serif`, `--mono`, `--measure`, `--base`, `--lh`).
@@ -56,6 +58,7 @@ Tu peux lire docs/refonte-typeheavy/00_PLAN.md pour contexte uniquement si besoi
 
 **Prompt à coller :**
 
+> Lis `CLAUDE.md` d'abord.
 > Modifie `layouts/partials/css.html` pour émettre AUSSI `assets/css/site.css`, en plus du CSS actuel, pendant la migration. Pipeline pour `site.css` : `resources.Get "css/site.css" | minify | fingerprint`, avec `integrity` en prod. Place le `<link>` de `site.css` **après** celui de Tailwind pour qu'il prime. Ne retire rien d'autre pour l'instant (Tailwind reste, on le démontera au P22, une fois tous les gabarits migrés). Vérifie le build avec `pnpm exec hugo --gc --minify`. Ne touche pas à `content/`. Commit : `refonte: branche site.css en parallèle`.
 
 **Vérif.** Build vert, `site.css` chargé (visible dans `public/`), site inchangé visuellement (normal : aucun gabarit ne l'utilise encore).
@@ -69,6 +72,7 @@ Tu peux lire docs/refonte-typeheavy/00_PLAN.md pour contexte uniquement si besoi
 
 **Prompt à coller :**
 
+> Lis `CLAUDE.md` d'abord.
 > Réécris `layouts/_default/baseof.html` en coquille minimale et sémantique, en flux normal (le site doit défiler comme un document, fini le verrouillage plein écran).
 > - `<html lang>` ; `<head>` garde `{{ partial "seo.html" . }}` et `{{ partial "css.html" . }}`. **Supprime** les `preconnect` vers Google Fonts.
 > - `<body>` : retire `h-screen w-screen overflow-hidden` et toutes les classes Tailwind ; le body est en flux normal. Structure : `{{ partial "header.html" . }}` (créé au P05), puis `<main class="measure">` (ou `wide` si `.Params.full_width`) contenant `{{ block "main" . }}{{ end }}`, puis `{{ partial "footer.html" . }}` (créé au P06).
@@ -87,6 +91,7 @@ Tu peux lire docs/refonte-typeheavy/00_PLAN.md pour contexte uniquement si besoi
 
 **Prompt à coller :**
 
+> Lis `CLAUDE.md` d'abord.
 > Crée `layouts/partials/header.html` : un en-tête typographique minimal, en haut du document, dans `<header class="wide">`.
 > - Le titre du site `presque-quelque-chose` en lien vers `/` (lien de retour à l'accueil).
 > - Une `<nav>` avec les entrées de `.Site.Menus.main` (solutions imaginaires, recherches, ondes & pixels, antenne radio, rhizome curieux, patafoin), plus des liens vers `/tags/` (thésaurus), `/manuel/`, `/recherche/` (page recherche Pagefind, créée au P24) et un lien « au hasard » qui appelle `randomArticle()`.
@@ -105,6 +110,7 @@ Tu peux lire docs/refonte-typeheavy/00_PLAN.md pour contexte uniquement si besoi
 
 **Prompt à coller :**
 
+> Lis `CLAUDE.md` d'abord.
 > Crée `layouts/partials/footer.html` dans `<footer class="wide">` : minimal.
 > - Ligne de copyright + licence à partir de `site.Params.footer.copyright` (notice avec l'année, licence si activée). Garde la mention de licence Creative Commons existante.
 > - Liens utiles : accueil, manuel, thésaurus. Tout en texte.

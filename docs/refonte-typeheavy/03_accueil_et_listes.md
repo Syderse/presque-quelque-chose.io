@@ -11,6 +11,7 @@ L'accueil devient un index typographique pur (DOM est traité à part, au P15). 
 
 **Prompt à coller :**
 
+> Lis `CLAUDE.md` d'abord. et `00_PLAN.md`.
 > Réécris `layouts/index.html` en **index typographique pur**, dans la colonne de lecture (`.measure` ou une largeur un peu plus large mais sobre). Plus de grille bento, plus de widgets `ctp-*`, plus de plein écran.
 > - **Titre** du site `presque-quelque-chose` + **accroche** : « Explorations éclectiques, inoccupations impersonnelles et science du particulier. » (depuis `site.Params.description`).
 > - **Courte intro** (2–3 phrases) dans le ton du site, présentant le lieu comme un cabinet de curiosités. Tu peux réutiliser/condenser le `content/_index.md` existant si pertinent (sans le dénaturer).
@@ -33,6 +34,7 @@ L'accueil devient un index typographique pur (DOM est traité à part, au P15). 
 
 **Prompt à coller :**
 
+> Lis `CLAUDE.md` d'abord. et `00_PLAN.md`.
 > Crée un gabarit de liste unifié `layouts/_default/list.html`, type-heavy et sobre, et fais-en hériter les sections de lecture.
 > - En haut : titre de la section + le `.Content` du `_index.md` s'il existe (intro de section) — **ne pas** le dénaturer.
 > - Liste des entrées : pour chaque page, **titre en lien** (serif), **date** et éventuellement **description** courte, en dessous. Tri par `weight` puis `date` selon la section (respecte l'ordre éditorial actuel — certaines pages n'ont pas de `date` mais un `weight`).
@@ -52,6 +54,7 @@ L'accueil devient un index typographique pur (DOM est traité à part, au P15). 
 
 **Prompt à coller :**
 
+> Lis `CLAUDE.md` d'abord. et `00_PLAN.md`.
 > Réécris `layouts/_default/terms.html` (l'index « thésaurus » de tous les tags) et `layouts/_default/taxonomy.html` (la page d'un tag donné) en version texte.
 > - `terms.html` : liste alphabétique des tags, chacun en lien, avec son nombre d'entrées (le compte se distingue par la taille/mono, pas par le gris). Garde le titre « thésaurus » et la description existante.
 > - `taxonomy.html` : pour un tag, la liste des contenus associés (titre + date + section), en liens texte.
@@ -69,6 +72,7 @@ L'accueil devient un index typographique pur (DOM est traité à part, au P15). 
 
 **Prompt à coller :**
 
+> Lis `CLAUDE.md` d'abord. et `00_PLAN.md`.
 > Adapte `layouts/404.html` au nouveau socle : retire les classes Tailwind/`ctp-*`, garde un message sobre « Page introuvable » + quelques liens de secours (accueil, sections principales, recherche, au hasard). Type-heavy, contraste franc, zéro gris, zéro fonte distante. Styles éventuels dans `site.css`. Vérifie le rendu. Commit : `refonte: 404 minimale`.
 
 **Vérif.** La 404 s'affiche proprement avec des liens de secours.

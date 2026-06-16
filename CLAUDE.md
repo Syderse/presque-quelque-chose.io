@@ -70,3 +70,4 @@ Quand tu touches à l'UI : tends vers ces principes, n'en ré-éloigne pas le si
 - **Hugo récent** : `build` (pas `_build`), `cascade.target`, `files`, `locale`, `hugo.Data`, parcours via `hugo.Sites` (pas `site.AllPages`). Détails dans `docs/AGENTS.md` › « Configuration A Ne Pas Casser ».
 - **Commits** petits, testés, réversibles ; un sujet par commit. Ne jamais masquer un build ou un test échoué.
 - **Style** : non catégorique aux emojis et aux tirets cadratins. Attention à la casse, évite de mettre des majuscules partout comme en anglais. 
+- **Autant que possible** : fais des suggestions de modifications ou d'autres manières de faire qui te semblent meilleures par rapport à ma demande et suggère les en me posant des questions avant exécution si tu juges cela pertinent.

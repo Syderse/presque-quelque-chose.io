@@ -11,6 +11,7 @@ On ne lance cette phase qu'une fois **tous les gabarits migrés** (P04→P21). C
 
 **Prompt à coller :**
 
+> Lis `CLAUDE.md` d'abord.
 > Pré-requis : tous les gabarits doivent déjà utiliser `site.css` (P04→P21). Vérifie d'abord qu'il ne reste **aucune** classe Tailwind/Catppuccin utilisée : `rg -n "ctp-|md:|class=\"[^\"]*\\b(flex|grid|text-|bg-|p-[0-9])" layouts | head` — s'il reste des usages, **arrête-toi et liste-les**, ne casse rien.
 > Ensuite, démonte proprement :
 > - `layouts/partials/css.html` : ne sert plus QUE `site.css` (`resources.Get "css/site.css" | minify | fingerprint`). Retire toute la branche `css.TailwindCSS`.
@@ -31,6 +32,7 @@ On ne lance cette phase qu'une fois **tous les gabarits migrés** (P04→P21). C
 
 **Prompt à coller :**
 
+> Lis `CLAUDE.md` d'abord. et `00_PLAN.md`.
 > Nettoie tout le code désormais inutilisé, en vérifiant à chaque fois qu'il n'est plus référencé (`rg` avant de supprimer).
 > - **JS** : supprime les moteurs remplacés — `dom-engine.js` (→ `dom.js`), `antenne-radio.js`, `daily-exp.js`, `mobile-tooltip.js`, `sidenote-adjuster.js`, et `almanach.js` si la version texte du P16 l'a rendu inutile. Garde `dom.js`, `PataphysicalDate.js`, `patafoin.js`, et `rhizome-engine.js` (chargé à la demande). Vérifie `layouts/partials/functions/js-loader.html`.
 > - **Widgets/partials morts** : supprime `widgets/dom-card.html`, `widgets/identity-card.html`, `widgets/almanach-card.html`, `widgets/manifesto-card.html`, `widgets/system-header.html`, `widgets/latest-posts.html`, `partials/sidebar.html`, `partials/mobile-nav.html`, et les cartes décorées inutilisées (`cards/wave-card.html`, `cards/archive-card.html`, `cards/rhizome-card.html`) — **seulement** si plus aucun gabarit ne les inclut.
@@ -49,6 +51,7 @@ On ne lance cette phase qu'une fois **tous les gabarits migrés** (P04→P21). C
 
 **Prompt à coller :**
 
+> Lis `CLAUDE.md` d'abord. et `00_PLAN.md`.
 > Mets l'infra en cohérence avec la refonte :
 > 1. **CSP** dans `netlify.toml` : retire `https://fonts.googleapis.com` (style-src/style-src-elem) et `https://fonts.gstatic.com` (font-src) — on n'utilise plus de fontes distantes ; `font-src 'self' data:` suffit, `style-src 'self' 'unsafe-inline'`. Retire `https://cdn.jsdelivr.net` si D3/Supabase sont désormais self-hosted (P17/P20) ; sinon garde-le. **Conserve** `frame-src` pour les embeds (YouTube, Spotify, Acast, podcache, redcircle) et `connect-src` pour Supabase. Vérifie qu'aucune ressource réelle n'est bloquée.
 > 2. **Preconnect** : confirme que les `preconnect` Google Fonts ont bien disparu (`baseof.html`, `seo.html`).
@@ -67,6 +70,7 @@ On ne lance cette phase qu'une fois **tous les gabarits migrés** (P04→P21). C
 
 **Prompt à coller :**
 
+> Lis `CLAUDE.md` d'abord. et `00_PLAN.md`.
 > Build final et bilan chiffré :
 > 1. `pnpm exec hugo --gc --minify --cleanDestinationDir --printPathWarnings` — zéro erreur.
 > 2. Re-mesure exactement comme la baseline (voir `00_PLAN.md` §6) et ajoute une section « APRÈS » à `docs/refonte-typeheavy/BASELINE.md` : `du -sh static _vendor public`, poids CSS généré, poids JS total, présence des endpoints (`almanach/index.json`, `articles-aleatoires.json`, `rhizome-curieux/index.json`), absence de `almanach/index.html`, nombre de pages.
@@ -86,6 +90,7 @@ On ne lance cette phase qu'une fois **tous les gabarits migrés** (P04→P21). C
 
 **Prompt à coller :**
 
+> Lis `CLAUDE.md` d'abord. et `00_PLAN.md`.
 > Mets à jour la doc projet pour refléter la refonte :
 > - `docs/AGENTS.md` : nouvelle stack (Hugo + **un seul CSS écrit à la main** `assets/css/site.css`, **sans Tailwind ni Hugo Blox**, **fontes système**, JS minimal). Mets à jour la « Carte Rapide » (header/footer partials, site.css, dom.js…), retire les mentions Tailwind/JIT/`hugo_stats.json`/safelist, et la liste des moteurs JS supprimés. Garde les sections endpoints JSON, sidenotes, sections.
 > - `docs/HISTORIQUE.md` : une entrée datée « Refonte type-heavy » — décision (manifeste bestmotherfucking : clair, serif système, haut contraste, sans fontes distantes, CSS main, sans Tailwind/Blox), conséquences (gadgets reconvertis : DOM préservé, almanach/rhizome/antenne en texte, forum isolé), endpoints/URLs préservés. Très concis.
