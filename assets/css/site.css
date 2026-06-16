@@ -708,6 +708,126 @@ caption {
   display: block;
 }
 
+/* --- Accueil : index typographique pur (P12) --------------------------------
+   Le gabarit content/_index.md est full_width, donc <main> est .wide ; on
+   recentre l'accueil dans une colonne sobre, un peu plus large que la mesure
+   de lecture. Tout en serif, différenciation par taille/graisse/casse, jamais
+   par un gris. */
+
+.home {
+  max-width: 44rem;
+  margin-inline: auto;
+}
+
+.home-head {
+  margin-bottom: 1.5rem;
+}
+
+.home-title {
+  margin: 0;
+  font-size: clamp(2.2rem, 1.6rem + 2.6vw, 3rem);
+  letter-spacing: -0.01em;
+}
+
+/* Accroche : corps un peu plus grand, italique — distincte sans gris. */
+.home-tagline {
+  margin: 0.4rem 0 0;
+  font-size: 1.15rem;
+  font-style: italic;
+}
+
+.home-intro {
+  margin-bottom: 2rem;
+}
+
+/* Ligne almanach : kicker mono discret, calée au-dessus des sections. */
+.almanach-line {
+  font-family: var(--mono);
+  font-size: 0.85rem;
+  margin-bottom: 2rem;
+}
+
+/* Titres de bloc d'accueil : filet bas, casse normale. */
+.home-h2 {
+  margin: 0 0 0.9rem;
+  padding-bottom: 0.3rem;
+  font-size: 1.3rem;
+  border-bottom: 1px solid var(--rule);
+}
+
+/* Sections : nom en serif gras, description en dessous, sans puces. */
+.home-sections {
+  margin-bottom: 2.5rem;
+}
+
+.sections-list {
+  margin: 0;
+}
+
+.section-name {
+  font-size: 1.2rem;
+  font-weight: 700;
+}
+
+.section-name a {
+  text-decoration: none;
+}
+
+.section-name a:hover,
+.section-name a:focus {
+  text-decoration: underline;
+}
+
+.section-desc {
+  margin: 0.15em 0 1.1em;
+  font-size: 0.95rem;
+}
+
+.section-desc:last-child {
+  margin-bottom: 0;
+}
+
+/* Derniers textes : liste sans puces, titre + date alignés. */
+.home-latest {
+  margin-bottom: 2.5rem;
+}
+
+.latest-list {
+  list-style: none;
+  padding-inline-start: 0;
+  margin-bottom: 0;
+}
+
+.latest-item {
+  display: flex;
+  justify-content: space-between;
+  align-items: baseline;
+  gap: 1em;
+  padding-block: 0.15em;
+}
+
+.latest-item + .latest-item {
+  margin-top: 0;
+}
+
+.latest-date {
+  flex: none;
+  font-family: var(--mono);
+  font-size: 0.8rem;
+}
+
+/* Lien « au hasard » : un peu plus présent, petites capitales. */
+.home-random {
+  margin-bottom: 2.5rem;
+  font-variant: small-caps;
+  letter-spacing: 0.02em;
+}
+
+/* Emplacement DOM (P15) : neutre tant qu'il est vide. */
+#dom-slot:empty {
+  display: none;
+}
+
 /* =============================================================================
    7. UTILITAIRES
    ========================================================================== */

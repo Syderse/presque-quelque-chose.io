@@ -1,52 +1,62 @@
 {{ define "main" }}
-{{/*
-  LAYOUT STRATEGY: FULL VIEWPORT DASHBOARD
-  - Wrapper padding (pt-4) must match baseof.html header padding (p-4) for vertical alignment.
-  - Horizontal spacing (pl-[72px]) handles the Sidebar Toggle clearance.
-  - REFACTOR: Reduced gap-6 to gap-4 for tighter UI.
-*/}}
-{{/* MOBILE: Simple scrolling page. DESKTOP (md+): Full viewport dashboard. */}}
-<div class="w-full md:h-full bg-[#050505] text-ctp-text selection:bg-ctp-mauve selection:text-ctp-base flex flex-col p-4 pb-20 md:px-6 md:pb-6 md:pt-4 gap-4">
+{{/* Accueil — index typographique pur (P12).
+     Plus de grille bento ni de widgets ctp-* : titre, accroche, intro, sections,
+     derniers textes, ligne almanach (P16), lien au hasard, emplacement DOM (P15). */}}
+<div class="home">
 
-    {{/* 1. HEADER SYSTÈME - Compact 4-col on mobile, full 8-col on desktop */}}
-    <div class="flex-none z-50 w-full md:pl-[72px] transition-[padding] duration-300">
-        {{ partial "widgets/system-header.html" . }}
-    </div>
+  <header class="home-head">
+    <h1 class="home-title">{{ site.Title }}</h1>
+    <p class="home-tagline">{{ site.Params.description }}</p>
+  </header>
 
-    {{/* 2. LA GRILLE BENTO */}}
-    {{/* MOBILE: No flex-1/min-h-0 = natural scrolling. DESKTOP: Viewport-fill dashboard. */}}
-    <div class="w-full max-w-[1920px] mx-auto md:flex-1 md:min-h-0">
-        <div class="flex flex-col gap-4 md:grid md:grid-cols-4 md:grid-rows-[minmax(0,1.75fr)_minmax(0,1fr)] md:gap-6 md:h-full">
+  <div class="home-intro">
+    <p>Un cabinet de curiosités : textes longs et fictions brèves, carnets, recherches,
+    objets sonores et visuels, un rhizome de petites trouvailles. Rien d'ordonné,
+    tout relié.</p>
+    <p>On y entre sans plan. Suivez un fil, perdez-le, prenez le suivant, ou
+    laissez le hasard décider.</p>
+  </div>
 
-            {{/* --- ROW 1 --- */}}
-            
-            {{/* CELL 1: DOM CARD */}}
-            <section class="min-h-[280px] md:min-h-0 md:col-span-1 md:row-span-1 md:h-full z-10 relative hover:z-50">
-                {{ partial "widgets/dom-card.html" . }}
-            </section>
+  {{/* Ligne almanach — date pataphysique du jour, remplie au P16. */}}
+  <p id="almanach-line" class="almanach-line" hidden></p>
 
-            {{/* CELL 2: IDENTITY */}}
-            <section class="md:col-span-2 md:row-span-1 md:h-full z-10 relative hover:z-50">
-                {{ partial "widgets/identity-card.html" . }}
-            </section>
+  <nav class="home-sections" aria-label="Sections du site">
+    <h2 class="home-h2">Les sections</h2>
+    <dl class="sections-list">
+      {{ range site.Menus.main }}
+        {{ $page := site.GetPage .URL }}
+        <dt class="section-name"><a href="{{ .URL }}">{{ .Name }}</a></dt>
+        <dd class="section-desc">{{ with $page }}{{ .Description }}{{ end }}</dd>
+      {{ end }}
+    </dl>
+  </nav>
 
-            {{/* CELL 3: LATEST POSTS */}}
-            <section class="md:col-span-1 md:row-span-1 md:h-full z-10 relative hover:z-50">
-                {{ partial "widgets/latest-posts.html" . }}
-            </section>
+  <section class="home-latest" aria-label="Derniers textes">
+    <h2 class="home-h2">Derniers textes</h2>
+    {{ $sections := slice "solutions-imaginaires" "ondes-pixels" "recherches" "rhizome-curieux" }}
+    {{ $posts := where site.RegularPages "Section" "in" $sections }}
+    {{ $posts = where $posts "Draft" false }}
+    {{ $posts = sort $posts "Date" "desc" | first 12 }}
+    <ul class="latest-list">
+      {{ range $posts }}
+        <li class="latest-item">
+          <a href="{{ .RelPermalink }}" class="latest-title">{{ .Title }}</a>
+          {{ if not .Date.IsZero }}
+            <time class="latest-date" datetime="{{ .Date.Format "2006-01-02" }}">{{ .Date | time.Format ":date_long" }}</time>
+          {{ end }}
+        </li>
+      {{ end }}
+    </ul>
+  </section>
 
-            {{/* --- ROW 2 --- */}}
+  <p class="home-random">
+    <a href="/solutions-imaginaires/" onclick="randomArticle(); return false;">un texte au hasard</a>
+  </p>
 
-            {{/* CELL 4: ALMANACH */}}
-            <section class="md:col-span-4 md:row-span-1 md:h-full z-10 relative hover:z-50">
-                {{ partial "widgets/almanach-card.html" . }}
-            </section>
+  {{/* DOM ici (P15) — emplacement réservé, branché plus tard. */}}
+  <section id="dom-slot" aria-hidden="true"></section>
 
-        </div>
-    </div>
 </div>
 {{ end }}
 
-{{ define "scripts" }}
-    {{ partial "functions/js-loader.html" (slice "PataphysicalDate" "almanach" "dom-engine") }}
-{{ end }}
+{{ define "scripts" }}{{/* scripts almanach (P16) et DOM (P15) à brancher ici */}}{{ end }}
