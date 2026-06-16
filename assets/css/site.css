@@ -428,6 +428,150 @@ caption {
   margin-left: 1rem;
 }
 
+/* --- Sidenotes Tufte, CSS pur (P09) -----------------------------------------
+   Appel numéroté en exposant ; note repliée par défaut, ouverte au clic via une
+   case à cocher cachée (technique :checked, zéro JS). Sur écran étroit la note
+   s'insère en bloc dans le fil de lecture ; sur grand écran (≥ 76rem) elle
+   flotte dans la marge, à droite ou à gauche en alternance. Deux variantes :
+   « note » (sobre) et « comment » (voix de commentaire, libellé petites caps).
+   Différenciation par filet, italique et casse — jamais par un gris. */
+
+/* Le conteneur reste en ligne et n'altère pas le flux du texte. */
+.sidenote-ref {
+  position: static;
+}
+
+/* La case à cocher : invisible mais focusable au clavier. */
+.sidenote-toggle {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  opacity: 0;
+  margin: 0;
+  pointer-events: none;
+}
+
+/* L'appel : exposant cliquable, contraste franc (jamais gris). */
+.sidenote-call {
+  cursor: pointer;
+  font-family: var(--mono);
+  font-size: 0.7em;
+  font-weight: 700;
+  line-height: 0;
+  vertical-align: super;
+  color: var(--accent);
+  padding: 0 0.15em;
+  user-select: none;
+}
+
+.sidenote-call:hover {
+  text-decoration: underline;
+}
+
+/* Variante commentaire : appel en rouge profond pour distinguer la voix. */
+.sidenote-call--comment {
+  color: var(--link);
+}
+
+/* Note ouverte : l'appel passe en gras (repère visuel de l'état). */
+.sidenote-toggle:checked + .sidenote-call {
+  font-weight: 800;
+  text-decoration: underline;
+}
+
+/* Focus clavier visible : la case cachée reçoit le focus, on stylise l'appel. */
+.sidenote-toggle:focus-visible + .sidenote-call {
+  outline: 2px solid var(--accent);
+  outline-offset: 2px;
+}
+
+/* État replié par défaut. */
+.sidenote {
+  display: none;
+}
+
+/* État ouvert — défaut (écran étroit) : bloc inséré dans le fil de lecture. */
+.sidenote-toggle:checked ~ .sidenote {
+  display: block;
+  margin: 0.7em 0;
+  padding: 0.5em 0.9em;
+  border-left: 2px solid var(--rule);
+  font-size: 0.92em;
+  line-height: 1.5;
+}
+
+.sidenote-num {
+  font-weight: 700;
+  color: var(--accent);
+}
+
+.sidenote-body {
+  font-family: var(--serif);
+}
+
+/* Variante commentaire : voix distincte — corps en italique, libellé en
+   petites capitales mono, filet et numéro en rouge. */
+.sidenote--comment {
+  font-style: italic;
+}
+
+/* Filet rouge pour la voix de commentaire (scopé sous :checked pour primer le
+   filet par défaut, de spécificité supérieure). */
+.sidenote-toggle:checked ~ .sidenote--comment {
+  border-left-color: var(--link);
+}
+
+.sidenote--comment .sidenote-num {
+  color: var(--link);
+}
+
+.sidenote-label {
+  display: block;
+  font-style: normal;
+  font-family: var(--mono);
+  font-size: 0.72em;
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+  margin-bottom: 0.25em;
+}
+
+/* --- Grand écran : la note ouverte flotte dans la marge ---------------------
+   Largeur de note 12rem, décalée de 14rem (2rem de gouttière) hors de la
+   colonne de lecture. Seuil 76rem : en-dessous, la note reste en bloc inline
+   pour ne jamais déborder horizontalement. `clear` empêche tout chevauchement
+   entre notes ouvertes successives, sans le moindre JS. */
+@media (min-width: 76rem) {
+  .sidenote-toggle:checked ~ .sidenote {
+    float: right;
+    clear: right;
+    width: 12rem;
+    margin: 0 -14rem 0.6rem 0;
+    padding: 0 0 0 0.9rem;
+    border-left: 1px solid var(--rule);
+    font-size: 0.8rem;
+    line-height: 1.4;
+    text-align: left;
+  }
+
+  .sidenote-toggle:checked ~ .sidenote--left {
+    float: left;
+    clear: left;
+    margin: 0 0 0.6rem -14rem;
+    padding: 0 0.9rem 0 0;
+    border-left: 0;
+    border-right: 1px solid var(--rule);
+    text-align: right;
+  }
+
+  .sidenote-toggle:checked ~ .sidenote--comment {
+    border-left-color: var(--link);
+  }
+
+  .sidenote-toggle:checked ~ .sidenote--comment.sidenote--left {
+    border-right-color: var(--link);
+  }
+}
+
 /* =============================================================================
    7. UTILITAIRES
    ========================================================================== */
