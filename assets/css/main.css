@@ -73,9 +73,9 @@
     line-height: 1.6;
   }
 
-  /* Global Link Reset: No underlines by default */
+  /* Global Link Reset: No underlines by default (sans !important — site.css prend la main) */
   a {
-    text-decoration: none !important;
+    text-decoration: none;
   }
 }
 
@@ -184,7 +184,7 @@
     /* 3. POLISH: Interactive Links (Deep Gold) */
     & :where(a):not(.not-prose) {
       color: var(--ctp-deep-gold) !important;
-      text-decoration: none !important;
+      text-decoration: none;
       font-weight: 600;
       transition: color 0.2s ease;
     }

@@ -216,9 +216,40 @@ a:focus {
   text-decoration-thickness: 2px;
 }
 
-/* Liens internes (marqués par la classe utilitaire) : bleu profond. */
-a.is-internal {
+/* Liens internes (render hook → class="internal-link") : bleu profond. */
+a.internal-link {
   color: var(--accent);
+}
+
+/* Les internes visités restent bleus — pas de dérive violet. */
+a.internal-link:visited {
+  color: var(--accent);
+}
+
+/* Liens externes : petit ↗ en exposant discret (via target="_blank"). */
+a[target="_blank"]::after {
+  content: "\202F↗";
+  font-size: 0.7em;
+  vertical-align: super;
+  line-height: 1;
+}
+
+/* Liens cassés : souligné ondulé pour signaler sans agresser. */
+a.broken-link {
+  color: var(--fg);
+  text-decoration-style: wavy;
+  text-decoration-color: var(--link);
+  text-decoration-thickness: 1px;
+}
+
+a.broken-link:visited {
+  color: var(--fg);
+}
+
+a.broken-link::after {
+  content: "\202F✗";
+  font-size: 0.75em;
+  color: var(--link);
 }
 
 /* --- Citations : filet à gauche, couleur du texte ------------------------ */
