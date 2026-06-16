@@ -1314,3 +1314,75 @@ caption {
 .skip-link:focus {
   top: 0.5rem;
 }
+
+/* --- EMBEDS — façade click-to-load (P19) -------------------------------- *
+   Rien ne charge tant qu'on ne clique pas : la façade est un bouton sobre,
+   haut contraste, sans gris. Au clic, l'iframe (vidéo/podcast) la remplace.
+   Vidéo : ratio 16:9 calé pour éviter tout saut de mise en page. */
+.embed {
+  margin: 1.6rem 0;
+}
+
+.embed-facade {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  gap: 0.3rem;
+  width: 100%;
+  padding: 1rem 1.1rem;
+  text-align: left;
+  background: var(--bg);
+  color: var(--fg);
+  border: 2px solid var(--rule);
+  font-family: inherit;
+  cursor: pointer;
+  transition: background 0.15s, color 0.15s;
+}
+
+.embed--video .embed-facade {
+  aspect-ratio: 16 / 9;
+}
+
+.embed--audio .embed-facade {
+  min-height: var(--embed-h, 110px);
+}
+
+.embed-facade:hover,
+.embed-facade:focus-visible {
+  background: var(--fg);
+  color: var(--bg);
+}
+
+.embed-facade-kind {
+  font-family: var(--mono);
+  font-size: 0.72rem;
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+}
+
+.embed-facade-title {
+  font-size: 1.1rem;
+  font-weight: 600;
+  line-height: 1.25;
+}
+
+.embed-facade-cue {
+  font-style: italic;
+  font-size: 0.92rem;
+}
+
+/* Iframe injectée : occupe la place de la façade. */
+.embed--video iframe {
+  display: block;
+  width: 100%;
+  aspect-ratio: 16 / 9;
+  height: auto;
+  border: 0;
+}
+
+.embed--audio iframe {
+  display: block;
+  width: 100%;
+  height: var(--embed-h, 110px);
+  border: 0;
+}
