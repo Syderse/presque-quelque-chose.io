@@ -1,160 +1,51 @@
 {{ define "main" }}
 
-{{/* --- TOC OVERLAY SYSTEM --- */}}
-{{ if .TableOfContents }}
-{{ .Scratch.Set "hasReadingToc" true }}
-<div id="toc-backdrop" 
-     onclick="closeToc()"
-     class="fixed inset-0 z-[60] bg-ctp-crust/60 cursor-pointer opacity-0 pointer-events-none transition-opacity duration-250 ease-out"
-     aria-hidden="true">
-</div>
+{{/* --- FIL D'ARIANE — texte simple, sobre --------------------------------- */}}
+<nav class="breadcrumb" aria-label="Fil d'Ariane">
+  <a href="{{ "/" | relURL }}">accueil</a>
+  {{- range .Ancestors.Reverse -}}
+    {{- if not .IsHome -}}
+      <span class="breadcrumb-sep" aria-hidden="true"> › </span>
+      <a href="{{ .Permalink }}">{{ .Title | plainify | lower | safeHTML }}</a>
+    {{- end -}}
+  {{- end -}}
+  <span class="breadcrumb-sep" aria-hidden="true"> › </span>
+  <span class="breadcrumb-current">{{ .Title | plainify | truncate 40 "…" | lower | safeHTML }}</span>
+</nav>
 
-<aside id="toc-panel" 
-       class="toc-panel toc-closed fixed top-4 right-4 bottom-4 z-[70] w-[280px] transition-[transform,opacity] duration-250 ease-out overflow-y-auto scrollbar-hide"
-       role="dialog"
-       aria-modal="true"
-       aria-hidden="true"
-       aria-labelledby="toc-panel-title"
-       tabindex="-1">
-  <div class="p-5">
-    <div class="flex items-center justify-between mb-5 pb-3 border-b border-ctp-surface0/50">
-      <h2 id="toc-panel-title" class="text-sm font-mono uppercase tracking-widest text-ctp-lavender/80">Plan</h2>
-      <button onclick="closeToc()" class="p-1 rounded-full text-ctp-overlay0 hover:text-ctp-mauve hover:bg-ctp-mauve/10 transition-colors duration-200" aria-label="Fermer">
-        <svg xmlns="http://www.w3.org/2000/svg" class="w-4 h-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
-          <line x1="18" y1="6" x2="6" y2="18"></line>
-          <line x1="6" y1="6" x2="18" y2="18"></line>
-        </svg>
-      </button>
-    </div>
-    <nav class="toc-tree" aria-label="Table des matières">
-      {{/* Clean shortcode placeholders (HAHAHUGOSHORTCODE...HBHB) from TOC */}}
-      {{ $toc := .TableOfContents | replaceRE `HAHAHUGOSHORTCODE-?\d+s\d+HBHB` "" | safeHTML }}
-      {{ $toc }}
-    </nav>
-  </div>
-</aside>
+{{/* --- EN-TÊTE ARTICLE — titre serif + ligne de métadonnées mono ---------- */}}
+<header class="article-header">
+  <h1>{{ .Title }}</h1>
 
-<div class="reader-plan-shell" aria-label="Outils de lecture">
-  <div class="reader-plan-shell-inner">
-    <button id="toc-open-button"
-            data-toc-open
-            type="button"
-            onclick="openToc()"
-            class="reader-plan-toggle"
-            aria-label="Afficher le plan de l'article"
-            aria-controls="toc-panel"
-            aria-expanded="false"
-            aria-haspopup="dialog">
-      <svg xmlns="http://www.w3.org/2000/svg" class="w-4 h-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
-        <line x1="8" y1="6" x2="21" y2="6"></line>
-        <line x1="8" y1="12" x2="21" y2="12"></line>
-        <line x1="8" y1="18" x2="21" y2="18"></line>
-        <line x1="3" y1="6" x2="3.01" y2="6"></line>
-        <line x1="3" y1="12" x2="3.01" y2="12"></line>
-        <line x1="3" y1="18" x2="3.01" y2="18"></line>
-      </svg>
-      <span>Plan</span>
-    </button>
-  </div>
-</div>
+  <p class="article-meta kicker">
+    {{- with .Date -}}
+      <time datetime="{{ .Format "2006-01-02" }}">{{ time.Format ":date_long" . }}</time>
+    {{- end -}}
+    {{- with $.Params.tags -}}
+      {{- range . -}}
+        <span class="article-meta-sep"> · </span><a href="{{ printf "/tags/%s/" (. | urlize) | relURL }}">#{{ . }}</a>
+      {{- end -}}
+    {{- end -}}
+  </p>
+</header>
+
+{{/* --- PLAN REPLIABLE NATIF (zéro JS) ------------------------------------- */}}
+{{ with .TableOfContents }}
+  {{ $toc := . | replaceRE `HAHAHUGOSHORTCODE-?\d+s\d+HBHB` "" | safeHTML }}
+  <details class="article-toc">
+    <summary>Plan</summary>
+    <nav aria-label="Table des matières">{{ $toc }}</nav>
+  </details>
 {{ end }}
 
-<div class="animate-fade-in-up">
+{{/* --- CONTENU — ne pas toucher à .Content ; prose stylée au P08 --------- */}}
+<article class="measure article-prose">
+  {{ .Content }}
+</article>
 
-  {{/* --- BREADCRUMB --- */}}
-  <nav class="breadcrumb" aria-label="Fil d'Ariane">
-    <a href="{{ "/" | relURL }}">accueil</a>
-    <span class="breadcrumb-separator">›</span>
-    {{- range .Ancestors.Reverse -}}
-    {{- if not .IsHome -}}
-    <a href="{{ .Permalink }}">{{ .Title | plainify | lower | safeHTML }}</a>
-    <span class="breadcrumb-separator">›</span>
-    {{- end -}}
-    {{- end -}}
-    <span class="breadcrumb-current">{{ .Title | plainify | truncate 40 "…" | lower | safeHTML }}</span>
-  </nav>
-
-  <header class="mb-16 pt-4 pb-8 border-b border-ctp-surface0">
-    <h1 class="text-4xl md:text-5xl font-serif font-bold text-ctp-peach leading-tight mb-8">
-      {{ .Title }}
-    </h1>
-
-    <div class="flex flex-wrap items-center justify-between gap-y-4 gap-x-6 text-sm font-medium">
-      <div class="flex flex-wrap gap-2">
-        {{ with .Params.tags }}
-        {{ range . }}
-        {{ partial "ui/tag-chip.html" . }}
-        {{ end }}
-        {{ end }}
-      </div>
-
-    </div>
-  </header>
-
-  {{/* --- CONTENU --- */}}
-  <article class="relative mx-auto content max-w-[60ch] overflow-visible prose prose-lg prose-catppuccin article-prose">
-    {{ .Content }}
-  </article>
-
-  {{/* --- FOOTER (NEW) --- */}}
-  {{ if not .Params.hide_footer }}
+{{/* --- PIED D'ARTICLE ----------------------------------------------------- */}}
+{{ if not .Params.hide_footer }}
   {{ partial "article-footer.html" . }}
-  {{ end }}
-
-</div>
-
-{{ $physics := resources.Get "js/sidenote-adjuster.js" | minify | fingerprint }}
-<script src="{{ $physics.RelPermalink }}" integrity="{{ $physics.Data.Integrity }}" defer></script>
-
-{{/* TOC Panel Logic */}}
-{{ if .TableOfContents }}
-<script>
-  const tocPanel = document.getElementById('toc-panel');
-  const tocBackdrop = document.getElementById('toc-backdrop');
-  let lastTocTrigger = null;
-
-  function setTocExpanded(isOpen) {
-    tocPanel.setAttribute('aria-hidden', String(!isOpen));
-    document.querySelectorAll('[data-toc-open]').forEach(button => {
-      button.setAttribute('aria-expanded', String(isOpen));
-    });
-  }
-
-  function openToc() {
-    lastTocTrigger = document.activeElement;
-    tocPanel.classList.remove('toc-closed');
-    tocPanel.classList.add('toc-open');
-    tocBackdrop.classList.remove('opacity-0', 'pointer-events-none');
-    tocBackdrop.classList.add('opacity-100', 'pointer-events-auto');
-    setTocExpanded(true);
-    tocPanel.focus({ preventScroll: true });
-  }
-
-  function closeToc(returnFocus = true) {
-    tocPanel.classList.remove('toc-open');
-    tocPanel.classList.add('toc-closed');
-    tocBackdrop.classList.remove('opacity-100', 'pointer-events-auto');
-    tocBackdrop.classList.add('opacity-0', 'pointer-events-none');
-    setTocExpanded(false);
-
-    if (returnFocus && lastTocTrigger && document.contains(lastTocTrigger)) {
-      lastTocTrigger.focus({ preventScroll: true });
-    }
-  }
-
-  document.addEventListener('keydown', (e) => {
-    if (e.key === 'Escape' && tocPanel.classList.contains('toc-open')) {
-      closeToc();
-    }
-  });
-
-  // Close TOC when clicking a link inside it
-  tocPanel.querySelectorAll('a').forEach(link => {
-    link.addEventListener('click', () => {
-      setTimeout(() => closeToc(false), 100);
-    });
-  });
-</script>
 {{ end }}
 
 {{ end }}
