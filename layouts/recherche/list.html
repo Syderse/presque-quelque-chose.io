@@ -1,0 +1,33 @@
+{{ define "main" }}
+{{/* Page /recherche (P24) — UI Pagefind chargée UNIQUEMENT ici.
+     Les assets /pagefind/* sont générés au build Netlify (pnpm dlx pagefind).
+     En dev local, ils n'existent pas tant qu'on n'a pas indexé public/. */}}
+<link href="/pagefind/pagefind-ui.css" rel="stylesheet" />
+
+<div class="recherche">
+  <header class="list-head">
+    <h1 class="list-title">{{ .Title }}</h1>
+    {{ with .Content }}<div class="list-intro">{{ . }}</div>{{ end }}
+  </header>
+
+  <div id="search" class="recherche-ui"></div>
+</div>
+{{ end }}
+
+{{ define "scripts" }}
+<script src="/pagefind/pagefind-ui.js"></script>
+<script>
+  window.addEventListener('DOMContentLoaded', () => {
+    if (typeof PagefindUI === 'undefined') return;
+    new PagefindUI({
+      element: '#search',
+      showSubResults: true,
+      showImages: false,
+      translations: {
+        placeholder: 'Fouiller le cabinet…',
+        zero_results: 'Rien trouvé pour « [SEARCH_TERM] »',
+      },
+    });
+  });
+</script>
+{{ end }}

@@ -228,5 +228,3 @@
 {{- $graph = $graph | append $breadcrumb -}}
 {{- $schema := dict "@context" "https://schema.org" "@graph" $graph -}}
 <script type="application/ld+json">{{ $schema | jsonify | safeJS }}</script>
-
-{{ template "_internal/google_analytics.html" . }}
