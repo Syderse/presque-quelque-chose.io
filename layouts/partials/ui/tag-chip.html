@@ -1,43 +1,25 @@
-{{/* Usage: {{ partial "ui/tag-chip.html" . }}
-Context: Can be a Taxonomy Term Page Object OR a String (tag name)
-*/}}
+{{/* Usage : {{ partial "ui/tag-chip.html" . }}
+     Contexte : un objet Page de terme OU une chaîne (nom de tag).
+     Refonte type-heavy : un simple lien de tag souligné, plus de « chip » coloré. */}}
 {{ $page := . }}
 {{ if reflect.IsSlice . }}
-{{/* Handle case where it might be passed as a slice (defensive) */}}
-{{ $page = index . 0 }}
+  {{ $page = index . 0 }}
 {{ end }}
 
 {{ if reflect.IsMap . }}
-{{/* It's likely a Page object */}}
+  {{/* C'est déjà un objet Page. */}}
 {{ else }}
-{{/* It's a string, we need to find the matching tag page.
-Problem: urlize doesn't respect removePathAccents config,
-so "école normale" -> "école-normale" but Hugo generates "ecole-normale".
-Solution: Iterate through all tag pages and match by comparing titles. */}}
-{{ $tagName := . | lower }}
-{{ $page = false }}
-{{ range site.Taxonomies.tags }}
-{{ $termTitle := .Page.Title | lower }}
-{{ if eq $termTitle $tagName }}
-{{ $page = .Page }}
-{{ end }}
-{{ end }}
+  {{/* C'est une chaîne : on retrouve la page de tag en comparant les titres
+       (urlize ne respecte pas removePathAccents, d'où l'appariement par titre). */}}
+  {{ $tagName := . | lower }}
+  {{ $page = false }}
+  {{ range site.Taxonomies.tags }}
+    {{ if eq (.Page.Title | lower) $tagName }}{{ $page = .Page }}{{ end }}
+  {{ end }}
 {{ end }}
 
 {{ if $page }}
-<a href="{{ $page.RelPermalink }}" class="inline-flex items-center px-2 py-1 
-            bg-ctp-mantle border border-ctp-mauve 
-            font-mono text-[9px] text-ctp-mauve uppercase tracking-widest 
-            hover:bg-ctp-surface0 
-            transition-colors duration-200 no-underline">
-    #{{ $page.LinkTitle }}
-</a>
+<a class="tag-link" href="{{ $page.RelPermalink }}">#{{ $page.LinkTitle }}</a>
 {{ else }}
-{{/* Fallback for missing tags */}}
-<span class="inline-flex items-center px-2 py-1 
-            bg-ctp-mantle border border-ctp-surface1 
-            font-mono text-[9px] text-ctp-subtext0 uppercase tracking-widest 
-            opacity-50 cursor-not-allowed">
-    #{{ . }}
-</span>
+<span class="tag-link tag-link--missing" title="étiquette introuvable">#{{ . }}</span>
 {{ end }}
