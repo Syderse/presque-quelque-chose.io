@@ -1,0 +1,397 @@
+/* =============================================================================
+   site.css — socle typographique de presque-quelque-chose
+   -----------------------------------------------------------------------------
+   Un unique fichier CSS écrit à la main : clair, haut contraste, fontes système,
+   même rendu partout. Aucune dépendance, aucune fonte distante, aucun @import.
+
+   Sommaire :
+     1. TOKENS        — custom properties (palette, fontes, mesures)
+     2. RESET         — reset moderne minimal
+     3. BASE          — html / body, document en flux normal
+     4. TYPOGRAPHIE   — titres, prose, liens, citations, code, tables
+     5. LAYOUT        — colonnes de lecture (.measure) et larges (.wide)
+     6. COMPOSANTS    — (vide pour l'instant)
+     7. UTILITAIRES   — petites classes d'appoint
+
+   Règle absolue : nulle part une couleur de texte grise ou délavée. Un texte
+   secondaire se distingue par la taille, la graisse, l'italique, les petites
+   capitales ou un filet — jamais par un gris.
+   ========================================================================== */
+
+/* =============================================================================
+   1. TOKENS
+   ========================================================================== */
+
+:root {
+  /* Palette — clair, haut contraste, zéro gris baveux */
+  --bg:           #fbfaf7; /* papier chaud */
+  --fg:           #14110d; /* quasi-noir : le texte */
+  --fg-strong:    #000000; /* titres / accents forts */
+  --link:         #9a1f1b; /* rouge profond, lisible sur clair */
+  --link-visited: #5a2a86; /* violet profond */
+  --accent:       #1a4d8f; /* bleu profond : liens internes / marqueurs */
+  --rule:         #14110d; /* filets = couleur du texte (jamais gris) */
+  --mark:         #fff2a8; /* surlignage */
+  --code-bg:      #f0ede6;
+
+  /* Typographie — 100% système */
+  --serif: Charter, "Bitstream Charter", "Sitka Text", "Iowan Old Style",
+           "Palatino Linotype", Palatino, Cambria, Georgia,
+           "Times New Roman", Times, serif;
+  --mono:  ui-monospace, "SF Mono", SFMono-Regular, Menlo, Consolas,
+           "Liberation Mono", monospace;
+
+  --measure: 66ch;       /* largeur de lecture */
+  --base: clamp(1.05rem, 0.95rem + 0.5vw, 1.2rem);
+  --lh: 1.55;
+}
+
+/* =============================================================================
+   2. RESET — moderne, minimal
+   ========================================================================== */
+
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+}
+
+/* Marges remises à zéro de façon raisonnée : on les réintroduit dans la
+   section TYPOGRAPHIE pour un rythme vertical cohérent. */
+body,
+h1, h2, h3, h4, h5, h6,
+p, figure, blockquote,
+ul, ol, dl, dd,
+pre, hr {
+  margin: 0;
+}
+
+/* Les médias se comportent en blocs fluides. */
+img,
+svg,
+video,
+canvas,
+audio,
+iframe,
+embed,
+object {
+  max-width: 100%;
+  height: auto;
+  display: block;
+}
+
+/* Les contrôles héritent de la typographie environnante. */
+input,
+button,
+textarea,
+select {
+  font: inherit;
+  color: inherit;
+}
+
+html {
+  -webkit-text-size-adjust: 100%;
+  text-size-adjust: 100%;
+}
+
+/* Focus net et visible — accessibilité clavier. */
+:focus-visible {
+  outline: 2px solid var(--accent);
+  outline-offset: 2px;
+}
+
+/* =============================================================================
+   3. BASE — document en flux normal, qui défile
+   ========================================================================== */
+
+html {
+  scroll-behavior: smooth;
+}
+
+body {
+  background: var(--bg);
+  color: var(--fg);
+  font-family: var(--serif);
+  font-size: var(--base);
+  line-height: var(--lh);
+  /* Pas de height:100vh, pas d'overflow:hidden : le document défile. */
+  text-rendering: optimizeLegibility;
+  -webkit-font-smoothing: antialiased;
+}
+
+::selection {
+  background: var(--fg);
+  color: var(--bg);
+}
+
+/* Respecte le souhait de mouvement réduit. */
+@media (prefers-reduced-motion: reduce) {
+  html {
+    scroll-behavior: auto;
+  }
+}
+
+/* =============================================================================
+   4. TYPOGRAPHIE
+   ========================================================================== */
+
+/* --- Titres : serif, gras, interlignage serré, échelle modulaire --------- */
+
+h1, h2, h3, h4, h5, h6 {
+  font-family: var(--serif);
+  font-weight: 700;
+  line-height: 1.2;
+  color: var(--fg-strong);
+  margin-top: 1.6em;
+  margin-bottom: 0.5em;
+}
+
+/* Premier titre d'un flux : pas de marge haute superflue. */
+h1:first-child,
+h2:first-child,
+h3:first-child {
+  margin-top: 0;
+}
+
+h1 { font-size: clamp(2rem, 1.4rem + 2.4vw, 2.8rem); }
+h2 { font-size: clamp(1.6rem, 1.2rem + 1.6vw, 2.1rem); }
+h3 { font-size: clamp(1.35rem, 1.1rem + 1vw, 1.6rem); }
+h4 { font-size: 1.25rem; }
+h5 { font-size: 1.1rem; }
+h6 { font-size: 1rem; }
+
+/* --- Rythme vertical du corps -------------------------------------------- */
+
+p,
+ul,
+ol,
+dl,
+blockquote,
+pre,
+table,
+figure {
+  margin-block: 0 1rem;
+}
+
+/* Listes : retrait lisible. */
+ul,
+ol {
+  padding-inline-start: 1.5em;
+}
+
+li + li {
+  margin-top: 0.25em;
+}
+
+/* Listes imbriquées : pas de double marge basse. */
+li > ul,
+li > ol {
+  margin-block: 0.25em 0;
+}
+
+dt {
+  font-weight: 700;
+}
+
+dd {
+  margin-inline-start: 1.5em;
+}
+
+/* --- Liens : toujours soulignés, jamais délavés -------------------------- */
+
+a {
+  color: var(--link);
+  text-decoration: underline;
+  text-decoration-thickness: 1px;
+  text-underline-offset: 0.15em;
+}
+
+a:visited {
+  color: var(--link-visited);
+}
+
+/* Hover/focus : on renforce le soulignement, on ne pâlit jamais. */
+a:hover,
+a:focus {
+  text-decoration-thickness: 2px;
+}
+
+/* Liens internes (marqués par la classe utilitaire) : bleu profond. */
+a.is-internal {
+  color: var(--accent);
+}
+
+/* --- Citations : filet à gauche, couleur du texte ------------------------ */
+
+blockquote {
+  border-left: 3px solid var(--rule);
+  padding-left: 1em;
+  font-style: italic;
+}
+
+blockquote > :last-child {
+  margin-bottom: 0;
+}
+
+cite {
+  font-style: normal;
+  font-variant: small-caps;
+}
+
+/* --- Code : mono sur fond discret ---------------------------------------- */
+
+code,
+kbd,
+samp {
+  font-family: var(--mono);
+  font-size: 0.9em;
+}
+
+:not(pre) > code {
+  background: var(--code-bg);
+  padding: 0.1em 0.35em;
+  border-radius: 2px;
+}
+
+pre {
+  background: var(--code-bg);
+  padding: 1em;
+  overflow-x: auto;
+  line-height: 1.45;
+}
+
+pre code {
+  background: none;
+  padding: 0;
+  font-size: 0.85rem;
+}
+
+/* --- Filets & marques ---------------------------------------------------- */
+
+hr {
+  border: 0;
+  border-top: 1px solid var(--rule);
+  margin-block: 2rem;
+}
+
+mark {
+  background: var(--mark);
+  color: var(--fg);
+  padding: 0 0.1em;
+}
+
+small {
+  font-size: 0.85em;
+}
+
+strong,
+b {
+  font-weight: 700;
+}
+
+abbr[title] {
+  text-decoration: underline dotted;
+  cursor: help;
+}
+
+/* --- Tables : lisibles, filets couleur du texte -------------------------- */
+
+table {
+  border-collapse: collapse;
+  width: 100%;
+}
+
+th,
+td {
+  text-align: left;
+  padding: 0.4em 0.6em;
+  border-bottom: 1px solid var(--rule);
+  vertical-align: top;
+}
+
+thead th {
+  border-bottom-width: 2px;
+}
+
+caption {
+  font-variant: small-caps;
+  letter-spacing: 0.03em;
+  text-align: left;
+  margin-bottom: 0.4em;
+}
+
+/* =============================================================================
+   5. LAYOUT — colonnes
+   ========================================================================== */
+
+/* Colonne de lecture : largeur de mesure, centrée. */
+.measure {
+  max-width: var(--measure);
+  margin-inline: auto;
+  padding-inline: 1rem;
+}
+
+/* Pages larges (listes, tableaux de bord textuels). */
+.wide {
+  max-width: 72rem;
+  margin-inline: auto;
+  padding-inline: 1rem;
+}
+
+/* =============================================================================
+   6. COMPOSANTS
+   -----------------------------------------------------------------------------
+   (vide pour l'instant — rempli au fil des prompts suivants : en-tête, pied,
+   sidenotes, DOM, almanach, etc.)
+   ========================================================================== */
+
+/* =============================================================================
+   7. UTILITAIRES
+   ========================================================================== */
+
+/* Accessibilité : masquer visuellement sans retirer du flux lecteur d'écran. */
+.visually-hidden {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  padding: 0;
+  margin: -1px;
+  overflow: hidden;
+  clip: rect(0 0 0 0);
+  clip-path: inset(50%);
+  white-space: nowrap;
+  border: 0;
+}
+
+/* Texte secondaire : différencié par la graisse et la casse, pas par un gris. */
+.kicker {
+  font-family: var(--mono);
+  font-size: 0.8rem;
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+}
+
+.smallcaps {
+  font-variant: small-caps;
+  letter-spacing: 0.02em;
+}
+
+/* Centrage de texte d'appoint. */
+.center {
+  text-align: center;
+}
+
+/* Lien d'évitement clavier (skip link), visible au focus. */
+.skip-link {
+  position: absolute;
+  left: 0.5rem;
+  top: -3rem;
+  background: var(--bg);
+  padding: 0.5em 0.75em;
+  border: 1px solid var(--rule);
+  transition: top 0.15s;
+}
+
+.skip-link:focus {
+  top: 0.5rem;
+}
