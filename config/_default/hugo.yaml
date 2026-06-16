@@ -176,12 +176,6 @@ params:
     name: "Mathieu Allag" # Ajoutez votre nom ici
     birthdate: "2002-01-15"
 
-  # SITE SETUP
-  # Appearance
-  appearance:
-    mode: dark
-    color: custom # Dit à Hugo de chercher notre custom.css
-
   # Site header
   header:
     navbar:
