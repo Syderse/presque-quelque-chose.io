@@ -53,10 +53,10 @@
     <a href="/solutions-imaginaires/" onclick="randomArticle(); return false;">un texte au hasard</a>
   </p>
 
-  {{/* DOM ici (P15) — emplacement réservé, branché plus tard. */}}
-  <section id="dom-slot" aria-hidden="true"></section>
+  {{/* DOM reconverti (P15) — le bouton récalcitrant, en bas de l'accueil. */}}
+  {{ partial "dom.html" . }}
 
 </div>
 {{ end }}
 
-{{ define "scripts" }}{{/* scripts almanach (P16) et DOM (P15) à brancher ici */}}{{ end }}
+{{ define "scripts" }}{{ partial "functions/js-loader.html" (slice "dom") }}{{/* almanach (P16) à brancher ici */}}{{ end }}

@@ -823,9 +823,72 @@ caption {
   letter-spacing: 0.02em;
 }
 
-/* Emplacement DOM (P15) : neutre tant qu'il est vide. */
-#dom-slot:empty {
-  display: none;
+/* --- DOM reconverti (P15) ----------------------------------------------------
+   Bouton récalcitrant : clic après clic (000→999) il déroule son monologue, puis
+   s'éteint sur une pierre tombale. Sobre, haut contraste, fontes système, aucune
+   couleur grise. Une seule transition d'opacité courte au changement de réplique. */
+
+.dom {
+  margin-top: 3.5rem;
+  padding-top: 1.5rem;
+  border-top: 1px solid var(--rule);
+  text-align: center;
+}
+
+.dom-counter {
+  font-family: var(--mono);
+  font-size: 0.8rem;
+  letter-spacing: 0.08em;
+  margin-bottom: 0.75rem;
+}
+
+.dom-button {
+  font-family: var(--mono);
+  font-size: 0.9rem;
+  letter-spacing: 0.04em;
+  color: var(--bg);
+  background: var(--fg);
+  border: 1px solid var(--fg);
+  padding: 0.5em 1.1em;
+  cursor: pointer;
+}
+
+.dom-button:hover,
+.dom-button:focus-visible {
+  color: var(--fg);
+  background: var(--bg);
+}
+
+.dom-glyph {
+  font-style: normal;
+}
+
+.dom-line {
+  max-width: 34rem;
+  margin: 1.5rem auto 0;
+  padding-left: 1rem;
+  border-left: 3px solid var(--rule);
+  font-family: var(--serif);
+  font-style: italic;
+  font-size: 1.05rem;
+  line-height: 1.5;
+  text-align: left;
+  transition: opacity 0.15s ease;
+}
+
+.dom-epitaph {
+  margin-top: 0.5rem;
+  font-family: var(--serif);
+  font-weight: 700;
+  font-size: 1.2rem;
+  line-height: 1.4;
+}
+
+.dom-end {
+  margin-top: 0.75rem;
+  font-family: var(--mono);
+  font-size: 0.8rem;
+  letter-spacing: 0.05em;
 }
 
 /* --- Listes de section : gabarit unifié (P13) -------------------------------
