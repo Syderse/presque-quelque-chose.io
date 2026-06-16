@@ -341,9 +341,74 @@ caption {
 /* =============================================================================
    6. COMPOSANTS
    -----------------------------------------------------------------------------
-   (vide pour l'instant — rempli au fil des prompts suivants : en-tête, pied,
-   sidenotes, DOM, almanach, etc.)
+   Rempli au fil des prompts : en-tête, pied, sidenotes, DOM, almanach, etc.
    ========================================================================== */
+
+/* --- En-tête + navigation texte (P05) ---------------------------------------
+   Tout en flux : titre, puis liste de liens texte soulignés. Repli en colonne
+   sur petit écran. Section courante = gras + puce, jamais une couleur pâle. */
+
+.site-header {
+  padding-top: 1.5rem;
+  padding-bottom: 1rem;
+  margin-bottom: 2rem;
+  border-bottom: 1px solid var(--rule);
+}
+
+.site-title {
+  display: inline-block;
+  font-family: var(--serif);
+  font-weight: 700;
+  font-size: 1.3rem;
+  letter-spacing: 0.01em;
+  color: var(--fg-strong);
+  text-decoration: none;
+}
+
+.site-title:hover,
+.site-title:focus-visible {
+  text-decoration: underline;
+}
+
+.site-nav {
+  margin-top: 0.75rem;
+  font-size: 0.95rem;
+  line-height: 1.7;
+}
+
+/* Liens séparés par un filet vertical discret (couleur du texte, jamais gris). */
+.site-nav a {
+  display: inline-block;
+  text-decoration: underline;
+}
+
+.site-nav a + a {
+  margin-left: 0.5rem;
+  padding-left: 0.75rem;
+  border-left: 1px solid var(--rule);
+}
+
+/* Section courante : graisse + puce, aucun gris. */
+.site-nav a.is-current {
+  font-weight: 700;
+}
+
+.site-nav a.is-current::before {
+  content: "▪ ";
+}
+
+/* Repli en colonne sur petit écran : un lien par ligne, sans filet vertical. */
+@media (max-width: 32rem) {
+  .site-nav {
+    display: flex;
+    flex-direction: column;
+  }
+  .site-nav a + a {
+    margin-left: 0;
+    padding-left: 0;
+    border-left: 0;
+  }
+}
 
 /* =============================================================================
    7. UTILITAIRES
