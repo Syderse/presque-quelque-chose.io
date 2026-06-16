@@ -32,6 +32,8 @@ Lis d'abord `00_PLAN.md` (esprit, décisions verrouillées, règles d'or, tokens
 
 **Prompt à coller :**
 
+Tu peux lire docs/refonte-typeheavy/00_PLAN.md pour contexte uniquement si besoin.
+
 > Crée `assets/css/site.css` : un **unique** fichier CSS écrit à la main, lisible, commenté, sans aucune dépendance (pas de Tailwind, pas de `@import` distant, **aucune fonte distante**). Objectif : socle type-heavy clair, haut contraste, fontes système, même rendu partout. Structure le fichier en sections commentées : `TOKENS`, `RESET`, `BASE`, `LAYOUT`, `TYPOGRAPHIE`, `COMPOSANTS` (vide pour l'instant), `UTILITAIRES`.
 >
 > 1. **TOKENS** — reprends exactement les custom properties de `docs/refonte-typeheavy/00_PLAN.md` §4 (palette claire, `--serif`, `--mono`, `--measure`, `--base`, `--lh`).
