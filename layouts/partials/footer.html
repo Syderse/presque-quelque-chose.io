@@ -1,4 +1,29 @@
-{{/* Stub minimal — étoffé au P06. */}}
-<footer class="wide">
-  <p>© {{ now.Year }} {{ .Site.Title }}</p>
+{{/* Pied de page minimal — copyright CC + liens texte (P06). */}}
+{{- $copy := .Site.Params.footer.copyright -}}
+{{- $lic  := $copy.license -}}
+{{- $year := now.Format "2006" -}}
+
+{{/* Construit le slug CC à partir des params (ex: "by-nc-nd"). */}}
+{{- $ccSlug := "by" -}}
+{{- if not $lic.allow_commercial -}}{{- $ccSlug = printf "%s-nc" $ccSlug -}}{{- end -}}
+{{- if not $lic.allow_derivatives -}}{{- $ccSlug = printf "%s-nd" $ccSlug -}}{{- else if $lic.share_alike -}}{{- $ccSlug = printf "%s-sa" $ccSlug -}}{{- end -}}
+
+{{- $noticeRaw := $copy.notice | default (printf "© %s presque-quelque-chose" $year) -}}
+{{- $notice    := replace $noticeRaw "{year}" $year -}}
+{{- if $lic.enable -}}
+  {{- $ccURL   := printf "https://creativecommons.org/licenses/%s/4.0/" $ccSlug -}}
+  {{- $ccLabel := printf "CC %s 4.0" (upper $ccSlug) -}}
+  {{- $licLink := printf `<a href="%s">%s</a>` $ccURL $ccLabel -}}
+  {{- $notice   = replace $notice "{license}" $licLink -}}
+{{- else -}}
+  {{- $notice   = replace $notice "{license}" "" | strings.TrimRight ". " -}}
+{{- end -}}
+
+<footer class="site-footer wide">
+  <p>{{ $notice | safeHTML }}</p>
+  <nav aria-label="Liens de pied de page">
+    <a href="/">accueil</a>
+    <a href="/manuel/">manuel</a>
+    <a href="/tags/">thésaurus</a>
+  </nav>
 </footer>
