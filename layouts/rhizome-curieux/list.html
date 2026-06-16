@@ -1,109 +1,55 @@
 {{ define "main" }}
-{{ $rhizomeData := partial "functions/get-rhizome-items.html" . }}
+{{/* Rhizome (P17) — liste lisible par défaut, sans JS, sur le socle site.css.
+     Racines = notes internes (.Pages, avec leur petit texte) ; spores = liens
+     externes (front matter `items`). Les données viennent de la même fonction
+     que l'endpoint RHIZOME (/rhizome-curieux/index.json), conservé intact.
+     Différenciation par taille/graisse/mono, jamais par un gris. */}}
+{{ $rhizome := partial "functions/get-rhizome-items.html" . }}
 
-<style>
-/* --- STYLES CAPSULE & ORBIT --- */
-/* CRITICAL FIX: Removed redundant :root variables. 
-   We now inherit --ctp-base, etc. directly from main.css */
+<div class="rhizome">
 
-/* 1. Base Nodes */
-.node-body {
-    transition: fill 0.18s ease, stroke 0.18s ease, stroke-width 0.18s ease;
-    rx: 15px; 
-    cursor: pointer;
-}
+  <header class="list-head">
+    <h1 class="list-title">{{ .Title }}</h1>
+    {{ with .Content }}<div class="list-intro">{{ . }}</div>
+    {{ else }}{{ with .Description }}<p class="list-intro">{{ . }}</p>{{ end }}{{ end }}
+  </header>
 
-/* 2. Noyau (Roots) - Solid & Pulsing */
-.node-root {
-    fill: var(--ctp-mantle);
-    stroke: var(--ctp-mauve);
-    stroke-width: 2px;
-}
+  {{/* Racines : notes internes du rhizome, titre + petit texte. */}}
+  {{ with $rhizome.internal }}
+  <section class="rhizome-roots">
+    <h2 class="rhizome-section-title">
+      racines <span class="rhizome-count">{{ len . }}</span>
+    </h2>
+    <ul class="entry-list">
+      {{ range . }}
+      <li class="entry">
+        <a class="entry-title internal-link" href="{{ .url }}">
+          <span class="rhizome-icon" aria-hidden="true">{{ .icon }}</span>{{ .title }}
+        </a>
+        {{ with .summary }}<p class="entry-desc">{{ . }}</p>{{ end }}
+      </li>
+      {{ end }}
+    </ul>
+  </section>
+  {{ end }}
 
-/* 3. Orbite (Spores) - Hollow & Sharp */
-.node-spore {
-    fill: var(--ctp-base); /* Transparent-ish look */
-    stroke: var(--ctp-green);
-    stroke-width: 1.5px;
-    stroke-dasharray: 4 2; /* Texture pointillée pour l'effet "gaz/spore" */
-}
+  {{/* Spores : liens externes, en colonnes compactes. */}}
+  {{ with $rhizome.external }}
+  <section class="rhizome-spores">
+    <h2 class="rhizome-section-title">
+      spores <span class="rhizome-count">{{ len . }}</span>
+    </h2>
+    <ul class="rhizome-spore-list">
+      {{ range . }}
+      <li class="rhizome-spore">
+        <a href="{{ .url }}" target="_blank" rel="noopener noreferrer">
+          <span class="rhizome-icon" aria-hidden="true">{{ .icon }}</span>{{ .title }}
+        </a>
+      </li>
+      {{ end }}
+    </ul>
+  </section>
+  {{ end }}
 
-/* 4. ÉTAT HOVER */
-.node-body.is-hovered {
-    stroke-width: 4px;
-    fill: var(--ctp-surface2);
-    stroke-dasharray: 0; /* Solidifie le contour au survol */
-}
-
-/* Tooltip */
-#rhizome-tooltip {
-    position: absolute;
-    transform: translate(-50%, 0); 
-    pointer-events: none; 
-    z-index: 50; 
-    transition: opacity 0.15s ease;
-}
-
-.label-text {
-    background-color: var(--ctp-base);
-    color: var(--ctp-text);
-    border: 1px solid var(--ctp-overlay1);
-    padding: 6px 10px;
-    font-size: 11px;
-    font-family: 'JetBrains Mono', monospace;
-    font-weight: bold;
-    box-shadow: 4px 4px 0px rgba(0,0,0,0.5);
-    white-space: nowrap;
-    text-transform: uppercase;
-}
-
-.node-root { stroke-opacity: 0.95; }
-
-</style>
-
-<div class="relative h-[calc(100vh-6rem)] w-full overflow-hidden bg-ctp-base font-mono group">
-  
-  {{/* Grid Background - Radar Style */}}
-  <div class="absolute inset-0 z-0 opacity-10 pointer-events-none bg-grid-pattern">
-  </div>
-
-  {{/* CANVAS D3 */}}
-  <div id="rhizome-viz" class="absolute inset-0 z-10 w-full h-full"></div>
-
-  {{/* TOOLTIP */}}
-  <div id="rhizome-tooltip" class="opacity-0 pointer-events-none">
-      <div class="label-text">DATA</div>
-  </div>
-
-  {{/* UI CONTROL STACK (RIGHT) */}}
-  <div class="absolute top-6 right-6 z-20 flex flex-col items-end gap-6 pointer-events-none w-64">
-    
-    {{/* BLOC TITRE */}}
-    <div class="bg-ctp-base border-2 border-ctp-surface2 p-4 shadow-[6px_6px_0px_#111] pointer-events-auto w-full text-right">
-       <h2 class="text-xl font-bold text-ctp-text uppercase tracking-widest leading-none">{{ .Title }}</h2>
-       <div class="text-[10px] text-ctp-surface2 mt-2 font-bold flex justify-end gap-2 items-center">
-         <span class="w-2 h-2 rounded-full bg-ctp-green"></span>
-         <span id="stat-nodes">--</span> NODES ONLINE
-       </div>
-    </div>
-
-    {{/* BLOC FILTRES */}}
-    <div class="flex flex-col gap-3 items-end pointer-events-auto w-full">
-      <button id="filter-internal" class="w-full bg-ctp-mantle border-2 border-ctp-mauve text-ctp-mauve px-4 py-3 text-xs font-bold hover:bg-ctp-mauve hover:text-ctp-base transition-colors shadow-[4px_4px_0px_#111] text-right flex justify-between items-center group">
-        <span class="opacity-50 group-hover:opacity-100 transition-opacity">●</span>
-        NUCLEUS (ROOTS)
-      </button>
-      <button id="filter-external" class="w-full bg-ctp-mantle border-2 border-ctp-green text-ctp-green px-4 py-3 text-xs font-bold hover:bg-ctp-green hover:text-ctp-base transition-colors shadow-[4px_4px_0px_#111] text-right flex justify-between items-center group">
-        <span class="opacity-50 group-hover:opacity-100 transition-opacity">○</span>
-        ORBIT (SPORES)
-      </button>
-    </div>
-
-  </div>
 </div>
-
-<script src="https://cdn.jsdelivr.net/npm/d3@7.9.0/dist/d3.min.js" integrity="sha384-CjloA8y00+1SDAUkjs099PVfnY2KmDC2BZnws9kh8D/lX1s46w6EPhpXdqMfjK6i" crossorigin="anonymous"></script>
-{{ $script := resources.Get "js/rhizome-engine.js" | minify | fingerprint }}
-<script src="{{ $script.RelPermalink }}" integrity="{{ $script.Data.Integrity }}"></script>
-
 {{ end }}

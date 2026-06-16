@@ -1069,6 +1069,58 @@ caption {
   border-top: 1px solid var(--rule);
 }
 
+/* --- Rhizome (P17) : liste lisible, sans JS --------------------------------
+   Page full_width (donc <main> est .wide) : on recentre comme une liste. Deux
+   sections : racines (notes internes, titre + petit texte) et spores (liens
+   externes en colonnes). Le compte par section se différencie en mono, jamais
+   par un gris. L'icône emoji reste discrète, sans couleur d'appui. */
+
+.rhizome {
+  max-width: 44rem;
+  margin-inline: auto;
+}
+
+.rhizome-roots,
+.rhizome-spores {
+  margin-top: 2.5rem;
+}
+
+.rhizome-section-title {
+  margin: 0 0 0.8rem;
+  padding-bottom: 0.3rem;
+  font-size: 1.3rem;
+  border-bottom: 1px solid var(--rule);
+}
+
+.rhizome-count {
+  margin-left: 0.4rem;
+  font-family: var(--mono);
+  font-size: 0.8rem;
+  font-weight: 400;
+  font-variant-numeric: tabular-nums;
+  vertical-align: 0.1em;
+}
+
+/* L'emoji introductif : taille mesurée, espacement à droite, jamais coloré. */
+.rhizome-icon {
+  margin-right: 0.4em;
+  font-style: normal;
+}
+
+/* Spores : liens externes en colonnes compactes, sobres. */
+.rhizome-spore-list {
+  list-style: none;
+  padding-inline-start: 0;
+  margin: 0;
+  columns: 14rem 2;
+  column-gap: 2rem;
+}
+
+.rhizome-spore {
+  break-inside: avoid;
+  padding-block: 0.35rem;
+}
+
 /* =============================================================================
    7. UTILITAIRES
    ========================================================================== */
