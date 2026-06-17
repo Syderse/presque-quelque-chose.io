@@ -13,7 +13,7 @@ tags:
 
 ### Départ de Séoul et trajet en bus
 
-On marchait de bon matin vers la [gare routière de Séoul](https://en.wikipedia.org/wiki/Seoul_Express_Bus_Terminal){{< sidenote >}}En Corée, les terminaux *gosok* (고속버스터미널) sont surtout pour les bus express, directs entre grandes villes par autoroute. Les terminaux *sioe* (시외버스터미널) relient aussi les villes moyennes et les itinéraires incluent davantage d'arrêts. Les deux bâtiments sont souvent voisins mais distincts.{{< /sidenote >}}, en vue de nous enfoncer dans les terres du pays. À ce moment-là, j'ai réalisé que j'aimais déjà beaucoup le [quartier de Sinchon]({{< relref "/solutions-imaginaires/blog_corée/jour_0_prologue/#arrivée-nocturne-dans-le-quartier-de-sinchon" >}}) et son esprit. Mais il fallait partir, pour pas perdre le rythme qu'on avait fixé quelques semaines plus tôt, au moment de planifier notre itinéraire.
+On marchait de bon matin vers la [gare routière de Séoul](https://en.wikipedia.org/wiki/Seoul_Express_Bus_Terminal){{< sidenote >}}En Corée, les terminaux *gosok* (고속버스터미널) sont surtout pour les bus express, directs entre grandes villes par autoroute. Les terminaux *sioe* (시외버스터미널) relient aussi les villes moyennes et les itinéraires incluent davantage d'arrêts. Les deux bâtiments sont souvent voisins mais distincts.{{< /sidenote >}}, en vue de nous enfoncer dans les terres du pays. À ce moment-là, j'ai réalisé que j'aimais déjà beaucoup le [quartier de Sinchon](/solutions-imaginaires/blog_corée/jour_0_prologue/#arrivée-nocturne-dans-le-quartier-de-sinchon) et son esprit. Mais il fallait partir, pour pas perdre le rythme qu'on avait fixé quelques semaines plus tôt, au moment de planifier notre itinéraire.
 
 ### Rencontre inattendue au terminal de Séoul
 

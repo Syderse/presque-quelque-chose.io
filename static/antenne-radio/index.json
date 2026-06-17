@@ -1,7 +1,193 @@
 {
-  "generated_at": "2026-06-02T06:16:43Z",
-  "item_count": 430,
+  "generated_at": "2026-06-17T03:44:07Z",
+  "item_count": 489,
   "items": [
+    {
+      "attribution_id": "radio_fanch",
+      "doi": null,
+      "id": "url:f43e660296b4dc4e0173",
+      "language": "und",
+      "published_at": "2026-06-16T06:30:00Z",
+      "source_family": "rss",
+      "source_name": "Radio Fañch",
+      "source_type": "blog",
+      "title": "La radio a… plus d'un titre !",
+      "url": "https://radiofanch.blogspot.com/2026/06/la-radio-plus-dun-titre.html"
+    },
+    {
+      "attribution_id": "radio_fanch",
+      "doi": null,
+      "id": "url:a38f94287a7cd26cb40d",
+      "language": "und",
+      "published_at": "2026-06-15T06:30:00Z",
+      "source_family": "rss",
+      "source_name": "Radio Fañch",
+      "source_type": "blog",
+      "title": "Tentative de description d'un moment de radio… (avec la complicité de Georges Pérec)",
+      "url": "https://radiofanch.blogspot.com/2026/06/tentative-de-description-dun-moment-de.html"
+    },
+    {
+      "attribution_id": "organised_sound",
+      "authors": [
+        "Thomas Grill",
+        "Arthur Flexer",
+        "Angélica Castelló",
+        "Marco Döttlinger",
+        "Patrik Lechner",
+        "Christian Grüny"
+      ],
+      "container_title": "Organised Sound",
+      "doi": "10.1017/s1355771826101356",
+      "id": "doi:b6245961934362535a8b",
+      "item_type": "journal_article",
+      "language": "en",
+      "published_at": "2026-06-11T00:00:00Z",
+      "source_family": "crossref",
+      "source_name": "Organised Sound",
+      "source_type": "journal_article",
+      "title": "Experimental sense-making, musicking and no control: Performing black box music instruments",
+      "url": "https://doi.org/10.1017/s1355771826101356"
+    },
+    {
+      "attribution_id": "organised_sound",
+      "authors": [
+        "Tanguy Pocquet du Haut-Jussé"
+      ],
+      "container_title": "Organised Sound",
+      "doi": "10.1017/s1355771826101344",
+      "id": "doi:02482ef8313fce05c783",
+      "item_type": "journal_article",
+      "language": "en",
+      "published_at": "2026-06-11T00:00:00Z",
+      "source_family": "crossref",
+      "source_name": "Organised Sound",
+      "source_type": "journal_article",
+      "title": "Mapping of d.i.y. neural networks’ processing data in audiovisual compositions: digital waste, algorithms’ idiosyncrasies, and transfictionality of data-evoking aesthetics",
+      "url": "https://doi.org/10.1017/s1355771826101344"
+    },
+    {
+      "attribution_id": "radio_fanch",
+      "doi": null,
+      "id": "url:fc333b6c8237ddeb1cf2",
+      "language": "und",
+      "published_at": "2026-06-10T06:30:00Z",
+      "source_family": "rss",
+      "source_name": "Radio Fañch",
+      "source_type": "blog",
+      "title": "À la radio : la joie de vivre… c'est possible !",
+      "url": "https://radiofanch.blogspot.com/2026/06/a-la-radio-la-joie-de-vivre-cest.html"
+    },
+    {
+      "attribution_id": "radio_fanch",
+      "doi": null,
+      "id": "url:4d233b5c240264756795",
+      "language": "und",
+      "published_at": "2026-06-09T06:30:00Z",
+      "source_family": "rss",
+      "source_name": "Radio Fañch",
+      "source_type": "blog",
+      "title": "Fip : on n'en peut plus des annonces, de l'auto-promo, des partenariats…",
+      "url": "https://radiofanch.blogspot.com/2026/06/fip-on-nen-peut-plus-des-annonces-de.html"
+    },
+    {
+      "attribution_id": "radio_fanch",
+      "doi": null,
+      "id": "url:f715d6c45911c2632924",
+      "language": "und",
+      "published_at": "2026-06-08T06:30:00Z",
+      "source_family": "rss",
+      "source_name": "Radio Fañch",
+      "source_type": "blog",
+      "title": "Le podcast : objet de toutes les recherches… (ou presque)",
+      "url": "https://radiofanch.blogspot.com/2026/06/le-podcast-objet-de-toutes-les.html"
+    },
+    {
+      "attribution_id": "radio_survivor",
+      "doi": null,
+      "id": "url:49f256cc26f651e9a070",
+      "language": "und",
+      "published_at": "2026-06-05T18:36:23Z",
+      "source_family": "rss",
+      "source_name": "Radio Survivor",
+      "source_type": "blog",
+      "title": "Unraveling the Mystery of a College Radio Network’s Interview with President Reagan at the White House",
+      "url": "https://www.radiosurvivor.com/2026/06/unraveling-the-mystery-of-a-college-radio-networks-interview-with-president-reagan-at-the-white-house"
+    },
+    {
+      "attribution_id": "radio_fanch",
+      "doi": null,
+      "id": "url:59214d2ef512ac943d5e",
+      "language": "und",
+      "published_at": "2026-06-04T06:30:00Z",
+      "source_family": "rss",
+      "source_name": "Radio Fañch",
+      "source_type": "blog",
+      "title": "Il y a 90 ans, le 4 juin 1936 : Léon Blum s'installe comme Président du Conseil…",
+      "url": "https://radiofanch.blogspot.com/2026/06/il-y-90-ans-le-4-juin-1936-leon-blum.html"
+    },
+    {
+      "attribution_id": "organised_sound",
+      "authors": [
+        "Boyi Bai"
+      ],
+      "container_title": "Organised Sound",
+      "doi": "10.1017/s1355771826101319",
+      "id": "doi:ed34098b6bf4a917ecfc",
+      "item_type": "journal_article",
+      "language": "en",
+      "published_at": "2026-06-03T00:00:00Z",
+      "source_family": "crossref",
+      "source_name": "Organised Sound",
+      "source_type": "journal_article",
+      "title": "From schizophonia to mediated auditory dislocation: Mediated tension in interactive VR soundscape composition",
+      "url": "https://doi.org/10.1017/s1355771826101319"
+    },
+    {
+      "attribution_id": "feminist_media_studies",
+      "authors": [],
+      "container_title": "Feminist Media Studies",
+      "doi": "10.1080/14680777.2026.2666540",
+      "id": "doi:b84eaa4a2e34d60149d5",
+      "item_type": "journal_article",
+      "language": "en",
+      "published_at": "2026-06-03T00:00:00Z",
+      "source_family": "openalex",
+      "source_name": "Feminist Media Studies",
+      "source_type": "journal_article",
+      "title": "“Search on”: Googling Black Girl Magic",
+      "url": "https://doi.org/10.1080/14680777.2026.2666540"
+    },
+    {
+      "attribution_id": "radio_fanch",
+      "doi": null,
+      "id": "url:e6eb0d5b813fcc5a37c0",
+      "language": "und",
+      "published_at": "2026-06-02T06:30:00Z",
+      "source_family": "rss",
+      "source_name": "Radio Fañch",
+      "source_type": "blog",
+      "title": "Radio Fañch : 15 ans, 2700 billets et une autre histoire de la radio…",
+      "url": "https://radiofanch.blogspot.com/2026/06/radio-fanch-15-ans-2700-billets-et-une.html"
+    },
+    {
+      "attribution_id": "organised_sound",
+      "authors": [
+        "Teresa Pelinski",
+        "Adam Pultz Melbye",
+        "Andrew McPherson"
+      ],
+      "container_title": "Organised Sound",
+      "doi": "10.1017/s1355771826101307",
+      "id": "doi:3b7da6fbe06f3c569574",
+      "item_type": "journal_article",
+      "language": "en",
+      "published_at": "2026-06-02T00:00:00Z",
+      "source_family": "crossref",
+      "source_name": "Organised Sound",
+      "source_type": "journal_article",
+      "title": "When AI doesn’t sound like AI: negotiating aesthetic expectations in technology-mediated musical practice – ERRATUM",
+      "url": "https://doi.org/10.1017/s1355771826101307"
+    },
     {
       "attribution_id": "sounding_out",
       "doi": null,
@@ -25,6 +211,130 @@
       "source_type": "blog",
       "title": "France Télévisions : une bergerie, un loup et pas le moindre raton-laveur en vue !",
       "url": "https://radiofanch.blogspot.com/2026/06/france-televisions-une-bergerie-un-loup.html"
+    },
+    {
+      "attribution_id": "resonance_journal",
+      "authors": [
+        "Phillip James Grider",
+        "Abigail Fagan"
+      ],
+      "container_title": "Resonance: The Journal of Sound and Culture",
+      "doi": "10.1525/res.2026.7.2.181",
+      "id": "doi:f3a68695e9547b34b499",
+      "item_type": "journal_article",
+      "language": "en",
+      "published_at": "2026-06-01T00:00:00Z",
+      "source_family": "crossref",
+      "source_name": "Resonance: The Journal of Sound and Culture",
+      "source_type": "journal_article",
+      "title": "Interlude",
+      "url": "https://doi.org/10.1525/res.2026.7.2.181"
+    },
+    {
+      "attribution_id": "resonance_journal",
+      "authors": [
+        "Seira Duncan",
+        "Rupert Summerson"
+      ],
+      "container_title": "Resonance: The Journal of Sound and Culture",
+      "doi": "10.1525/res.2026.7.2.203",
+      "id": "doi:c639949bb66a36a684e3",
+      "item_type": "journal_article",
+      "language": "en",
+      "published_at": "2026-06-01T00:00:00Z",
+      "source_family": "crossref",
+      "source_name": "Resonance: The Journal of Sound and Culture",
+      "source_type": "journal_article",
+      "title": "Music, Poetry, and Well-Being on the First Japanese Antarctic Expedition (1910–1912)",
+      "url": "https://doi.org/10.1525/res.2026.7.2.203"
+    },
+    {
+      "attribution_id": "resonance_journal",
+      "authors": [
+        "Carolyn Philpott",
+        "Philip Samartzis",
+        "Elizabeth Leane",
+        "Adele Jackson"
+      ],
+      "container_title": "Resonance: The Journal of Sound and Culture",
+      "doi": "10.1525/res.2026.7.2.218",
+      "id": "doi:c05546fca9e7a6dc0ff6",
+      "item_type": "journal_article",
+      "language": "en",
+      "published_at": "2026-06-01T00:00:00Z",
+      "source_family": "crossref",
+      "source_name": "Resonance: The Journal of Sound and Culture",
+      "source_type": "journal_article",
+      "title": "Drift, Static, Signal",
+      "url": "https://doi.org/10.1525/res.2026.7.2.218"
+    },
+    {
+      "attribution_id": "resonance_journal",
+      "authors": [
+        "Daniel Gilfillan"
+      ],
+      "container_title": "Resonance: The Journal of Sound and Culture",
+      "doi": "10.1525/res.2026.7.2.149",
+      "id": "doi:34d74000d0830bffae1f",
+      "item_type": "journal_article",
+      "language": "en",
+      "published_at": "2026-06-01T00:00:00Z",
+      "source_family": "crossref",
+      "source_name": "Resonance: The Journal of Sound and Culture",
+      "source_type": "journal_article",
+      "title": "Unsinging the Planet",
+      "url": "https://doi.org/10.1525/res.2026.7.2.149"
+    },
+    {
+      "attribution_id": "resonance_journal",
+      "authors": [
+        "Sladja Blažan"
+      ],
+      "container_title": "Resonance: The Journal of Sound and Culture",
+      "doi": "10.1525/res.2026.7.2.189",
+      "id": "doi:1e0c483dcaded5a9f1f8",
+      "item_type": "journal_article",
+      "language": "en",
+      "published_at": "2026-06-01T00:00:00Z",
+      "source_family": "crossref",
+      "source_name": "Resonance: The Journal of Sound and Culture",
+      "source_type": "journal_article",
+      "title": "“A Murmur in the Trees”",
+      "url": "https://doi.org/10.1525/res.2026.7.2.189"
+    },
+    {
+      "attribution_id": "resonance_journal",
+      "authors": [
+        "Jay Needham"
+      ],
+      "container_title": "Resonance: The Journal of Sound and Culture",
+      "doi": "10.1525/res.2026.7.2.145",
+      "id": "doi:1df0a796113d32318fd9",
+      "item_type": "journal_article",
+      "language": "en",
+      "published_at": "2026-06-01T00:00:00Z",
+      "source_family": "crossref",
+      "source_name": "Resonance: The Journal of Sound and Culture",
+      "source_type": "journal_article",
+      "title": "Introduction",
+      "url": "https://doi.org/10.1525/res.2026.7.2.145"
+    },
+    {
+      "attribution_id": "resonance_journal",
+      "authors": [
+        "Caitlin Woolsey"
+      ],
+      "container_title": "Resonance: The Journal of Sound and Culture",
+      "doi": "10.1525/res.2026.7.2.168",
+      "id": "doi:0e9ad75d291d277015e2",
+      "item_type": "journal_article",
+      "language": "en",
+      "published_at": "2026-06-01T00:00:00Z",
+      "source_family": "crossref",
+      "source_name": "Resonance: The Journal of Sound and Culture",
+      "source_type": "journal_article",
+      "title": "“The Sound Can Touch You Directly”",
+      "url": "https://doi.org/10.1525/res.2026.7.2.168"
     },
     {
       "attribution_id": "radio_fanch",
@@ -52,6 +362,36 @@
       "source_type": "journal_article",
       "title": "Radio discovery in smart speakers: The gatekeeping function of voice assistant platforms and aggregators",
       "url": "https://doi.org/10.1177/01634437261454508"
+    },
+    {
+      "attribution_id": "hal",
+      "authors": [],
+      "container_title": null,
+      "doi": "10.5281/zenodo.20448475",
+      "id": "doi:b28ced17de27587baa5e",
+      "item_type": "journal_article",
+      "language": "en",
+      "published_at": "2026-05-29T00:00:00Z",
+      "source_family": "hal",
+      "source_name": "HAL open archive",
+      "source_type": "journal_article",
+      "title": "Genealogy, Archival Reconstruction, and Historical Memory: A Critical Study of The Desclergues of la Villa Ducal de Montblanc",
+      "url": "https://hal.science/hal-05638264v1"
+    },
+    {
+      "attribution_id": "hal",
+      "authors": [],
+      "container_title": null,
+      "doi": "10.5281/zenodo.20431684",
+      "id": "doi:8315fbf39515840bebca",
+      "item_type": "journal_article",
+      "language": "en",
+      "published_at": "2026-05-28T00:00:00Z",
+      "source_family": "hal",
+      "source_name": "HAL open archive",
+      "source_type": "journal_article",
+      "title": "A 1992-1993 High School Genetics Thesis at the Dawn of the Genomic Era: Scientific, Historical, and Pedagogical Analysis of Nico F. Declercq's Erfelijkheid en recombinant-DNA-Technologie",
+      "url": "https://hal.science/hal-05636747v1"
     },
     {
       "attribution_id": "radio_fanch",
@@ -219,6 +559,21 @@
       "url": "https://radiofanch.blogspot.com/2026/05/jose-artur-le-pop-en-mai-68.html"
     },
     {
+      "attribution_id": "openalex",
+      "authors": [],
+      "container_title": null,
+      "doi": "10.33612/diss.1522398055",
+      "id": "doi:9cb888dc0a98332a587c",
+      "item_type": "thesis",
+      "language": "en",
+      "published_at": "2026-05-19T00:00:00Z",
+      "source_family": "openalex",
+      "source_name": "OpenAlex",
+      "source_type": "thesis",
+      "title": "A radio study of extrasolar magnetospheres",
+      "url": "https://doi.org/10.33612/diss.1522398055"
+    },
+    {
       "attribution_id": "sounding_out",
       "doi": null,
       "id": "url:edc41a520580d00eb8a0",
@@ -268,6 +623,21 @@
       "source_type": "journal_article",
       "title": "Sport as a commercial media spectacle: The case of the “F1: The Movie”",
       "url": "https://doi.org/10.1177/01634437261452159"
+    },
+    {
+      "attribution_id": "convergence_journal",
+      "authors": [],
+      "container_title": "Convergence The International Journal of Research into New Media Technologies",
+      "doi": "10.1177/13548565261453786",
+      "id": "doi:8bf385cb0b99d6fe1505",
+      "item_type": "journal_article",
+      "language": "en",
+      "published_at": "2026-05-15T00:00:00Z",
+      "source_family": "openalex",
+      "source_name": "Convergence",
+      "source_type": "journal_article",
+      "title": "‘The behind-the-scenes we were never supposed to see’: Resisting, reframing, and reinforcing incarceration stigmas on Prison TikTok",
+      "url": "https://doi.org/10.1177/13548565261453786"
     },
     {
       "attribution_id": "sound_studies_journal",
@@ -1046,6 +1416,21 @@
       "url": "https://radiofanch.blogspot.com/2026/04/audiences-radio-grand-bluff-tarte-la.html"
     },
     {
+      "attribution_id": "feminist_media_studies",
+      "authors": [],
+      "container_title": "Feminist Media Studies",
+      "doi": "10.1080/14680777.2026.2660240",
+      "id": "doi:616f334ec86859b265b1",
+      "item_type": "journal_article",
+      "language": "en",
+      "published_at": "2026-04-16T00:00:00Z",
+      "source_family": "openalex",
+      "source_name": "Feminist Media Studies",
+      "source_type": "journal_article",
+      "title": "Ambivalent masculinities: digital culture, precarity and disaffection in the UK screen industries",
+      "url": "https://doi.org/10.1080/14680777.2026.2660240"
+    },
+    {
       "attribution_id": "journal_radio_audio_media",
       "doi": "10.1080/19376529.2026.2645542",
       "id": "doi:d68904a9baf9fc6246b9",
@@ -1212,6 +1597,21 @@
       "source_type": "blog",
       "title": "Radio Station Visit #197: WNEK at Western New England University",
       "url": "https://www.radiosurvivor.com/2026/04/radio-station-visit-197-wnek-at-western-new-england-university"
+    },
+    {
+      "attribution_id": "hal",
+      "authors": [],
+      "container_title": null,
+      "doi": null,
+      "id": "url:fb6381fae7c973cdb984",
+      "item_type": "journal_article",
+      "language": "fr",
+      "published_at": "2026-04-07T00:00:00Z",
+      "source_family": "hal",
+      "source_name": "HAL open archive",
+      "source_type": "journal_article",
+      "title": "Le podcast natif, essor et incertitudes d'un nouveau média",
+      "url": "https://univ-pantheon-assas.hal.science/hal-05642328v1"
     },
     {
       "attribution_id": "hal",
@@ -1604,6 +2004,21 @@
       "url": "https://radiodufutur.wordpress.com/2026/03/21/la-mise-en-image-de-la-radio-recherche-dandres-godefroy"
     },
     {
+      "attribution_id": "popular_communication",
+      "authors": [],
+      "container_title": "Popular Communication",
+      "doi": "10.1080/15405702.2026.2645565",
+      "id": "doi:e53a8ea69e9c4eb38c21",
+      "item_type": "journal_article",
+      "language": "en",
+      "published_at": "2026-03-19T00:00:00Z",
+      "source_family": "openalex",
+      "source_name": "Popular Communication",
+      "source_type": "journal_article",
+      "title": "Can political internet memes influence information selection of young adults? Examining the mediating roles of issue-specific interest, perceived issue importance, and humor",
+      "url": "https://doi.org/10.1080/15405702.2026.2645565"
+    },
+    {
       "attribution_id": "openalex",
       "authors": [],
       "container_title": null,
@@ -1634,6 +2049,36 @@
       "url": "https://hal.science/hal-05574404v1"
     },
     {
+      "attribution_id": "convergence_journal",
+      "authors": [],
+      "container_title": "Convergence The International Journal of Research into New Media Technologies",
+      "doi": "10.1177/13548565261437437",
+      "id": "doi:da89c710e432099764ac",
+      "item_type": "journal_article",
+      "language": "en",
+      "published_at": "2026-03-19T00:00:00Z",
+      "source_family": "openalex",
+      "source_name": "Convergence",
+      "source_type": "journal_article",
+      "title": "Beyond the easy gig: Platform work literacies among location-based on-demand workers in Spain",
+      "url": "https://doi.org/10.1177/13548565261437437"
+    },
+    {
+      "attribution_id": "feminist_media_studies",
+      "authors": [],
+      "container_title": "Feminist Media Studies",
+      "doi": "10.1080/14680777.2026.2635501",
+      "id": "doi:20730d2a7d87760508a7",
+      "item_type": "journal_article",
+      "language": "en",
+      "published_at": "2026-03-12T00:00:00Z",
+      "source_family": "openalex",
+      "source_name": "Feminist Media Studies",
+      "source_type": "journal_article",
+      "title": "‘Sight unseen: black British women and the BBC archive’",
+      "url": "https://doi.org/10.1080/14680777.2026.2635501"
+    },
+    {
       "attribution_id": "hal",
       "authors": [],
       "container_title": null,
@@ -1662,6 +2107,21 @@
       "source_type": "journal_article",
       "title": "This program was brought to you by the algorithm: Rethinking television via TikTok",
       "url": "https://doi.org/10.1177/13548565261433139"
+    },
+    {
+      "attribution_id": "convergence_journal",
+      "authors": [],
+      "container_title": "Convergence The International Journal of Research into New Media Technologies",
+      "doi": "10.1177/13548565261425432",
+      "id": "doi:21306ff7fc32cd97f9e3",
+      "item_type": "journal_article",
+      "language": "en",
+      "published_at": "2026-03-10T00:00:00Z",
+      "source_family": "openalex",
+      "source_name": "Convergence",
+      "source_type": "journal_article",
+      "title": "Filmmaking with volumetric video capture",
+      "url": "https://doi.org/10.1177/13548565261425432"
     },
     {
       "attribution_id": "radiomorphoses",
@@ -1704,6 +2164,21 @@
       "source_type": "journal_article",
       "title": "An age of scandal entrepreneurs and scandalous production: Undercover journalism and its public interest scandals",
       "url": "https://doi.org/10.1177/01634437261422598"
+    },
+    {
+      "attribution_id": "media_culture_society",
+      "authors": [],
+      "container_title": "Media Culture & Society",
+      "doi": "10.1177/01634437261422575",
+      "id": "doi:b0e37f94c58f0993593c",
+      "item_type": "journal_article",
+      "language": "en",
+      "published_at": "2026-03-03T00:00:00Z",
+      "source_family": "openalex",
+      "source_name": "Media, Culture & Society",
+      "source_type": "journal_article",
+      "title": "From emotional struggles to digital resistance: How content creators challenge platform governance and reconstruct identity in copyright disputes",
+      "url": "https://doi.org/10.1177/01634437261422575"
     },
     {
       "attribution_id": "resonance_journal",
@@ -1864,6 +2339,21 @@
       "url": "https://doi.org/10.1525/res.2026.7.1.75"
     },
     {
+      "attribution_id": "feminist_media_studies",
+      "authors": [],
+      "container_title": "Feminist Media Studies",
+      "doi": "10.1080/14680777.2026.2633544",
+      "id": "doi:89713d2f3757fbbc1f21",
+      "item_type": "journal_article",
+      "language": "en",
+      "published_at": "2026-02-25T00:00:00Z",
+      "source_family": "openalex",
+      "source_name": "Feminist Media Studies",
+      "source_type": "journal_article",
+      "title": "On/Offline – Communication practices used by Portuguese feminist groups",
+      "url": "https://doi.org/10.1080/14680777.2026.2633544"
+    },
+    {
       "attribution_id": "radio_survivor",
       "doi": null,
       "id": "url:b078f181348ec4fd5684",
@@ -1996,6 +2486,21 @@
       "url": "https://soundstudiesblog.com/2026/02/02/so-reads-alexis-mcgees-from-blues-to-beyonce-a-century-of-black-womens-generational-sonic-rhetorics"
     },
     {
+      "attribution_id": "media_culture_society",
+      "authors": [],
+      "container_title": "Media Culture & Society",
+      "doi": "10.1177/01634437261417330",
+      "id": "doi:7b3629759d033d985b6d",
+      "item_type": "journal_article",
+      "language": "en",
+      "published_at": "2026-02-01T00:00:00Z",
+      "source_family": "openalex",
+      "source_name": "Media, Culture & Society",
+      "source_type": "journal_article",
+      "title": "A labor of love: How fans of women’s sports navigate streaming subscriptions and slow changes in coverage",
+      "url": "https://doi.org/10.1177/01634437261417330"
+    },
+    {
       "attribution_id": "journal_radio_audio_media",
       "doi": "10.1080/19376529.2026.2622968",
       "id": "doi:0aaf80472b8081e97ec3",
@@ -2053,6 +2558,21 @@
       "url": "https://doi.org/10.1177/13548565261422038"
     },
     {
+      "attribution_id": "media_culture_society",
+      "authors": [],
+      "container_title": "Media Culture & Society",
+      "doi": "10.1177/01634437251410079",
+      "id": "doi:78e7391afcb100d07523",
+      "item_type": "journal_article",
+      "language": "en",
+      "published_at": "2026-01-26T00:00:00Z",
+      "source_family": "openalex",
+      "source_name": "Media, Culture & Society",
+      "source_type": "journal_article",
+      "title": "From dead bills to new ideas: How policy discourse is reimagining local journalism in the United States",
+      "url": "https://doi.org/10.1177/01634437251410079"
+    },
+    {
       "attribution_id": "journal_radio_audio_media",
       "doi": "10.1080/19376529.2026.2613720",
       "id": "doi:6550ede07fb732b9f32a",
@@ -2063,6 +2583,21 @@
       "source_type": "blog",
       "title": "Gramsci in the Manosphere: James Lindsay, Podcast Discourse, & the Mediation of Political Subjectivity in Young Male Voters",
       "url": "https://www.tandfonline.com/doi/full/10.1080/19376529.2026.2613720?af=R"
+    },
+    {
+      "attribution_id": "popular_communication",
+      "authors": [],
+      "container_title": "Popular Communication",
+      "doi": "10.1080/15405702.2026.2617544",
+      "id": "doi:55ab15d9b9d19bd9660a",
+      "item_type": "journal_article",
+      "language": "en",
+      "published_at": "2026-01-22T00:00:00Z",
+      "source_family": "openalex",
+      "source_name": "Popular Communication",
+      "source_type": "journal_article",
+      "title": "Review of The Tenementals’ album— <i>Glasgow: a history (vol. I of VI)</i>",
+      "url": "https://doi.org/10.1080/15405702.2026.2617544"
     },
     {
       "attribution_id": "hal",
@@ -2406,6 +2941,81 @@
       "source_type": "journal_article",
       "title": "Making music and sound with the <i>GreenWaves</i> : a modern reimagination of the Ondes Martenot",
       "url": "https://doi.org/10.1080/20551940.2026.2622156"
+    },
+    {
+      "attribution_id": "popular_communication",
+      "authors": [],
+      "container_title": "Popular Communication",
+      "doi": "10.1080/15405702.2026.2619473",
+      "id": "doi:ce8216b8680c4fb985bb",
+      "item_type": "journal_article",
+      "language": "en",
+      "published_at": "2026-01-02T00:00:00Z",
+      "source_family": "openalex",
+      "source_name": "Popular Communication",
+      "source_type": "journal_article",
+      "title": "Inoculation theory as a design approach to game-based misinformation interventions: a review",
+      "url": "https://doi.org/10.1080/15405702.2026.2619473"
+    },
+    {
+      "attribution_id": "volume_journal",
+      "authors": [],
+      "container_title": "Volume !",
+      "doi": "10.4000/16bjc",
+      "id": "doi:fc806e522fa168da4674",
+      "item_type": "journal_article",
+      "language": "fr",
+      "published_at": "2026-01-01T00:00:00Z",
+      "source_family": "openalex",
+      "source_name": "Volume!",
+      "source_type": "journal_article",
+      "title": "Gabrielle Kielich, The Road Crew. Live Music and Touring",
+      "url": "https://doi.org/10.4000/16bjc"
+    },
+    {
+      "attribution_id": "volume_journal",
+      "authors": [],
+      "container_title": "Volume !",
+      "doi": "10.4000/16bjd",
+      "id": "doi:860bb68b818bc105bf9f",
+      "item_type": "journal_article",
+      "language": "fr",
+      "published_at": "2026-01-01T00:00:00Z",
+      "source_family": "openalex",
+      "source_name": "Volume!",
+      "source_type": "journal_article",
+      "title": "Jérémy Michot, Introduction aux musiques de séries télévisées : de Badge 714 à Lost",
+      "url": "https://doi.org/10.4000/16bjd"
+    },
+    {
+      "attribution_id": "volume_journal",
+      "authors": [],
+      "container_title": "Volume !",
+      "doi": "10.4000/16bjb",
+      "id": "doi:0085500dbfe5cd398fce",
+      "item_type": "journal_article",
+      "language": "fr",
+      "published_at": "2026-01-01T00:00:00Z",
+      "source_family": "openalex",
+      "source_name": "Volume!",
+      "source_type": "journal_article",
+      "title": "Liz Pelly, Mood Machine. The Rise of Spotify and the Costs of the Perfect Playlist",
+      "url": "https://doi.org/10.4000/16bjb"
+    },
+    {
+      "attribution_id": "societes_representations",
+      "authors": [],
+      "container_title": "Sociétés & Représentations",
+      "doi": "10.4000/16djg",
+      "id": "doi:7a4462daa698c3d256c5",
+      "item_type": "journal_article",
+      "language": "fr",
+      "published_at": "2026-01-01T00:00:00Z",
+      "source_family": "openalex",
+      "source_name": "Sociétés & Représentations",
+      "source_type": "journal_article",
+      "title": "De la création collective à l’approche pluridisciplinaire de son étude",
+      "url": "https://doi.org/10.4000/16djg"
     },
     {
       "attribution_id": "openalex",
@@ -3034,6 +3644,21 @@
       "url": "https://www.radiosurvivor.com/2025/11/radio-station-visit-185-b-rad-at-bennington-college"
     },
     {
+      "attribution_id": "feminist_media_studies",
+      "authors": [],
+      "container_title": "Feminist Media Studies",
+      "doi": "10.1080/14680777.2025.2557855",
+      "id": "doi:569c7f1475cc4f5ef863",
+      "item_type": "journal_article",
+      "language": "en",
+      "published_at": "2025-11-10T00:00:00Z",
+      "source_family": "openalex",
+      "source_name": "Feminist Media Studies",
+      "source_type": "journal_article",
+      "title": "Transnational Feminist Media Ethics and LGBTIQ+ activism in Namibia, Africa: media coverage and implications of the 2023 Namibian Supreme Court ruling on same-sex marriages",
+      "url": "https://doi.org/10.1080/14680777.2025.2557855"
+    },
+    {
       "attribution_id": "radio_survivor",
       "doi": null,
       "id": "url:c215ca7d8e8f08cee3cf",
@@ -3056,6 +3681,21 @@
       "source_type": "blog",
       "title": "Radio Station Visit #183: KXDU at University of Denver",
       "url": "https://www.radiosurvivor.com/2025/11/radio-station-visit-183-kxdu-at-university-of-denver"
+    },
+    {
+      "attribution_id": "media_culture_society",
+      "authors": [],
+      "container_title": "Media Culture & Society",
+      "doi": "10.1177/01634437251385461",
+      "id": "doi:cc1d5664568709cd4421",
+      "item_type": "journal_article",
+      "language": "en",
+      "published_at": "2025-11-05T00:00:00Z",
+      "source_family": "openalex",
+      "source_name": "Media, Culture & Society",
+      "source_type": "journal_article",
+      "title": "Disconnection divide: When rooflessness meets (digital) dis/connection",
+      "url": "https://doi.org/10.1177/01634437251385461"
     },
     {
       "attribution_id": "sounding_out",
@@ -3092,6 +3732,36 @@
       "source_type": "blog",
       "title": "WCSB Student Leaders and Supporters Fight Against Takeover of Cleveland State University’s Student-Run College Radio Station",
       "url": "https://www.radiosurvivor.com/2025/10/wcsb-student-leaders-and-supporters-fight-against-takeover-of-cleveland-state-universitys-student-run-college-radio-station"
+    },
+    {
+      "attribution_id": "media_culture_society",
+      "authors": [],
+      "container_title": "Media Culture & Society",
+      "doi": "10.1177/01634437251385455",
+      "id": "doi:9424776c94e427a93668",
+      "item_type": "journal_article",
+      "language": "en",
+      "published_at": "2025-10-27T00:00:00Z",
+      "source_family": "openalex",
+      "source_name": "Media, Culture & Society",
+      "source_type": "journal_article",
+      "title": "Beyond Rhetoric: The media and the Nigerian government’s professed commitment to the clean-up of Ogoniland",
+      "url": "https://doi.org/10.1177/01634437251385455"
+    },
+    {
+      "attribution_id": "feminist_media_studies",
+      "authors": [],
+      "container_title": "Feminist Media Studies",
+      "doi": "10.1080/14680777.2025.2573731",
+      "id": "doi:207ddf8ed2481f8339b4",
+      "item_type": "journal_article",
+      "language": "en",
+      "published_at": "2025-10-23T00:00:00Z",
+      "source_family": "openalex",
+      "source_name": "Feminist Media Studies",
+      "source_type": "journal_article",
+      "title": "Stacks and sirens: construction of race, femininity, and feminist agency in two Finnish rap music videos",
+      "url": "https://doi.org/10.1080/14680777.2025.2573731"
     },
     {
       "attribution_id": "radio_survivor",
@@ -3155,6 +3825,21 @@
       "source_type": "blog",
       "title": "Radio Station Visit #180: WZLY-FM at Wellesley College",
       "url": "https://www.radiosurvivor.com/2025/10/radio-station-visit-180-wzly-fm-at-wellesley-college"
+    },
+    {
+      "attribution_id": "feminist_media_studies",
+      "authors": [],
+      "container_title": "Feminist Media Studies",
+      "doi": "10.1080/14680777.2025.2573727",
+      "id": "doi:a952d89f99620bcc9335",
+      "item_type": "journal_article",
+      "language": "en",
+      "published_at": "2025-10-17T00:00:00Z",
+      "source_family": "openalex",
+      "source_name": "Feminist Media Studies",
+      "source_type": "journal_article",
+      "title": "(Un)Girly girls: reimagining femininity on Japanese TikTok",
+      "url": "https://doi.org/10.1080/14680777.2025.2573727"
     },
     {
       "attribution_id": "radio_survivor",
@@ -3224,6 +3909,21 @@
       "source_type": "journal_article",
       "title": "Online learning with video",
       "url": "https://doi.org/10.3917/res.252.0021"
+    },
+    {
+      "attribution_id": "convergence_journal",
+      "authors": [],
+      "container_title": "Convergence The International Journal of Research into New Media Technologies",
+      "doi": "10.1177/13548565251383380",
+      "id": "doi:eac875bf13ff423a70dc",
+      "item_type": "journal_article",
+      "language": "en",
+      "published_at": "2025-10-07T00:00:00Z",
+      "source_family": "openalex",
+      "source_name": "Convergence",
+      "source_type": "journal_article",
+      "title": "Big data audiences: Critical approaches to the datafication of audience ontologies in contemporary media industries",
+      "url": "https://doi.org/10.1177/13548565251383380"
     },
     {
       "attribution_id": "sounding_out",
@@ -3482,6 +4182,21 @@
       "source_type": "blog",
       "title": "Scripting Empire: Broadcasting, the BBC, and the Black Atlantic",
       "url": "https://www.tandfonline.com/doi/full/10.1080/19376529.2025.2558934?af=R"
+    },
+    {
+      "attribution_id": "popular_communication",
+      "authors": [],
+      "container_title": "Popular Communication",
+      "doi": "10.1080/15405702.2025.2560859",
+      "id": "doi:2fef7cbd8357f16e001e",
+      "item_type": "journal_article",
+      "language": "en",
+      "published_at": "2025-09-22T00:00:00Z",
+      "source_family": "openalex",
+      "source_name": "Popular Communication",
+      "source_type": "journal_article",
+      "title": "Cultural transgressions and media contestation: a qualitative study of the tradwife trend in Dutch media",
+      "url": "https://doi.org/10.1080/15405702.2025.2560859"
     },
     {
       "attribution_id": "media_culture_society",
@@ -3784,6 +4499,51 @@
       "url": "https://doi.org/10.18146/view.361"
     },
     {
+      "attribution_id": "openalex",
+      "authors": [],
+      "container_title": null,
+      "doi": "10.4324/9781003564461",
+      "id": "doi:c9cff99ebed870554dab",
+      "item_type": "book",
+      "language": "en",
+      "published_at": "2025-08-05T00:00:00Z",
+      "source_family": "openalex",
+      "source_name": "OpenAlex",
+      "source_type": "book",
+      "title": "Sense-Making",
+      "url": "https://doi.org/10.4324/9781003564461"
+    },
+    {
+      "attribution_id": "openalex",
+      "authors": [],
+      "container_title": null,
+      "doi": "10.1108/978-1-83708-202-5",
+      "id": "doi:77342688f148f00b5c95",
+      "item_type": "book",
+      "language": "en",
+      "published_at": "2025-08-04T00:00:00Z",
+      "source_family": "openalex",
+      "source_name": "OpenAlex",
+      "source_type": "book",
+      "title": "Gender Equity and Economic Development",
+      "url": "https://doi.org/10.1108/978-1-83708-202-5"
+    },
+    {
+      "attribution_id": "feminist_media_studies",
+      "authors": [],
+      "container_title": "Feminist Media Studies",
+      "doi": "10.1080/14680777.2025.2540811",
+      "id": "doi:e93b725c1ffb62466177",
+      "item_type": "journal_article",
+      "language": "en",
+      "published_at": "2025-08-01T00:00:00Z",
+      "source_family": "openalex",
+      "source_name": "Feminist Media Studies",
+      "source_type": "journal_article",
+      "title": "“Why don’t they ask me about my work?”: A study of sexism inside and outside television sport newsrooms in Spain",
+      "url": "https://doi.org/10.1080/14680777.2025.2540811"
+    },
+    {
       "attribution_id": "media_culture_society",
       "authors": [],
       "container_title": "Media Culture & Society",
@@ -3797,6 +4557,36 @@
       "source_type": "journal_article",
       "title": "Influencer culture and the changing face of sport and media",
       "url": "https://doi.org/10.1177/01634437251360383"
+    },
+    {
+      "attribution_id": "media_culture_society",
+      "authors": [],
+      "container_title": "Media Culture & Society",
+      "doi": "10.1177/01634437251360374",
+      "id": "doi:765f8a54987f83dd8021",
+      "item_type": "journal_article",
+      "language": "en",
+      "published_at": "2025-07-30T00:00:00Z",
+      "source_family": "openalex",
+      "source_name": "Media, Culture & Society",
+      "source_type": "journal_article",
+      "title": "Leaving North Korea: Illicit cultural globalization and mediated migration in the digital age",
+      "url": "https://doi.org/10.1177/01634437251360374"
+    },
+    {
+      "attribution_id": "media_culture_society",
+      "authors": [],
+      "container_title": "Media Culture & Society",
+      "doi": "10.1177/01634437251360381",
+      "id": "doi:ca18590e499cc92531cd",
+      "item_type": "journal_article",
+      "language": "en",
+      "published_at": "2025-07-28T00:00:00Z",
+      "source_family": "openalex",
+      "source_name": "Media, Culture & Society",
+      "source_type": "journal_article",
+      "title": "Encoding/decoding in artificial intelligence: Global AI and local languages",
+      "url": "https://doi.org/10.1177/01634437251360381"
     },
     {
       "attribution_id": "journal_radio_audio_media",
@@ -3826,6 +4616,21 @@
       "url": "https://doi.org/10.30965/9783657798209_003"
     },
     {
+      "attribution_id": "feminist_media_studies",
+      "authors": [],
+      "container_title": "Feminist Media Studies",
+      "doi": "10.1080/14680777.2025.2524727",
+      "id": "doi:83af041f7f601780dd36",
+      "item_type": "journal_article",
+      "language": "en",
+      "published_at": "2025-07-23T00:00:00Z",
+      "source_family": "openalex",
+      "source_name": "Feminist Media Studies",
+      "source_type": "journal_article",
+      "title": "Surveillance media technology and news coverage of stranger violence against women in Australia",
+      "url": "https://doi.org/10.1080/14680777.2025.2524727"
+    },
+    {
       "attribution_id": "journal_radio_audio_media",
       "doi": "10.1080/19376529.2025.2529907",
       "id": "doi:0c2564ec23001f87e7d2",
@@ -3836,6 +4641,21 @@
       "source_type": "blog",
       "title": "Missing the Bandwagon: Commercial Radio's Failure to Represent Women's Sports Within Internal and External Competition Settings",
       "url": "https://www.tandfonline.com/doi/full/10.1080/19376529.2025.2529907?af=R"
+    },
+    {
+      "attribution_id": "media_culture_society",
+      "authors": [],
+      "container_title": "Media Culture & Society",
+      "doi": "10.1177/01634437251353045",
+      "id": "doi:a74671b9050f77f6328f",
+      "item_type": "journal_article",
+      "language": "en",
+      "published_at": "2025-07-17T00:00:00Z",
+      "source_family": "openalex",
+      "source_name": "Media, Culture & Society",
+      "source_type": "journal_article",
+      "title": "How diplomacy matters to cultural production: A case study of China’s Korean limitation order and Korean television",
+      "url": "https://doi.org/10.1177/01634437251353045"
     },
     {
       "attribution_id": "journal_radio_audio_media",
@@ -4281,6 +5101,51 @@
       "url": "https://www.tandfonline.com/doi/full/10.1080/19376529.2025.2495349?af=R"
     },
     {
+      "attribution_id": "feminist_media_studies",
+      "authors": [],
+      "container_title": "Feminist Media Studies",
+      "doi": "10.1080/14680777.2025.2512233",
+      "id": "doi:333e7af7b43ef3375f66",
+      "item_type": "journal_article",
+      "language": "en",
+      "published_at": "2025-06-12T00:00:00Z",
+      "source_family": "openalex",
+      "source_name": "Feminist Media Studies",
+      "source_type": "journal_article",
+      "title": "Swallowing the rape myth: understanding rape mythology on The Red Pill",
+      "url": "https://doi.org/10.1080/14680777.2025.2512233"
+    },
+    {
+      "attribution_id": "feminist_media_studies",
+      "authors": [],
+      "container_title": "Feminist Media Studies",
+      "doi": "10.1080/14680777.2025.2517145",
+      "id": "doi:c4c2a9fa14c2e1bd6316",
+      "item_type": "journal_article",
+      "language": "en",
+      "published_at": "2025-06-09T00:00:00Z",
+      "source_family": "openalex",
+      "source_name": "Feminist Media Studies",
+      "source_type": "journal_article",
+      "title": "Introduction: media, gender, and sexuality in Africa",
+      "url": "https://doi.org/10.1080/14680777.2025.2517145"
+    },
+    {
+      "attribution_id": "feminist_media_studies",
+      "authors": [],
+      "container_title": "Feminist Media Studies",
+      "doi": "10.1080/14680777.2025.2505182",
+      "id": "doi:e26c1508efc1cd26d060",
+      "item_type": "journal_article",
+      "language": "en",
+      "published_at": "2025-06-03T00:00:00Z",
+      "source_family": "openalex",
+      "source_name": "Feminist Media Studies",
+      "source_type": "journal_article",
+      "title": "Giving up on the law? The disconnect of hate speech policy and female journalists’ experiences",
+      "url": "https://doi.org/10.1080/14680777.2025.2505182"
+    },
+    {
       "attribution_id": "resonance_journal",
       "authors": [
         "Farzin Vejdani"
@@ -4361,6 +5226,21 @@
       "attribution_id": "feminist_media_studies",
       "authors": [],
       "container_title": "Feminist Media Studies",
+      "doi": "10.1080/14680777.2025.2493720",
+      "id": "doi:e6f16bd9699e0872dc17",
+      "item_type": "journal_article",
+      "language": "en",
+      "published_at": "2025-05-18T00:00:00Z",
+      "source_family": "openalex",
+      "source_name": "Feminist Media Studies",
+      "source_type": "journal_article",
+      "title": "Provocative eroticism: anger in fourth-wave feminist Danish pop culture",
+      "url": "https://doi.org/10.1080/14680777.2025.2493720"
+    },
+    {
+      "attribution_id": "feminist_media_studies",
+      "authors": [],
+      "container_title": "Feminist Media Studies",
       "doi": "10.1080/14680777.2025.2504498",
       "id": "doi:4a478e99f4ee5c359831",
       "item_type": "journal_article",
@@ -4427,6 +5307,21 @@
       "url": "https://www.tandfonline.com/doi/full/10.1080/19376529.2025.2499598?af=R"
     },
     {
+      "attribution_id": "feminist_media_studies",
+      "authors": [],
+      "container_title": "Feminist Media Studies",
+      "doi": "10.1080/14680777.2025.2495728",
+      "id": "doi:7ea30de04b24d2f3f69f",
+      "item_type": "journal_article",
+      "language": "en",
+      "published_at": "2025-05-07T00:00:00Z",
+      "source_family": "openalex",
+      "source_name": "Feminist Media Studies",
+      "source_type": "journal_article",
+      "title": "Good vibes and collective action: gendered politics on Instagram",
+      "url": "https://doi.org/10.1080/14680777.2025.2495728"
+    },
+    {
       "attribution_id": "media_culture_society",
       "authors": [],
       "container_title": "Media Culture & Society",
@@ -4485,6 +5380,21 @@
       "source_type": "journal_article",
       "title": "Propaganda feedback loops as communication rituals: Hate speech on talk radio",
       "url": "https://doi.org/10.1177/01634437251331809"
+    },
+    {
+      "attribution_id": "openalex",
+      "authors": [],
+      "container_title": null,
+      "doi": "10.1145/3706598.3713460",
+      "id": "doi:be81d9bb772f2a85b9ff",
+      "item_type": "journal_article",
+      "language": "en",
+      "published_at": "2025-04-24T00:00:00Z",
+      "source_family": "openalex",
+      "source_name": "OpenAlex",
+      "source_type": "journal_article",
+      "title": "PAIGE: Examining Learning Outcomes and Experiences with Personalized AI-Generated Educational Podcasts",
+      "url": "https://doi.org/10.1145/3706598.3713460"
     },
     {
       "attribution_id": "openalex",
@@ -4889,6 +5799,21 @@
       "url": "https://doi.org/10.1177/13548565251326796"
     },
     {
+      "attribution_id": "openalex",
+      "authors": [],
+      "container_title": null,
+      "doi": "10.4324/9781003467915-10",
+      "id": "doi:cde0eba4304740ce1770",
+      "item_type": "chapter",
+      "language": "en",
+      "published_at": "2025-03-17T00:00:00Z",
+      "source_family": "openalex",
+      "source_name": "OpenAlex",
+      "source_type": "chapter",
+      "title": "American Evangelicals and the Imaginary Realm on Global Radio, 1920–70",
+      "url": "https://doi.org/10.4324/9781003467915-10"
+    },
+    {
       "attribution_id": "sounding_out",
       "doi": null,
       "id": "url:cd5767c347fe1fbce72f",
@@ -5043,6 +5968,33 @@
       "url": "https://www.tandfonline.com/doi/full/10.1080/19376529.2025.2460834?af=R"
     },
     {
+      "attribution_id": "journal_radio_audio_media",
+      "doi": "10.1080/19376529.2024.2449338",
+      "id": "doi:2bb32565d2b8952a23b9",
+      "language": "en",
+      "published_at": "2025-02-24T00:00:00Z",
+      "source_family": "rss",
+      "source_name": "Journal of Radio & Audio Media / Taylor & Francis Online",
+      "source_type": "journal_article",
+      "title": "Community Building Through the Airwaves : <i>RefFM Radio Station and Young People in Kakuma</i>",
+      "url": "https://doi.org/10.1080/19376529.2024.2449338"
+    },
+    {
+      "attribution_id": "openalex",
+      "authors": [],
+      "container_title": null,
+      "doi": "10.51644/9781771126465-021",
+      "id": "doi:7a599b2f4182c65acb4c",
+      "item_type": "chapter",
+      "language": "en",
+      "published_at": "2025-02-18T00:00:00Z",
+      "source_family": "openalex",
+      "source_name": "OpenAlex",
+      "source_type": "chapter",
+      "title": "Conclusion. Podcast Studies: Now and Next",
+      "url": "https://doi.org/10.51644/9781771126465-021"
+    },
+    {
       "attribution_id": "feminist_media_studies",
       "authors": [],
       "container_title": "Feminist Media Studies",
@@ -5083,6 +6035,36 @@
       "source_type": "blog",
       "title": "On a Blind Date with My First Love, Radio, for 30 Years",
       "url": "https://www.tandfonline.com/doi/full/10.1080/19376529.2024.2437388?af=R"
+    },
+    {
+      "attribution_id": "reseaux",
+      "authors": [],
+      "container_title": "Réseaux",
+      "doi": "10.3917/res.248.0011",
+      "id": "doi:fe34ebea254cfc8dc600",
+      "item_type": "journal_article",
+      "language": "fr",
+      "published_at": "2025-01-14T00:00:00Z",
+      "source_family": "openalex",
+      "source_name": "Réseaux",
+      "source_type": "journal_article",
+      "title": "AI, medicine and the social sciences",
+      "url": "https://doi.org/10.3917/res.248.0011"
+    },
+    {
+      "attribution_id": "reseaux",
+      "authors": [],
+      "container_title": "Réseaux",
+      "doi": "10.3917/res.248.0227",
+      "id": "doi:5b9d4aba7f2436014fce",
+      "item_type": "journal_article",
+      "language": "fr",
+      "published_at": "2025-01-14T00:00:00Z",
+      "source_family": "openalex",
+      "source_name": "Réseaux",
+      "source_type": "journal_article",
+      "title": "The black box and the physician",
+      "url": "https://doi.org/10.3917/res.248.0227"
     },
     {
       "attribution_id": "reseaux",
@@ -6033,6 +7015,36 @@
       "attribution_id": "openalex",
       "authors": [],
       "container_title": null,
+      "doi": "10.1007/978-3-031-77853-7_4",
+      "id": "doi:8b86285a59f90397fbb6",
+      "item_type": "chapter",
+      "language": "en",
+      "published_at": "2025-01-01T00:00:00Z",
+      "source_family": "openalex",
+      "source_name": "OpenAlex",
+      "source_type": "chapter",
+      "title": "Unlocking Multilingualism on Radio in Lesotho",
+      "url": "https://doi.org/10.1007/978-3-031-77853-7_4"
+    },
+    {
+      "attribution_id": "openalex",
+      "authors": [],
+      "container_title": null,
+      "doi": "10.18653/v1/2025.acl-long.1222",
+      "id": "doi:77c5bea51e6e27448d01",
+      "item_type": "journal_article",
+      "language": "en",
+      "published_at": "2025-01-01T00:00:00Z",
+      "source_family": "openalex",
+      "source_name": "OpenAlex",
+      "source_type": "journal_article",
+      "title": "Mapping the Podcast Ecosystem with the Structured Podcast Research Corpus",
+      "url": "https://doi.org/10.18653/v1/2025.acl-long.1222"
+    },
+    {
+      "attribution_id": "openalex",
+      "authors": [],
+      "container_title": null,
       "doi": "10.5040/9798765121405",
       "id": "doi:4a6184eda29a3f299144",
       "item_type": "book",
@@ -6043,6 +7055,21 @@
       "source_type": "book",
       "title": "Literature as Sound Studies",
       "url": "https://doi.org/10.5040/9798765121405"
+    },
+    {
+      "attribution_id": "view_journal",
+      "authors": [],
+      "container_title": "VIEW Journal of European Television History and Culture",
+      "doi": "10.18146/view.353",
+      "id": "doi:e05f09a4d09cbfc5bbb2",
+      "item_type": "journal_article",
+      "language": "en",
+      "published_at": "2024-12-30T00:00:00Z",
+      "source_family": "openalex",
+      "source_name": "VIEW Journal of European Television History and Culture",
+      "source_type": "journal_article",
+      "title": "Television in and After the Archive: Catalogues, Databases, Interfaces and Other Ways to Organize Audiovisual Records",
+      "url": "https://doi.org/10.18146/view.353"
     },
     {
       "attribution_id": "media_culture_society",
@@ -6073,138 +7100,6 @@
       "source_type": "journal_article",
       "title": "Diagrammatic thinking and audience reading of COVID-19 data visualisations: A UK case study",
       "url": "https://doi.org/10.1177/13548565241309886"
-    },
-    {
-      "attribution_id": "reseaux",
-      "authors": [],
-      "container_title": "Réseaux",
-      "doi": "10.3917/res.246.0043",
-      "id": "doi:d61ef8b74170ae943f65",
-      "item_type": "journal_article",
-      "language": "fr",
-      "published_at": "2024-12-17T00:00:00Z",
-      "source_family": "openalex",
-      "source_name": "Réseaux",
-      "source_type": "journal_article",
-      "title": "To the Youtube market. Organization, revenue, topology",
-      "url": "https://doi.org/10.3917/res.246.0043"
-    },
-    {
-      "attribution_id": "reseaux",
-      "authors": [],
-      "container_title": "Réseaux",
-      "doi": "10.3917/res.246.0269",
-      "id": "doi:d3dd43b543ae8f088e70",
-      "item_type": "journal_article",
-      "language": "fr",
-      "published_at": "2024-12-17T00:00:00Z",
-      "source_family": "openalex",
-      "source_name": "Réseaux",
-      "source_type": "journal_article",
-      "title": "Lancetgate or scientific publication put to the test by Twitter",
-      "url": "https://doi.org/10.3917/res.246.0269"
-    },
-    {
-      "attribution_id": "reseaux",
-      "authors": [],
-      "container_title": "Réseaux",
-      "doi": "10.3917/res.246.0011",
-      "id": "doi:c390519421d248310ba8",
-      "item_type": "journal_article",
-      "language": "fr",
-      "published_at": "2024-12-17T00:00:00Z",
-      "source_family": "openalex",
-      "source_name": "Réseaux",
-      "source_type": "journal_article",
-      "title": "Living from one’s views",
-      "url": "https://doi.org/10.3917/res.246.0011"
-    },
-    {
-      "attribution_id": "reseaux",
-      "authors": [],
-      "container_title": "Réseaux",
-      "doi": "10.3917/res.246.0227",
-      "id": "doi:871c3b7a3253ce922300",
-      "item_type": "journal_article",
-      "language": "fr",
-      "published_at": "2024-12-17T00:00:00Z",
-      "source_family": "openalex",
-      "source_name": "Réseaux",
-      "source_type": "journal_article",
-      "title": "Saisir les algorithmes dans l’action",
-      "url": "https://doi.org/10.3917/res.246.0227"
-    },
-    {
-      "attribution_id": "reseaux",
-      "authors": [],
-      "container_title": "Réseaux",
-      "doi": "10.3917/res.246.0089",
-      "id": "doi:73ffe0bc2b766d835c5f",
-      "item_type": "journal_article",
-      "language": "fr",
-      "published_at": "2024-12-17T00:00:00Z",
-      "source_family": "openalex",
-      "source_name": "Réseaux",
-      "source_type": "journal_article",
-      "title": "Staging money",
-      "url": "https://doi.org/10.3917/res.246.0089"
-    },
-    {
-      "attribution_id": "reseaux",
-      "authors": [],
-      "container_title": "Réseaux",
-      "doi": "10.3917/res.246.0127",
-      "id": "doi:536c3fed94565c88790d",
-      "item_type": "journal_article",
-      "language": "fr",
-      "published_at": "2024-12-17T00:00:00Z",
-      "source_family": "openalex",
-      "source_name": "Réseaux",
-      "source_type": "journal_article",
-      "title": "A Capitalism of Donation",
-      "url": "https://doi.org/10.3917/res.246.0127"
-    },
-    {
-      "attribution_id": "reseaux",
-      "authors": [],
-      "container_title": "Réseaux",
-      "doi": "10.3917/res.246.0161",
-      "id": "doi:4c79e973a12e3a59eb39",
-      "item_type": "journal_article",
-      "language": "fr",
-      "published_at": "2024-12-17T00:00:00Z",
-      "source_family": "openalex",
-      "source_name": "Réseaux",
-      "source_type": "journal_article",
-      "title": "L’envers de la notoriété et du marché",
-      "url": "https://doi.org/10.3917/res.246.0161"
-    },
-    {
-      "attribution_id": "openalex",
-      "authors": [],
-      "container_title": null,
-      "doi": "10.51644/9781771126465",
-      "id": "doi:d0712607e5bc821ad077",
-      "item_type": "book",
-      "language": "en",
-      "published_at": "2024-12-13T00:00:00Z",
-      "source_family": "openalex",
-      "source_name": "OpenAlex",
-      "source_type": "book",
-      "title": "Podcast Studies",
-      "url": "https://doi.org/10.51644/9781771126465"
-    },
-    {
-      "attribution_id": "sounding_out",
-      "doi": null,
-      "id": "url:0c3784b2e9a8427d6c48",
-      "language": "und",
-      "published_at": "2024-12-09T14:00:00Z",
-      "source_family": "rss",
-      "source_name": "Sounding Out!",
-      "source_type": "blog",
-      "title": "“This AI will heat up any club”: Reggaetón and the Rise of the Cyborg Genre",
-      "url": "https://soundstudiesblog.com/2024/12/09/this-ai-will-heat-up-any-club-reggaeton-music-and-the-rise-of-the-cyborg-genre"
     }
   ],
   "schema_version": "antenne-radio-public-v0",

@@ -9,54 +9,34 @@ full_width: false
 ---
 
 <style>
-body:has(.rpg-print-sheets) main {
-  background: var(--ctp-base) !important;
-}
-body:has(.rpg-print-sheets) .animate-fade-in-up > header {
-  border-bottom-color: var(--ctp-surface0) !important;
-}
-body:has(.rpg-print-sheets) .animate-fade-in-up > header h1 {
-  color: var(--ctp-peach) !important;
-}
-body:has(.rpg-print-sheets) .breadcrumb a,
-body:has(.rpg-print-sheets) .breadcrumb-separator,
-body:has(.rpg-print-sheets) .breadcrumb-current {
-  color: var(--ctp-subtext0) !important;
-}
-.article-prose:has(.rpg-print-sheets) {
-  max-width: min(210mm, calc(100vw - 2rem));
-  width: 100%;
-}
+/* Fiches imprimables : feuille A4, rendu sobre et autonome. Aucune dépendance
+   au thème global ; uniquement des variables locales. */
 .rpg-print-sheets {
-  --sheet-bg: var(--ctp-mantle);
-  --sheet-ink: var(--ctp-text);
-  --sheet-muted: var(--ctp-subtext0);
-  --sheet-line: var(--ctp-surface2);
-  --sheet-soft: var(--ctp-surface0);
-  --sheet-accent: var(--ctp-mauve);
-  --sheet-accent-2: var(--ctp-blue);
-  color: var(--sheet-ink) !important;
+  --sheet-bg: #fff;
+  --sheet-ink: var(--fg);
+  --sheet-muted: var(--fg);
+  --sheet-line: var(--rule);
+  --sheet-soft: var(--code-bg);
+  --sheet-accent: var(--fg-strong);
+  color: var(--sheet-ink);
   max-width: 210mm;
   margin: 0 auto 4rem;
 }
-.rpg-print-sheets :where(h1, h2, h3, h4, h5, h6, p, li, table, th, td) {
-  color: var(--sheet-ink) !important;
-}
-.rpg-print-sheets :where(strong, b) {
-  color: var(--sheet-accent-2) !important;
-}
-.rpg-print-sheets :where(em, i) {
-  color: var(--ctp-green) !important;
+/* Sur écran, les fiches débordent la colonne de lecture (66ch). */
+main:has(.rpg-print-sheets),
+.article-prose:has(.rpg-print-sheets) {
+  max-width: min(210mm, calc(100vw - 2rem));
+  width: 100%;
 }
 .rpg-print-sheets :where(p, li, blockquote) {
   text-align: start;
   text-align-last: auto;
 }
 .rpg-print-sheets :where(th, td) {
-  border-color: var(--sheet-line) !important;
+  border-color: var(--sheet-line);
 }
 .rpg-print-sheets :where(thead th) {
-  background-color: color-mix(in srgb, var(--sheet-soft) 72%, transparent) !important;
+  background-color: var(--sheet-soft);
 }
 .rpg-print-intro {
   text-align: center;
@@ -76,7 +56,7 @@ body:has(.rpg-print-sheets) .breadcrumb-current {
   page-break-after: auto;
   border: 1px solid var(--sheet-line);
   background: var(--sheet-bg);
-  box-shadow: 8px 8px 0 var(--ctp-crust);
+  box-shadow: 6px 6px 0 var(--sheet-line);
 }
 .rpg-sheet-page:last-child {
   break-after: auto;
@@ -170,12 +150,19 @@ body:has(.rpg-print-sheets) .breadcrumb-current {
     color: #111 !important;
   }
 
-  body:has(.rpg-print-sheets),
-  body:has(.rpg-print-sheets) #app-shell,
+  /* Tout le chrome du site disparaît à l'impression. */
+  body:has(.rpg-print-sheets) .site-header,
+  body:has(.rpg-print-sheets) .site-footer,
+  body:has(.rpg-print-sheets) .breadcrumb,
+  body:has(.rpg-print-sheets) .article-header,
+  body:has(.rpg-print-sheets) .article-toc,
+  body:has(.rpg-print-sheets) .toc-btn,
+  body:has(.rpg-print-sheets) .toc-float-panel,
+  body:has(.rpg-print-sheets) .article-attachment {
+    display: none !important;
+  }
+
   body:has(.rpg-print-sheets) main,
-  body:has(.rpg-print-sheets) main > div,
-  body:has(.rpg-print-sheets) main > div > div,
-  body:has(.rpg-print-sheets) .animate-fade-in-up,
   body:has(.rpg-print-sheets) .article-prose {
     position: static !important;
     display: block !important;
@@ -195,18 +182,6 @@ body:has(.rpg-print-sheets) .breadcrumb-current {
     color: #111 !important;
   }
 
-  body:has(.rpg-print-sheets) .breadcrumb,
-  body:has(.rpg-print-sheets) #app-shell > header,
-  body:has(.rpg-print-sheets) .fixed.bottom-0,
-  body:has(.rpg-print-sheets) .animate-fade-in-up > header,
-  body:has(.rpg-print-sheets) #sidebar-panel,
-  body:has(.rpg-print-sheets) #sidebar-backdrop,
-  body:has(.rpg-print-sheets) #toc-panel,
-  body:has(.rpg-print-sheets) #toc-backdrop,
-  body:has(.rpg-print-sheets) .md\:hidden {
-    display: none !important;
-  }
-
   .rpg-print-sheets {
     --sheet-bg: #fff !important;
     --sheet-ink: #111 !important;
@@ -214,7 +189,6 @@ body:has(.rpg-print-sheets) .breadcrumb-current {
     --sheet-line: #222 !important;
     --sheet-soft: #fff !important;
     --sheet-accent: #111 !important;
-    --sheet-accent-2: #111 !important;
     width: 190mm !important;
     max-width: 190mm !important;
     margin: 0 !important;
@@ -280,7 +254,7 @@ body:has(.rpg-print-sheets) .breadcrumb-current {
   display: block;
   aspect-ratio: 1 / 1;
   border: 1px solid var(--sheet-line);
-  background: var(--ctp-base);
+  background: #fff;
 }
 .character-bio {
   border: 1.4px solid var(--sheet-line);
@@ -420,7 +394,7 @@ body:has(.rpg-print-sheets) .breadcrumb-current {
 
 <div class="name-line"><strong>Nom :</strong><span></span></div>
 
-<p>Tout a commencé à huit ans, le jour où un papillon a croisé son chemin. Iel l'a suivi — évidemment, qui ne l'aurait pas fait ? Le papillon l'a mené·e jusqu'à une grotte humide au fond de laquelle quelque chose palpitait doucement. Iel s'est approché·e. Et puis plus rien. Vingt-quatre heures plus tard, iel est ressorti·e d'un cocon, couvert·e d'une substance étrangement apaisante. Ses parents, qui avaient déjà commencé à porter le deuil, n'en sont pas revenu·es. Iel non plus, d'une certaine manière : quelque chose avait changé, là-dedans. On lui a interdit d'y retourner. Iel y retournait quand même, discrètement, la nuit, dessinait les organismes, prélevait des échantillons. À seize ans, major de promo en biologie. À dix-neuf, en s'inspirant de la structure des cocons, iel concevait des armures de protection spatiale pour son père soldat et les commercialisait, avec un succès inattendu. Iel devint le·a plus riche PDG d'entreprise biotechnologique de la galaxie. Obsédé·e par la prochaine planète inexplorée, le prochain spécimen improbable, iel a initié la mission de reconnaissance dans laquelle sont embarqués tous les personnages. Iel est convaincu·e que chaque espèce, même la plus hideuse, cache un trésor utile à l'humanité. Il suffit juste de savoir regarder.</p>
+<p>Tout a commencé à huit ans, le jour où un papillon a croisé son chemin. Iel l'a suivi, évidemment, qui ne l'aurait pas fait ? Le papillon l'a mené·e jusqu'à une grotte humide au fond de laquelle quelque chose palpitait doucement. Iel s'est approché·e. Et puis plus rien. Vingt-quatre heures plus tard, iel est ressorti·e d'un cocon, couvert·e d'une substance étrangement apaisante. Ses parents, qui avaient déjà commencé à porter le deuil, n'en sont pas revenu·es. Iel non plus, d'une certaine manière : quelque chose avait changé, là-dedans. On lui a interdit d'y retourner. Iel y retournait quand même, discrètement, la nuit, dessinait les organismes, prélevait des échantillons. À seize ans, major de promo en biologie. À dix-neuf, en s'inspirant de la structure des cocons, iel concevait des armures de protection spatiale pour son père soldat et les commercialisait, avec un succès inattendu. Iel devint le·a plus riche PDG d'entreprise biotechnologique de la galaxie. Obsédé·e par la prochaine planète inexplorée, le prochain spécimen improbable, iel a initié la mission de reconnaissance dans laquelle sont embarqués tous les personnages. Iel est convaincu·e que chaque espèce, même la plus hideuse, cache un trésor utile à l'humanité. Il suffit juste de savoir regarder.</p>
 
 </div>
 
@@ -430,8 +404,8 @@ body:has(.rpg-print-sheets) .breadcrumb-current {
 
 ### Compétences passives
 
-- **Lecture biologique** — *Identifie auto si créature/plante est comestible, toxique ou utile. Le MJ donne au moins une info.*
-- **Symbiose intuitive** — *Les créatures ne l'attaquent pas au premier tour (sauf provocation directe). Iel ne sera jamais le·a premier·ère à être ciblé·e.*
+- **Lecture biologique** : *Identifie auto si créature/plante est comestible, toxique ou utile. Le MJ donne au moins une info.*
+- **Symbiose intuitive** : *Les créatures ne l'attaquent pas au premier tour (sauf provocation directe). Iel ne sera jamais le·a premier·ère à être ciblé·e.*
 
 </div>
 
@@ -439,7 +413,7 @@ body:has(.rpg-print-sheets) .breadcrumb-current {
 
 ### Combat
 
-- **Maître·esse des herbes et potions** — *Peut concocter des brevages offensifs ou défensifs qui donnent +2 RES ou FOR le temps d'un combat à un allié.*
+- **Maître·esse des herbes et potions** : *Peut concocter des brevages offensifs ou défensifs qui donnent +2 RES ou FOR le temps d'un combat à un allié.*
 
 </div>
 
@@ -453,13 +427,13 @@ Essaye toujours de capturer plutôt qu'achever. **-5 pour porter le coup fatal.*
 
 <div class="rpg-box character-choices">
 
-### Compétences au choix — Choisis 2 parmi 5
+### Compétences au choix : choisis 2 parmi 5
 
-- [ ] **Phéromones de pacification** — *1×/biome, force un ennemi biologique à passer son tour.*
-- [ ] **Collecteur·rice expert·e** — *Une fois par biome, peut fabriquer un kit de soin à partir d'échantillons organiques. Le kit rend 1d6PV.*
-- [ ] **Masta' Beast Masta'** — *Apprivoise une petite créature compagnon (attaque 1d6, peut distraire un ennemi ou absorber un coup).*
-- [ ] **Décodeur de patterns** — *À partir du second tour de combat, iel obtient une nouvelle information sur la créature.*
-- [ ] **Toxicologue** — *Immunité aux poisons et aux gazs toxiques.*
+- [ ] **Phéromones de pacification** : *1×/biome, force un ennemi biologique à passer son tour.*
+- [ ] **Collecteur·rice expert·e** : *Une fois par biome, peut fabriquer un kit de soin à partir d'échantillons organiques. Le kit rend 1d6PV.*
+- [ ] **Masta' Beast Masta'** : *Apprivoise une petite créature compagnon (attaque 1d6, peut distraire un ennemi ou absorber un coup).*
+- [ ] **Décodeur de patterns** : *À partir du second tour de combat, iel obtient une nouvelle information sur la créature.*
+- [ ] **Toxicologue** : *Immunité aux poisons et aux gazs toxiques.*
 
 </div>
 
@@ -560,8 +534,8 @@ Essaye toujours de capturer plutôt qu'achever. **-5 pour porter le coup fatal.*
 
 ### Compétences passives
 
-- **Instinct de survie** — *Ne peut jamais être tué en un seul coup. Si devrait mourir → reste à 1 PV (2×/partie). Même s'il doit subir -4PV alors qu'il ne lui en reste que 2, il survit à 1PV.*
-- **Rat de laboratoire** — *Immunité aux poisons.*
+- **Instinct de survie** : *Ne peut jamais être tué en un seul coup. Si devrait mourir → reste à 1 PV (2×/partie). Même s'il doit subir -4PV alors qu'il ne lui en reste que 2, il survit à 1PV.*
+- **Rat de laboratoire** : *Immunité aux poisons.*
 
 </div>
 
@@ -569,8 +543,8 @@ Essaye toujours de capturer plutôt qu'achever. **-5 pour porter le coup fatal.*
 
 ### Combat
 
-- **Frappe décisive** — *2×/partie, transforme un coup en critique auto (déclarer avant le jet).*
-- **Riposte** — *Si une attaque le·a rate, contre-attaque immédiate (sans coût d'action).*
+- **Frappe décisive** : *2×/partie, transforme un coup en critique auto (déclarer avant le jet).*
+- **Riposte** : *Si une attaque le·a rate, contre-attaque immédiate (sans coût d'action).*
 
 </div>
 
@@ -584,13 +558,13 @@ Essaye toujours de capturer plutôt qu'achever. **-5 pour porter le coup fatal.*
 
 <div class="rpg-box character-choices">
 
-### Compétences au choix — Choisis 2 parmi 5
+### Compétences au choix : choisis 2 parmi 5
 
-- [ ] **Tir de suppression** — *Force toutes les créatures d'une zone à se mettre à couvert 1 tour.*
-- [ ] **Démolisseur** — *+4 pour détruire structures, carapaces, barrières. Peut forcer les passages.*
-- [ ] **Commandement de terrain** — *1×/tour, donne un ordre tactique : un·e allié·e se repositionne gratuitement ou gagne +2 à sa prochaine action.*
-- [ ] **Seconde peau** — *L'armure ne gêne jamais ses mouvements.*
-- [ ] **Zéro hésitation** — *Agit toujours en premier au 1<sup>er</sup> tour. **Malus :** ne peut pas fuir.*
+- [ ] **Tir de suppression** : *Force toutes les créatures d'une zone à se mettre à couvert 1 tour.*
+- [ ] **Démolisseur** : *+4 pour détruire structures, carapaces, barrières. Peut forcer les passages.*
+- [ ] **Commandement de terrain** : *1×/tour, donne un ordre tactique : un·e allié·e se repositionne gratuitement ou gagne +2 à sa prochaine action.*
+- [ ] **Seconde peau** : *L'armure ne gêne jamais ses mouvements.*
+- [ ] **Zéro hésitation** : *Agit toujours en premier au 1<sup>er</sup> tour. **Malus :** ne peut pas fuir.*
 
 </div>
 
@@ -691,8 +665,8 @@ Essaye toujours de capturer plutôt qu'achever. **-5 pour porter le coup fatal.*
 
 ### Compétences passives
 
-- **Personne ne me surveille** — *Se déplace discrètement même observé. Les créatures ciblent les autres en priorité.*
-- **Sang-froid** — *Quand iel est à 3 PV ou moins, iel gagne +2 à tous ses jets au lieu de paniquer. Plus la situation est désespérée, plus iel devient dangereux·se.*
+- **Personne ne me surveille** : *Se déplace discrètement même observé. Les créatures ciblent les autres en priorité.*
+- **Sang-froid** : *Quand iel est à 3 PV ou moins, iel gagne +2 à tous ses jets au lieu de paniquer. Plus la situation est désespérée, plus iel devient dangereux·se.*
 
 </div>
 
@@ -700,8 +674,8 @@ Essaye toujours de capturer plutôt qu'achever. **-5 pour porter le coup fatal.*
 
 ### Combat
 
-- **Coup bas** — *Par surprise : **coup critique**. Si raté, la cible se concentre exclusivement sur lui.*
-- **Lampe empoisonnée** — *Enduit ses armes ou ses projectiles de substances empoisonnées. Les attaques appliquent l'état empoisonné pendant deux tours (non-cumulable).*
+- **Coup bas** : *Par surprise : **coup critique**. Si raté, la cible se concentre exclusivement sur lui.*
+- **Lampe empoisonnée** : *Enduit ses armes ou ses projectiles de substances empoisonnées. Les attaques appliquent l'état empoisonné pendant deux tours (non-cumulable).*
 
 </div>
 
@@ -715,13 +689,13 @@ Essaye toujours de capturer plutôt qu'achever. **-5 pour porter le coup fatal.*
 
 <div class="rpg-box character-choices">
 
-### Compétences au choix — Choisis 2 parmi 5
+### Compétences au choix : choisis 2 parmi 5
 
-- [ ] **Saltimbanque** — *Très habile en toutes circonstances (+2 AGI).*
-- [ ] **Joker** — *2×/biome, annule une conséquence négative le concernant.*
-- [ ] **Caméléon** — *1×/biome, peut imiter le comportement ou la posture d'une créature observée pendant 1 tour. Pendant 1 tour (ou 1 scène hors combat), les créatures de cette espèce le traitent comme l'un des leurs.*
-- [ ] **Fantôme** — *Après avoir infligé des dégâts, iel peut immédiatement se repositionner (se mettre à couvert, reculer, changer de flanc). Les ennemis perdent sa trace jusqu'à sa prochaine attaque.*
-- [ ] **Assassin Drama Queen** — *Quand iel tombe à 0 PV, iel ne meurt pas immédiatement. Iel a droit à une dernière action : une attaque, un mot, un geste, un sabotage. Cette action bénéficie de +5 au jet ! Puis iel s'effondre en soupirant très fort.*
+- [ ] **Saltimbanque** : *Très habile en toutes circonstances (+2 AGI).*
+- [ ] **Joker** : *2×/biome, annule une conséquence négative le concernant.*
+- [ ] **Caméléon** : *1×/biome, peut imiter le comportement ou la posture d'une créature observée pendant 1 tour. Pendant 1 tour (ou 1 scène hors combat), les créatures de cette espèce le traitent comme l'un des leurs.*
+- [ ] **Fantôme** : *Après avoir infligé des dégâts, iel peut immédiatement se repositionner (se mettre à couvert, reculer, changer de flanc). Les ennemis perdent sa trace jusqu'à sa prochaine attaque.*
+- [ ] **Assassin Drama Queen** : *Quand iel tombe à 0 PV, iel ne meurt pas immédiatement. Iel a droit à une dernière action : une attaque, un mot, un geste, un sabotage. Cette action bénéficie de +5 au jet ! Puis iel s'effondre en soupirant très fort.*
 
 </div>
 
@@ -822,8 +796,8 @@ Essaye toujours de capturer plutôt qu'achever. **-5 pour porter le coup fatal.*
 
 ### Compétences passives
 
-- **Sociopathe** — *Iel peut ignorer les décisions collectives et agir dans son coin, parce qu'iel sait mieux que tout le monde.*
-- **Optimisation continue** — *Chaque objet utilisé régulièrement gagne +1 après 2 jours (cumulable 2× max).*
+- **Sociopathe** : *Iel peut ignorer les décisions collectives et agir dans son coin, parce qu'iel sait mieux que tout le monde.*
+- **Optimisation continue** : *Chaque objet utilisé régulièrement gagne +1 après 2 jours (cumulable 2× max).*
 
 </div>
 
@@ -831,8 +805,8 @@ Essaye toujours de capturer plutôt qu'achever. **-5 pour porter le coup fatal.*
 
 ### Combat
 
-- **Tourelle improvisée** — *Construit une tourelle légère (1 tour de setup) qui tire automatiquement (1d6/tour).*
-- **Data Analyst** — *Peut activer la posture Data Analyst : iel ne peut plus jouer mais observe et étudie tout ce qui se passe grâce à ses intruments de mesure. Dans cet état, retire 2 RES à tous les adversaires.*
+- **Tourelle improvisée** : *Construit une tourelle légère (1 tour de setup) qui tire automatiquement (1d6/tour).*
+- **Data Analyst** : *Peut activer la posture Data Analyst : iel ne peut plus jouer mais observe et étudie tout ce qui se passe grâce à ses intruments de mesure. Dans cet état, retire 2 RES à tous les adversaires.*
 
 </div>
 
@@ -846,13 +820,13 @@ Essaye toujours de capturer plutôt qu'achever. **-5 pour porter le coup fatal.*
 
 <div class="rpg-box character-choices">
 
-### Compétences au choix — Choisis 2 parmi 5
+### Compétences au choix : choisis 2 parmi 5
 
-- [ ] **Firewall mental** — *Immunisé aux effets psychiques/hypnotiques des créatures.*
-- [ ] **Télémétrie avancée** — *+3 PER grâce à ses super lunettes.*
-- [ ] **Armurier** — *Au début de chaque biome, désigne un allié dont l'armure gagne +1 RES.*
-- [ ] **Forgeron** — *Au début de chaque biome, désigne un allié dont l'arme gagne +1 DEG.*
-- [ ] **Fusées de dispersion** — *Il possède deux puissantes fusées IEM qui déstabilisent les cibles et infligent 2d10 DMG en TECHNO.*
+- [ ] **Firewall mental** : *Immunisé aux effets psychiques/hypnotiques des créatures.*
+- [ ] **Télémétrie avancée** : *+3 PER grâce à ses super lunettes.*
+- [ ] **Armurier** : *Au début de chaque biome, désigne un allié dont l'armure gagne +1 RES.*
+- [ ] **Forgeron** : *Au début de chaque biome, désigne un allié dont l'arme gagne +1 DEG.*
+- [ ] **Fusées de dispersion** : *Il possède deux puissantes fusées IEM qui déstabilisent les cibles et infligent 2d10 DMG en TECHNO.*
 
 </div>
 
@@ -953,8 +927,8 @@ Essaye toujours de capturer plutôt qu'achever. **-5 pour porter le coup fatal.*
 
 ### Compétences passives
 
-- **Poison goûtu** — *L'état empoisonné lui rend 1PV/tour au lui de lui en retirer.*
-- **Quand l'estomac est content...** — *+1 à tous les jets grâce aux bons petits plats du cuisto préféré de l'équipage.*
+- **Poison goûtu** : *L'état empoisonné lui rend 1PV/tour au lui de lui en retirer.*
+- **Quand l'estomac est content...** : *+1 à tous les jets grâce aux bons petits plats du cuisto préféré de l'équipage.*
 
 </div>
 
@@ -962,8 +936,8 @@ Essaye toujours de capturer plutôt qu'achever. **-5 pour porter le coup fatal.*
 
 ### Combat
 
-- **Recette de grand-mère** — *Pendant le combat, peut utiliser une action pour soigner un·e allié·e de 1d6 une fois par combat*
-- **Précision de boucher·ère** — *Si une créature à 4 PV ou moins, iel peut l'exécuter si iel fait une réussite aux dés (>12 CREA).*
+- **Recette de grand-mère** : *Pendant le combat, peut utiliser une action pour soigner un·e allié·e de 1d6 une fois par combat*
+- **Précision de boucher·ère** : *Si une créature à 4 PV ou moins, iel peut l'exécuter si iel fait une réussite aux dés (>12 CREA).*
 
 </div>
 
@@ -977,13 +951,13 @@ Essaye toujours de capturer plutôt qu'achever. **-5 pour porter le coup fatal.*
 
 <div class="rpg-box character-choices">
 
-### Compétences au choix — Choisis 2 parmi 5
+### Compétences au choix : choisis 2 parmi 5
 
-- [ ] **Chimiste culinaire** — *Extrait substances actives en cuisinant : toxines, stimulants, antidotes.*
-- [ ] **Festin revigorant** — *Lors d'un repos, soigne **tout le groupe** de 2 PV chacun.*
-- [ ] **Appât gourmet** — *Prépare appât irrésistible pour un type de créature. Il peut attirer une créature. Mais le jet déterminera l'attitude de la créature.*
-- [ ] **Dernier repas** — *Une seule fois par partie, peut redonner la vie à un·e allié·e mort·e.*
-- [ ] **Injection d'adrénaline** — *3×/partie, prépare un stimulant qui donne +2 FOR à un allié pour toute la durée du combat.*
+- [ ] **Chimiste culinaire** : *Extrait substances actives en cuisinant : toxines, stimulants, antidotes.*
+- [ ] **Festin revigorant** : *Lors d'un repos, soigne **tout le groupe** de 2 PV chacun.*
+- [ ] **Appât gourmet** : *Prépare appât irrésistible pour un type de créature. Il peut attirer une créature. Mais le jet déterminera l'attitude de la créature.*
+- [ ] **Dernier repas** : *Une seule fois par partie, peut redonner la vie à un·e allié·e mort·e.*
+- [ ] **Injection d'adrénaline** : *3×/partie, prépare un stimulant qui donne +2 FOR à un allié pour toute la durée du combat.*
 
 </div>
 
@@ -1084,8 +1058,8 @@ Essaye toujours de capturer plutôt qu'achever. **-5 pour porter le coup fatal.*
 
 ### Compétences passives
 
-- **J'ai toujours du feu sur moi** — *+2 aux jets impliquant l'élément feu. De plus, les attaques portées avec des armes de type feu enflamment les cibles pendant de tour. État enflammé : la cible perd 1PV au début de son tour de jeu.*
-- **Peau épaisse** — *Réduit de 1 tous les dégâts reçus (s'iel doit subir -1PV, iel subit néanmoins -1PV). Les brûlures ne lui font aucun effet.*
+- **J'ai toujours du feu sur moi** : *+2 aux jets impliquant l'élément feu. De plus, les attaques portées avec des armes de type feu enflamment les cibles pendant de tour. État enflammé : la cible perd 1PV au début de son tour de jeu.*
+- **Peau épaisse** : *Réduit de 1 tous les dégâts reçus (s'iel doit subir -1PV, iel subit néanmoins -1PV). Les brûlures ne lui font aucun effet.*
 
 </div>
 
@@ -1093,8 +1067,8 @@ Essaye toujours de capturer plutôt qu'achever. **-5 pour porter le coup fatal.*
 
 ### Combat
 
-- **Cocktails molotov** — *Peut fabriquer des cocktails Molotov facilement. **Part avec 2 cocktails Molotov.***
-- **Cri de provocation** — *Pousse un hurlement qui enrage les adversaires et les met au défi. 2d10 RES réussite à 12. En cas de réussite, la prochaine attaque de chaque ennemi ciblera le·a pompiste.*
+- **Cocktails molotov** : *Peut fabriquer des cocktails Molotov facilement. **Part avec 2 cocktails Molotov.***
+- **Cri de provocation** : *Pousse un hurlement qui enrage les adversaires et les met au défi. 2d10 RES réussite à 12. En cas de réussite, la prochaine attaque de chaque ennemi ciblera le·a pompiste.*
 
 </div>
 
@@ -1108,13 +1082,13 @@ Essaye toujours de capturer plutôt qu'achever. **-5 pour porter le coup fatal.*
 
 <div class="rpg-box character-choices">
 
-### Compétences au choix — Choisis 2 parmi 5
+### Compétences au choix : choisis 2 parmi 5
 
-- [ ] **Bombe artisanale** — *Fabrique un explosif improvisé avec les matériaux disponibles (1 tour de préparation). 2d10 dégâts en zone, détruit les barricades et structures. Jet de BRICOL (diff. 10) : échec = explose prématurément (1d6 dégâts à iel et aux alliés proches qui ignore 2 RES). 2×/partie*
-- [ ] **Surcharge thermique contrôlée** — *Pousse un objet, une arme, une armure, au-delà des limites : +3 aux dés, mais destruction au bout de deux utilisations.*
-- [ ] **Mur de flamme** — *Créé un mur de flamme où il le souhaite. Il inflige -2PV et appliqué l'état enflammé si un PJ ou une créature le traverse.*
-- [ ] **Mastodonte** — *Soulève ou déplace les objets lourds. +4 FOR pour les actions de force brute. Hors combat, ou pour manipulation tactique en combat (pas pour attaquer).*
-- [ ] **Bouclier de fortune** — *Fabrique un bouclier avec des débris. +2 RES, se détruit après un combat.*
+- [ ] **Bombe artisanale** : *Fabrique un explosif improvisé avec les matériaux disponibles (1 tour de préparation). 2d10 dégâts en zone, détruit les barricades et structures. Jet de BRICOL (diff. 10) : échec = explose prématurément (1d6 dégâts à iel et aux alliés proches qui ignore 2 RES). 2×/partie*
+- [ ] **Surcharge thermique contrôlée** : *Pousse un objet, une arme, une armure, au-delà des limites : +3 aux dés, mais destruction au bout de deux utilisations.*
+- [ ] **Mur de flamme** : *Créé un mur de flamme où il le souhaite. Il inflige -2PV et appliqué l'état enflammé si un PJ ou une créature le traverse.*
+- [ ] **Mastodonte** : *Soulève ou déplace les objets lourds. +4 FOR pour les actions de force brute. Hors combat, ou pour manipulation tactique en combat (pas pour attaquer).*
+- [ ] **Bouclier de fortune** : *Fabrique un bouclier avec des débris. +2 RES, se détruit après un combat.*
 
 </div>
 
