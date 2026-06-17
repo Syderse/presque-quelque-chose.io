@@ -1,0 +1,79 @@
+{{- /* SHORTCODE: EMBED (P19 — façade click-to-load)
+  But : ne rien charger tant qu'on n'a pas cliqué. On rend une façade sobre
+  (type + titre) ; au clic, un petit script vanilla injecte l'iframe réelle
+  (ou, pour redcircle, le script + le conteneur du lecteur).
+  Paramètres :
+    type   youtube | spotify | acast | redcircle   (obligatoire)
+    id     identifiant (vidéo YouTube, ou épisode redcircle pour la classe)
+    src    URL complète (iframe, ou src du script redcircle)
+    title  libellé affiché sur la façade
+    height hauteur en px pour les lecteurs audio (défaut selon le type)
+  Aucune fonte/CDN ajouté, CSP inchangée. Le script n'est émis qu'une fois
+  par page (garde via .Page.Store). */ -}}
+{{- $type := lower (.Get "type") -}}
+{{- $id := .Get "id" -}}
+{{- $src := .Get "src" -}}
+{{- $title := .Get "title" -}}
+{{- $height := .Get "height" -}}
+{{- $isVideo := eq $type "youtube" -}}
+{{- /* libellé de type, en clair */ -}}
+{{- $label := index (dict
+      "youtube" "vidéo"
+      "spotify" "podcast"
+      "acast" "podcast"
+      "redcircle" "podcast") $type -}}
+{{- with $label | default "média" -}}{{- $label = . -}}{{- end -}}
+{{- /* URL réelle selon le type */ -}}
+{{- $url := $src -}}
+{{- if and $isVideo $id (not $src) -}}
+  {{- $url = printf "https://www.youtube.com/embed/%s" $id -}}
+{{- end -}}
+{{- /* hauteur par défaut des lecteurs audio */ -}}
+{{- if and (not $isVideo) (not $height) -}}
+  {{- $height = cond (eq $type "acast") "110" (cond (eq $type "spotify") "152" "") -}}
+{{- end -}}
+{{- $cls := cond $isVideo "embed--video" "embed--audio" -}}
+<div class="embed embed--{{ $type }} {{ $cls }}"{{ with $height }} style="--embed-h: {{ . }}px"{{ end }}>
+  <button type="button" class="embed-facade"
+    data-embed-type="{{ $type }}"
+    data-embed-src="{{ $url }}"
+    {{ with $id }}data-embed-id="{{ . }}"{{ end }}
+    data-embed-title="{{ $title }}"
+    aria-label="Charger : {{ with $title }}{{ . }}{{ else }}{{ $label }}{{ end }}">
+    <span class="embed-facade-kind">{{ $label }}</span>
+    {{ with $title }}<span class="embed-facade-title">{{ . }}</span>{{ end }}
+    <span class="embed-facade-cue">cliquer pour charger</span>
+  </button>
+</div>
+{{- if not (.Page.Store.Get "embed_js_done") -}}
+{{- .Page.Store.Set "embed_js_done" true -}}
+<script>
+(function () {
+  function load(btn) {
+    var d = btn.dataset, wrap = btn.parentNode;
+    if (d.embedType === "redcircle") {
+      var div = document.createElement("div");
+      div.className = "redcirclePlayer-" + d.embedId;
+      var s = document.createElement("script");
+      s.async = true; s.defer = true; s.src = d.embedSrc;
+      s.onload = function () { if (window.redcircleIframe) window.redcircleIframe(); };
+      wrap.replaceChild(div, btn);
+      wrap.appendChild(s);
+      return;
+    }
+    var f = document.createElement("iframe");
+    f.src = d.embedSrc;
+    f.title = d.embedTitle || "";
+    f.loading = "lazy";
+    f.setAttribute("frameborder", "0");
+    f.setAttribute("allowfullscreen", "");
+    f.allow = "accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share";
+    wrap.replaceChild(f, btn);
+  }
+  document.addEventListener("click", function (e) {
+    var btn = e.target.closest(".embed-facade");
+    if (btn) load(btn);
+  });
+})();
+</script>
+{{- end -}}

@@ -13,7 +13,7 @@ authors:
   - Mathieu Allag
 ---
 
-<iframe src="https://embed.acast.com/66f2a18a7a3d63d20ff5a0b5/6707c373faebb1a9f1130c03" frameBorder="0" width="100%" height="110px"></iframe>
+{{< embed type="acast" src="https://embed.acast.com/66f2a18a7a3d63d20ff5a0b5/6707c373faebb1a9f1130c03" height="110" >}}
 
 **Pot-au-feu** - masculin. Plat traditionnel de la cuisine française, composé de viande de bœuf cuisant dans un bouillon aromatisé par des légumes et un bouquet garni.
 
@@ -33,6 +33,6 @@ Prise de son et montage : _Kenza Benyahia et Mathieu Allag_
 
 Musique : _Jérôme Evrard_
 
-Retour au [début de la trilogie](../1-autour-du-pot/).
+Retour au [début de la trilogie](/ondes-pixels/autour-du-pot/1-autour-du-pot/).
 
 ---

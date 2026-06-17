@@ -11,15 +11,14 @@ authors:
   - Mathieu Allag
 ---
 
-<script async defer onload="redcircleIframe();" src="https://api.podcache.net/embedded-player/sh/c4addcff-24e9-4f4f-a061-41800c8201a0/ep/6abe5f25-6801-4e5d-9a3b-81a39a0672d7"></script>
-<div class="redcirclePlayer-6abe5f25-6801-4e5d-9a3b-81a39a0672d7"></div>
+{{< embed type="redcircle" id="6abe5f25-6801-4e5d-9a3b-81a39a0672d7" src="https://api.podcache.net/embedded-player/sh/c4addcff-24e9-4f4f-a061-41800c8201a0/ep/6abe5f25-6801-4e5d-9a3b-81a39a0672d7" >}}
 
 ---
 
-<iframe width="560" height="315" src="https://www.youtube.com/embed/RdOPPkh6zM0" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe>
+{{< embed type="youtube" id="RdOPPkh6zM0" >}}
 
 Manifeste pour une science du placement des aïeules. L'immobilité n'est pas une fatalité, c'est une typologie. Et il est urgent de l'établir, quelque part entre la coloscopie et la poésie.
 
 ---
 
-Pour la suite : [Nomades et pointillés](../2_chat_nomades/).
+Pour la suite : [Nomades et pointillés](/ondes-pixels/mamies/2_chat_nomades/).

@@ -14,12 +14,11 @@ authors:
   - Mathieu Allag
 ---
 
-<script async defer onload="redcircleIframe();" src="https://api.podcache.net/embedded-player/sh/c4addcff-24e9-4f4f-a061-41800c8201a0/ep/3771ca90-470a-4040-a096-bf33cb284071"></script>
-<div class="redcirclePlayer-3771ca90-470a-4040-a096-bf33cb284071"></div>
+{{< embed type="redcircle" id="3771ca90-470a-4040-a096-bf33cb284071" src="https://api.podcache.net/embedded-player/sh/c4addcff-24e9-4f4f-a061-41800c8201a0/ep/3771ca90-470a-4040-a096-bf33cb284071" >}}
 
 ---
 
-<iframe width="560" height="315" src="https://www.youtube.com/embed/HKmhBdgJTRs?si=gTT0OBq--HEH3sUD" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe>
+{{< embed type="youtube" src="https://www.youtube.com/embed/HKmhBdgJTRs?si=gTT0OBq--HEH3sUD" >}}
 
 Miyazaki est-il un boucher matérialiste anti-merveilleux qui a des penchants refoulés pour le gore ? Ou est-ce que ça fait partie des techniques qu'il utilise pour incarner ses créatures merveilleuses ?
 
@@ -40,4 +39,4 @@ Le mémoire intégral est accessible sur mon site : [Fabriquer un bestiaire aujo
 
 ---
 
-Pour la suite de l'enquête : [Tsuchi-gumo](../2_tsuchi_gumo/).
+Pour la suite de l'enquête : [Tsuchi-gumo](/ondes-pixels/bestiaire_miyazaki_youtube/2_tsuchi_gumo/).

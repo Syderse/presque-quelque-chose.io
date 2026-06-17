@@ -9,54 +9,34 @@ full_width: false
 ---
 
 <style>
-body:has(.rpg-print-sheets) main {
-  background: var(--ctp-base) !important;
-}
-body:has(.rpg-print-sheets) .animate-fade-in-up > header {
-  border-bottom-color: var(--ctp-surface0) !important;
-}
-body:has(.rpg-print-sheets) .animate-fade-in-up > header h1 {
-  color: var(--ctp-peach) !important;
-}
-body:has(.rpg-print-sheets) .breadcrumb a,
-body:has(.rpg-print-sheets) .breadcrumb-separator,
-body:has(.rpg-print-sheets) .breadcrumb-current {
-  color: var(--ctp-subtext0) !important;
-}
-.article-prose:has(.rpg-print-sheets) {
-  max-width: min(210mm, calc(100vw - 2rem));
-  width: 100%;
-}
+/* Fiches imprimables : feuille A4, rendu sobre et autonome. Aucune dépendance
+   au thème global ; uniquement des variables locales. */
 .rpg-print-sheets {
-  --sheet-bg: var(--ctp-mantle);
-  --sheet-ink: var(--ctp-text);
-  --sheet-muted: var(--ctp-subtext0);
-  --sheet-line: var(--ctp-surface2);
-  --sheet-soft: var(--ctp-surface0);
-  --sheet-accent: var(--ctp-mauve);
-  --sheet-accent-2: var(--ctp-blue);
-  color: var(--sheet-ink) !important;
+  --sheet-bg: #fff;
+  --sheet-ink: var(--fg);
+  --sheet-muted: var(--fg);
+  --sheet-line: var(--rule);
+  --sheet-soft: var(--code-bg);
+  --sheet-accent: var(--fg-strong);
+  color: var(--sheet-ink);
   max-width: 210mm;
   margin: 0 auto 4rem;
 }
-.rpg-print-sheets :where(h1, h2, h3, h4, h5, h6, p, li, table, th, td) {
-  color: var(--sheet-ink) !important;
-}
-.rpg-print-sheets :where(strong, b) {
-  color: var(--sheet-accent-2) !important;
-}
-.rpg-print-sheets :where(em, i) {
-  color: var(--ctp-green) !important;
+/* Sur écran, les fiches débordent la colonne de lecture (66ch). */
+main:has(.rpg-print-sheets),
+.article-prose:has(.rpg-print-sheets) {
+  max-width: min(210mm, calc(100vw - 2rem));
+  width: 100%;
 }
 .rpg-print-sheets :where(p, li, blockquote) {
   text-align: start;
   text-align-last: auto;
 }
 .rpg-print-sheets :where(th, td) {
-  border-color: var(--sheet-line) !important;
+  border-color: var(--sheet-line);
 }
 .rpg-print-sheets :where(thead th) {
-  background-color: color-mix(in srgb, var(--sheet-soft) 72%, transparent) !important;
+  background-color: var(--sheet-soft);
 }
 .rpg-print-intro {
   text-align: center;
@@ -76,7 +56,7 @@ body:has(.rpg-print-sheets) .breadcrumb-current {
   page-break-after: auto;
   border: 1px solid var(--sheet-line);
   background: var(--sheet-bg);
-  box-shadow: 8px 8px 0 var(--ctp-crust);
+  box-shadow: 6px 6px 0 var(--sheet-line);
 }
 .rpg-sheet-page:last-child {
   break-after: auto;
@@ -170,12 +150,19 @@ body:has(.rpg-print-sheets) .breadcrumb-current {
     color: #111 !important;
   }
 
-  body:has(.rpg-print-sheets),
-  body:has(.rpg-print-sheets) #app-shell,
+  /* Tout le chrome du site disparaît à l'impression. */
+  body:has(.rpg-print-sheets) .site-header,
+  body:has(.rpg-print-sheets) .site-footer,
+  body:has(.rpg-print-sheets) .breadcrumb,
+  body:has(.rpg-print-sheets) .article-header,
+  body:has(.rpg-print-sheets) .article-toc,
+  body:has(.rpg-print-sheets) .toc-btn,
+  body:has(.rpg-print-sheets) .toc-float-panel,
+  body:has(.rpg-print-sheets) .article-attachment {
+    display: none !important;
+  }
+
   body:has(.rpg-print-sheets) main,
-  body:has(.rpg-print-sheets) main > div,
-  body:has(.rpg-print-sheets) main > div > div,
-  body:has(.rpg-print-sheets) .animate-fade-in-up,
   body:has(.rpg-print-sheets) .article-prose {
     position: static !important;
     display: block !important;
@@ -195,18 +182,6 @@ body:has(.rpg-print-sheets) .breadcrumb-current {
     color: #111 !important;
   }
 
-  body:has(.rpg-print-sheets) .breadcrumb,
-  body:has(.rpg-print-sheets) #app-shell > header,
-  body:has(.rpg-print-sheets) .fixed.bottom-0,
-  body:has(.rpg-print-sheets) .animate-fade-in-up > header,
-  body:has(.rpg-print-sheets) #sidebar-panel,
-  body:has(.rpg-print-sheets) #sidebar-backdrop,
-  body:has(.rpg-print-sheets) #toc-panel,
-  body:has(.rpg-print-sheets) #toc-backdrop,
-  body:has(.rpg-print-sheets) .md\:hidden {
-    display: none !important;
-  }
-
   .rpg-print-sheets {
     --sheet-bg: #fff !important;
     --sheet-ink: #111 !important;
@@ -214,7 +189,6 @@ body:has(.rpg-print-sheets) .breadcrumb-current {
     --sheet-line: #222 !important;
     --sheet-soft: #fff !important;
     --sheet-accent: #111 !important;
-    --sheet-accent-2: #111 !important;
     width: 190mm !important;
     max-width: 190mm !important;
     margin: 0 !important;

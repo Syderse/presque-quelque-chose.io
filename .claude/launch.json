@@ -1,0 +1,12 @@
+{
+  "version": "0.0.1",
+  "configurations": [
+    {
+      "name": "hugo",
+      "runtimeExecutable": "pnpm",
+      "runtimeArgs": ["dev", "--", "--port", "1313"],
+      "port": 1313,
+      "autoPort": false
+    }
+  ]
+}

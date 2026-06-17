@@ -15,12 +15,11 @@ authors:
   - Mathieu Allag
 ---
 
-<script async defer onload="redcircleIframe();" src="https://api.podcache.net/embedded-player/sh/c4addcff-24e9-4f4f-a061-41800c8201a0/ep/540c5c08-bbea-4919-b04a-acc851d55034"></script>
-<div class="redcirclePlayer-540c5c08-bbea-4919-b04a-acc851d55034"></div>
+{{< embed type="redcircle" id="540c5c08-bbea-4919-b04a-acc851d55034" src="https://api.podcache.net/embedded-player/sh/c4addcff-24e9-4f4f-a061-41800c8201a0/ep/540c5c08-bbea-4919-b04a-acc851d55034" >}}
 
 ---
 
-<iframe width="560" height="315" src="https://www.youtube.com/embed/Gm6ffUHJPL0?si=AbiTLt1BEMhCOmHD" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe>
+{{< embed type="youtube" src="https://www.youtube.com/embed/Gm6ffUHJPL0?si=AbiTLt1BEMhCOmHD" >}}
 
 Une scène de crime, un sanglier maudit aux allures de monstre incompréhensible et de vieux dossiers.
 
@@ -60,4 +59,4 @@ Le mémoire intégral est accessible sur mon site : [Fabriquer un bestiaire aujo
 
 ---
 
-Retour au [début de la série](../1_boucher/).
+Retour au [début de la série](/ondes-pixels/bestiaire_miyazaki_youtube/1_boucher/).

@@ -1,0 +1,11 @@
+{{/* DOM reconverti (P15) — bouton récalcitrant.
+     Clic après clic (000→999) il déroule son monologue (static/data/dom-story.json),
+     puis s'éteint sur une pierre tombale. Le JS (assets/js/dom.js) est chargé par
+     l'accueil via js-loader ; sans lui, le bouton ne casse rien. */}}
+<section class="dom" id="dom" aria-label="DOM, un élément du DOM">
+  <p class="dom-counter" id="dom-counter" title="clic droit nostalgique">000 / 999</p>
+  <button type="button" class="dom-button" id="dom-button">
+    <span class="dom-glyph" aria-hidden="true">👾</span> ne pas cliquer
+  </button>
+  <p class="dom-line" id="dom-line" hidden></p>
+</section>

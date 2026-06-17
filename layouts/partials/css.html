@@ -1,24 +1,14 @@
-{{/* Architecture Robuste 2025 : Intégration Native Tailwind v4 
-   Ce partial remplace l'ancienne chaîne PostCSS.
-*/}}
+{{/* Un seul CSS, écrit à la main : assets/css/site.css.
+   Plus de Tailwind, plus de Hugo Blox. */}}
 
-{{ $opts := dict "inlineImports" true }}
-
-{{/* CORRECTIF : Ciblage du nouveau point d'entrée standard (main.css) */}}
-{{ $styles := resources.Get "css/main.css" }}
-
-{{ if $styles }}
+{{ $sitecss := resources.Get "css/site.css" }}
+{{ if $sitecss }}
   {{ if hugo.IsDevelopment }}
-    {{/* EN DEV : Compilation rapide via CLI natif ou Module Go */}}
-    {{ $styles = $styles | css.TailwindCSS $opts }}
+    <link rel="stylesheet" href="{{ $sitecss.RelPermalink }}" />
   {{ else }}
-    {{/* EN PROD : DEBUG MODE - Minification Désactivée */}}
-    {{/* On a retiré "| minify" temporairement car il casse le "CSS Nesting" de Tailwind v4 */}}
-    {{ $styles = $styles | css.TailwindCSS $opts | fingerprint }}
+    {{ $sitecss = $sitecss | minify | fingerprint }}
+    <link rel="stylesheet" href="{{ $sitecss.RelPermalink }}" integrity="{{ $sitecss.Data.Integrity }}" />
   {{ end }}
-  
-  <link rel="stylesheet" href="{{ $styles.RelPermalink }}" {{ if not hugo.IsDevelopment }}integrity="{{ $styles.Data.Integrity }}"{{ end }} />
 {{ else }}
-  {{/* Sécurité : Si le fichier est mal nommé, le build échoue explicitement */}}
-  {{ errorf "Architecture Error: assets/css/main.css est introuvable. Vérifiez le dossier assets/." }}
+  {{ errorf "Architecture Error: assets/css/site.css est introuvable. Vérifiez le dossier assets/." }}
 {{ end }}

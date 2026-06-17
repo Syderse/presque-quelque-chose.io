@@ -13,7 +13,7 @@ authors:
   - Mathieu Allag
 ---
 
-<iframe src="https://embed.acast.com/66f2a18a7a3d63d20ff5a0b5/66f6d223bc593991487a515c" frameBorder="0" width="100%" height="110px"></iframe>
+{{< embed type="acast" src="https://embed.acast.com/66f2a18a7a3d63d20ff5a0b5/66f6d223bc593991487a515c" height="110" >}}
 
 **Pôt** - nom commun. Cantine de l’École normale supérieure, et par extension, repas de cette cantine.
 
@@ -35,6 +35,6 @@ Prise de son et montage : _Kenza Benyahia et Mathieu Allag_
 
 Musique : _Jérôme Evrard_
 
-Pour le [plat de résistance](../2-autour-du-pot/).
+Pour le [plat de résistance](/ondes-pixels/autour-du-pot/2-autour-du-pot/).
 
 ---

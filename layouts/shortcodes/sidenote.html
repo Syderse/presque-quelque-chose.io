@@ -1,10 +1,14 @@
-{{- /* SHORTCODE: SIDENOTE (Solid State V3.2 - Compact Reference Call)
-- Keeps the wrapper non-relative so absolute notes anchor to the article.
-- Trims shortcode whitespace so inline calls can sit against words/punctuation.
+{{- /* SHORTCODE: SIDENOTE (P09 — CSS pur, zéro JS)
+- Appel numéroté en exposant ; la note est repliée par défaut et s'ouvre au
+  clic (case à cocher cachée, technique :checked). Sur grand écran la note
+  ouverte flotte dans la marge ; sur écran étroit elle s'insère en bloc dans
+  le fil de lecture. Mise en forme entièrement dans assets/css/site.css.
+- Wrapper non-positionné ; whitespace trimmé pour coller l'appel au texte.
+- Logique de variantes (note / comment) et libellés conservée à l'identique.
 */ -}}
 {{- $num := add .Ordinal 1 -}}
 {{- $isEven := eq (mod $num 2) 0 -}}
-{{- $sideClass := cond $isEven "sn-right" "sn-left" -}}
+{{- $sideClass := cond $isEven "sidenote--right" "sidenote--left" -}}
 {{- $variant := "note" -}}
 {{- if .IsNamedParams -}}
   {{- with .Get "variant" -}}{{- $variant = . -}}{{- end -}}
@@ -25,53 +29,8 @@
 {{- end -}}
 {{- $variant = lower $variant -}}
 {{- $isComment := in (slice "comment" "commentaire" "comments" "commentaires") $variant -}}
-{{- $variantClass := cond $isComment "sn-comment" "sn-note" -}}
-{{- $triggerVariantClass := cond $isComment "side-note-trigger--comment" "side-note-trigger--note" -}}
+{{- $variantClass := cond $isComment "sidenote--comment" "sidenote--note" -}}
+{{- $callVariantClass := cond $isComment "sidenote-call--comment" "sidenote-call--note" -}}
 {{- $titlePrefix := cond $isComment (printf "Voir %s" $commentLabel) "Voir la note" -}}
-<span class="side-note-marker group/note" data-sidenote-marker><input type="checkbox" id="sn-{{ $num }}" class="peer hidden" /><label for="sn-{{ $num }}" class="side-note-trigger {{ $triggerVariantClass }} peer-checked:font-bold" title="{{ $titlePrefix }} {{ $num }}" aria-label="{{ $titlePrefix }} {{ $num }}" aria-controls="sn-{{ $num }}-content" aria-expanded="false" role="button" tabindex="0">{{ $num }}</label><span id="sn-{{ $num }}-content" class="side-note-content {{ $sideClass }} {{ $variantClass }}
-        /* --- BASE MOBILE STYLES (Default) --- */
-        hidden peer-checked:block
-        w-full my-4 p-4
-        bg-ctp-surface0 border-l-2 border-ctp-peach
-        text-sm text-ctp-subtext0 font-serif leading-relaxed
-        rounded-r shadow-md
-        relative /* Mobile needs relative flow */
-
-        /* --- DESKTOP STYLES (Physics Layer) --- */
-        lg:block lg:absolute lg:top-0
-        lg:w-56 lg:p-3 lg:m-0 lg:rounded-md
-        lg:text-xs lg:font-mono lg:leading-tight
-
-        /* VISUAL STATE: PASSIVE */
-        lg:bg-transparent lg:border-0
-        lg:opacity-60 lg:hover:opacity-100
-        lg:transition-[opacity,transform,background-color,border-color,box-shadow] lg:duration-200 lg:ease-out
-
-        /* VISUAL STATE: ACTIVE */
-        lg:peer-checked:opacity-100
-        lg:peer-checked:bg-ctp-mantle
-        lg:peer-checked:border lg:peer-checked:border-ctp-peach
-        lg:peer-checked:shadow-[4px_4px_0px_0px_rgba(0,0,0,0.4)]
-        lg:peer-checked:z-50 lg:peer-checked:scale-105
-
-        /* LEFT/RIGHT LOGIC (Anchored to Article) */
-        {{ if $isEven }}
-            /* RIGHT STACK */
-            lg:left-full lg:ml-8 lg:text-left
-            lg:border-l lg:border-ctp-surface1
-            lg:peer-checked:border-l-ctp-peach
-        {{ else }}
-            /* LEFT STACK */
-            lg:right-full lg:mr-8 lg:text-right
-            lg:border-r lg:border-ctp-surface1
-            lg:peer-checked:border-r-ctp-peach
-        {{ end }}
-    " role="note" tabindex="0" data-sidenote-content>
-            {{ if $isComment }}
-                <span class="side-note-label">{{ $commentLabel }}</span>
-            {{ end }}
-            <span class="block">
-                <span class="side-note-number text-ctp-peach font-bold mr-1">{{ $num }}.</span>
-                <span class="side-note-body">{{ .Inner | markdownify }}</span>
-            </span>
-        </span></span>
+{{- $title := printf "%s %d" $titlePrefix $num -}}
+<span class="sidenote-ref"><input type="checkbox" id="sn-{{ $num }}" class="sidenote-toggle" /><label for="sn-{{ $num }}" class="sidenote-call {{ $callVariantClass }}" title="{{ $title }}" aria-label="{{ $title }}">{{ $num }}</label><span id="sn-{{ $num }}-content" class="sidenote {{ $sideClass }} {{ $variantClass }}" role="note">{{ if $isComment }}<span class="sidenote-label">{{ $commentLabel }}</span>{{ end }}<span class="sidenote-num">{{ $num }}.</span> <span class="sidenote-body">{{ .Inner | markdownify }}</span></span></span>

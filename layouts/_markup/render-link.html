@@ -1,27 +1,49 @@
 {{- $dest := .Destination -}}
 {{- $is_anchor := strings.HasPrefix $dest "#" -}}
 {{- $is_remote := or (strings.HasPrefix $dest "http") (strings.HasPrefix $dest "//") -}}
+{{- $is_scheme := or (strings.HasPrefix $dest "mailto:") (strings.HasPrefix $dest "tel:") -}}
 
-{{- /* LOGIQUE :
-1. Si c'est un lien web (http) ou une ancre (#top), on affiche direct.
-2. Sinon, on essaie de trouver la page Hugo correspondante avec .GetPage (Liens relatifs)
-*/ -}}
+{{- /* Système de liens internes « hugoesque » : on écrit dans le markdown un chemin de
+       contenu absolu ([texte](/section/page/#ancre)), et ce hook le résout via GetPage vers
+       le permalien canonique. C'est le remplaçant moderne du shortcode relref : il dé-accentue
+       (removePathAccents), survit aux changements de config de permaliens, et signale les liens
+       cassés (classe broken-link) au lieu de les laisser passer silencieusement.
 
-{{- if or $is_remote $is_anchor -}}
+       Filet de sécurité relref : Hugo remplace les shortcodes par un marqueur opaque
+       (HAHAHUGOSHORTCODE…HBHB) AVANT goldmark, donc le hook voit le marqueur, jamais l'URL.
+       Un marqueur vient forcément d'un relref validé au build (refLinksErrorLevel = ERROR) :
+       on le classe interne et on laisse Hugo réinjecter le href après coup. */ -}}
+{{- $is_shortcode := and (strings.Contains $dest "HUGOSHORTCODE") (strings.Contains $dest "HBHB") -}}
+
+{{- if or $is_remote $is_anchor $is_scheme -}}
 
 <a href="{{ $dest | safeURL }}"{{ with .Title }} title="{{ . }}"{{ end }}{{ if $is_remote }} target="_blank" rel="noopener noreferrer"{{ end }}>{{ .Text | safeHTML }}</a>
 
+{{- else if $is_shortcode -}}
+
+<a href="{{ $dest | safeURL }}" class="internal-link"{{ with .Title }} title="{{ . }}"{{ end }}>{{ .Text | safeHTML }}</a>
+
 {{- else -}}
 
-{{- /* Tentative de résolution interne */ -}}
-{{- $page := .Page.GetPage $dest -}}
+{{- /* urls.Parse sépare proprement chemin et fragment (#ancre) */ -}}
+{{- $parsed := urls.Parse $dest -}}
+{{- $path := $parsed.Path -}}
+{{- $fragment := "" -}}
+{{- with $parsed.Fragment -}}{{- $fragment = printf "#%s" . -}}{{- end -}}
+
+{{- $page := .Page.GetPage $path -}}
 
 {{- if $page -}}
-{{- /* CAS A : Page trouvée ! On utilise son permalien canonique */ -}}
-<a href="{{ $page.RelPermalink }}" class="internal-link"{{ with .Title }} title="{{ . }}"{{ end }}>{{ .Text | safeHTML }}</a>
+{{- /* Page trouvée : permalien canonique (accents retirés, config-proof) + ancre */ -}}
+<a href="{{ $page.RelPermalink }}{{ $fragment }}" class="internal-link"{{ with .Title }} title="{{ . }}"{{ end }}>{{ .Text | safeHTML }}</a>
+
+{{- else if strings.HasPrefix $path "/" -}}
+{{- /* Chemin absolu non résolu par GetPage : sans doute une ressource statique ou un
+       endpoint JSON (/antenne-radio/, fichiers servés) — on laisse passer tel quel. */ -}}
+<a href="{{ $dest | safeURL }}" class="internal-link"{{ with .Title }} title="{{ . }}"{{ end }}>{{ .Text | safeHTML }}</a>
 
 {{- else -}}
-{{- /* CAS B : Pas trouvé (Fichier statique, PDF, ou lien cassé). On laisse tel quel. */ -}}
+{{- /* Chemin relatif non résolu : vrai lien cassé, on le signale */ -}}
 <a href="{{ $dest | safeURL }}"{{ with .Title }} title="{{ . }}"{{ end }} class="broken-link">{{ .Text | safeHTML }}</a>
 {{- end -}}
 

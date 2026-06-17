@@ -17,7 +17,7 @@ Cette journée fut consacrée au repos. Pour la première fois du voyage, on a f
 
 ### Retrait d'espèces dans le quartier de Seomyeon
 
-On a réglé [la dette d'honneur contractée la veille]({{< relref "/solutions-imaginaires/blog_corée/jour_8/#recherche-infructueuse-d'un-distributeur" >}}) avec nos cartes capricieuses. On est descendus dans le quartier de [Seomyeon](https://commons.wikimedia.org/wiki/Category:Seomyeon)-Bujeon, où nous logions, et on a trouvé un distributeur de la [Hana Bank](https://en.wikipedia.org/wiki/Hana_Bank). Cette fois, la carte est entrée et a craché les billets sans drame ni cavale.
+On a réglé [la dette d'honneur contractée la veille](/solutions-imaginaires/blog_corée/jour_8/#recherche-infructueuse-dun-distributeur) avec nos cartes capricieuses. On est descendus dans le quartier de [Seomyeon](https://commons.wikimedia.org/wiki/Category:Seomyeon)-Bujeon, où nous logions, et on a trouvé un distributeur de la [Hana Bank](https://en.wikipedia.org/wiki/Hana_Bank). Cette fois, la carte est entrée et a craché les billets sans drame ni cavale.
 
 ### Déjeuner de jajangmyeon au Taebaek Hall
 

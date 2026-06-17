@@ -147,7 +147,7 @@ Le robot émet un premier rapport :
 - Lézard-amphibie
 - Nénuphar gluant
 
-**♢ Récapitulatif loot -- Jour 1 : le marais**
+**♢ Récapitulatif loot du jour 1 : le marais**
 
 | **Matériau** | **Effets** | **Danger** |
 | --- | --- | --- |
@@ -158,7 +158,7 @@ Le robot émet un premier rapport :
 | Massue du platane | maillet incassable, test de dureté, piquets | inutilisable en combat |
 | *Du crapaud-hallucinogène :* |  |  |
 | Glandes hallucinogènes | grenade fumigène (déni zone, 3 tours) | dangereux sans protection |
-| Peau visqueuse | imperméable/isolant | -- |
+| Peau visqueuse | imperméable/isolant | aucun |
 
 ## **Crafts possibles avec le loot du biome**
 
@@ -200,7 +200,7 @@ La créature tient à peine dans la main. Sous sa peau pâle, des veines vertes 
   - Et monte sur l'épaule du PJ qui a joué avec lui pour toute la durée du jour 2
     - Libre à vous de définir ses actions et effets par la suite (ex : phénomènes environnementaux bénéfiques)
 
-**♢ Loot -- muraille vivante**
+**♢ Loot : muraille vivante**
 
 | **Objet** | **Effet** | **Risque** |
 | --- | --- | --- |
@@ -218,7 +218,7 @@ S'ils s'approchent ou si observation quelconque,
 
 *Dans l’embrasure de la porte apparaît un visage humain qui a passé des années à l'ombre. La peau porte un vert éteint, comme remonté du dedans. Ses traits sont calmes et bienveillants. De fins filaments pâles glissent le long de ses tempes, se tendent puis disparaissent, comme des racines qui cherchent la lumière*
 
--- Des visiteurs… Ça faisait tellement longtemps.
+Des visiteurs… Ça faisait tellement longtemps.
 
 - Oren propose l'hospitalité
   - Il invite les PJ à passer la nuit chez lui, à l'abri
@@ -228,7 +228,7 @@ Description de sa transformation si le combat est engagé,
 
 *« Ses yeux se remplissent de noir, lentement, comme une encre qui gagne l’eau. Sous sa peau, la mousse affleure, durcit, se fend en plaques végétales. Des lianes sortent de ses paumes, de son dos, puis du sol autour de lui. Quand il parle, plusieurs voix répondent dans la sienne.*
 
-*— Je voulais vous aider. »*
+*Je voulais vous aider. »*
 
 **Ce qu'il offre :**
 - Soins (il a des onguents efficaces)
@@ -285,7 +285,7 @@ Elle ne s’intéresse qu’aux corps ouverts : plaies, déchirures, chairs mal 
 
 **★ Tisseur chirurgical**
 
-**♢ Loot -- tisseur chirurgical**
+**♢ Loot : tisseur chirurgical**
 
 | **Matériau** | **Effet** | **Obtention** |
 | --- | --- | --- |
@@ -333,7 +333,7 @@ Le robot s'immobilise au milieu de la plage,
 
 - Les plaies causées par les lames de silice se recouvrent d'un minéral gris. 
 
-**/!\ Chronomètre -- orage de silice**
+**/!\ Chronomètre : orage de silice**
 
 - **T-10 à T-7 :** ciel cuivré, vent qui se lève, créatures qui fuient
 - **T-7 à T-3 :** premiers éclairs au loin, grêle de particules légères (-1 PV si exposé)
@@ -370,7 +370,7 @@ Ces prédateurs opportunistes entrent par la trompe exposée à l'air pour se no
 
 - Dard paralysant, mandibules foreuses, bile acide
 - Faiblesse : si retournés, ils sont paralysés et leur ventre mou est exposé
-- Résolution pacifique possible : leur offrir un œuf -- ils le prennent et partent
+- Résolution pacifique possible : leur offrir un œuf, ils le prennent et partent
 
 **♢LOOT**
 
@@ -406,13 +406,13 @@ Au pied de la falaise aride,
 
 *Le groupe arrive au pied de la montagne après une mauvaise nuit. La tempête de silice gronde encore derrière eux, plus loin, mais ici il n’y a presque plus de vent. Seulement la chaleur, la roche, et le signal du GPS qui pointe vers les hauteurs.*
 
-**/!\ Mécanique -- déshydratation**
+**/!\ Mécanique : déshydratation**
 
 *L’air est sec comme un four. Le terrain monte, escarpé, ocre et gris. Chaque pas soulève une poussière fine qui colle à la gorge. Vos lèvres se fendent. La langue devient lourde*
 
 | **Temps sans eau** | **Effet** | **Cumulatif** |
 | --- | --- | --- |
-| 0-5 min | soif légère, aucun malus | -- |
+| 0-5 min | soif légère, aucun malus | non |
 | 5-10 min | -1 à tous les jets | oui |
 | 10-15 min | -2 à tous les jets | oui |
 | 15-20 min | -3 à tous les jets | oui |
@@ -434,7 +434,7 @@ L'oasis-tuyau est la seule source d'eau de cette zone. Elle se situe au sommet d
 
 *La falaise ne propose pas vraiment de route. À gauche, une cassure verticale monte dans l'ombre. Des traces brillantes et sinueuses scintillent par endroits. À droite, la pente s'élargit en plein soleil, traversée de grandes structures d'os qui sortent du sable comme des cages ouvertes. Au sommet de ces arches pendent des capsules oranges, lourdes de jus.*
 
-**/!\ Mécanique -- déclencher la voie**
+**/!\ Mécanique : déclencher la voie**
 
 Ne pas demander de choisir. La première piste qui reçoit deux gestes concrets devient la voie de l'ascension.
 
@@ -515,14 +515,14 @@ Si les PJ observent avant de toucher,
 - Ils attaquent surtout ce qui bouge en plein soleil.
 - Ils hésitent dans l'ombre, la nuit, ou quand leurs queues-miroirs sont brisées.
 
-**▷ Options détaillées -- vélociraptors solaires**
+**▷ Options détaillées : vélociraptors solaires**
 
 1. **Rester à l'ombre :** progression lente de rocher en rocher. Discrétion 12 par segment. Échec = un vélociraptor coupe la prochaine ombre avec sa queue-miroir. Le troupeau arrive et ils embarquent le groupe en haut. Une fois en haut, début du combat. 
 2. **Combat :** viser les queues-miroirs (-2 pour toucher. AGI > 12 pour valider une touche). Une queue brisée force le vélociraptor à reculer. Deux queues brisées suffisent à mettre fin au combat.
 3. **Se laisser capturer :** raccourci brutal. Les défenses encagent la cible et la transportent au sommet. Le combat se déclenche une fois en haut. 
 4. **Attendre la nuit :** passage plus sûr, mais 2-3h perdues. Appliquer la déshydratation tout du long, sauf si les PJ trouvent un moyen crédible de préserver l'eau ou le corps.
 
-**♢ Loot -- vélociraptors solaires**
+**♢ Loot : vélociraptors solaires**
 
 | **Matériau** | **Effet** | **Danger** |
 | --- | --- | --- |
@@ -564,7 +564,7 @@ Si elle attaque,
 - **Pollen :** paralysie progressive. Au premier tour d'exposition, -2 AGI. Au troisième, chute ou immobilisation si aucun test de résistance n'est réussi.
 - **Enfermement :** si les PJ insistent après l'avertissement, les parois du tube se contractent. La sortie reste visible, mais plus personne ne passe facilement.
 
-**♢ Loot -- oasis-tuyau**
+**♢ Loot : oasis-tuyau**
 
 | **Ressource** | **Effet** | **Condition** |
 | --- | --- | --- |

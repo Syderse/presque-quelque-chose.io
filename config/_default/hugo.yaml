@@ -5,18 +5,8 @@ baseURL: "https://presque-quelque-chose.com/"
 locale: "fr-fr"
 
 # ===========================================================================
-# SERVICES (ANALYTICS)
-# ===========================================================================
-services:
-  googleAnalytics:
-    ID: "G-ZKEH9KTM32"
-
-# ===========================================================================
 # CORE BUILD SETTINGS
 # ===========================================================================
-build:
-  writeStats: true # Indispensable pour Tailwind JIT
-
 # Fusion des paramètres de sécurité et minify
 security:
   enableInlineShortcodes: true
@@ -31,30 +21,12 @@ module:
   mounts:
     - source: assets
       target: assets
-
-    # [CORRECTIF NETLIFY]
-    # Suppression du mount hugo_stats.json pour éviter les erreurs de "Cold Build".
     - source: layouts
       target: layouts
     - source: content
       target: content
     - source: static
       target: static
-
-    # Imports Hugo Blox
-    - source: hugo-blox/blox/community
-      target: layouts/_partials/blox/community/
-      files: "**.html"
-    - source: hugo-blox/blox/all-access
-      target: layouts/_partials/blox/
-      files: "**.html"
-    - source: hugo-blox/blox
-      target: assets/dist/community/blox/
-      files: "**.css"
-
-  imports:
-    - path: github.com/HugoBlox/hugo-blox-builder/modules/blox-plugin-netlify
-    - path: github.com/HugoBlox/hugo-blox-builder/modules/blox-tailwind
 
 # ===========================================================================
 # OUTPUTS & FORMATS (API STATIC)
@@ -196,12 +168,6 @@ params:
   author:
     name: "Mathieu Allag" # Ajoutez votre nom ici
     birthdate: "2002-01-15"
-
-  # SITE SETUP
-  # Appearance
-  appearance:
-    mode: dark
-    color: custom # Dit à Hugo de chercher notre custom.css
 
   # Site header
   header:

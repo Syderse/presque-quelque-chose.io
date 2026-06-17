@@ -1,0 +1,35 @@
+{{ define "main" }}
+{{/* Gabarit de liste unifié (P13) — sobre, type-heavy.
+     Titre de section + intro (.Content du _index.md), puis les entrées.
+     Les sous-dossiers (.Sections) sont rendus en regroupements titrés, pour
+     préserver la structure éditoriale (solutions-imaginaires, ondes-pixels…).
+     Tri par weight puis date (ordre Hugo par défaut, .ByWeight pour les
+     dossiers). Aucune carte décorée, aucune image, aucune classe Tailwind. */}}
+<div class="list">
+
+  <header class="list-head">
+    <h1 class="list-title">{{ .Title }}</h1>
+    {{ with .Content }}<div class="list-intro">{{ . }}</div>{{ end }}
+  </header>
+
+  {{/* Pages directement sous la section (sans dossier). */}}
+  {{ with .RegularPages }}
+    {{ partial "list-entries.html" .ByWeight }}
+  {{ end }}
+
+  {{/* Sous-dossiers : repliés par défaut, titre <summary> + marqueur. */}}
+  {{ range .Sections.ByWeight }}
+    <details class="list-group">
+      <summary class="list-group-title">
+        <span class="list-group-marker" aria-hidden="true">▶</span>
+        <a href="{{ .RelPermalink }}">{{ .Title }}</a>
+      </summary>
+      {{ with .Description }}<p class="list-group-desc">{{ . }}</p>{{ end }}
+      {{ with .Pages }}
+        {{ partial "list-entries.html" .ByWeight }}
+      {{ end }}
+    </details>
+  {{ end }}
+
+</div>
+{{ end }}

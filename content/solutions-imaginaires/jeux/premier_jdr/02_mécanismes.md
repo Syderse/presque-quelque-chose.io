@@ -12,9 +12,9 @@ tags:
 
 Tirer 1d6 :
 
-- **1--2** : choisir 1 item
-- **3--4** : choisir 2 items
-- **5--6** : tout loot
+- **1-2** : choisir 1 item
+- **3-4** : choisir 2 items
+- **5-6** : tout loot
 
 ## États et afflictions
 
@@ -60,9 +60,9 @@ Soigne 1d6 points de vie.
 
 Tirer 1d6 :
 
-- **1--2** : regain de 1 PV
-- **3--4** : regain de 2 PV
-- **5--6** : regain de 3 PV
+- **1-2** : regain de 1 PV
+- **3-4** : regain de 2 PV
+- **5-6** : regain de 3 PV
 
 ## Événements
 
@@ -70,8 +70,8 @@ Tirer 1d6 :
 
 Chaque nuit où le groupe peut vraiment installer un camp, tirer 1d6 :
 
-- **1--4** : rien à signaler, appliquer seulement le repos nocturne
-- **5--6** : tirer un événement nocturne dans la table ci-dessous
+- **1-4** : rien à signaler, appliquer seulement le repos nocturne
+- **5-6** : tirer un événement nocturne dans la table ci-dessous
 
 Si la nuit impose une contrainte spéciale, comme une tempête ou une veille forcée, le MJ peut annuler le jet classique et appliquer la conséquence indiquée par le script.
 
@@ -81,15 +81,15 @@ Après résolution, le MJ peut retirer l'événement de la table pour éviter qu
 
 Tirer 1d6 :
 
-- **1--2** : les pagures géants
-- **3--4** : la ruche-anémone
-- **5--6** : l'écho-écho traque
+- **1-2** : les pagures géants
+- **3-4** : la ruche-anémone
+- **5-6** : l'écho-écho traque
 
 #### Les pagures géants
 
 **Déclencheur :** une file de pagures géants traverse la zone du camp.
 
-**Ambiance :** *« Le sol vibre en rythme, comme un cœur de pierre. Par la paroi translucide du dôme, des rochers qui marchent. Une file de créatures massives -- chitine et calcaire -- avançant avec l'implacable patience des ères géologiques. Leur chemin passe exactement là où vous avez planté votre camp. »*
+**Ambiance :** *« Le sol vibre en rythme, comme un cœur de pierre. Par la paroi translucide du dôme, des rochers qui marchent. Une file de créatures massives, chitine et calcaire, avançant avec l'implacable patience des ères géologiques. Leur chemin passe exactement là où vous avez planté votre camp. »*
 
 **Effet :** si les PJ ne déplacent pas le camp, ne détournent pas la file ou ne protègent pas le dôme, les pagures piétinent le campement. Le MJ choisit la conséquence la plus intéressante : matériel abîmé, dôme déplacé, réveil brutal, séparation courte, ressource écrasée.
 
@@ -109,7 +109,7 @@ Tirer 1d6 :
 
 **Déclencheur :** le spectre-diapason repère le camp au son. Il ne voit presque rien, mais traque la moindre vibration.
 
-**Ambiance :** *« Un silence. Pas le silence normal -- un silence actif. Puis un claquement de dents. Rapide. Proche. Une silhouette vibre dans la pénombre. Humanoïde. Pas de visage -- une parabole organique, une antenne de chair, tournée vers vous. »*
+**Ambiance :** *« Un silence. Pas le silence normal, un silence actif. Puis un claquement de dents. Rapide. Proche. Une silhouette vibre dans la pénombre. Humanoïde. Pas de visage, une parabole organique, une antenne de chair, tournée vers vous. »*
 
 **Règles IRL :**
 

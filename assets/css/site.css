@@ -1,0 +1,1796 @@
+/* =============================================================================
+   site.css — socle typographique de presque-quelque-chose
+   -----------------------------------------------------------------------------
+   Un unique fichier CSS écrit à la main : clair, haut contraste, fontes système,
+   même rendu partout. Aucune dépendance, aucune fonte distante, aucun @import.
+
+   Sommaire :
+     1. TOKENS        — custom properties (palette, fontes, mesures)
+     2. RESET         — reset moderne minimal
+     3. BASE          — html / body, document en flux normal
+     4. TYPOGRAPHIE   — titres, prose, liens, citations, code, tables
+     5. LAYOUT        — colonnes de lecture (.measure) et larges (.wide)
+     6. COMPOSANTS    — (vide pour l'instant)
+     7. UTILITAIRES   — petites classes d'appoint
+
+   Règle absolue : nulle part une couleur de texte grise ou délavée. Un texte
+   secondaire se distingue par la taille, la graisse, l'italique, les petites
+   capitales ou un filet — jamais par un gris.
+   ========================================================================== */
+
+/* =============================================================================
+   1. TOKENS
+   ========================================================================== */
+
+:root {
+  /* Palette — clair, haut contraste, zéro gris baveux */
+  --bg:           #fbfaf7; /* papier chaud */
+  --fg:           #14110d; /* quasi-noir : le texte */
+  --fg-strong:    #000000; /* titres / accents forts */
+  --link:         #9a1f1b; /* rouge profond, lisible sur clair */
+  --link-visited: #5a2a86; /* violet profond */
+  --accent:       #1a4d8f; /* bleu profond : liens internes / marqueurs */
+  --rule:         #14110d; /* filets = couleur du texte (jamais gris) */
+  --mark:         #fff2a8; /* surlignage */
+  --code-bg:      #f0ede6;
+
+  /* Typographie — 100% système */
+  --serif: Charter, "Bitstream Charter", "Sitka Text", "Iowan Old Style",
+           "Palatino Linotype", Palatino, Cambria, Georgia,
+           "Times New Roman", Times, serif;
+  --mono:  ui-monospace, "SF Mono", SFMono-Regular, Menlo, Consolas,
+           "Liberation Mono", monospace;
+
+  --measure: 66ch;       /* largeur de lecture */
+  --base: clamp(1.05rem, 0.95rem + 0.5vw, 1.2rem);
+  --lh: 1.55;
+}
+
+/* =============================================================================
+   2. RESET — moderne, minimal
+   ========================================================================== */
+
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+}
+
+/* Marges remises à zéro de façon raisonnée : on les réintroduit dans la
+   section TYPOGRAPHIE pour un rythme vertical cohérent. */
+body,
+h1, h2, h3, h4, h5, h6,
+p, figure, blockquote,
+ul, ol, dl, dd,
+pre, hr {
+  margin: 0;
+}
+
+/* Les médias se comportent en blocs fluides. */
+img,
+svg,
+video,
+canvas,
+audio,
+iframe,
+embed,
+object {
+  max-width: 100%;
+  height: auto;
+  display: block;
+}
+
+/* Les contrôles héritent de la typographie environnante. */
+input,
+button,
+textarea,
+select {
+  font: inherit;
+  color: inherit;
+}
+
+html {
+  -webkit-text-size-adjust: 100%;
+  text-size-adjust: 100%;
+}
+
+/* Focus net et visible — accessibilité clavier. */
+:focus-visible {
+  outline: 2px solid var(--accent);
+  outline-offset: 2px;
+}
+
+/* =============================================================================
+   3. BASE — document en flux normal, qui défile
+   ========================================================================== */
+
+html {
+  scroll-behavior: smooth;
+}
+
+body {
+  background: var(--bg);
+  color: var(--fg);
+  font-family: var(--serif);
+  font-size: var(--base);
+  line-height: var(--lh);
+  /* Pas de height:100vh, pas d'overflow:hidden : le document défile. */
+  text-rendering: optimizeLegibility;
+  -webkit-font-smoothing: antialiased;
+}
+
+::selection {
+  background: var(--fg);
+  color: var(--bg);
+}
+
+/* Respecte le souhait de mouvement réduit. */
+@media (prefers-reduced-motion: reduce) {
+  html {
+    scroll-behavior: auto;
+  }
+}
+
+/* =============================================================================
+   4. TYPOGRAPHIE
+   ========================================================================== */
+
+/* --- Titres : serif, gras, interlignage serré, échelle modulaire --------- */
+
+h1, h2, h3, h4, h5, h6 {
+  font-family: var(--serif);
+  font-weight: 700;
+  line-height: 1.2;
+  color: var(--fg-strong);
+  margin-top: 1.6em;
+  margin-bottom: 0.5em;
+}
+
+/* Premier titre d'un flux : pas de marge haute superflue. */
+h1:first-child,
+h2:first-child,
+h3:first-child {
+  margin-top: 0;
+}
+
+h1 { font-size: clamp(2rem, 1.4rem + 2.4vw, 2.8rem); }
+h2 { font-size: clamp(1.6rem, 1.2rem + 1.6vw, 2.1rem); }
+h3 { font-size: clamp(1.35rem, 1.1rem + 1vw, 1.6rem); }
+h4 { font-size: 1.25rem; }
+h5 { font-size: 1.1rem; }
+h6 { font-size: 1rem; }
+
+/* --- Rythme vertical du corps -------------------------------------------- */
+
+p,
+ul,
+ol,
+dl,
+blockquote,
+pre,
+table,
+figure {
+  margin-block: 0 1rem;
+}
+
+/* Listes : retrait lisible. */
+ul,
+ol {
+  padding-inline-start: 1.5em;
+}
+
+li + li {
+  margin-top: 0.25em;
+}
+
+/* Listes imbriquées : pas de double marge basse. */
+li > ul,
+li > ol {
+  margin-block: 0.25em 0;
+}
+
+dt {
+  font-weight: 700;
+}
+
+dd {
+  margin-inline-start: 1.5em;
+}
+
+/* --- Liens : toujours soulignés, jamais délavés -------------------------- */
+
+a {
+  color: var(--link);
+  text-decoration: underline;
+  text-decoration-thickness: 1px;
+  text-underline-offset: 0.15em;
+}
+
+a:visited {
+  color: var(--link-visited);
+}
+
+/* Hover/focus : on renforce le soulignement, on ne pâlit jamais. */
+a:hover,
+a:focus {
+  text-decoration-thickness: 2px;
+}
+
+/* Liens internes (render hook → class="internal-link") : bleu, tirets. */
+a.internal-link {
+  color: var(--accent);
+  text-decoration-style: dashed;
+}
+
+/* Les internes visités restent bleus — pas de dérive violet. */
+a.internal-link:visited {
+  color: var(--accent);
+}
+
+/* Liens externes : petit ↗ en exposant discret (via target="_blank"). */
+a[target="_blank"]::after {
+  content: "\202F↗";
+  font-size: 0.7em;
+  vertical-align: super;
+  line-height: 1;
+}
+
+/* Liens cassés : pas de wavy (ressemble au correcteur ortho), juste le ✗. */
+a.broken-link {
+  color: var(--fg);
+  text-decoration-style: dashed;
+  text-decoration-color: color-mix(in srgb, var(--fg) 40%, transparent);
+  text-decoration-thickness: 1px;
+}
+
+a.broken-link:visited {
+  color: var(--fg);
+}
+
+a.broken-link::after {
+  content: "\202F✗";
+  font-size: 0.75em;
+  color: color-mix(in srgb, var(--fg) 50%, transparent);
+}
+
+/* --- Citations : filet à gauche, couleur du texte ------------------------ */
+
+blockquote {
+  border-left: 3px solid var(--rule);
+  padding-left: 1em;
+  font-style: italic;
+}
+
+blockquote > :last-child {
+  margin-bottom: 0;
+}
+
+cite {
+  font-style: normal;
+  font-variant: small-caps;
+}
+
+/* --- Code : mono sur fond discret ---------------------------------------- */
+
+code,
+kbd,
+samp {
+  font-family: var(--mono);
+  font-size: 0.9em;
+}
+
+:not(pre) > code {
+  background: var(--code-bg);
+  padding: 0.1em 0.35em;
+  border-radius: 2px;
+}
+
+pre {
+  background: var(--code-bg);
+  padding: 1em;
+  overflow-x: auto;
+  line-height: 1.45;
+}
+
+pre code {
+  background: none;
+  padding: 0;
+  font-size: 0.85rem;
+}
+
+/* --- Filets & marques ---------------------------------------------------- */
+
+hr {
+  border: 0;
+  border-top: 1px solid var(--rule);
+  margin-block: 2rem;
+}
+
+mark {
+  background: var(--mark);
+  color: var(--fg);
+  padding: 0 0.1em;
+}
+
+small {
+  font-size: 0.85em;
+}
+
+strong,
+b {
+  font-weight: 700;
+}
+
+abbr[title] {
+  text-decoration: underline dotted;
+  cursor: help;
+}
+
+/* --- Tables : lisibles, filets couleur du texte -------------------------- */
+
+table {
+  border-collapse: collapse;
+  width: 100%;
+}
+
+th,
+td {
+  text-align: left;
+  padding: 0.4em 0.6em;
+  border-bottom: 1px solid var(--rule);
+  vertical-align: top;
+}
+
+thead th {
+  border-bottom-width: 2px;
+}
+
+caption {
+  font-variant: small-caps;
+  letter-spacing: 0.03em;
+  text-align: left;
+  margin-bottom: 0.4em;
+}
+
+/* =============================================================================
+   5. LAYOUT — colonnes
+   ========================================================================== */
+
+/* Colonne de lecture : largeur de mesure, centrée. */
+.measure {
+  max-width: var(--measure);
+  margin-inline: auto;
+  padding-inline: 1rem;
+}
+
+/* Pages larges (listes, tableaux de bord textuels). */
+.wide {
+  max-width: 72rem;
+  margin-inline: auto;
+  padding-inline: 1rem;
+}
+
+/* =============================================================================
+   6. COMPOSANTS
+   -----------------------------------------------------------------------------
+   Rempli au fil des prompts : en-tête, pied, sidenotes, DOM, almanach, etc.
+   ========================================================================== */
+
+/* --- En-tête + navigation texte (P05) ---------------------------------------
+   Tout en flux : titre, puis liste de liens texte soulignés. Repli en colonne
+   sur petit écran. Section courante = gras + puce, jamais une couleur pâle. */
+
+.site-header {
+  padding-top: 1.5rem;
+  padding-bottom: 1rem;
+  margin-bottom: 2rem;
+  border-bottom: 1px solid var(--rule);
+}
+
+.site-title {
+  display: inline-block;
+  font-family: var(--serif);
+  font-weight: 700;
+  font-size: 1.3rem;
+  letter-spacing: 0.01em;
+  color: var(--fg-strong);
+  text-decoration: none;
+}
+
+.site-title:hover,
+.site-title:focus-visible {
+  text-decoration: underline;
+}
+
+.site-nav {
+  margin-top: 0.75rem;
+  font-size: 0.95rem;
+  line-height: 1.7;
+}
+
+/* Liens séparés par un filet vertical discret (couleur du texte, jamais gris). */
+.site-nav a {
+  display: inline-block;
+  text-decoration: underline;
+}
+
+.site-nav a + a {
+  margin-left: 0.5rem;
+  padding-left: 0.75rem;
+  border-left: 1px solid var(--rule);
+}
+
+/* Section courante : graisse + puce, aucun gris. */
+.site-nav a.is-current {
+  font-weight: 700;
+}
+
+.site-nav a.is-current::before {
+  content: "▪ ";
+}
+
+/* Repli en colonne sur petit écran : un lien par ligne, sans filet vertical. */
+@media (max-width: 32rem) {
+  .site-nav {
+    display: flex;
+    flex-direction: column;
+  }
+  .site-nav a + a {
+    margin-left: 0;
+    padding-left: 0;
+    border-left: 0;
+  }
+}
+
+/* --- Pied de page minimal (P06) -----------------------------------------------
+   Filet haut en --rule, petits texte, liens sobres sans gris. */
+
+.site-footer {
+  margin-top: 3rem;
+  padding-block: 1.25rem;
+  border-top: 1px solid var(--rule);
+  font-size: 0.875rem;
+}
+
+.site-footer p {
+  margin-bottom: 0.5rem;
+}
+
+.site-footer nav a + a {
+  margin-left: 1rem;
+}
+
+.site-footer-social {
+  margin-top: 0.5rem;
+}
+
+/* --- Outils transversaux : niveau secondaire sous la nav de contenu ----------
+   Plus petit que les sections, sous un filet discret. Distinction par taille et
+   filet, jamais par un gris délavé. */
+.site-tools {
+  margin-top: 0.6rem;
+  padding-top: 0.6rem;
+  border-top: 1px solid var(--rule);
+  font-family: var(--mono);
+  font-size: 0.78rem;
+  letter-spacing: 0.03em;
+}
+
+.site-tools a {
+  display: inline-block;
+  text-decoration: underline;
+}
+
+.site-tools a + a {
+  margin-left: 0.5rem;
+  padding-left: 0.75rem;
+  border-left: 1px solid var(--rule);
+}
+
+.site-tools a.is-current {
+  font-weight: 700;
+}
+
+@media (max-width: 32rem) {
+  .site-tools {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.25rem 0;
+  }
+  .site-tools a + a {
+    margin-left: 0;
+    padding-left: 0;
+    border-left: 0;
+  }
+  .site-tools a {
+    margin-right: 0.5rem;
+    padding-right: 0.75rem;
+    border-right: 1px solid var(--rule);
+  }
+  .site-tools a:last-child {
+    border-right: 0;
+  }
+}
+
+/* --- Fil d'Ariane (single) --------------------------------------------------
+   Petit, mono, discret : c'est un repère, pas un titre. Déborde la colonne de
+   lecture pour s'aligner sur la largeur du header/footer et tenir sur une seule
+   ligne. Section courante distinguée par la graisse, jamais par un gris. */
+.breadcrumb {
+  width: min(72rem, 100vw - 2rem);
+  margin-left: 50%;
+  transform: translateX(-50%);
+  margin-bottom: 1.75rem;
+  font-family: var(--mono);
+  font-size: 0.74rem;
+  letter-spacing: 0.02em;
+  line-height: 1.5;
+}
+
+.breadcrumb a {
+  text-decoration: none;
+}
+
+.breadcrumb a:hover,
+.breadcrumb a:focus-visible {
+  text-decoration: underline;
+}
+
+.breadcrumb-current {
+  font-weight: 700;
+}
+
+/* --- Sidenotes Tufte, CSS pur (P09) -----------------------------------------
+   Appel numéroté en exposant ; note repliée par défaut, ouverte au clic via une
+   case à cocher cachée (technique :checked, zéro JS). Sur écran étroit la note
+   s'insère en bloc dans le fil de lecture ; sur grand écran (≥ 76rem) elle
+   flotte dans la marge, à droite ou à gauche en alternance. Deux variantes :
+   « note » (sobre) et « comment » (voix de commentaire, libellé petites caps).
+   Différenciation par filet, italique et casse — jamais par un gris. */
+
+/* Le conteneur reste en ligne et n'altère pas le flux du texte. */
+.sidenote-ref {
+  position: static;
+}
+
+/* La case à cocher : invisible mais focusable au clavier. */
+.sidenote-toggle {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  opacity: 0;
+  margin: 0;
+  pointer-events: none;
+}
+
+/* L'appel : exposant cliquable, contraste franc (jamais gris). */
+.sidenote-call {
+  cursor: pointer;
+  font-family: var(--mono);
+  font-size: 0.7em;
+  font-weight: 700;
+  line-height: 0;
+  vertical-align: super;
+  color: var(--accent);
+  padding: 0 0.15em;
+  user-select: none;
+}
+
+.sidenote-call:hover {
+  text-decoration: underline;
+}
+
+/* Variante commentaire : appel en rouge profond pour distinguer la voix. */
+.sidenote-call--comment {
+  color: var(--link);
+}
+
+/* Note ouverte : l'appel passe en gras (repère visuel de l'état). */
+.sidenote-toggle:checked + .sidenote-call {
+  font-weight: 800;
+  text-decoration: underline;
+}
+
+/* Focus clavier visible : la case cachée reçoit le focus, on stylise l'appel. */
+.sidenote-toggle:focus-visible + .sidenote-call {
+  outline: 2px solid var(--accent);
+  outline-offset: 2px;
+}
+
+/* État replié par défaut. */
+.sidenote {
+  display: none;
+}
+
+/* État ouvert — défaut (écran étroit) : bloc inséré dans le fil de lecture. */
+.sidenote-toggle:checked ~ .sidenote {
+  display: block;
+  margin: 0.7em 0;
+  padding: 0.5em 0.9em;
+  border-left: 2px solid var(--rule);
+  font-size: 0.92em;
+  line-height: 1.5;
+}
+
+.sidenote-num {
+  font-weight: 700;
+  color: var(--accent);
+}
+
+.sidenote-body {
+  font-family: var(--serif);
+}
+
+/* Variante commentaire : voix distincte — corps en italique, libellé en
+   petites capitales mono, filet et numéro en rouge. */
+.sidenote--comment {
+  font-style: italic;
+}
+
+/* Filet rouge pour la voix de commentaire (scopé sous :checked pour primer le
+   filet par défaut, de spécificité supérieure). */
+.sidenote-toggle:checked ~ .sidenote--comment {
+  border-left-color: var(--link);
+}
+
+.sidenote--comment .sidenote-num {
+  color: var(--link);
+}
+
+.sidenote-label {
+  display: block;
+  font-style: normal;
+  font-family: var(--mono);
+  font-size: 0.72em;
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+  margin-bottom: 0.25em;
+}
+
+/* --- Grand écran : la note ouverte flotte dans la marge ---------------------
+   Largeur de note 12rem, décalée de 14rem (2rem de gouttière) hors de la
+   colonne de lecture. Seuil 76rem : en-dessous, la note reste en bloc inline
+   pour ne jamais déborder horizontalement. `clear` empêche tout chevauchement
+   entre notes ouvertes successives, sans le moindre JS. */
+@media (min-width: 76rem) {
+  .sidenote-toggle:checked ~ .sidenote {
+    float: right;
+    clear: right;
+    width: 12rem;
+    margin: 0 -14rem 0.6rem 0;
+    padding: 0 0 0 0.9rem;
+    border-left: 1px solid var(--rule);
+    font-size: 0.8rem;
+    line-height: 1.4;
+    text-align: left;
+  }
+
+  .sidenote-toggle:checked ~ .sidenote--left {
+    float: left;
+    clear: left;
+    margin: 0 0 0.6rem -14rem;
+    padding: 0 0.9rem 0 0;
+    border-left: 0;
+    border-right: 1px solid var(--rule);
+    text-align: right;
+  }
+
+  .sidenote-toggle:checked ~ .sidenote--comment {
+    border-left-color: var(--link);
+  }
+
+  .sidenote-toggle:checked ~ .sidenote--comment.sidenote--left {
+    border-right-color: var(--link);
+  }
+}
+
+/* --- Bouton flottant « plan » + panneau TOC ----------------------------------
+   JS révèle le bouton (hidden → visible) et crée le panneau dynamiquement.
+   Sans JS : le <details> statique en haut de l'article reste la seule entrée.
+   Placement bas-gauche pour éviter la barre de défilement et les sidenotes
+   droites (les plus fréquentes). Sidenotes gauches ouvertes : chevauchement
+   rare, bref, non bloquant — les deux éléments restent utilisables. */
+
+.toc-btn {
+  position: fixed;
+  bottom: 1.5rem;
+  left: 1.5rem;
+  z-index: 20;
+  font-family: var(--serif);
+  font-size: 1rem;
+  font-variant: small-caps;
+  letter-spacing: 0.04em;
+  background: var(--bg);
+  color: var(--fg);
+  border: 1px solid var(--rule);
+  padding: 0.55rem 1.1rem;
+  cursor: pointer;
+  line-height: 1;
+}
+
+.toc-btn:hover,
+.toc-btn:focus-visible {
+  background: var(--fg);
+  color: var(--bg);
+  outline: none;
+}
+
+.toc-float-panel {
+  position: fixed;
+  bottom: 3rem;
+  left: 1.5rem;
+  z-index: 20;
+  max-width: min(18rem, calc(42vw - 2rem));
+  max-height: calc(80vh - 4rem);
+  overflow-y: auto;
+  background: var(--bg);
+  border: 1px solid var(--rule);
+  padding: 0.75rem 1rem;
+  font-size: 0.875rem;
+  line-height: 1.5;
+}
+
+.toc-float-panel nav ol,
+.toc-float-panel nav ul {
+  margin: 0;
+  padding-left: 1.2em;
+}
+
+.toc-float-panel nav li {
+  margin: 0.2em 0;
+}
+
+.toc-float-panel nav a {
+  color: var(--fg);
+  text-decoration: underline;
+}
+
+.toc-float-panel nav a:hover {
+  color: var(--link);
+}
+
+/* --- Corps de l'article : paragraphes justifiés avec césures ------------------ */
+
+.article-prose p {
+  text-align: justify;
+  hyphens: auto;
+  hyphenate-limit-chars: 6 3 3;
+}
+
+/* --- Pied d'article (P11) ----------------------------------------------------
+   Méta sobre, partage presse-papier, CTA Patafoin, articles liés et prev/next.
+   Tout en liens texte ; différenciation par la taille/la graisse/la casse,
+   jamais par un gris. */
+
+.article-footer {
+  margin-top: 3rem;
+  padding-top: 1.5rem;
+  border-top: 1px solid var(--rule);
+}
+
+/* Méta : libellés mono petits, valeurs en corps — distinction par la taille. */
+.article-footer-meta {
+  display: grid;
+  grid-template-columns: auto 1fr;
+  gap: 0.2em 1em;
+  margin-bottom: 1.25rem;
+}
+
+.article-footer-meta dt {
+  font-family: var(--mono);
+  font-size: 0.78rem;
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+  align-self: baseline;
+}
+
+.article-footer-meta dd {
+  margin-inline-start: 0;
+  font-family: var(--mono);
+  font-size: 0.95rem;
+}
+
+/* Actions : partage + lien Patafoin, en ligne, sobres. */
+.article-footer-actions {
+  margin-bottom: 1.5rem;
+}
+
+/* Bouton présenté comme un lien (partage presse-papier), zéro habillage. */
+.linklike {
+  border: 0;
+  background: none;
+  padding: 0;
+  cursor: pointer;
+  color: var(--link);
+  font-family: inherit;
+  font-size: inherit;
+  text-decoration: underline;
+  text-decoration-thickness: 1px;
+  text-underline-offset: 0.15em;
+}
+
+.linklike:hover,
+.linklike:focus {
+  text-decoration-thickness: 2px;
+}
+
+/* Titre de section ("à lire aussi") : kicker mono, marge calée. */
+.article-footer-head {
+  margin: 0 0 0.6rem;
+}
+
+/* Articles liés : liste de liens, titre + date sur une ligne. */
+.related {
+  margin-bottom: 1.5rem;
+}
+
+.related-list {
+  list-style: none;
+  padding-inline-start: 0;
+  margin-bottom: 0;
+}
+
+.related-item {
+  display: flex;
+  justify-content: space-between;
+  align-items: baseline;
+  gap: 1em;
+}
+
+.related-item .related-date {
+  flex: none;
+}
+
+/* Prev / next : deux liens texte, libellé kicker au-dessus du titre. */
+.prevnext {
+  display: flex;
+  justify-content: space-between;
+  gap: 1.5rem;
+}
+
+.prevnext a {
+  display: block;
+  max-width: 48%;
+}
+
+.prevnext-next {
+  margin-left: auto;
+  text-align: right;
+}
+
+.prevnext .kicker {
+  display: block;
+}
+
+/* --- Accueil : index typographique pur (P12) --------------------------------
+   Le gabarit content/_index.md est full_width, donc <main> est .wide ; on
+   recentre l'accueil dans une colonne sobre, un peu plus large que la mesure
+   de lecture. Tout en serif, différenciation par taille/graisse/casse, jamais
+   par un gris. */
+
+.home {
+  max-width: 44rem;
+  margin-inline: auto;
+}
+
+.home-head {
+  margin-bottom: 1.5rem;
+}
+
+.home-title {
+  margin: 0;
+  font-size: clamp(2.2rem, 1.6rem + 2.6vw, 3rem);
+  letter-spacing: -0.01em;
+}
+
+/* Accroche : corps un peu plus grand, italique — distincte sans gris. */
+.home-tagline {
+  margin: 0.4rem 0 0;
+  font-size: 1.15rem;
+  font-style: italic;
+}
+
+.home-intro {
+  margin-bottom: 2rem;
+}
+
+/* Almanach : date pataphysique (kicker mono) + entrée du jour (serif),
+   calées au-dessus du DOM en bas de page. */
+.almanach {
+  margin-bottom: 2rem;
+}
+
+.almanach-line {
+  font-family: var(--mono);
+  font-size: 0.85rem;
+  margin: 0 0 0.4rem;
+}
+
+.almanach-entry {
+  margin: 0;
+  font-style: italic;
+}
+
+/* Titres de bloc d'accueil : filet bas, casse normale. */
+.home-h2 {
+  margin: 0 0 0.9rem;
+  padding-bottom: 0.3rem;
+  font-size: 1.3rem;
+  border-bottom: 1px solid var(--rule);
+}
+
+/* Sections : nom en serif gras, description en dessous, sans puces. */
+.home-sections {
+  margin-bottom: 2.5rem;
+}
+
+.sections-list {
+  margin: 0;
+}
+
+.section-name {
+  font-size: 1.2rem;
+  font-weight: 700;
+}
+
+.section-name a {
+  text-decoration: none;
+}
+
+.section-name a:hover,
+.section-name a:focus {
+  text-decoration: underline;
+}
+
+.section-desc {
+  margin: 0.15em 0 1.1em;
+  font-size: 0.95rem;
+}
+
+.section-desc:last-child {
+  margin-bottom: 0;
+}
+
+/* Derniers textes : liste sans puces, titre + date alignés. */
+.home-latest {
+  margin-bottom: 2.5rem;
+}
+
+.latest-list {
+  list-style: none;
+  padding-inline-start: 0;
+  margin-bottom: 0;
+}
+
+.latest-item {
+  display: flex;
+  justify-content: space-between;
+  align-items: baseline;
+  gap: 1em;
+  padding-block: 0.15em;
+}
+
+.latest-item + .latest-item {
+  margin-top: 0;
+}
+
+.latest-date {
+  flex: none;
+  font-family: var(--mono);
+  font-size: 0.8rem;
+}
+
+/* Lien « au hasard » : un peu plus présent, petites capitales. */
+.home-random {
+  margin-bottom: 2.5rem;
+  font-variant: small-caps;
+  letter-spacing: 0.02em;
+}
+
+/* --- DOM reconverti (P15) ----------------------------------------------------
+   Bouton récalcitrant : clic après clic (000→999) il déroule son monologue, puis
+   s'éteint sur une pierre tombale. Sobre, haut contraste, fontes système, aucune
+   couleur grise. Une seule transition d'opacité courte au changement de réplique. */
+
+.dom {
+  margin-top: 3.5rem;
+  padding-top: 1.5rem;
+  border-top: 1px solid var(--rule);
+  text-align: center;
+}
+
+.dom-counter {
+  font-family: var(--mono);
+  font-size: 0.8rem;
+  letter-spacing: 0.08em;
+  margin-bottom: 0.75rem;
+}
+
+.dom-button {
+  font-family: var(--mono);
+  font-size: 0.9rem;
+  letter-spacing: 0.04em;
+  color: var(--bg);
+  background: var(--fg);
+  border: 1px solid var(--fg);
+  padding: 0.5em 1.1em;
+  cursor: pointer;
+}
+
+.dom-button:hover,
+.dom-button:focus-visible {
+  color: var(--fg);
+  background: var(--bg);
+}
+
+.dom-glyph {
+  font-style: normal;
+}
+
+.dom-line {
+  max-width: 34rem;
+  margin: 1.5rem auto 0;
+  padding-left: 1rem;
+  border-left: 3px solid var(--rule);
+  font-family: var(--serif);
+  font-style: italic;
+  font-size: 1.05rem;
+  line-height: 1.5;
+  text-align: left;
+  transition: opacity 0.15s ease;
+}
+
+.dom-epitaph {
+  margin-top: 0.5rem;
+  font-family: var(--serif);
+  font-weight: 700;
+  font-size: 1.2rem;
+  line-height: 1.4;
+}
+
+.dom-end {
+  margin-top: 0.75rem;
+  font-family: var(--mono);
+  font-size: 0.8rem;
+  letter-spacing: 0.05em;
+}
+
+/* --- Listes de section : gabarit unifié (P13) -------------------------------
+   Les _index.md de section sont full_width, donc <main> est .wide ; on recentre
+   la liste dans une colonne sobre comme l'accueil. Entrées en flux : titre serif
+   en lien, date/tags en mono, description en dessous. Sous-dossiers groupés sous
+   un intertitre. Différenciation par taille/graisse/casse, jamais par un gris. */
+
+.list {
+  max-width: 44rem;
+  margin-inline: auto;
+}
+
+.list-head {
+  margin-bottom: 2rem;
+}
+
+.list-title {
+  margin: 0;
+  font-size: clamp(2rem, 1.5rem + 2.2vw, 2.7rem);
+  letter-spacing: -0.01em;
+}
+
+.list-intro {
+  margin-top: 0.6rem;
+}
+
+/* Regroupement par sous-dossier : replié par défaut via <details>. */
+.list-group {
+  margin-top: 2.5rem;
+}
+
+.list-group-title {
+  margin: 0 0 0.3rem;
+  padding-bottom: 0.3rem;
+  font-size: 1.3rem;
+  font-weight: 700;
+  border-bottom: 1px solid var(--rule);
+  list-style: none;
+  display: flex;
+  align-items: baseline;
+  gap: 0.4em;
+  cursor: pointer;
+}
+
+.list-group-title::-webkit-details-marker {
+  display: none;
+}
+
+.list-group-title::marker {
+  content: '';
+}
+
+.list-group-marker {
+  font-size: 0.65em;
+  opacity: 0.5;
+  transition: transform 0.15s;
+  flex-shrink: 0;
+}
+
+.list-group[open] > .list-group-title .list-group-marker {
+  transform: rotate(90deg);
+}
+
+.list-group-title a {
+  text-decoration: none;
+}
+
+.list-group-title a:hover,
+.list-group-title a:focus {
+  text-decoration: underline;
+}
+
+.list-group-desc {
+  margin: 0 0 0.9rem;
+  font-style: italic;
+}
+
+/* Entrées : liste sans puces, titre serif puis méta et description. */
+.entry-list {
+  list-style: none;
+  padding-inline-start: 0;
+  margin: 0;
+}
+
+.entry {
+  padding-block: 0.6rem;
+}
+
+.entry + .entry {
+  border-top: 1px solid var(--rule);
+}
+
+.entry-title {
+  font-size: 1.2rem;
+  font-weight: 700;
+  text-decoration: none;
+}
+
+.entry-title:hover,
+.entry-title:focus {
+  text-decoration: underline;
+}
+
+.entry-meta {
+  margin: 0.2em 0 0;
+}
+
+.entry-meta a {
+  text-decoration: none;
+}
+
+.entry-meta a:hover,
+.entry-meta a:focus {
+  text-decoration: underline;
+}
+
+.entry-desc {
+  margin: 0.25em 0 0;
+  font-size: 0.95rem;
+}
+
+/* --- Thésaurus : index alphabétique des tags (P14) --------------------------
+   Une entrée par tag : terme souligné à gauche, compte en mono à droite. Le
+   compte se différencie par la fonte mono et la taille, jamais par un gris. */
+
+.thesaurus-list {
+  list-style: none;
+  padding-inline-start: 0;
+  margin: 0;
+}
+
+.thesaurus-item {
+  display: flex;
+  align-items: baseline;
+  gap: 0.75rem;
+  padding-block: 0.4rem;
+}
+
+.thesaurus-item + .thesaurus-item {
+  border-top: 1px solid var(--rule);
+}
+
+.thesaurus-term {
+  font-size: 1.1rem;
+}
+
+.thesaurus-count {
+  margin-left: auto;
+  font-family: var(--mono);
+  font-size: 0.8rem;
+  font-variant-numeric: tabular-nums;
+}
+
+/* Lien de tag (P14) : simple lien souligné, mono discret. Pas de « chip ». */
+.tag-link {
+  font-family: var(--mono);
+  font-size: 0.85rem;
+}
+
+.tag-link--missing {
+  text-decoration: line-through;
+  cursor: not-allowed;
+}
+
+/* --- 404 (P14b) : message sobre + liens de secours -------------------------- */
+.notfound {
+  max-width: 44rem;
+  margin-inline: auto;
+}
+
+.notfound-title {
+  margin: 0.3rem 0 0;
+  font-size: clamp(2rem, 1.5rem + 2.2vw, 2.7rem);
+  letter-spacing: -0.01em;
+}
+
+.notfound-intro {
+  margin: 0.8rem 0 1.5rem;
+}
+
+.notfound-links {
+  list-style: none;
+  padding-inline-start: 0;
+  margin: 0;
+}
+
+.notfound-links li {
+  padding-block: 0.3rem;
+}
+
+.notfound-links li + li {
+  border-top: 1px solid var(--rule);
+}
+
+/* --- Rhizome (P17) : liste lisible, sans JS --------------------------------
+   Page full_width (donc <main> est .wide) : on recentre comme une liste. Deux
+   sections : racines (notes internes, titre + petit texte) et spores (liens
+   externes en colonnes). Le compte par section se différencie en mono, jamais
+   par un gris. L'icône emoji reste discrète, sans couleur d'appui. */
+
+.rhizome {
+  max-width: 44rem;
+  margin-inline: auto;
+}
+
+.rhizome-roots,
+.rhizome-spores {
+  margin-top: 2.5rem;
+}
+
+.rhizome-section-title {
+  margin: 0 0 0.8rem;
+  padding-bottom: 0.3rem;
+  font-size: 1.3rem;
+  border-bottom: 1px solid var(--rule);
+}
+
+.rhizome-count {
+  margin-left: 0.4rem;
+  font-family: var(--mono);
+  font-size: 0.8rem;
+  font-weight: 400;
+  font-variant-numeric: tabular-nums;
+  vertical-align: 0.1em;
+}
+
+/* L'emoji introductif : taille mesurée, espacement à droite, jamais coloré. */
+.rhizome-icon {
+  margin-right: 0.4em;
+  font-style: normal;
+}
+
+/* Spores : liens externes en colonnes compactes, sobres. */
+.rhizome-spore-list {
+  list-style: none;
+  padding-inline-start: 0;
+  margin: 0;
+  columns: 14rem 2;
+  column-gap: 2rem;
+}
+
+.rhizome-spore {
+  break-inside: avoid;
+  padding-block: 0.35rem;
+}
+
+/* --- Antenne radio (P18) : index de veille en table statique ---------------
+   Page full_width (donc <main> est .wide) : on recentre dans une colonne sobre.
+   Table sémantique lisible (filets couleur du texte), filtre vanilla minimal
+   révélé par JS. Sur petit écran, la table se replie en blocs étiquetés. La
+   différenciation reste typographique : taille, mono, petites capitales. */
+
+.antenne {
+  max-width: 60rem;
+  margin-inline: auto;
+}
+
+.antenne-meta {
+  margin-top: 0.8rem;
+}
+
+/* Filtre : libellé mono + champ, sur une ligne, sobre. */
+.antenne-filter {
+  display: flex;
+  align-items: baseline;
+  flex-wrap: wrap;
+  gap: 0.6rem;
+  margin: 2rem 0 0.5rem;
+}
+
+.antenne-filter input {
+  flex: 1 1 16rem;
+  padding: 0.35em 0.5em;
+  border: 1px solid var(--rule);
+  background: var(--bg);
+  color: var(--fg);
+}
+
+.antenne-filter-count {
+  font-family: var(--mono);
+  font-size: 0.8rem;
+  font-variant-numeric: tabular-nums;
+}
+
+/* Table : un peu plus compacte que le corps, chiffres tabulaires pour les dates. */
+.antenne-table {
+  font-size: 0.95rem;
+  margin-top: 1rem;
+}
+
+.antenne-table th {
+  font-variant: small-caps;
+  letter-spacing: 0.03em;
+}
+
+.antenne-table time,
+.antenne-table td:last-child {
+  font-family: var(--mono);
+  font-size: 0.85rem;
+  font-variant-numeric: tabular-nums;
+}
+
+.antenne-table time {
+  white-space: nowrap;
+}
+
+.antenne-empty {
+  margin-top: 2rem;
+  font-style: italic;
+}
+
+/* À propos & retrait : prose sobre, sources en liste sans puces. */
+.antenne-about {
+  margin-top: 3rem;
+  padding-top: 1.5rem;
+  border-top: 2px solid var(--rule);
+}
+
+.antenne-about-title,
+.antenne-about-subtitle {
+  font-variant: small-caps;
+  letter-spacing: 0.02em;
+}
+
+.antenne-sources {
+  list-style: none;
+  padding-inline-start: 0;
+  margin: 0;
+}
+
+.antenne-sources li {
+  padding-block: 0.4rem;
+}
+
+.antenne-sources li + li {
+  border-top: 1px solid var(--rule);
+}
+
+.antenne-source-note {
+  display: block;
+  font-size: 0.9rem;
+  font-style: italic;
+}
+
+/* Repli mobile : chaque ligne devient un bloc étiqueté (data-label). */
+@media (max-width: 38rem) {
+  .antenne-table,
+  .antenne-table tbody,
+  .antenne-table tr,
+  .antenne-table td {
+    display: block;
+    width: 100%;
+  }
+
+  .antenne-table thead {
+    position: absolute;
+    width: 1px;
+    height: 1px;
+    overflow: hidden;
+    clip: rect(0 0 0 0);
+    clip-path: inset(50%);
+  }
+
+  .antenne-table tr {
+    padding-block: 0.6rem;
+    border-bottom: 1px solid var(--rule);
+  }
+
+  .antenne-table td {
+    border-bottom: 0;
+    padding: 0.15em 0;
+  }
+
+  .antenne-table td::before {
+    content: attr(data-label) " : ";
+    font-variant: small-caps;
+    letter-spacing: 0.02em;
+  }
+
+  /* La date et le DOI absent ne méritent pas leur propre ligne étiquetée. */
+  .antenne-table td[data-label="titre"] {
+    font-size: 1.05rem;
+  }
+
+  .antenne-table td[data-label="titre"]::before {
+    content: none;
+  }
+}
+
+/* =============================================================================
+   7. UTILITAIRES
+   ========================================================================== */
+
+/* Accessibilité : masquer visuellement sans retirer du flux lecteur d'écran. */
+.visually-hidden {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  padding: 0;
+  margin: -1px;
+  overflow: hidden;
+  clip: rect(0 0 0 0);
+  clip-path: inset(50%);
+  white-space: nowrap;
+  border: 0;
+}
+
+/* Texte secondaire : différencié par la graisse et la casse, pas par un gris. */
+.kicker {
+  font-family: var(--mono);
+  font-size: 0.8rem;
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+}
+
+.smallcaps {
+  font-variant: small-caps;
+  letter-spacing: 0.02em;
+}
+
+/* Centrage de texte d'appoint. */
+.center {
+  text-align: center;
+}
+
+/* Lien d'évitement clavier (skip link), visible au focus. */
+.skip-link {
+  position: absolute;
+  left: 0.5rem;
+  top: -3rem;
+  background: var(--bg);
+  padding: 0.5em 0.75em;
+  border: 1px solid var(--rule);
+  transition: top 0.15s;
+}
+
+.skip-link:focus {
+  top: 0.5rem;
+}
+
+/* --- EMBEDS — façade click-to-load (P19) -------------------------------- *
+   Rien ne charge tant qu'on ne clique pas : la façade est un bouton sobre,
+   haut contraste, sans gris. Au clic, l'iframe (vidéo/podcast) la remplace.
+   Vidéo : ratio 16:9 calé pour éviter tout saut de mise en page. */
+.embed {
+  margin: 1.6rem 0;
+}
+
+.embed-facade {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  gap: 0.3rem;
+  width: 100%;
+  padding: 1rem 1.1rem;
+  text-align: left;
+  background: var(--bg);
+  color: var(--fg);
+  border: 2px solid var(--rule);
+  font-family: inherit;
+  cursor: pointer;
+  transition: background 0.15s, color 0.15s;
+}
+
+.embed--video .embed-facade {
+  aspect-ratio: 16 / 9;
+}
+
+.embed--audio .embed-facade {
+  min-height: var(--embed-h, 110px);
+}
+
+.embed-facade:hover,
+.embed-facade:focus-visible {
+  background: var(--fg);
+  color: var(--bg);
+}
+
+.embed-facade-kind {
+  font-family: var(--mono);
+  font-size: 0.72rem;
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+}
+
+.embed-facade-title {
+  font-size: 1.1rem;
+  font-weight: 600;
+  line-height: 1.25;
+}
+
+.embed-facade-cue {
+  font-style: italic;
+  font-size: 0.92rem;
+}
+
+/* Iframe injectée : occupe la place de la façade. */
+.embed--video iframe {
+  display: block;
+  width: 100%;
+  aspect-ratio: 16 / 9;
+  height: auto;
+  border: 0;
+}
+
+.embed--audio iframe {
+  display: block;
+  width: 100%;
+  height: var(--embed-h, 110px);
+  border: 0;
+}
+
+/* --- Forum Patafoin (P20) : forum Supabase isolé, restylé sur le socle ------
+   Fils de discussion en <details>, formulaires sobres. Aucun gris : méta et
+   texte secondaire se distinguent par la taille, la casse, le mono et les
+   filets (couleur du texte). Tout le JS (Supabase auto-hébergé + patafoin.js)
+   n'est chargé que sur cette page. */
+
+.patafoin {
+  margin-block: 1rem;
+}
+
+/* Bouton générique du forum : cadre franc, inversion au survol. */
+.pf-btn {
+  display: inline-block;
+  padding: 0.4em 0.9em;
+  font: inherit;
+  font-size: 0.95rem;
+  color: var(--fg);
+  background: var(--bg);
+  border: 2px solid var(--rule);
+  cursor: pointer;
+  transition: background 0.15s, color 0.15s;
+}
+
+.pf-btn:hover,
+.pf-btn:focus-visible {
+  background: var(--fg);
+  color: var(--bg);
+}
+
+.pf-btn--ghost {
+  border-width: 1px;
+  border-style: dashed;
+}
+
+.pf-new-topic {
+  margin-bottom: 1.5rem;
+}
+
+/* --- Formulaires (nouveau sujet + réponse) --------------------------------- */
+.pf-form {
+  margin: 1.25rem 0;
+  padding: 1rem 1.1rem;
+  border: 1px solid var(--rule);
+}
+
+.pf-form--reply {
+  border-style: dashed;
+  margin-top: 0.75rem;
+}
+
+.pf-form-target {
+  margin: 0 0 0.75rem;
+}
+
+.pf-field {
+  display: block;
+  margin-bottom: 0.8rem;
+}
+
+.pf-label {
+  display: block;
+  font-family: var(--mono);
+  font-size: 0.75rem;
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
+  margin-bottom: 0.25rem;
+}
+
+.pf-label i {
+  font-style: italic;
+  text-transform: none;
+  letter-spacing: 0;
+}
+
+.pf-form input,
+.pf-form textarea {
+  display: block;
+  width: 100%;
+  padding: 0.4em 0.55em;
+  font: inherit;
+  color: var(--fg);
+  background: var(--bg);
+  border: 1px solid var(--rule);
+}
+
+.pf-form textarea {
+  resize: vertical;
+  line-height: 1.5;
+}
+
+.pf-form-actions {
+  display: flex;
+  justify-content: flex-end;
+  gap: 0.75rem;
+}
+
+/* --- Arbre des discussions ------------------------------------------------- */
+.pf-tree {
+  margin-top: 1rem;
+}
+
+.pf-loading,
+.pf-empty,
+.pf-noreply,
+.pf-fallback {
+  font-style: italic;
+}
+
+.pf-error {
+  padding: 0.75rem 0.9rem;
+  border: 2px solid var(--link);
+  color: var(--link);
+}
+
+/* Sujet : un <details> à filet ; titre serif gras, méta mono. */
+.pf-topic {
+  border: 1px solid var(--rule);
+  margin-bottom: 0.75rem;
+}
+
+.pf-topic[open] {
+  border-width: 2px;
+}
+
+.pf-topic-summary {
+  list-style: none;
+  display: flex;
+  align-items: baseline;
+  gap: 0.6rem;
+  padding: 0.7rem 0.9rem;
+  cursor: pointer;
+}
+
+.pf-topic-summary::-webkit-details-marker {
+  display: none;
+}
+
+.pf-topic-summary:hover {
+  background: var(--code-bg);
+}
+
+.pf-topic-marker {
+  font-family: var(--mono);
+  font-weight: 700;
+  transition: transform 0.15s;
+}
+
+.pf-topic[open] .pf-topic-marker {
+  transform: rotate(90deg);
+}
+
+.pf-topic-title {
+  font-weight: 700;
+  font-size: 1.15rem;
+}
+
+.pf-topic-meta {
+  margin-left: auto;
+  white-space: nowrap;
+}
+
+.pf-topic-body {
+  padding: 0 0.9rem 0.9rem;
+}
+
+/* Contenu d'un message : on préserve les retours à la ligne saisis. */
+.pf-content {
+  white-space: pre-wrap;
+  margin: 0.5rem 0 0.75rem;
+}
+
+.pf-reply-trigger {
+  font: inherit;
+  font-size: 0.85rem;
+  background: none;
+  border: 0;
+  padding: 0;
+  color: var(--accent);
+  text-decoration: underline;
+  cursor: pointer;
+}
+
+.pf-reply-trigger:hover,
+.pf-reply-trigger:focus-visible {
+  text-decoration-thickness: 2px;
+}
+
+/* Réponses : indentation portée par un filet vertical (couleur du texte). */
+.pf-replies,
+.pf-subreplies {
+  margin-top: 0.75rem;
+}
+
+.pf-node {
+  padding-left: 1rem;
+  border-left: 1px solid var(--rule);
+  margin-top: 0.9rem;
+}
+
+/* L'ancien connecteur décoratif est inutile : l'indentation est sur .pf-node. */
+.pf-node-rule {
+  display: none;
+}
+
+.pf-node-head {
+  display: flex;
+  align-items: baseline;
+  flex-wrap: wrap;
+  gap: 0.5rem;
+  margin: 0;
+  font-size: 0.85rem;
+}
+
+.pf-node-author {
+  font-weight: 700;
+}
+
+.pf-node-id {
+  font-family: var(--mono);
+  font-size: 0.72rem;
+  margin-left: auto;
+}
+
+@media (max-width: 32rem) {
+  .pf-node-id {
+    display: none;
+  }
+}

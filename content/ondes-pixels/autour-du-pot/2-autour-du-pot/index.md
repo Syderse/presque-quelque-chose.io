@@ -13,7 +13,7 @@ authors:
   - Mathieu Allag
 ---
 
-<iframe src="https://embed.acast.com/66f2a18a7a3d63d20ff5a0b5/66feb97be43e42d91756409d" frameBorder="0" width="100%" height="110px"></iframe>
+{{< embed type="acast" src="https://embed.acast.com/66f2a18a7a3d63d20ff5a0b5/66feb97be43e42d91756409d" height="110" >}}
 
 **Plat de résistance** - masculin. Ce qui constitue le _coeur_ d'un repas, plat le plus copieux.
 
@@ -33,6 +33,6 @@ Prise de son et montage : _Kenza Benyahia et Mathieu Allag_
 
 Musique : _Jérôme Evrard_
 
-Pour le [pot-au-feu](../3-autour-du-pot/).
+Pour le [pot-au-feu](/ondes-pixels/autour-du-pot/3-autour-du-pot/).
 
 ---
