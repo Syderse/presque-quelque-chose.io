@@ -39,6 +39,8 @@ Ici on reconvertit les fonctionnalités signature en versions minimales et fidè
 
 **Prompt à coller :**
 
+Attention pose moi des questions parce que je souhaite le maintien des entrées aléatoires de l'almanach dans l'écran d'accueil.
+
 > Lis `CLAUDE.md` d'abord. et `00_PLAN.md`.
 > Reconvertis l'almanach en version texte minimale, sans la carte animée.
 > 1. **Ligne pataphysique** sur l'accueil : un petit script branche, dans `#almanach-line` (slot prévu au P12), la date pataphysique du jour + le saint, calculés par `assets/js/PataphysicalDate.js` (lib autonome, offline — conserve-la). Sortie en une phrase sobre (ex. « Nous sommes le [jour] [mois] [année] E.P. — fête de [saint]. »). Charge le script uniquement sur l'accueil. Gère proprement l'absence de JS (la ligne reste vide, sans casser).

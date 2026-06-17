@@ -2,14 +2,19 @@
 <header class="site-header wide">
   <a class="site-title" href="/">{{ .Site.Title }}</a>
 
-  <nav class="site-nav" aria-label="Navigation principale">
+  {{/* Sections de contenu — navigation principale. */}}
+  <nav class="site-nav" aria-label="Sections du site">
     {{- range .Site.Menus.main }}
       {{- $current := $.IsMenuCurrent "main" . }}
       <a href="{{ .URL }}"{{ if $current }} class="is-current" aria-current="page"{{ end }}>{{ .Name }}</a>
     {{- end }}
-    <a href="/tags/"{{ if hasPrefix .RelPermalink "/tags/" }} class="is-current" aria-current="page"{{ end }}>thésaurus</a>
+  </nav>
+
+  {{/* Outils transversaux — niveau secondaire, sous un filet discret. */}}
+  <nav class="site-tools" aria-label="Outils">
     <a href="/manuel/"{{ if hasPrefix .RelPermalink "/manuel/" }} class="is-current" aria-current="page"{{ end }}>manuel</a>
-    <a href="/recherche/"{{ if hasPrefix .RelPermalink "/recherche/" }} class="is-current" aria-current="page"{{ end }}>recherche</a>
+    <a href="/tags/"{{ if hasPrefix .RelPermalink "/tags/" }} class="is-current" aria-current="page"{{ end }}>thésaurus</a>
+    <a href="/recherche/"{{ if hasPrefix .RelPermalink "/recherche/" }} class="is-current" aria-current="page"{{ end }}>chercher</a>
     <a href="#" onclick="randomArticle(); return false;">au hasard</a>
   </nav>
 </header>

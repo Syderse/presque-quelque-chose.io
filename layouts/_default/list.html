@@ -17,17 +17,18 @@
     {{ partial "list-entries.html" .ByWeight }}
   {{ end }}
 
-  {{/* Sous-dossiers : un intertitre par dossier, puis ses entrées. */}}
+  {{/* Sous-dossiers : repliés par défaut, titre <summary> + marqueur. */}}
   {{ range .Sections.ByWeight }}
-    <section class="list-group">
-      <h2 class="list-group-title">
+    <details class="list-group">
+      <summary class="list-group-title">
+        <span class="list-group-marker" aria-hidden="true">▶</span>
         <a href="{{ .RelPermalink }}">{{ .Title }}</a>
-      </h2>
+      </summary>
       {{ with .Description }}<p class="list-group-desc">{{ . }}</p>{{ end }}
       {{ with .Pages }}
         {{ partial "list-entries.html" .ByWeight }}
       {{ end }}
-    </section>
+    </details>
   {{ end }}
 
 </div>

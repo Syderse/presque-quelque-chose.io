@@ -23,6 +23,7 @@ cd antenne_radio && make test      # tests pytest ; make run ; make export-publi
 - Toujours commencer par `git status --short` ; le worktree peut contenir un chantier en cours.
 - Vérifier le build après toute modification de gabarit/CSS/build.
 - Hugo Extended `0.160.1` est épinglé via `pnpm exec hugo`. Netlify l'utilise aussi (pas de `HUGO_VERSION` dans `netlify.toml`).
+- Privilégie toujours si possible les solutions hugoesques (hugo native) pour assurer la robustesse et la performance speedy lightweight.
 
 ## Architecture (le non-évident)
 
@@ -68,6 +69,7 @@ Quand tu touches à l'UI : tends vers ces principes, n'en ré-éloigne pas le si
 - **Préserver les endpoints & la discipline.** Sorties JSON (ALMANACH/RANDOMIZER/RHIZOME), RSS, whitelist antenne radio, redirects SEO, CSP. Si on retire un domaine (fonte, CDN), **adapter** la CSP de `netlify.toml`, ne pas la casser.
 - **Mesurer avant/après** dès qu'on touche `static/`, `_vendor/`, le CSS généré, les embeds ou le pipeline : `du -sh .git static _vendor public`, poids CSS/JS, présence des endpoints.
 - **Hugo récent** : `build` (pas `_build`), `cascade.target`, `files`, `locale`, `hugo.Data`, parcours via `hugo.Sites` (pas `site.AllPages`). Détails dans `docs/AGENTS.md` › « Configuration A Ne Pas Casser ».
+- **Liens internes** : toujours `[texte](/chemin/de/contenu/#ancre)` — le render hook (`layouts/_markup/render-link.html`) résout via `GetPage` → permalien canonique (dé-accentuation, validation). Ne jamais écrire `{{< relref … >}}` ni de chemins relatifs `../`.
 - **Commits** petits, testés, réversibles ; un sujet par commit. Ne jamais masquer un build ou un test échoué.
 - **Style** : non catégorique aux emojis et aux tirets cadratins. Attention à la casse, évite de mettre des majuscules partout comme en anglais. 
 - **Autant que possible** : fais des suggestions de modifications ou d'autres manières de faire qui te semblent meilleures par rapport à ma demande et suggère les en me posant des questions avant exécution si tu juges cela pertinent.

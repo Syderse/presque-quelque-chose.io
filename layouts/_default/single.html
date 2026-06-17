@@ -29,13 +29,15 @@
   </p>
 </header>
 
-{{/* --- PLAN REPLIABLE NATIF (zéro JS) ------------------------------------- */}}
+{{/* --- PLAN : fallback <details> (no-JS) + bouton flottant (JS) ----------- */}}
 {{ with .TableOfContents }}
   {{ $toc := . | replaceRE `HAHAHUGOSHORTCODE-?\d+s\d+HBHB` "" | safeHTML }}
   <details class="article-toc">
     <summary>Plan</summary>
     <nav aria-label="Table des matières">{{ $toc }}</nav>
   </details>
+  <button class="toc-btn" id="toc-btn" hidden
+          aria-label="Ouvrir le plan" aria-expanded="false">plan</button>
 {{ end }}
 
 {{/* --- CONTENU — ne pas toucher à .Content ; prose stylée au P08 --------- */}}
@@ -56,3 +58,46 @@
 {{ end }}
 
 {{ end }}
+
+{{/* --- JS bouton plan flottant (uniquement si TOC existe) ------------------ */}}
+{{ define "scripts" }}{{ with .TableOfContents }}
+<script>
+(function () {
+  var btn = document.getElementById('toc-btn');
+  var details = document.querySelector('.article-toc');
+  if (!btn || !details) return;
+
+  var src = details.querySelector('nav');
+  var panel = document.createElement('aside');
+  panel.className = 'toc-float-panel';
+  panel.setAttribute('aria-label', 'Plan de l\'article');
+  panel.hidden = true;
+  panel.appendChild(src.cloneNode(true));
+  document.body.appendChild(panel);
+
+  details.hidden = true;
+  btn.hidden = false;
+
+  btn.addEventListener('click', function () {
+    var open = panel.hidden;
+    panel.hidden = !open;
+    btn.setAttribute('aria-expanded', String(open));
+  });
+
+  panel.addEventListener('click', function (e) {
+    if (e.target.tagName === 'A') {
+      panel.hidden = true;
+      btn.setAttribute('aria-expanded', 'false');
+    }
+  });
+
+  document.addEventListener('keydown', function (e) {
+    if (e.key === 'Escape' && !panel.hidden) {
+      panel.hidden = true;
+      btn.setAttribute('aria-expanded', 'false');
+      btn.focus();
+    }
+  });
+})();
+</script>
+{{ end }}{{ end }}

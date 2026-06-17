@@ -216,9 +216,10 @@ a:focus {
   text-decoration-thickness: 2px;
 }
 
-/* Liens internes (render hook → class="internal-link") : bleu profond. */
+/* Liens internes (render hook → class="internal-link") : bleu, tirets. */
 a.internal-link {
   color: var(--accent);
+  text-decoration-style: dashed;
 }
 
 /* Les internes visités restent bleus — pas de dérive violet. */
@@ -234,11 +235,11 @@ a[target="_blank"]::after {
   line-height: 1;
 }
 
-/* Liens cassés : souligné ondulé pour signaler sans agresser. */
+/* Liens cassés : pas de wavy (ressemble au correcteur ortho), juste le ✗. */
 a.broken-link {
   color: var(--fg);
-  text-decoration-style: wavy;
-  text-decoration-color: var(--link);
+  text-decoration-style: dashed;
+  text-decoration-color: color-mix(in srgb, var(--fg) 40%, transparent);
   text-decoration-thickness: 1px;
 }
 
@@ -249,7 +250,7 @@ a.broken-link:visited {
 a.broken-link::after {
   content: "\202F✗";
   font-size: 0.75em;
-  color: var(--link);
+  color: color-mix(in srgb, var(--fg) 50%, transparent);
 }
 
 /* --- Citations : filet à gauche, couleur du texte ------------------------ */
@@ -463,6 +464,82 @@ caption {
   margin-top: 0.5rem;
 }
 
+/* --- Outils transversaux : niveau secondaire sous la nav de contenu ----------
+   Plus petit que les sections, sous un filet discret. Distinction par taille et
+   filet, jamais par un gris délavé. */
+.site-tools {
+  margin-top: 0.6rem;
+  padding-top: 0.6rem;
+  border-top: 1px solid var(--rule);
+  font-family: var(--mono);
+  font-size: 0.78rem;
+  letter-spacing: 0.03em;
+}
+
+.site-tools a {
+  display: inline-block;
+  text-decoration: underline;
+}
+
+.site-tools a + a {
+  margin-left: 0.5rem;
+  padding-left: 0.75rem;
+  border-left: 1px solid var(--rule);
+}
+
+.site-tools a.is-current {
+  font-weight: 700;
+}
+
+@media (max-width: 32rem) {
+  .site-tools {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.25rem 0;
+  }
+  .site-tools a + a {
+    margin-left: 0;
+    padding-left: 0;
+    border-left: 0;
+  }
+  .site-tools a {
+    margin-right: 0.5rem;
+    padding-right: 0.75rem;
+    border-right: 1px solid var(--rule);
+  }
+  .site-tools a:last-child {
+    border-right: 0;
+  }
+}
+
+/* --- Fil d'Ariane (single) --------------------------------------------------
+   Petit, mono, discret : c'est un repère, pas un titre. Déborde la colonne de
+   lecture pour s'aligner sur la largeur du header/footer et tenir sur une seule
+   ligne. Section courante distinguée par la graisse, jamais par un gris. */
+.breadcrumb {
+  width: min(72rem, 100vw - 2rem);
+  margin-left: 50%;
+  transform: translateX(-50%);
+  margin-bottom: 1.75rem;
+  font-family: var(--mono);
+  font-size: 0.74rem;
+  letter-spacing: 0.02em;
+  line-height: 1.5;
+}
+
+.breadcrumb a {
+  text-decoration: none;
+}
+
+.breadcrumb a:hover,
+.breadcrumb a:focus-visible {
+  text-decoration: underline;
+}
+
+.breadcrumb-current {
+  font-weight: 700;
+}
+
 /* --- Sidenotes Tufte, CSS pur (P09) -----------------------------------------
    Appel numéroté en exposant ; note repliée par défaut, ouverte au clic via une
    case à cocher cachée (technique :checked, zéro JS). Sur écran étroit la note
@@ -607,6 +684,79 @@ caption {
   }
 }
 
+/* --- Bouton flottant « plan » + panneau TOC ----------------------------------
+   JS révèle le bouton (hidden → visible) et crée le panneau dynamiquement.
+   Sans JS : le <details> statique en haut de l'article reste la seule entrée.
+   Placement bas-gauche pour éviter la barre de défilement et les sidenotes
+   droites (les plus fréquentes). Sidenotes gauches ouvertes : chevauchement
+   rare, bref, non bloquant — les deux éléments restent utilisables. */
+
+.toc-btn {
+  position: fixed;
+  bottom: 1.5rem;
+  left: 1.5rem;
+  z-index: 20;
+  font-family: var(--serif);
+  font-size: 1rem;
+  font-variant: small-caps;
+  letter-spacing: 0.04em;
+  background: var(--bg);
+  color: var(--fg);
+  border: 1px solid var(--rule);
+  padding: 0.55rem 1.1rem;
+  cursor: pointer;
+  line-height: 1;
+}
+
+.toc-btn:hover,
+.toc-btn:focus-visible {
+  background: var(--fg);
+  color: var(--bg);
+  outline: none;
+}
+
+.toc-float-panel {
+  position: fixed;
+  bottom: 3rem;
+  left: 1.5rem;
+  z-index: 20;
+  max-width: min(18rem, calc(42vw - 2rem));
+  max-height: calc(80vh - 4rem);
+  overflow-y: auto;
+  background: var(--bg);
+  border: 1px solid var(--rule);
+  padding: 0.75rem 1rem;
+  font-size: 0.875rem;
+  line-height: 1.5;
+}
+
+.toc-float-panel nav ol,
+.toc-float-panel nav ul {
+  margin: 0;
+  padding-left: 1.2em;
+}
+
+.toc-float-panel nav li {
+  margin: 0.2em 0;
+}
+
+.toc-float-panel nav a {
+  color: var(--fg);
+  text-decoration: underline;
+}
+
+.toc-float-panel nav a:hover {
+  color: var(--link);
+}
+
+/* --- Corps de l'article : paragraphes justifiés avec césures ------------------ */
+
+.article-prose p {
+  text-align: justify;
+  hyphens: auto;
+  hyphenate-limit-chars: 6 3 3;
+}
+
 /* --- Pied d'article (P11) ----------------------------------------------------
    Méta sobre, partage presse-papier, CTA Patafoin, articles liés et prev/next.
    Tout en liens texte ; différenciation par la taille/la graisse/la casse,
@@ -745,7 +895,7 @@ caption {
 }
 
 /* Almanach : date pataphysique (kicker mono) + entrée du jour (serif),
-   calées au-dessus des sections. */
+   calées au-dessus du DOM en bas de page. */
 .almanach {
   margin-bottom: 2rem;
 }
@@ -930,7 +1080,7 @@ caption {
   margin-top: 0.6rem;
 }
 
-/* Regroupement par sous-dossier : intertitre à filet bas. */
+/* Regroupement par sous-dossier : replié par défaut via <details>. */
 .list-group {
   margin-top: 2.5rem;
 }
@@ -939,7 +1089,32 @@ caption {
   margin: 0 0 0.3rem;
   padding-bottom: 0.3rem;
   font-size: 1.3rem;
+  font-weight: 700;
   border-bottom: 1px solid var(--rule);
+  list-style: none;
+  display: flex;
+  align-items: baseline;
+  gap: 0.4em;
+  cursor: pointer;
+}
+
+.list-group-title::-webkit-details-marker {
+  display: none;
+}
+
+.list-group-title::marker {
+  content: '';
+}
+
+.list-group-marker {
+  font-size: 0.65em;
+  opacity: 0.5;
+  transition: transform 0.15s;
+  flex-shrink: 0;
+}
+
+.list-group[open] > .list-group-title .list-group-marker {
+  transform: rotate(90deg);
 }
 
 .list-group-title a {

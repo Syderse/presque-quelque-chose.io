@@ -11,7 +11,7 @@ On ne lance cette phase qu'une fois **tous les gabarits migrés** (P04→P21). C
 
 **Prompt à coller :**
 
-> Lis `CLAUDE.md` d'abord.
+> Lis `CLAUDE.md` d'abord. Lis `00_PLAN.md` d'abord.
 > Pré-requis : tous les gabarits doivent déjà utiliser `site.css` (P04→P21). Vérifie d'abord qu'il ne reste **aucune** classe Tailwind/Catppuccin utilisée : `rg -n "ctp-|md:|class=\"[^\"]*\\b(flex|grid|text-|bg-|p-[0-9])" layouts | head` — s'il reste des usages, **arrête-toi et liste-les**, ne casse rien.
 > Ensuite, démonte proprement :
 > - `layouts/partials/css.html` : ne sert plus QUE `site.css` (`resources.Get "css/site.css" | minify | fingerprint`). Retire toute la branche `css.TailwindCSS`.
@@ -56,7 +56,7 @@ On ne lance cette phase qu'une fois **tous les gabarits migrés** (P04→P21). C
 > 1. **CSP** dans `netlify.toml` : retire `https://fonts.googleapis.com` (style-src/style-src-elem) et `https://fonts.gstatic.com` (font-src) — on n'utilise plus de fontes distantes ; `font-src 'self' data:` suffit, `style-src 'self' 'unsafe-inline'`. Retire `https://cdn.jsdelivr.net` si D3/Supabase sont désormais self-hosted (P17/P20) ; sinon garde-le. **Conserve** `frame-src` pour les embeds (YouTube, Spotify, Acast, podcache, redcircle) et `connect-src` pour Supabase. Vérifie qu'aucune ressource réelle n'est bloquée.
 > 2. **Preconnect** : confirme que les `preconnect` Google Fonts ont bien disparu (`baseof.html`, `seo.html`).
 > 3. **Pagefind / recherche** : crée une page `/recherche` qui charge l'UI Pagefind (assets locaux générés dans `/pagefind/` au build Netlify) **uniquement sur cette page**. Garde l'indexation Pagefind dans la commande de build. Lien « recherche » déjà dans le header (P05).
-> 4. **Google Analytics (optionnel)** : si tu veux un site vraiment sans traceur, retire `services.googleAnalytics` de `hugo.yaml` et `https://www.googletagmanager.com` de la CSP. **Demande-moi avant** — c'est un choix éditorial, pas un défaut.
+> 4. **Google Analytics (je valide en vrai je suis chaud)** : si tu veux un site vraiment sans traceur, retire `services.googleAnalytics` de `hugo.yaml` et `https://www.googletagmanager.com` de la CSP. **Demande-moi avant** — c'est un choix éditorial, pas un défaut.
 > Vérifie le build et, si possible, un déploiement preview. Commit : `refonte: CSP + recherche Pagefind`.
 
 **Vérif.** CSP sans domaines de fontes, embeds et forum fonctionnels, page `/recherche` opérationnelle.

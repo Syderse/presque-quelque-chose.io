@@ -9,21 +9,6 @@
     <p class="home-tagline">{{ site.Params.description }}</p>
   </header>
 
-  <div class="home-intro">
-    <p>Un cabinet de curiosités : textes longs et fictions brèves, carnets, recherches,
-    objets sonores et visuels, un rhizome de petites trouvailles. Rien d'ordonné,
-    tout relié.</p>
-    <p>On y entre sans plan. Suivez un fil, perdez-le, prenez le suivant, ou
-    laissez le hasard décider.</p>
-  </div>
-
-  {{/* Almanach — date pataphysique du jour + entrée tirée au hasard (P16).
-       Les deux lignes restent cachées sans JS, sans rien casser. */}}
-  <section class="almanach" aria-label="Almanach pataphysique">
-    <p id="almanach-line" class="almanach-line" hidden></p>
-    <p id="almanach-entry" class="almanach-entry" hidden></p>
-  </section>
-
   <nav class="home-sections" aria-label="Sections du site">
     <h2 class="home-h2">Les sections</h2>
     <dl class="sections-list">
@@ -56,6 +41,13 @@
   <p class="home-random">
     <a href="/solutions-imaginaires/" onclick="randomArticle(); return false;">un texte au hasard</a>
   </p>
+
+  {{/* Almanach — date pataphysique du jour + entrée tirée au hasard (P16).
+       Les deux lignes restent cachées sans JS, sans rien casser. */}}
+  <section class="almanach" aria-label="Almanach pataphysique">
+    <p id="almanach-line" class="almanach-line" hidden></p>
+    <p id="almanach-entry" class="almanach-entry" hidden></p>
+  </section>
 
   {{/* DOM reconverti (P15) — le bouton récalcitrant, en bas de l'accueil. */}}
   {{ partial "dom.html" . }}
