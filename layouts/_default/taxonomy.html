@@ -5,7 +5,7 @@
 
   <header class="list-head">
     <p class="kicker"><a href="{{ "/tags/" | relURL }}">thésaurus</a></p>
-    <h1 class="list-title">{{ .Title }}</h1>
+    <h1 class="list-title">{{ if eq .Data.Singular "tag" }}{{ .Title | lower }}{{ else }}{{ .Title }}{{ end }}</h1>
     <p class="list-intro smallcaps">{{ len .Pages }} entrée{{ if gt (len .Pages) 1 }}s{{ end }}</p>
   </header>
 

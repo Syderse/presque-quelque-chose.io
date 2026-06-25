@@ -19,7 +19,7 @@
 {{ end }}
 
 {{ if $page }}
-<a class="tag-link" href="{{ $page.RelPermalink }}">#{{ $page.LinkTitle }}</a>
+<a class="tag-link" href="{{ $page.RelPermalink }}">#{{ $page.LinkTitle | lower }}</a>
 {{ else }}
-<span class="tag-link tag-link--missing" title="étiquette introuvable">#{{ . }}</span>
+<span class="tag-link tag-link--missing" title="étiquette introuvable">#{{ . | lower }}</span>
 {{ end }}

@@ -1,5 +1,8 @@
 {{- $siteTitle := .Site.Title -}}
 {{- $pageName := .Title | plainify -}}
+{{- if eq .Data.Singular "tag" -}}
+  {{- $pageName = $pageName | lower -}}
+{{- end -}}
 {{- $isNotFound := or (eq .Kind "404") (eq $pageName "404 Page not found") -}}
 {{- if .IsHome -}}
   {{- $pageName = $siteTitle -}}

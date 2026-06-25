@@ -1,7 +1,6 @@
 ---
-title: "Recherche"
+title: "Chercher"
 description: "Fouiller le cabinet de curiosités : textes, carnets, recherches, almanach."
 ---
 
-Cherchez dans l'ensemble du site. L'index est construit au déploiement ; en
-développement local, lancez d'abord une indexation Pagefind sur `public/`.
+Vous pouvez faire une recherche par mot-clé dans tout le contenu du site.

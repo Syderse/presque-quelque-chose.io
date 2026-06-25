@@ -46,7 +46,6 @@ Retourne: Un Dict avec "internal" et "external".
     "title" .Title
     "url" .RelPermalink
     "summary" .Description
-    "icon" (.Params.icon | default "🥕")
     "colorName" $colorName
     "colorHex" $hex
     "type" "internal"
@@ -69,7 +68,6 @@ Retourne: Un Dict avec "internal" et "external".
       "title" .title
       "url" .url
       "summary" ""
-      "icon" (.icon | default "🦠")
       "colorName" $colorName
       "colorHex" $hex
       "type" "external"

@@ -14,7 +14,7 @@
     <ul class="thesaurus-list">
       {{ range . }}
         <li class="thesaurus-item">
-          <a class="thesaurus-term" href="{{ .Page.RelPermalink }}">{{ .Page.Title }}</a>
+          <a class="thesaurus-term" href="{{ .Page.RelPermalink }}">{{ if eq $.Data.Singular "tag" }}{{ .Page.Title | lower }}{{ else }}{{ .Page.Title }}{{ end }}</a>
           <span class="thesaurus-count" aria-label="{{ .Count }} entrée{{ if gt .Count 1 }}s{{ end }}">{{ .Count }}</span>
         </li>
       {{ end }}

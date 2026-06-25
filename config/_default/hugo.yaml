@@ -179,7 +179,7 @@ params:
   # Site footer
   footer:
     copyright:
-      notice: "© {year} Me. This work is licensed under {license}"
+      notice: "© {year} presque-quelqu'un. Ce site et ce qu'il contient est mis à disposition sous licence {license}"
       license:
         enable: true
         allow_derivatives: false

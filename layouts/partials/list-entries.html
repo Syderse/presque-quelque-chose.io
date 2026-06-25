@@ -13,7 +13,7 @@
           {{- end -}}
           {{- range $i, $t := .Params.tags -}}
             {{- if or $hasDate (gt $i 0) }}<span class="entry-meta-sep"> · </span>{{ end -}}
-            <a href="{{ printf "/tags/%s/" ($t | urlize) | relURL }}">#{{ $t }}</a>
+            <a href="{{ printf "/tags/%s/" ($t | urlize) | relURL }}">#{{ $t | lower }}</a>
           {{- end -}}
         </p>
       {{ end }}

@@ -1,4 +1,4 @@
 ---
 title: "thesaurus"
-description: "Thésaurus du site : une entrée par tag pour explorer les textes, recherches, sons et curiosités d'une autre manière."
+description: "Une liste de tags pour naviguer en suivant vos envies particulières ou transversales."
 ---

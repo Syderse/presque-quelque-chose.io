@@ -23,7 +23,7 @@
     {{- end -}}
     {{- with $.Params.tags -}}
       {{- range . -}}
-        <span class="article-meta-sep"> · </span><a href="{{ printf "/tags/%s/" (. | urlize) | relURL }}">#{{ . }}</a>
+        <span class="article-meta-sep"> · </span><a href="{{ printf "/tags/%s/" (. | urlize) | relURL }}">#{{ . | lower }}</a>
       {{- end -}}
     {{- end -}}
   </p>
