@@ -1,7 +1,132 @@
 {
-  "generated_at": "2026-06-17T03:44:07Z",
-  "item_count": 489,
+  "generated_at": "2026-06-25T01:08:03Z",
+  "item_count": 500,
   "items": [
+    {
+      "attribution_id": "radio_fanch",
+      "doi": null,
+      "id": "url:9e8c86ea13a1028ab98a",
+      "language": "und",
+      "published_at": "2026-06-24T06:30:00Z",
+      "source_family": "rss",
+      "source_name": "Radio Fañch",
+      "source_type": "blog",
+      "title": "À la radio : une bonne oreille…",
+      "url": "https://radiofanch.blogspot.com/2026/06/a-la-radio-une-bonne-oreille.html"
+    },
+    {
+      "attribution_id": "organised_sound",
+      "authors": [
+        "Andrew P. McPherson"
+      ],
+      "container_title": "Organised Sound",
+      "doi": "10.1017/s1355771826101320",
+      "id": "doi:158ae73ecef1d55e26c3",
+      "item_type": "journal_article",
+      "language": "en",
+      "published_at": "2026-06-24T00:00:00Z",
+      "source_family": "crossref",
+      "source_name": "Organised Sound",
+      "source_type": "journal_article",
+      "title": "Notes aren’t real: An anti-framework for entangled instrument design",
+      "url": "https://doi.org/10.1017/s1355771826101320"
+    },
+    {
+      "attribution_id": "radio_fanch",
+      "doi": null,
+      "id": "url:6e4f0212390a47a4d38f",
+      "language": "und",
+      "published_at": "2026-06-23T06:30:00Z",
+      "source_family": "rss",
+      "source_name": "Radio Fañch",
+      "source_type": "blog",
+      "title": "France Culture, l'été c'est vraiment… la barbe !",
+      "url": "https://radiofanch.blogspot.com/2026/06/france-culture-lete-cest-vraiment-la.html"
+    },
+    {
+      "attribution_id": "radio_fanch",
+      "doi": null,
+      "id": "url:fe15a14e27065affd867",
+      "language": "und",
+      "published_at": "2026-06-22T06:36:08Z",
+      "source_family": "rss",
+      "source_name": "Radio Fañch",
+      "source_type": "blog",
+      "title": "Radio-réalité : comment ça marche ?",
+      "url": "https://radiofanch.blogspot.com/2026/06/radio-realite-comment-ca-marche.html"
+    },
+    {
+      "attribution_id": "radio_fanch",
+      "doi": null,
+      "id": "url:e9c15f994b7f552537eb",
+      "language": "und",
+      "published_at": "2026-06-21T12:00:00Z",
+      "source_family": "rss",
+      "source_name": "Radio Fañch",
+      "source_type": "blog",
+      "title": "France Culture : Pink Floyd, memory music…",
+      "url": "https://radiofanch.blogspot.com/2026/06/france-culture-pink-floyd-memory-music.html"
+    },
+    {
+      "attribution_id": "radio_fanch",
+      "doi": null,
+      "id": "url:25af99354a59111e13c0",
+      "language": "und",
+      "published_at": "2026-06-19T07:30:00Z",
+      "source_family": "rss",
+      "source_name": "Radio Fañch",
+      "source_type": "blog",
+      "title": "1936 : l'été où les Françaises et les Français découvrent les vacances…",
+      "url": "https://radiofanch.blogspot.com/2026/06/1936-lete-ou-les-francaises-et-les.html"
+    },
+    {
+      "attribution_id": "popular_communication",
+      "authors": [],
+      "container_title": "Popular Communication",
+      "doi": "10.1080/15405702.2026.2690280",
+      "id": "doi:6060d6bf6b82fe2ed423",
+      "item_type": "journal_article",
+      "language": "en",
+      "published_at": "2026-06-19T00:00:00Z",
+      "source_family": "openalex",
+      "source_name": "Popular Communication",
+      "source_type": "journal_article",
+      "title": "The Authoritarianism of Pop Culture: how emotional media shape social thought—and how they can serve the common good in the future of media",
+      "url": "https://doi.org/10.1080/15405702.2026.2690280"
+    },
+    {
+      "attribution_id": "feminist_media_studies",
+      "authors": [],
+      "container_title": "Feminist Media Studies",
+      "doi": "10.1080/14680777.2026.2676587",
+      "id": "doi:219f97bda2f71110e3a7",
+      "item_type": "journal_article",
+      "language": "en",
+      "published_at": "2026-06-18T00:00:00Z",
+      "source_family": "openalex",
+      "source_name": "Feminist Media Studies",
+      "source_type": "journal_article",
+      "title": "Sun, sea, and sexism on <i>Love Island</i> : Twitter (now X) user responses to ‘laddish’ masculinities and misogynistic discursive distancing on television",
+      "url": "https://doi.org/10.1080/14680777.2026.2676587"
+    },
+    {
+      "attribution_id": "organised_sound",
+      "authors": [
+        "Thanos Polymeneas-Liontiris",
+        "Alexandros Drymonitis"
+      ],
+      "container_title": "Organised Sound",
+      "doi": "10.1017/s1355771826101332",
+      "id": "doi:56bda4f86577c8885b9a",
+      "item_type": "journal_article",
+      "language": "en",
+      "published_at": "2026-06-17T00:00:00Z",
+      "source_family": "crossref",
+      "source_name": "Organised Sound",
+      "source_type": "journal_article",
+      "title": "Nodes, glitches and embedded algorithms: COMACROB and posthuman organology",
+      "url": "https://doi.org/10.1017/s1355771826101332"
+    },
     {
       "attribution_id": "radio_fanch",
       "doi": null,
@@ -13,6 +138,21 @@
       "source_type": "blog",
       "title": "La radio a… plus d'un titre !",
       "url": "https://radiofanch.blogspot.com/2026/06/la-radio-plus-dun-titre.html"
+    },
+    {
+      "attribution_id": "convergence_journal",
+      "authors": [],
+      "container_title": "Convergence The International Journal of Research into New Media Technologies",
+      "doi": "10.1177/13548565261461163",
+      "id": "doi:d7956091774c289590a2",
+      "item_type": "journal_article",
+      "language": "en",
+      "published_at": "2026-06-16T00:00:00Z",
+      "source_family": "openalex",
+      "source_name": "Convergence",
+      "source_type": "journal_article",
+      "title": "Selling preparation, selling self: Platformization, professional identity, and regulatory adaptation in Russian artistic tutoring on Telegram",
+      "url": "https://doi.org/10.1177/13548565261461163"
     },
     {
       "attribution_id": "radio_fanch",
@@ -1030,6 +1170,21 @@
       "source_type": "journal_article",
       "title": "Art of Sound – Creativity in Film Sound and Electroacoustic Music Andrew Knight-Hill and Emma Margetson, London: Focal Press, 2023. ISBN: 9780367755881.",
       "url": "https://doi.org/10.1017/s1355771826101265"
+    },
+    {
+      "attribution_id": "media_culture_society",
+      "authors": [],
+      "container_title": "Media Culture & Society",
+      "doi": "10.1177/01634437261446790",
+      "id": "doi:a0adddf2b34cb2255d84",
+      "item_type": "journal_article",
+      "language": "en",
+      "published_at": "2026-05-03T00:00:00Z",
+      "source_family": "openalex",
+      "source_name": "Media, Culture & Society",
+      "source_type": "journal_article",
+      "title": "Digital vulnerabilities",
+      "url": "https://doi.org/10.1177/01634437261446790"
     },
     {
       "attribution_id": "les_radios_libres",
@@ -2181,6 +2336,21 @@
       "url": "https://doi.org/10.1177/01634437261422575"
     },
     {
+      "attribution_id": "hal",
+      "authors": [],
+      "container_title": null,
+      "doi": null,
+      "id": "url:90a7ea5b5a0aee0c013f",
+      "item_type": "journal_article",
+      "language": "fr",
+      "published_at": "2026-03-02T00:00:00Z",
+      "source_family": "hal",
+      "source_name": "HAL open archive",
+      "source_type": "journal_article",
+      "title": "Émissions Littéraires du service audiovisuel public français : où sont les femmes ?",
+      "url": "https://hal.science/hal-05664927v1"
+    },
+    {
       "attribution_id": "resonance_journal",
       "authors": [
         "Caroline Preziosi"
@@ -3016,6 +3186,21 @@
       "source_type": "journal_article",
       "title": "De la création collective à l’approche pluridisciplinaire de son étude",
       "url": "https://doi.org/10.4000/16djg"
+    },
+    {
+      "attribution_id": "questions_communication",
+      "authors": [],
+      "container_title": "Questions de communication",
+      "doi": "10.4000/16ed3",
+      "id": "doi:bc7162e751808e4bc93c",
+      "item_type": "journal_article",
+      "language": "en",
+      "published_at": "2026-01-01T00:00:00Z",
+      "source_family": "openalex",
+      "source_name": "Questions de communication",
+      "source_type": "journal_article",
+      "title": "Henri Assogba et Kodjo Atassé Koulete (dirs), L’Univers de la radio. Adaptations et mutations, Québec, Presses de l’Université Laval, 2025, 210 pages",
+      "url": "https://doi.org/10.4000/16ed3"
     },
     {
       "attribution_id": "openalex",
@@ -7070,36 +7255,6 @@
       "source_type": "journal_article",
       "title": "Television in and After the Archive: Catalogues, Databases, Interfaces and Other Ways to Organize Audiovisual Records",
       "url": "https://doi.org/10.18146/view.353"
-    },
-    {
-      "attribution_id": "media_culture_society",
-      "authors": [],
-      "container_title": "Media Culture & Society",
-      "doi": "10.1177/01634437241299342",
-      "id": "doi:398f8196c09e1352101a",
-      "item_type": "journal_article",
-      "language": "en",
-      "published_at": "2024-12-19T00:00:00Z",
-      "source_family": "openalex",
-      "source_name": "Media, Culture & Society",
-      "source_type": "journal_article",
-      "title": "Between headlines and hunger: Media framing of food poverty on the island of Ireland",
-      "url": "https://doi.org/10.1177/01634437241299342"
-    },
-    {
-      "attribution_id": "convergence_journal",
-      "authors": [],
-      "container_title": "Convergence The International Journal of Research into New Media Technologies",
-      "doi": "10.1177/13548565241309886",
-      "id": "doi:4ef131c78ea1b19b801d",
-      "item_type": "journal_article",
-      "language": "en",
-      "published_at": "2024-12-18T00:00:00Z",
-      "source_family": "openalex",
-      "source_name": "Convergence",
-      "source_type": "journal_article",
-      "title": "Diagrammatic thinking and audience reading of COVID-19 data visualisations: A UK case study",
-      "url": "https://doi.org/10.1177/13548565241309886"
     }
   ],
   "schema_version": "antenne-radio-public-v0",
